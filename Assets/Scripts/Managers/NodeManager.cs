@@ -136,9 +136,8 @@ public class NodeManager : MonoBehaviour
 
     public void Initialise()
     {
-        //Set node contact flags (player side)
+        //Set node contact flags (player side & non-player side)
         UpdateNodeContacts();
-        //Set node contacts flags (non-player side)
         UpdateNodeContacts(false);
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
@@ -1883,59 +1882,79 @@ public class NodeManager : MonoBehaviour
         int index, nodeID, numOfNodes, numOfContacts;
         if (actor != null)
         {
-            int contactLevel = actor.datapoint0;
-            int contactsPerLevel = 2;
-            int totalContacts = contactLevel * contactsPerLevel;
-            List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-            List<int> listOfContactNodes = new List<int>();
-            if (listOfNodes != null)
+            //check if actor already has been OnMap and has a previous set of contacts
+            Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+            if (dictOfActorContacts != null)
             {
-                //create a templist of nodes
-                List<Node> tempListOfNodes = new List<Node>(listOfNodes);
-                //randomly select nodes up to total contacts
-                
-                for(int i = 0; i < totalContacts; i++)
+                //actor in dictionary?
+                if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
                 {
-                    //check minimum number of nodes left to select from
-                    numOfNodes = tempListOfNodes.Count;
-                    if (numOfNodes > 0)
+                    List<int> listOfNodes = dictOfActorContacts[actor.actorID];
+                    if (listOfNodes != null)
                     {
-                        index = Random.Range(0, tempListOfNodes.Count);
-                        nodeID = tempListOfNodes[index].nodeID;
-                        listOfContactNodes.Add(nodeID);
-                        //remove chosen node to prevent duplicates
-                        tempListOfNodes.RemoveAt(index);
+                        //add to dictOfActorContacts & dictOfNodeContacts
+                        GameManager.instance.dataScript.AddContacts(actor.actorID, listOfNodes);
                     }
-                    else { break; }
+                    else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actor.actorID); }
                 }
-                //Contact nodes determined, now add to dictionaries
-                numOfContacts = listOfContactNodes.Count;
-                if (numOfContacts > 0)
+                else
                 {
-                    //add to dictOfActorContacts & dictOfNodeContacts
-                    GameManager.instance.dataScript.AddContacts(actor.actorID, listOfContactNodes);
+                    //generate a new set of contacts for the actor
+                    int contactLevel = actor.datapoint0;
+                    int contactsPerLevel = 2;
+                    int totalContacts = contactLevel * contactsPerLevel;
+                    List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                    List<int> listOfContactNodes = new List<int>();
+                    if (listOfAllNodes != null)
+                    {
+                        //create a templist of nodes
+                        List<Node> tempListOfNodes = new List<Node>(listOfAllNodes);
+                        //randomly select nodes up to total contacts
+                        for (int i = 0; i < totalContacts; i++)
+                        {
+                            //check minimum number of nodes left to select from
+                            numOfNodes = tempListOfNodes.Count;
+                            if (numOfNodes > 0)
+                            {
+                                index = Random.Range(0, tempListOfNodes.Count);
+                                nodeID = tempListOfNodes[index].nodeID;
+                                listOfContactNodes.Add(nodeID);
+                                //remove chosen node to prevent duplicates
+                                tempListOfNodes.RemoveAt(index);
+                            }
+                            else { break; }
+                        }
+                        //Contact nodes determined, now add to dictionaries
+                        numOfContacts = listOfContactNodes.Count;
+                        if (numOfContacts > 0)
+                        {
+                            //add to dictOfActorContacts & dictOfNodeContacts
+                            GameManager.instance.dataScript.AddContacts(actor.actorID, listOfContactNodes);
+                        }
+                        else { Debug.LogWarningFormat("Actor {0}, {1} has no contacts", actor.actorName, actor.arc.name); }
+                    }
+                    else { Debug.LogError("Invalid listOfNodes (Null)"); }
                 }
-                else { Debug.LogWarningFormat("Actor {0}, {1} has no contacts", actor.actorName, actor.arc.name); }
             }
-            else { Debug.LogError("Invalid listOfNodes (Null)"); }
+            else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
         }
         else { Debug.LogError("Invalid actor (Null)"); }
     }
 
     /// <summary>
-    /// Update Node contact status across the map whenever there is a change. Contact state updated for, default, Player side only
+    /// Update Node contact status across the map whenever there is a change. Contact state updated for, default, Current side only
     /// </summary>
-    public void UpdateNodeContacts(bool isPlayerSide = true)
+    public void UpdateNodeContacts(bool isCurrentSide = true)
     {
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.instance.dataScript.GetDictOfNodeContacts(isPlayerSide);
+        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.instance.dataScript.GetDictOfNodeContacts(isCurrentSide);
         if (dictOfNodeContacts != null)
         {
             if (listOfNodes != null)
             {
                 //player side
                 bool isResistance;
-                if (isPlayerSide == true)
+                if (isCurrentSide == true)
                 {
                     //player side
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)

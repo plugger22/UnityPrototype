@@ -9,7 +9,7 @@ using packageAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact}
 
     public GUIStyle customBackground;
 
@@ -100,7 +100,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height), "Option Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 100), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height), "Level Menu", customBackground);
 
@@ -636,6 +636,24 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.playerScript.DebugAddRandomSecret();
             }
 
+            //fourteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Add Contact"))
+            {
+                Debug.Log("[Dbg] Button -> Add Contact");
+                if (debugDisplay != 27)
+                { debugDisplay = 27; }
+                else { debugDisplay = 0; }
+            }
+
+            //fifteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 17 + button_height * 17, button_width, button_height), "Remove Contact"))
+            {
+                Debug.Log("[Dbg] Button -> Remove Contact");
+                if (debugDisplay != 29)
+                { debugDisplay = 29; }
+                else { debugDisplay = 0; }
+            }
+
 
             //
             // - - - Level Menu - - -
@@ -915,6 +933,44 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DisplayCrisisNodes();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 400), analysis, customBackground);
                         break;
+                    //Add Contact to Actor
+                    case 27:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input Contact NodeID");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        status = GUIStatus.AddContact;
+                        textOutput = null;
+                        break;
+                    //Add Contact to Actor processing and Output
+                    case 28:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.dataScript.DebugAddContact(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
+                    //Remove Actor Contact
+                    case 29:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input Contact NodeID");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        status = GUIStatus.RemoveContact;
+                        textOutput = null;
+                        break;
+                    //Remove Actor Contact processing and Output
+                    case 30:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.dataScript.DebugRemoveContact(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -938,6 +994,12 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.SetState:
                         debugDisplay = 23;
+                        break;
+                    case GUIStatus.AddContact:
+                        debugDisplay = 28;
+                        break;
+                    case GUIStatus.RemoveContact:
+                        debugDisplay = 30;
                         break;
                 }
                 break;

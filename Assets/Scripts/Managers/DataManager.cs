@@ -732,7 +732,7 @@ public class DataManager : MonoBehaviour
     { return dictOfActorContacts; }
 
     /// <summary>
-    /// adds mew set of Actor contacts to dictionaries. ListOfContactNodes holds nodeID's where actor has a contact
+    /// adds mew set of Actor contacts to dictionaries. ListOfContactNodes holds nodeID's where actor has a contact. Updates node flags
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="listOfContactNodes"></param>
@@ -796,11 +796,13 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("No contacts in listOfContactNodes"); successFlag = false; }
         }
         else { Debug.LogError("Invalid listOfContactNodes (Null)"); successFlag = false; }
+        //update node contacts
+        GameManager.instance.nodeScript.UpdateNodeContacts();
         return successFlag;
     }
 
     /// <summary>
-    /// Removes all contacts from a specific actor from dictOfNodeContacts (record remains in dictOfActorContacts in case the actor returns)
+    /// Removes all contacts from a specific actor from dictOfNodeContacts (record remains in dictOfActorContacts in case the actor returns). Updates node flags
     /// </summary>
     /// <param name="actorID"></param>
     /// <returns></returns>
@@ -825,13 +827,21 @@ public class DataManager : MonoBehaviour
                     //find node entry in dictOfNodeContacts
                     if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                     {
-                        List<int> tempList = dictOfNodeContacts[nodeID];
-                        if (tempList != null)
+                        List<int> listOfActors = dictOfNodeContacts[nodeID];
+                        if (listOfActors != null)
                         {
                             //remove actor from list
-                            if (tempList.Remove(actorID) == false)
+                            if (listOfActors.Remove(actorID) == false)
                             { Debug.LogWarningFormat("ActorID failed to be removed from list of NodeID {0}", nodeID); successFlag = false; }
-                            else { Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: actorID {0} removed from nodeID {1} list{2}", actorID, nodeID, "\n"); }
+                            else
+                            {
+                                /*Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: actorID {0} removed from nodeID {1} list{2}", actorID, nodeID, "\n");*/
+                                if (listOfActors.Count == 0)
+                                {
+                                    //if no more actors with contacts at node, delete dictionary record
+                                    dictOfNodeContacts.Remove(nodeID);
+                                }
+                            }
                         }
                         else { Debug.LogWarningFormat("Invalid list<actorID> (Null) for nodeID {0}", nodeID); successFlag = false; }
                     }
@@ -841,17 +851,22 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarningFormat("invalid listOfNodes (Empty) for actorID {0}", actorID); successFlag = false; }
         }
         else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
+        //update node contacts
+        GameManager.instance.nodeScript.UpdateNodeContacts();
         return successFlag;
     }
 
     /// <summary>
-    /// add a single new node contact to an actor. Update dictionaries and node flags.
+    /// add a single new node contact to an actor. Update dictionaries and node flags. Current or other side, automatically detected. Updates node flags as well.
     /// </summary>
-    public void AddContactSingle(int actorID, int nodeID)
+    public bool AddContactSingle(int actorID, int nodeID)
     {
         Debug.Assert(actorID > -1, "Invalid actorID (-1)");
         Debug.Assert(nodeID > -1, "Invalid nodeID (-1)");
         bool isSuccess = true;
+        bool isCurrentSide = true;
+        if (GameManager.instance.sideScript.PlayerSide.level != GameManager.instance.turnScript.currentSide.level)
+        { isCurrentSide = false; }
         Actor actor = GetActor(actorID);
         if (actor != null)
         {
@@ -865,7 +880,7 @@ public class DataManager : MonoBehaviour
                     {
                         //all O.K, add contact to dictionaries
                         listOfNodes.Add(nodeID);
-                        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
+                        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts(isCurrentSide);
                         if (dictOfNodeContacts != null)
                         {
                             //get specific node
@@ -907,8 +922,139 @@ public class DataManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); isSuccess = false; }
         //log message
         if (isSuccess == true)
-        { Debug.LogFormat("CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
-        else { Debug.LogFormat("Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        { Debug.LogFormat("DataManager.cs -> CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        else { Debug.LogFormat("DataManager.cs -> Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        //update node contact flags
+        GameManager.instance.nodeScript.UpdateNodeContacts(isCurrentSide);
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// Remove a single contact from an actor. Update dictionaries and node flags. Current or other side, automatically detected.
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool RemoveContactSingle(int actorID, int nodeID)
+    {
+        Debug.Assert(actorID > -1, "Invalid actorID (-1)");
+        Debug.Assert(nodeID > -1, "Invalid nodeID (-1)");
+        bool isSuccess = true;
+        bool isCurrentSide = true;
+        if (GameManager.instance.sideScript.PlayerSide.level != GameManager.instance.turnScript.currentSide.level)
+        { isCurrentSide = false; }
+        Actor actor = GetActor(actorID);
+        if (actor != null)
+        {
+            //check actor has no existing contact at node
+            if (dictOfActorContacts.ContainsKey(actorID) == true)
+            {
+                List<int> listOfNodes = dictOfActorContacts[actorID];
+                if (listOfNodes != null)
+                {
+                    if (listOfNodes.Exists(id => id == nodeID) == true)
+                    {
+                        //remove nodeID from node list
+                        if (listOfNodes.Remove(nodeID) == true)
+                        {
+                            //get appropriate node dictionary
+                            Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts(isCurrentSide);
+                            if (dictOfNodeContacts != null)
+                            {
+                                //get specific node
+                                if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                                {
+                                    List<int> listOfActors = dictOfNodeContacts[nodeID];
+                                    if (listOfActors != null)
+                                    {
+                                        //remove actor from Node list of actors
+                                        if (listOfActors.Remove(actorID) == false)
+                                        { Debug.LogWarningFormat("Failed to remove actorID {0} from nodeID {1} listOfActors", actorID, nodeID); isSuccess = false; }
+                                        else
+                                        {
+                                            //if there are no other contacts, delete dictionarys record
+                                            if (listOfActors.Count == 0)
+                                            { dictOfNodeContacts.Remove(nodeID); }
+                                        }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid listOfActors for nodeID {0}", nodeID); isSuccess = false; }
+                                }
+                                else { Debug.LogWarningFormat("nodeID {0} for actorID {1} NOT found in dictOfNodeContacts", nodeID, actorID); isSuccess = false; }
+                            }
+                            else { Debug.LogError("Invalid dictOfNodeContacts (Null)"); isSuccess = false; }
+                        }
+                        else { Debug.LogWarningFormat("Unable to remove nodeID {0}", nodeID); isSuccess = false; }
+                    }
+                    else { Debug.LogWarningFormat("ActorID {0} has NO Contact at nodeID {1}", actorID, nodeID); isSuccess = false; }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actorID); isSuccess = false; }
+            }
+            else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
+        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); isSuccess = false; }
+        //log message
+        if (isSuccess == true)
+        { Debug.LogFormat("DataManager.cs -> CONTACT REMOVED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        //update node contact flags
+        GameManager.instance.nodeScript.UpdateNodeContacts(isCurrentSide);
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// debug method to add a single contact to an actor at a node
+    /// </summary>
+    /// <param name="nodeIDString"></param>
+    /// <param name="actorSlotIDString"></param>
+    /// <returns></returns>
+    public string DebugAddContact(string nodeIDString, string actorSlotIDString)
+    {
+        Debug.Assert(string.IsNullOrEmpty(nodeIDString) == false, "Invalid nodeID string (Null or empty");
+        Debug.Assert(string.IsNullOrEmpty(actorSlotIDString) == false, "Invalid actorSlotID string (Null or empty");
+        string contactResult = "Unknown";
+        int nodeID = Convert.ToInt32(nodeIDString);
+        int actorSlotID = Convert.ToInt32(actorSlotIDString);
+        Actor actor = GetCurrentActor(actorSlotID, GameManager.instance.turnScript.currentSide);
+        if (actor != null)
+        {
+            if (AddContactSingle(actor.actorID, nodeID) == true)
+            { contactResult = "Contacted ADDED successfully"; }
+            else { contactResult = "FAILED to add Contact"; }
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID);
+            contactResult = "FAILED to add Contact (Invalid Actor)";
+        }
+        return contactResult;
+    }
+
+    /// <summary>
+    /// debug method to remove a single contact from an actor at a node
+    /// </summary>
+    /// <param name="nodeIDString"></param>
+    /// <param name="actorSlotIDString"></param>
+    /// <returns></returns>
+    public string DebugRemoveContact(string nodeIDString, string actorSlotIDString)
+    {
+        Debug.Assert(string.IsNullOrEmpty(nodeIDString) == false, "Invalid nodeID string (Null or empty");
+        Debug.Assert(string.IsNullOrEmpty(actorSlotIDString) == false, "Invalid actorSlotID string (Null or empty");
+        string contactResult = "Unknown";
+        int nodeID = Convert.ToInt32(nodeIDString);
+        int actorSlotID = Convert.ToInt32(actorSlotIDString);
+        Actor actor = GetCurrentActor(actorSlotID, GameManager.instance.turnScript.currentSide);
+        if (actor != null)
+        {
+            if (RemoveContactSingle(actor.actorID, nodeID) == true)
+            { contactResult = "Contacted REMOVED successfully"; }
+            else { contactResult = "FAILED to Remove Contact"; }
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID);
+            contactResult = "FAILED to Remove Contact (Invalid Actor)";
+        }
+        return contactResult;
     }
 
     /// <summary>
@@ -1899,6 +2045,8 @@ public class DataManager : MonoBehaviour
             actor.actorSlotID = slotID;
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
+            //update contacts
+            GameManager.instance.nodeScript.SetActorContacts(actor);
             //update actor GUI display
             GameManager.instance.actorPanelScript.UpdateActorPanel();
         }
@@ -2002,8 +2150,7 @@ public class DataManager : MonoBehaviour
         }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
-        //update node contacts
-        GameManager.instance.nodeScript.UpdateNodeContacts();
+
     }
 
     /// <summary>
