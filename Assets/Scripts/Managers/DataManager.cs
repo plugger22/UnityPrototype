@@ -845,6 +845,73 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// add a single new node contact to an actor. Update dictionaries and node flags.
+    /// </summary>
+    public void AddContactSingle(int actorID, int nodeID)
+    {
+        Debug.Assert(actorID > -1, "Invalid actorID (-1)");
+        Debug.Assert(nodeID > -1, "Invalid nodeID (-1)");
+        bool isSuccess = true;
+        Actor actor = GetActor(actorID);
+        if (actor != null)
+        {
+            //check actor has no existing contact at node
+            if (dictOfActorContacts.ContainsKey(actorID) == true)
+            {
+                List<int> listOfNodes = dictOfActorContacts[actorID];
+                if (listOfNodes != null)
+                {
+                    if (listOfNodes.Exists(id => id == nodeID) == false)
+                    {
+                        //all O.K, add contact to dictionaries
+                        listOfNodes.Add(nodeID);
+                        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
+                        if (dictOfNodeContacts != null)
+                        {
+                            //get specific node
+                            if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                            {
+                                //existing contacts at node, check not a duplicate
+                                List<int> listOfActors = dictOfNodeContacts[nodeID];
+                                if (listOfActors != null)
+                                {
+                                    //check actor doesn't already have a contact at node
+                                    if (listOfActors.Exists(id => id == actorID) == false)
+                                    {
+                                        //add actor to node list
+                                        listOfActors.Add(actorID);
+                                    }
+                                    else { Debug.LogWarningFormat("actorID {0} already present at nodeID {1}", actorID, nodeID); isSuccess = false; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", nodeID); isSuccess = false; }
+                            }
+                            else
+                            {
+                                //no existing contacts at node, create new entry
+                                List<int> newList = new List<int>();
+                                newList.Add(actorID);
+                                try
+                                { dictOfNodeContacts.Add(nodeID, newList); }
+                                catch (ArgumentException)
+                                { Debug.LogErrorFormat("Invalid entry in dictOfNodeContacts for nodeID {0}", nodeID); }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid dictOfNodeContacts (Null)"); isSuccess = false; }
+                    }
+                    else { Debug.LogWarningFormat("ActorID {0} has existing contact at nodeID {1}", actorID, nodeID); isSuccess = false; }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actorID); isSuccess = false; }
+            }
+            else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
+        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); isSuccess = false; }
+        //log message
+        if (isSuccess == true)
+        { Debug.LogFormat("CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        else { Debug.LogFormat("Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+    }
+
+    /// <summary>
     /// return a list of all Nodes where an actor has contacts, returns empty list if none
     /// </summary>
     /// <param name="actorID"></param>
