@@ -106,7 +106,7 @@ public class InputManager : MonoBehaviour
     {
         ModalState = modal;
         //reset gamestate only if modalLevel is 0
-        if (GameManager.instance.modalGUIScropt.CheckModalLevel() == 0)
+        if (GameManager.instance.modalGUIScript.CheckModalLevel() == 0)
         {
             //only reset back to normal if there is no longer a modal state
             if (modal == ModalState.None)
@@ -363,7 +363,7 @@ public class InputManager : MonoBehaviour
     public string DisplayGameState()
     {
         StringBuilder builder = new StringBuilder();
-        int modalLevel = GameManager.instance.modalGUIScropt.CheckModalLevel();
+        int modalLevel = GameManager.instance.modalGUIScript.CheckModalLevel();
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");

@@ -139,8 +139,8 @@ public class NodeManager : MonoBehaviour
     public void Initialise()
     {
         //Set node contact flags (player side & non-player side)
-        UpdateNodeContacts();
-        UpdateNodeContacts(false);
+        GameManager.instance.contactScript.UpdateNodeContacts();
+        GameManager.instance.contactScript.UpdateNodeContacts(false);
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
         if (arrayOfEffectOutcome != null)
@@ -1875,7 +1875,7 @@ public class NodeManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// Initialises contacts for a new actor
     /// </summary>
     /// <param name="actor"></param>
@@ -1941,9 +1941,9 @@ public class NodeManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
         }
         else { Debug.LogError("Invalid actor (Null)"); }
-    }
+    }*/
 
-    /// <summary>
+    /*/// <summary>
     /// Update Node contact status across the map whenever there is a change. Contact state updated for, default, Current side only
     /// </summary>
     public void UpdateNodeContacts(bool isCurrentSide = true)
@@ -2021,10 +2021,10 @@ public class NodeManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfNodeContacts (Null)"); }
-    }
+    }*/
 
 
-    /// <summary>
+    /*/// <summary>
     /// toggles node's isContactKnown property on / off
     /// </summary>
     /// <param name="textInput_0"></param>
@@ -2050,7 +2050,7 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         return resultText;
-    }
+    }*/
 
 
     /// <summary>

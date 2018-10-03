@@ -383,7 +383,7 @@ public class ActorManager : MonoBehaviour
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
-                { GameManager.instance.nodeScript.SetActorContacts(actor); }
+                { GameManager.instance.contactScript.SetActorContacts(actor); }
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }

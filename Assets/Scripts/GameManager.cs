@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
     [HideInInspector] public StartManager startScript;                //Start Manager
     [HideInInspector] public LevelManager levelScript;                //Level Manager
-    [HideInInspector] public ImportManager importScript;              //Import Manager
     [HideInInspector] public PreLoadManager preloadScript;            //PreLoad Manager
     [HideInInspector] public LoadManager loadScript;                  //Load Manager
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
@@ -36,6 +35,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public NewsManager newsScript;                  //News Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
+    [HideInInspector] public ContactManager contactScript;            //Contact Manager
     [HideInInspector] public ActionManager actionScript;              //Action Manager
     [HideInInspector] public SideManager sideScript;                  //Side Manager
     [HideInInspector] public HelpManager helpScript;                  //Help Manager
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
     [HideInInspector] public ModalInventoryUI inventoryScript;        //Modal InventoryUI window
     /*[HideInInspector] public ModalDiceUI diceScript;                //Modal Dice UI window*/
-    [HideInInspector] public ModalGUI modalGUIScropt;                 //Modal GUI 
+    [HideInInspector] public ModalGUI modalGUIScript;                 //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
     [HideInInspector] public WidgetTopUI widgetTopScript;             //Widget Top UI
     [HideInInspector] public CityInfoUI cityInfoScript;               //City Info UI
@@ -129,7 +129,6 @@ public class GameManager : MonoBehaviour
         //Get component references
         startScript = GetComponent<StartManager>();
         levelScript = GetComponent<LevelManager>();
-        importScript = GetComponent<ImportManager>();
         preloadScript = GetComponent<PreLoadManager>();
         loadScript = GetComponent<LoadManager>();
         metaScript = GetComponent<MetaManager>();
@@ -137,6 +136,7 @@ public class GameManager : MonoBehaviour
         guiScript = GetComponent<GUIManager>();
         globalScript = GetComponent<GlobalManager>();
         actorScript = GetComponent<ActorManager>();
+        contactScript = GetComponent<ContactManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
         traitScript = GetComponent<TraitManager>();
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
         genericPickerScript = ModalGenericPicker.Instance();
         inventoryScript = ModalInventoryUI.Instance();
         /*diceScript = ModalDiceUI.Instance();*/
-        modalGUIScropt = ModalGUI.Instance();
+        modalGUIScript = ModalGUI.Instance();
         widgetTopScript = WidgetTopUI.Instance();
         cityInfoScript = CityInfoUI.Instance();
         mainInfoScript = MainInfoUI.Instance();
@@ -193,6 +193,68 @@ public class GameManager : MonoBehaviour
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
         DontDestroyOnLoad(gameObject);
+        //Error Checking
+        Debug.Assert(startScript != null, "Invalid startScript (Null)");
+        Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
+        Debug.Assert(preloadScript != null, "Invalid preloadScript (Null)");
+        Debug.Assert(loadScript != null, "Invalid loadScript (Null)");
+        Debug.Assert(metaScript != null, "Invalid metaScript (Null)");
+        Debug.Assert(dataScript != null, "Invalid dataScript (Null)");
+        Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
+        Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
+        Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
+        Debug.Assert(contactScript != null, "Invalid contactScript (Null)");
+        Debug.Assert(actionScript != null, "Invalid actionScript (Null)");
+        Debug.Assert(playerScript != null, "Invalid playerScript (Null)");
+        Debug.Assert(traitScript != null, "Invalid traitScript (Null)");
+        Debug.Assert(factionScript != null, "Invalid factionScript (Null)");
+        Debug.Assert(secretScript != null, "Invalid secretScript (Null)");
+        Debug.Assert(orgScript != null, "Invalid orgScript (Null)");
+        Debug.Assert(cityScript != null, "Invalid cityScript (Null)");
+        Debug.Assert(objectiveScript != null, "Invalid objectiveScript (Null)");
+        Debug.Assert(effectScript != null, "Invalid effectScript (Null)");
+        Debug.Assert(targetScript != null, "Invalid targetScript (Null)");
+        Debug.Assert(optionScript != null, "Invalid optionScript (Null)");
+        Debug.Assert(nodeScript != null, "Invalid nodeScript (Null)");
+        Debug.Assert(teamScript != null, "Invalid teamScript (Null)");
+        Debug.Assert(gearScript != null, "Invalid gearScript (Null)");
+        Debug.Assert(messageScript != null, "Invalid messageScript (Null)");
+        Debug.Assert(itemDataScript != null, "Invalid itemDataScript (Null)");
+        Debug.Assert(connScript != null, "Invalid connScript (Null)");
+        Debug.Assert(colourScript != null, "Invalid colourScript (Null)");
+        Debug.Assert(testScript != null, "Invalid testScript (Null)");
+        Debug.Assert(validateScript != null, "Invalid validateScript (Null)");
+        Debug.Assert(tooltipScript != null, "Invalid tooltipScript (Null)");
+        Debug.Assert(newsScript != null, "Invalid newsScript (Null)");
+        Debug.Assert(sideScript != null, "Invalid sideScript (Null)");
+        Debug.Assert(helpScript != null, "Invalid helpScript (Null)");
+        Debug.Assert(turnScript != null, "Invalid turnScript (Null)");
+        Debug.Assert(inputScript != null, "Invalid inputScript (Null)");
+        Debug.Assert(captureScript != null, "Invalid captureScript (Null)");
+        Debug.Assert(aiScript != null, "Invalid aiScript (Null)");
+        Debug.Assert(rebelScript != null, "Invalid rebelScript (Null)");
+        Debug.Assert(authorityScript != null, "Invalid authorityScript (Null)");
+        //singletons
+        Debug.Assert(tooltipNodeScript != null, "Invalid tooltipNodeScript (Null)");
+        Debug.Assert(tooltipConnScript != null, "Invalid tooltipConnScript (Null)");
+        Debug.Assert(tooltipActorScript != null, "Invalid tooltipActorScript (Null)");
+        Debug.Assert(tooltipPlayerScript != null, "Invalid tooltipPlayerScript (Null)");
+        Debug.Assert(tooltipGenericScript != null, "Invalid tooltipGenericScript (Null)");
+        Debug.Assert(actionMenuScript != null, "Invalid actionMenuScript (Null)");
+        Debug.Assert(outcomeScript != null, "Invalid outcomeScript (Null)");
+        Debug.Assert(teamPickerScript != null, "Invalid teamPickerScript (Null)");
+        Debug.Assert(genericPickerScript != null, "Invalid genericPickerScript (Null)");
+        Debug.Assert(inventoryScript != null, "Invalid inventoryScript (Null)");
+        Debug.Assert(modalGUIScript != null, "Invalid modalGUIScript (Null)");
+        Debug.Assert(widgetTopScript != null, "Invalid widgetTopScript (Null)");
+        Debug.Assert(cityInfoScript != null, "Invalid cityInfoScript (Null)");
+        Debug.Assert(mainInfoScript != null, "Invalid mainInfoScript (Null)");
+        Debug.Assert(aiDisplayScript != null, "Invalid aiDisplayScript (Null)");
+        Debug.Assert(aiSideTabScript != null, "Invalid aiSideTabScript (Null)");
+        Debug.Assert(alertScript != null, "Invalid alertScript (Null)");
+        Debug.Assert(actorPanelScript != null, "Invalid actorPanelScript (Null)");
+        Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");
+        Debug.Assert(debugGraphicsScript != null, "Invalid debugGraphicsScript (Null)");
     }
 
 
@@ -236,12 +298,6 @@ public class GameManager : MonoBehaviour
             startMethod.className = "ValidationManager (SO)";
             listOfStartMethods.Add(startMethod);
         }
-
-        /*//Import Manager -> InitialiseStart
-        startMethod.handler = GameManager.instance.importScript.InitialiseStart;
-        startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);*/
-
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         startMethod.handler = GameManager.instance.globalScript.Initialise;
         startMethod.className = "GlobalManager";
@@ -274,12 +330,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.loadScript.InitialiseEarly;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
-        
-        /*//Import Manager -> InitialiseEarly
-        startMethod.handler = GameManager.instance.importScript.InitialiseEarly;
-        startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);*/
-
         //GUI Manager -> before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
         startMethod.handler = GameManager.instance.guiScript.Initialise;
         startMethod.className = "GUIManager";
@@ -316,12 +366,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.loadScript.InitialiseLate;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
-
-        /*//Import Manager -> InitialiseLate -> immediately after levelScript.Initialise
-        startMethod.handler = GameManager.instance.importScript.InitialiseLate;
-        startMethod.className = "ImportManager";
-        listOfStartMethods.Add(startMethod);*/
-
         //City Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
         startMethod.className = "CityManager";

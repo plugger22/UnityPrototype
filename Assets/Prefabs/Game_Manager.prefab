@@ -52,7 +52,6 @@ GameObject:
   - component: {fileID: 114704934405690708}
   - component: {fileID: 114271324079928462}
   - component: {fileID: 114818089887408198}
-  - component: {fileID: 114544219891371586}
   - component: {fileID: 114333061750755962}
   - component: {fileID: 114255827819229090}
   - component: {fileID: 114184360560951246}
@@ -61,6 +60,7 @@ GameObject:
   - component: {fileID: 114656342642216484}
   - component: {fileID: 114639168605164212}
   - component: {fileID: 114983986480103908}
+  - component: {fileID: 114851938744220614}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -1320,17 +1320,6 @@ MonoBehaviour:
   connectorTooltips: 0
   debugData: 0
   noAI: 0
---- !u!114 &114544219891371586
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1289370855557188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 746937cf223cf8640a103b124d8e3902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114556544146557144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1653,7 +1642,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startScript: {fileID: 0}
   levelScript: {fileID: 114256465635010494}
-  importScript: {fileID: 0}
   preloadScript: {fileID: 0}
   loadScript: {fileID: 0}
   metaScript: {fileID: 0}
@@ -1663,6 +1651,7 @@ MonoBehaviour:
   tooltipScript: {fileID: 0}
   newsScript: {fileID: 0}
   actorScript: {fileID: 0}
+  contactScript: {fileID: 0}
   actionScript: {fileID: 0}
   sideScript: {fileID: 0}
   helpScript: {fileID: 0}
@@ -1792,6 +1781,17 @@ MonoBehaviour:
   maxNumOfObjectives: 3
   objectivesTotal: 0
   objectivesCurrent: 0
+--- !u!114 &114851938744220614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49af79647aea5b646aa77f25f6a0688b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -994,7 +994,7 @@ public class DebugGUI : MonoBehaviour
                     //toggle isContactKnown processing
                     case 32:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.nodeScript.DebugToggleIsContactKnown(textInput_0); }
+                        { textOutput = GameManager.instance.contactScript.DebugToggleIsContactKnown(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;

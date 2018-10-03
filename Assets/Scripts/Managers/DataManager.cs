@@ -827,7 +827,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfContactNodes (Null)"); successFlag = false; }
         //update node contacts
-        GameManager.instance.nodeScript.UpdateNodeContacts();
+        GameManager.instance.contactScript.UpdateNodeContacts();
         return successFlag;
     }
 
@@ -882,7 +882,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
         //update node contacts
-        GameManager.instance.nodeScript.UpdateNodeContacts();
+        GameManager.instance.contactScript.UpdateNodeContacts();
         return successFlag;
     }
 
@@ -937,7 +937,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodeContacts (Null)"); }
         //update node contacts
-        GameManager.instance.nodeScript.UpdateNodeContacts();
+        GameManager.instance.contactScript.UpdateNodeContacts();
         return numContacts;
     }
 
@@ -1010,7 +1010,7 @@ public class DataManager : MonoBehaviour
         { Debug.LogFormat("DataManager.cs -> CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
-        GameManager.instance.nodeScript.UpdateNodeContacts(isCurrentSide);
+        GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
         return isSuccess;
     }
 
@@ -1082,7 +1082,7 @@ public class DataManager : MonoBehaviour
         { Debug.LogFormat("DataManager.cs -> CONTACT REMOVED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
-        GameManager.instance.nodeScript.UpdateNodeContacts(isCurrentSide);
+        GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
         return isSuccess;
     }
 
@@ -2132,7 +2132,7 @@ public class DataManager : MonoBehaviour
             actor.Status = ActorStatus.Active;
             //update contacts (not for game start -> sequencing issues)
             if (GameManager.instance.turnScript.Turn > 0)
-            { GameManager.instance.nodeScript.SetActorContacts(actor); }
+            { GameManager.instance.contactScript.SetActorContacts(actor); }
             //update actor GUI display
             GameManager.instance.actorPanelScript.UpdateActorPanel();
         }
