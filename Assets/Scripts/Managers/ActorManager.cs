@@ -677,7 +677,7 @@ public class ActorManager : MonoBehaviour
                                 { 
                                     //check for actor connections at node
                                     /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)*/
-                                    if (GameManager.instance.dataScript.CheckActorContact(actor.actorID, nodeID) == true)
+                                    if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
                                     {
                                         //Not if actor has Spooked trait and Security Measures in place
                                         if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures ) == true && securityState != AuthoritySecurityState.Normal)
@@ -927,7 +927,7 @@ public class ActorManager : MonoBehaviour
                             tempAction = null;
                             //active node for actor
                             /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.actorSlotID) == true)*/
-                            if (GameManager.instance.dataScript.CheckActorContact(actor.actorID, nodeID) == true)
+                            if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
                             {
                                 //get ANY TEAM node action
                                 actionID = GameManager.instance.dataScript.GetActionID("Any Team");

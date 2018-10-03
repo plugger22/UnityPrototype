@@ -1228,9 +1228,39 @@ public class TeamManager : MonoBehaviour
                 }
                 break;
             case "ERASURE":
-
-                //TO DO -> deletes any known connections ?
-
+                //deletes any KNOWN contacts
+                if (node.isContactKnown == true)
+                {
+                    int numRemoved = GameManager.instance.dataScript.RemoveContactsNode(node.nodeID, false);
+                    if (numRemoved > 0)
+                    {
+                        //message
+                        text = string.Format("{0} {1}: {2} known Contact{3} ERASED at {4}, {5}", team.arc.name, team.teamName, numRemoved, numRemoved != 1 ? "s" : "", node.nodeName, node.Arc.name);
+                        itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                        effectText = string.Format("{0}{1} Resistance Contact{2} ERASED{3}", colourGood, numRemoved, numRemoved != 1 ? "s" : "", colourEnd);
+                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                    }
+                    else
+                    {
+                        //known contacts but none present
+                        text = string.Format("{0} {1}: Zero known Contacts ERASED at {2}, {3}", team.arc.name, team.teamName, node.nodeName, node.Arc.name);
+                        itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                        effectText = string.Format("{0}Zero KNOWN Resistance Contacts ERASED{1}", colourNeutral, colourEnd);
+                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                        //error condition -> shouldn't happen
+                        Debug.LogWarningFormat("Zero Known contacts at nodeID {0} Erased by teamID {1}{2}", node.nodeID, team.teamID, "\n");
+                    }
+                    //Authority no longer has any knowledge of contacts at node
+                    node.isContactKnown = false;
+                }
+                else
+                {
+                    //contacts unknown
+                    text = string.Format("{0} {1}: No Resistance Contacts Known at {2}, {3}", team.arc.name, team.teamName, node.nodeName, node.Arc.name);
+                    itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                    effectText = string.Format("{0}No KNOWN Resistance Contacts present at District{1}", colourNeutral, colourEnd);
+                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                }
                 break;
             case "DAMAGE":
                 //at node with a completed, but uncontained, target?

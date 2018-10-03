@@ -9,7 +9,7 @@ using packageAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact}
 
     public GUIStyle customBackground;
 
@@ -102,7 +102,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 100), "Action Menu", customBackground);
             //background box (Level)
-            GUI.Box(new Rect(box_level, box_y, box_width, box_height), "Level Menu", customBackground);
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2), "Level Menu", customBackground);
 
             //
             // - - - Data (first box)
@@ -655,6 +655,16 @@ public class DebugGUI : MonoBehaviour
             }
 
 
+            //sixteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "isContactKnown"))
+            {
+                Debug.Log("[Dbg] Button -> Set isContactKnown True");
+                if (debugDisplay != 31)
+                { debugDisplay = 31; }
+                else { debugDisplay = 0; }
+            }
+
+
             //
             // - - - Level Menu - - -
             //
@@ -971,6 +981,24 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
+                    //Toggle isContactKnown for a node
+                    case 31:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input Contact NodeID");
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 100, 240, 35), "node.isContactKnown will be toggled On/Off");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        status = GUIStatus.isKnownContact;
+                        textOutput = null;
+                        break;
+                    //toggle isContactKnown processing
+                    case 32:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.nodeScript.DebugToggleIsContactKnown(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1000,6 +1028,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.RemoveContact:
                         debugDisplay = 30;
+                        break;
+                    case GUIStatus.isKnownContact:
+                        debugDisplay = 32;
                         break;
                 }
                 break;

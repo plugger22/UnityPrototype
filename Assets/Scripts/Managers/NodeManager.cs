@@ -5,6 +5,8 @@ using gameAPI;
 using modalAPI;
 using packageAPI;
 using System.Text;
+using System;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles all node related matters
@@ -2021,6 +2023,34 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfNodeContacts (Null)"); }
     }
 
+
+    /// <summary>
+    /// toggles node's isContactKnown property on / off
+    /// </summary>
+    /// <param name="textInput_0"></param>
+    /// <returns></returns>
+    public string DebugToggleIsContactKnown(string textInput_0)
+    {
+        Debug.Assert(string.IsNullOrEmpty(textInput_0) == false, "Invalid textInput_0 string (Null or Empty)");
+        string resultText = "Unknown";
+        int nodeID = Convert.ToInt32(textInput_0);
+        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            if (node.isContactKnown == true)
+            {
+                node.isContactKnown = false;
+                resultText = string.Format("{0}, {1}, nodeID {2}{3}isContactKnown FALSE", node.nodeName, node.Arc.name, node.nodeID, "\n");
+            }
+            else
+            {
+                node.isContactKnown = true;
+                resultText = string.Format("{0}, {1}, nodeID {2}{3}isContactKnown TRUE", node.nodeName, node.Arc.name, node.nodeID, "\n");
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        return resultText;
+    }
 
 
     /// <summary>
