@@ -1715,6 +1715,39 @@ public class ActorManager : MonoBehaviour
             }
         }
         //
+        // - - - Authority actions - - -
+        //
+        else
+        {
+            //
+            // - - - Recruit - - -
+            //
+            int numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
+            //spare space for a new recruit?
+            if (numOfActors < maxNumOfReserveActors)
+            {
+                ModalActionDetails recruitActionDetails = new ModalActionDetails() { };
+                recruitActionDetails.side = playerSide;
+                recruitActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                recruitActionDetails.level = 2;
+                tooltipText = "There's a job to be done and you're the person to find the people to do it";
+                EventButtonDetails activateDetails = new EventButtonDetails()
+                {
+                    buttonTitle = "Recruit",
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
+                    buttonTooltipMain = "Recruit a subordinate",
+                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                    //use a Lambda to pass arguments to the action
+                    action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, recruitActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                };
+                //add Activate button to list
+                tempList.Add(activateDetails);
+            }
+            else
+            { infoBuilder.AppendFormat("{0}Can't Recruit as Maxxed out{1}", colourAlert, colourEnd); }
+
+        }
+        //
         // - - - Cancel - - - (both sides)
         //
         //Cancel button is added last

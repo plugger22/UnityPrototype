@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Recruit Actor
   m_EditorClassIdentifier: 
   tooltipText: It takes a special person to whisper entreaties into the ear of an
-    undecided Rebel.
+    undecided Rebel
   intendedActor: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 38be8d19ea0a29b4bb20562b7b0a24b2, type: 2}
