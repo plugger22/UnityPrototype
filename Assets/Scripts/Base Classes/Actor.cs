@@ -159,7 +159,7 @@ namespace gameAPI
         { return dictOfContacts; }
 
         /// <summary>
-        /// Add contact to dictOfContacts
+        /// Add contact to dictOfContacts (ContactManager.cs -> AssignContact updates contact details)
         /// </summary>
         /// <param name="contact"></param>
         public void AddContact(Contact contact)
@@ -173,15 +173,28 @@ namespace gameAPI
             }
             else { Debug.LogError("Invalid contact (Null)"); }
         }
-        
+
         /// <summary>
-        /// Removes contact at specified node, returns true if successful, false if not
+        /// Removes contact at specified node, returns true if successful, false if not. Updates contact details
         /// </summary>
         /// <param name="nodeID"></param>
         public bool RemoveContact(int nodeID)
         {
-            bool isSuccess = dictOfContacts.Remove(nodeID);
-            return isSuccess;
+            if (dictOfContacts.ContainsKey(nodeID) == true)
+            {
+                Contact contact = dictOfContacts[nodeID];
+                if (contact != null)
+                {
+                    //update contact details
+                    contact.actorID = -1;
+                    contact.nodeID = -1;
+                    contact.status = ContactStatus.Inactive;
+                    contact.turnFinish = GameManager.instance.turnScript.Turn;
+                }
+                else { Debug.LogWarningFormat("Invalid contact (Null) for nodeID {0}", nodeID); }
+            }
+            //remove contact
+            return dictOfContacts.Remove(nodeID);
         }
 
         /// <summary>

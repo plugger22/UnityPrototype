@@ -960,16 +960,33 @@ public class DataManager : MonoBehaviour
                         for (int i = 0; i < numContacts; i++)
                         {
                             actorID = listOfActors[i];
-                            //find record in dictOfActors
-                            if (dictOfActorContacts.ContainsKey(actorID) == true)
+                            Actor actor = GetActor(actorID);
+                            if (actor != null)
                             {
-                                //remove nodeID from list
-                                if (dictOfActorContacts[actorID].Remove(nodeID) == true)
-                                { Debug.LogFormat("DataManager.cs -> RemoveContactsNode: nodeID {0} removed from dictOfActorContacts[{1}]{2}", nodeID, actorID, "\n"); }
-                                else
-                                { Debug.LogWarningFormat("nodeID {0} not found in dictOfActorContacts.ListOfNodes for actorID {1}", nodeID, actorID); }
+                                //find record in dictOfActors
+                                if (dictOfActorContacts.ContainsKey(actorID) == true)
+                                {
+                                    //remove nodeID from list
+                                    if (dictOfActorContacts[actorID].Remove(nodeID) == true)
+                                    {
+                                        Debug.LogFormat("DataManager.cs -> RemoveContactsNode: nodeID {0} removed from dictOfActorContacts[{1}]{2}", nodeID, actorID, "\n");
+                                        //resistance actor, remove contact from dict
+                                        if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+                                        {
+                                            //remove contact record from actor
+                                            if (actor.RemoveContact(nodeID) == true)
+                                            { Debug.LogFormat("[Tst] DataManager.cs -> RemoveContacts: Contact REMOVED from {0}, {1},  nodeID {2}", actor.actorName, actor.arc.name, nodeID); }
+                                            else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", 
+                                                actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+                                        }
+                                    }
+                                    else
+                                    { Debug.LogWarningFormat("nodeID {0} not found in dictOfActorContacts.ListOfNodes for actorID {1}", nodeID, actorID); }
+
+                                }
+                                else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}, nodeID {1}", actorID, nodeID); }
                             }
-                            else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}, nodeID {1}", actorID, nodeID); }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
                         }
                     }
                     else { Debug.LogWarningFormat("There are NO contacts present for nodeID {0}", nodeID); }

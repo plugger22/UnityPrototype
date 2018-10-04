@@ -82,7 +82,7 @@
     //
     // - - - Contacts - - -
     //
-    public enum ContactStatus { Active, Inactive, ContactPool, Dismissed, Captured, Killed }
+    public enum ContactStatus { Active, Inactive, ContactPool }
 
     //
     // - - - AI - - -
