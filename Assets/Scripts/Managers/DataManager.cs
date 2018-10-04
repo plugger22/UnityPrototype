@@ -734,10 +734,10 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add contact to dictionary
+    /// Add contact to dictionary (Resistance side only)
     /// </summary>
     /// <param name="contact"></param>
-    public void AddContact(Contact contact)
+    public void AddResistanceContact(Contact contact)
     {
         if (contact != null)
         {
@@ -1048,9 +1048,23 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); isSuccess = false; }
-        //log message
         if (isSuccess == true)
-        { Debug.LogFormat("DataManager.cs -> CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        {
+            //assign a new contact if a Resistance actor
+            if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+            {
+                Contact contact = GameManager.instance.contactScript.AssignContact(actor.actorID, nodeID);
+                if (contact != null)
+                {
+                    actor.AddContact(contact);
+                    Debug.LogFormat("[Tst] Contact Added: {0}, {1}, actorID {2}, nodeID {3}, {4}, contactID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, nodeID,
+                        contact.contactName, contact.contactID, "\n");
+                }
+                else { Debug.LogError("Invalid contact (Null)"); }
+            }
+            //log message
+            Debug.LogFormat("DataManager.cs -> CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
+        }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
         GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
@@ -1120,9 +1134,16 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); isSuccess = false; }
-        //log message
+        
         if (isSuccess == true)
-        { Debug.LogFormat("DataManager.cs -> CONTACT REMOVED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+        {
+            //remove contact record from actor
+            if (actor.RemoveContact(nodeID) == true)
+            { Debug.LogFormat("[Tst] DataManager.cs -> RemoveContactSingle: Contact REMOVED from {0}, {1},  nodeID {2}", actor.actorName, actor.arc.name, nodeID); }
+            else { Debug.LogWarningFormat("DataManager.cs -> RemoveContactSingle: Contact NOT removed from {0}, {1},  nodeID {2}", actor.actorName, actor.arc.name, nodeID); }
+            //log message
+            Debug.LogFormat("DataManager.cs -> CONTACT REMOVED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
+        }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
         GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);

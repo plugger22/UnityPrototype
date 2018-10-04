@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,15 +15,28 @@ public class ContactManager : MonoBehaviour
     [Range(1,3)] public int contactsPerLevel = 2;
     [Tooltip("Number of contacts to initially seed the contact pool with")]
     [Range(50, 100)] public int numOfPoolContacts = 50;
-
+    [Tooltip("Number of contacts remaining in the contactPool when a top up is required")]
+    [Range(5, 20)] public int numOfPoolThreshold = 10;
+    [Tooltip("Number of contacts to top up the pool with once the threshold is reached")]
+    [Range(10, 50)] public int numOfPoolTopUp = 20;
 
     private static int contactIDCounter = 0;              //used to sequentially number contactID's
+
+    //fast access fields
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
 
 
     public void Initialise()
     {
         //seed contact pool
         CreateContacts(numOfPoolContacts);
+        //fast acess fields
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        //check O.K
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
     }
 
     /// <summary>
@@ -76,8 +90,10 @@ public class ContactManager : MonoBehaviour
     /// Called whenever a new contact is needed. A randomly selected contactID is chosen from contactPool and the contact returned to the actor requiring it. Returns Null if a problem
     /// </summary>
     /// <returns></returns>
-    public Contact AssignContact()
+    public Contact AssignContact(int actorID, int nodeID)
     {
+        Debug.Assert(actorID > -1, "Invalid actorID (less than Zero)");
+        Debug.Assert(nodeID > -1, "Invalid nodeID (Less than Zero)");
         Contact contact = null;
         int contactID = -1;
         List<int> contactPool = GameManager.instance.dataScript.GetContactPool();
@@ -89,9 +105,23 @@ public class ContactManager : MonoBehaviour
             contactPool.RemoveAt(index);
             //get contact
             contact = GameManager.instance.dataScript.GetContact(contactID);
-            if (contact == null) { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", contactID); }
-            
+            if (contact != null)
+            {
+                //initialise data
+                contact.actorID = actorID;
+                contact.nodeID = nodeID;
+                contact.status = ContactStatus.Active;
+                contact.turnStart = GameManager.instance.turnScript.Turn;
+            }
+            else
+                { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", contactID); }
             //check if pool requires topping up
+            if (contactPool.Count <= numOfPoolThreshold)
+            {
+                //top up pool
+                CreateContacts(numOfPoolTopUp);
+                Debug.LogFormat("[Tst] ContactManager.cs -> AssignContact: ContactPool topped up, now has {0} records", contactPool.Count);
+            }
         }
         else { Debug.LogError("Invalid contactPool list (Null)"); }
         return contact;
@@ -113,6 +143,7 @@ public class ContactManager : MonoBehaviour
                 //actor in dictionary?
                 if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
                 {
+                    //previous contacts exist
                     List<int> listOfNodes = dictOfActorContacts[actor.actorID];
                     if (listOfNodes != null)
                     {
@@ -153,6 +184,21 @@ public class ContactManager : MonoBehaviour
                         {
                             //add to dictOfActorContacts & dictOfNodeContacts
                             GameManager.instance.dataScript.AddContacts(actor.actorID, listOfContactNodes);
+                            if (actor.side.level == globalResistance.level)
+                            {
+                                //add to actor (Resistance side only)
+                                for (int i = 0; i < numOfContacts; i++)
+                                {
+                                    Contact contact = AssignContact(actor.actorID, listOfContactNodes[i]);
+                                    if (contact != null)
+                                    {
+                                        actor.AddContact(contact);
+                                        Debug.LogFormat("[Tst] Contact Added: {0}, {1}, actorID {2}, nodeID {3}, {4}, contactID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, listOfContactNodes[i],
+                                            contact.contactName, contact.contactID, "\n");
+                                    }
+                                    else { Debug.LogError("Invalid contact (Null)"); }
+                                }
+                            }
                         }
                         else { Debug.LogWarningFormat("Actor {0}, {1} has no contacts", actor.actorName, actor.arc.name); }
                     }
@@ -181,14 +227,14 @@ public class ContactManager : MonoBehaviour
                 if (isCurrentSide == true)
                 {
                     //player side
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     { isResistance = false; }
                     else { isResistance = true; }
                 }
                 else
                 {
                     //non player side
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     { isResistance = true; }
                     else { isResistance = false; }
                 }
@@ -275,5 +321,53 @@ public class ContactManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         return resultText;
+    }
+
+    /// <summary>
+    /// Display resistance contacts by actor
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayContacts()
+    {
+        StringBuilder builder = new StringBuilder();
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            Dictionary<int, Contact> dictOfContacts;
+            builder.AppendFormat("- Resistance Actor Contacts{0}{1}", "\n", "\n");
+            int numOfContacts;
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        builder.AppendFormat(" {0}, {1}, actorID {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                        dictOfContacts = actor.GetDictOfContacts();
+                        if (dictOfContacts != null)
+                        {
+                            numOfContacts = dictOfContacts.Count;
+                            if (numOfContacts > 0)
+                            {
+                                foreach(var contact in dictOfContacts)
+                                {
+                                    Debug.Assert(contact.Value.actorID == actor.actorID, string.Format("Contact.actorID {0} doesn't match actorID {1}", contact.Value.contactID, actor.actorID));
+                                    builder.AppendFormat(" Id {0}, {1}, {2}, nodeID {3}{4}", contact.Value.contactID, contact.Value.contactName, contact.Value.job, contact.Value.nodeID, "\n");
+                                }
+                            }
+                            else { builder.AppendFormat("No Contacts present{0}", "\n"); }
+                        }
+                        else { builder.AppendFormat("Invalid dictOfContacts (Null){0}", "\n"); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+                builder.AppendLine();
+                builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
     }
 }

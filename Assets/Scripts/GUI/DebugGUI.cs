@@ -96,7 +96,7 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Data)
-            GUI.Box(new Rect(box_x, box_y, box_width, box_height), "Info Menu", customBackground);
+            GUI.Box(new Rect(box_x, box_y, box_width, box_height + 100), "Info Menu", customBackground);
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height), "Option Menu", customBackground);
             //background box (Actions)
@@ -133,7 +133,6 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 6)
                 { debugDisplay = 6; }
                 else { debugDisplay = 0; }
-
             }
 
             //fourth button
@@ -272,6 +271,19 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 26)
                 { debugDisplay = 26; }
                 else { debugDisplay = 0; }
+            }
+
+            //sevenTeenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts"))
+            {
+                //resistance only
+                if (GameManager.instance.turnScript.currentSide.level == GameManager.instance.globalScript.sideResistance.level)
+                {
+                    Debug.Log("[Dbg] Button -> Toggle Contacts");
+                    if (debugDisplay != 33)
+                    { debugDisplay = 33; }
+                    else { debugDisplay = 0; }
+                }
             }
 
 
@@ -998,6 +1010,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
+                        break;
+                    //Contacts -> Resistance
+                    case 33:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.contactScript.DisplayContacts();
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 450), analysis, customBackground);
                         break;
                 }
             }

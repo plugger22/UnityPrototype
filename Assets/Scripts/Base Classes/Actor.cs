@@ -1,8 +1,10 @@
 ﻿using packageAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace gameAPI
 {
@@ -54,6 +56,7 @@ namespace gameAPI
         private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
         private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+        private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();  //key -> nodeID where contact is, Value -> contact
 
         //private backing field
         private ActorStatus _status;
@@ -151,6 +154,48 @@ namespace gameAPI
 
         public List<int> GetTeams()
         { return listOfTeams; }
+
+        public Dictionary<int, Contact> GetDictOfContacts()
+        { return dictOfContacts; }
+
+        /// <summary>
+        /// Add contact to dictOfContacts
+        /// </summary>
+        /// <param name="contact"></param>
+        public void AddContact(Contact contact)
+        {
+            if (contact != null)
+            {
+                try
+                { dictOfContacts.Add(contact.nodeID, contact); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
+            }
+            else { Debug.LogError("Invalid contact (Null)"); }
+        }
+        
+        /// <summary>
+        /// Removes contact at specified node, returns true if successful, false if not
+        /// </summary>
+        /// <param name="nodeID"></param>
+        public bool RemoveContact(int nodeID)
+        {
+            bool isSuccess = dictOfContacts.Remove(nodeID);
+            return isSuccess;
+        }
+
+        /// <summary>
+        /// returns an Actor Contact for a specific node, Null if not found
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public Contact GetContact(int nodeID)
+        {
+            Debug.Assert(nodeID > -1, "Invalid nodeID (less than Zero)");
+            if (dictOfContacts.ContainsKey(nodeID) == true)
+            { return dictOfContacts[nodeID]; }
+            return null;
+        }
 
         /// <summary>
         /// Add a new condition to list provided it isn't already present. Returns true is successful

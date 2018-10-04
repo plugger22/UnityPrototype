@@ -1690,7 +1690,7 @@ MonoBehaviour:
   teamPickerScript: {fileID: 0}
   genericPickerScript: {fileID: 0}
   inventoryScript: {fileID: 0}
-  modalGUIScropt: {fileID: 0}
+  modalGUIScript: {fileID: 0}
   alertScript: {fileID: 0}
   widgetTopScript: {fileID: 0}
   cityInfoScript: {fileID: 0}
@@ -1701,7 +1701,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 50546
-  isAuthority: 1
+  isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 0
@@ -1792,6 +1792,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49af79647aea5b646aa77f25f6a0688b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contactsPerLevel: 2
+  numOfPoolContacts: 50
+  numOfPoolThreshold: 10
+  numOfPoolTopUp: 20
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1
