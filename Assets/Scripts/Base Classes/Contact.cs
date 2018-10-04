@@ -1,24 +1,24 @@
 ﻿using gameAPI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 /// <summary>
-/// Resistance Contact
+/// Resistance Contact, non-Unity data class
 /// </summary>
-public class Contact : MonoBehaviour
+public class Contact
 {
-    [HideInInspector] public int contactID;
-    [HideInInspector] public string contactName;
-    [HideInInspector] public string job;
-    [HideInInspector] public string detail0;              //multipurpose, could be level of job
-    [HideInInspector] public string detail1;              //multipurpose, could be name of corporation
-    [HideInInspector] public int actorID;
-    [HideInInspector] public int nodeID;
-    [HideInInspector] public int turnStart;
-    [HideInInspector] public int turnFinish;
-    [HideInInspector] public ContactStatus status;
-    [HideInInspector] public bool isTurned;               //working for Authority as an informant
+    public int contactID;
+    public string contactName;
+    public string job;
+    public string dataText0;              //multipurpose, could be level of job
+    public string dataText1;              //multipurpose, could be name of corporation
+    public int actorID;
+    public int nodeID;
+    public int turnStart;               //turn started as a contact
+    public int turnFinish;              //turn finished as a contact
+    public ContactStatus status;
+    public bool isTurned;               //working for Authority as an informant
     
 
 }

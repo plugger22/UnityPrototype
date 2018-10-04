@@ -69,6 +69,9 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorDisposedOf = new List<int>();
     private List<int> resistanceActorResigned = new List<int>();
 
+    //contacts (resistance)
+    private List<int> contactPool = new List<int>();
+
     //master lists 
     private List<ActorArc> authorityActorArcs = new List<ActorArc>();
     private List<ActorArc> resistanceActorArcs = new List<ActorArc>();
@@ -165,6 +168,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, SecretStatus> dictOfSecretStatus = new Dictionary<string, SecretStatus>(); //Key -> SecretStatus.name, Value -> SecretStatus
     private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();       //Key -> turn, Value -> MainInfoData set for turn
+    private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                //Key -> contactID, Value -> Contact
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();       //Key -> ActorID, Value -> list of nodeID's where actor has contacts
     private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();   //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();    //Key -> NodeID, Value -> list of actorID's who have a contact at node
@@ -705,6 +709,45 @@ public class DataManager : MonoBehaviour
     //
     // - - - Contacts - - - 
     //
+
+    /// <summary>
+    /// list of unassigned, pre-initialised, resistance contactID's
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetContactPool()
+    { return contactPool; }
+
+    public Dictionary<int, Contact> GetDictOfContacts()
+    { return dictOfContacts; }
+
+    /// <summary>
+    /// Returns a contact, Null if not found
+    /// </summary>
+    /// <param name="contactID"></param>
+    /// <returns></returns>
+    public Contact GetContact(int contactID)
+    {
+        Debug.Assert(contactID > -1, "Invalid contactID (less than Zero)");
+        if (dictOfContacts.ContainsKey(contactID) == true)
+        { return dictOfContacts[contactID]; }
+        return null;
+    }
+
+    /// <summary>
+    /// Add contact to dictionary
+    /// </summary>
+    /// <param name="contact"></param>
+    public void AddContact(Contact contact)
+    {
+        if (contact != null)
+        {
+            try
+            { dictOfContacts.Add(contact.contactID, contact); }
+            catch (ArgumentException)
+            { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
+        }
+        else { Debug.LogError("Invalid contact (Null)"); }
+    }
 
     /// <summary>
     /// returns the appropraite dict based on, default, current side (unless 'false')

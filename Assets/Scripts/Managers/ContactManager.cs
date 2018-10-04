@@ -6,12 +6,96 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
-/// Handles all actor contact matters
+/// Handles all actor contact matters. Resistance contacts are modelled in detail (contact.cs), Authority contacts are simply nodes where the actor has influence (dictOfActorContacts / dictOfNodeContacts)
 /// </summary>
 public class ContactManager : MonoBehaviour
 {
     [Tooltip("How many contacts per level of influence/connections that the actor has")]
     [Range(1,3)] public int contactsPerLevel = 2;
+    [Tooltip("Number of contacts to initially seed the contact pool with")]
+    [Range(50, 100)] public int numOfPoolContacts = 50;
+
+
+    private static int contactIDCounter = 0;              //used to sequentially number contactID's
+
+
+    public void Initialise()
+    {
+        //seed contact pool
+        CreateContacts(numOfPoolContacts);
+    }
+
+    /// <summary>
+    /// create new Resistance contacts and place them dictionary, unassigned
+    /// </summary>
+    public void CreateContacts(int numOfContacts)
+    {
+        Debug.Assert(numOfContacts > 0, "Invalid numOfContacts (zero, or less)");
+        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        List<int> contactPool = GameManager.instance.dataScript.GetContactPool();
+        if (dictOfContacts != null)
+        {
+            if (contactPool != null)
+            {
+                int counter = 0;
+                for (int i = 0; i < numOfContacts; i++)
+                {
+                    Contact contact = new Contact();
+                    //initialise contact
+                    contact.contactID = contactIDCounter++;
+                    contact.contactName = string.Format("PersonName_{0}", contact.contactID);
+                    contact.job = string.Format("Job_{0}", contact.contactID);
+                    contact.dataText0 = string.Format("MegaCorp_{0}", contact.contactID);
+                    contact.dataText1 = string.Format("NeedyCharacter_{0}", contact.contactID);
+                    contact.status = ContactStatus.ContactPool;
+                    contact.actorID = -1;
+                    contact.nodeID = -1;
+                    contact.isTurned = false;
+                    contact.turnStart = -1;
+                    contact.turnFinish = -1;
+                    //add to dictionary
+                    try
+                    {
+                        dictOfContacts.Add(contact.contactID, contact);
+                        counter++;
+                        //add to list
+                        contactPool.Add(contact.contactID);
+                    }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
+                }
+                Debug.LogFormat("[Tst] ContactManager.cs -> CreateContacts: {0} out of {1} contacts created and added to pool", counter, numOfContacts);
+                Debug.LogFormat("[Tst] ContactManager.cs -> CreateContacts: contactPool has {0} records", contactPool.Count);
+            }
+            else { Debug.LogError("Invalid contactPool list (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+    }
+
+    /// <summary>
+    /// Called whenever a new contact is needed. A randomly selected contactID is chosen from contactPool and the contact returned to the actor requiring it. Returns Null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public Contact AssignContact()
+    {
+        Contact contact = null;
+        int contactID = -1;
+        List<int> contactPool = GameManager.instance.dataScript.GetContactPool();
+        if (contactPool != null)
+        {
+            int index = Random.Range(0, contactPool.Count);
+            contactID = contactPool[index];
+            //delete record from pool to prevent duplicates
+            contactPool.RemoveAt(index);
+            //get contact
+            contact = GameManager.instance.dataScript.GetContact(contactID);
+            if (contact == null) { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", contactID); }
+            
+            //check if pool requires topping up
+        }
+        else { Debug.LogError("Invalid contactPool list (Null)"); }
+        return contact;
+    }
 
     /// <summary>
     /// Initialises contacts for a new actor

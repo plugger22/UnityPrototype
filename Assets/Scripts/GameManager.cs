@@ -394,6 +394,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.dataScript.InitialiseFinal;
         startMethod.className = "DataManager";
         listOfStartMethods.Add(startMethod);
+        //Contact Manager -> before ActorManager.cs InitialiseLate
+        startMethod.handler = GameManager.instance.contactScript.Initialise;
+        startMethod.className = "ContactManager";
+        listOfStartMethods.Add(startMethod);
         //Actor Manager -> after DataManager.cs & before NodeManager.cs
         startMethod.handler = GameManager.instance.actorScript.InitialiseLate;
         startMethod.className = "ActorManager";
