@@ -80,6 +80,11 @@
     public enum ActorTooltip { None, Breakdown, LieLow, Captured}                        //actor sprite shows a relevant tooltip if other than 'None'
 
     //
+    // - - - Contacts - - -
+    //
+    public enum ContactStatus { Active, Inactive, ContactPool, Dismissed, Captured, Killed }
+
+    //
     // - - - AI - - -
     //
     public enum Priority { Low, Medium, High, Critical }

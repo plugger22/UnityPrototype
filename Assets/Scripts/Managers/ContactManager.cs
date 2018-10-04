@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class ContactManager : MonoBehaviour
 {
+    [Tooltip("How many contacts per level of influence/connections that the actor has")]
+    [Range(1,3)] public int contactsPerLevel = 2;
 
     /// <summary>
     /// Initialises contacts for a new actor
@@ -39,7 +41,6 @@ public class ContactManager : MonoBehaviour
                 {
                     //generate a new set of contacts for the actor
                     int contactLevel = actor.datapoint0;
-                    int contactsPerLevel = 2;
                     int totalContacts = contactLevel * contactsPerLevel;
                     List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
                     List<int> listOfContactNodes = new List<int>();
