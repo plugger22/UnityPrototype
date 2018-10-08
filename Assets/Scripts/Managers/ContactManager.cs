@@ -78,8 +78,8 @@ public class ContactManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
                 }
-                Debug.LogFormat("[Tst] ContactManager.cs -> CreateContacts: {0} out of {1} contacts created and added to pool", counter, numOfContacts);
-                Debug.LogFormat("[Tst] ContactManager.cs -> CreateContacts: contactPool has {0} records", contactPool.Count);
+                Debug.LogFormat("[Cont] ContactManager.cs -> CreateContacts: {0} out of {1} contacts created and added to pool", counter, numOfContacts);
+                Debug.LogFormat("[Cont] ContactManager.cs -> CreateContacts: contactPool has {0} records", contactPool.Count);
             }
             else { Debug.LogError("Invalid contactPool list (Null)"); }
         }
@@ -120,7 +120,7 @@ public class ContactManager : MonoBehaviour
             {
                 //top up pool
                 CreateContacts(numOfPoolTopUp);
-                Debug.LogFormat("[Tst] ContactManager.cs -> AssignContact: ContactPool topped up, now has {0} records", contactPool.Count);
+                Debug.LogFormat("[Cont] ContactManager.cs -> AssignContact: ContactPool topped up, now has {0} records", contactPool.Count);
             }
         }
         else { Debug.LogError("Invalid contactPool list (Null)"); }
@@ -215,7 +215,7 @@ public class ContactManager : MonoBehaviour
                                     if (contact != null)
                                     {
                                         actor.AddContact(contact);
-                                        Debug.LogFormat("[Tst] Contact Added: {0}, {1}, actorID {2}, nodeID {3}, {4}, contactID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, listOfContactNodes[i],
+                                        Debug.LogFormat("[Cont] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4}, ID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, listOfContactNodes[i],
                                             contact.contactName, contact.contactID, "\n");
                                     }
                                     else { Debug.LogError("Invalid contact (Null)"); }

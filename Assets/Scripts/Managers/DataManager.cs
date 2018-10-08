@@ -932,13 +932,17 @@ public class DataManager : MonoBehaviour
             //set all actor.cs contacts to status 'inactive'
             if (successFlag == true)
             {
-                Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
-                if (dictOfContacts != null)
+                //resistance only
+                if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
                 {
-                    foreach(var contact in dictOfContacts)
-                    { contact.Value.status = ContactStatus.Inactive; }
+                    Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+                    if (dictOfContacts != null)
+                    {
+                        foreach (var contact in dictOfContacts)
+                        { contact.Value.status = ContactStatus.Inactive; }
+                    }
+                    else { Debug.LogErrorFormat("Invalid dictOfContacs for actorID {0}", actorID); }
                 }
-                else { Debug.LogErrorFormat("Invalid dictOfContacs for actorID {0}", actorID); }
             }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
@@ -989,11 +993,20 @@ public class DataManager : MonoBehaviour
                                         //resistance actor, remove contact from dict
                                         if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
                                         {
-                                            //remove contact record from actor
-                                            if (actor.RemoveContact(nodeID) == true)
-                                            { Debug.LogFormat("[Tst] DataManager.cs -> RemoveContacts: Contact REMOVED from {0}, {1},  nodeID {2}", actor.actorName, actor.arc.name, nodeID); }
-                                            else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", 
-                                                actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+                                            Contact contact = actor.GetContact(nodeID);
+                                            if (contact != null)
+                                            {
+                                                //remove contact record from actor
+                                                if (actor.RemoveContact(nodeID) == true)
+                                                { Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.contactName, contact.contactID, 
+                                                    actor.actorName, actor.arc.name, nodeID); }
+                                                else
+                                                {
+                                                    Debug.LogFormat("DataManager.cs -> Contact {0}, ID {1}, NOT Removed (FAIL), {2}, {3}, actorID {4} contact at nodeID {5}{6}", contact.contactName, 
+                                                        contact.contactID, actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
+                                                }
+                                            }
+                                            else { Debug.LogErrorFormat("Invalid Contact (Null) for actor {0}, {1}, ID {2} at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, nodeID); }
                                         }
                                     }
                                     else
@@ -1090,13 +1103,13 @@ public class DataManager : MonoBehaviour
                 if (contact != null)
                 {
                     actor.AddContact(contact);
-                    Debug.LogFormat("[Tst] Contact Added: {0}, {1}, actorID {2}, nodeID {3}, {4}, contactID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, nodeID,
-                        contact.contactName, contact.contactID, "\n");
+                    Debug.LogFormat("[Cont] DatabaseManager.cs -> AddContactSingle: ADDED {0}, contactID {1} to {2}, {3}, actorID {4}, nodeID {5}, {6}", contact.contactName, contact.contactID,
+                        actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
                 }
                 else { Debug.LogError("Invalid contact (Null)"); }
             }
-            //log message
-            Debug.LogFormat("DataManager.cs -> CONTACT ADDED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
+            else
+            { Debug.LogFormat("[Cont] DataManager.cs -> AddContactSingle: ADDED {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
@@ -1171,11 +1184,26 @@ public class DataManager : MonoBehaviour
         if (isSuccess == true)
         {
             //remove contact record from actor
-            if (actor.RemoveContact(nodeID) == true)
-            { Debug.LogFormat("[Tst] DataManager.cs -> RemoveContactSingle: Contact REMOVED from {0}, {1},  nodeID {2}", actor.actorName, actor.arc.name, nodeID); }
-            else { Debug.LogWarningFormat("DataManager.cs -> RemoveContactSingle: Contact NOT removed from {0}, {1},  nodeID {2}", actor.actorName, actor.arc.name, nodeID); }
-            //log message
-            Debug.LogFormat("DataManager.cs -> CONTACT REMOVED: {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
+            if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+            {
+                Contact contact = actor.GetContact(nodeID);
+                if (contact != null)
+                {
+                    if (actor.RemoveContact(nodeID) == true)
+                    {
+                        Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED {0}, ID {1}, from {2}, {3}, actorID {4}, at nodeID {5}", contact.contactName, contact.contactID,
+                          actor.actorName, actor.arc.name, actor.actorID, nodeID);
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("DataManager.cs -> RemoveContactSingle: Contact {0}, ID {1}, NOT removed from {2}, {3},  nodeID {4}", contact.contactName, contact.contactID,
+                          actor.actorName, actor.arc.name, nodeID);
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid contact (Null) for nodeID {0}, actor {1}, {2}, ID {3}", nodeID, actor.actorName, actor.arc.name, actor.actorID); }
+            }
+            else
+            { Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED from {0}, {1}, actorID {2}, at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, nodeID); }
         }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
