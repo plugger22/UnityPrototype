@@ -891,41 +891,57 @@ public class DataManager : MonoBehaviour
             int numOfNodes = listOfNodes.Count;
             int nodeID;
             Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
-            if (numOfNodes > 0)
+            Actor actor = GetActor(actorID);
+            if (actor != null)
             {
-                //loop nodes and remove actorID from each node contact list
-                for (int i = 0; i < numOfNodes; i++)
+                if (numOfNodes > 0)
                 {
-                    nodeID = listOfNodes[i];
-                    //find node entry in dictOfNodeContacts
-                    if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+                    //loop nodes and remove actorID from each node contact list
+                    for (int i = 0; i < numOfNodes; i++)
                     {
-                        List<int> listOfActors = dictOfNodeContacts[nodeID];
-                        if (listOfActors != null)
+                        nodeID = listOfNodes[i];
+                        //find node entry in dictOfNodeContacts
+                        if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                         {
-                            //remove actor from list
-                            if (listOfActors.Remove(actorID) == false)
-                            { Debug.LogWarningFormat("ActorID failed to be removed from list of NodeID {0}", nodeID); successFlag = false; }
-                            else
+                            List<int> listOfActors = dictOfNodeContacts[nodeID];
+                            if (listOfActors != null)
                             {
-                                /*Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: actorID {0} removed from nodeID {1} list{2}", actorID, nodeID, "\n");*/
-                                if (listOfActors.Count == 0)
+                                //remove actor from list
+                                if (listOfActors.Remove(actorID) == false)
+                                { Debug.LogWarningFormat("ActorID failed to be removed from list of NodeID {0}", nodeID); successFlag = false; }
+                                else
                                 {
-                                    //if no more actors with contacts at node, delete dictionary record
-                                    dictOfNodeContacts.Remove(nodeID);
+                                    /*Debug.LogFormat("[Tst] NodeManager.cs -> RemoveContacts: actorID {0} removed from nodeID {1} list{2}", actorID, nodeID, "\n");*/
+                                    if (listOfActors.Count == 0)
+                                    {
+                                        //if no more actors with contacts at node, delete dictionary record
+                                        dictOfNodeContacts.Remove(nodeID);
+                                    }
                                 }
                             }
+                            else { Debug.LogWarningFormat("Invalid list<actorID> (Null) for nodeID {0}", nodeID); successFlag = false; }
                         }
-                        else { Debug.LogWarningFormat("Invalid list<actorID> (Null) for nodeID {0}", nodeID); successFlag = false; }
+                        else { Debug.LogWarningFormat("Node not found in dictOfContacts, nodeID {0}", nodeID); successFlag = false; }
                     }
-                    else { Debug.LogWarningFormat("Node not found in dictOfContacts, nodeID {0}", nodeID); successFlag = false; }
                 }
+                else { Debug.LogWarningFormat("invalid listOfNodes (Empty) for actorID {0}", actorID); successFlag = false; }
             }
-            else { Debug.LogWarningFormat("invalid listOfNodes (Empty) for actorID {0}", actorID); successFlag = false; }
+            else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
+            //update node contacts
+            GameManager.instance.contactScript.UpdateNodeContacts();
+            //set all actor.cs contacts to status 'inactive'
+            if (successFlag == true)
+            {
+                Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+                if (dictOfContacts != null)
+                {
+                    foreach(var contact in dictOfContacts)
+                    { contact.Value.status = ContactStatus.Inactive; }
+                }
+                else { Debug.LogErrorFormat("Invalid dictOfContacs for actorID {0}", actorID); }
+            }
         }
-        else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
-        //update node contacts
-        GameManager.instance.contactScript.UpdateNodeContacts();
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         return successFlag;
     }
 

@@ -132,6 +132,10 @@ namespace gameAPI
             isComplaining = false;
         }
 
+        //
+        // - - - Teams - - -
+        //
+
         /// <summary>
         /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap
         /// </summary>
@@ -154,6 +158,10 @@ namespace gameAPI
 
         public List<int> GetTeams()
         { return listOfTeams; }
+
+        //
+        // - - - Contacts - - -
+        //
 
         public Dictionary<int, Contact> GetDictOfContacts()
         { return dictOfContacts; }
@@ -198,7 +206,7 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// returns an Actor Contact for a specific node, Null if not found
+        /// returns an Actor Contact for a specific node, Null if not found. Contact must be status 'Active'
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
@@ -206,9 +214,17 @@ namespace gameAPI
         {
             Debug.Assert(nodeID > -1, "Invalid nodeID (less than Zero)");
             if (dictOfContacts.ContainsKey(nodeID) == true)
-            { return dictOfContacts[nodeID]; }
+            {
+                if (dictOfContacts[nodeID].status == ContactStatus.Active)
+                { return dictOfContacts[nodeID]; }
+                else { Debug.LogWarningFormat("Invalid contact {0} (\"{1}\") for nodeID {2}", dictOfContacts[nodeID].contactName, dictOfContacts[nodeID].status, nodeID); }
+            }
             return null;
         }
+
+        //
+        // - - - Conditions - - -
+        //
 
         /// <summary>
         /// Add a new condition to list provided it isn't already present. Returns true is successful

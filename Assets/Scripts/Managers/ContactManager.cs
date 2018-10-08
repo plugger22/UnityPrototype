@@ -149,6 +149,28 @@ public class ContactManager : MonoBehaviour
                     {
                         //add to dictOfNodeContacts only (already an entry present in dictOfActorContacts)
                         GameManager.instance.dataScript.AddContacts(actor.actorID, listOfNodes, false);
+                        //reactivate (set status -> 'active') all relevant actor contacts
+                        Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+                        if (dictOfContacts != null)
+                        {
+                            foreach(var contact in dictOfContacts)
+                            {
+                                nodeID = contact.Value.nodeID;
+                                //check nodeID in list
+                                if (listOfNodes.Exists(x => x == nodeID) == true)
+                                {
+                                    //reactivate contact
+                                    contact.Value.status = ContactStatus.Active;
+                                }
+                                else
+                                {
+                                    //contact not found in list, warning message
+                                    Debug.LogWarningFormat("Contact {0}, {1}, ID {2} nodeID {3} not found in listOfNodes & deletec", contact.Value.contactName, contact.Value.job, contact.Value.contactID,
+                                        contact.Value.nodeID);
+                                }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                     }
                     else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actor.actorID); }
                 }
@@ -324,7 +346,7 @@ public class ContactManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Display resistance contacts by actor
+    /// Debug Display resistance contacts by actor
     /// </summary>
     /// <returns></returns>
     public string DisplayContacts()
@@ -354,7 +376,8 @@ public class ContactManager : MonoBehaviour
                                 foreach(var contact in dictOfContacts)
                                 {
                                     Debug.Assert(contact.Value.actorID == actor.actorID, string.Format("Contact.actorID {0} doesn't match actorID {1}", contact.Value.contactID, actor.actorID));
-                                    builder.AppendFormat(" Id {0}, {1}, {2}, nodeID {3}{4}", contact.Value.contactID, contact.Value.contactName, contact.Value.job, contact.Value.nodeID, "\n");
+                                    builder.AppendFormat(" Id {0}, {1}, {2}, nodeID {3}, {4}{5}", contact.Value.contactID, contact.Value.contactName, contact.Value.job, contact.Value.nodeID, 
+                                        contact.Value.status, "\n");
                                 }
                             }
                             else { builder.AppendFormat("No Contacts present{0}", "\n"); }
@@ -366,6 +389,39 @@ public class ContactManager : MonoBehaviour
                 builder.AppendLine();
                 builder.AppendLine();
             }
+            //Reserve actors
+            List<int> listOfReserveActors = GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve);
+            if (listOfReserveActors != null)
+            {
+                for (int i = 0; i < listOfReserveActors.Count; i++)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                    if (actor != null)
+                    {
+                        builder.AppendFormat("RESERVE {0}, {1}, actorID {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                        dictOfContacts = actor.GetDictOfContacts();
+                        if (dictOfContacts != null)
+                        {
+                            numOfContacts = dictOfContacts.Count;
+                            if (numOfContacts > 0)
+                            {
+                                foreach (var contact in dictOfContacts)
+                                {
+                                    Debug.Assert(contact.Value.actorID == actor.actorID, string.Format("Contact.actorID {0} doesn't match actorID {1}", contact.Value.contactID, actor.actorID));
+                                    builder.AppendFormat(" Id {0}, {1}, {2}, nodeID {3}, {4}{5}", contact.Value.contactID, contact.Value.contactName, contact.Value.job, contact.Value.nodeID, 
+                                        contact.Value.status, "\n");
+                                }
+                            }
+                            else { builder.AppendFormat("No Contacts present{0}", "\n"); }
+                        }
+                        else { builder.AppendFormat("Invalid dictOfContacts (Null){0}", "\n"); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Reserve actor (Null) for actorID {0}", listOfReserveActors[i]); }
+                    builder.AppendLine();
+                    builder.AppendLine();
+                }
+            }
+            else { Debug.LogError("Invalid listOfReserveActors (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
