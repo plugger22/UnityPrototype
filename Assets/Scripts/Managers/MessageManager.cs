@@ -850,6 +850,55 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Actor gains or loses a single contact
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="isGained"></param>
+    /// <returns></returns>
+    public Message ActorContact(string text, Actor actor, Node node, Contact contact, bool isGained = true)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Contact;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            //ItemData
+            ItemData data = new ItemData();
+            if (isGained == true)
+            {
+                data.itemText = string.Format("{0}, Aquires a new CONTACT", actor.arc.name);
+                data.topText = "New Contact";
+            }
+            else
+            {
+                data.itemText = string.Format("{0}, Loses an existing CONTACT", actor.arc.name);
+                data.topText = "Contact Lost";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetActorContactDetails(actor, node, contact, isGained);
+            data.priority = ItemPriority.Medium;
+            data.sprite = actor.arc.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - AI - - -
     //

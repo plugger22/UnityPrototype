@@ -155,6 +155,7 @@
         Actor_Reassured,
         Actor_Conflict,
         Actor_Trait,
+        Actor_Contact,
         //Target
         Target_Attempt,
         Target_Contained,

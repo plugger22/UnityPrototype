@@ -998,8 +998,18 @@ public class DataManager : MonoBehaviour
                                             {
                                                 //remove contact record from actor
                                                 if (actor.RemoveContact(nodeID) == true)
-                                                { Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.contactName, contact.contactID, 
-                                                    actor.actorName, actor.arc.name, nodeID); }
+                                                {
+                                                    Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.contactName, contact.contactID, 
+                                                    actor.actorName, actor.arc.name, nodeID);
+                                                    //message
+                                                    Node node = GetNode(nodeID);
+                                                    if (node != null)
+                                                    {
+                                                        string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
+                                                        GameManager.instance.messageScript.ActorContact(text, actor, node, contact);
+                                                    }
+                                                    else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+                                                }
                                                 else
                                                 {
                                                     Debug.LogFormat("DataManager.cs -> Contact {0}, ID {1}, NOT Removed (FAIL), {2}, {3}, actorID {4} contact at nodeID {5}{6}", contact.contactName, 
@@ -1105,6 +1115,14 @@ public class DataManager : MonoBehaviour
                     actor.AddContact(contact);
                     Debug.LogFormat("[Cont] DatabaseManager.cs -> AddContactSingle: ADDED {0}, contactID {1} to {2}, {3}, actorID {4}, nodeID {5}, {6}", contact.contactName, contact.contactID,
                         actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
+                    //message
+                    Node node = GetNode(nodeID);
+                    if (node != null)
+                    {
+                        string text = string.Format("{0} Aquires {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
+                        GameManager.instance.messageScript.ActorContact(text, actor, node, contact);
+                    }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                 }
                 else { Debug.LogError("Invalid contact (Null)"); }
             }
@@ -1193,6 +1211,14 @@ public class DataManager : MonoBehaviour
                     {
                         Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED {0}, ID {1}, from {2}, {3}, actorID {4}, at nodeID {5}", contact.contactName, contact.contactID,
                           actor.actorName, actor.arc.name, actor.actorID, nodeID);
+                        //message
+                        Node node = GetNode(nodeID);
+                        if (node != null)
+                        {
+                            string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
+                            GameManager.instance.messageScript.ActorContact(text, actor, node, contact, false);
+                        }
+                        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                     }
                     else
                     {
