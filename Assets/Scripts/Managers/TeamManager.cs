@@ -1147,7 +1147,7 @@ public class TeamManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Implements PERMANENT team effects on nodes at completion of teams OnMap Timer.
+    /// Implements PERMANENT team effects (Player/AI) on nodes at completion of teams OnMap Timer.
     /// Node and Team are assumed to be checked for Null by the parent method
     /// Actor is 'null' for an AI operation
     /// </summary>
@@ -1228,10 +1228,10 @@ public class TeamManager : MonoBehaviour
                 }
                 break;
             case "ERASURE":
-                //deletes any KNOWN contacts
+                //deletes any KNOWN Resistance contacts
                 if (node.isContactKnown == true)
                 {
-                    int numRemoved = GameManager.instance.dataScript.RemoveContactsNode(node.nodeID, false);
+                    int numRemoved = GameManager.instance.dataScript.RemoveContactsNode(node.nodeID, "due to an ERASURE Team", false, globalResistance);
                     if (numRemoved > 0)
                     {
                         //message

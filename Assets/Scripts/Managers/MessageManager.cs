@@ -851,7 +851,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor gains or loses a single contact
+    /// Resistance Actor gains or loses a single contact (resistance side message). 'Reason' is self contained
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actor"></param>
@@ -859,7 +859,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public Message ActorContact(string text, Actor actor, Node node, Contact contact, bool isGained = true)
+    public Message ActorContact(string text, Actor actor, Node node, Contact contact, bool isGained = true, string reason = null)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(node != null, "Invalid node (Null)");
@@ -870,7 +870,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Contact;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.side = globalResistance;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
@@ -886,7 +886,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("{0}, Loses an existing CONTACT", actor.arc.name);
                 data.topText = "Contact Lost";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetActorContactDetails(actor, node, contact, isGained);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorContactDetails(reason, actor, node, contact, isGained);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.ALERTS;

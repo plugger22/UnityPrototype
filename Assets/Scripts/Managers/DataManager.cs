@@ -771,6 +771,27 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Overloaded. Based on side. Returns null if not either Authority or Resistance
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Dictionary<int, List<int>> GetDictOfNodeContacts(GlobalSide side)
+    {
+        switch (side.level)
+        {
+            case 1:
+                //Authority
+                return dictOfNodeContactsAuthority;
+            case 2:
+                //Resistance
+                return dictOfNodeContactsResistance;
+            default:
+                Debug.LogWarningFormat("Invalid side.level {0}", side.level);
+                return null;
+        }
+    }
+
     public Dictionary<int, List<int>> GetDictOfActorContacts()
     { return dictOfActorContacts; }
 
@@ -951,16 +972,20 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// Removes all contacts at a specific node (eg. erasure team removing Known contacts). Updates collections and node flags. Returns # of contacts removed, 0 if none
+    /// To choose a specific side, put in a value for isCurrentSide (which is ignored) and specify a GlobalSide
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public int RemoveContactsNode(int nodeID, bool isCurrentSide = true)
+    public int RemoveContactsNode(int nodeID, string reason, bool isCurrentSide = true, GlobalSide side = null)
     {
         Debug.Assert(nodeID > -1, "Invalid nodeID (-1)");
         int numContacts = 0;
         List<int> listOfActors;
         //get 
-        Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts(isCurrentSide);
+        Dictionary<int, List<int>> dictOfNodeContacts = null;
+        if (side != null)
+        { dictOfNodeContacts = GetDictOfNodeContacts(side); }
+        else { dictOfNodeContacts = GetDictOfNodeContacts(isCurrentSide); }
         if (dictOfNodeContacts != null)
         {
             //find entry
@@ -1006,7 +1031,7 @@ public class DataManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                                                        GameManager.instance.messageScript.ActorContact(text, actor, node, contact);
+                                                        GameManager.instance.messageScript.ActorContact(text, actor, node, contact, false, reason);
                                                     }
                                                     else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                                                 }

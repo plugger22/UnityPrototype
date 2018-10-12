@@ -399,7 +399,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public string GetActorContactDetails(Actor actor, Node node, Contact contact, bool isGained)
+    public string GetActorContactDetails(string reason, Actor actor, Node node, Contact contact, bool isGained)
     {
         StringBuilder builder = new StringBuilder();
         string verb, colourVerb;
@@ -407,11 +407,12 @@ public class ItemDataManager : MonoBehaviour
         colourVerb = colourGood;
         if (isGained == false) { verb = "Lost"; colourVerb = colourBad; }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
-        builder.AppendFormat("{0}<b>has {1} a Contact</b>{2}{3}{4}", colourVerb, verb, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<b>At</b>{1}{2}", colourNeutral, colourEnd, "\n");
-        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<b>Contact</b>{1}{2}", colourNeutral, colourEnd, "\n");
-        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}", contact.contactName, colourAlert, contact.job, colourEnd);
+        builder.AppendFormat("{0}<b>has {1} a Contact</b>{2}{3}", colourVerb, verb, colourEnd, "\n");
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
+        builder.AppendFormat("{0}{1}Contact{2}{3}", "\n", colourNeutral, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", contact.contactName, colourAlert, contact.job, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         return builder.ToString();
     }
 
