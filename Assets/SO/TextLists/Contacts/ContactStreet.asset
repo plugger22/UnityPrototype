@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ContactStreet
+  m_EditorClassIdentifier: 
+  descriptor: Street Living Contact
+  randomList:
+  - Hitman
+  - Bodyguard
+  - Cab Driver
+  - Prisoner
+  - Drug Cooker
+  - Ex-Prisoner
+  - Gang Member
+  - Junkie
+  - Hacker
+  - Prostitute
+  - Thug
+  - Street Vendor
+  - Thief
+  - Burglar
+  - Bartender
+  - Bouncer
+  - Con Artist
+  - Counterfeiter
+  - Drug Dealer
+  - Fixer
+  - Fence
+  - Pimp
+  - Hooker
+  - Mercenary
+  - Backyard Doc
+  - Smuggler
+  - Vagrant

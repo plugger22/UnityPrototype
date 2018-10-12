@@ -31,6 +31,7 @@ public class LoadManager : MonoBehaviour
     public SecretType[] arrayOfSecretTypes;
     public SecretStatus[] arrayOfSecretStatus;
     public NodeDatapoint[] arrayOfNodeDatapoints;
+    public TextList[] arrayOfTextLists;
 
     [Header("InitialiseEarly -> First Half")]
     public NodeArc[] arrayOfNodeArcs;

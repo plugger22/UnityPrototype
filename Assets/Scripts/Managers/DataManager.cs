@@ -183,6 +183,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
     /*private Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = new Dictionary<string, NodeDatapoint>();   //Key -> NodeDatapoint.name, Value -> NodeDatapoint*/
 
+    //
+    // - - - Initialisation - - -
+    //
 
     /// <summary>
     /// Stuff that is done after level Manager.SetUp
@@ -443,9 +446,7 @@ public class DataManager : MonoBehaviour
         return -1;
     }
 
-
-
-
+       
     //
     // - - - Action Related - - -
     //

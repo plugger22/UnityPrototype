@@ -492,6 +492,29 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on SecretStatus SO, array {0}, assets {1} records", numArray, numAssets); }
         //
+        // - - - TextList - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:TextList", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfTextLists.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TextList SO, array {0}, assets {1} records", numArray, numAssets);
+            TextList[] arrayTemp = GameManager.instance.loadScript.arrayOfTextLists;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(TextList));
+                //get object
+                TextList meta = metaObject as TextList;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING TextList \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TextList SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
         // - - - NodeDatapoint - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:NodeDatapoint", new[] { "Assets/SO" });
