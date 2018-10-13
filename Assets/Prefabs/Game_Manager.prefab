@@ -718,6 +718,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5976175e127ee964fb44cc4fe7b7825f, type: 2}
   - {fileID: 11400000, guid: d77e6494404005247b6d73690a11af22, type: 2}
   - {fileID: 11400000, guid: 496c7f6eff1db9b4bb9bd3c2b1224712, type: 2}
+  arrayOfContactTypes:
+  - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
+  - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
+  - {fileID: 11400000, guid: 8b4989c5af6369d45a9c4cb1913fe5fb, type: 2}
+  - {fileID: 11400000, guid: 463bab3ce9c227c44b509504cfe6ac8d, type: 2}
+  - {fileID: 11400000, guid: 5b86ec6fab272cd45ac93a0d88beb083, type: 2}
+  - {fileID: 11400000, guid: 71fd072f2cd61d546aff7c4f55021bb7, type: 2}
+  - {fileID: 11400000, guid: 8b5d49d20de45ea479d473d9ce147290, type: 2}
+  - {fileID: 11400000, guid: 39b67c36f6466ec44b00f03f4e24d9ce, type: 2}
+  - {fileID: 11400000, guid: 114118893f278ad47a7f3102ded61bb5, type: 2}
   arrayOfQualities:
   - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
   - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}
@@ -1714,7 +1724,7 @@ MonoBehaviour:
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
-  isValidateSO: 1
+  isValidateSO: 0
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

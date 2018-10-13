@@ -22,8 +22,9 @@ public class LoadManager : MonoBehaviour
     public EffectDuration[] arrayOfEffectDuration;
     public EffectOperator[] arrayOfEffectOperator;
     public EffectOutcome[] arrayOfEffectOutcome;
+    public ContactType[] arrayOfContactTypes;
     public Quality[] arrayOfQualities;
-
+    
     [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
     public TraitCategory[] arrayOfTraitCategories;
@@ -66,75 +67,82 @@ public class LoadManager : MonoBehaviour
     {
         int numArray, numDict, counter;
         //
-        // - - - GlobalMeta - - -
+        // - - - GlobalMeta (not stored in a collection)
         //
         numArray = arrayOfGlobalMeta.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalMeta has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
         //
-        // - - - GlobalChance - - -
+        // - - - GlobalChance (not stored in a collection)
         //
         numArray = arrayOfGlobalChance.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalChance has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
         //
-        // - - - GlobalType - - -
+        // - - - GlobalType (not stored in a collection)
         //
         numArray = arrayOfGlobalType.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
         //
-        // - - - GlobalSide - - -
+        // - - - GlobalSide (not stored in a collection)
         //
         numArray = arrayOfGlobalSide.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
         //
-        // - - - GlobalWho - - -
+        // - - - GlobalWho (not stored in a collection)
         //
         numArray = arrayOfGlobalWho.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
         //
-        // - - - EffectApply
+        // - - - EffectApply (not stored in a collection)
         //
         numArray = arrayOfEffectApply.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
         //
-        // - - - EffectCriteria
+        // - - - EffectCriteria (not stored in a collection)
         //
         numArray = arrayOfEffectCriteria.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectCriteria has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectCriteria present"); }
         //
-        // - - - EffectDuration
+        // - - - EffectDuration (not stored in a collection)
         //
         numArray = arrayOfEffectDuration.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectDuration has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectDuration present"); }
         //
-        // - - - EffectOperator
+        // - - - EffectOperator (not stored in a collection)
         //
         numArray = arrayOfEffectOperator.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectOperator has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectOperator present"); }
         //
-        // - - - EffectOutcome
+        // - - - EffectOutcome (not stored in a collection)
         //
         numArray = arrayOfEffectOutcome.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
+        //
+        // - - - ContactType (not stored in a collection)
+        //
+        numArray = arrayOfContactTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfContactTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
         //
         // - - - Quality
         //
@@ -180,6 +188,7 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listAuthority (size different to numOfQualities)"); }
         }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Qualities present"); }
+
         //
         // - - - Conditions - - -
         //

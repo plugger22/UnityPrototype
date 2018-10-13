@@ -112,6 +112,20 @@ public class ContactManager : MonoBehaviour
                 contact.nodeID = nodeID;
                 contact.status = ContactStatus.Active;
                 contact.turnStart = GameManager.instance.turnScript.Turn;
+                //assign type and job
+                Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (node != null)
+                {
+                    ContactType contactType = node.Arc.GetRandomContactType();
+                    if (contactType != null)
+                    {
+                        contact.type = contactType;
+                        contact.job = contactType.pickList.GetRandomRecord();
+                        if (contact.job == null) { Debug.LogErrorFormat("Invalid contactType job for {0}", contactType.pickList.name); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid contactType (Null) for nodeID {0}, {1}", nodeID, node.Arc.name); }
+                }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
             }
             else
                 { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", contactID); }

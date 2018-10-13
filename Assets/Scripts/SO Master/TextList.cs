@@ -12,4 +12,18 @@ public class TextList : ScriptableObject
     public string descriptor;
     [Tooltip("A list of strings (related) used to create a random pick list")]
     public List<string> randomList;
+
+    /// <summary>
+    /// returns a randomly selected record from the list, null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string GetRandomRecord()
+    {
+        Debug.Assert(randomList != null, "Invalid pickList (Null)");
+        int numOfRecords = randomList.Count;
+        if (numOfRecords > 0)
+        { return randomList[Random.Range(0, numOfRecords)]; }
+        else { Debug.LogErrorFormat("Invalid TextList Count (zero) for {0}", this.name); }
+        return null;
+    }
 }

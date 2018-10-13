@@ -16,3 +16,7 @@ MonoBehaviour:
   Support: 0
   Security: 2
   sprite: {fileID: 21300000, guid: 502f8a8c8427da649868fe2a1eecb617, type: 3}
+  contactTypes:
+  - {fileID: 11400000, guid: 463bab3ce9c227c44b509504cfe6ac8d, type: 2}
+  - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
+  - {fileID: 11400000, guid: 8b5d49d20de45ea479d473d9ce147290, type: 2}

@@ -16,4 +16,25 @@ public class NodeArc : ScriptableObject
     [Tooltip("Values between 0 and 3 only")] [Range(0, 3)] public int Security;
 
     public Sprite sprite;
+
+    [Tooltip("Contact Types that are possible in this NodeArc")]
+    public ContactType[] contactTypes;
+
+
+    /// <summary>
+    /// returns a randomly selected ContactType, null if none found
+    /// </summary>
+    /// <returns></returns>
+    public ContactType GetRandomContactType()
+    {
+        ContactType typeReturn = null;
+        int numOfTypes = contactTypes.Length;
+        if (numOfTypes > 0)
+        {
+            if (numOfTypes > 1)
+            { typeReturn = contactTypes[Random.Range(0, numOfTypes)]; }
+            else { typeReturn = contactTypes[0]; }
+        }
+        return typeReturn;
+    }
 }
