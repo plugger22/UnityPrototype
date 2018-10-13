@@ -495,12 +495,20 @@ public class ValidationManager : MonoBehaviour
         // - - - TextList - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:TextList", new[] { "Assets/SO" });
-        numArray = GameManager.instance.loadScript.arrayOfTextLists.Length;
+        numArray = GameManager.instance.loadScript.arrayOfContactTextLists.Length;
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
         {
             Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TextList SO, array {0}, assets {1} records", numArray, numAssets);
-            TextList[] arrayTemp = GameManager.instance.loadScript.arrayOfTextLists;
+            //combine all text list arrays into a single list for validation checks
+            List<TextList> listOfAllTextLists = new List<TextList>();
+            listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
+
+            //NOTE: add extra text lists here (as above)
+
+            //convert to array
+            TextList[] arrayTemp = listOfAllTextLists.ToArray();
+            
             foreach (var guid in metaGUID)
             {
                 //get path
