@@ -13,13 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Street Living Contact
   randomList:
-  - Hitman
+  - Pickpocket
   - Bodyguard
-  - Cab Driver
-  - Prisoner
+  - Street Artist
+  - Homeless Bum
   - Drug Cooker
   - Ex-Prisoner
-  - Gang Member
+  - Street Ganger
   - Junkie
   - Hacker
   - Prostitute

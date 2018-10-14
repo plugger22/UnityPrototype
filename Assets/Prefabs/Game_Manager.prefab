@@ -728,6 +728,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b5d49d20de45ea479d473d9ce147290, type: 2}
   - {fileID: 11400000, guid: 39b67c36f6466ec44b00f03f4e24d9ce, type: 2}
   - {fileID: 11400000, guid: 114118893f278ad47a7f3102ded61bb5, type: 2}
+  - {fileID: 11400000, guid: c095d45223dbe2d45a49ab2e8d5b1180, type: 2}
   arrayOfQualities:
   - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
   - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}
@@ -815,6 +816,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5faf434e0fcf134283d6face74020e3, type: 2}
   - {fileID: 11400000, guid: 2a75b3f98fffa484bb87303aeb8bdb14, type: 2}
   - {fileID: 11400000, guid: 1f45a646614aedc4ab459c6be0ce1e5d, type: 2}
+  - {fileID: 11400000, guid: 88218dff765462441bf3429f77219f9d, type: 2}
   arrayOfNameTextLists:
   - {fileID: 11400000, guid: b7c3926a637ccda4880a3268a808df17, type: 2}
   - {fileID: 11400000, guid: 1b89a161504ccdf4c95e808d4929370d, type: 2}
@@ -1726,11 +1728,11 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 50546
+  seed: 0
   isAuthority: 0
   isPerformanceLog: 1
-  isValidateData: 0
-  isValidateSO: 1
+  isValidateData: 1
+  isValidateSO: 0
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

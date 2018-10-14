@@ -19,4 +19,6 @@ MonoBehaviour:
   contactTypes:
   - {fileID: 11400000, guid: 71fd072f2cd61d546aff7c4f55021bb7, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
-  - {fileID: 11400000, guid: 8b4989c5af6369d45a9c4cb1913fe5fb, type: 2}
+  - {fileID: 11400000, guid: c095d45223dbe2d45a49ab2e8d5b1180, type: 2}
+  - {fileID: 11400000, guid: c095d45223dbe2d45a49ab2e8d5b1180, type: 2}
+  - {fileID: 11400000, guid: c095d45223dbe2d45a49ab2e8d5b1180, type: 2}

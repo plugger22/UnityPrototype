@@ -177,7 +177,7 @@ namespace gameAPI
                 try
                 { dictOfContacts.Add(contact.nodeID, contact); }
                 catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
+                { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.nameFirst, contact.contactID); }
             }
             else { Debug.LogError("Invalid contact (Null)"); }
         }
@@ -217,7 +217,7 @@ namespace gameAPI
             {
                 if (dictOfContacts[nodeID].status == ContactStatus.Active)
                 { return dictOfContacts[nodeID]; }
-                else { Debug.LogWarningFormat("Invalid contact {0} (\"{1}\") for nodeID {2}", dictOfContacts[nodeID].contactName, dictOfContacts[nodeID].status, nodeID); }
+                else { Debug.LogWarningFormat("Invalid contact {0} (\"{1}\") for nodeID {2}", dictOfContacts[nodeID].nameFirst, dictOfContacts[nodeID].status, nodeID); }
             }
             return null;
         }

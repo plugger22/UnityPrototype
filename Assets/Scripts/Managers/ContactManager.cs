@@ -47,26 +47,55 @@ public class ContactManager : MonoBehaviour
         Debug.Assert(numOfContacts > 0, "Invalid numOfContacts (zero, or less)");
         Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
         List<int> contactPool = GameManager.instance.dataScript.GetContactPool();
+        //weighted array for randomly determining effectiveness (weighted for an average outcome)
+        int[] arrayOfEffectiveness = new int[] { 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3 };
+        int numEffectiveness = arrayOfEffectiveness.Length;
         if (dictOfContacts != null)
         {
             if (contactPool != null)
             {
+                //Get NameSet SO from Country
+                NameSet nameSet = null;
+                City city = GameManager.instance.cityScript.GetCity();
+                if (city != null)
+                {
+                    nameSet = city.country.nameSet;
+                    if (nameSet == null) { Debug.LogErrorFormat("Invalid NameSet (Null) for {0} in {1}", city.name, city.country.name); }
+                }
+                else { Debug.LogError("Invalid City (Null)"); }
                 int counter = 0;
                 for (int i = 0; i < numOfContacts; i++)
                 {
                     Contact contact = new Contact();
                     //initialise contact
                     contact.contactID = contactIDCounter++;
-                    contact.contactName = string.Format("PersonName_{0}", contact.contactID);
                     contact.job = string.Format("Job_{0}", contact.contactID);
-                    contact.dataText0 = string.Format("MegaCorp_{0}", contact.contactID);
-                    contact.dataText1 = string.Format("NeedyCharacter_{0}", contact.contactID);
                     contact.status = ContactStatus.ContactPool;
                     contact.actorID = -1;
                     contact.nodeID = -1;
                     contact.isTurned = false;
                     contact.turnStart = -1;
                     contact.turnFinish = -1;
+                    contact.usefulIntel = 0;
+                    //effectiveness (random 1 to 3, weighted normal)
+                    contact.effectiveness = arrayOfEffectiveness[Random.Range(0, numEffectiveness)];
+                    //name & sex
+                    if (nameSet != null)
+                    {
+                        //50% chance of being either sex
+                        if (Random.Range(0, 100) < 50)
+                        {
+                            contact.isMale = true;
+                            contact.nameFirst = nameSet.firstMaleNames.GetRandomRecord();
+                        }
+                        else
+                        {
+                            contact.isMale = false;
+                            contact.nameFirst = nameSet.firstFemaleNames.GetRandomRecord();
+                        }
+                        contact.nameLast = nameSet.lastNames.GetRandomRecord();
+                    }
+                    else { contact.nameFirst = "Unknown"; contact.nameLast = "Unknown"; contact.isMale = true; }
                     //add to dictionary
                     try
                     {
@@ -76,7 +105,7 @@ public class ContactManager : MonoBehaviour
                         contactPool.Add(contact.contactID);
                     }
                     catch (ArgumentException)
-                    { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
+                    { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.nameFirst, contact.contactID); }
                 }
                 Debug.LogFormat("[Cont] ContactManager.cs -> CreateContacts: {0} out of {1} contacts created and added to pool", counter, numOfContacts);
                 Debug.LogFormat("[Cont] ContactManager.cs -> CreateContacts: contactPool has {0} records", contactPool.Count);
@@ -179,7 +208,7 @@ public class ContactManager : MonoBehaviour
                                 else
                                 {
                                     //contact not found in list, warning message
-                                    Debug.LogWarningFormat("Contact {0}, {1}, ID {2} nodeID {3} not found in listOfNodes & deletec", contact.Value.contactName, contact.Value.job, contact.Value.contactID,
+                                    Debug.LogWarningFormat("Contact {0}, {1}, ID {2} nodeID {3} not found in listOfNodes & deletec", contact.Value.nameFirst, contact.Value.job, contact.Value.contactID,
                                         contact.Value.nodeID);
                                 }
                             }
@@ -230,7 +259,7 @@ public class ContactManager : MonoBehaviour
                                     {
                                         actor.AddContact(contact);
                                         Debug.LogFormat("[Cont] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4}, ID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, listOfContactNodes[i],
-                                            contact.contactName, contact.contactID, "\n");
+                                            contact.nameFirst, contact.contactID, "\n");
                                     }
                                     else { Debug.LogError("Invalid contact (Null)"); }
                                 }
@@ -390,8 +419,8 @@ public class ContactManager : MonoBehaviour
                                 foreach(var contact in dictOfContacts)
                                 {
                                     Debug.Assert(contact.Value.actorID == actor.actorID, string.Format("Contact.actorID {0} doesn't match actorID {1}", contact.Value.contactID, actor.actorID));
-                                    builder.AppendFormat(" Id {0}, {1}, {2}, nodeID {3}, {4}{5}", contact.Value.contactID, contact.Value.contactName, contact.Value.job, contact.Value.nodeID, 
-                                        contact.Value.status, "\n");
+                                    builder.AppendFormat(" Id {0}, {1} {2}, {3}, nodeID {4}, E {5}, {6}{7}", contact.Value.contactID, contact.Value.nameFirst, contact.Value.nameLast,
+                                        contact.Value.job, contact.Value.nodeID, contact.Value.effectiveness, contact.Value.status, "\n");
                                 }
                             }
                             else { builder.AppendFormat("No Contacts present{0}", "\n"); }
@@ -422,8 +451,8 @@ public class ContactManager : MonoBehaviour
                                 foreach (var contact in dictOfContacts)
                                 {
                                     Debug.Assert(contact.Value.actorID == actor.actorID, string.Format("Contact.actorID {0} doesn't match actorID {1}", contact.Value.contactID, actor.actorID));
-                                    builder.AppendFormat(" Id {0}, {1}, {2}, nodeID {3}, {4}{5}", contact.Value.contactID, contact.Value.contactName, contact.Value.job, contact.Value.nodeID, 
-                                        contact.Value.status, "\n");
+                                    builder.AppendFormat(" Id {0}, {1} {2}, {3}, nodeID {4}, E {5}, {6}{7}", contact.Value.contactID, contact.Value.nameFirst, contact.Value.nameLast,
+                                        contact.Value.job, contact.Value.nodeID, contact.Value.effectiveness, contact.Value.status, "\n");
                                 }
                             }
                             else { builder.AppendFormat("No Contacts present{0}", "\n"); }

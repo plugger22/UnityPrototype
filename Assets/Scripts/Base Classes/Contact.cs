@@ -8,18 +8,21 @@ using UnityEngine;
 /// </summary>
 public class Contact
 {
-    [HideInInspector] public int contactID;
-    [HideInInspector] public string contactName;
-    [HideInInspector] public string job;
-    [HideInInspector] public string dataText0;              //multipurpose, could be level of job
-    [HideInInspector] public string dataText1;              //multipurpose, could be name of corporation
-    [HideInInspector] public int actorID;
-    [HideInInspector] public int nodeID;
-    [HideInInspector] public int turnStart;               //turn started as a contact
-    [HideInInspector] public int turnFinish;              //turn finished as a contact
-    [HideInInspector] public ContactType type;            //job category
-    [HideInInspector] public ContactStatus status;
-    [HideInInspector] public bool isTurned;               //working for Authority as an informant
+    public int contactID;
+    public string nameFirst;
+    public string nameLast;
+    public string job;
+    public int actorID;
+    public int nodeID;
+    public int effectiveness;           //1 to 3 effectiveness in gaining new info (3 best, 1 worst)
+    public int turnStart;               //turn started as a contact
+    public int turnFinish;              //turn finished as a contact
+    public int usefulIntel;             //tracks number of useful intel items sourced by the contact
+    public ContactType type;            //job category
+    public ContactStatus status;
+    public bool isMale;                 //Male if true, female if false
+    public bool isTurned;               //working for Authority as an informant
+    
     
 
 }

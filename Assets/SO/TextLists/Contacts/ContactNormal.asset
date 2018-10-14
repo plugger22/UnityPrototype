@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ContactLegal
+  m_Name: ContactNormal
   m_EditorClassIdentifier: 
   descriptor: Legally employed contact
   randomList:
@@ -23,15 +23,15 @@ MonoBehaviour:
   - Student
   - Teacher
   - Sales Assistant
-  - Warehouse Packer
+  - Cleaner
   - Clerk
   - Courier
-  - Engineer
+  - Driver
   - Technician
   - Pilot
-  - Scientist
+  - Muscian
   - Librarian
-  - Administrator
+  - Nurses Aid
   - Truck Driver
   - Bus Driver
   - Chauffeur

@@ -402,17 +402,37 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorContactDetails(string reason, Actor actor, Node node, Contact contact, bool isGained)
     {
         StringBuilder builder = new StringBuilder();
-        string verb, colourVerb;
-        verb = "Gained";
-        colourVerb = colourGood;
+        string verb, colourVerb, effectiveVerb, colourEffective;
+        verb = "Gained"; effectiveVerb = "Unknown";
+        colourVerb = colourGood; colourEffective = colourBad;
         if (isGained == false) { verb = "Lost"; colourVerb = colourBad; }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
         builder.AppendFormat("{0}<b>has {1} a Contact</b>{2}{3}", colourVerb, verb, colourEnd, "\n");
         if (string.IsNullOrEmpty(reason) == false)
         { builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
-        builder.AppendFormat("{0}{1}Contact{2}{3}", "\n", colourNeutral, colourEnd, "\n");
-        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", contact.contactName, colourAlert, contact.job, colourEnd, "\n");
-        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        builder.AppendFormat("{0}{1}<b>{2}</b>{3} contact{4}", "\n", colourNeutral, contact.type.name, colourEnd, "\n");
+        builder.AppendFormat("{0} {1}, {2}<b>{3}</b>{4}{5}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        //effectiveness (convert to text string, put into current or past tense and colour code)
+        if (isGained == true)
+        {
+            switch (contact.effectiveness)
+            {
+                case 3: effectiveVerb = "is Wired-In"; colourEffective = colourGood; break;
+                case 2: effectiveVerb = "is Networked"; colourEffective = colourNeutral; break;
+                case 1: effectiveVerb = "knows stuff"; colourEffective = colourBad; break;
+            }
+        }
+        else
+        {
+            switch (contact.effectiveness)
+            {
+                case 3: effectiveVerb = "was Wired-In"; colourEffective = colourGood; break;
+                case 2: effectiveVerb = "was Networked"; colourEffective = colourNeutral; break;
+                case 1: effectiveVerb = "knew stuff"; colourEffective = colourBad; break;
+            }
+        }
+        builder.AppendFormat("{0} {1}<b>{2}</b>{3}", contact.nameFirst, colourEffective, effectiveVerb, colourEnd);
         return builder.ToString();
     }
 

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ContactUtility
+  m_Name: ContactInfrastructure
   m_EditorClassIdentifier: 
-  descriptor: Utility type contacts
+  descriptor: Infrastructure type contacts
   randomList:
   - Control Room Operator
   - Control Room Technician

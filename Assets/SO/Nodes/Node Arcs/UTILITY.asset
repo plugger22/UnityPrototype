@@ -18,3 +18,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: f2a235d1864e8d149babe7fc49924cf3, type: 3}
   contactTypes:
   - {fileID: 11400000, guid: 114118893f278ad47a7f3102ded61bb5, type: 2}
+  - {fileID: 11400000, guid: 114118893f278ad47a7f3102ded61bb5, type: 2}
+  - {fileID: 11400000, guid: 114118893f278ad47a7f3102ded61bb5, type: 2}
+  - {fileID: 11400000, guid: 71fd072f2cd61d546aff7c4f55021bb7, type: 2}
+  - {fileID: 11400000, guid: 8b4989c5af6369d45a9c4cb1913fe5fb, type: 2}

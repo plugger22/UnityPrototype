@@ -745,7 +745,7 @@ public class DataManager : MonoBehaviour
             try
             { dictOfContacts.Add(contact.contactID, contact); }
             catch (ArgumentException)
-            { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.contactName, contact.contactID); }
+            { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.nameFirst, contact.contactID); }
         }
         else { Debug.LogError("Invalid contact (Null)"); }
     }
@@ -1025,7 +1025,7 @@ public class DataManager : MonoBehaviour
                                                 //remove contact record from actor
                                                 if (actor.RemoveContact(nodeID) == true)
                                                 {
-                                                    Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.contactName, contact.contactID, 
+                                                    Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.nameFirst, contact.contactID, 
                                                     actor.actorName, actor.arc.name, nodeID);
                                                     //message
                                                     Node node = GetNode(nodeID);
@@ -1038,7 +1038,7 @@ public class DataManager : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    Debug.LogFormat("DataManager.cs -> Contact {0}, ID {1}, NOT Removed (FAIL), {2}, {3}, actorID {4} contact at nodeID {5}{6}", contact.contactName, 
+                                                    Debug.LogFormat("DataManager.cs -> Contact {0}, ID {1}, NOT Removed (FAIL), {2}, {3}, actorID {4} contact at nodeID {5}{6}", contact.nameFirst, 
                                                         contact.contactID, actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
                                                 }
                                             }
@@ -1139,7 +1139,7 @@ public class DataManager : MonoBehaviour
                 if (contact != null)
                 {
                     actor.AddContact(contact);
-                    Debug.LogFormat("[Cont] DatabaseManager.cs -> AddContactSingle: ADDED {0}, contactID {1} to {2}, {3}, actorID {4}, nodeID {5}, {6}", contact.contactName, contact.contactID,
+                    Debug.LogFormat("[Cont] DatabaseManager.cs -> AddContactSingle: ADDED {0}, contactID {1} to {2}, {3}, actorID {4}, nodeID {5}, {6}", contact.nameFirst, contact.contactID,
                         actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
                     //message
                     Node node = GetNode(nodeID);
@@ -1235,7 +1235,7 @@ public class DataManager : MonoBehaviour
                 {
                     if (actor.RemoveContact(nodeID) == true)
                     {
-                        Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED {0}, ID {1}, from {2}, {3}, actorID {4}, at nodeID {5}", contact.contactName, contact.contactID,
+                        Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED {0}, ID {1}, from {2}, {3}, actorID {4}, at nodeID {5}", contact.nameFirst, contact.contactID,
                           actor.actorName, actor.arc.name, actor.actorID, nodeID);
                         //message
                         Node node = GetNode(nodeID);
@@ -1248,7 +1248,7 @@ public class DataManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarningFormat("DataManager.cs -> RemoveContactSingle: Contact {0}, ID {1}, NOT removed from {2}, {3},  nodeID {4}", contact.contactName, contact.contactID,
+                        Debug.LogWarningFormat("DataManager.cs -> RemoveContactSingle: Contact {0}, ID {1}, NOT removed from {2}, {3},  nodeID {4}", contact.nameFirst, contact.contactID,
                           actor.actorName, actor.arc.name, nodeID);
                     }
                 }
