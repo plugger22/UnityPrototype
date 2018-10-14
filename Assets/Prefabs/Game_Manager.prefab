@@ -815,6 +815,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f5faf434e0fcf134283d6face74020e3, type: 2}
   - {fileID: 11400000, guid: 2a75b3f98fffa484bb87303aeb8bdb14, type: 2}
   - {fileID: 11400000, guid: 1f45a646614aedc4ab459c6be0ce1e5d, type: 2}
+  arrayOfNameTextLists:
+  - {fileID: 11400000, guid: b7c3926a637ccda4880a3268a808df17, type: 2}
+  - {fileID: 11400000, guid: 1b89a161504ccdf4c95e808d4929370d, type: 2}
+  - {fileID: 11400000, guid: c446b43b6116aa34a9fbf47950e5d156, type: 2}
+  arrayOfNameSets:
+  - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -1724,7 +1730,7 @@ MonoBehaviour:
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
-  isValidateSO: 0
+  isValidateSO: 1
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

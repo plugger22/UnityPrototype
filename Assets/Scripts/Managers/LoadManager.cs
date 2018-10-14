@@ -32,9 +32,14 @@ public class LoadManager : MonoBehaviour
     public SecretType[] arrayOfSecretTypes;
     public SecretStatus[] arrayOfSecretStatus;
     public NodeDatapoint[] arrayOfNodeDatapoints;
+    
 
     [Header("TextLists -> One for each Category")]
     public TextList[] arrayOfContactTextLists;
+    public TextList[] arrayOfNameTextLists;
+
+    [Header("TextList Related SO's")]
+    public NameSet[] arrayOfNameSets;
 
     [Header("InitialiseEarly -> First Half")]
     public NodeArc[] arrayOfNodeArcs;
@@ -143,6 +148,27 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfContactTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
+        //
+        // - - - Text Lists Contacts (not stored in a collection)
+        //
+        numArray = arrayOfContactTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfContactTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ContactTextLists present"); }
+        //
+        // - - - Text Lists Names (not stored in a collection)
+        //
+        numArray = arrayOfNameTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNameTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NameTextLists present"); }
+        //
+        // - - - NameSets (not stored in a collection)
+        //
+        numArray = arrayOfNameSets.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NameSets present"); }
         //
         // - - - Quality
         //

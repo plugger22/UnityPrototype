@@ -518,17 +518,18 @@ public class ValidationManager : MonoBehaviour
         // - - - TextList - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:TextList", new[] { "Assets/SO" });
-        numArray = GameManager.instance.loadScript.arrayOfContactTextLists.Length;
+        
+        //combine all text list arrays into a single list for validation checks
+        List<TextList> listOfAllTextLists = new List<TextList>();
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
+
+        //NOTE: add extra text lists here (as above)
+        numArray = listOfAllTextLists.Count;
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
         {
             Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TextList SO, array {0}, assets {1} records", numArray, numAssets);
-            //combine all text list arrays into a single list for validation checks
-            List<TextList> listOfAllTextLists = new List<TextList>();
-            listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
-
-            //NOTE: add extra text lists here (as above)
-
             //convert to array
             TextList[] arrayTemp = listOfAllTextLists.ToArray();
             
@@ -544,7 +545,31 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TextList \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TextList SO, array {0}, assets {1} records", numArray, numAssets); }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TextList SO, array {0}, assets {1} records", numArray, numAssets); }        
+        //
+        // - - - NameSets - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:NameSet", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfNameSets.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on NameSet SO, array {0}, assets {1} records", numArray, numAssets);
+            NameSet[] arrayTemp = GameManager.instance.loadScript.arrayOfNameSets;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(NameSet));
+                //get object
+                NameSet meta = metaObject as NameSet;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING NameSet \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NameSet SO, array {0}, assets {1} records", numArray, numAssets); }
+
         //
         // - - - NodeDatapoint - - -
         //
