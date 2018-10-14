@@ -821,8 +821,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7c3926a637ccda4880a3268a808df17, type: 2}
   - {fileID: 11400000, guid: 1b89a161504ccdf4c95e808d4929370d, type: 2}
   - {fileID: 11400000, guid: c446b43b6116aa34a9fbf47950e5d156, type: 2}
+  - {fileID: 11400000, guid: ff3718f935dbbff49b113c8cf7c44c3c, type: 2}
+  - {fileID: 11400000, guid: dd240069ecddf4e48aa36f82b96a4422, type: 2}
+  - {fileID: 11400000, guid: 41ce7f9525985db408af38509b6f3125, type: 2}
+  - {fileID: 11400000, guid: cfd12865fceb969438af40252f4586c1, type: 2}
+  - {fileID: 11400000, guid: 7b7409a005f3f2544a33b08f7b5f5aad, type: 2}
+  - {fileID: 11400000, guid: ff1c65ddc9743834b893990546b04d24, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
+  - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
+  - {fileID: 11400000, guid: f935e371ffa59e745bad0891ea7997dd, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -1731,8 +1739,8 @@ MonoBehaviour:
   seed: 0
   isAuthority: 0
   isPerformanceLog: 1
-  isValidateData: 1
-  isValidateSO: 0
+  isValidateData: 0
+  isValidateSO: 1
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
