@@ -25,6 +25,9 @@ public class ContactManager : MonoBehaviour
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+    //traits
+    private int actorContactEffectHigh;
+    private int actorContactEffectLow;
 
 
     public void Initialise()
@@ -34,9 +37,13 @@ public class ContactManager : MonoBehaviour
         //fast acess fields
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        actorContactEffectHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectHigh");
+        actorContactEffectLow = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectLow");
         //check O.K
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
+        Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
     }
 
     /// <summary>
@@ -155,6 +162,24 @@ public class ContactManager : MonoBehaviour
                     else { Debug.LogErrorFormat("Invalid contactType (Null) for nodeID {0}, {1}", nodeID, node.Arc.name); }
                 }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+                //traits affecting effectiveness (do at end of initialisation, eg. need type)
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    if (actor.CheckTraitEffect(actorContactEffectHigh) == true)
+                    {
+                        contact.effectiveness++;
+                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for {0} contact, {1}", contact.type.name, contact.nameFirst), "to raise their Effectiveness +1");
+                    }
+                    if (actor.CheckTraitEffect(actorContactEffectLow) == true)
+                    {
+                        contact.effectiveness--;
+                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for {0} contact, {1}", contact.type.name, contact.nameFirst), "to lower their Effectiveness -1");
+                    }
+                    //keep effectiveness with bounds
+                    contact.effectiveness = Mathf.Clamp(contact.effectiveness, 1, 3);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             else
                 { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", contactID); }
@@ -258,8 +283,8 @@ public class ContactManager : MonoBehaviour
                                     if (contact != null)
                                     {
                                         actor.AddContact(contact);
-                                        Debug.LogFormat("[Cont] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4}, ID {5}{6}", actor.actorName, actor.arc.name, actor.actorID, listOfContactNodes[i],
-                                            contact.nameFirst, contact.contactID, "\n");
+                                        Debug.LogFormat("[Cont] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4} {5}, ID {6}, E {7}, {8}", actor.actorName, actor.arc.name, 
+                                            actor.actorID, listOfContactNodes[i], contact.type.name, contact.nameFirst, contact.contactID, contact.effectiveness, "\n");
                                     }
                                     else { Debug.LogError("Invalid contact (Null)"); }
                                 }
