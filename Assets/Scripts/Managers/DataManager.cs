@@ -1509,7 +1509,7 @@ public class DataManager : MonoBehaviour
     /// intialised in ImportManager.cs
     /// </summary>
     public void InitialiseArrayOfNodes()
-    { arrayOfNodes = new int[GameManager.instance.levelScript.GetNodeTypeTotals().Length, (int)NodeInfo.Count]; }
+    { arrayOfNodes = new int[CheckNumOfNodeArcs(), (int)NodeInfo.Count]; }
 
     public int[,] GetArrayOfNodes()
     { return arrayOfNodes; }

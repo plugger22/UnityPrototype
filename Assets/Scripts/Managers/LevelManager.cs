@@ -865,7 +865,7 @@ public class LevelManager : MonoBehaviour
     /// <returns></returns>
     public int[] GetNodeTypeTotals()
     {
-        int length = arrayOfNodeArcTotals.GetLength(0);
+        int length = arrayOfNodeArcTotals.GetLength(1);
         int[] tempArray = new int[length];
         for (int i = 0; i < length; i++)
         { tempArray[i] = arrayOfNodeArcTotals[0, i]; }

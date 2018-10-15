@@ -34,4 +34,12 @@ public class CityArc : ScriptableObject
     public List<NodeArc> listOfFourConnArcs;
     [Tooltip("Node Arc types that can be found in nodes with FIVE connections (type is randomly chosen so multiple instances of the same NodeArc are O.K")]
     public List<NodeArc> listOfFiveConnArcs;
+
+    [Header("NodeArc Districts in City")]
+    [Tooltip("How many Corporate districts")]
+    [Range(1, 10)] public int numOfNodeArc0 = 1;
+    [Tooltip("How many Corporate districts")]
+    [Range(1, 10)] public int numOfNodeArc1 = 1;
+    [Tooltip("How many Corporate districts")]
+    [Range(1, 10)] public int numOfNodeArc2 = 1;
 }
