@@ -11,4 +11,10 @@ public class ContactType : ScriptableObject
 
     public TextList pickList;
 
+
+    public void OnEnable()
+    {
+        Debug.Assert(pickList != null, string.Format("Invalid pickList (Null) for ContactType \"{0}\"", this.name));
+    }
+
 }

@@ -21,6 +21,11 @@ public class NodeArc : ScriptableObject
     public ContactType[] contactTypes;
 
 
+    public void OnEnable()
+    {
+        Debug.Assert(contactTypes != null, string.Format("Invalid array of contactTypes (Null) for NodeArc \"{0}\"", this.name));
+    }
+
     /// <summary>
     /// returns a randomly selected ContactType, null if none found
     /// </summary>

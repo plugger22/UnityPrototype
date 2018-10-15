@@ -8,6 +8,8 @@ using GraphAPI;
 using gameAPI;
 using System.Text;
 
+public enum NodeArcTally { Current, Required, Count };   //used for indexing of arrayOfNodeArcTotals
+
 public class LevelManager : MonoBehaviour
 {
     public GameObject node;             //node prefab
@@ -58,7 +60,7 @@ public class LevelManager : MonoBehaviour
     /*private List<List<GameObject>> listOfActorNodesAuthority = new List<List<GameObject>>();        //list containing sublists, one each of all the active nodes for each actor in the level
     private List<List<GameObject>> listOfActorNodesResistance = new List<List<GameObject>>();       //need a separate list for each side  */ 
 
-    private int[] arrayOfNodeTypeTotals;            //array of how many of each node type there is on the map, index = node.Arc.nodeArcID
+    private int[,] arrayOfNodeArcTotals;            //array of how many of each node type there is on the map, index = node.Arc.nodeArcID
     /*private bool[,,] arrayOfActiveNodes;            //[total nodes, side, total actors] true if node active for that actor*/
     
     /// <summary>
@@ -428,38 +430,6 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
-    //
-    // --- Show Active Nodes
-    //
-    #region Show Nodes
-
-
-
-
-    #endregion
-
-    //
-    // - - - Redraw methods (GameManager)
-    //
-    #region Redraw and Rest graph
-
-
-
-
-
-
-    /*public void RedrawConnections()
-    {
-        Renderer renderer;
-        foreach(GameObject obj in listOfConnections)
-        {
-            Connection connection = obj.GetComponent<Connection>();
-            renderer = obj.GetComponent<Renderer>();
-            renderer.material = connection.
-        }
-    }*/
-
-    #endregion
 
     //
     // - - - Graph related methods - - -
@@ -500,7 +470,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)
         {
             NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
-            builder.Append(string.Format("{0}  {1}{2}", arc.name, arrayOfNodeTypeTotals[i], "\n"));
+            builder.Append(string.Format("{0}  {1}{2}", arc.name, arrayOfNodeArcTotals[(int)NodeArcTally.Current, i], "\n"));
         }
         return builder.ToString();
     }
@@ -635,16 +605,15 @@ public class LevelManager : MonoBehaviour
         int index;
         int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
         //array of counters
-        arrayOfNodeTypeTotals = new int[numRecords];
+        arrayOfNodeArcTotals = new int[(int)NodeArcTally.Count, numRecords];
         //loop list of nodes
-        foreach (GameObject obj in listOfNodeObjects)
+        foreach(Node node in listOfNodes)
         {
-            Node node = obj.GetComponent<Node>();
-            int numNodes = node.GetNumOfNeighbours();
+            int numConnections = node.GetNumOfNeighbours();
             //node name
             node.nodeName = "Placeholder";
             //get random node Arc from appropriate list
-            node.Arc = GetRandomNodeArc(numNodes);
+            node.Arc = GetRandomNodeArc(numConnections);
             //provide base level stats 
             node.Stability = node.Arc.Stability;
             node.Support = node.Arc.Support;
@@ -655,28 +624,60 @@ public class LevelManager : MonoBehaviour
             node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
             node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
             //position
-            node.nodePosition = obj.transform.position;
+            node.nodePosition = node.transform.position;
             //target -> none
             node.targetID = -1;
             //keep a tally of how many of each type have been generated
             index = node.Arc.nodeArcID;
             if (index < numRecords)
-            { arrayOfNodeTypeTotals[index]++; }
+            { arrayOfNodeArcTotals[(int)NodeArcTally.Current, index]++; }
             else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.Arc.name)); }
         }
         //Display stats
         string name;
         int num;
         Debug.Log("Node Summary" + "\n");
-        for (int i = 0; i < arrayOfNodeTypeTotals.Length; i++)
+        for (int i = 0; i < numRecords; i++)
         {
-            num = arrayOfNodeTypeTotals[i];
+            num = arrayOfNodeArcTotals[(int)NodeArcTally.Current, i];
             if (num > 0)
             {
                 name = GameManager.instance.dataScript.GetNodeArc(i).name;
                 Debug.Log(string.Format("Node {0} total {1}{2}", name, num, "\n"));
             }
         }
+    }
+
+    /// <summary>
+    /// Returns a node Arc based on the numConnections that node has the requirements of the City (which can overide default data)
+    /// </summary>
+    /// <param name="numConnections"></param>
+    /// <returns></returns>
+    private NodeArc GetNodeArc(int numConnections) 
+    {
+        NodeArc tempArc = null; 
+        List<NodeArc> tempList = null;
+        switch (numConnections)
+        {
+            case 1:
+                tempList = listOfOneConnArcs; break;
+            case 2:
+                tempList = listOfTwoConnArcs; break;
+            case 3:
+                tempList = listOfThreeConnArcs; break;
+            case 4:
+                tempList = listOfFourConnArcs; break;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                tempList = listOfFiveConnArcs; break;
+            default:
+                Debug.LogError("Invalid number of Connections " + numConnections);
+                break;
+        }
+        tempArc = tempList[Random.Range(0, tempList.Count)];
+        return tempArc;
     }
 
     /// <summary>
@@ -858,8 +859,18 @@ public class LevelManager : MonoBehaviour
         return arrayOfActiveNodes[nodeID, side.level, slotID];
     }*/
 
+    /// <summary>
+    /// returns totals of all node arcs in an array format
+    /// </summary>
+    /// <returns></returns>
     public int[] GetNodeTypeTotals()
-    { return arrayOfNodeTypeTotals; }
+    {
+        int length = arrayOfNodeArcTotals.GetLength(0);
+        int[] tempArray = new int[length];
+        for (int i = 0; i < length; i++)
+        { tempArray[i] = arrayOfNodeArcTotals[0, i]; }
+        return tempArray;
+    }
 
     public List<Node> GetListOfNodes()
     { return listOfNodes; }
