@@ -769,14 +769,14 @@ public class LevelManager : MonoBehaviour
         //Display stats
         string name;
         int num;
-        Debug.Log("Node Summary" + "\n");
+        Debug.Log("LevelManager.cs -> InitialiseNodeArc: Node Summary" + "\n");
         for (int i = 0; i < numRecords; i++)
         {
             num = arrayOfNodeArcTotals[(int)NodeArcTally.Current, i];
             if (num > 0)
             {
                 name = GameManager.instance.dataScript.GetNodeArc(i).name;
-                Debug.Log(string.Format("Node {0} total {1}{2}", name, num, "\n"));
+                Debug.Log(string.Format("  Node {0} total {1}{2}", name, num, "\n"));
             }
         }
     }
