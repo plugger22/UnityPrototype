@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Ghangzou
   cityArcID: 4
-  numOfNodes: 30
+  numOfNodes: 25
   minNodeSpacing: 1.25
   connectionFrequency: 50
   sprite: {fileID: 21300000, guid: d877486904bd6524cbb2259763bb1d64, type: 3}
@@ -38,3 +38,8 @@ MonoBehaviour:
   listOfFiveConnArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
+  size: {fileID: 11400000, guid: 46de56f28630afa43848b86b20f802d8, type: 2}
+  spacing: {fileID: 11400000, guid: 74e65cfaf2985e34e8055e53c299ce10, type: 2}
+  connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
+  security: {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  priority: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}

@@ -515,6 +515,98 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on SecretStatus SO, array {0}, assets {1} records", numArray, numAssets); }
         //
+        // - - - CitySize - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:CitySize", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfCitySize.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on CitySize SO, array {0}, assets {1} records", numArray, numAssets);
+            CitySize[] arrayTemp = GameManager.instance.loadScript.arrayOfCitySize;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(CitySize));
+                //get object
+                CitySize meta = metaObject as CitySize;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING CitySize \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySize SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - CitySpacing - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:CitySpacing", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfCitySpacing.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on CitySpacing SO, array {0}, assets {1} records", numArray, numAssets);
+            CitySpacing[] arrayTemp = GameManager.instance.loadScript.arrayOfCitySpacing;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(CitySpacing));
+                //get object
+                CitySpacing meta = metaObject as CitySpacing;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING CitySpacing \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySpacing SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - CityConnections - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:CityConnections", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfCityConnections.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on CityConnection SO, array {0}, assets {1} records", numArray, numAssets);
+            CityConnections[] arrayTemp = GameManager.instance.loadScript.arrayOfCityConnections;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(CityConnections));
+                //get object
+                CityConnections meta = metaObject as CityConnections;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING CityConnections \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CityConnections SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - CitySecurity - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:CitySecurity", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfCitySecurity.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on CityConnection SO, array {0}, assets {1} records", numArray, numAssets);
+            CitySecurity[] arrayTemp = GameManager.instance.loadScript.arrayOfCitySecurity;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(CitySecurity));
+                //get object
+                CitySecurity meta = metaObject as CitySecurity;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING CitySecurity \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySecurity SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
         // - - - TextList - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:TextList", new[] { "Assets/SO" });

@@ -24,6 +24,10 @@ public class LoadManager : MonoBehaviour
     public EffectOutcome[] arrayOfEffectOutcome;
     public ContactType[] arrayOfContactTypes;
     public Quality[] arrayOfQualities;
+    public CitySize[] arrayOfCitySize;
+    public CitySpacing[] arrayOfCitySpacing;
+    public CityConnections[] arrayOfCityConnections;
+    public CitySecurity[] arrayOfCitySecurity;
     
     [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
@@ -169,6 +173,34 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NameSets present"); }
+        //
+        // - - - CitySize (not stored in a collection)
+        //
+        numArray = arrayOfCitySize.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySize has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySize present"); }
+        //
+        // - - - CitySpacing (not stored in a collection)
+        //
+        numArray = arrayOfCitySpacing.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySpacing has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySpacing present"); }
+        //
+        // - - - CityConnections (not stored in a collection)
+        //
+        numArray = arrayOfCityConnections.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCityConnections has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CityConnections present"); }
+        //
+        // - - - CitySecurity (not stored in a collection)
+        //
+        numArray = arrayOfCitySecurity.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySecurity has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySecurity present"); }
         //
         // - - - Quality
         //

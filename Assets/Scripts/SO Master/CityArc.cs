@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// SO for City Arcs. Name of SO is the name of the city arc, eg. "Small Research City"
 /// </summary>
-[CreateAssetMenu(menuName = "Game / CityArc")]
+[CreateAssetMenu(menuName = "Game / City / CityArc")]
 public class CityArc : ScriptableObject
 {
     public string descriptor;
@@ -13,8 +13,8 @@ public class CityArc : ScriptableObject
     [HideInInspector] public int cityArcID;         //dynamically assigned by ImportManager.cs
 
     [Header("City Layout")]
-    [Tooltip("Number of nodes on the map (may be less if procgen can't fit them in")]
-    [Range(10, 40)] public int numOfNodes = 20;
+    [Tooltip("Number of nodes on the map (may be less if procgen can't fit them in). Aim for 15 / 20 / 25 / 30 if possible")]
+    [Range(15, 30)] public int numOfNodes = 20;
     [Tooltip("Minimum spacing between nodes (don't exceed 1 if numOfNodes > 25) Note: going to high here with a lot of nodes will result in nodes not being able to fit")]
     [Range(1f, 3f)] public float minNodeSpacing = 1.5f;
     [Tooltip("% chance of each node having an additional connection")]
@@ -35,11 +35,26 @@ public class CityArc : ScriptableObject
     [Tooltip("Node Arc types that can be found in nodes with FIVE connections (type is randomly chosen so multiple instances of the same NodeArc are O.K")]
     public List<NodeArc> listOfFiveConnArcs;
 
-    [Header("NodeArc Districts in City")]
-    [Tooltip("How many Corporate districts")]
-    [Range(1, 10)] public int numOfNodeArc0 = 1;
-    [Tooltip("How many Corporate districts")]
-    [Range(1, 10)] public int numOfNodeArc1 = 1;
-    [Tooltip("How many Corporate districts")]
-    [Range(1, 10)] public int numOfNodeArc2 = 1;
+    [Header("City Stats")]
+    [Tooltip("Size of City")]
+    public CitySize size;
+    [Tooltip("Spacing of Nodes")]
+    public CitySpacing spacing;
+    [Tooltip("Node Connections frequency")]
+    public CityConnections connections;
+    [Tooltip("Connection Security (chance of a connection having a higher than default level")]
+    public CitySecurity security;
+
+    [Tooltip("Any NodeArc placed here will take up HALF of the districts left-over after assigning the minimum requirements. If left blank then random from default selection")]
+    public NodeArc priority;
+
+
+    public void OnEnable()
+    {
+        Debug.Assert(size != null, "Invalid CitySize (Null)");
+        Debug.Assert(spacing != null, "Invalid CitySpacing (Null)");
+        Debug.Assert(connections != null, "Invalid CityConnections (Null)");
+        Debug.Assert(security != null, "Invalid CitySecurity (Null)");
+    }
+
 }

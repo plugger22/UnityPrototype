@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Chaotic Slums (Large)
   m_EditorClassIdentifier: 
   descriptor: Mumbai, Mexico City
-  cityArcID: 0
-  numOfNodes: 30
+  cityArcID: 1
+  numOfNodes: 25
   minNodeSpacing: 1.25
   connectionFrequency: 25
   sprite: {fileID: 21300000, guid: 4e26caa7f0321aa459ec58412bff8964, type: 3}
@@ -39,3 +39,8 @@ MonoBehaviour:
   listOfFiveConnArcs:
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  size: {fileID: 11400000, guid: 46de56f28630afa43848b86b20f802d8, type: 2}
+  spacing: {fileID: 11400000, guid: 74e65cfaf2985e34e8055e53c299ce10, type: 2}
+  connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
+  security: {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  priority: {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}

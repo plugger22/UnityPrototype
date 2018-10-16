@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Normal City (Medium)
   m_EditorClassIdentifier: 
   descriptor: Uses default values
-  cityArcID: 7
+  cityArcID: 8
   numOfNodes: 20
   minNodeSpacing: 1.5
   connectionFrequency: 50
@@ -22,3 +22,8 @@ MonoBehaviour:
   listOfThreeConnArcs: []
   listOfFourConnArcs: []
   listOfFiveConnArcs: []
+  size: {fileID: 11400000, guid: 3cafe0fefa618474ea44446fac14fa83, type: 2}
+  spacing: {fileID: 11400000, guid: 55377a44f95fe1141900fa668542047a, type: 2}
+  connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
+  security: {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  priority: {fileID: 0}

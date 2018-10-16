@@ -8,7 +8,7 @@ using GraphAPI;
 using gameAPI;
 using System.Text;
 
-public enum NodeArcTally { Current, Required, Count };   //used for indexing of arrayOfNodeArcTotals
+public enum NodeArcTally { Current, Minimum, Count };   //used for indexing of arrayOfNodeArcTotals
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,12 +16,13 @@ public class LevelManager : MonoBehaviour
     public GameObject connection;       //connection prefab
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
     [Header("Default City Setup")]
-    [Range(10, 30)] public int numOfNodesDefault = 20;              //number of nodes (adjusted after use in InitialiseNodes() to reflect actual number)
-    [Range(1f, 3f)] public float minSpacingDefault = 1.5f;            //minimum spacing (world units) between nodes (>=)
-    [Header("Connections")]
-    [Tooltip("Random % chance of a node having additional connections")]
+    [Tooltip("number of nodes (adjusted after use in InitialiseNodes() to reflect actual number). Set to CitySize 'Normal'")]
+    [Range(10, 30)] public int numOfNodesDefault = 20; 
+    [Tooltip("minimum spacing (world units) between nodes (>=). Set to CitySpacing 'Normal'")]
+    [Range(1f, 3f)] public float minSpacingDefault = 1.5f;
+    [Tooltip("Random % chance of a node having additional connections, set to CityConnection 'Normal' value")]
     [Range(0, 100)] public int connectionFrequencyDefault = 50;
-    [Tooltip("Chance of a connection having a high security level (more than 'None')")]
+    [Tooltip("Chance of a connection having a high security level (more than 'None'). Set to CitySecurity 'Normal' value")]
     [Range(0, 100)] public int connectionSecurityDefault = 25;
 
     //actual values used (city values or default, if none)
@@ -72,6 +73,7 @@ public class LevelManager : MonoBehaviour
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
         RemoveInvalidNodes();
+        InitialiseNodeArcArray();
         InitialiseGraph();
         AssignNodeArcs();
         AssignSecurityLevels();
@@ -85,7 +87,6 @@ public class LevelManager : MonoBehaviour
     //
     // --- Graph construction ---
     //
-    #region InitialiseNodes
     /// <summary>
     /// place 'x' num nodes randomly within a 10 x 10 grid (world units) with a minimum spacing between them all
     /// </summary>
@@ -104,7 +105,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < number; i++)
         {
             loopCtr = 0;
-            //continue generating random positions until a valid one is found (max ten iterations then skip node if not successful)
+            //continue generating random positions until a valid one is found (max 20 iterations then skip node if not successful)
             do
             {
                 loopCtr++;
@@ -133,7 +134,10 @@ public class LevelManager : MonoBehaviour
                     }
                     //prevent endless iterations
                     if (loopCtr >= 20)
-                    { break; }
+                    {
+                        Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: failed random placement (20 times), index {0}", i);
+                        break;
+                    }
                 }
             }
             while (validPos == false);
@@ -157,8 +161,7 @@ public class LevelManager : MonoBehaviour
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
         numOfNodes = listOfNodeObjects.Count;
     }
-    #endregion
-    #region InitialiseSortedDistances
+
     /// <summary>
     /// populates listOfSortedDistances (list of lists for each node of all other nodes sorted by distance, nearest to furthest)
     /// </summary>
@@ -208,9 +211,8 @@ public class LevelManager : MonoBehaviour
             tempDict.Clear();
         }
     }
-    #endregion
-    #region CheckValidConnection
-    /// <summary>
+
+    /*/// <summary>
     /// Checks connection for validity based on Collisions and duplicate nodes. Returns true if all O.K
     /// </summary>
     /// <param name="indexStart"></param>
@@ -233,9 +235,8 @@ public class LevelManager : MonoBehaviour
         }
         //passed all checks
         return true;
-    }
-    #endregion
-    #region CheckForDuplicateConnection
+    }*/
+
     /// <summary>
     /// Checks for an existing duplicate connection, returns false if no duplicate exist
     /// </summary>
@@ -254,8 +255,7 @@ public class LevelManager : MonoBehaviour
         if (nodeEnd.CheckNeighbourPosition(posStart) == true) { return true; }
         return false;
     }
-    #endregion
-    #region CheckForNodeCollision
+
     /// <summary>
     /// Does a line cast along projected connection path and returns false if path is clear of nodes, true if not
     /// </summary>
@@ -279,8 +279,7 @@ public class LevelManager : MonoBehaviour
         boxColliderEnd.enabled = true;
         return checkRoute;
     }
-    #endregion
-    #region PlaceConnection
+
     /// <summary>
     /// Create a connection between two nodes using a Cylinder prefab using positions and nodeID's
     /// </summary>
@@ -330,9 +329,7 @@ public class LevelManager : MonoBehaviour
         }
         else { Debug.LogError(string.Format("Invalid Connection, ID {0} -> Not added to collections", connectionTemp.connID)); }
     }
-    #endregion
 
-    #region ChangeAllConnections
     /// <summary>
     /// debug function to change all connection security levels (called from DebugGUI menu)
     /// </summary>
@@ -345,9 +342,7 @@ public class LevelManager : MonoBehaviour
             connection.ChangeSecurityLevel(secLvl);
         }
     }
-    #endregion
 
-    #region RemoveInvalidNodes
     /// <summary>
     /// loops listOfSortedNodes and removes any node connections that are invalid due to collisions
     /// </summary>
@@ -394,8 +389,33 @@ public class LevelManager : MonoBehaviour
             Debug.Log(debugOutput);
         }*/
     }
-    #endregion
-    #region AddRandomConnections
+
+    /// <summary>
+    /// run once nodes have been finalised. Sets up array prior to assigning NodeArcs
+    /// </summary>
+    private void InitialiseNodeArcArray()
+    {
+        int minValue = 0;
+        //initialiseArray
+        int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+        arrayOfNodeArcTotals = new int[(int)NodeArcTally.Count, numRecords];
+        //get minimum number of each type of NodeArc
+        City city = GameManager.instance.cityScript.GetCity();
+        if (city != null)
+        { minValue = city.Arc.size.minNum; }
+        else { Debug.LogError("Invalid city (Null)"); }
+        Debug.Assert(minValue > 0, "Invalid minValue (Zero)");
+        //loop nodeArcs
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        if (dictOfNodeArcs != null)
+        {
+            //assign a minimum number of nodes that must be this nodeArc type
+            foreach(var nodeArc in dictOfNodeArcs)
+            {  arrayOfNodeArcTotals[(int)NodeArcTally.Minimum, nodeArc.Key] = minValue; }
+        }
+        else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
+    }
+
     /// <summary>
     /// Adds additional random connections using one of a nodes three shortest connections. Not all nodes get an extra connection.
     /// </summary>
@@ -428,13 +448,11 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    #endregion
-
 
     //
     // - - - Graph related methods - - -
     //
-    #region Graph Analysis Methods
+
     /// <summary>
     /// returns a string made up of basic GraphAPI analysis methods
     /// </summary>
@@ -490,12 +508,11 @@ public class LevelManager : MonoBehaviour
         }
         return searchResult;
     }
-    #endregion
 
     //
     // - - - Graph Related Search Methods - - -
     //
-    #region Graph related Search Methods
+
     /// <summary>
     /// Input a node and set all linked connections to that node to neutral colour
     /// </summary>
@@ -546,12 +563,11 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    #endregion
 
     //
     // - - - MST related methods - - -
     //
-    #region InitialiseGraph, assign Node and Actor arcs
+
     /// <summary>
     /// Set up an Edge Weighted graph ready for an MST
     /// </summary>
@@ -604,8 +620,8 @@ public class LevelManager : MonoBehaviour
     {
         int index;
         int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
-        //array of counters
-        arrayOfNodeArcTotals = new int[(int)NodeArcTally.Count, numRecords];
+        /*//array of counters
+        arrayOfNodeArcTotals = new int[(int)NodeArcTally.Count, numRecords];*/
         //loop list of nodes
         foreach(Node node in listOfNodes)
         {
@@ -693,7 +709,7 @@ public class LevelManager : MonoBehaviour
             //
             // - - - Node Arc Lists - - -
             //
-            //one connection
+            /*//one connection
             if (city.Arc.listOfOneConnArcs != null && city.Arc.listOfOneConnArcs.Count > 0)
             { listOfOneConnArcs = city.Arc.listOfOneConnArcs; }
             else { listOfOneConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(1); }
@@ -712,7 +728,15 @@ public class LevelManager : MonoBehaviour
             //five connection
             if (city.Arc.listOfFiveConnArcs != null && city.Arc.listOfFiveConnArcs.Count > 0)
             { listOfFiveConnArcs = city.Arc.listOfFiveConnArcs; }
-            else { listOfFiveConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(5); }
+            else { listOfFiveConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(5); }*/
+
+            //set up defaults
+            listOfOneConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(1);
+            listOfTwoConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(2);
+            listOfThreeConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(3);
+            listOfFourConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(4);
+            listOfFiveConnArcs = GameManager.instance.dataScript.GetDefaultNodeArcList(5);
+
             //asserts
             Debug.Assert(listOfOneConnArcs != null && listOfOneConnArcs.Count > 0, "Invalid listOfOneConnArcs");
             Debug.Assert(listOfTwoConnArcs != null && listOfTwoConnArcs.Count > 0, "Invalid listOfTwoConnArcs");
@@ -722,18 +746,10 @@ public class LevelManager : MonoBehaviour
             //
             // - - - Set up data - - -
             //
-            if (city.Arc.numOfNodes >= 10 && city.Arc.numOfNodes < 40)
-            { numOfNodes = city.Arc.numOfNodes; }
-            else { numOfNodes = numOfNodesDefault; }
-            if (city.Arc.minNodeSpacing >= 1.0f && city.Arc.minNodeSpacing <= 3.0f)
-            { minSpacing = city.Arc.minNodeSpacing; }
-            else { minSpacing = minSpacingDefault; }
-            if (city.Arc.connectionFrequency >= 0 && city.Arc.connectionFrequency <= 100)
-            { connectionFrequency = city.Arc.connectionFrequency; }
-            else { connectionFrequency = connectionFrequencyDefault; }
-            if (city.connectionSecurityChance >= 0 && city.connectionSecurityChance <= 100)
-            { connectionSecurity = city.connectionSecurityChance; }
-            else { connectionSecurity = connectionSecurityDefault; }
+            numOfNodes = city.Arc.size.numOfNodes;
+            minSpacing = city.Arc.spacing.minDistance;
+            connectionFrequency = city.Arc.connections.frequency;
+            connectionSecurity = city.Arc.security.chance;
         }
         else
         {
@@ -797,13 +813,12 @@ public class LevelManager : MonoBehaviour
 
     
 
-    #endregion
 
 
     //
     // - - - Assign Security Levels to Connections
     //
-    #region AssignSecurityLevels
+
     /// <summary>
     /// assigns Connection security levels depending on node sec lvl and a random roll. Default is Low Sec
     /// </summary>
@@ -841,7 +856,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-#endregion
 
 
 

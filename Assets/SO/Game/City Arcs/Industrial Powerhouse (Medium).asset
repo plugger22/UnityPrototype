@@ -38,3 +38,8 @@ MonoBehaviour:
   listOfFiveConnArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
+  size: {fileID: 11400000, guid: 3cafe0fefa618474ea44446fac14fa83, type: 2}
+  spacing: {fileID: 11400000, guid: 55377a44f95fe1141900fa668542047a, type: 2}
+  connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
+  security: {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  priority: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}

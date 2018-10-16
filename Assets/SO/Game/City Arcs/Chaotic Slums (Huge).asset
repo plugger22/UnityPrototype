@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75e50320967e0424fbfa6c3eaa43259d, type: 3}
-  m_Name: Chaotic Slums (Medium)
+  m_Name: Chaotic Slums (Huge)
   m_EditorClassIdentifier: 
   descriptor: Dacca
-  cityArcID: 1
-  numOfNodes: 20
-  minNodeSpacing: 1.5
+  cityArcID: 0
+  numOfNodes: 30
+  minNodeSpacing: 1.25
   connectionFrequency: 30
   sprite: {fileID: 21300000, guid: 4e26caa7f0321aa459ec58412bff8964, type: 3}
   listOfOneConnArcs:
@@ -38,3 +38,8 @@ MonoBehaviour:
   listOfFiveConnArcs:
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  size: {fileID: 11400000, guid: a5def1f0e7e4469409978a9e402370f1, type: 2}
+  spacing: {fileID: 11400000, guid: 74e65cfaf2985e34e8055e53c299ce10, type: 2}
+  connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
+  security: {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  priority: {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}

@@ -14,8 +14,8 @@ MonoBehaviour:
   descriptor: Sprawling slums and barrios
   baseLoyalty: 3
   connectionSecurityChance: 25
-  Arc: {fileID: 11400000, guid: bc0b3a48b2f6aa448a02418fcf746153, type: 2}
+  Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: dc3ec61ba88ce664db67fa218372e96e, type: 2}
   cityID: 6
-  mayor: {fileID: 11400000, guid: 38dec5d38e750624a90d38fd3137313d, type: 2}
-  faction: {fileID: 11400000, guid: 066d73a3ca4d3304490a9b91243d46e8, type: 2}
+  mayor: {fileID: 11400000, guid: 603cd93ccd903aa4f9ae2a4be6c581b3, type: 2}
+  faction: {fileID: 11400000, guid: 6041e87eef1508646ad96be985691ba5, type: 2}

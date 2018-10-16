@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Normal City (Large)
   m_EditorClassIdentifier: 
   descriptor: Uses default values
-  cityArcID: 6
-  numOfNodes: 30
+  cityArcID: 7
+  numOfNodes: 25
   minNodeSpacing: 1.25
   connectionFrequency: 50
   sprite: {fileID: 21300000, guid: a884c1c83da884a4f8b7360806b8f53a, type: 3}
@@ -22,3 +22,8 @@ MonoBehaviour:
   listOfThreeConnArcs: []
   listOfFourConnArcs: []
   listOfFiveConnArcs: []
+  size: {fileID: 11400000, guid: 46de56f28630afa43848b86b20f802d8, type: 2}
+  spacing: {fileID: 11400000, guid: 74e65cfaf2985e34e8055e53c299ce10, type: 2}
+  connections: {fileID: 11400000, guid: 4d648aa86af0dec46bac5d667af62aee, type: 2}
+  security: {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  priority: {fileID: 0}
