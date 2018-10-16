@@ -52,8 +52,8 @@ public class LevelManager : MonoBehaviour
     private List<NodeArc> listOfFourConnArcsDefault = new List<NodeArc>();
     private List<NodeArc> listOfFiveConnArcsDefault = new List<NodeArc>();
 
-    private List<NodeArc>[] listOfConnArcsDefault;
-    private List<NodeArc>[] listOfConnArcsPreferred;
+    private List<NodeArc>[] listOfConnArcsDefault;      //Note that the array is indexed from 0 and that the node Connetions are from 1 (so -1 to numOfConnections to access correct list in array)
+    private List<NodeArc>[] listOfConnArcsPreferred;    //Note that the array is indexed from 0 and that the node Connetions are from 1 (so -1 to numOfConnections to access correct list in array)
 
     //collections (all indexes correspond throughout, eg. listOfNodes[2] = listOfCoordinates[2] = listOfSortedDistances[2])
     //Note: collections initialised here as GameManager.SetUpScene will run prior to the Awake callback here
@@ -67,8 +67,7 @@ public class LevelManager : MonoBehaviour
     /*private List<List<GameObject>> listOfActorNodesAuthority = new List<List<GameObject>>();        //list containing sublists, one each of all the active nodes for each actor in the level
     private List<List<GameObject>> listOfActorNodesResistance = new List<List<GameObject>>();       //need a separate list for each side  */ 
 
-    private int[,] arrayOfNodeArcTotals;            //array of how many of each node type there is on the map, index = node.Arc.nodeArcID
-    /*private bool[,,] arrayOfActiveNodes;            //[total nodes, side, total actors] true if node active for that actor*/
+    private int[,] arrayOfNodeArcTotals;            //array of how many of each node type there is on the map, index -> [(int)NodeArcTally, nodeArc.nodeArcID]
     
     /// <summary>
     /// Master method that drives a level
@@ -737,52 +736,172 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void InitialiseNodeArcs()
     {
-        int index, numConnections;
+        int index, current, minimum, numConnections;
+        bool isRepeat;
         int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
-        //loop list of nodes -> Default values and assign names
-        foreach (Node node in listOfNodes)
+        current = (int)NodeArcTally.Current;
+        minimum = (int)NodeArcTally.Minimum;
+        //create a temporary list of all nodes
+        List<Node> tempListOfNodes = new List<Node>(listOfNodes);
+        List<NodeArc> tempListOfNodeArcs = new List<NodeArc>();
+
+
+        //reverse loop nodes, assign minimum required nodeArcs -> first pass
+        for (int i = tempListOfNodes.Count - 1; i >= 0; i--)
         {
-            numConnections = node.GetNumOfNeighbours();
-            //node name
-            node.nodeName = "Placeholder";
-            //get random node Arc from appropriate list
-            node.Arc = GetNodeArcRandom(numConnections);
-            //provide base level stats 
-            node.Stability = node.Arc.Stability;
-            node.Support = node.Arc.Support;
-            node.Security = node.Arc.Security;
-            //keep within range of 0 to 3
-            int maxNodeValue = GameManager.instance.nodeScript.maxNodeValue;
-            node.Stability = Mathf.Clamp(node.Stability, 0, maxNodeValue);
-            node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
-            node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
-            //position
-            node.nodePosition = node.transform.position;
-            //target -> none
-            node.targetID = -1;
-            //keep a tally of how many of each type have been generated
-            index = node.Arc.nodeArcID;
-            if (index < numRecords)
-            { arrayOfNodeArcTotals[(int)NodeArcTally.Current, index]++; }
-            else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.Arc.name)); }
+            Node node = tempListOfNodes[i];
+            if (node != null)
+            {
+                numConnections = node.GetNumOfNeighbours();
+                numConnections = Mathf.Min(5, numConnections) - 1;
+                //get list of NodeArcs for this number of connections (Preferred)
+                tempListOfNodeArcs = listOfConnArcsPreferred[numConnections];
+                //loop list looking for unassigned nodeArcs
+                foreach (NodeArc nodeArc in tempListOfNodeArcs)
+                {
+                    index = nodeArc.nodeArcID;
+                    //check if this NodeArc still requires nodes
+                    if (arrayOfNodeArcTotals[current, index] < arrayOfNodeArcTotals[minimum, index] == true)
+                    {
+                        //assign node arc, set node details and adjust count
+                        node.Arc = nodeArc;
+                        SetNodeDetails(node);
+                        arrayOfNodeArcTotals[current, index]++;
+                        //delete node from tempList and go onto the next
+                        tempListOfNodes.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) from tempListOfNodes[{0}]", i); }
         }
         //Display stats
+        DisplayNodeStats("MINIMUM (First Pass)", numRecords);
+
+        //check if any nodeArcs didn't meet their minimum requirements, assign a random node node if so -> Final pass
+        for (int i = 0; i < numRecords; i++)
+        {
+            isRepeat = false;
+            do
+            {
+                if (arrayOfNodeArcTotals[current, i] < arrayOfNodeArcTotals[minimum, i] == true)
+                {
+                    isRepeat = true;
+                    //assign random node
+                    Node node = tempListOfNodes[Random.Range(0, tempListOfNodes.Count)];
+                    if (node != null)
+                    {
+                        //assign node arc, set node details and adjust count
+
+                        node.Arc = GameManager.instance.dataScript.GetNodeArc(i);
+                        if (node.Arc != null)
+                        {
+                            SetNodeDetails(node);
+                            arrayOfNodeArcTotals[current, i]++;
+                            //delete node from tempList
+                            tempListOfNodes.RemoveAt(i);
+                        }
+                        else { Debug.LogErrorFormat("Invalid NodeArc (Null) for nodeArcID {0}", i); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid node (Null) from tempListOfNodes[{0}]", i); }
+                    //check if minimimum requirement met
+                    if (arrayOfNodeArcTotals[current, i] < arrayOfNodeArcTotals[minimum, i] == false)
+                    { isRepeat = false; }
+                    //check there is at least one unassigned node remaining
+                    if (tempListOfNodeArcs.Count == 0) { isRepeat = false; }
+                }
+            }
+            while (isRepeat == true);
+        }
+        //Display stats
+        DisplayNodeStats("MINIMUM (Final Pass)", numRecords);
+
+        //Assign nodeArc priority, if any
+        City city = GameManager.instance.cityScript.GetCity();
+        if (city != null)
+        {
+            if (tempListOfNodeArcs.Count > 0)
+            {
+                NodeArc arc = city.Arc.priority;
+                if (arc != null)
+                {
+                    index = arc.nodeArcID;
+                    Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: Priority NodeArc \"{0}\", nodeArcID {1}{2}", arc.name, arc.nodeArcID, "\n");
+                    int numToAssign = tempListOfNodeArcs.Count / 2;
+                    //randomly assign half the remaining node arcs to the priority NodeArc
+                    ff
+                }
+                else { Debug.Log("LevelManager.cs -> InitialiseNodeArcs: There is no cityArc Priority"); }
+            }
+            else { Debug.LogWarning("NO more nodes available, tempListOfNodeArcs is Empty"); }
+        }
+        else { Debug.LogError("Invalid city (Null)"); }
+
+        //loop list of nodes -> Default values and assign names
+        foreach (Node node in tempListOfNodes)
+        {
+            numConnections = node.GetNumOfNeighbours();
+            //get random node Arc from appropriate list
+            node.Arc = GetNodeArcRandom(numConnections);
+            if (node.Arc != null)
+            {
+                //assign data to node
+                SetNodeDetails(node);
+                //keep a tally of how many of each type have been generated
+                index = node.Arc.nodeArcID;
+                if (index < numRecords)
+                { arrayOfNodeArcTotals[current, index]++; }
+                else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.Arc.name)); }
+            }
+            else { Debug.LogError("Invalid nodeArc (Null)"); }
+        }
+        //Display stats
+        DisplayNodeStats("FINAL", numRecords);
+    }
+
+    /// <summary>
+    /// Submethod for InitialiseNodeArcs to set up a node based on it's assigned NodeArc
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="nodeArc"></param>
+    private void SetNodeDetails(Node node)
+    {
+        //node name
+        node.nodeName = "Placeholder";
+        //provide base level stats 
+        node.Stability = node.Arc.Stability;
+        node.Support = node.Arc.Support;
+        node.Security = node.Arc.Security;
+        //keep within range of 0 to 3
+        int maxNodeValue = GameManager.instance.nodeScript.maxNodeValue;
+        node.Stability = Mathf.Clamp(node.Stability, 0, maxNodeValue);
+        node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
+        node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
+        //position
+        node.nodePosition = node.transform.position;
+        //target -> none
+        node.targetID = -1;
+    }
+
+    /// <summary>
+    /// private subMethod for InitialiseNodeArcs to display node stats at various stages of initialisation. 'Header' gives text at start of display
+    /// </summary>
+    /// <param name="header"></param>
+    private void DisplayNodeStats(string header, int numRecords)
+    {
         string name;
         int num;
-        Debug.Log("LevelManager.cs -> InitialiseNodeArc: Node Summary" + "\n");
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArc: {0}{1}", header, "\n");
         for (int i = 0; i < numRecords; i++)
         {
             num = arrayOfNodeArcTotals[(int)NodeArcTally.Current, i];
-            if (num > 0)
-            {
-                name = GameManager.instance.dataScript.GetNodeArc(i).name;
-                Debug.Log(string.Format("  Node {0} total {1}{2}", name, num, "\n"));
-            }
+            name = GameManager.instance.dataScript.GetNodeArc(i).name;
+            Debug.Log(string.Format("  Node {0} total {1}{2}", name, num, "\n"));
         }
     }
 
     /// <summary>
-    /// Returns a Random node Arc based on the numConnections that node has the requirements of the City (which can overide default data)
+    /// Returns a Random node Arc based on the numConnections that node has the requirements of the City (which can overide default data). Returns Null if a problem
     /// </summary>
     /// <param name="numConnections"></param>
     /// <returns></returns>
