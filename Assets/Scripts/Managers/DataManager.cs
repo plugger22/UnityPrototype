@@ -94,6 +94,13 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfThreeConnArcsDefault = new List<NodeArc>();
     public List<NodeArc> listOfFourConnArcsDefault = new List<NodeArc>();
     public List<NodeArc> listOfFiveConnArcsDefault = new List<NodeArc>();
+    //which nodeArcs like which connections (no dupes in a single list but a nodeArc can be in multiple lists)
+    [Header("Preffered Connections for NodeArcs")]
+    public List<NodeArc> listOfOneConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfTwoConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfThreeConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfFourConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfFiveConnArcsPreferred = new List<NodeArc>();
 
     //manage actor choices
     private List<ManageAction> listOfActorHandle = new List<ManageAction>();
@@ -192,6 +199,16 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
+        Debug.Assert(listOfOneConnArcsDefault != null, "Invalid listOfOneConnArcsDefault (Null)");
+        Debug.Assert(listOfTwoConnArcsDefault != null, "Invalid listOfTwoConnArcsDefault (Null)");
+        Debug.Assert(listOfThreeConnArcsDefault != null, "Invalid listOfThreeConnArcsDefault (Null)");
+        Debug.Assert(listOfFourConnArcsDefault != null, "Invalid listOfFourConnArcsDefault (Null)");
+        Debug.Assert(listOfFiveConnArcsDefault != null, "Invalid listOfFiveConnArcsDefault (Null)");
+        Debug.Assert(listOfOneConnArcsPreferred != null, "Invalid listOfOneConnArcsPreferred (Null)");
+        Debug.Assert(listOfTwoConnArcsPreferred != null, "Invalid listOfTwoConnArcsPreferred (Null)");
+        Debug.Assert(listOfThreeConnArcsPreferred != null, "Invalid listOfThreeConnArcsPreferred (Null)");
+        Debug.Assert(listOfFourConnArcsPreferred != null, "Invalid listOfFourConnArcsPreferred (Null)");
+        Debug.Assert(listOfFiveConnArcsPreferred != null, "Invalid listOfFiveConnArcsPreferred (Null)");
         //arrayOfNodes -> contains all relevant info on nodes by type
         int[] tempArray = GameManager.instance.levelScript.GetNodeTypeTotals();
         arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
@@ -380,21 +397,34 @@ public class DataManager : MonoBehaviour
         List<NodeArc> tempList = null;
         switch (numConnections)
         {
-            case 1:
-                tempList = listOfOneConnArcsDefault;
+            case 1: tempList = listOfOneConnArcsDefault; break;
+            case 2: tempList = listOfTwoConnArcsDefault; break;
+            case 3: tempList = listOfThreeConnArcsDefault; break;
+            case 4: tempList = listOfFourConnArcsDefault; break;
+            case 5: tempList = listOfFiveConnArcsDefault; break;
+            default:
+                Debug.LogError("Invalid number of Connections " + numConnections);
                 break;
-            case 2:
-                tempList = listOfTwoConnArcsDefault;
-                break;
-            case 3:
-                tempList = listOfThreeConnArcsDefault;
-                break;
-            case 4:
-                tempList = listOfFourConnArcsDefault;
-                break;
-            case 5:
-                tempList = listOfFiveConnArcsDefault;
-                break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// returns a list of Preferred Node Arcs based on number of node connections (1 to 5). Null if a problem.
+    /// </summary>
+    /// <param name="numConnections"></param>
+    /// <returns></returns>
+    public List<NodeArc> GetPreferredNodeArcList(int numConnections)
+    {
+        Debug.Assert(numConnections > 0 && numConnections < 6, string.Format("Invalid numConnections \"{0}\"", numConnections));
+        List<NodeArc> tempList = null;
+        switch (numConnections)
+        {
+            case 1: tempList = listOfOneConnArcsPreferred; break;
+            case 2: tempList = listOfTwoConnArcsPreferred; break;
+            case 3: tempList = listOfThreeConnArcsPreferred; break;
+            case 4: tempList = listOfFourConnArcsPreferred; break;
+            case 5: tempList = listOfFiveConnArcsPreferred; break;
             default:
                 Debug.LogError("Invalid number of Connections " + numConnections);
                 break;
