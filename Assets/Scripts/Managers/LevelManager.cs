@@ -479,45 +479,7 @@ public class LevelManager : MonoBehaviour
     // - - - Graph related methods - - -
     //
 
-    /// <summary>
-    /// returns a string made up of basic GraphAPI analysis methods
-    /// </summary>
-    /// <returns></returns>
-    public string GetGraphAnalysis()
-    {
-        string analysis = "Graph Analysis" + "\n\n";
-        //graphAPI analysis data
-        if (graph != null)
-        {
-            analysis += "MaxDegree:  " + Convert.ToString(graph.CalcMaxDegree()) + "\n";
-            analysis += "AvgDegree:  " + Convert.ToString(graph.CalcAvgDegree()) + "\n";
-            analysis += "SelfLoops:    " + Convert.ToString(graph.CalcSelfLoops()) + "\n\n";
-        }
-        else
-        { Debug.LogError("Graph is Null -> no analysis available"); }
-        //base stats
-        analysis += "NumNodes:  " + Convert.ToString(listOfNodes.Count) + "\n";
-        analysis += "NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n\n";
-        analysis += TestSearch();
-        return analysis;
-    }
 
-   
-    /// <summary>
-    /// returns a string made up of Node type distribution
-    /// </summary>
-    /// <returns></returns>
-    public string GetNodeAnalysis()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.Append("Node Analysis" + "\n\n");
-        for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)
-        {
-            NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
-            builder.Append(string.Format("{0}  {1}{2}", arc.name, arrayOfNodeArcTotals[(int)NodeArcTally.Current, i], "\n"));
-        }
-        return builder.ToString();
-    }
 
     /// <summary>
     /// Test Search that determines if the graph is connected or not
@@ -931,4 +893,50 @@ public class LevelManager : MonoBehaviour
     public List<Node> GetListOfNodes()
     { return listOfNodes; }
 
+
+    //
+    // - - - Debug - - -
+    //
+
+    /// <summary>
+    /// city analysis
+    /// </summary>
+    /// <returns></returns>
+    public string GetLevelAnalysis()
+    {
+        StringBuilder builder = new StringBuilder();
+        //City data
+        City city = GameManager.instance.cityScript.GetCity();
+        if (city != null)
+        {
+            builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
+            builder.AppendFormat(" size {0} Districts{1}", city.Arc.size.name, "\n");
+        }
+        else { Debug.LogError("Invalid city (Null)"); }
+        //node analysis
+        builder.Append(" Node Analysis" + "\n\n");
+        for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)
+        {
+            NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
+            builder.Append(string.Format(" {0}  {1}{2}", arc.name, arrayOfNodeArcTotals[(int)NodeArcTally.Current, i], "\n"));
+        }
+        //graph analysis
+        builder.AppendFormat("{0}{1} Graph Analysis{2}{3}", "\n", "\n", "\n", "\n");
+        //graphAPI analysis data
+        if (graph != null)
+        {
+            builder.Append(" MaxDegree:  " + Convert.ToString(graph.CalcMaxDegree()) + "\n");
+            builder.Append(" AvgDegree:  " + Convert.ToString(graph.CalcAvgDegree()) + "\n");
+            builder.Append(" SelfLoops:    " + Convert.ToString(graph.CalcSelfLoops()) + "\n\n");
+        }
+        else
+        { Debug.LogError(" Graph is Null -> no analysis available"); }
+        //base stats
+        builder.Append(" NumNodes:  " + Convert.ToString(listOfNodes.Count) + "\n");
+        builder.Append(" NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n\n");
+        builder.AppendFormat(" {0}", TestSearch());
+        return builder.ToString();
+    }
+
+    
 }
