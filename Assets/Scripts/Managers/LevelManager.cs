@@ -228,7 +228,8 @@ public class LevelManager : MonoBehaviour
             }
         }
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
-        numOfNodes = listOfNodeObjects.Count;
+        /*numOfNodes = listOfNodeObjects.Count;*/
+        numOfNodes = listOfNodes.Count;
     }
 
     /// <summary>
@@ -243,8 +244,9 @@ public class LevelManager : MonoBehaviour
                                        //stores relevant index to listOfNodes / listOfCoordinates
 
         //loop list of Nodes
-        for (int index = 0; index < listOfNodeObjects.Count; index++)
-        {
+        /*for (int index = 0; index < listOfNodeObjects.Count; index++)*/
+        for (int index = 0; index < listOfNodes.Count; index++)
+            {
             //create a duplicate list
             List<Vector3> tempList = new List<Vector3>(listOfCoordinates);
             currentPos = listOfCoordinates[index];
@@ -539,7 +541,7 @@ public class LevelManager : MonoBehaviour
         else
         { Debug.LogError("Graph is Null -> no analysis available"); }
         //base stats
-        analysis += "NumNodes:  " + Convert.ToString(listOfNodeObjects.Count) + "\n";
+        analysis += "NumNodes:  " + Convert.ToString(listOfNodes.Count) + "\n";
         analysis += "NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n\n";
         analysis += TestSearch();
         return analysis;
@@ -736,7 +738,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void InitialiseNodeArcs()
     {
-        int index, current, minimum, numConnections;
+        int index, current, minimum, numConnections, remainingNodes;
         bool isRepeat;
         int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
         current = (int)NodeArcTally.Current;
@@ -744,9 +746,9 @@ public class LevelManager : MonoBehaviour
         //create a temporary list of all nodes
         List<Node> tempListOfNodes = new List<Node>(listOfNodes);
         List<NodeArc> tempListOfNodeArcs = new List<NodeArc>();
-
-
-        //reverse loop nodes, assign minimum required nodeArcs -> first pass
+        //
+        // - - - reverse loop nodes, assign minimum required nodeArcs -> first pass
+        //
         for (int i = tempListOfNodes.Count - 1; i >= 0; i--)
         {
             Node node = tempListOfNodes[i];
@@ -777,8 +779,9 @@ public class LevelManager : MonoBehaviour
         }
         //Display stats
         DisplayNodeStats("MINIMUM (First Pass)", numRecords);
-
-        //check if any nodeArcs didn't meet their minimum requirements, assign a random node node if so -> Final pass
+        //
+        // - - - check if any nodeArcs didn't meet their minimum requirements, assign a random node node if so -> Final pass
+        //
         for (int i = 0; i < numRecords; i++)
         {
             isRepeat = false;
@@ -792,7 +795,6 @@ public class LevelManager : MonoBehaviour
                     if (node != null)
                     {
                         //assign node arc, set node details and adjust count
-
                         node.Arc = GameManager.instance.dataScript.GetNodeArc(i);
                         if (node.Arc != null)
                         {
@@ -815,48 +817,78 @@ public class LevelManager : MonoBehaviour
         }
         //Display stats
         DisplayNodeStats("MINIMUM (Final Pass)", numRecords);
-
-        //Assign nodeArc priority, if any
+        //
+        // - - - Assign nodeArc priority, if any
+        //
         City city = GameManager.instance.cityScript.GetCity();
         if (city != null)
         {
-            if (tempListOfNodeArcs.Count > 0)
+            remainingNodes = tempListOfNodes.Count;
+            if (remainingNodes > 0)
             {
-                NodeArc arc = city.Arc.priority;
-                if (arc != null)
+                NodeArc arcPriority = city.Arc.priority;
+                if (arcPriority != null)
                 {
-                    index = arc.nodeArcID;
-                    Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: Priority NodeArc \"{0}\", nodeArcID {1}{2}", arc.name, arc.nodeArcID, "\n");
-                    int numToAssign = tempListOfNodeArcs.Count / 2;
+                    index = arcPriority.nodeArcID;
+                    int numToAssign = remainingNodes / 2;
+                    Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: Priority NodeArc \"{0}\", nodeArcID {1}, numToAssign {2}{3}", arcPriority.name, arcPriority.nodeArcID, numToAssign, "\n");
                     //randomly assign half the remaining node arcs to the priority NodeArc
-                    ff
+                    int counter = Mathf.Min(numToAssign, remainingNodes);
+                    for (int i = 0; i < counter; i++)
+                    {
+                        Node node = tempListOfNodes[Random.Range(0, tempListOfNodes.Count)];
+                        if (node != null)
+                        {
+                            //assign node arc, set node details and adjust count
+                            node.Arc = arcPriority;
+                            if (node.Arc != null)
+                            {
+                                SetNodeDetails(node);
+                                arrayOfNodeArcTotals[current, arcPriority.nodeArcID]++;
+                                //delete node from tempList
+                                tempListOfNodes.RemoveAt(i);
+                            }
+                            else { Debug.LogErrorFormat("Invalid NodeArc (Null) for nodeArcID {0}", arcPriority.nodeArcID); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid node (Null) from tempListOfNodes[{0}]", i); }
+                    }
                 }
                 else { Debug.Log("LevelManager.cs -> InitialiseNodeArcs: There is no cityArc Priority"); }
             }
             else { Debug.LogWarning("NO more nodes available, tempListOfNodeArcs is Empty"); }
         }
         else { Debug.LogError("Invalid city (Null)"); }
-
-        //loop list of nodes -> Default values and assign names
-        foreach (Node node in tempListOfNodes)
+        //Display stats
+        DisplayNodeStats("PRIORITY", numRecords);
+        //
+        // - - - Assign random (default) nodeArcs to any remaining nodes
+        //
+        remainingNodes = tempListOfNodes.Count;
+        if (remainingNodes > 0)
         {
-            numConnections = node.GetNumOfNeighbours();
-            //get random node Arc from appropriate list
-            node.Arc = GetNodeArcRandom(numConnections);
-            if (node.Arc != null)
+            for (int i = 0; i < remainingNodes; i++)
             {
-                //assign data to node
-                SetNodeDetails(node);
-                //keep a tally of how many of each type have been generated
-                index = node.Arc.nodeArcID;
-                if (index < numRecords)
-                { arrayOfNodeArcTotals[current, index]++; }
-                else { Debug.LogError(string.Format("Number of NodeArcs exceeded by nodeArcID {0} for Node {1}", index, node.Arc.name)); }
+                Node node = tempListOfNodes[i];
+                if (node != null)
+                {
+                    numConnections = node.GetNumOfNeighbours();
+                    //get random node Arc from appropriate list
+                    node.Arc = GetNodeArcRandom(numConnections);
+                    if (node.Arc != null)
+                    {
+                        //assign data to node
+                        SetNodeDetails(node);
+                        //keep a tally of how many of each type have been generated
+                        index = node.Arc.nodeArcID;
+                        arrayOfNodeArcTotals[current, index]++;
+                    }
+                    else { Debug.LogError("Invalid nodeArc (Null)"); }
+                }
+                else { Debug.LogErrorFormat("Invalid node (Null) for tempListOfNodes[{0}]", i); }
             }
-            else { Debug.LogError("Invalid nodeArc (Null)"); }
         }
         //Display stats
-        DisplayNodeStats("FINAL", numRecords);
+        DisplayNodeStats("FINAL (Random defaul for remaining)", numRecords);
     }
 
     /// <summary>

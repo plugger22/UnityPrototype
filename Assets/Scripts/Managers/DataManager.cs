@@ -224,11 +224,13 @@ public class DataManager : MonoBehaviour
             listOfNodesByType.Add(tempList);
         }
         //Populate List of lists -> place node in the correct list
-        foreach(var nodeObj in dictOfNodeObjects)
+        /*foreach(var nodeObj in dictOfNodeObjects)
         {
             Node node = nodeObj.Value.GetComponent<Node>();
             listOfNodesByType[node.Arc.nodeArcID].Add(node);
-        }
+        }*/
+        foreach(var node in dictOfNodes)
+        { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
         //Node Crisis placed into pick lists
         if (dictOfNodeCrisis != null)
         {
