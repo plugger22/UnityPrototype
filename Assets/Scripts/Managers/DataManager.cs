@@ -213,9 +213,7 @@ public class DataManager : MonoBehaviour
         int[] tempArray = GameManager.instance.levelScript.GetNodeTypeTotals();
         arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
         for (int i = 0; i < tempArray.Length; i++)
-        {
-            arrayOfNodes[i, 0] = tempArray[i];
-        }
+        { arrayOfNodes[i, 0] = tempArray[i]; }
         //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
         int limit = CheckNumOfNodeTypes();
         for(int i = 0; i < limit; i++)
@@ -1468,9 +1466,7 @@ public class DataManager : MonoBehaviour
     {
         Node node = null;
         if (dictOfNodes.TryGetValue(nodeID, out node))
-        {
-            return node;
-        }
+        { return node; }
         return null;
     }
 

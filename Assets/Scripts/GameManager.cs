@@ -288,6 +288,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "PreLoadManager";
         listOfStartMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
+        //Load Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
@@ -358,14 +359,17 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.levelScript.Initialise;
         startMethod.className = "LevelManager";
         listOfStartMethods.Add(startMethod);
-        //Data Manager -> InitialiseLate -> immediately after levelScript.Initialise
-        startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
-        startMethod.className = "DataManager";
-        listOfStartMethods.Add(startMethod);
-        //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise & DataManager.Initialise
+
+        //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
         startMethod.handler = GameManager.instance.loadScript.InitialiseLate;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
+
+        //Data Manager -> InitialiseLate -> immediately after LoadScript.Initialise
+        startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
+        startMethod.className = "DataManager";
+        listOfStartMethods.Add(startMethod);
+
         //City Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
         startMethod.className = "CityManager";

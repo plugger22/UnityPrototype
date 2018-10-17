@@ -150,6 +150,7 @@ public class ContactManager : MonoBehaviour
                 contact.turnStart = GameManager.instance.turnScript.Turn;
                 //assign type and job
                 Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                Debug.Assert(node.Arc != null, string.Format("Invalid node.Arc for nodeID {0}", node.nodeID));
                 if (node != null)
                 {
                     ContactType contactType = node.Arc.GetRandomContactType();

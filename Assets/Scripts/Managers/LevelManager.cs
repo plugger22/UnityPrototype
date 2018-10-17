@@ -738,7 +738,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void InitialiseNodeArcs()
     {
-        int index, current, minimum, numConnections, remainingNodes;
+        int index, rndIndex, current, minimum, numConnections, remainingNodes;
         bool isRepeat;
         int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
         current = (int)NodeArcTally.Current;
@@ -746,6 +746,7 @@ public class LevelManager : MonoBehaviour
         //create a temporary list of all nodes
         List<Node> tempListOfNodes = new List<Node>(listOfNodes);
         List<NodeArc> tempListOfNodeArcs = new List<NodeArc>();
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: START tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");
         //
         // - - - reverse loop nodes, assign minimum required nodeArcs -> first pass
         //
@@ -765,13 +766,16 @@ public class LevelManager : MonoBehaviour
                     //check if this NodeArc still requires nodes
                     if (arrayOfNodeArcTotals[current, index] < arrayOfNodeArcTotals[minimum, index] == true)
                     {
-                        //assign node arc, set node details and adjust count
-                        node.Arc = nodeArc;
-                        SetNodeDetails(node);
-                        arrayOfNodeArcTotals[current, index]++;
-                        //delete node from tempList and go onto the next
-                        tempListOfNodes.RemoveAt(i);
-                        break;
+                        if (nodeArc != null)
+                        {
+                            //assign node arc, set node details and adjust count
+                            SetNodeDetails(node, nodeArc);
+                            arrayOfNodeArcTotals[current, index]++;
+                            //delete node from tempList and go onto the next
+                            tempListOfNodes.RemoveAt(i);
+                            break;
+                        }
+                        else { Debug.LogError("Invalid nodeArc (Null)"); }
                     }
                 }
             }
@@ -779,6 +783,7 @@ public class LevelManager : MonoBehaviour
         }
         //Display stats
         DisplayNodeStats("MINIMUM (First Pass)", numRecords);
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: MINIMUM (First) tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");
         //
         // - - - check if any nodeArcs didn't meet their minimum requirements, assign a random node node if so -> Final pass
         //
@@ -791,17 +796,18 @@ public class LevelManager : MonoBehaviour
                 {
                     isRepeat = true;
                     //assign random node
-                    Node node = tempListOfNodes[Random.Range(0, tempListOfNodes.Count)];
+                    rndIndex = Random.Range(0, tempListOfNodes.Count);
+                    Node node = tempListOfNodes[rndIndex];
                     if (node != null)
                     {
                         //assign node arc, set node details and adjust count
-                        node.Arc = GameManager.instance.dataScript.GetNodeArc(i);
-                        if (node.Arc != null)
+                        NodeArc nodeArc = GameManager.instance.dataScript.GetNodeArc(i);
+                        if (nodeArc != null)
                         {
-                            SetNodeDetails(node);
+                            SetNodeDetails(node, nodeArc);
                             arrayOfNodeArcTotals[current, i]++;
                             //delete node from tempList
-                            tempListOfNodes.RemoveAt(i);
+                            tempListOfNodes.RemoveAt(rndIndex);
                         }
                         else { Debug.LogErrorFormat("Invalid NodeArc (Null) for nodeArcID {0}", i); }
                     }
@@ -817,6 +823,7 @@ public class LevelManager : MonoBehaviour
         }
         //Display stats
         DisplayNodeStats("MINIMUM (Final Pass)", numRecords);
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: MINIMUM (Final) tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");
         //
         // - - - Assign nodeArc priority, if any
         //
@@ -836,17 +843,18 @@ public class LevelManager : MonoBehaviour
                     int counter = Mathf.Min(numToAssign, remainingNodes);
                     for (int i = 0; i < counter; i++)
                     {
-                        Node node = tempListOfNodes[Random.Range(0, tempListOfNodes.Count)];
+                        rndIndex = Random.Range(0, tempListOfNodes.Count);
+                        Node node = tempListOfNodes[rndIndex];
                         if (node != null)
                         {
                             //assign node arc, set node details and adjust count
-                            node.Arc = arcPriority;
-                            if (node.Arc != null)
+                            NodeArc nodeArc = arcPriority;
+                            if (nodeArc != null)
                             {
-                                SetNodeDetails(node);
+                                SetNodeDetails(node, nodeArc);
                                 arrayOfNodeArcTotals[current, arcPriority.nodeArcID]++;
                                 //delete node from tempList
-                                tempListOfNodes.RemoveAt(i);
+                                tempListOfNodes.RemoveAt(rndIndex);
                             }
                             else { Debug.LogErrorFormat("Invalid NodeArc (Null) for nodeArcID {0}", arcPriority.nodeArcID); }
                         }
@@ -860,6 +868,7 @@ public class LevelManager : MonoBehaviour
         else { Debug.LogError("Invalid city (Null)"); }
         //Display stats
         DisplayNodeStats("PRIORITY", numRecords);
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: PRIORITY tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");
         //
         // - - - Assign random (default) nodeArcs to any remaining nodes
         //
@@ -873,11 +882,11 @@ public class LevelManager : MonoBehaviour
                 {
                     numConnections = node.GetNumOfNeighbours();
                     //get random node Arc from appropriate list
-                    node.Arc = GetNodeArcRandom(numConnections);
-                    if (node.Arc != null)
+                    NodeArc nodeArc = GetNodeArcRandom(numConnections);
+                    if (nodeArc != null)
                     {
                         //assign data to node
-                        SetNodeDetails(node);
+                        SetNodeDetails(node, nodeArc);
                         //keep a tally of how many of each type have been generated
                         index = node.Arc.nodeArcID;
                         arrayOfNodeArcTotals[current, index]++;
@@ -889,6 +898,7 @@ public class LevelManager : MonoBehaviour
         }
         //Display stats
         DisplayNodeStats("FINAL (Random defaul for remaining)", numRecords);
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: RANDOM tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");
     }
 
     /// <summary>
@@ -896,23 +906,30 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <param name="nodeArc"></param>
-    private void SetNodeDetails(Node node)
+    private void SetNodeDetails(Node nodeTemp, NodeArc nodeArc)
     {
-        //node name
-        node.nodeName = "Placeholder";
-        //provide base level stats 
-        node.Stability = node.Arc.Stability;
-        node.Support = node.Arc.Support;
-        node.Security = node.Arc.Security;
-        //keep within range of 0 to 3
-        int maxNodeValue = GameManager.instance.nodeScript.maxNodeValue;
-        node.Stability = Mathf.Clamp(node.Stability, 0, maxNodeValue);
-        node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
-        node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
-        //position
-        node.nodePosition = node.transform.position;
-        //target -> none
-        node.targetID = -1;
+        //find node in listOfNodes & update details (currently in a tempList and will be deleted)
+        Node node = listOfNodes.Find(x => x.nodeID == nodeTemp.nodeID);
+        if (node != null)
+        {
+            node.Arc = nodeArc;
+            //node name
+            node.nodeName = "Placeholder";
+            //provide base level stats 
+            node.Stability = node.Arc.Stability;
+            node.Support = node.Arc.Support;
+            node.Security = node.Arc.Security;
+            //keep within range of 0 to 3
+            int maxNodeValue = GameManager.instance.nodeScript.maxNodeValue;
+            node.Stability = Mathf.Clamp(node.Stability, 0, maxNodeValue);
+            node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
+            node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
+            //position
+            node.nodePosition = node.transform.position;
+            //target -> none
+            node.targetID = -1;
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
     }
 
     /// <summary>

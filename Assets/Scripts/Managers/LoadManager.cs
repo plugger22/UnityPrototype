@@ -1260,8 +1260,6 @@ public class LoadManager : MonoBehaviour
                 else { Debug.LogError("Invalid listOfNodes (Null)"); }
             }
             else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
-            /*//Actor Nodes
-            GameManager.instance.dataScript.UpdateActorNodes();*/
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
     }
