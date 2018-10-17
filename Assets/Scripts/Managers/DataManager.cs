@@ -95,7 +95,7 @@ public class DataManager : MonoBehaviour
     public List<NodeArc> listOfFourConnArcsDefault = new List<NodeArc>();
     public List<NodeArc> listOfFiveConnArcsDefault = new List<NodeArc>();
     //which nodeArcs like which connections (no dupes in a single list but a nodeArc can be in multiple lists)
-    [Header("Preffered Connections for NodeArcs")]
+    [Header("Preferred Connections for NodeArcs")]
     public List<NodeArc> listOfOneConnArcsPreferred = new List<NodeArc>();
     public List<NodeArc> listOfTwoConnArcsPreferred = new List<NodeArc>();
     public List<NodeArc> listOfThreeConnArcsPreferred = new List<NodeArc>();
@@ -222,11 +222,6 @@ public class DataManager : MonoBehaviour
             listOfNodesByType.Add(tempList);
         }
         //Populate List of lists -> place node in the correct list
-        /*foreach(var nodeObj in dictOfNodeObjects)
-        {
-            Node node = nodeObj.Value.GetComponent<Node>();
-            listOfNodesByType[node.Arc.nodeArcID].Add(node);
-        }*/
         foreach(var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
         //Node Crisis placed into pick lists
