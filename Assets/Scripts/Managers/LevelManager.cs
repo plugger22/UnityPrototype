@@ -149,30 +149,23 @@ public class LevelManager : MonoBehaviour
                 randomPos.x = Random.Range(0, 11) - 5;
                 randomPos.y = 0.5f;
                 randomPos.z = Random.Range(0, 11) - 5;
-
-                if (listOfCoordinates.Count == 0)
-                { /*Debug.Log("RandomPos: " + randomPos);*/ }
-                else
+                //loop list and check min spacing requirement
+                for (int j = 0; j < listOfCoordinates.Count; j++)
                 {
-                    //loop list and check min spacing requirement
-                    for (int j = 0; j < listOfCoordinates.Count; j++)
-                    {
-                        distance = Vector3.Distance(listOfCoordinates[j], randomPos);
-                        
-                        /*Debug.Log("list[j]: " + listOfCoordinates[j] + "  randomPos: " + randomPos);
-                        Debug.Log("distance: " + distance);*/
+                    distance = Vector3.Distance(listOfCoordinates[j], randomPos);
 
-                        //identical to an existing position?
-                        if (listOfCoordinates[j] == randomPos) { validPos = false; break; }
-                        //fails minimum spacing test
-                        else if (distance <= spacing) { validPos = false;  break; }
-                    }
-                    //prevent endless iterations
-                    if (loopCtr >= 20)
-                    {
-                        Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: failed random placement (20 times), index {0}", i);
-                        break;
-                    }
+                    Debug.LogFormat("Node {0} Checklist[{1}], randomPos {2} distance {3}, counter {4}", i, j, randomPos, distance, loopCtr);
+
+                    //identical to an existing position?
+                    if (listOfCoordinates[j] == randomPos) { validPos = false; break; }
+                    //fails minimum spacing test
+                    else if (distance <= spacing) { validPos = false; break; }
+                }
+                //prevent endless iterations
+                if (loopCtr >= 20)
+                {
+                    Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: failed random placement (20 times), index {0}", i);
+                    break;
                 }
             }
             while (validPos == false);
@@ -196,6 +189,10 @@ public class LevelManager : MonoBehaviour
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
         /*numOfNodes = listOfNodeObjects.Count;*/
         numOfNodes = listOfNodes.Count;
+        if (numOfNodes != number)
+        {
+            Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Mismatch on InitialiseNodes, {0} Nodes short", number - numOfNodes);
+        }
     }
 
     /// <summary>
@@ -910,11 +907,17 @@ public class LevelManager : MonoBehaviour
         if (city != null)
         {
             builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
-            builder.AppendFormat(" size {0} Districts{1}", city.Arc.size.name, "\n");
+            builder.AppendFormat(" Size {0}, {1} districts ({2} rqd min #){3}", city.Arc.size.name, city.Arc.size.numOfNodes, city.Arc.size.minNum, "\n");
+            builder.AppendFormat(" Spacing {0} ({1} min distance btwn nodes){2}", city.Arc.spacing.name, city.Arc.spacing.minDistance, "\n");
+            builder.AppendFormat(" Connections {0} ({1}% chance of extra conn){2}", city.Arc.connections.name, city.Arc.connections.frequency, "\n");
+            builder.AppendFormat(" Security {0} ({1}% chance of higher Security){2}{3}", city.Arc.security.name, city.Arc.security.chance, "\n", "\n");
+            if (city.Arc.priority != null)
+            { builder.AppendFormat(" Priority NodeArc {0} (50% of remaining){1}", city.Arc.priority.name, "\n"); }
+            else { builder.AppendFormat(" Priority NONE (remaining all Random){0}", "\n"); }
         }
         else { Debug.LogError("Invalid city (Null)"); }
         //node analysis
-        builder.Append(" Node Analysis" + "\n\n");
+        builder.AppendFormat("{0} Node Analysis{1}{2}", "\n", "\n", "\n");
         for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)
         {
             NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
