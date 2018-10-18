@@ -9,16 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Gotham City
+  m_Name: New York
   m_EditorClassIdentifier: 
   descriptor: Dark and riddled with crime.
   baseLoyalty: 5
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
   mayorDistrict: 
-  iconName: 
+  iconName: Statue of Liberty
   iconDistrict: 
-  districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
+  airportDistrict: 
+  portDistrict: 
+  districtNames: {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
   cityID: 4
-  mayor: {fileID: 11400000, guid: a6827a088f2e84f44bb86637e69ba42d, type: 2}
+  mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
   faction: {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}

@@ -16,9 +16,11 @@ MonoBehaviour:
   Arc: {fileID: 11400000, guid: 9ceafc034aa45664a9c4b564298e540e, type: 2}
   country: {fileID: 11400000, guid: cb6627e1333c21341a08bf4228c40d48, type: 2}
   mayorDistrict: 
-  iconName: 
+  iconName: Opera House
   iconDistrict: 
-  districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
+  airportDistrict: 
+  portDistrict: 
+  districtNames: {fileID: 11400000, guid: f2ec3998326528a4c820b31d04acec8e, type: 2}
   cityID: 8
-  mayor: {fileID: 11400000, guid: d6c92273355a3c44999005b17358e428, type: 2}
+  mayor: {fileID: 11400000, guid: a6827a088f2e84f44bb86637e69ba42d, type: 2}
   faction: {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}
