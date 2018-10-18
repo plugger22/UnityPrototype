@@ -123,55 +123,99 @@ public class LevelManager : MonoBehaviour
     // --- Graph construction ---
     //
     /// <summary>
-    /// place 'x' num nodes randomly within a 10 x 10 grid (world units) with a minimum spacing between them all
+    /// place 'x' num nodes randomly within a 11 x 11 grid (world units) with a minimum spacing between them all
     /// </summary>
     /// <param name="number"></param>
     /// <param name="spacing"></param>
     private void InitialiseNodes(int number, float spacing)
     {
-        int loopCtr;
-        float distance;
-        Vector3 randomPos;
+        int outerLoopCtr, innerLoopCtr, random_x, random_z;
+        int size = 11;
+        int numOfTimesToCheck = 20;
+        Vector3 randomPos = Vector3.zero; //default value
         bool validPos;
         nodeHolder = new GameObject("MasterNode").transform;
         Node nodeTemp;
-
-        //loop for number of nodes required (10 x 10 grid with coords ranging from -5 to +5)
+        //array of mirror cells to grid where if true, a node exists. Used for optimising placement routine.
+        bool[,] arrayOfFlags = new bool[size, size];
+        //zero out flag array
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            { arrayOfFlags[i, j] = false; }
+        }
+        //loop for number of nodes required (11 x 11 grid with coords ranging from -5 to +5)
         for (int i = 0; i < number; i++)
         {
-            loopCtr = 0;
-            //continue generating random positions until a valid one is found (max 20 iterations then skip node if not successful)
+            outerLoopCtr = 0;
+            //continue generating random positions until a valid one is found (max 20 iterations then go to manual if not successful)
             do
             {
-                loopCtr++;
+                outerLoopCtr++;
                 validPos = true;
                 //set up Vector3
-                randomPos.x = Random.Range(0, 11) - 5;
-                randomPos.y = 0.5f;
-                randomPos.z = Random.Range(0, 11) - 5;
-                //loop list and check min spacing requirement
-                for (int j = 0; j < listOfCoordinates.Count; j++)
+                random_x = Random.Range(0, size);
+                random_z = Random.Range(0, size);
+                //check array first
+                if (arrayOfFlags[random_x, random_z] == false)
                 {
-                    distance = Vector3.Distance(listOfCoordinates[j], randomPos);
-
-                    Debug.LogFormat("Node {0} Checklist[{1}], randomPos {2} distance {3}, counter {4}", i, j, randomPos, distance, loopCtr);
-
-                    //identical to an existing position?
-                    if (listOfCoordinates[j] == randomPos) { validPos = false; break; }
-                    //fails minimum spacing test
-                    else if (distance <= spacing) { validPos = false; break; }
+                    randomPos.x = random_x - 5;
+                    randomPos.y = 0.5f;
+                    randomPos.z = random_z - 5;
+                    //empty cell, loop list and check min spacing requirement
+                    validPos = CheckPositionValid(randomPos, spacing);
                 }
-                //prevent endless iterations
-                if (loopCtr >= 20)
+                else { validPos = false; }
+                //Timed out, do it the hard way by stepping through the array, cell by cell, looking for any empty one
+                if (outerLoopCtr >= numOfTimesToCheck)
                 {
+                    innerLoopCtr = 0;
                     Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: failed random placement (20 times), index {0}", i);
-                    break;
+                    //random position to kick off
+                    random_x = Random.Range(0, size);
+                    random_z = Random.Range(0, size);
+                    //find a valid position by traversing array, step by step
+                    do
+                    {
+                        innerLoopCtr++;
+                        //not a duplicate and are immediate orthagonal neighbours blanks?
+                        if (arrayOfFlags[random_x, random_z] == false && CheckForOrthagonalNeighbours(arrayOfFlags, size - 1, random_x, random_z) == false)
+                        {
+                            randomPos.x = random_x - 5;
+                            randomPos.y = 0.5f;
+                            randomPos.z = random_z - 5;
+                            //empty cell, loop list and check min spacing requirement
+                            validPos = CheckPositionValid(randomPos, spacing);
+                            //invalid position, increment array, roll over if need be, for next position to try
+                            if (validPos == false)
+                            {
+                                if (Random.Range(0, 100) < 50)
+                                { random_x++; if (random_x >= size) { random_x = 0; } }
+                                else
+                                { random_z++; if (random_z >= size) { random_z = 0; } }
+                            }
+                        }
+                        else
+                        {
+                            //Invalid position, increment array, roll over if need be, for next position to try
+                            validPos = false;
+                            if (Random.Range(0, 100) < 50)
+                            { random_x++; if (random_x >= size) { random_x = 0; } }
+                            else
+                            { random_z++; if (random_z >= size) { random_z = 0; } }
+                        }
+                        if (validPos == true)
+                        { Debug.LogFormat("[Tst] LevelManager.cs -> InitaliseNodes: Manual array stepping WORKED for index {0}, looped {1} times", i, innerLoopCtr); }
+                    }
+                    while (validPos == false && innerLoopCtr < 100);
                 }
             }
-            while (validPos == false);
+            while (validPos == false && outerLoopCtr < numOfTimesToCheck);
             //successful node
             if (validPos == true)
             {
+                //update array if required
+                arrayOfFlags[random_x, random_z] = true;
                 //create node from prefab
                 instance = Instantiate(node, randomPos, Quaternion.identity) as GameObject;
                 instance.transform.SetParent(nodeHolder);
@@ -190,9 +234,50 @@ public class LevelManager : MonoBehaviour
         /*numOfNodes = listOfNodeObjects.Count;*/
         numOfNodes = listOfNodes.Count;
         if (numOfNodes != number)
+        { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Mismatch on InitialiseNodes, {0} Nodes short", number - numOfNodes); }
+    }
+
+    /// <summary>
+    /// subMethod for InitialiseNodes to check a randomPosition against all existing nodes for minimum spacing. Returns true if O.K, false if not
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="spacing"></param>
+    /// <returns></returns>
+    private bool CheckPositionValid(Vector3 pos, float spacing)
+    {
+        bool isValidPos = true;
+        float distance;
+        //loop existing nodes
+        for (int j = 0; j < listOfCoordinates.Count; j++)
         {
-            Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Mismatch on InitialiseNodes, {0} Nodes short", number - numOfNodes);
+            distance = Vector3.Distance(listOfCoordinates[j], pos);
+
+            /*//identical to an existing position?
+            if (listOfCoordinates[j] == pos) { isValidPos = false; break; }*/
+
+            //fails minimum spacing test
+            if (distance <= spacing) { isValidPos = false; break; }
         }
+        return isValidPos;
+    }
+
+    /// <summary>
+    /// subMethod for InitialiseNodes to quickly check if any there are any immediate orthagonal neighbours using array (distance would be 1.0 which is too close for all spacings, returns true)
+    /// </summary>
+    /// <param name="random_x"></param>
+    /// <param name="random_z"></param>
+    /// <returns></returns>
+    private bool CheckForOrthagonalNeighbours(bool[,] arrayOfFlags, int max, int random_x, int random_z)
+    {
+        if (random_x > 0)
+        { if (arrayOfFlags[random_x - 1, random_z] == true) { return true; } }
+        if (random_x < max)
+        { if (arrayOfFlags[random_x + 1, random_z] == true) { return true; } }
+        if (random_z > 0)
+        { if (arrayOfFlags[random_x, random_z - 1] == true) { return true; } }
+        if (random_z < max)
+        { if (arrayOfFlags[random_x, random_z + 1] == true) { return true; } }
+        return false;
     }
 
     /// <summary>
