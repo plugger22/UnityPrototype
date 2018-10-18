@@ -59,12 +59,19 @@ public class LevelManager : MonoBehaviour
     private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
      
     private int[,] arrayOfNodeArcTotals;            //array of how many of each node type there is on the map, index -> [(int)NodeArcTally, nodeArc.nodeArcID]
+
+    //fast access
+    private City city;
     
     /// <summary>
     /// Master method that drives a level
     /// </summary>
     public void Initialise()
     {
+        //fast access
+        city = GameManager.instance.cityScript.GetCity();
+        Debug.Assert(city != null, "Invalid city (Null)");
+        //ProcGen level
         InitialiseData();
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
@@ -74,6 +81,7 @@ public class LevelManager : MonoBehaviour
         InitialiseNodeArcs();
         /*AssignNodeArcs();*/
         AssignSecurityLevels();
+        InitialiseDistrictNames();
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
     }
 
@@ -95,10 +103,7 @@ public class LevelManager : MonoBehaviour
             if (tempListPreferred != null) { listOfConnArcsPreferred[index] = tempListPreferred; }
 
         }
-        //city required to access level data
-        City city = GameManager.instance.cityScript.GetCity();
-        Debug.Assert(city != null && city.Arc != null, "City or City.Arc is Null");
-        if (city != null && city.Arc != null)
+        if (city.Arc != null)
         {
             // Set up data
             numOfNodes = city.Arc.size.numOfNodes;
@@ -108,8 +113,8 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            //no valid city found
-            Debug.LogWarning("Invalid City or City Arc (Null)");
+            //no valid city Arc found
+            Debug.LogWarning("Invalid City Arc (Null)");
             //Set up Data
             numOfNodes = numOfNodesDefault;
             minSpacing = minSpacingDefault;
@@ -508,10 +513,7 @@ public class LevelManager : MonoBehaviour
         int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
         arrayOfNodeArcTotals = new int[(int)NodeArcTally.Count, numRecords];
         //get minimum number of each type of NodeArc
-        City city = GameManager.instance.cityScript.GetCity();
-        if (city != null)
-        { minValue = city.Arc.size.minNum; }
-        else { Debug.LogError("Invalid city (Null)"); }
+        minValue = city.Arc.size.minNum;
         Debug.Assert(minValue > 0, "Invalid minValue (Zero)");
         //loop nodeArcs
         Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
@@ -778,45 +780,40 @@ public class LevelManager : MonoBehaviour
         //
         // - - - PRIORITY nodeArcs, if any
         //
-        City city = GameManager.instance.cityScript.GetCity();
-        if (city != null)
+        remainingNodes = tempListOfNodes.Count;
+        if (remainingNodes > 0)
         {
-            remainingNodes = tempListOfNodes.Count;
-            if (remainingNodes > 0)
+            NodeArc arcPriority = city.Arc.priority;
+            if (arcPriority != null)
             {
-                NodeArc arcPriority = city.Arc.priority;
-                if (arcPriority != null)
+                index = arcPriority.nodeArcID;
+                int numToAssign = remainingNodes / 2;
+                Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: Priority NodeArc \"{0}\", nodeArcID {1}, numToAssign {2}{3}", arcPriority.name, arcPriority.nodeArcID, numToAssign, "\n");
+                //randomly assign half the remaining node arcs to the priority NodeArc
+                int counter = Mathf.Min(numToAssign, remainingNodes);
+                for (int i = 0; i < counter; i++)
                 {
-                    index = arcPriority.nodeArcID;
-                    int numToAssign = remainingNodes / 2;
-                    Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: Priority NodeArc \"{0}\", nodeArcID {1}, numToAssign {2}{3}", arcPriority.name, arcPriority.nodeArcID, numToAssign, "\n");
-                    //randomly assign half the remaining node arcs to the priority NodeArc
-                    int counter = Mathf.Min(numToAssign, remainingNodes);
-                    for (int i = 0; i < counter; i++)
+                    rndIndex = Random.Range(0, tempListOfNodes.Count);
+                    Node node = tempListOfNodes[rndIndex];
+                    if (node != null)
                     {
-                        rndIndex = Random.Range(0, tempListOfNodes.Count);
-                        Node node = tempListOfNodes[rndIndex];
-                        if (node != null)
+                        //assign node arc, set node details and adjust count
+                        NodeArc nodeArc = arcPriority;
+                        if (nodeArc != null)
                         {
-                            //assign node arc, set node details and adjust count
-                            NodeArc nodeArc = arcPriority;
-                            if (nodeArc != null)
-                            {
-                                SetNodeDetails(node, nodeArc);
-                                arrayOfNodeArcTotals[current, arcPriority.nodeArcID]++;
-                                //delete node from tempList
-                                tempListOfNodes.RemoveAt(rndIndex);
-                            }
-                            else { Debug.LogErrorFormat("Invalid NodeArc (Null) for nodeArcID {0}", arcPriority.nodeArcID); }
+                            SetNodeDetails(node, nodeArc);
+                            arrayOfNodeArcTotals[current, arcPriority.nodeArcID]++;
+                            //delete node from tempList
+                            tempListOfNodes.RemoveAt(rndIndex);
                         }
-                        else { Debug.LogErrorFormat("Invalid node (Null) from tempListOfNodes[{0}]", i); }
+                        else { Debug.LogErrorFormat("Invalid NodeArc (Null) for nodeArcID {0}", arcPriority.nodeArcID); }
                     }
+                    else { Debug.LogErrorFormat("Invalid node (Null) from tempListOfNodes[{0}]", i); }
                 }
-                else { Debug.Log("LevelManager.cs -> InitialiseNodeArcs: There is NO cityArc Priority"); }
             }
-            else { Debug.LogWarning("NO more nodes available, tempListOfNodeArcs is Empty"); }
+            else { Debug.Log("LevelManager.cs -> InitialiseNodeArcs: There is NO cityArc Priority"); }
         }
-        else { Debug.LogError("Invalid city (Null)"); }
+        else { Debug.LogWarning("NO more nodes available, tempListOfNodeArcs is Empty"); }
         //Display stats
         DisplayNodeStats("PRIORITY", numRecords);
         /*Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: PRIORITY tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
@@ -881,6 +878,40 @@ public class LevelManager : MonoBehaviour
             node.targetID = -1;
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
+    }
+
+    /// <summary>
+    /// Assign names to all nodes
+    /// </summary>
+    private void InitialiseDistrictNames()
+    {
+        TextList districtNames = city.districtNames;
+        int index;
+        if (districtNames != null)
+        {
+            List<string> listOfNames = new List<string>(districtNames.randomList);
+            if (listOfNames != null)
+            {
+                if (listOfNames.Count >= city.Arc.size.numOfNodes)
+                {
+                    //randomly assign names
+                    foreach(Node node in listOfNodes)
+                    {
+                        index = Random.Range(0, listOfNames.Count);
+                        if (string.IsNullOrEmpty(listOfNames[index]) == false)
+                        {
+                            node.nodeName = listOfNames[index];
+                            //delete record to avoid dupes
+                            listOfNames.RemoveAt(index);
+                        }
+                        else { Debug.LogWarningFormat("Invalid name (Null or Empty) for listOfNames[{0}]", index); }
+                    }
+                }
+                else { Debug.LogError("Not enough district names for city"); }
+            }
+            else { Debug.LogError("Invalid DistrictNames.randomList (Null)"); }
+        }
+        else { Debug.LogError("Invalid TextList districtNames (Null)"); }
     }
 
     /// <summary>
@@ -988,19 +1019,14 @@ public class LevelManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //City data
-        City city = GameManager.instance.cityScript.GetCity();
-        if (city != null)
-        {
-            builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
-            builder.AppendFormat(" Size {0}, {1} districts ({2} rqd min #){3}", city.Arc.size.name, city.Arc.size.numOfNodes, city.Arc.size.minNum, "\n");
-            builder.AppendFormat(" Spacing {0} ({1} min distance btwn nodes){2}", city.Arc.spacing.name, city.Arc.spacing.minDistance, "\n");
-            builder.AppendFormat(" Connections {0} ({1}% chance of extra conn){2}", city.Arc.connections.name, city.Arc.connections.frequency, "\n");
-            builder.AppendFormat(" Security {0} ({1}% chance of higher Security){2}{3}", city.Arc.security.name, city.Arc.security.chance, "\n", "\n");
-            if (city.Arc.priority != null)
-            { builder.AppendFormat(" Priority NodeArc {0} (50% of remaining){1}", city.Arc.priority.name, "\n"); }
-            else { builder.AppendFormat(" Priority NONE (remaining all Random){0}", "\n"); }
-        }
-        else { Debug.LogError("Invalid city (Null)"); }
+        builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
+        builder.AppendFormat(" Size {0}, {1} districts ({2} rqd min #){3}", city.Arc.size.name, city.Arc.size.numOfNodes, city.Arc.size.minNum, "\n");
+        builder.AppendFormat(" Spacing {0} ({1} min distance btwn nodes){2}", city.Arc.spacing.name, city.Arc.spacing.minDistance, "\n");
+        builder.AppendFormat(" Connections {0} ({1}% chance of extra conn){2}", city.Arc.connections.name, city.Arc.connections.frequency, "\n");
+        builder.AppendFormat(" Security {0} ({1}% chance of higher Security){2}{3}", city.Arc.security.name, city.Arc.security.chance, "\n", "\n");
+        if (city.Arc.priority != null)
+        { builder.AppendFormat(" Priority NodeArc {0} (50% of remaining){1}", city.Arc.priority.name, "\n"); }
+        else { builder.AppendFormat(" Priority NONE (remaining all Random){0}", "\n"); }
         //node analysis
         builder.AppendFormat("{0} Node Analysis{1}{2}", "\n", "\n", "\n");
         for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)

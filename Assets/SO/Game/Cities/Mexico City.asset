@@ -13,9 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Sprawling slums and barrios
   baseLoyalty: 3
-  connectionSecurityChance: 25
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: dc3ec61ba88ce664db67fa218372e96e, type: 2}
+  mayorDistrict: 
+  iconName: 
+  iconDistrict: 
+  districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   cityID: 6
   mayor: {fileID: 11400000, guid: 603cd93ccd903aa4f9ae2a4be6c581b3, type: 2}
   faction: {fileID: 11400000, guid: 6041e87eef1508646ad96be985691ba5, type: 2}

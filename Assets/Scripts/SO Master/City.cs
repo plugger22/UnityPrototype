@@ -20,6 +20,20 @@ public class City : ScriptableObject
     public CityArc Arc;
     public Country country;
 
+    [Header("Districts")]
+    [Tooltip("Name of the district containing the Mayor's office")]
+    public string mayorDistrict;
+    [Tooltip("Name of a distinctive cultural icon for the city, eg 'The Eiffel Tower' or 'The Statue of Liberty'")]
+    public string iconName;
+    [Tooltip("Name of the district where the icon is located")]
+    public string iconDistrict;
+    [Tooltip("Name of the district where the city airport is located")]
+    public string airportDistrict;
+    [Tooltip("Name of the district where the port (if any) is located")]
+    public string portDistrict;
+    [Tooltip("List of district names to be randomly assigned to city nodes, min 28 required")]
+    public TextList districtNames;
+
     
     [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs
 
@@ -29,6 +43,14 @@ public class City : ScriptableObject
 
     private List<Organisation> listOfOrganisations = new List<Organisation>();    //organisations present in the city
     private List<int> listOfDistrictTotals = new List<int>();       //cityManager.cs assigns this data (needs to be in the same order as DataManager.cs -> dictOfNodeArc's)
+
+
+    public void OnEnable()
+    {
+        Debug.Assert(Arc != null, "Invalid CityArc (Null)");
+        Debug.Assert(country != null, "Invalid Country (Null)");
+        Debug.Assert(districtNames != null, "Invalid TextList of DistrictNames (Null)");
+    }
 
     /// <summary>
     /// initialise district totals

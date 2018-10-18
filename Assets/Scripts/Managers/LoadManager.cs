@@ -41,6 +41,7 @@ public class LoadManager : MonoBehaviour
     [Header("TextLists -> One for each Category")]
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
+    public TextList[] arrayOfDistrictTextLists;
 
     [Header("TextList Related SO's")]
     public NameSet[] arrayOfNameSets;
@@ -166,6 +167,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNameTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NameTextLists present"); }
+        //
+        // - - - Text Lists Districts (not stored in a collection)
+        //
+        numArray = arrayOfDistrictTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfDistrictTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No DistrictTextLists present"); }
         //
         // - - - NameSets (not stored in a collection)
         //

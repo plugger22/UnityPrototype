@@ -850,6 +850,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95a039f25c71f764e936bbf1866e4664, type: 2}
   - {fileID: 11400000, guid: bb4f6eac5824b5c4089e8760e0adbdb4, type: 2}
   - {fileID: 11400000, guid: 463372ee7b93a9049bbad149f7e86736, type: 2}
+  arrayOfDistrictTextLists:
+  - {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}

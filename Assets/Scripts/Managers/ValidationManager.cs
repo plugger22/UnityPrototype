@@ -615,7 +615,7 @@ public class ValidationManager : MonoBehaviour
         List<TextList> listOfAllTextLists = new List<TextList>();
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
-
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
         //NOTE: add extra text lists here (as above)
         numArray = listOfAllTextLists.Count;
         numAssets = metaGUID.Length;

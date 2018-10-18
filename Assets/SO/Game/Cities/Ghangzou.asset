@@ -13,9 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Factories, factories, factories
   baseLoyalty: 8
-  connectionSecurityChance: 25
   Arc: {fileID: 11400000, guid: 6fe0e6932109b7f4fbc5a5821c63d7da, type: 2}
   country: {fileID: 11400000, guid: c1dbc50598d0c7d499991f3461f9ba43, type: 2}
+  mayorDistrict: 
+  iconName: 
+  iconDistrict: 
+  districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   cityID: 3
-  mayor: {fileID: 11400000, guid: c9c4daa74bb0b7c49be4032c06438c52, type: 2}
-  faction: {fileID: 11400000, guid: ec3367a7c7ea31142874adb8b75c1ab0, type: 2}
+  mayor: {fileID: 11400000, guid: 38dec5d38e750624a90d38fd3137313d, type: 2}
+  faction: {fileID: 11400000, guid: 066d73a3ca4d3304490a9b91243d46e8, type: 2}
