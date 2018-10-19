@@ -236,7 +236,6 @@ public class LevelManager : MonoBehaviour
             }
         }
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
-        /*numOfNodes = listOfNodeObjects.Count;*/
         numOfNodes = listOfNodes.Count;
         if (numOfNodes != number)
         { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Mismatch on InitialiseNodes, {0} Nodes short", number - numOfNodes); }
@@ -256,10 +255,6 @@ public class LevelManager : MonoBehaviour
         for (int j = 0; j < listOfCoordinates.Count; j++)
         {
             distance = Vector3.Distance(listOfCoordinates[j], pos);
-
-            /*//identical to an existing position?
-            if (listOfCoordinates[j] == pos) { isValidPos = false; break; }*/
-
             //fails minimum spacing test
             if (distance <= spacing) { isValidPos = false; break; }
         }
@@ -734,9 +729,9 @@ public class LevelManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid node (Null) from tempListOfNodes[{0}]", i); }
         }
-        //Display stats
+        /*//Display stats
         DisplayNodeStats("MINIMUM (First Pass)", numRecords);
-        /*Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: MINIMUM (First) tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: MINIMUM (First) tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
         //
         // - - - MINIMUM FINAL (makes up any deficit)
         //
@@ -774,9 +769,9 @@ public class LevelManager : MonoBehaviour
             }
             while (isRepeat == true);
         }
-        //Display stats
+        /*//Display stats
         DisplayNodeStats("MINIMUM (Final Pass)", numRecords);
-        /*Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: MINIMUM (Final) tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: MINIMUM (Final) tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
         //
         // - - - PRIORITY nodeArcs, if any
         //
@@ -814,9 +809,9 @@ public class LevelManager : MonoBehaviour
             else { Debug.Log("LevelManager.cs -> InitialiseNodeArcs: There is NO cityArc Priority"); }
         }
         else { Debug.LogWarning("NO more nodes available, tempListOfNodeArcs is Empty"); }
-        //Display stats
+        /*//Display stats
         DisplayNodeStats("PRIORITY", numRecords);
-        /*Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: PRIORITY tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: PRIORITY tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
         //
         // - - - RANDOM
         //
@@ -844,9 +839,9 @@ public class LevelManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid node (Null) for tempListOfNodes[{0}]", i); }
             }
         }
-        //Display stats
+        /*//Display stats
         DisplayNodeStats("FINAL (Random defaul for remaining)", numRecords);
-        /*Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: RANDOM tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
+        Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: RANDOM tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
     }
 
     /// <summary>
