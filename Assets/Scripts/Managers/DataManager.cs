@@ -4212,8 +4212,19 @@ public class DataManager : MonoBehaviour
     public City GetRandomCity()
     {
         City city = null;
-        List<City> listOfCities = dictOfCities.Values.ToList();
-        city = listOfCities[Random.Range(0, listOfCities.Count)];
+        List<City> tempList = dictOfCities.Values.ToList();
+        List<City> useList = new List<City>();
+        //narrow list down to those with 'isTestOff' = false (default condition) -> Debug testing only, not for release
+        foreach(City cityTemp in tempList)
+        {
+            if (cityTemp != null)
+            { if (cityTemp.isTestOff == false) { useList.Add(cityTemp); } }
+            else { Debug.LogWarning("Invalid city (Null) in tempList"); }
+        }
+        //select random city
+        if (useList.Count > 0)
+        { city = useList[Random.Range(0, useList.Count)]; }
+        else { Debug.LogError("No records in useList (active Cities)"); }
         return city;
     }
 

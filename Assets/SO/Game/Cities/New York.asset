@@ -15,12 +15,12 @@ MonoBehaviour:
   baseLoyalty: 5
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
-  mayorDistrict: 
-  iconName: Statue of Liberty
-  iconDistrict: 
-  airportDistrict: 
-  portDistrict: 
+  iconDistrict: Liberty Island
+  airportDistrict: Flushing
+  portDistrict: Port Newark
   districtNames: {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
+  iconName: Statue of Liberty
+  isTestOff: 0
   cityID: 4
-  mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
-  faction: {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}
+  mayor: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
+  faction: {fileID: 11400000, guid: bceab10738a333d448540192a04a2c60, type: 2}

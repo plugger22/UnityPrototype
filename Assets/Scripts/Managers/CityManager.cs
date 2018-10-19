@@ -23,6 +23,12 @@ public class CityManager : MonoBehaviour
     [Tooltip("Countdown timer, in turns, triggered when City Loyalty at Max or Min")]
     [Range(1, 10)] public int loyaltyCountdownTimer = 3;
 
+    //nodeID's of special city districts -> assigned by LevelManager.cs -> InitialiseDistrictNames. If default value of '-1' then no special district of that type exists
+    [HideInInspector] public int mayorDistrictID = -1;
+    [HideInInspector] public int airportDistrictID = -1;
+    [HideInInspector] public int harbourDistrictID = -1;
+    [HideInInspector] public int iconDistrictID = -1;
+
     private int _cityLoyalty;                       //loyalty of city (0 to 10). Same number for both sides
     private bool isLoyaltyCheckedThisTurn;          //ensures that CheckCityLoyaltyAtLimit is checked only once per turn
     private int loyaltyMinTimer;                    //countdown timer that triggers when loyalty at min

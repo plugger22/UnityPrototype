@@ -886,7 +886,10 @@ public class LevelManager : MonoBehaviour
     private void InitialiseDistrictNames()
     {
         TextList districtNames = city.districtNames;
-        int index;
+        Dictionary<Node, float> tempDict = new Dictionary<Node, float>();
+        int index, nodeID, counter;
+        bool isSuccess;
+        float distance;
         if (districtNames != null)
         {
             List<string> listOfNames = new List<string>(districtNames.randomList);
@@ -895,7 +898,7 @@ public class LevelManager : MonoBehaviour
                 if (listOfNames.Count >= city.Arc.size.numOfNodes)
                 {
                     //randomly assign names
-                    foreach(Node node in listOfNodes)
+                    foreach (Node node in listOfNodes)
                     {
                         index = Random.Range(0, listOfNames.Count);
                         if (string.IsNullOrEmpty(listOfNames[index]) == false)
@@ -906,6 +909,110 @@ public class LevelManager : MonoBehaviour
                         }
                         else { Debug.LogWarningFormat("Invalid name (Null or Empty) for listOfNames[{0}]", index); }
                     }
+                    Vector3 refPos = new Vector3(0f, 0.5f, 0);
+                    //loop nodes -> place in dict with node Key and distance from node to grid centre (0,0) as value
+                    foreach (Node node in listOfNodes)
+                    {
+                        distance = Vector3.Distance(node.nodePosition, refPos);
+                        //store record in dict
+                        try
+                        { tempDict.Add(node, distance); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Invalid entry (duplicate) for node {0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                    }
+                    if (tempDict.Count > 0)
+                    {
+                        //Mayors Office -> sort dictionary from closest to grid centre to furtherst
+                        var sortedDictMayor = from entry in tempDict orderby entry.Value ascending select entry;
+                        
+                        /*//debug printout
+                        foreach (var record in sortedDictMayor)
+                        { Debug.LogFormat("Sorted -> Mayor: {0}, {1}, ID{2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n"); }*/
+
+                        //find the first government node for the mayor's office (which will be closest to the centre)
+                        foreach (var record in sortedDictMayor)
+                        {
+                            if (record.Key.Arc.name.Equals("GOVERNMENT") == true)
+                            {
+                                Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor's office at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
+                                record.Key.nodeName = "City Centre";
+                                record.Key.specialName = "Town Hall";
+                                GameManager.instance.cityScript.mayorDistrictID = record.Key.nodeID;
+                                break;
+                            }
+                        }
+                        //Airport and Seaport -> sort dictionary from furtherst from grid centre to closest
+                        var sortedDictPort = from entry in tempDict orderby entry.Value descending select entry;
+
+                        /*//debug printout
+                        foreach (var record in sortedDictPort)
+                        { Debug.LogFormat("Sorted -> Port: {0}, {1}, ID{2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n"); }*/
+
+                        //find first couple of entries for ports (furtherst from centre)
+                        counter = 0;
+                        foreach (var record in sortedDictPort)
+                        {
+                            if (counter == 0)
+                            {
+                                //Airport
+                                if (string.IsNullOrEmpty(city.airportDistrict) == false)
+                                {
+                                    Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Airport at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
+                                    record.Key.nodeName = city.airportDistrict;
+                                    record.Key.specialName = "Airport";
+                                    GameManager.instance.cityScript.airportDistrictID = record.Key.nodeID;
+                                }
+                                else { Debug.LogWarning("Missing airportDistrict name"); }
+                            }
+                            if (counter == 1)
+                            {
+                                //Harbour
+                                if (string.IsNullOrEmpty(city.harbourDistrict) == false)
+                                {
+                                    Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Harbour at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
+                                    record.Key.nodeName = city.harbourDistrict;
+                                    record.Key.specialName = "Harbour";
+                                    GameManager.instance.cityScript.harbourDistrictID = record.Key.nodeID;
+                                }
+                                else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }
+                                break;
+                            }
+                            counter++;
+                        }
+                        //Icon district
+                        if (string.IsNullOrEmpty(city.iconDistrict) == false)
+                        {
+                            List<int> listOfSpecialDistricts = new List<int>();
+                            nodeID = GameManager.instance.cityScript.mayorDistrictID;
+                            if (nodeID > -1) { listOfSpecialDistricts.Add(nodeID); }
+                            nodeID = GameManager.instance.cityScript.airportDistrictID;
+                            if (nodeID > -1) { listOfSpecialDistricts.Add(nodeID); }
+                            nodeID = GameManager.instance.cityScript.harbourDistrictID;
+                            if (nodeID > -1) { listOfSpecialDistricts.Add(nodeID); }
+                            isSuccess = false;
+                            //randomly assign but check not an existing special district
+                            do
+                            {
+                                Node node = listOfNodes[Random.Range(0, listOfNodes.Count)];
+                                //check not a special node
+                                if (listOfSpecialDistricts.Exists(x => x == node.nodeID) == false)
+                                {
+                                    //valid node for icon district (not a special district)
+                                    Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Icon \"{0}\" district at {1}, {2}, ID {3}{4}", city.iconName, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                    node.nodeName = city.iconDistrict;
+                                    node.specialName = city.iconName;
+                                    GameManager.instance.cityScript.iconDistrictID = node.nodeID;
+                                    break;
+                                }
+                                counter++;
+                                if (counter == 20)
+                                { Debug.LogWarningFormat("LevelManager.cs -> InitialiseDistrictNames: Invalid icon District (Timed out on a count of {0})", counter); }
+                            }
+                            while (isSuccess == false && counter < 20);
+                        }
+                        else { Debug.LogWarning("Missing IconDistrict name"); }
+                    }
+                    else { Debug.LogError("Invalid tempDict (No records)"); }
                 }
                 else { Debug.LogError("Not enough district names for city"); }
             }

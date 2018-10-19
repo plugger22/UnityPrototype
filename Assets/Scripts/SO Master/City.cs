@@ -10,31 +10,34 @@ public class City : ScriptableObject
 {
     [Tooltip("Short text summary that appears in city tooltip")]
     public string descriptor;
+
+    [Header("Stats")]
     [Tooltip("Starting loyalty to the Authorities of the City (10 is total loyalty)")]
     [Range(0, 10)] public int baseLoyalty = 10;
 
-    /*[Tooltip("Chance of a connection having a high security level (more than 'None')")]
-    [Range(0, 100)] public int connectionSecurityChance = 25;*/
-
+    [Header("Archetypes")]
     [Tooltip("City Arc determines the size, layout and node type frequencies of the city")]
     public CityArc Arc;
     public Country country;
 
     [Header("Districts")]
-    [Tooltip("Name of the district containing the Mayor's office")]
-    public string mayorDistrict;
-    [Tooltip("Name of a distinctive cultural icon for the city, eg 'The Eiffel Tower' or 'The Statue of Liberty'")]
-    public string iconName;
     [Tooltip("Name of the district where the icon is located")]
     public string iconDistrict;
     [Tooltip("Name of the district where the city airport is located")]
     public string airportDistrict;
-    [Tooltip("Name of the district where the port (if any) is located")]
-    public string portDistrict;
+    [Tooltip("Name of the district where the working port (if any) is located")]
+    public string harbourDistrict;
     [Tooltip("List of district names to be randomly assigned to city nodes, min 28 required")]
     public TextList districtNames;
 
+    [Header("Features")]
+    [Tooltip("Name of a distinctive cultural icon for the city, eg 'The Eiffel Tower' or 'The Statue of Liberty'")]
+    public string iconName;
     
+    [Header("Debugging")]
+    [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
+    public bool isTestOff = false;
+
     [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs
 
     //dynamically assigned data

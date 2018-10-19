@@ -13,6 +13,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public int nodeID;                //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
     [HideInInspector] public Vector3 nodePosition;      //position
     [HideInInspector] public string nodeName;           //name of node, eg. "Downtown Bronx"
+    [HideInInspector] public string specialName;        //eg. name of icon, airport, harbour, town hall, etc. if node is special, ignore otherwise
     [HideInInspector] public NodeArc Arc;               //archetype type
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
 
@@ -255,7 +256,7 @@ public class Node : MonoBehaviour
                 ModalPanelDetails details = new ModalPanelDetails()
                 {
                     itemID = nodeID,
-                    itemName = this.nodeName,
+                    itemName = nodeName,
                     itemDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
                     itemPos = transform.position,
                     listOfButtonDetails = GameManager.instance.actorScript.GetNodeActions(nodeID),
@@ -442,6 +443,7 @@ public class Node : MonoBehaviour
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
                         nodeName = textName,
+                        specialName = specialName,
                         type = textType,
                         isTargetKnown = isTargetKnown,
                         isTracer = isTracer,

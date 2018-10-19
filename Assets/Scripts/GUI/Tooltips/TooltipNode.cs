@@ -234,7 +234,9 @@ public class TooltipNode : MonoBehaviour
             tracerTimer.text = "";
         }
         //set up tooltipNode object
-        nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd);
+        if (string.IsNullOrEmpty(data.specialName) == false)
+        { nodeName.text = string.Format("{0}{1}{2}{3}{4}", data.nodeName, "\n", colourAlert, data.specialName, colourEnd); }
+        else { nodeName.text = string.Format("{0}{1}{2}", colourDefault, data.nodeName, colourEnd); }
         nodeType.text = string.Format("{0}{1}{2}", colourDefault, data.type, colourEnd);
         //
         // - - - Stats (BEFORE Crisis)- - - 

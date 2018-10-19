@@ -15,10 +15,12 @@ MonoBehaviour:
   baseLoyalty: 9
   Arc: {fileID: 11400000, guid: 26d83090982f6de4ea21b688a86b5fb9, type: 2}
   country: {fileID: 11400000, guid: 06aba64a4706524499b9c130097e711f, type: 2}
-  mayorDistrict: 
-  iconName: 
   iconDistrict: 
+  airportDistrict: 
+  portDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
+  iconName: 
+  isTestOff: 1
   cityID: 2
   mayor: {fileID: 11400000, guid: c9c4daa74bb0b7c49be4032c06438c52, type: 2}
   faction: {fileID: 11400000, guid: ec3367a7c7ea31142874adb8b75c1ab0, type: 2}

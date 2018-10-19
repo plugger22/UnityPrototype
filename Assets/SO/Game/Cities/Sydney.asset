@@ -15,12 +15,12 @@ MonoBehaviour:
   baseLoyalty: 8
   Arc: {fileID: 11400000, guid: 9ceafc034aa45664a9c4b564298e540e, type: 2}
   country: {fileID: 11400000, guid: cb6627e1333c21341a08bf4228c40d48, type: 2}
-  mayorDistrict: 
-  iconName: Opera House
-  iconDistrict: 
-  airportDistrict: 
-  portDistrict: 
+  iconDistrict: Bennelong
+  airportDistrict: Mascot
+  portDistrict: Botany
   districtNames: {fileID: 11400000, guid: f2ec3998326528a4c820b31d04acec8e, type: 2}
+  iconName: Opera House
+  isTestOff: 0
   cityID: 8
   mayor: {fileID: 11400000, guid: a6827a088f2e84f44bb86637e69ba42d, type: 2}
   faction: {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}
