@@ -64,6 +64,7 @@ public class TargetManager : MonoBehaviour
         MaxTargets = numOfNodes * maxPercentTargets / 100;
         ActiveTargets = MaxTargets - StartTargets;
         ActiveTargets = Mathf.Max(0, ActiveTargets);
+        Debug.LogFormat("TargetManager.cs -> Initialise: MaxTargets {0}, StartTargets {1}, ActiveTargets {2}, LiveTargets {3}{4}", MaxTargets, StartTargets, ActiveTargets, LiveTargets, "\n");
         //Set initialise targets on map
         SetRandomTargets(1, Status.Active);
         SetRandomTargets(StartTargets, Status.Live);

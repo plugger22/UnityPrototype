@@ -257,7 +257,7 @@ public class DataManager : MonoBehaviour
         int currentMetaLevel = GameManager.instance.metaScript.metaLevel.level;
         foreach (var target in dictOfTargets)
         {
-            //add to list pf Possible targets if a level 1 target & nodes of the required type are available
+            //add to list of Possible targets if a level 1 target & nodes of the required type are available
             if (target.Value.targetLevel == 1)
             {
                 //check target is the correct metaLevel or that no metaLevel has been specified
@@ -1858,7 +1858,10 @@ public class DataManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// returns possibleTargetsPool.Count
+    /// </summary>
+    /// <returns></returns>
     public int CheckNumOfPossibleTargets()
     { return possibleTargetsPool.Count; }
 
