@@ -17,7 +17,7 @@ MonoBehaviour:
   country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
   iconDistrict: Liberty Island
   airportDistrict: Flushing
-  portDistrict: Port Newark
+  harbourDistrict: Red Hook
   districtNames: {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
   iconName: Statue of Liberty
   isTestOff: 0

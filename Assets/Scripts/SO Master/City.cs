@@ -21,11 +21,11 @@ public class City : ScriptableObject
     public Country country;
 
     [Header("Districts")]
-    [Tooltip("Name of the district where the icon is located")]
+    [Tooltip("Name of the district where the icon is located. NOTE: Same name can't be in District TextList")]
     public string iconDistrict;
-    [Tooltip("Name of the district where the city airport is located")]
+    [Tooltip("Name of the district where the city airport is located. NOTE: Same name can't be in District TextList")]
     public string airportDistrict;
-    [Tooltip("Name of the district where the working port (if any) is located")]
+    [Tooltip("Name of the district where the working port (if any) is located. NOTE: Same name can't be in District TextList")]
     public string harbourDistrict;
     [Tooltip("List of district names to be randomly assigned to city nodes, min 28 required")]
     public TextList districtNames;

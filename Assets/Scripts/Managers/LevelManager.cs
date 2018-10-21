@@ -892,6 +892,28 @@ public class LevelManager : MonoBehaviour
             {
                 if (listOfNames.Count >= city.Arc.size.numOfNodes)
                 {
+                    //check if airport, harbour or icon district names are duplicated in district name list, remove if so and generate warning message
+                    index = listOfNames.FindIndex(x => x == city.iconDistrict);
+                    if (index > -1)
+                    {
+                        Debug.LogWarningFormat("Duplicate Icon district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.name);
+                        listOfNames.RemoveAt(index);
+                    }
+                    index = listOfNames.FindIndex(x => x == city.airportDistrict);
+                    if (index > -1)
+                    {
+                        Debug.LogWarningFormat("Duplicate Airport district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.name);
+                        listOfNames.RemoveAt(index);
+                    }
+                    if (city.harbourDistrict != null)
+                    {
+                        index = listOfNames.FindIndex(x => x == city.harbourDistrict);
+                        if (index > -1)
+                        {
+                            Debug.LogWarningFormat("Duplicate Harbour district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.name);
+                            listOfNames.RemoveAt(index);
+                        }
+                    }
                     //randomly assign names
                     foreach (Node node in listOfNodes)
                     {

@@ -13,23 +13,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Organised Crime contacts
   randomList:
-  - MobsterAssassin
-  - Mobster Bookie
-  - Mobster Bodyguard
-  - Mobster Enforcer
-  - Mobster Hacker
-  - Mobster Minor Boss
-  - Mobster Counterfeiter
-  - Mobster Moneyman
-  - Mobster Bagman
-  - Mobster Thug
-  - Triad Thug
-  - Triad Assassin
-  - Triad Bookie
-  - Triad Bodyguard
-  - Triad Enforcer
-  - Triad Hacker
-  - Triad Minor Boss
-  - Triad Counterfeiter
-  - Triad Bagman
-  - Triad Financier
+  - Gang Assassin
+  - Gang Bookie
+  - Gang Bodyguard
+  - Gang Enforcer
+  - Gang Hacker
+  - Gang Street Boss
+  - Gang Counterfeiter
+  - Gang Financer
+  - Gang Collector
+  - Gang Heavy
+  - Gang Fixer
+  - Gang Cleaner
+  - Gang Quartermaster
+  - Gang Driver
+  - Gang District Boss
+  - Gang Forger
+  - Gang Arsonist
+  - Gang Extorter
+  - Gang Blackmailer
+  - Gang Lawyer

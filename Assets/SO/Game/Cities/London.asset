@@ -17,10 +17,10 @@ MonoBehaviour:
   country: {fileID: 11400000, guid: 06aba64a4706524499b9c130097e711f, type: 2}
   iconDistrict: Westminister
   airportDistrict: Heathrow
-  portDistrict: 
+  harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: Big Ben
   isTestOff: 0
   cityID: 5
-  mayor: {fileID: 11400000, guid: c9c4daa74bb0b7c49be4032c06438c52, type: 2}
-  faction: {fileID: 11400000, guid: ec3367a7c7ea31142874adb8b75c1ab0, type: 2}
+  mayor: {fileID: 11400000, guid: 6315cbaaef881524e9547466c7d46283, type: 2}
+  faction: {fileID: 11400000, guid: 03a87536ea8c7044c97e5e526ee52d6c, type: 2}

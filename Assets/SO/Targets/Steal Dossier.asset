@@ -16,10 +16,20 @@ MonoBehaviour:
   metaLevel: {fileID: 0}
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 2
-  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   actorArc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
   gear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
+  type: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
+  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
+  - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
+  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
+  listOfFailEffects:
+  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
+  OngoingEffect: {fileID: 0}
   targetStatus: 0
   infoLevel: 1
   targetID: 6
@@ -27,12 +37,3 @@ MonoBehaviour:
   isKnownByAI: 0
   timer: -1
   nodeID: -1
-  listOfGoodEffects:
-  - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
-  - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
-  listOfBadEffects:
-  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
-  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  listOfOngoingEffects: []
-  listOfFailEffects:
-  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}

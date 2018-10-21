@@ -11,7 +11,7 @@ using UnityEngine;
 public class LoadManager : MonoBehaviour
 {
 
-    [Header("Initialise Start -> enums")]
+    [Header("Initialise Start -> Enums")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
     public GlobalType[] arrayOfGlobalType;
@@ -23,11 +23,13 @@ public class LoadManager : MonoBehaviour
     public EffectOperator[] arrayOfEffectOperator;
     public EffectOutcome[] arrayOfEffectOutcome;
     public ContactType[] arrayOfContactTypes;
+    public TargetType[] arrayOfTargetTypes;
     public Quality[] arrayOfQualities;
     public CitySize[] arrayOfCitySize;
     public CitySpacing[] arrayOfCitySpacing;
     public CityConnections[] arrayOfCityConnections;
     public CitySecurity[] arrayOfCitySecurity;
+    
     
     [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
@@ -153,6 +155,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfContactTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
+        //
+        // - - - TargetType (not stored in a collection)
+        //
+        numArray = arrayOfTargetTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetTypes present"); }
         //
         // - - - Text Lists Contacts (not stored in a collection)
         //

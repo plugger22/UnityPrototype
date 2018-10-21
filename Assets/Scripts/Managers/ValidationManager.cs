@@ -377,6 +377,29 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ContactType SO, array {0}, assets {1} records", numArray, numAssets); }
         //
+        // - - - TargetType - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:TargetType", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfTargetTypes.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TargetType SO, array {0}, assets {1} records", numArray, numAssets);
+            TargetType[] arrayTemp = GameManager.instance.loadScript.arrayOfTargetTypes;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(TargetType));
+                //get object
+                TargetType meta = metaObject as TargetType;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING TargetType \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetType SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
         // - - - Quality - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:Quality", new[] { "Assets/SO" });
