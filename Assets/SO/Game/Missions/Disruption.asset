@@ -17,12 +17,12 @@ MonoBehaviour:
   objectiveOne: {fileID: 0}
   objectiveTwo: {fileID: 0}
   objectiveThree: {fileID: 0}
-  activeTargets: 0
-  liveTargets: 0
-  iconTarget: {fileID: 0}
-  airportTarget: {fileID: 0}
-  harbourTarget: {fileID: 0}
-  vipTarget: {fileID: 0}
-  storyTarget: {fileID: 0}
-  goalTarget: {fileID: 0}
-  missionID: 0
+  activeTargets: 3
+  liveTargets: 2
+  iconTarget: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
+  airportTarget: {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
+  harbourTarget: {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  vipTarget: {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
+  storyTarget: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  goalTarget: {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
+  missionID: 1

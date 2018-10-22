@@ -48,7 +48,7 @@ public class Target : ScriptableObject
     [HideInInspector] public int targetID;
     [HideInInspector] public int ongoingID;         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;               //is known by the AI?
-    [HideInInspector] public int timer;                      //countdown timer, default '-1' for ignore
+    //[HideInInspector] public int timer;                      //countdown timer, default '-1' for ignore
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
 
 }

@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: CityTarget2
   m_EditorClassIdentifier: 
-  description: 
-  reason: 
+  description: Blow up Airport
+  reason: Why not?
   metaLevel: {fileID: 0}
   activation: {fileID: 0}
   targetLevel: 1
-  actorArc: {fileID: 0}
-  gear: {fileID: 0}
+  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   sprite: {fileID: 0}
   type: {fileID: 11400000, guid: a46143a253f580b42acc627392cf8001, type: 2}
   nodeArc: {fileID: 0}

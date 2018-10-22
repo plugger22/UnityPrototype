@@ -11,18 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: CityTarget1
   m_EditorClassIdentifier: 
-  description: 
-  reason: 
+  description: Blow up Icon
+  reason: '''Cause you can'
   metaLevel: {fileID: 0}
-  activation: {fileID: 0}
+  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 1
-  actorArc: {fileID: 0}
-  gear: {fileID: 0}
-  sprite: {fileID: 0}
+  actorArc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
+  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   type: {fileID: 11400000, guid: a46143a253f580b42acc627392cf8001, type: 2}
   nodeArc: {fileID: 0}
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: eb855bca1ba8c2f4fb217c1cced20566, type: 2}
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
   targetStatus: 0
