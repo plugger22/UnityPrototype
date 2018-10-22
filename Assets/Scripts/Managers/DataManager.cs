@@ -252,7 +252,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseFinal()
     {
-        //
+        /*//
         // - - - Possible Targets - - - 
         //
         int currentMetaLevel = GameManager.instance.metaScript.metaLevel.level;
@@ -275,7 +275,7 @@ public class DataManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));
+        Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));*/
     }
 
     //

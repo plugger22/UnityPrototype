@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
+  m_Name: GoalTarget2
+  m_EditorClassIdentifier: 
+  description: 
+  reason: 
+  metaLevel: {fileID: 0}
+  activation: {fileID: 0}
+  targetLevel: 1
+  actorArc: {fileID: 0}
+  gear: {fileID: 0}
+  sprite: {fileID: 0}
+  type: {fileID: 11400000, guid: 51f529f1815bf554e9166edd1ecbb5ca, type: 2}
+  nodeArc: {fileID: 0}
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  listOfFailEffects: []
+  OngoingEffect: {fileID: 0}
+  targetStatus: 0
+  infoLevel: 1
+  targetID: 19
+  ongoingID: -1
+  isKnownByAI: 0
+  timer: -1
+  nodeID: -1

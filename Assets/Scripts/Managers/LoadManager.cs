@@ -54,12 +54,18 @@ public class LoadManager : MonoBehaviour
     public Trait[] arrayOfTraits;
     public ActorArc[] arrayOfActorArcs;
     public Effect[] arrayOfEffects;
-    public Target[] arrayOfTargets;
     public Action[] arrayOfActions;
     public TeamArc[] arrayOfTeamArcs;
     public Gear[] arrayOfGear;
     public GearRarity[] arrayOfGearRarity;
     public GearType[] arrayOfGearType;
+
+    [Header("Targets")]
+    public Target[] arrayOfTargetsGeneric;
+    public Target[] arrayOfTargetsCity;
+    public Target[] arrayOfTargetsVIP;
+    public Target[] arrayOfTargetsStory;
+    public Target[] arrayOfTargetsGoal;
 
     [Header("InitialiseEarly -> Second Half")]
     public ManageActor[] arrayOfManageActors;
@@ -534,7 +540,7 @@ public class LoadManager : MonoBehaviour
                 }
                 numDict = dictOfTraits.Count;
                 Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTraits has {0} entries{1}", numDict, "\n");
-                Debug.Assert( numDict == counter, "Mismatch on count");
+                Debug.Assert(numDict == counter, "Mismatch on count");
                 Debug.Assert(numDict > 0, "No Traits have been imported");
                 Debug.Assert(numArray == numDict, string.Format("Mismatch in Trait count, array {0}, dict {1}", numArray, numDict));
             }
@@ -578,7 +584,7 @@ public class LoadManager : MonoBehaviour
                     Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", numDict, "\n");
                     Debug.LogFormat("[Imp] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
                     Debug.LogFormat("[Imp] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
-                    Debug.Assert( numDict == counter, "Mismatch on count");
+                    Debug.Assert(numDict == counter, "Mismatch on count");
                     Debug.Assert(numDict > 0, "No Actor Arcs have been imported");
                     Debug.Assert(numArray == numDict, string.Format("Mismatch on ActorArcs count, array {0}, dict {1}", numArray, numDict));
                 }
@@ -617,16 +623,28 @@ public class LoadManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }
         //
         // - - - Targets - - -
-        //
+        //            
+        Debug.Assert(arrayOfTargetsGeneric.Length > 0, "Invalid arrayOfTargetsGeneric (no records)");
+        Debug.Assert(arrayOfTargetsCity.Length > 0, "Invalid arrayOfTargetsCity (no records)");
+        Debug.Assert(arrayOfTargetsVIP.Length > 0, "Invalid arrayOfTargetsVIP (no records)");
+        Debug.Assert(arrayOfTargetsStory.Length > 0, "Invalid arrayOfTargetsStory (no records)");
+        Debug.Assert(arrayOfTargetsGoal.Length > 0, "Invalid arrayOfTargetsGoal (no records)");
         Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             counter = 0;
-            numArray = arrayOfTargets.Length;
+            List<Target> listOfTargets = new List<Target>();
+            listOfTargets.AddRange(arrayOfTargetsGeneric);
+            listOfTargets.AddRange(arrayOfTargetsCity);
+            listOfTargets.AddRange(arrayOfTargetsVIP);
+            listOfTargets.AddRange(arrayOfTargetsStory);
+            listOfTargets.AddRange(arrayOfTargetsGoal);
+            numArray = listOfTargets.Count;
+
             for (int i = 0; i < numArray; i++)
             {
                 //assign a zero based unique ID number
-                Target target = arrayOfTargets[i];
+                Target target = listOfTargets[i];
                 //set data
                 target.targetID = counter++;
                 target.targetStatus = Status.Dormant;
@@ -663,10 +681,14 @@ public class LoadManager : MonoBehaviour
                             case "Generic":
                                 if (target.Value.nodeArc != null)
                                 {
-                                    index = target.Value.nodeArc.nodeArcID;
-                                    arrayOfGenericTargets[index].Add(target.Value.targetID);
-                                    /*Debug.LogFormat("[Tst] LoadManager.cs -> InitialiseEarly: Target \"{0}\", nodeArcID {1}, added to arrayOfGenericTargets[{2}]{3}", target.Value.name,
-                                        target.Value.nodeArc.nodeArcID, index, "\n");*/
+                                    //only level one targets placed in array
+                                    if (target.Value.targetLevel == 1)
+                                    {
+                                        index = target.Value.nodeArc.nodeArcID;
+                                        arrayOfGenericTargets[index].Add(target.Value.targetID);
+                                        /*Debug.LogFormat("[Tst] LoadManager.cs -> InitialiseEarly: Target \"{0}\", nodeArcID {1}, added to arrayOfGenericTargets[{2}]{3}", target.Value.name,
+                                            target.Value.nodeArc.nodeArcID, index, "\n");*/
+                                    }
                                 }
                                 else { Debug.LogWarningFormat("Invalid nodeArc for Generic target {0}", target.Value.name); }
                                 break;

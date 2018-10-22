@@ -9,30 +9,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: Traffic Signals
+  m_Name: Survelliance Grid
   m_EditorClassIdentifier: 
-  description: Grind traffic to a halt
-  reason: Traffic signals being hacked
+  description: Penetrate Survelliance Grid
+  reason: Surveillance Grid being hacked
   metaLevel: {fileID: 0}
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 1
-  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
-  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  gear: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   type: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
-  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  nodeArc: {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   listOfGoodEffects:
+  - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: c8af3711ce8ab464f8752d6331168bbf, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  OngoingEffect: {fileID: 11400000, guid: 9eef9920ae131f847ac02efc8b347252, type: 2}
+  OngoingEffect: {fileID: 11400000, guid: 502f00bd350a7094d82b0b36533bd4e7, type: 2}
   targetStatus: 2
   infoLevel: 1
-  targetID: 8
+  targetID: 7
   ongoingID: -1
   isKnownByAI: 0
   timer: -1
-  nodeID: 28
+  nodeID: 8

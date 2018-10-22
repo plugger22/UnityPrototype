@@ -827,12 +827,18 @@ public class ValidationManager : MonoBehaviour
         // - - - Target - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:Target", new[] { "Assets/SO" });
-        numArray = GameManager.instance.loadScript.arrayOfTargets.Length;
+        List<Target> listOfTargets = new List<Target>();
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsGeneric);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsCity);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsVIP);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsStory);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsGoal);
+        numArray = listOfTargets.Count;
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
         {
             Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Target SO, array {0}, assets {1} records", numArray, numAssets);
-            Target[] arrayTemp = GameManager.instance.loadScript.arrayOfTargets;
+            /*Target[] arrayTemp = GameManager.instance.loadScript.arrayOfTargets;*/
             foreach (var guid in metaGUID)
             {
                 //get path
@@ -841,7 +847,7 @@ public class ValidationManager : MonoBehaviour
                 UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Target));
                 //get object
                 Target meta = metaObject as Target;
-                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                if (listOfTargets.Exists( element => element.name.Equals(meta.name)) == false)
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Target \"{0}\"", meta.name); }
             }
         }

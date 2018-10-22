@@ -9,5 +9,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fae6ff1990b55624895da6c65f65a892, type: 3}
-  m_Name: Mayor
+  m_Name: VIP
   m_EditorClassIdentifier: 
+  descriptor: Mayora or other VIP's

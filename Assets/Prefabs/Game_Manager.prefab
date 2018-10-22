@@ -1165,16 +1165,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 75c5222b0758a26439f6188569469520, type: 2}
   - {fileID: 11400000, guid: e60e937d1329a1542a255615518c11d5, type: 2}
   - {fileID: 11400000, guid: ada99b83817c2f642a59bb4270b0e36f, type: 2}
-  arrayOfTargets:
-  - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
-  - {fileID: 11400000, guid: 796d29ef79a7d7341afcfda9e1326752, type: 2}
-  - {fileID: 11400000, guid: e7385a27d2b48804d9e283f2983e28b0, type: 2}
-  - {fileID: 11400000, guid: 0d9afc7d36c71254b83ddf50a4d1fb72, type: 2}
-  - {fileID: 11400000, guid: 789e2860d998d244dacaeaafa3e861fa, type: 2}
-  - {fileID: 11400000, guid: a918b115649de1e499cb26df4225dafb, type: 2}
-  - {fileID: 11400000, guid: 042e44b6e7253f844813e68e7b09fd9e, type: 2}
-  - {fileID: 11400000, guid: 5fc54c25ff286c749bf1006c20e9d8c9, type: 2}
-  - {fileID: 11400000, guid: cc323a0c7ccfa42458531c7eddb74493, type: 2}
   arrayOfActions:
   - {fileID: 11400000, guid: e2452f8fe0121e9439cf59d543b9dc0a, type: 2}
   - {fileID: 11400000, guid: baa27ad6b90477e4e94cb6ed5cc27066, type: 2}
@@ -1245,6 +1235,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a88df17476114704ab637e71e32b4140, type: 2}
   - {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   - {fileID: 11400000, guid: 378cee33565b65c42aff9c940e94919c, type: 2}
+  arrayOfTargetsGeneric:
+  - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
+  - {fileID: 11400000, guid: 796d29ef79a7d7341afcfda9e1326752, type: 2}
+  - {fileID: 11400000, guid: e7385a27d2b48804d9e283f2983e28b0, type: 2}
+  - {fileID: 11400000, guid: 0d9afc7d36c71254b83ddf50a4d1fb72, type: 2}
+  - {fileID: 11400000, guid: 789e2860d998d244dacaeaafa3e861fa, type: 2}
+  - {fileID: 11400000, guid: a918b115649de1e499cb26df4225dafb, type: 2}
+  - {fileID: 11400000, guid: 042e44b6e7253f844813e68e7b09fd9e, type: 2}
+  - {fileID: 11400000, guid: 5fc54c25ff286c749bf1006c20e9d8c9, type: 2}
+  - {fileID: 11400000, guid: cc323a0c7ccfa42458531c7eddb74493, type: 2}
+  arrayOfTargetsCity:
+  - {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
+  - {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
+  - {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  arrayOfTargetsVIP:
+  - {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
+  - {fileID: 11400000, guid: 975a5596bd2e1fa45a2dd74b585282c4, type: 2}
+  - {fileID: 11400000, guid: ee2e69b320cc87748969ab5ea57192fb, type: 2}
+  arrayOfTargetsStory:
+  - {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  - {fileID: 11400000, guid: 9bdb2eb8d989fed44a8782c9ef232a6a, type: 2}
+  - {fileID: 11400000, guid: 51e1ace29b9f95140a601f7475150729, type: 2}
+  arrayOfTargetsGoal:
+  - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
+  - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
+  - {fileID: 11400000, guid: 2e4f8c5604ff85e46ac0cc21cb3d2bf2, type: 2}
   arrayOfManageActors:
   - {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
   - {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}

@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Target / TargetType")]
 public class TargetType : ScriptableObject
 {
-
+    [Tooltip("Not used, info purposes only")]
+    public string descriptor;
 
 }
