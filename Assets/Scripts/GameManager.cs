@@ -102,11 +102,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
     
     private List<StartMethod> listOfStartMethods = new List<StartMethod>();
-    
+
 
     #endregion
 
-
+    #region awake
     /// <summary>
     /// Constructor
     /// </summary>
@@ -256,8 +256,9 @@ public class GameManager : MonoBehaviour
         Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");
         Debug.Assert(debugGraphicsScript != null, "Invalid debugGraphicsScript (Null)");
     }
+    #endregion
 
-
+    #region start
     private void Start()
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
@@ -276,7 +277,8 @@ public class GameManager : MonoBehaviour
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
     }
-    
+    #endregion
+
     /// <summary>
     /// set up list of delegates ready for initialisation (do this because there are two version of initialisation, performance monitoring ON or OFF)
     /// </summary>
@@ -287,7 +289,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.preloadScript.Initialise;
         startMethod.className = "PreLoadManager";
         listOfStartMethods.Add(startMethod);
-        //Load Manager -> InitialiseStart
         //Load Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";

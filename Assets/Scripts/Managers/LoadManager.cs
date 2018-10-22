@@ -428,7 +428,7 @@ public class LoadManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly()
     {
-        int numArray, numDict, counter;
+        int numArray, numDict, counter, index;
         GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
         GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //
@@ -648,6 +648,35 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict == counter, "Mismatch on count");
             Debug.Assert(numDict > 0, "No Targets have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Targets count, array {0}, dict {1}", numArray, numDict));
+            //initialise Generic target array
+            GameManager.instance.dataScript.InitialiseArrayOfGenericTargets();
+            List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+            if (arrayOfGenericTargets != null)
+            {
+                //assign targets to pools
+                foreach (var target in dictOfTargets)
+                {
+                    if (target.Value.type != null)
+                    {
+                        switch (target.Value.type.name)
+                        {
+                            case "Generic":
+                                if (target.Value.nodeArc != null)
+                                {
+                                    index = target.Value.nodeArc.nodeArcID;
+                                    arrayOfGenericTargets[index].Add(target.Value.targetID);
+                                    /*Debug.LogFormat("[Tst] LoadManager.cs -> InitialiseEarly: Target \"{0}\", nodeArcID {1}, added to arrayOfGenericTargets[{2}]{3}", target.Value.name,
+                                        target.Value.nodeArc.nodeArcID, index, "\n");*/
+                                }
+                                else { Debug.LogWarningFormat("Invalid nodeArc for Generic target {0}", target.Value.name); }
+                                break;
+
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid TargetType (Null) for target \"{0}\"", target.Value.name); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
         //

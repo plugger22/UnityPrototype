@@ -15,7 +15,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class DataManager : MonoBehaviour
 {
-    
+
     //NOTE: some arrays are initialised by ImportManager.cs making a call to DataManager methods due to sequencing issues
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
@@ -69,6 +69,14 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorDisposedOf = new List<int>();
     private List<int> resistanceActorResigned = new List<int>();
 
+    //target pools
+    private List<int>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetID's for each nodeArc type. All level one targets
+    private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
+    private List<Target> activeTargetPool = new List<Target>();                         //targets onMap but not yet visible to resistance player
+    private List<Target> liveTargetPool = new List<Target>();                           //targets OnMap and visible to resistance player
+    private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
+    private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
+
     //contacts (resistance)
     private List<int> contactPool = new List<int>();
 
@@ -76,13 +84,6 @@ public class DataManager : MonoBehaviour
     private List<ActorArc> authorityActorArcs = new List<ActorArc>();
     private List<ActorArc> resistanceActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
-
-    //for fast access
-    private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
-    private List<Target> activeTargetPool = new List<Target>();                         //targets onMap but not yet visible to resistance player
-    private List<Target> liveTargetPool = new List<Target>();                           //targets OnMap and visible to resistance player
-    private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
-    private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
 
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
@@ -134,7 +135,7 @@ public class DataManager : MonoBehaviour
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
-    
+
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
@@ -215,14 +216,14 @@ public class DataManager : MonoBehaviour
         for (int i = 0; i < tempArray.Length; i++)
         { arrayOfNodes[i, 0] = tempArray[i]; }
         //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
-        int limit = CheckNumOfNodeTypes();
-        for(int i = 0; i < limit; i++)
+        int limit = CheckNumOfNodeArcs();
+        for (int i = 0; i < limit; i++)
         {
             List<Node> tempList = new List<Node>();
             listOfNodesByType.Add(tempList);
         }
         //Populate List of lists -> place node in the correct list
-        foreach(var node in dictOfNodes)
+        foreach (var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
         //Node Crisis placed into pick lists
         if (dictOfNodeCrisis != null)
@@ -242,7 +243,7 @@ public class DataManager : MonoBehaviour
         for (int outer = 0; outer < (int)ItemTab.Count; outer++)
         {
             for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
-            {  arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
+            { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
         }
     }
 
@@ -366,7 +367,7 @@ public class DataManager : MonoBehaviour
         if (turnNumber < 1) { turnNumber = GameManager.instance.turnScript.Turn; }
         //get data set
         if (dictOfHistory.ContainsKey(turnNumber))
-        {  data = dictOfHistory[turnNumber]; }
+        { data = dictOfHistory[turnNumber]; }
         else { Debug.LogWarningFormat("Record not found in dictOfHistory for turn number {0}", turnNumber); }
         //return data set
         return data;
@@ -443,7 +444,7 @@ public class DataManager : MonoBehaviour
     {
         if (dictOfNodeArcs.ContainsKey(nodeArcID))
         { return dictOfNodeArcs[nodeArcID]; }
-        else { Debug.LogWarning("Not found in Dict > nodeArcID " + nodeArcID);}
+        else { Debug.LogWarning("Not found in Dict > nodeArcID " + nodeArcID); }
         return null;
     }
 
@@ -471,7 +472,7 @@ public class DataManager : MonoBehaviour
         return -1;
     }
 
-       
+
     //
     // - - - Action Related - - -
     //
@@ -522,7 +523,7 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         //filter for the required side
         List<ActorArc> tempMaster = new List<ActorArc>();
-        if(side.level == GameManager.instance.globalScript.sideAuthority.level) { tempMaster.AddRange(authorityActorArcs); }
+        if (side.level == GameManager.instance.globalScript.sideAuthority.level) { tempMaster.AddRange(authorityActorArcs); }
         else if (side.level == GameManager.instance.globalScript.sideResistance.level) { tempMaster.AddRange(resistanceActorArcs); }
 
         if (tempMaster.Count > 0)
@@ -642,7 +643,7 @@ public class DataManager : MonoBehaviour
     public Trait GetTrait(string traitText)
     {
         Trait trait = null;
-        foreach(var record in dictOfTraits)
+        foreach (var record in dictOfTraits)
         {
             if (record.Value.tag.Equals(traitText) == true)
             {
@@ -1050,7 +1051,7 @@ public class DataManager : MonoBehaviour
                                                 //remove contact record from actor
                                                 if (actor.RemoveContact(nodeID) == true)
                                                 {
-                                                    Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.nameFirst, contact.contactID, 
+                                                    Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.nameFirst, contact.contactID,
                                                     actor.actorName, actor.arc.name, nodeID);
                                                     //message
                                                     Node node = GetNode(nodeID);
@@ -1063,7 +1064,7 @@ public class DataManager : MonoBehaviour
                                                 }
                                                 else
                                                 {
-                                                    Debug.LogFormat("DataManager.cs -> Contact {0}, ID {1}, NOT Removed (FAIL), {2}, {3}, actorID {4} contact at nodeID {5}{6}", contact.nameFirst, 
+                                                    Debug.LogFormat("DataManager.cs -> Contact {0}, ID {1}, NOT Removed (FAIL), {2}, {3}, actorID {4} contact at nodeID {5}{6}", contact.nameFirst,
                                                         contact.contactID, actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
                                                 }
                                             }
@@ -1249,7 +1250,7 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); isSuccess = false; }
-        
+
         if (isSuccess == true)
         {
             //remove contact record from actor
@@ -1498,7 +1499,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int CheckNodeInfo(int nodeIndex, NodeInfo info)
     {
-        Debug.Assert(nodeIndex > -1 && nodeIndex < CheckNumOfNodeTypes(), "Invalid nodeIndex");
+        Debug.Assert(nodeIndex > -1 && nodeIndex < CheckNumOfNodeArcs(), "Invalid nodeIndex");
         return arrayOfNodes[nodeIndex, (int)info];
     }
 
@@ -1510,7 +1511,7 @@ public class DataManager : MonoBehaviour
     /// <param name="newData"></param>
     public void SetNodeInfo(int nodeIndex, NodeInfo info, int newData)
     {
-        Debug.Assert(nodeIndex > -1 && nodeIndex < CheckNumOfNodeTypes(), "Invalid nodeIndex");
+        Debug.Assert(nodeIndex > -1 && nodeIndex < CheckNumOfNodeArcs(), "Invalid nodeIndex");
         arrayOfNodes[nodeIndex, (int)info] = newData;
     }
 
@@ -1521,12 +1522,12 @@ public class DataManager : MonoBehaviour
     public int CheckNumOfNodes()
     { return dictOfNodeObjects.Count; }
 
-    /// <summary>
+    /*/// <summary>
     /// returns number of different node arc types on level, eg. "Corporate" + "Utility" would return 2
     /// </summary>
     /// <returns></returns>
     public int CheckNumOfNodeTypes()
-    { return arrayOfNodes.Length; }
+    { return arrayOfNodes.Length; }*/
 
     /// <summary>
     /// intialised in ImportManager.cs
@@ -1545,11 +1546,11 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetListOfNodesByType(int nodeArcID)
     {
-        Debug.Assert(nodeArcID > -1 && nodeArcID < CheckNumOfNodeTypes(), "Invalid nodeArcID parameter");
+        Debug.Assert(nodeArcID > -1 && nodeArcID < CheckNumOfNodeArcs(), "Invalid nodeArcID parameter");
         return listOfNodesByType[nodeArcID];
     }
 
-    
+
     /// <summary>
     /// returns a Random node of a particular NodeArc type, or (by default) ANY random node. Returns null if a problem.
     /// </summary>
@@ -1582,7 +1583,7 @@ public class DataManager : MonoBehaviour
                 List<int> keyList = new List<int>(dictOfNodes.Keys);
                 key = keyList[Random.Range(0, keyList.Count)];
                 node = GetNode(key);
-                Debug.LogWarning(string.Format("Alert: nodeList is either Null or Count Zero for nodeArcID \"{0}\", {1}{2}", 
+                Debug.LogWarning(string.Format("Alert: nodeList is either Null or Count Zero for nodeArcID \"{0}\", {1}{2}",
                     nodeArcID, GetNodeArc(nodeArcID), "\n"));
             }
         }
@@ -1837,7 +1838,7 @@ public class DataManager : MonoBehaviour
     public int CheckNumOfConnections()
     { return dictOfConnections.Count; }
 
-   
+
 
 
     //
@@ -1857,6 +1858,25 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    public List<int>[] GetArrayOfGenericTargets()
+    { return arrayOfGenericTargets; }
+
+    /// <summary>
+    /// Initialises generic targets array. Called by LoadManager.cs -> targets (due to sequence issues with # of nodeArcs which determines size of array)
+    /// </summary>
+    public void InitialiseArrayOfGenericTargets()
+    {
+        int sizeOfArray = CheckNumOfNodeArcs();
+        if (sizeOfArray > 0)
+        {
+            arrayOfGenericTargets = new List<int>[sizeOfArray];
+            for (int i = 0; i < sizeOfArray; i++)
+            {
+                List<int> tempList = new List<int>();
+                arrayOfGenericTargets[i] = tempList;
+            }
+        }
+    }
 
     /// <summary>
     /// returns possibleTargetsPool.Count

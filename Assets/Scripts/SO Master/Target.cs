@@ -30,7 +30,7 @@ public class Target : ScriptableObject
 
     [Header("Category")]
     public TargetType type;
-    [Tooltip("Which Node Arc it applies to, eg. 'Government' -> Only applies if a NodeArc type target, ignore otherwise")]
+    [Tooltip("Which Node Arc it applies to, eg. 'Government' -> Only applies if a Generic type target, ignore otherwise")]
     public NodeArc nodeArc;
 
     [Header("Effects")]
