@@ -180,6 +180,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();       //Key -> ActorID, Value -> list of nodeID's where actor has contacts
     private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();   //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();    //Key -> NodeID, Value -> list of actorID's who have a contact at node
+    private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
 
     //global SO's (enum equivalents)
     /*private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
@@ -4422,6 +4423,13 @@ public class DataManager : MonoBehaviour
 
     public List<Image> GetListOfActorPortraits()
     { return listOfActorPortraits; }
+
+    //
+    // - - - Missions - - -
+    //
+
+    public Dictionary<int, Mission> GetDictOfMissions()
+    { return dictOfMissions; }
    
 
     //new methods above here

@@ -79,6 +79,7 @@ public class LoadManager : MonoBehaviour
     public Organisation[] arrayOfOrganisations;
     public Mayor[] arrayOfMayors;
     public DecisionAI[] arrayOfDecisionAI;
+    public Mission[] arrayOfMissions;
 
 
     public void InitialiseStart()
@@ -1284,6 +1285,35 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
+        //
+        // - - - Missions - - -
+        //
+        Dictionary<int, Mission> dictOfMissions = GameManager.instance.dataScript.GetDictOfMissions();
+        if (dictOfMissions != null)
+        {
+            counter = 0;
+            numArray = arrayOfMissions.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based unique ID number
+                Mission mission = arrayOfMissions[i];
+                //set data
+                mission.missionID = counter++;
+                //add to dictionary
+                try
+                { dictOfMissions.Add(mission.missionID, mission); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Mission (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Mission (duplicate) ID \"{0}\" for \"{1}\"", counter, mission.name)); counter--; }
+            }
+            numDict = dictOfMissions.Count;
+            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMissions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Missions have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Mission count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfMissions (Null) -> Import failed"); }
     }
 
 

@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MessageManager messageScript;            //Message Manager
     [HideInInspector] public ItemDataManager itemDataScript;          //ItemData Manager
     [HideInInspector] public ConnectionManager connScript;            //Connection Manager
+    [HideInInspector] public MissionManager missionScript;            //Mission Manager
     [HideInInspector] public ColourManager colourScript;              //Colour Manager
     [HideInInspector] public TestManager testScript;                  //Test Manager
     [HideInInspector] public ValidationManager validateScript;        //Validation Manager
@@ -154,6 +155,7 @@ public class GameManager : MonoBehaviour
         messageScript = GetComponent<MessageManager>();
         itemDataScript = GetComponent<ItemDataManager>();
         connScript = GetComponent<ConnectionManager>();
+        missionScript = GetComponent<MissionManager>();
         colourScript = GetComponent<ColourManager>();
         testScript = GetComponent<TestManager>();
         validateScript = GetComponent<ValidationManager>();
@@ -221,6 +223,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(messageScript != null, "Invalid messageScript (Null)");
         Debug.Assert(itemDataScript != null, "Invalid itemDataScript (Null)");
         Debug.Assert(connScript != null, "Invalid connScript (Null)");
+        Debug.Assert(missionScript != null, "Invalid missionScript (Null)");
         Debug.Assert(colourScript != null, "Invalid colourScript (Null)");
         Debug.Assert(testScript != null, "Invalid testScript (Null)");
         Debug.Assert(validateScript != null, "Invalid validateScript (Null)");
@@ -467,6 +470,10 @@ public class GameManager : MonoBehaviour
         //Connection Manager
         startMethod.handler = GameManager.instance.connScript.Initialise;
         startMethod.className = "ConnectionManager";
+        listOfStartMethods.Add(startMethod);
+        //Mission Manager
+        startMethod.handler = GameManager.instance.missionScript.Initialise;
+        startMethod.className = "MissionManager";
         listOfStartMethods.Add(startMethod);
         //City Info UI
         startMethod.handler = GameManager.instance.cityInfoScript.Initialise;

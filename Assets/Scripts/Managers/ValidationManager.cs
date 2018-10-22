@@ -1220,6 +1220,29 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on DecisionAI SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - Mission - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Mission", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfMissions.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Mission SO, array {0}, assets {1} records", numArray, numAssets);
+            Mission[] arrayTemp = GameManager.instance.loadScript.arrayOfMissions;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Mission));
+                //get object
+                Mission meta = metaObject as Mission;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Mission \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Mission SO, array {0}, assets {1} records", numArray, numAssets); }
 
     }
 

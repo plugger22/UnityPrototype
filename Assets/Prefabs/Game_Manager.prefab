@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 114639168605164212}
   - component: {fileID: 114983986480103908}
   - component: {fileID: 114851938744220614}
+  - component: {fileID: 114395521989347528}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -1386,6 +1387,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82b5a992085ea894ba4c4be491ea1450, type: 2}
   - {fileID: 11400000, guid: 9096eb90bfabf11428378f1b81d90809, type: 2}
   - {fileID: 11400000, guid: 88801f08ee15aaa49bb8a7ec2dfaacab, type: 2}
+  arrayOfMissions:
+  - {fileID: 11400000, guid: c402ec51357f6c24d891c455f2d7acea, type: 2}
+  - {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
+  - {fileID: 11400000, guid: c18dfa424a4646349ac6ee1fc6ddb8cf, type: 2}
+  - {fileID: 11400000, guid: d342762d49376704d83814ef8888b652, type: 2}
+  - {fileID: 11400000, guid: b48dee76979230d41a91637f9b6a4a8c, type: 2}
+--- !u!114 &114395521989347528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c71d9a6edb582c4a8483af3b5ec5a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMission: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
 --- !u!114 &114414509910123350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1796,6 +1815,7 @@ MonoBehaviour:
   messageScript: {fileID: 0}
   itemDataScript: {fileID: 0}
   connScript: {fileID: 0}
+  missionScript: {fileID: 0}
   colourScript: {fileID: 0}
   testScript: {fileID: 0}
   validateScript: {fileID: 0}

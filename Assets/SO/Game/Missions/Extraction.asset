@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f34838f8a6e0c34389da63668a03d07, type: 3}
+  m_Name: Extraction
+  m_EditorClassIdentifier: 
+  descriptor: Extract target from city
+  briefing: 
+  timer: 100
+  objectiveOne: {fileID: 0}
+  objectiveTwo: {fileID: 0}
+  objectiveThree: {fileID: 0}
+  activeTargets: 0
+  liveTargets: 0
+  iconTarget: {fileID: 0}
+  airportTarget: {fileID: 0}
+  harbourTarget: {fileID: 0}
+  vipTarget: {fileID: 0}
+  storyTarget: {fileID: 0}
+  goalTarget: {fileID: 0}
+  missionID: 0
