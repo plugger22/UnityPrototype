@@ -56,5 +56,17 @@ public class Mission : ScriptableObject
     [Tooltip("Activation profile for Goal target")]
     public TargetProfile goalProfile;
 
+    [Header("Follow-On Targets")]
+    [Tooltip("City Icon specific follow-on target, can ignore")]
+    public Target iconFollowOnTarget;
+    [Tooltip("City airport specific follow-on target, can ignore")]
+    public Target airportFollowOnTarget;
+    [Tooltip("City harbour specific follow-on target, can ignore")]
+    public Target harbourFollowOnTarget;
+    [Tooltip("Story follow-on target, can ignore")]
+    public Target storyFollowOnTarget;
+    [Tooltip("Goal follow-on target, can ignore")]
+    public Target goalFollowOnTarget;
+
     [HideInInspector] public int missionID;
 }

@@ -202,7 +202,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node);
+                SetTargetDetails(target, node, mission.iconProfile);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID);
             }
@@ -216,7 +216,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node);
+                SetTargetDetails(target, node, mission.airportProfile);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID);
             }
@@ -230,7 +230,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node);
+                SetTargetDetails(target, node, mission.harbourProfile);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID);
             }
@@ -243,19 +243,62 @@ public class TargetManager : MonoBehaviour
     /// NOTE: Target and Node checked for null by calling methods
     /// </summary>
     /// <param name="target"></param>
-    private void SetTargetDetails(Target target, Node node)
+    private void SetTargetDetails(Target target, Node node, TargetProfile profile)
     {
+        //only proceed to assign target if successfully added to list
         if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
         {
-            node.targetID = target.targetID;
-            target.nodeID = node.nodeID;
-            //set status (debug)
-            target.targetStatus = Status.Live;
-            //add to pool
-            GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
+            //profile must be valid
+            if (profile != null)
+            {
+                node.targetID = target.targetID;
+                target.nodeID = node.nodeID;
+
+                //activation
+                switch (profile.trigger.name)
+                {
+                    case "Live":
+                        //target commences live, ignore activation field
+                        target.targetStatus = Status.Live;
+                        target.isRepeat = false;
+                        break;
+                    case "LiveRepeat":
+                        //target commences live, repeats, using same activation profile
+                        target.targetStatus = Status.Live;
+                        if (profile.activation != null)
+                        { target.activation = profile.activation; }
+                        else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
+                        target.isRepeat = true;
+                        break;
+                    case "Custom":
+                        target.targetStatus = Status.Active;
+                        target.isRepeat = false;
+                        if (profile.activation != null)
+                        { target.activation = profile.activation; }
+                        else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
+                        break;
+                    case "CustomRepeat":
+                        target.targetStatus = Status.Active;
+                        target.isRepeat = true;
+                        if (profile.activation != null)
+                        { target.activation = profile.activation; }
+                        else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", profile.trigger.name, target.name);
+                        break;
+                }
+                //delay
+                target.timerDelay = profile.delay;
+                //window
+                target.turnWindow = profile.turnWindow;
+                //add to pool
+                GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus);
+
+            }
+            else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}, targetID {1}", target.name, target.targetID); }
         }
         else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3}", node.nodeName, node.Arc.name, node.nodeID, target.name); }
-        
     }
 
 

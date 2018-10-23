@@ -31,9 +31,6 @@ public class Target : ScriptableObject
     [Tooltip("Which Node Arc it applies to, eg. 'Government' -> Only applies if a Generic type target, ignore otherwise")]
     public NodeArc nodeArc;
 
-    [Header("Timing")]
-
-
     [Header("Effects")]
     [Tooltip("All GOOD effects (SO's) that happen as a result of target successfully being resolved")]
     public List<Effect> listOfGoodEffects;
@@ -51,6 +48,9 @@ public class Target : ScriptableObject
     [HideInInspector] public int ongoingID;         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;               //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
+    [HideInInspector] public int turnWindow;                        //number of turns target is live and visibile before disappearing
+    [HideInInspector] public int nextTargetID;                      //if target completed, this is the next target to process, only valid if > -1
+    [HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
 
     //Timers
     [HideInInspector] public int timerDelay;                        //delay in turns before target tests for activation
