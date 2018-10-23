@@ -17,32 +17,11 @@ public class MissionManager : MonoBehaviour
     public void Initialise()
     {
         Debug.Assert(mission != null, "Invalid mission (Null)");
-        //Set up mission
-        AssignCityTargets();
+        GameManager.instance.targetScript.AssignTargets(mission);
     }
 
-    /// <summary>
-    /// Assign city targets to appropriate nodes
-    /// </summary>
-    private void AssignCityTargets()
-    {
-        int nodeID;
-        Target target;
-        //icon
-        if (mission.iconTarget != null)
-        {
-            target = mission.iconTarget;
-            nodeID = GameManager.instance.cityScript.iconDistrictID;
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
-            if (node != null)
-            {
-                node.targetID = target.targetID;
-                //set status (debug)
-                target.targetStatus = Status.Live;
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID, 
-                    target.name, target.targetID);
-            }
-            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
-        }
-    }
+ 
+
+
+
 }

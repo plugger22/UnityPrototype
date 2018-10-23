@@ -400,6 +400,52 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetType SO, array {0}, assets {1} records", numArray, numAssets); }
         //
+        // - - - TargetTrigger - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:TargetTrigger", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfTargetTriggers.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TargetTrigger SO, array {0}, assets {1} records", numArray, numAssets);
+            TargetTrigger[] arrayTemp = GameManager.instance.loadScript.arrayOfTargetTriggers;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(TargetTrigger));
+                //get object
+                TargetTrigger meta = metaObject as TargetTrigger;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING TargetTrigger \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetTrigger SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
+        // - - - TargetProfile - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:TargetProfile", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfTargetProfiles.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on TargetProfile SO, array {0}, assets {1} records", numArray, numAssets);
+            TargetProfile[] arrayTemp = GameManager.instance.loadScript.arrayOfTargetProfiles;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(TargetProfile));
+                //get object
+                TargetProfile meta = metaObject as TargetProfile;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING TargetProfile \"{0}\"", meta.name); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetProfile SO, array {0}, assets {1} records", numArray, numAssets); }
+        //
         // - - - Quality - - -
         //
         metaGUID = AssetDatabase.FindAssets("t:Quality", new[] { "Assets/SO" });

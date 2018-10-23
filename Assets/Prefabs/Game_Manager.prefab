@@ -740,6 +740,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00209517fd7d8b9428fc7aaaf74d6d88, type: 2}
   - {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   - {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
+  arrayOfTargetTriggers:
+  - {fileID: 11400000, guid: 82ae80a91c839fa48b5292e9c4fde55e, type: 2}
+  - {fileID: 11400000, guid: 2281c5546c92be642a0ed77de3ea91b6, type: 2}
+  arrayOfTargetProfiles:
+  - {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  - {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  - {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   arrayOfQualities:
   - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
   - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}

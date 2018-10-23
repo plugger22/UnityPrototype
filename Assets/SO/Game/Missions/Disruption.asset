@@ -25,4 +25,10 @@ MonoBehaviour:
   vipTarget: {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
   storyTarget: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
   goalTarget: {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
+  iconProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  airportProfile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  harbourProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  vipProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  storyProfile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
+  goalProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   missionID: 1

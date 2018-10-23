@@ -71,11 +71,12 @@ public class DataManager : MonoBehaviour
 
     //target pools
     private List<int>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetID's for each nodeArc type. All level one targets
-    private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
+    //private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
     private List<Target> activeTargetPool = new List<Target>();                         //targets onMap but not yet visible to resistance player
     private List<Target> liveTargetPool = new List<Target>();                           //targets OnMap and visible to resistance player
     private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
     private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
+    private List<int> listOfNodesWithTargets = new List<int>();                         //list of all nodes which currently have an active or live target
 
     //contacts (resistance)
     private List<int> contactPool = new List<int>();
@@ -1879,12 +1880,33 @@ public class DataManager : MonoBehaviour
         }
     }
 
+
+    public List<int> GetNodesWithTargetsList()
+    { return listOfNodesWithTargets; }
+
     /// <summary>
+    /// add a nodeID to list that contains all nodes currently with an active or live target. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public bool AddNodeToTargetList(int nodeID)
+    {
+        Debug.Assert(nodeID > -1, "Invalid nodeID (less than Zero)");
+        if (listOfNodesWithTargets.Exists(x => x == nodeID) == false)
+        { listOfNodesWithTargets.Add(nodeID); }
+        else
+        {
+            Debug.LogWarningFormat("WARNING: nodeID {0} already present in listOfNodesWithTarget", nodeID);
+            return false;
+        }
+        return true;
+    }
+
+    /*/// <summary>
     /// returns possibleTargetsPool.Count
     /// </summary>
     /// <returns></returns>
     public int CheckNumOfPossibleTargets()
-    { return possibleTargetsPool.Count; }
+    { return possibleTargetsPool.Count; }*/
 
     public Dictionary<int, Target> GetDictOfTargets()
     { return dictOfTargets; }
@@ -1918,8 +1940,8 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
-    public List<Target> GetPossibleTargets()
-    { return possibleTargetsPool; }
+    /*public List<Target> GetPossibleTargets()
+    { return possibleTargetsPool; }*/
 
 
 
@@ -1936,9 +1958,9 @@ public class DataManager : MonoBehaviour
         {
             switch (status)
             {
-                case Status.Dormant:
+                /*case Status.Dormant:
                     possibleTargetsPool.Add(target);
-                    break;
+                    break;*/
                 case Status.Active:
                     activeTargetPool.Add(target);
                     break;
@@ -1974,9 +1996,9 @@ public class DataManager : MonoBehaviour
             List<Target> listOfTargets = new List<Target>();
             switch (status)
             {
-                case Status.Dormant:
+                /*case Status.Dormant:
                     listOfTargets = possibleTargetsPool;
-                    break;
+                    break;*/
                 case Status.Active:
                     listOfTargets = activeTargetPool;
                     break;

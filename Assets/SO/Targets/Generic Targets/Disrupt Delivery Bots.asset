@@ -14,13 +14,13 @@ MonoBehaviour:
   description: Shut down supply
   reason: Delivery bots being disabled
   metaLevel: {fileID: 0}
-  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  targetLevel: 2
+  targetLevel: 1
   actorArc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
   gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   type: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
+  turnWindow: 999
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
   - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
@@ -30,9 +30,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   OngoingEffect: {fileID: 11400000, guid: 3f4567a032ff64344a058fc6d262347b, type: 2}
   targetStatus: 0
+  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
   targetID: 1
   ongoingID: -1
   isKnownByAI: 0
-  timer: -1
   nodeID: -1
+  timerDelay: 0
+  timerCountdown: 0
+  timerWindow: 0

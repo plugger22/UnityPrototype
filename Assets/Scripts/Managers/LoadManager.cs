@@ -24,6 +24,8 @@ public class LoadManager : MonoBehaviour
     public EffectOutcome[] arrayOfEffectOutcome;
     public ContactType[] arrayOfContactTypes;
     public TargetType[] arrayOfTargetTypes;
+    public TargetTrigger[] arrayOfTargetTriggers;
+    public TargetProfile[] arrayOfTargetProfiles;
     public Quality[] arrayOfQualities;
     public CitySize[] arrayOfCitySize;
     public CitySpacing[] arrayOfCitySpacing;
@@ -169,6 +171,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetTypes present"); }
+        //
+        // - - - TargetTriggers (not stored in a collection)
+        //
+        numArray = arrayOfTargetTriggers.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetTriggers has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetTriggers present"); }
+        //
+        // - - - TargetProfile (not stored in a collection)
+        //
+        numArray = arrayOfTargetProfiles.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetProfiles has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetProfiles present"); }
         //
         // - - - Text Lists Contacts (not stored in a collection)
         //

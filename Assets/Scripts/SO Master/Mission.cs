@@ -24,7 +24,7 @@ public class Mission : ScriptableObject
     public Objective objectiveThree;
 
 
-    [Header("Targets (all Level 1)")]
+    [Header("Targets (Level 1)")]
     [Tooltip("Number of initial Live (visible) targets at start")]
     public int activeTargets;
     [Tooltip("Number of initial Active (hidden) targets at start")]
@@ -41,6 +41,20 @@ public class Mission : ScriptableObject
     public Target storyTarget;
     [Tooltip("Goal target, can ignore")]
     public Target goalTarget;
+
+    [Header("Target Activation (Level 1)")]
+    [Tooltip("Activation profile for Icon target")]
+    public TargetProfile iconProfile;
+    [Tooltip("Activation profile for Airport target")]
+    public TargetProfile airportProfile;
+    [Tooltip("Activation profile for Harbour target")]
+    public TargetProfile harbourProfile;
+    [Tooltip("Activation profile for VIP target")]
+    public TargetProfile vipProfile;
+    [Tooltip("Activation profile for Story target")]
+    public TargetProfile storyProfile;
+    [Tooltip("Activation profile for Goal target")]
+    public TargetProfile goalProfile;
 
     [HideInInspector] public int missionID;
 }

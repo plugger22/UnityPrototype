@@ -172,7 +172,98 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
+
     /// <summary>
+    /// master method to assign targets at level start
+    /// </summary>
+    /// <param name="mission"></param>
+    public void AssignTargets(Mission mission)
+    {
+        if (mission != null)
+        {
+            AssignCityTargets(mission);
+
+        }
+        else { Debug.LogError("Invalid mission (Null)"); }
+    }
+
+    /// <summary>
+    /// Assign city targets to appropriate nodes
+    /// </summary>
+    private void AssignCityTargets(Mission mission)
+    {
+        int nodeID;
+        Target target;
+        //icon
+        if (mission.iconTarget != null)
+        {
+            target = mission.iconTarget;
+            nodeID = GameManager.instance.cityScript.iconDistrictID;
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            {
+                SetTargetDetails(target, node);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
+        }
+        //airport
+        if (mission.airportTarget != null)
+        {
+            target = mission.airportTarget;
+            nodeID = GameManager.instance.cityScript.airportDistrictID;
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            {
+                SetTargetDetails(target, node);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for airportTarget", nodeID); }
+        }
+        //harbour
+        if (mission.harbourTarget != null)
+        {
+            target = mission.harbourTarget;
+            nodeID = GameManager.instance.cityScript.harbourDistrictID;
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            {
+                SetTargetDetails(target, node);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for harbourTarget", nodeID); }
+        }
+    }
+
+    /// <summary>
+    /// Sets target activation, status and adds to relevant pools
+    /// NOTE: Target and Node checked for null by calling methods
+    /// </summary>
+    /// <param name="target"></param>
+    private void SetTargetDetails(Target target, Node node)
+    {
+        if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
+        {
+            node.targetID = target.targetID;
+            target.nodeID = node.nodeID;
+            //set status (debug)
+            target.targetStatus = Status.Live;
+            //add to pool
+            GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
+        }
+        else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3}", node.nodeName, node.Arc.name, node.nodeID, target.name); }
+        
+    }
+
+
+
+
+
+
+    /*/// <summary>
     /// Populates a set number of randomly chosen level 1 targets into the level with the indicated status
     /// </summary>
     /// <param name="numOfTargets"></param>
@@ -366,7 +457,7 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfExisting or tempList (either are Null)"); }
         return listOfNodes;
-    }
+    }*/
 
 
     /// <summary>
@@ -474,7 +565,7 @@ public class TargetManager : MonoBehaviour
             case Status.Live:
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.name, colourEnd));
                 tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
-                //good effects
+                /*//good effects
                 Effect effect = null;
                 for (int i = 0; i < target.listOfGoodEffects.Count; i++)
                 {
@@ -493,12 +584,12 @@ public class TargetManager : MonoBehaviour
                 }
                 //ongoing effects
                 if (target.OngoingEffect != null)
-                { tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd)); }
+                { tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd)); }*/
                 //info level data colour graded
                 tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd,
                     GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
-                tempList.Add(string.Format("{0}{1} gear{2}", colourGear, target.gear.name, colourEnd));
-                tempList.Add(string.Format("{0}{1}{2}", colourGear, target.actorArc.name, colourEnd));
+                tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));
+                tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
                 break;
             case Status.Completed:
                 //put tooltip together

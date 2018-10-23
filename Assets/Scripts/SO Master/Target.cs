@@ -15,8 +15,6 @@ public class Target : ScriptableObject
     public string reason;
     [Tooltip("Only select an option here if the Target is restricted to a particular metaLevel, otherwise leave as None (null)")]
     public GlobalMeta metaLevel;
-    [Tooltip("Chance of going live each turn, if active")]
-    public GlobalChance activation;    
     [Tooltip("From 1 to 3, lowest to highest. Level 1 can trigger a Level 2 which can trigger a level 3")]
     [Range(1, 3)] public int targetLevel = 1;
 
@@ -33,6 +31,9 @@ public class Target : ScriptableObject
     [Tooltip("Which Node Arc it applies to, eg. 'Government' -> Only applies if a Generic type target, ignore otherwise")]
     public NodeArc nodeArc;
 
+    [Header("Timing")]
+
+
     [Header("Effects")]
     [Tooltip("All GOOD effects (SO's) that happen as a result of target successfully being resolved")]
     public List<Effect> listOfGoodEffects;
@@ -44,11 +45,16 @@ public class Target : ScriptableObject
     public Effect OngoingEffect;
 
     [HideInInspector] public Status targetStatus;      //default status of Dormant
+    [HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live
     [HideInInspector] public int infoLevel;                        //from 1 to 3 but can be zero in some cases
     [HideInInspector] public int targetID;
     [HideInInspector] public int ongoingID;         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;               //is known by the AI?
-    //[HideInInspector] public int timer;                      //countdown timer, default '-1' for ignore
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
+
+    //Timers
+    [HideInInspector] public int timerDelay;                        //delay in turns before target tests for activation
+    [HideInInspector] public int timerCountdown;                    //back stop timer, triggered once activations commence. If target hasn't activated randomly by the time timer reaches zero then does so
+    [HideInInspector] public int timerWindow;                       //number of turns target, once live, stays that way before disappearing, set to turnWindow on activation
 
 }
