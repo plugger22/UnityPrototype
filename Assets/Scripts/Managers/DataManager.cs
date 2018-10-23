@@ -76,7 +76,7 @@ public class DataManager : MonoBehaviour
     private List<Target> liveTargetPool = new List<Target>();                           //targets OnMap and visible to resistance player
     private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
     private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
-    private List<int> listOfNodesWithTargets = new List<int>();                         //list of all nodes which currently have an active or live target
+    private List<int> listOfNodesWithTargets = new List<int>();                         //list of all nodes which currently have non-dormant targets
 
     //contacts (resistance)
     private List<int> contactPool = new List<int>();
@@ -1885,7 +1885,7 @@ public class DataManager : MonoBehaviour
     { return listOfNodesWithTargets; }
 
     /// <summary>
-    /// add a nodeID to list that contains all nodes currently with an active or live target. Returns true if successful, false otherwise
+    /// add a nodeID to list that contains all nodes currently with non-Dormant targets. Returns true if successful, false otherwise
     /// </summary>
     /// <param name="nodeID"></param>
     public bool AddNodeToTargetList(int nodeID)
@@ -1899,6 +1899,44 @@ public class DataManager : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// gets a random Node that is NOT present in listOfNodesWithTargets. Returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public Node GetRandomTargetNode()
+    {
+        int counter = 0;
+        Node node = null;
+        bool isSuccess = false;
+        do
+        {
+            counter++;
+            node = GetRandomNode();
+            if (listOfNodesWithTargets.Exists(x => x == node.nodeID) == false)
+            { isSuccess = true; }
+            if (counter == 20)
+            { Debug.LogFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after {0} iterations{1}", counter, "\n"); }
+        }
+        while (isSuccess = false && counter < 20);
+        //go to manual
+        if (isSuccess == false)
+        {
+            //loop through list of nodes until you find one without a target
+            for (int i = 0; i < listOfNodes.Count; i++)
+            {
+                node = listOfNodes[i];
+                if (listOfNodesWithTargets.Exists(x => x == node.nodeID) == false)
+                {
+                    isSuccess = true;
+                    break;
+                }
+            }
+            if (isSuccess == false)
+            { Debug.LogFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after a FULL loop through list of nodes{0}", "\n"); }
+        }
+        return node;
     }
 
     /*/// <summary>

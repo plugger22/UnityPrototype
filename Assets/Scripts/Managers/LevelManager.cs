@@ -939,22 +939,24 @@ public class LevelManager : MonoBehaviour
                     }
                     if (tempDict.Count > 0)
                     {
-                        //Mayors Office -> sort dictionary from closest to grid centre to furtherst
+                        //Mayors Office (City Hall) -> sort dictionary from closest to grid centre to furtherst
                         var sortedDictMayor = from entry in tempDict orderby entry.Value ascending select entry;
                         
                         /*//debug printout
                         foreach (var record in sortedDictMayor)
                         { Debug.LogFormat("Sorted -> Mayor: {0}, {1}, ID{2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n"); }*/
 
-                        //find the first government node for the mayor's office (which will be closest to the centre)
+                        //find the first government node for City Hall (which will be closest to the centre)
                         foreach (var record in sortedDictMayor)
                         {
                             if (record.Key.Arc.name.Equals("GOVERNMENT") == true)
                             {
-                                Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor's office at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
+                                Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor & City Hall at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                 record.Key.nodeName = "City Centre";
                                 record.Key.specialName = "Town Hall";
+                                //Mayor placed at CityHall at game start
                                 GameManager.instance.cityScript.mayorDistrictID = record.Key.nodeID;
+                                GameManager.instance.cityScript.cityHallDistrictID = record.Key.nodeID;
                                 break;
                             }
                         }

@@ -23,7 +23,7 @@ public class TargetProfile : ScriptableObject
 
     [Tooltip("Applies to All -> If true the target repeats using the same profile as now")]
     public bool isRepeat;
-    [Tooltip("Only applicable for REPEAT profiles -> if true the target repeats at same node")]
+    [Tooltip("Only applicable for REPEAT profiles -> if true the target repeats at same node, otherwise random node")]
     public bool isSameNode;
 
 }

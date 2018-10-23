@@ -182,7 +182,10 @@ public class TargetManager : MonoBehaviour
         if (mission != null)
         {
             AssignCityTargets(mission);
-
+            AssignGenericTargets(mission);
+            AssignVIPTarget(mission);
+            AssignStoryTarget(mission);
+            AssignGoalTarget(mission);
         }
         else { Debug.LogError("Invalid mission (Null)"); }
     }
@@ -194,6 +197,20 @@ public class TargetManager : MonoBehaviour
     {
         int nodeID;
         Target target;
+        //city hall
+        if (mission.cityHallTarget != null)
+        {
+            target = mission.cityHallTarget;
+            nodeID = GameManager.instance.cityScript.cityHallDistrictID;
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            {
+                SetTargetDetails(target, node, mission.cityHallProfile, mission.cityHallFollowOnTarget);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID, target.nextTargetID);
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
+        }
         //icon
         if (mission.iconTarget != null)
         {
@@ -202,9 +219,9 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.iconProfile);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID);
+                SetTargetDetails(target, node, mission.iconProfile, mission.iconFollowOnTarget);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID, target.nextTargetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
@@ -216,9 +233,9 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.airportProfile);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID);
+                SetTargetDetails(target, node, mission.airportProfile, mission.airportFollowOnTarget);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID, target.nextTargetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for airportTarget", nodeID); }
         }
@@ -230,12 +247,88 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.harbourProfile);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID);
+                SetTargetDetails(target, node, mission.harbourProfile, mission.harbourFollowOnTarget);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID, target.nextTargetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for harbourTarget", nodeID); }
         }
+    }
+
+    /// <summary>
+    /// Assign the specified number of active and Live Generic targets to specific NodeArc types
+    /// </summary>
+    /// <param name="mission"></param>
+    private void AssignGenericTargets(Mission mission)
+    {
+        List<NodeArc> listOfNodeArcs = new List<NodeArc>(GameManager.instance.dataScript.GetDictOfNodeArcs().Values);
+        int numActive = mission.targetsGenericLive;
+        int numLive = mission.targetsGenericActive;
+        //Live Targets first
+        int index = Random.Range(0, listOfNodeArcs.Count);
+        NodeArc nodeArc = listOfNodeArcs[index];
+        //Active Targets next
+    }
+
+    /// <summary>
+    /// Assign a VIP target (typically it's a repeating target) to a random node
+    /// </summary>
+    /// <param name="mission"></param>
+    private void AssignVIPTarget(Mission mission)
+    {
+        Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+        if (node != null)
+        {
+            if (mission.vipTarget != null)
+            {
+                Target target = mission.vipTarget;
+                //VIP targets don't have follow-on targets (use repeating random node targets instead)
+                SetTargetDetails(target, node, mission.vipProfile);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignVIPTarget: VIP node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
+                    target.name, target.targetID);
+            }
+        }
+        else { Debug.LogWarning("Invalid node (Null) for VIPTarget"); }
+    }
+
+    /// <summary>
+    /// Assign a Story target to a random node
+    /// </summary>
+    /// <param name="mission"></param>
+    private void AssignStoryTarget(Mission mission)
+    {
+        Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+        if (node != null)
+        {
+            if (mission.harbourTarget != null)
+            {
+                Target target = mission.storyTarget;
+                SetTargetDetails(target, node, mission.storyProfile);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
+                    target.name, target.targetID);
+            }
+        }
+        else { Debug.LogWarning("Invalid node (Null) for StoryTarget"); }
+    }
+
+    /// <summary>
+    /// Assign a Goal target to a random node
+    /// </summary>
+    /// <param name="mission"></param>
+    private void AssignGoalTarget(Mission mission)
+    {
+        Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+        if (node != null)
+        {
+            if (mission.harbourTarget != null)
+            {
+                Target target = mission.goalTarget;
+                SetTargetDetails(target, node, mission.goalProfile);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
+                    target.name, target.targetID);
+            }
+        }
+        else { Debug.LogWarning("Invalid node (Null) for GoalTarget"); }
     }
 
     /// <summary>
@@ -243,7 +336,7 @@ public class TargetManager : MonoBehaviour
     /// NOTE: Target and Node checked for null by calling methods
     /// </summary>
     /// <param name="target"></param>
-    private void SetTargetDetails(Target target, Node node, TargetProfile profile)
+    private void SetTargetDetails(Target target, Node node, TargetProfile profile, Target followOnTarget = null)
     {
         //only proceed to assign target if successfully added to list
         if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
@@ -262,24 +355,9 @@ public class TargetManager : MonoBehaviour
                         target.targetStatus = Status.Live;
                         target.isRepeat = false;
                         break;
-                    case "LiveRepeat":
-                        //target commences live, repeats, using same activation profile
-                        target.targetStatus = Status.Live;
-                        if (profile.activation != null)
-                        { target.activation = profile.activation; }
-                        else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
-                        target.isRepeat = true;
-                        break;
                     case "Custom":
                         target.targetStatus = Status.Active;
                         target.isRepeat = false;
-                        if (profile.activation != null)
-                        { target.activation = profile.activation; }
-                        else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
-                        break;
-                    case "CustomRepeat":
-                        target.targetStatus = Status.Active;
-                        target.isRepeat = true;
                         if (profile.activation != null)
                         { target.activation = profile.activation; }
                         else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
@@ -290,8 +368,15 @@ public class TargetManager : MonoBehaviour
                 }
                 //delay
                 target.timerDelay = profile.delay;
+                //repeat
+                target.isRepeat = profile.isRepeat;
+                target.isSameNode = profile.isSameNode;
                 //window
                 target.turnWindow = profile.turnWindow;
+                //follow On target
+                if (followOnTarget != null)
+                { target.nextTargetID = followOnTarget.targetID; }
+                else { target.nextTargetID = -1; }
                 //add to pool
                 GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus);
 

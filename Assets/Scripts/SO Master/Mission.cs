@@ -13,6 +13,7 @@ public class Mission : ScriptableObject
     public string descriptor;
     [Tooltip("Player briefing")]
     [TextArea] public string briefing;
+    [TextArea] public string devNotes;
     [Tooltip("Mission Timer -> how many turns")]
     [Range(20, 100)] public int timer = 100;
 
@@ -26,9 +27,11 @@ public class Mission : ScriptableObject
 
     [Header("Targets (Level 1)")]
     [Tooltip("Number of initial Live (visible) targets at start")]
-    public int activeTargets;
+    public int targetsGenericLive;
     [Tooltip("Number of initial Active (hidden) targets at start")]
-    public int liveTargets;
+    public int targetsGenericActive;
+    [Tooltip("City CityHall specific target, can ignore")]
+    public Target cityHallTarget;
     [Tooltip("City Icon specific target, can ignore")]
     public Target iconTarget;
     [Tooltip("City airport specific target, can ignore")]
@@ -43,6 +46,8 @@ public class Mission : ScriptableObject
     public Target goalTarget;
 
     [Header("Target Activation (Level 1)")]
+    [Tooltip("Activation profile for City Hall target")]
+    public TargetProfile cityHallProfile;
     [Tooltip("Activation profile for Icon target")]
     public TargetProfile iconProfile;
     [Tooltip("Activation profile for Airport target")]
@@ -57,6 +62,8 @@ public class Mission : ScriptableObject
     public TargetProfile goalProfile;
 
     [Header("Follow-On Targets")]
+    [Tooltip("City CityHall specific follow-on target, can ignore")]
+    public Target cityHallFollowOnTarget;
     [Tooltip("City Icon specific follow-on target, can ignore")]
     public Target iconFollowOnTarget;
     [Tooltip("City airport specific follow-on target, can ignore")]

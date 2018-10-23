@@ -24,7 +24,8 @@ public class CityManager : MonoBehaviour
     [Range(1, 10)] public int loyaltyCountdownTimer = 3;
 
     //nodeID's of special city districts -> assigned by LevelManager.cs -> InitialiseDistrictNames. If default value of '-1' then no special district of that type exists
-    [HideInInspector] public int mayorDistrictID = -1;
+    [HideInInspector] public int mayorDistrictID = -1;   //same as city hall at start of game but mayor can move around. Mayor's current locatoin
+    [HideInInspector] public int cityHallDistrictID = -1;
     [HideInInspector] public int airportDistrictID = -1;
     [HideInInspector] public int harbourDistrictID = -1;
     [HideInInspector] public int iconDistrictID = -1;
