@@ -15,12 +15,12 @@ MonoBehaviour:
   baseLoyalty: 8
   Arc: {fileID: 11400000, guid: 26d83090982f6de4ea21b688a86b5fb9, type: 2}
   country: {fileID: 11400000, guid: a6f419d252b97e8488a6d059e9777121, type: 2}
-  iconDistrict: 
-  airportDistrict: 
-  portDistrict: 
+  iconDistrict: Arles Centre
+  airportDistrict: Nimes
+  harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
-  iconName: 
-  isTestOff: 1
+  iconName: Foundation Van Gogh
+  isTestOff: 0
   cityID: 0
   mayor: {fileID: 11400000, guid: 3507257dca470024697693b51935336f, type: 2}
   faction: {fileID: 11400000, guid: 6041e87eef1508646ad96be985691ba5, type: 2}

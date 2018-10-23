@@ -419,6 +419,7 @@ MonoBehaviour:
   miniPanelOpacity: 0.25
   loyaltyCountdownTimer: 3
   mayorDistrictID: -1
+  cityHallDistrictID: -1
   airportDistrictID: -1
   harbourDistrictID: -1
   iconDistrictID: -1
@@ -1257,6 +1258,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
   - {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
   - {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  - {fileID: 11400000, guid: 0709a03dbe8855c4ca63596a7fa53fb7, type: 2}
   arrayOfTargetsVIP:
   - {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
   - {fileID: 11400000, guid: 975a5596bd2e1fa45a2dd74b585282c4, type: 2}
@@ -1846,7 +1848,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 8048
+  seed: 0
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0

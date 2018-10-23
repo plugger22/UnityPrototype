@@ -22,5 +22,5 @@ MonoBehaviour:
   iconName: Big Ben
   isTestOff: 0
   cityID: 5
-  mayor: {fileID: 11400000, guid: 6315cbaaef881524e9547466c7d46283, type: 2}
-  faction: {fileID: 11400000, guid: 03a87536ea8c7044c97e5e526ee52d6c, type: 2}
+  mayor: {fileID: 11400000, guid: ab2076eb4bf30fa4e95af2473114bd5e, type: 2}
+  faction: {fileID: 11400000, guid: bceab10738a333d448540192a04a2c60, type: 2}
