@@ -46,6 +46,10 @@ public class Mission : ScriptableObject
     public Target goalTarget;
 
     [Header("Target Activation (Level 1)")]
+    [Tooltip("Activation Profile for Generic Live (Visible) targets")]
+    public TargetProfile genericLiveProfile;
+    [Tooltip("Activation Profile for Generic Active (Passive) targets")]
+    public TargetProfile genericActiveProfile;
     [Tooltip("Activation profile for City Hall target")]
     public TargetProfile cityHallProfile;
     [Tooltip("Activation profile for Icon target")]

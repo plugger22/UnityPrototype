@@ -261,12 +261,76 @@ public class TargetManager : MonoBehaviour
     /// <param name="mission"></param>
     private void AssignGenericTargets(Mission mission)
     {
+        int index, counter, numOfNodes, attempts;
         List<NodeArc> listOfNodeArcs = new List<NodeArc>(GameManager.instance.dataScript.GetDictOfNodeArcs().Values);
         int numActive = mission.targetsGenericLive;
         int numLive = mission.targetsGenericActive;
+        List<Node> listOfNodesByType = new List<Node>();
+        Node node = null;
+        Target target = null;
         //Live Targets first
-        int index = Random.Range(0, listOfNodeArcs.Count);
-        NodeArc nodeArc = listOfNodeArcs[index];
+        counter = 0; attempts = 0;
+        do
+        {
+            //get random nodeArc
+            index = Random.Range(0, listOfNodeArcs.Count);
+            NodeArc nodeArc = listOfNodeArcs[index];
+            if (nodeArc != null)
+            {
+                //get a random node of that type
+                listOfNodesByType = GameManager.instance.dataScript.GetListOfNodesByType(nodeArc.nodeArcID);
+                numOfNodes = listOfNodesByType.Count;
+                if (numOfNodes > 0)
+                {
+                    /*node = listOfNodesByType[Random.Range(0, numOfNodes)];*/
+                    node = null;
+                    //loop through list (can't randomly pick one as the node could already have a target)
+                    for (int i = 0; i < numOfNodes; i++)
+                    {
+                        node = listOfNodesByType[i];
+                        if (node != null)
+                        {
+                            //check node doesn't already have a target
+                            if (node.targetID == -1)
+                            { break; }
+                            else { node = null; }
+                        }
+                    }
+                    if (node != null)
+                    {
+                        //valid node
+                        target = GameManager.instance.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
+                        if (target != null)
+                        {
+                            //valid target
+                            if (mission.genericLiveProfile != null)
+                            {
+                                //assign target to node
+                                SetTargetDetails(target, node, mission.genericLiveProfile);
+                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
+                                    target.name, target.targetID);
+                                counter++;
+                                //delete target to prevent dupes
+                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
+                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.name, target.targetID, nodeArc.nodeArcID); }
+                            }
+                            else { Debug.LogError("Invalid mission.genericLiveProfile (Null)"); }
+                        }
+                        else { Debug.LogError("Invalid target (Null)"); }
+                    }
+                }
+                //delete nodeArc to prevent dupes
+                listOfNodeArcs.RemoveAt(index);
+            }
+            else { Debug.LogError("Invalid nodeArc (Null) in listOfNodeArcs -> No Target assigned"); }
+            //endless loop prevention
+            attempts++;
+            if (attempts == 20)
+            { Debug.LogFormat("[Tst] TargetManager.cs -> AssignGenericTargets: {0} out of {1} targets assigned for NodeArc \"{2}\", timed out on {3} attempts", counter, numLive, nodeArc.name, attempts); }
+        }
+        while (counter < numLive && attempts < 20);
+
+
         //Active Targets next
     }
 

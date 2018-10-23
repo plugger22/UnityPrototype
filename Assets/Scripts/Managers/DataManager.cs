@@ -1864,6 +1864,22 @@ public class DataManager : MonoBehaviour
     { return arrayOfGenericTargets; }
 
     /// <summary>
+    /// gets random generic target for a specific nodeArcID. Returns null if one found or a problem
+    /// </summary>
+    /// <param name="nodeArcID"></param>
+    /// <returns></returns>
+    public Target GetRandomGenericTarget(int nodeArcID)
+    {
+        int targetID = -1;
+        List<int> tempList = arrayOfGenericTargets[nodeArcID];
+        if (tempList.Count > 0)
+        { targetID = tempList[Random.Range(0, tempList.Count)]; }
+        if (targetID > -1)
+        { return GetTarget(targetID); }
+        return null;
+    }
+
+    /// <summary>
     /// Initialises generic targets array. Called by LoadManager.cs -> targets (due to sequence issues with # of nodeArcs which determines size of array)
     /// </summary>
     public void InitialiseArrayOfGenericTargets()
@@ -1880,9 +1896,29 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// removes a target from a specific generic list to prevent dupes. Returns true if successful.
+    /// </summary>
+    /// <param name="targetID"></param>
+    /// <param name="nodeArcID"></param>
+    public bool RemoveTargetFromGenericList(int targetID, int nodeArcID)
+    {
+        if (arrayOfGenericTargets[nodeArcID].Remove(targetID) == true)
+        { return true; }
+        return false;
+    }
+
 
     public List<int> GetNodesWithTargetsList()
     { return listOfNodesWithTargets; }
+
+    /// <summary>
+    /// returns true if node on list, false otherwise
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool CheckNodeOnTargetList(int nodeID)
+    { return listOfNodesWithTargets.Exists(x => x == nodeID); }
 
     /// <summary>
     /// add a nodeID to list that contains all nodes currently with non-Dormant targets. Returns true if successful, false otherwise
