@@ -568,21 +568,19 @@ public class TargetManager : MonoBehaviour
                 switch (profile.trigger.name)
                 {
                     case "Live":
-                        //target commences live, ignore activation field
                         target.targetStatus = Status.Live;
-                        target.isRepeat = false;
                         break;
                     case "Custom":
                         target.targetStatus = Status.Active;
-                        target.isRepeat = false;
-                        if (profile.activation != null)
-                        { target.activation = profile.activation; }
-                        else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
                         break;
                     default:
                         Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", profile.trigger.name, target.name);
                         break;
                 }
+                //activation
+                if (profile.activation != null)
+                { target.activation = profile.activation; }
+                else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
                 //delay
                 target.timerDelay = profile.delay;
                 target.timerCountdown = 0;
@@ -908,7 +906,7 @@ public class TargetManager : MonoBehaviour
                 tempList.Add(string.Format("{0}<b>Level {1}</b>{2}", colourDefault, target.targetLevel, colourEnd));
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    tempList.Add(string.Format("Activation \"{0}\"", target.activation));
+                    tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
                     tempList.Add(string.Format("timerCountdown {0}", target.timerCountdown));
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
@@ -944,7 +942,7 @@ public class TargetManager : MonoBehaviour
                 tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    tempList.Add(string.Format("Activation \"{0}\"", target.activation));
+                    tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
                     tempList.Add(string.Format("timerCountdown {0}", target.timerCountdown));
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
