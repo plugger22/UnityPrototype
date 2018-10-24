@@ -2230,20 +2230,17 @@ public class ActionManager : MonoBehaviour
                 {
                     //Success
                     isSuccessful = true;
-                    //target admin
-                    target.targetStatus = Status.Completed;
-                    GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
-                    //if ongoing effects then target moved to completed pool
+                    target.turnSuccess = GameManager.instance.turnScript.Turn;
+                    //Ongoing effects then target moved to completed pool
                     if (target.OngoingEffect != null)
-                    { GameManager.instance.dataScript.AddTargetToPool(target, Status.Completed); }
-                    //no ongoing effects -> target contained and done with. 
-                    else
                     {
-                        target.targetStatus = Status.Contained;
-                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Contained);
-                        //Node cleared out ready for next target
-                        node.targetID = -1;
+                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
+                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Outstanding);
+                        target.targetStatus = Status.Outstanding;
                     }
+                    //NO ongoing effects -> target  done with. 
+                    else
+                    { GameManager.instance.targetScript.SetTargetDone(target, node); }
                     text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
                     GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                     //random roll

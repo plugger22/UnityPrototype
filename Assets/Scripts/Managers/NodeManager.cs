@@ -440,13 +440,13 @@ public class NodeManager : MonoBehaviour
                     //FOW Off
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Active));
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
-                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding));
                 }
                 else
                 {
                     //FOW On
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
-                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Completed));
+                    tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding));
                 }
                 if (tempList.Count > 0)
                 {

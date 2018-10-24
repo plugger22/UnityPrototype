@@ -1230,7 +1230,7 @@ public class AIManager : MonoBehaviour
                                     dataPackage.isPreferred = node.isPreferredAuthority;
                                     listOfTargetsKnown.Add(dataPackage);
                                     break;
-                                case Status.Completed:
+                                case Status.Outstanding:
                                     //Damage team node data package (only for completed targets with ongoing effects that require containing)
                                     if (node.CheckForOngoingEffects() == true)
                                     {
@@ -1516,8 +1516,7 @@ public class AIManager : MonoBehaviour
                                                         if (target.isKnownByAI)
                                                         { score += nodeTargetFactor; }
                                                         break;
-                                                    case Status.Completed:
-                                                    case Status.Contained:
+                                                    case Status.Outstanding:
                                                         score -= nodeTargetFactor;
                                                         break;
                                                 }

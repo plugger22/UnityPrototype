@@ -54,6 +54,8 @@ public class Target : ScriptableObject
     [HideInInspector] public bool isKnownByAI;               //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
     [HideInInspector] public int turnWindow;                        //number of turns target is live and visibile before disappearing
+    [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted
+    [HideInInspector] public int turnDone;                          //turn # when target done
     [HideInInspector] public int nextTargetID;                      //if target completed, this is the next target to process, only valid if > -1
     [HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
     [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node

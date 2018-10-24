@@ -1938,6 +1938,14 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// removes a nodeID from list of all nodes with a non-dormant/done target. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool RemoveNodeFromTargetList(int nodeID)
+    { return listOfNodesWithTargets.Remove(nodeID); }
+
+    /// <summary>
     /// gets a random Node that is NOT present in listOfNodesWithTargets. Returns null if a problem
     /// </summary>
     /// <returns></returns>
@@ -2001,10 +2009,10 @@ public class DataManager : MonoBehaviour
             case Status.Live:
                 tempList = targetPoolLive;
                 break;
-            case Status.Completed:
+            case Status.Outstanding:
                 tempList = targetPoolOutstanding;
                 break;
-            case Status.Contained:
+            case Status.Done:
                 tempList = targetPoolDone;
                 break;
             default:
@@ -2041,10 +2049,10 @@ public class DataManager : MonoBehaviour
                 case Status.Live:
                     targetPoolLive.Add(target);
                     break;
-                case Status.Completed:
+                case Status.Outstanding:
                     targetPoolOutstanding.Add(target);
                     break;
-                case Status.Contained:
+                case Status.Done:
                     targetPoolDone.Add(target);
                     break;
                 default:
@@ -2079,10 +2087,10 @@ public class DataManager : MonoBehaviour
                 case Status.Live:
                     listOfTargets = targetPoolLive;
                     break;
-                case Status.Completed:
+                case Status.Outstanding:
                     listOfTargets = targetPoolOutstanding;
                     break;
-                case Status.Contained:
+                case Status.Done:
                     listOfTargets = targetPoolDone;
                     break;
                 default:

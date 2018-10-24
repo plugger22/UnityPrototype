@@ -127,39 +127,106 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        int targetID;
+        CheckTargets();
+    }
+
+    /// <summary>
+    /// checks all targets on map and handles admin and status changes
+    /// </summary>
+    private void CheckTargets()
+    {
+        int targetID, rndNum;
+        bool isLive;
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
-            foreach(Node node in listOfNodes)
+            //loop nodes
+            foreach (Node node in listOfNodes)
             {
                 targetID = node.targetID;
+                //Target present
                 if (targetID > -1)
                 {
-                    //target present
-                    if (node.isTargetKnown == false)
+                    Target target = GameManager.instance.dataScript.GetTarget(targetID);
+                    if (target != null)
                     {
-                        //probe team present -> target known
-                        if (node.isProbeTeam == true)
-                        { node.isTargetKnown = true; }
-                        else
+                        //
+                        // - - - Probe Team - - -
+                        //
+                        if (node.isTargetKnown == false)
                         {
-                            //get target status
-                            Target target = GameManager.instance.dataScript.GetTarget(targetID);
-                            if (target != null)
+                            //probe team present -> target known
+                            if (node.isProbeTeam == true)
+                            { node.isTargetKnown = true; }
+                            else
                             {
-                                //target automatically known regardless if completed or contained
-                                switch(target.targetStatus)
+                                //target automatically known regardless even if completed & not yet contained
+                                switch (target.targetStatus)
                                 {
-                                    case Status.Completed:
-                                    case Status.Contained:
+                                    case Status.Outstanding:
                                         node.isTargetKnown = true;
                                         break;
                                 }
                             }
-                            else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", targetID)); }
+                        }
+                        //
+                        // - - - Target status - - -
+                        //
+                        switch (target.targetStatus)
+                        {
+                            case Status.Active:
+                                if (target.timerDelay == 0)
+                                {
+                                    //activation roll
+                                    isLive = false;
+                                    target.timerCountdown++;
+                                    rndNum = Random.Range(0, 100);
+                                    switch(target.activation.level)
+                                    {
+                                        case 3:
+                                            //Extreme
+                                            if (rndNum < 50) { isLive = true; }
+                                            else if (target.timerCountdown >= 2) { isLive = true; }
+                                            break;
+                                        case 2:
+                                            //High
+                                            if (rndNum < 20) { isLive = true; }
+                                            else if (target.timerCountdown >= 5) { isLive = true; }
+                                            break;
+                                        case 1:
+                                            //Medium
+                                            if (rndNum < 10) { isLive = true; }
+                                            else if (target.timerCountdown >= 10) { isLive = true; }
+                                            break;
+                                        case 0:
+                                            //Low
+                                            if (rndNum < 5) { isLive = true; }
+                                            else if (target.timerCountdown >= 20) { isLive = true; }
+                                            break;
+                                        default:
+                                            Debug.LogWarningFormat("Invalid activation GlobalChance.level {0}", target.activation.level);
+                                            break;
+                                    }
+                                    //Target goes Live
+                                    if (isLive == true)
+                                    {
+                                        target.targetStatus = Status.Live;
+                                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
+                                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Active);
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0}, id {1} goes LIVE", target.name, target.targetID);
+                                    }
+                                }
+                                else
+                                { target.timerDelay--; }
+                                break;
+                            case Status.Live:
+                                if (target.timerWindow == 0)
+                                { SetTargetDone(target, node); }
+                                else { target.timerWindow--; }
+                                break;
                         }
                     }
+                    else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", targetID)); }
                 }
                 else
                 {
@@ -171,7 +238,6 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
-
 
     /// <summary>
     /// master method to assign targets at level start
@@ -498,7 +564,6 @@ public class TargetManager : MonoBehaviour
             {
                 node.targetID = target.targetID;
                 target.nodeID = node.nodeID;
-
                 //activation
                 switch (profile.trigger.name)
                 {
@@ -520,6 +585,7 @@ public class TargetManager : MonoBehaviour
                 }
                 //delay
                 target.timerDelay = profile.delay;
+                target.timerCountdown = 0;
                 //repeat
                 target.isRepeat = profile.isRepeat;
                 target.isSameNode = profile.isSameNode;
@@ -777,8 +843,7 @@ public class TargetManager : MonoBehaviour
                             {
                                 switch (target.targetStatus)
                                 {
-                                    case Status.Completed:
-                                    case Status.Contained:
+                                    case Status.Outstanding:
                                         tempList.Add(string.Format("<b>{0} Target</b>", target.targetStatus));
                                         tempList.Add(string.Format("{0}<size=110%>{1}</size>{2}", colourTarget, target.name, colourEnd));
                                         tempList.Add(string.Format("Level {0}", target.targetLevel));
@@ -800,7 +865,7 @@ public class TargetManager : MonoBehaviour
                             switch (target.targetStatus)
                             {
                                 case Status.Live:
-                                case Status.Completed:
+                                case Status.Outstanding:
                                     tempList.AddRange(GetTargetDetails(target));
                                     break;
                             }
@@ -812,7 +877,7 @@ public class TargetManager : MonoBehaviour
                             {
                                 case Status.Active:
                                 case Status.Live:
-                                case Status.Completed:
+                                case Status.Outstanding:
                                     tempList.AddRange(GetTargetDetails(target));
                                     break;
                             }
@@ -841,6 +906,13 @@ public class TargetManager : MonoBehaviour
                 tempList.Add(string.Format("{0}<b>{1} Target</b>{2}", colourNormal, target.targetStatus, colourEnd));
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.name, colourEnd));
                 tempList.Add(string.Format("{0}<b>Level {1}</b>{2}", colourDefault, target.targetLevel, colourEnd));
+                if (GameManager.instance.optionScript.debugData == true)
+                {
+                    tempList.Add(string.Format("Activation \"{0}\"", target.activation));
+                    tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
+                    tempList.Add(string.Format("timerCountdown {0}", target.timerCountdown));
+                    tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
+                }
                 break;
             case Status.Live:
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.name, colourEnd));
@@ -870,8 +942,15 @@ public class TargetManager : MonoBehaviour
                     GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
                 tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));
                 tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
+                if (GameManager.instance.optionScript.debugData == true)
+                {
+                    tempList.Add(string.Format("Activation \"{0}\"", target.activation));
+                    tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
+                    tempList.Add(string.Format("timerCountdown {0}", target.timerCountdown));
+                    tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
+                }
                 break;
-            case Status.Completed:
+            case Status.Outstanding:
                 //put tooltip together
                 tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.name, colourEnd));
                 //ongoing effects
@@ -1221,7 +1300,7 @@ public class TargetManager : MonoBehaviour
 
 
     /// <summary>
-    /// Contains a completed target as a result of Damage team intervention. Handles all related matters.
+    /// Contains a completed (Oustanding) target as a result of Damage team intervention. Handles all related matters.
     /// Note: target is checked for Null by the calling method
     /// </summary>
     /// <param name="target"></param>
@@ -1233,10 +1312,7 @@ public class TargetManager : MonoBehaviour
             GameManager.instance.connScript.RemoveOngoingEffect(target.ongoingID);
             GameManager.instance.nodeScript.RemoveOngoingEffect(target.ongoingID);
             //admin
-            target.targetStatus = Status.Contained;
-            GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Completed);
-            GameManager.instance.dataScript.AddTargetToPool(target, Status.Contained);
-            node.targetID = -1;
+            SetTargetDone(target, node);
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
     }
@@ -1253,15 +1329,17 @@ public class TargetManager : MonoBehaviour
         {
             if (target != null)
             {
-
-                //remove from current target list
+                //remove from current target pool
                 switch(target.targetStatus)
                 {
                     case Status.Live:
+                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
+                        break;
                     case Status.Active:
-                    case Status.Completed:
-                    case Status.Contained:
-                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Completed);
+                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Active);
+                        break;
+                    case Status.Outstanding:
+                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Outstanding);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid targetStatus \"{0}\". Lists not updated", target.targetStatus);
@@ -1271,17 +1349,26 @@ public class TargetManager : MonoBehaviour
                 //continue?
                 if (isSuccess == true)
                 {
-                    //Add to list
-
-                    //id's
+                    target.targetStatus = Status.Done;
+                    target.turnDone = GameManager.instance.turnScript.Turn;
+                    //Add to pool 
+                    GameManager.instance.dataScript.AddTargetToPool(target, Status.Done);
+                    //remove from list
+                    if (GameManager.instance.dataScript.RemoveNodeFromTargetList(node.nodeID) == false)
+                    { Debug.LogWarningFormat("Node id {0} NOT removed from listOfNodesWithTargets", node.nodeID); }
+                    //id's back to default
                     node.targetID = -1;
                     target.nodeID = -1;
+                    //log
+                    Debug.LogFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin completed", target.name, target.targetID);
                 }
             }
             else { Debug.LogError("Invalid target (Null)"); isSuccess = false; }
 
         }
         else { Debug.LogError("Invalid node (Null)"); isSuccess = false; }
+        if (isSuccess == false)
+        { Debug.LogFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin FAILED", target.name, target.targetID); }
         return isSuccess;
     }
 
