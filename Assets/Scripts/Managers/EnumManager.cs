@@ -62,7 +62,7 @@
     //
     // - - - Decisions and Targets - - -
     //
-    public enum Status { Dormant, Active, Live, Completed, Contained }
+    public enum Status { Dormant, Active, Live, Outstanding, Done }
     public enum Activation { Low, Medium, High }                                     //chance of becoming 'Live' once 'Active'
 
     //

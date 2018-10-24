@@ -41,6 +41,11 @@ public class Target : ScriptableObject
     [Tooltip("ONGOING effect (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained. Currently MAX of ONE effect allowed")]
     public Effect OngoingEffect;
 
+    [Header("Linked Sequence")]
+    [Tooltip("GENERIC Targets Only (set via Mission SO for others) -> Generic mission that follows this one. Can have a sequence level 1 - 2 - 3, etc. Optional")]
+    public Target followOnTarget;
+    
+
     [HideInInspector] public Status targetStatus;      //default status of Dormant
     [HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live
     [HideInInspector] public int infoLevel;                        //from 1 to 3 but can be zero in some cases

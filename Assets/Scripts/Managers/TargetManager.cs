@@ -1234,10 +1234,55 @@ public class TargetManager : MonoBehaviour
             GameManager.instance.nodeScript.RemoveOngoingEffect(target.ongoingID);
             //admin
             target.targetStatus = Status.Contained;
+            GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Completed);
             GameManager.instance.dataScript.AddTargetToPool(target, Status.Contained);
             node.targetID = -1;
         }
         else { Debug.LogError(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
+    }
+
+    /// <summary>
+    /// Called whenever a target is done (finished OnMap, eg. Contained or Completed with no ongoing effects or timed out (window). Returns true if all O.K
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="node"></param>
+    public bool SetTargetDone(Target target, Node node)
+    {
+        bool isSuccess = true;
+        if (node != null)
+        {
+            if (target != null)
+            {
+
+                //remove from current target list
+                switch(target.targetStatus)
+                {
+                    case Status.Live:
+                    case Status.Active:
+                    case Status.Completed:
+                    case Status.Contained:
+                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Completed);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid targetStatus \"{0}\". Lists not updated", target.targetStatus);
+                        isSuccess = false;
+                        break;
+                }
+                //continue?
+                if (isSuccess == true)
+                {
+                    //Add to list
+
+                    //id's
+                    node.targetID = -1;
+                    target.nodeID = -1;
+                }
+            }
+            else { Debug.LogError("Invalid target (Null)"); isSuccess = false; }
+
+        }
+        else { Debug.LogError("Invalid node (Null)"); isSuccess = false; }
+        return isSuccess;
     }
 
 

@@ -72,10 +72,10 @@ public class DataManager : MonoBehaviour
     //target pools
     private List<int>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetID's for each nodeArc type. All level one targets
     //private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
-    private List<Target> activeTargetPool = new List<Target>();                         //targets onMap but not yet visible to resistance player
-    private List<Target> liveTargetPool = new List<Target>();                           //targets OnMap and visible to resistance player
-    private List<Target> completedTargetPool = new List<Target>();                       //successfully attempted targets, Status -> Completed
-    private List<Target> containedTargetPool = new List<Target>();                    //completed targets that authority has contained (shuts down success Effects)
+    private List<Target> targetPoolActive = new List<Target>();                         //targets onMap but not yet visible to resistance player
+    private List<Target> targetPoolLive = new List<Target>();                           //targets OnMap and visible to resistance player
+    private List<Target> targetPoolOutstanding = new List<Target>();                       //completed targets that authority has not yet contained (shuts down onging Effects)
+    private List<Target> targetPoolDone = new List<Target>();                    //targets done with (no longer coming back to the map, various reasons)
     private List<int> listOfNodesWithTargets = new List<int>();                         //list of all nodes which currently have non-dormant targets
 
     //contacts (resistance)
@@ -1996,16 +1996,16 @@ public class DataManager : MonoBehaviour
         switch (status)
         {
             case Status.Active:
-                tempList = activeTargetPool;
+                tempList = targetPoolActive;
                 break;
             case Status.Live:
-                tempList = liveTargetPool;
+                tempList = targetPoolLive;
                 break;
             case Status.Completed:
-                tempList = completedTargetPool;
+                tempList = targetPoolOutstanding;
                 break;
             case Status.Contained:
-                tempList = containedTargetPool;
+                tempList = targetPoolDone;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid status \"{0}\"", status));
@@ -2036,16 +2036,16 @@ public class DataManager : MonoBehaviour
                     possibleTargetsPool.Add(target);
                     break;*/
                 case Status.Active:
-                    activeTargetPool.Add(target);
+                    targetPoolActive.Add(target);
                     break;
                 case Status.Live:
-                    liveTargetPool.Add(target);
+                    targetPoolLive.Add(target);
                     break;
                 case Status.Completed:
-                    completedTargetPool.Add(target);
+                    targetPoolOutstanding.Add(target);
                     break;
                 case Status.Contained:
-                    containedTargetPool.Add(target);
+                    targetPoolDone.Add(target);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid target status {0}", status));
@@ -2074,16 +2074,16 @@ public class DataManager : MonoBehaviour
                     listOfTargets = possibleTargetsPool;
                     break;*/
                 case Status.Active:
-                    listOfTargets = activeTargetPool;
+                    listOfTargets = targetPoolActive;
                     break;
                 case Status.Live:
-                    listOfTargets = liveTargetPool;
+                    listOfTargets = targetPoolLive;
                     break;
                 case Status.Completed:
-                    listOfTargets = completedTargetPool;
+                    listOfTargets = targetPoolOutstanding;
                     break;
                 case Status.Contained:
-                    listOfTargets = containedTargetPool;
+                    listOfTargets = targetPoolDone;
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid target status {0}", status));
