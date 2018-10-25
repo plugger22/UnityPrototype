@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// handles all global SO enum equivalents
+/// handles all global SO enum equivalents and key Global strings
 /// </summary>
 public class GlobalManager : MonoBehaviour
 {
+    [Header("Global strings")]
+    [Tooltip("Name of overarching AI Protagonist that drives the Authority side. Player's main enemy")]
+    public string tagAIName = "GOLIATH";
+
     //used for quick reference -> Meta Levels where metaBottom is the lowest level and metaTop is the highest
     [HideInInspector] public GlobalMeta metaBottom;
     [HideInInspector] public GlobalMeta metaMiddle;

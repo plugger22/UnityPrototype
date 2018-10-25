@@ -13,6 +13,7 @@ public class MessageManager : MonoBehaviour
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
     private GlobalSide globalBoth;
+    private string tagAIName;                                                //name of AI protagonist
     private int playerActorID = -1;
     private Sprite playerSprite;
     private Mayor mayor;
@@ -30,6 +31,12 @@ public class MessageManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalBoth = GameManager.instance.globalScript.sideBoth;
+        tagAIName = GameManager.instance.globalScript.tagAIName;
+
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
+        Debug.Assert(string.IsNullOrEmpty(tagAIName) == false, "Invalid tagAIName (Null or Empty)");
 
         //event Listeners
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
@@ -2004,6 +2011,60 @@ public class MessageManager : MonoBehaviour
     //
     // - - - Targets - - -
     //
+
+    /// <summary>
+    /// A new, LIVE target, pops up. Both sides notified
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public Message TargetNew(string text, Node node, Target target)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(target != null, "Invalid target (Null)");
+        Debug.Assert(target.targetStatus == Status.Live, "Target status NOT Live");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            string sideText;
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.TARGET;
+            message.subType = MessageSubType.Target_New;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = node.nodeID;
+            message.data1 = target.timerWindow;
+            message.data2 = target.targetID;
+            //ItemData
+            ItemData data = new ItemData();
+            if(message.side.level == globalResistance.level)
+            {
+                //resistance player
+                data.itemText = string.Format("Rebel HQ have identified an OPPORTUNITY at {0}", node.nodeName);
+                data.topText = "Target Opportunity";
+                sideText = "Opportunity";
+            }
+            else
+            {
+                //authority player
+                data.itemText = string.Format("{0} has identified a vulnerability at {1}", tagAIName, node.nodeName);
+                data.topText = "Target Vulnerability";
+                sideText = "Vulnerability";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetTargetNewDetails(node, target, sideText, message.side);
+            data.priority = ItemPriority.Medium;
+            data.sprite = target.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
 
     /// <summary>
     /// Target has been attempted successfully, or not, by an actor ('999' for player), at a node. Returns null if text invalid.

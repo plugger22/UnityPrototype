@@ -12,24 +12,41 @@ public enum TargetFactors { TargetInfo, NodeSupport, ActorAndGear, NodeSecurity,
 /// </summary>
 public class TargetManager : MonoBehaviour
 {
-    [Range(0, 20)]
-    [Tooltip("The % of the total Nodes on the level which commence with a Live target")]
-    public int startPercentTargets = 10;
-    [Range(20, 50)]
+
+    /*[Tooltip("The % of the total Nodes on the level which commence with a Live target")]
+    [Range(0, 20)] public int startPercentTargets = 10;
     [Tooltip("The % of the total Nodes on the level that can have a Live target at any one time")]
-    public int maxPercentTargets = 25;
-    [Range(0, 100)]
+    [Range(20, 50)] public int maxPercentTargets = 25;*/
+
+    [Header("Target Activation Chances")]
+    [Tooltip("% Chance of target going Live each turn with LOW activation")]
+    [Range(1, 50)] public int activateLowChance = 5;
+    [Tooltip("% Chance of target going Live each turn with MED activation")]
+    [Range(1, 50)] public int activateMedChance = 10;
+    [Tooltip("% Chance of target going Live each turn with HIGH activation")]
+    [Range(1, 50)] public int activateHighChance = 20;
+    [Tooltip("% Chance of target going Live each turn with EXTREME activation")]
+    [Range(1, 50)] public int activateExtremeChance = 50;
+
+    [Header("Target Hard Limits")]
+    [Tooltip("Number of turns with LOW activation at which target automatically activates if it hasn't already done so via start of turn checks")]
+    [Range(1, 50)] public int activateLowLimit = 20;
+    [Tooltip("Number of turns with MED activation at which target automatically activates if it hasn't already done so via start of turn checks")]
+    [Range(1, 50)] public int activateMedLimit = 10;
+    [Tooltip("Number of turns with HIGH activation at which target automatically activates if it hasn't already done so via start of turn checks")]
+    [Range(1, 50)] public int activateHighLimit = 5;
+    [Tooltip("Number of turns with EXTREME activation at which target automatically activates if it hasn't already done so via start of turn checks")]
+    [Range(1, 50)] public int activateExtremeLimit = 2;
+
+    [Header("Target Resolution")]
     [Tooltip("The base chance of a target attempt being successful with no other factors in play")]
-    public int baseTargetChance = 50;
-    [Range(1, 3)]
+    [Range(0, 100)] public int baseTargetChance = 50;
     [Tooltip("How much effect having the right Gear for a target will have on the chance of success")]
-    public int gearEffect = 2;
-    [Range(1, 3)]
+    [Range(1, 3)] public int gearEffect = 2;
     [Tooltip("How much effect having the right Actor for a target will have on the chance of success")]
-    public int actorEffect = 2;
-    [Range(1, 3)]
+    [Range(1, 3)] public int actorEffect = 2;
     [Tooltip("Maximum amount of target info that can be acquired on a specific target")]
-    public int maxTargetInfo = 3;
+    [Range(1, 3)] public int maxTargetInfo = 3;
 
     [HideInInspector] public int StartTargets;
     [HideInInspector] public int ActiveTargets;
@@ -58,20 +75,26 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        //calculate limits
+        Debug.Assert(activateLowChance < activateMedChance, "invalid activateLowChance (should be less than MED)");
+        Debug.Assert(activateMedChance < activateHighChance, "invalid activateMedChance (should be less than HIGH)");
+        Debug.Assert(activateHighChance < activateExtremeChance, "invalid activateHighChance (should be less than EXTREME)");
+        Debug.Assert(activateLowLimit > activateMedLimit, "invalid activateLowLimit (should be more than MED)");
+        Debug.Assert(activateMedLimit > activateHighLimit, "invalid activateMedLimit (should be more than HIGH)");
+        Debug.Assert(activateHighLimit > activateExtremeLimit, "invalid activateHighLimit (should be more than EXTREME)");
+
+        /*//calculate limits
         int numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         StartTargets = numOfNodes * startPercentTargets / 100;
         MaxTargets = numOfNodes * maxPercentTargets / 100;
         ActiveTargets = MaxTargets - StartTargets;
-        ActiveTargets = Mathf.Max(0, ActiveTargets);
-
+        ActiveTargets = Mathf.Max(0, ActiveTargets);*/
         /*Debug.LogFormat("TargetManager.cs -> Initialise: MaxTargets {0}, StartTargets {1}, ActiveTargets {2}, LiveTargets {3}{4}", MaxTargets, StartTargets, ActiveTargets, LiveTargets, "\n");
         //Set initialise targets on map
         SetRandomTargets(1, Status.Active);
         SetRandomTargets(StartTargets, Status.Live);*/
 
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
-        foreach(var factor in Enum.GetValues(typeof(TargetFactors)))
+        foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
         //fast access
         infiltrationGear = GameManager.instance.dataScript.GetGearType("Infiltration");
@@ -179,29 +202,29 @@ public class TargetManager : MonoBehaviour
                                 {
                                     //activation roll
                                     isLive = false;
-                                    target.timerCountdown++;
+                                    target.timerHardLimit++;
                                     rndNum = Random.Range(0, 100);
                                     switch(target.activation.level)
                                     {
                                         case 3:
                                             //Extreme
-                                            if (rndNum < 50) { isLive = true; }
-                                            else if (target.timerCountdown >= 2) { isLive = true; }
+                                            if (rndNum < activateExtremeChance) { isLive = true; }
+                                            else if (target.timerHardLimit >= activateExtremeLimit) { isLive = true; }
                                             break;
                                         case 2:
                                             //High
-                                            if (rndNum < 20) { isLive = true; }
-                                            else if (target.timerCountdown >= 5) { isLive = true; }
+                                            if (rndNum < activateHighChance) { isLive = true; }
+                                            else if (target.timerHardLimit >= activateHighLimit) { isLive = true; }
                                             break;
                                         case 1:
                                             //Medium
-                                            if (rndNum < 10) { isLive = true; }
-                                            else if (target.timerCountdown >= 10) { isLive = true; }
+                                            if (rndNum < activateMedChance) { isLive = true; }
+                                            else if (target.timerHardLimit >= activateMedLimit) { isLive = true; }
                                             break;
                                         case 0:
                                             //Low
-                                            if (rndNum < 5) { isLive = true; }
-                                            else if (target.timerCountdown >= 20) { isLive = true; }
+                                            if (rndNum < activateLowChance) { isLive = true; }
+                                            else if (target.timerHardLimit >= activateLowLimit) { isLive = true; }
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid activation GlobalChance.level {0}", target.activation.level);
@@ -569,6 +592,8 @@ public class TargetManager : MonoBehaviour
                 {
                     case "Live":
                         target.targetStatus = Status.Live;
+                        string text = string.Format("New target {0}, id {1} at {2}, {3}, id {4}", target.name, target.targetID, node.nodeName, node.Arc.name, node.nodeID);
+                        GameManager.instance.messageScript.TargetNew(text, node, target);
                         break;
                     case "Custom":
                         target.targetStatus = Status.Active;
@@ -583,12 +608,12 @@ public class TargetManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
                 //delay
                 target.timerDelay = profile.delay;
-                target.timerCountdown = 0;
+                target.timerHardLimit = 0;
                 //repeat
                 target.isRepeat = profile.isRepeat;
                 target.isSameNode = profile.isSameNode;
                 //window
-                target.turnWindow = profile.turnWindow;
+                target.timerWindow = profile.timerWindow;
                 //follow On target
                 if (followOnTarget != null)
                 { target.nextTargetID = followOnTarget.targetID; }
@@ -908,7 +933,7 @@ public class TargetManager : MonoBehaviour
                 {
                     tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
-                    tempList.Add(string.Format("timerCountdown {0}", target.timerCountdown));
+                    tempList.Add(string.Format("timerCountdown {0}", target.timerHardLimit));
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
                 }
                 break;
@@ -944,7 +969,7 @@ public class TargetManager : MonoBehaviour
                 {
                     tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
-                    tempList.Add(string.Format("timerCountdown {0}", target.timerCountdown));
+                    tempList.Add(string.Format("timerCountdown {0}", target.timerHardLimit));
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
                 }
                 break;

@@ -157,6 +157,9 @@
         Actor_Trait,
         Actor_Contact,
         //Target
+        Target_New,
+        Target_Expired,
+        Target_ExpiredWarning,
         Target_Attempt,
         Target_Contained,
         //Ongoing

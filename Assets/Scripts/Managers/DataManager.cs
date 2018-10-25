@@ -1963,7 +1963,7 @@ public class DataManager : MonoBehaviour
             if (counter == 20)
             { Debug.LogFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after {0} iterations{1}", counter, "\n"); }
         }
-        while (isSuccess = false && counter < 20);
+        while (isSuccess == false && counter < 20);
         //go to manual
         if (isSuccess == false)
         {

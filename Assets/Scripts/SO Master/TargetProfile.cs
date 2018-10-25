@@ -19,7 +19,7 @@ public class TargetProfile : ScriptableObject
     [Tooltip("Required for ALL")]
     public GlobalChance activation;
     [Tooltip("Applies to ALL -> The number of turns the target is active for before disappearing. Leave at default 999 if you want target to remain on map permanently")]
-    public int turnWindow = 999;
+    public int timerWindow = 999;
 
     [Tooltip("Applies to All -> If true the target repeats using the same profile as now")]
     public bool isRepeat;
@@ -34,7 +34,7 @@ public class TargetProfile : ScriptableObject
     {
         Debug.Assert(activation != null, string.Format("Invalid activation (Null) for TargetProfile \"{0}\"", this.name));
         Debug.Assert(trigger != null, string.Format("Invalid trigger (Null) for TargetProfile \"{0}\"", this.name));
-        Debug.Assert(turnWindow > 0, string.Format("Invalid turnWindow (Zero) for TargetProfile \"{0}\"", this.name));
+        Debug.Assert(timerWindow > 0, string.Format("Invalid turnWindow (Zero) for TargetProfile \"{0}\"", this.name));
     }
 
 }

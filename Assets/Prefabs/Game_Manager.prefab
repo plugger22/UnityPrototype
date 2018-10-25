@@ -325,8 +325,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd74d3a28d47454ca61b309a7494b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPercentTargets: 20
-  maxPercentTargets: 25
+  activateLowChance: 5
+  activateMedChance: 10
+  activateHighChance: 20
+  activateExtremeChance: 50
+  activateLowLimit: 20
+  activateMedLimit: 10
+  activateHighLimit: 5
+  activateExtremeLimit: 2
   baseTargetChance: 50
   gearEffect: 2
   actorEffect: 2
@@ -1506,6 +1512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e7ea69722671640b489cd99a41db47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tagAIName: GOLIATH
   metaBottom: {fileID: 0}
   metaMiddle: {fileID: 0}
   metaTop: {fileID: 0}
@@ -1849,7 +1856,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
-  isAuthority: 0
+  isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

@@ -12,7 +12,7 @@ public class ItemDataManager : MonoBehaviour
 {
 
 
-    //private string colourRebel;
+    private string colourRebel;
     //private string colourAuthority;
     private string colourNeutral;
     //private string colourNormal;
@@ -59,7 +59,7 @@ public class ItemDataManager : MonoBehaviour
     {
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         //colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
@@ -1098,6 +1098,34 @@ public class ItemDataManager : MonoBehaviour
     //
     // - - - Targets - - -
     //
+
+
+    /// <summary>
+    /// New LIVE target popped up
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="target"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public string GetTargetNewDetails(Node node, Target target, string sideText, GlobalSide side)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(sideText) == true) { sideText = "Unknown"; }
+        if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        { builder.AppendFormat("An {0}<b>{1}</b>{2} exists at{3}", colourGood, sideText, colourEnd, "\n"); }
+        else { builder.AppendFormat("A {0}<b>{1}</b>{2} exists at{3}", colourBad, sideText, colourEnd, "\n"); }
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}", colourNeutral, target.description, colourEnd);
+        if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        {
+            builder.AppendFormat("{0}{1}<b>{2} gear bonus<b>{3}{4}", "\n", colourRebel, target.gear.name, colourEnd, "\n");
+            builder.AppendFormat("{0}<b>{1} bonus</b>{2}", colourRebel, target.actorArc.name, colourEnd);
+        }
+        else
+        {  builder.AppendFormat("{0}{1}<b>Window of Vulnerability</b>{2}{3}<b>{4} days</b>", "\n", colourRebel, colourEnd, "\n", target.timerWindow); }
+            return builder.ToString();
+    }
 
     /// <summary>
     /// Target attempt, successful or not, player or actor, Resistance message only

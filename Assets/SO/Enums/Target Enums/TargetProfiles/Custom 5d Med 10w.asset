@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85e475f7931d775429ca745f57cea651, type: 3}
-  m_Name: Custom 5d Med
+  m_Name: Custom 5d Med 10w
   m_EditorClassIdentifier: 
   descriptor: custom activation profile
   trigger: {fileID: 11400000, guid: 82ae80a91c839fa48b5292e9c4fde55e, type: 2}
   delay: 5
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  turnWindow: 999
+  timerWindow: 10
   isRepeat: 0
   isSameNode: 0

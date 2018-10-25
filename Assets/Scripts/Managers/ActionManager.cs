@@ -2225,6 +2225,7 @@ public class ActionManager : MonoBehaviour
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID, true);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.name, "\n");
+                target.numOfAttempts++;
                 int roll = Random.Range(0, 100);
                 if (roll < chance)
                 {
