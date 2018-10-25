@@ -1116,14 +1116,17 @@ public class ItemDataManager : MonoBehaviour
         else { builder.AppendFormat("A {0}<b>{1}</b>{2} exists at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.name, colourEnd, "\n");
-        builder.AppendFormat("{0}<b>{1}</b>{2}", colourNeutral, target.description, colourEnd);
         if (side.level == GameManager.instance.globalScript.sideResistance.level)
         {
-            builder.AppendFormat("{0}{1}<b>{2} gear bonus<b>{3}{4}", "\n", colourRebel, target.gear.name, colourEnd, "\n");
+            builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.description, colourEnd, "\n");
+            builder.AppendFormat("{0}<b>{1} gear bonus<b>{2}{3}", colourRebel, target.gear.name, colourEnd, "\n");
             builder.AppendFormat("{0}<b>{1} bonus</b>{2}", colourRebel, target.actorArc.name, colourEnd);
         }
         else
-        {  builder.AppendFormat("{0}{1}<b>Window of Vulnerability</b>{2}{3}<b>{4} days</b>", "\n", colourRebel, colourEnd, "\n", target.timerWindow); }
+        {
+            builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.descriptorAuthority, colourEnd, "\n");
+            builder.AppendFormat("<b>Window of Vulnerability</b>{0}{1}<b>{2} days</b>{3}", "\n", colourBad, target.timerWindow, colourEnd);
+        }
             return builder.ToString();
     }
 

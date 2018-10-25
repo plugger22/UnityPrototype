@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: GoalTarget3
   m_EditorClassIdentifier: 
-  description: 
+  description: Big scary thing
+  descriptorAuthority: Loose cannon on deck
   reason: 
   metaLevel: {fileID: 0}
-  activation: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 0}
   gear: {fileID: 0}
@@ -25,10 +25,20 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
+  followOnTarget: {fileID: 0}
   targetStatus: 0
+  activation: {fileID: 0}
   infoLevel: 1
-  targetID: 20
+  targetID: 21
   ongoingID: -1
   isKnownByAI: 0
-  timer: -1
   nodeID: -1
+  nextTargetID: 0
+  isRepeat: 0
+  isSameNode: 0
+  turnSuccess: 0
+  turnDone: 0
+  numOfAttempts: 0
+  timerDelay: 0
+  timerHardLimit: 0
+  timerWindow: 0

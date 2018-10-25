@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: VIPTarget1
   m_EditorClassIdentifier: 
   description: Mayor Gives Speech
+  descriptorAuthority: Schedule has been leaked
   reason: Kill that Sucker
   metaLevel: {fileID: 0}
-  activation: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
   gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
@@ -25,10 +25,20 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
-  targetStatus: 0
+  followOnTarget: {fileID: 0}
+  targetStatus: 1
+  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
-  targetID: 12
+  targetID: 13
   ongoingID: -1
   isKnownByAI: 0
-  timer: -1
-  nodeID: -1
+  nodeID: 4
+  nextTargetID: -1
+  isRepeat: 0
+  isSameNode: 0
+  turnSuccess: 0
+  turnDone: 0
+  numOfAttempts: 0
+  timerDelay: 4
+  timerHardLimit: 0
+  timerWindow: 10

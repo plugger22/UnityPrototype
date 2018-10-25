@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: CityTarget3
   m_EditorClassIdentifier: 
   description: Meet informant at Docks
+  descriptorAuthority: Possible known backdoor
   reason: It's dark and spooky
   metaLevel: {fileID: 0}
-  activation: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
@@ -25,10 +25,20 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
+  followOnTarget: {fileID: 0}
   targetStatus: 0
+  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
   targetID: 11
   ongoingID: -1
   isKnownByAI: 0
-  timer: -1
   nodeID: -1
+  nextTargetID: -1
+  isRepeat: 0
+  isSameNode: 0
+  turnSuccess: 0
+  turnDone: 1
+  numOfAttempts: 0
+  timerDelay: 0
+  timerHardLimit: 0
+  timerWindow: 9

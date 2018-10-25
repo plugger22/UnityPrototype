@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Power Grid
   m_EditorClassIdentifier: 
   description: Glitch out the Power
+  descriptorAuthority: Possible Security Flaw
   reason: Power Grid being shorted out
   metaLevel: {fileID: 0}
   targetLevel: 1
@@ -20,7 +21,6 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   type: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   nodeArc: {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
-  turnWindow: 999
   listOfGoodEffects:
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
@@ -29,13 +29,20 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   OngoingEffect: {fileID: 11400000, guid: 973e6ac5ed05bbb42a82b68ce083832a, type: 2}
-  targetStatus: 0
+  followOnTarget: {fileID: 0}
+  targetStatus: 2
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
   targetID: 2
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
+  nodeID: 1
+  nextTargetID: -1
+  isRepeat: 0
+  isSameNode: 0
+  turnSuccess: 0
+  turnDone: 1
+  numOfAttempts: 0
   timerDelay: 0
-  timerCountdown: 0
-  timerWindow: 0
+  timerHardLimit: 0
+  timerWindow: 9

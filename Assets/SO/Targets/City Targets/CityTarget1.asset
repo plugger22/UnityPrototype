@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: CityTarget1
   m_EditorClassIdentifier: 
   description: Blow up Icon
+  descriptorAuthority: Possible known backdoor
   reason: '''Cause you can'
   metaLevel: {fileID: 0}
-  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
   gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
@@ -27,10 +27,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb855bca1ba8c2f4fb217c1cced20566, type: 2}
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
-  targetStatus: 0
+  followOnTarget: {fileID: 0}
+  targetStatus: 1
+  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
   targetID: 9
   ongoingID: -1
   isKnownByAI: 0
-  timer: -1
-  nodeID: -1
+  nodeID: 10
+  nextTargetID: 14
+  isRepeat: 0
+  isSameNode: 0
+  turnSuccess: 0
+  turnDone: 0
+  numOfAttempts: 0
+  timerDelay: 4
+  timerHardLimit: 0
+  timerWindow: 10

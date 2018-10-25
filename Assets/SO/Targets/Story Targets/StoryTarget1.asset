@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: StoryTarget1
   m_EditorClassIdentifier: 
   description: Personnel Database
+  descriptorAuthority: Loose lips sink ships
   reason: Mum is in there somewhere
   metaLevel: {fileID: 0}
-  activation: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
   gear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
@@ -25,10 +25,20 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
-  targetStatus: 0
+  followOnTarget: {fileID: 0}
+  targetStatus: 2
+  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
-  targetID: 15
+  targetID: 16
   ongoingID: -1
   isKnownByAI: 0
-  timer: -1
-  nodeID: -1
+  nodeID: 24
+  nextTargetID: -1
+  isRepeat: 0
+  isSameNode: 0
+  turnSuccess: 0
+  turnDone: 1
+  numOfAttempts: 0
+  timerDelay: 0
+  timerHardLimit: 0
+  timerWindow: 9
