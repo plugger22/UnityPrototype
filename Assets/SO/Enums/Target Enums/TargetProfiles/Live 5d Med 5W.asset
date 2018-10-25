@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Live activation profile
   trigger: {fileID: 11400000, guid: 2281c5546c92be642a0ed77de3ea91b6, type: 2}
-  delay: 5
+  delay: 0
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  timerWindow: 5
+  window: 5
   isRepeat: 0
   isSameNode: 0

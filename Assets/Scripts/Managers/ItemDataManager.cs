@@ -10,7 +10,9 @@ using packageAPI;
 /// </summary>
 public class ItemDataManager : MonoBehaviour
 {
-
+    //fast access
+    private GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
 
     private string colourRebel;
     //private string colourAuthority;
@@ -23,10 +25,15 @@ public class ItemDataManager : MonoBehaviour
     //private string colourSide;
     private string colourEnd;
 
+
+
     public void Initialise()
     {
-        //update colours for AI Display tooltip data
-        /*SetColours();*/
+        //fast access
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
@@ -949,7 +956,7 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(warning) == false)
         {
             string colourSide = colourBad;
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
             { colourSide = colourGood; }
             builder.AppendFormat("{0}<b>{1}</b>{2}", colourSide, warning, colourEnd);
         }
@@ -977,7 +984,7 @@ public class ItemDataManager : MonoBehaviour
         string colourStart = colourBad;
         string colourFinish = colourGood;
         string colourCrisis = colourBad;
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
         { colourStart = colourBad; colourFinish = colourGood; colourCrisis = colourGood; }
         //text
         if (string.IsNullOrEmpty(description) == false)
@@ -1026,7 +1033,7 @@ public class ItemDataManager : MonoBehaviour
         string colourSideGood = colourGood;
         string colourSideBad = colourBad;
         //default colours from POV of authority, reverse for resistance
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         { colourSideGood = colourBad; colourSideBad = colourGood; }
         if (changeInLoyalty > 0)
         {
@@ -1064,7 +1071,7 @@ public class ItemDataManager : MonoBehaviour
         //default POV Resistance side
         string colourSideGood = colourGood;
         string colourSideBad = colourBad;
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
         { colourSideGood = colourBad; colourSideBad = colourGood; }
         builder.AppendFormat("{0}, {1}{2}", node.nodeName, node.Arc.name, "\n");
         if (node.crisisTimer > 0)
@@ -1111,12 +1118,12 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(sideText) == true) { sideText = "Unknown"; }
-        if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        if (side.level == globalResistance.level)
         { builder.AppendFormat("An {0}<b>{1}</b>{2} exists at{3}", colourGood, sideText, colourEnd, "\n"); }
         else { builder.AppendFormat("A {0}<b>{1}</b>{2} exists at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.name, colourEnd, "\n");
-        if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        if (side.level == globalResistance.level)
         {
             builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.description, colourEnd, "\n");
             builder.AppendFormat("{0}<b>{1} gear bonus<b>{2}{3}", colourRebel, target.gear.name, colourEnd, "\n");
@@ -1125,9 +1132,48 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.descriptorAuthority, colourEnd, "\n");
-            builder.AppendFormat("<b>Window of Vulnerability</b>{0}{1}<b>{2} days</b>{3}", "\n", colourBad, target.timerWindow, colourEnd);
+            builder.AppendFormat("Window of Vulnerability{0}{1}<b>{2} days</b>{3}", "\n", colourBad, target.timerWindow, colourEnd);
         }
             return builder.ToString();
+    }
+
+    /// <summary>
+    /// A target that has not been successfully attempt has expired (timed out)
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="target"></param>
+    /// <param name="sideText"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public string GetTargetExpiredDetails(Node node, Target target, string sideText, GlobalSide side)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(sideText) == true) { sideText = "Unknown"; }
+        if (side.level == globalResistance.level)
+        { builder.AppendFormat("Expired {0}{1}{2} at{3}", colourGood, sideText, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}<b>{1}</b>{2} has been resolved at{3}", colourBad, sideText, colourEnd, "\n"); }
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}{4}", colourAlert, target.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2} attempt{3} were made on Target{4}", colourNeutral, target.numOfAttempts, colourEnd, target.numOfAttempts != 1 ? "s" : "", "\n");
+        builder.AppendFormat("Target was Live for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.turnsWindow, colourEnd, target.turnsWindow != 1 ? "s" : "");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// A target that has not been successfully attempted is about to expire
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public string GetTargetExpiredWarningDetails(Node node, Target target)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>Opportunity</b>{1} at{2}", colourGood, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}{4}", colourAlert, target.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Will be gone in</b>{0}", "\n");
+        builder.AppendFormat("{0}<b>{1}{2} days</b>", colourNeutral, target.timerWindow, colourEnd);
+        return builder.ToString();
     }
 
     /// <summary>
@@ -1181,7 +1227,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.name, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         { builder.AppendFormat("<b>Authority has sealed off the situation{0}{1}Ongoing effects cancelled</b>{2}", "\n", colourBad, colourEnd); }
         else
         { builder.AppendFormat("{0}<b>{1}, {2}{3}, has sealed off the situation{4}{5}Ongoing effects cancelled</b>{6}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", colourBad, colourEnd); }

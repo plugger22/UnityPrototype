@@ -48,6 +48,10 @@ public class TargetManager : MonoBehaviour
     [Tooltip("Maximum amount of target info that can be acquired on a specific target")]
     [Range(1, 3)] public int maxTargetInfo = 3;
 
+    [Header("Warnings")]
+    [Tooltip("A Live target will generate a warning message to Resistance player this number of turns before it expires")]
+    [Range(1, 3)] public int targetWarning = 2;
+
     [HideInInspector] public int StartTargets;
     [HideInInspector] public int ActiveTargets;
     [HideInInspector] public int LiveTargets;
@@ -57,6 +61,8 @@ public class TargetManager : MonoBehaviour
 
     //fast access
     private GearType infiltrationGear;
+    private GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
 
     //colour Palette
     private string colourGood;
@@ -98,7 +104,11 @@ public class TargetManager : MonoBehaviour
         { listOfFactors.Add((TargetFactors)factor); }
         //fast access
         infiltrationGear = GameManager.instance.dataScript.GetGearType("Infiltration");
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
         Debug.Assert(infiltrationGear != null, "Invalid infiltrationGear (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TargetManager");
@@ -244,8 +254,22 @@ public class TargetManager : MonoBehaviour
                                 break;
                             case Status.Live:
                                 if (target.timerWindow == 0)
-                                { SetTargetDone(target, node); }
-                                else { target.timerWindow--; }
+                                {
+                                    Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0}, id {1} Expired", target.name, target.targetID);
+                                    string text = string.Format("Target {0} at {1}, {2}, has Expired", target.name, node.nodeName, node.Arc.name);
+                                    GameManager.instance.messageScript.TargetExpired(text, node, target);
+                                    SetTargetDone(target, node);
+                                }
+                                else
+                                {
+                                    target.timerWindow--;
+                                    //warning message -> Resistance player only
+                                    if (target.timerWindow == targetWarning && GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                                    {
+                                        string text = string.Format("Target {0} at {1}, {2}, about to Expire", target.name, node.nodeName, node.Arc.name);
+                                        GameManager.instance.messageScript.TargetExpiredWarning(text, node, target);
+                                    }
+                                }
                                 break;
                         }
                     }
@@ -588,6 +612,23 @@ public class TargetManager : MonoBehaviour
                 node.targetID = target.targetID;
                 target.nodeID = node.nodeID;
                 //activation
+                if (profile.activation != null)
+                { target.activation = profile.activation; }
+                else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
+                //delay
+                target.timerDelay = profile.delay;
+                target.timerHardLimit = 0;
+                //repeat
+                target.isRepeat = profile.isRepeat;
+                target.isSameNode = profile.isSameNode;
+                //window
+                target.timerWindow = profile.window;
+                target.turnsWindow = profile.window;
+                //follow On target
+                if (followOnTarget != null)
+                { target.nextTargetID = followOnTarget.targetID; }
+                else { target.nextTargetID = -1; }
+                //status and message
                 switch (profile.trigger.name)
                 {
                     case "Live":
@@ -602,22 +643,6 @@ public class TargetManager : MonoBehaviour
                         Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", profile.trigger.name, target.name);
                         break;
                 }
-                //activation
-                if (profile.activation != null)
-                { target.activation = profile.activation; }
-                else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
-                //delay
-                target.timerDelay = profile.delay;
-                target.timerHardLimit = 0;
-                //repeat
-                target.isRepeat = profile.isRepeat;
-                target.isSameNode = profile.isSameNode;
-                //window
-                target.timerWindow = profile.timerWindow;
-                //follow On target
-                if (followOnTarget != null)
-                { target.nextTargetID = followOnTarget.targetID; }
-                else { target.nextTargetID = -1; }
                 //add to pool
                 GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus);
 
@@ -1126,7 +1151,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     //check if actor present in team
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, GameManager.instance.globalScript.sideResistance);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available
@@ -1272,7 +1297,7 @@ public class TargetManager : MonoBehaviour
                                 //player NOT at node ->  check if actor is present in OnMap line-up
                                 if (target.actorArc != null)
                                 {
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, GameManager.instance.globalScript.sideResistance);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available

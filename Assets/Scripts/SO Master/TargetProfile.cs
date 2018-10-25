@@ -14,12 +14,12 @@ public class TargetProfile : ScriptableObject
 
     [Tooltip("Activation set-up for target")]
     public TargetTrigger trigger;
-    [Tooltip("CUSTOM & REPEAT trigger only (ignore otherwise) -> Number of turns before activation rolls begin")]
+    [Tooltip("Number of turns before activation rolls begin -> Ignored for LIVE")]
     public int delay;
-    [Tooltip("Required for ALL")]
+    [Tooltip("Chance of activating per turn (after delay countdown). Ignored for LIVE")]
     public GlobalChance activation;
     [Tooltip("Applies to ALL -> The number of turns the target is active for before disappearing. Leave at default 999 if you want target to remain on map permanently")]
-    public int timerWindow = 999;
+    public int window = 999;
 
     [Tooltip("Applies to All -> If true the target repeats using the same profile as now")]
     public bool isRepeat;
@@ -34,7 +34,7 @@ public class TargetProfile : ScriptableObject
     {
         Debug.Assert(activation != null, string.Format("Invalid activation (Null) for TargetProfile \"{0}\"", this.name));
         Debug.Assert(trigger != null, string.Format("Invalid trigger (Null) for TargetProfile \"{0}\"", this.name));
-        Debug.Assert(timerWindow > 0, string.Format("Invalid turnWindow (Zero) for TargetProfile \"{0}\"", this.name));
+        Debug.Assert(window > 0, string.Format("Invalid turnWindow (Zero) for TargetProfile \"{0}\"", this.name));
     }
 
 }

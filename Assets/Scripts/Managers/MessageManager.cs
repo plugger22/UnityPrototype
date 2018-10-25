@@ -275,8 +275,11 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Random;
             data.side = message.side;
             data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
+            //add (message only if a meaningful outcome)
+            if (isReversed == false)
+            { if (numRolled >= numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }
+            else { if (numRolled < numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }
+            
             GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -2059,6 +2062,99 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// A target not yet successfully attempted, has expired (timed out)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public Message TargetExpired(string text, Node node, Target target)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(target != null, "Invalid target (Null)");
+        Debug.Assert(target.targetStatus == Status.Live, "Target status NOT Live");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            string sideText;
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.TARGET;
+            message.subType = MessageSubType.Target_Expired;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = node.nodeID;
+            message.data1 = target.numOfAttempts;
+            message.data2 = target.targetID;
+            //ItemData
+            ItemData data = new ItemData();
+            if (message.side.level == globalResistance.level)
+            {
+                //resistance player
+                data.itemText = string.Format("Window of Opportunity at {0} has CLOSED", node.nodeName);
+                data.topText = "Target Gone";
+                sideText = "Opportunity";
+            }
+            else
+            {
+                //authority player
+                data.itemText = string.Format("Vulnerability at {0} has been RESOLVED", node.nodeName);
+                data.topText = "Vulnerability Closed";
+                sideText = "Vulnerability";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetTargetExpiredDetails(node, target, sideText, message.side);
+            data.priority = ItemPriority.Medium;
+            data.sprite = target.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Target about to expire. Warning message to Resistance Player only
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public Message TargetExpiredWarning(string text, Node node, Target target)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(target != null, "Invalid target (Null)");
+        Debug.Assert(target.targetStatus == Status.Live, "Target status NOT Live");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.TARGET;
+            message.subType = MessageSubType.Target_Expired;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = node.nodeID;
+            message.data1 = target.timerWindow;
+            message.data2 = target.targetID;
+            //ItemData
+            ItemData data = new ItemData();
+            //resistance player only
+            data.itemText = string.Format("Window of Opportunity at {0} CLOSING SOON", node.nodeName);
+            data.topText = "Target Warning";
+            data.bottomText = GameManager.instance.itemDataScript.GetTargetExpiredWarningDetails(node, target);
+            data.priority = ItemPriority.Medium;
+            data.sprite = target.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
             GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }

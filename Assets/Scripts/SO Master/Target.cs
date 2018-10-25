@@ -55,7 +55,6 @@ public class Target : ScriptableObject
     [HideInInspector] public int ongoingID;         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;               //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
-
     [HideInInspector] public int nextTargetID;                      //if target completed, this is the next target to process, only valid if > -1
     [HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
     [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node
@@ -64,7 +63,7 @@ public class Target : ScriptableObject
     [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted
     [HideInInspector] public int turnDone;                          //turn # when target done
     [HideInInspector] public int numOfAttempts;                     //how many attempts made on target
-
+    [HideInInspector] public int turnsWindow;                       //number of turns of Live window (info purposes only)
     //Timers
     [HideInInspector] public int timerDelay;                        //delay in turns before target tests for activation
     [HideInInspector] public int timerHardLimit;                    //back stop timer, triggered once activations commence. If target hasn't activated randomly by the time timer reaches zero then does so
