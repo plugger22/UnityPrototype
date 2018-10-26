@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: CityTarget4
   m_EditorClassIdentifier: 
   description: Hack City Hall
+  descriptorResistance: Blow up City Hall
   descriptorAuthority: Possible known backdoor
   reason: Get the Mayor's movements
   metaLevel: {fileID: 0}
@@ -32,13 +33,14 @@ MonoBehaviour:
   targetID: 12
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 11
+  nodeID: 17
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
-  timerDelay: 4
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
   timerWindow: 10

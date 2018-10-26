@@ -9,8 +9,8 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Target / Target")]
 public class Target : ScriptableObject
 {
-    [Tooltip("Keep short, eg. 'Rolling Blackouts', Resistance POV")]
-    public string description;
+    [Tooltip("Keep short, indicates Opportunity eg. 'Grind traffic to a half', Resistance POV")]
+    public string descriptorResistance;
     [Tooltip("Keep short, indicates suspected vulnerability eg. 'Possible Security Break', Authority POV")]
     public string descriptorAuthority;
     [Tooltip("In format '[due to]...', keep short")]
@@ -74,7 +74,7 @@ public class Target : ScriptableObject
     /// </summary>
     public void OnEnable()
     {
-        Debug.Assert(string.IsNullOrEmpty(description) == false, "Invalid description (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(descriptorAuthority) == false, "Invalid descriptorAuthority (Null or Empty)");
     }
 }

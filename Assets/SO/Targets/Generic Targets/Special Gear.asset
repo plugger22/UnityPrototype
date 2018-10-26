@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Special Gear
   m_EditorClassIdentifier: 
   description: Hard to get item
+  descriptorResistance: Source Unique item
   descriptorAuthority: Possible Security Flaw
   reason: obtaining a special item
   metaLevel: {fileID: 0}
@@ -36,13 +37,14 @@ MonoBehaviour:
   targetID: 4
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 19
+  nodeID: 1
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 1
   numOfAttempts: 0
-  timerDelay: 4
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
   timerWindow: 10

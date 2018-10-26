@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: CityTarget3
   m_EditorClassIdentifier: 
   description: Meet informant at Docks
+  descriptorResistance: Meet Informant
   descriptorAuthority: Possible known backdoor
   reason: It's dark and spooky
   metaLevel: {fileID: 0}
@@ -37,8 +38,9 @@ MonoBehaviour:
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
-  turnDone: 1
+  turnDone: 6
   numOfAttempts: 0
+  turnsWindow: 5
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 9
+  timerWindow: 5

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: VIPTarget3
   m_EditorClassIdentifier: 
   description: Whodo Voodoo
+  descriptorResistance: Kidnapp Corporate CEO
   descriptorAuthority: V.I.P Schedule leaked
   reason: 
   metaLevel: {fileID: 0}

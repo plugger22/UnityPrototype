@@ -624,7 +624,7 @@ public class ActorManager : MonoBehaviour
                             if (targetProceed == true)
                             {
                                 string targetHeader = string.Format("{0}<size=110%>{1}</size>{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault,
-                                    target.description, colourEnd);
+                                    target.descriptorResistance, colourEnd);
                                 //button target details
                                 EventButtonDetails targetDetails = new EventButtonDetails()
                                 {

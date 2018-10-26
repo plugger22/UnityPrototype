@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: CityTarget2
   m_EditorClassIdentifier: 
   description: Blow up Airport
+  descriptorResistance: Close Airport
   descriptorAuthority: Possible known backdoor
   reason: Why not?
   metaLevel: {fileID: 0}
@@ -32,13 +33,14 @@ MonoBehaviour:
   targetID: 10
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 12
+  nodeID: 7
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
-  timerDelay: 1
+  turnsWindow: 5
+  timerDelay: 2
   timerHardLimit: 0
   timerWindow: 5

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: GoalTarget1
   m_EditorClassIdentifier: 
   description: Server Farm
+  descriptorResistance: Advance Goal
   descriptorAuthority: Loose cannon on deck
   reason: It's where the AI is
   metaLevel: {fileID: 0}
@@ -32,13 +33,14 @@ MonoBehaviour:
   targetID: 19
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 8
+  nodeID: 16
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
-  timerDelay: 4
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
   timerWindow: 10

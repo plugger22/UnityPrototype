@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Survelliance Grid
   m_EditorClassIdentifier: 
   description: Penetrate Survelliance Grid
+  descriptorResistance: Hack Survelliance Grid
   descriptorAuthority: Possible Security Flaw
   reason: Surveillance Grid being hacked
   metaLevel: {fileID: 0}
@@ -37,13 +38,14 @@ MonoBehaviour:
   targetID: 7
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 22
+  nodeID: 12
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
-  timerDelay: 4
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
   timerWindow: 10

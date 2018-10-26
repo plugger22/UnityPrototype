@@ -9,6 +9,7 @@ using packageAPI;
 /// </summary>
 public class DebugGUI : MonoBehaviour
 {
+    //for whenever interaction is needed
     private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact}
 
     public GUIStyle customBackground;
@@ -39,6 +40,7 @@ public class DebugGUI : MonoBehaviour
     public int gap_y; 
 
     private int button_width;
+    private int targetToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string textOutput;
@@ -285,6 +287,20 @@ public class DebugGUI : MonoBehaviour
                     else { debugDisplay = 0; }
                 }
             }
+
+            //eightennth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 17 + button_height * 17, button_width, button_height), "Toggle Targets"))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Targets");
+                //toggles sequentially through target info displays and then switches off
+                switch (targetToggle)
+                {
+                    case 0: debugDisplay = 34; targetToggle = 1; break;
+                    case 1: debugDisplay = 35; targetToggle = 2; break;
+                    case 2: debugDisplay = 36; targetToggle = 3; break;
+                    case 3: debugDisplay = 0; targetToggle = 0; break;
+                }
+               }
 
 
             //
@@ -1011,6 +1027,26 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.contactScript.DisplayContacts();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //Targets Generic
+                    case 34:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugShowGenericTargets();
+                        GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
+                        break;
+                    //Target Pools
+                    case 35:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
+                        analysis = GameManager.instance.dataScript.DebugShowTargetPools();
+                        GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
+                        break;
+                    //Target Dictionary
+                    case 36:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
+                        analysis = GameManager.instance.dataScript.DebugShowTargetDict();
+                        GUI.Box(new Rect(Screen.width - 555, 10, 550, 800), analysis, customBackground);
                         break;
                 }
             }

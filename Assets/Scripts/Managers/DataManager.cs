@@ -2022,10 +2022,6 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
-    /*public List<Target> GetPossibleTargets()
-    { return possibleTargetsPool; }*/
-
-
 
     /// <summary>
     /// Adds target to List (possible is dormant, active, live, completed). Returns true if target added, false otherwise
@@ -2114,7 +2110,145 @@ public class DataManager : MonoBehaviour
         return isSuccess;
     }
 
+    /// <summary>
+    /// Debug method to display contents of generic target array
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowGenericTargets()
+    {
+        StringBuilder builder = new StringBuilder();
+        Target target = null;
+        List<int> tempList = new List<int>();
+        builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
+        for (int i = 0; i < arrayOfGenericTargets.Length; i++)
+        {
+            builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
+            tempList = arrayOfGenericTargets[i];
+            if (tempList != null)
+            {
+                if (tempList.Count > 0)
+                {
+                    for (int j = 0; j < tempList.Count; j++)
+                    {
+                        target = GetTarget(tempList[j]);
+                        if (target != null)
+                        {
+                            builder.AppendFormat(" {0}, id {1}, level {2}, act {3}, del {4}, win {5}{6}", target.name, target.targetID, target.targetLevel,
+                                target.activation.name, target.timerDelay, target.timerWindow, "\n");
+                        }
+                        else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
+                    }
+                }
+                else { builder.AppendFormat(" No Targets present{0}", "\n"); }
+            }
+            else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
+        }
+        return builder.ToString();
+    }
 
+    /// <summary>
+    /// Debug method to display different target pools
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowTargetPools()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat(" Target Pools{0}", "\n");
+        builder.AppendFormat("{0} Active Targets{1}", "\n", "\n");
+        builder.Append(DebugDisplayPool(targetPoolActive));
+        builder.AppendFormat("{0} Live Targets{1}", "\n", "\n");
+        builder.Append(DebugDisplayPool(targetPoolLive));
+        builder.AppendFormat("{0} Outstanding Targets{1}", "\n", "\n");
+        builder.Append(DebugDisplayPool(targetPoolOutstanding));
+        builder.AppendFormat("{0} Done Targets{1}", "\n", "\n");
+        builder.Append(DebugDisplayPool(targetPoolDone));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug submethod for DebugShowTargetPools
+    /// </summary>
+    /// <param name="tempList"></param>
+    /// <returns></returns>
+    private string DebugDisplayPool(List<Target> tempList)
+    {
+        StringBuilder builderTemp = new StringBuilder();
+        Target target = null;
+        Node node = null;
+        if (tempList != null)
+        {
+            if (tempList.Count > 0)
+            {
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    target = tempList[i];
+                    if (target != null)
+                    {
+                        node = GetNode(target.nodeID);
+                        if (node != null)
+                        {
+                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, {7}, {8}, id {9}{10}", target.name, target.targetID, target.targetLevel, target.activation.name,
+                                target.targetStatus, target.timerDelay, target.timerWindow, node.nodeName, node.Arc.name, target.nodeID, "\n");
+                        }
+                        else
+                        {
+                            //no error 'cause you want to pick up targets without node data as they are 'Done' targets
+                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, id {7}{8}", target.name, target.targetID, target.targetLevel, target.activation.name,
+                                target.targetStatus, target.timerDelay, target.timerWindow, target.nodeID, "\n");
+                        }
+                    }
+                    else { builderTemp.AppendFormat(" INVALID Target (Null){0}", "\n"); }
+                }
+            }
+            else { builderTemp.AppendFormat(" No targets present{0}", "\n"); }
+        }
+        return builderTemp.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to display target dictionary
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowTargetDict()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat(" TargetDictionary{0}{1}", "\n", "\n");
+        foreach(var target in dictOfTargets)
+        {
+            if (target.Value.followOnTarget != null)
+            {
+                if (target.Value.activation != null)
+                {
+                    //non-dormant but has follow-on target & valid activation
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, tar id {8}{9}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                        target.Value.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
+                }
+                else
+                {
+                    //dormant ->  follow-on target & NO valid activation
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act n.a, {3}, d {4}, w {5}, nodeID {6}, tar id {7}{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                        target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
+                }
+            }
+            else
+            {
+                //No followOn target
+                if (target.Value.activation != null)
+                {
+                    //active / live / outstanding -> valid activation
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, tar id n.a{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                          target.Value.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
+                }
+                else
+                {
+                    //dormant -> no activation value
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act n.a, {3}, d {4}, w {5}, nodeID {6}, tar id n.a{7}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                          target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
+                }
+            }
+        }
+        return builder.ToString();
+    }
 
     //
     // - - - Teams & TeamArcs & TeamPools - - -

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: StoryTarget1
   m_EditorClassIdentifier: 
   description: Personnel Database
+  descriptorResistance: Advance Story
   descriptorAuthority: Loose lips sink ships
   reason: Mum is in there somewhere
   metaLevel: {fileID: 0}
@@ -32,13 +33,14 @@ MonoBehaviour:
   targetID: 16
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 24
+  nodeID: 6
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
-  turnDone: 1
+  turnDone: 6
   numOfAttempts: 0
+  turnsWindow: 5
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 9
+  timerWindow: 5

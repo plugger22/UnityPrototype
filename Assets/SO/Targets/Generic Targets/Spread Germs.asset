@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Spread Germs
   m_EditorClassIdentifier: 
   description: Breach Biocontainment
+  descriptorResistance: Breach Biocontainment
   descriptorAuthority: Possible Security Flaw
   reason: releasing Biohazards
   metaLevel: {fileID: 0}
@@ -36,13 +37,14 @@ MonoBehaviour:
   targetID: 5
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 6
+  nodeID: 8
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
-  turnDone: 1
+  turnDone: 6
   numOfAttempts: 0
+  turnsWindow: 5
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 9
+  timerWindow: 5

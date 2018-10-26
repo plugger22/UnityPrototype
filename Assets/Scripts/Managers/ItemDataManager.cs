@@ -1125,7 +1125,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.name, colourEnd, "\n");
         if (side.level == globalResistance.level)
         {
-            builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.description, colourEnd, "\n");
+            builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.descriptorResistance, colourEnd, "\n");
             builder.AppendFormat("{0}<b>{1} gear</b>{2} bonus{3}", colourRebel, target.gear.name, colourEnd, "\n");
             builder.AppendFormat("{0}<b>{1}</b>{2} bonus{3}{4}", colourRebel, target.actorArc.name, colourEnd, "\n", "\n");
         }

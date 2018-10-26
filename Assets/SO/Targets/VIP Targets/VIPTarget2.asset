@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: VIPTarget2
   m_EditorClassIdentifier: 
   description: Whodo Voodoo
+  descriptorResistance: Capture Scientist
   descriptorAuthority: V.I.P Schedule leaked
   reason: 
   metaLevel: {fileID: 0}

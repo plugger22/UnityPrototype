@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: StoryTarget3
   m_EditorClassIdentifier: 
   description: Wiper blades
+  descriptorResistance: Advance Story
   descriptorAuthority: Loose lips sink ships
   reason: 
   metaLevel: {fileID: 0}
@@ -39,6 +40,7 @@ MonoBehaviour:
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
+  turnsWindow: 0
   timerDelay: 0
   timerHardLimit: 0
   timerWindow: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Traffic Signals
   m_EditorClassIdentifier: 
   description: Grind traffic to a halt
+  descriptorResistance: Grind traffic to a halt
   descriptorAuthority: Possible Security Flaw
   reason: Traffic signals being hacked
   metaLevel: {fileID: 0}
@@ -41,8 +42,9 @@ MonoBehaviour:
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
-  turnDone: 1
+  turnDone: 6
   numOfAttempts: 0
-  timerDelay: 4
+  turnsWindow: 5
+  timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 10
+  timerWindow: 5

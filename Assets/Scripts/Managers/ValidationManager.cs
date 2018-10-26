@@ -31,7 +31,7 @@ public class ValidationManager : MonoBehaviour
             if (target != null)
             {
                 //fields
-                if (string.IsNullOrEmpty(target.description) == true)
+                if (string.IsNullOrEmpty(target.descriptorResistance) == true)
                 { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid description field (Null or Empty)", target.name); }
                 if (target.activation == null)
                 { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid activation field (Null)", target.name); }

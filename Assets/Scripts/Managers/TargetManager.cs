@@ -991,7 +991,7 @@ public class TargetManager : MonoBehaviour
                 if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                 {
                     //resistance player
-                    tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+                    tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourDefault, target.descriptorResistance, colourEnd));
                     tempList.Add(string.Format("{0}Info level{1}  {2}<b>{3}</b>{4}", colourDefault, colourEnd,
                         GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
                     tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));

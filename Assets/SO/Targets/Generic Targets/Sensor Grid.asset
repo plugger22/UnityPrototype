@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Sensor Grid
   m_EditorClassIdentifier: 
   description: Penetrate Sensor Grid
+  descriptorResistance: Penetrate Sensor Grid
   descriptorAuthority: Possible Security Flaw
   reason: Sensor grid being hacked
   metaLevel: {fileID: 0}
@@ -41,8 +42,9 @@ MonoBehaviour:
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
-  turnDone: 0
+  turnDone: 6
   numOfAttempts: 0
-  timerDelay: 0
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
-  timerWindow: 9
+  timerWindow: 10

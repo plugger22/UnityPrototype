@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: CityTarget1
   m_EditorClassIdentifier: 
   description: Blow up Icon
+  descriptorResistance: Blow up a famous Icon
   descriptorAuthority: Possible known backdoor
   reason: '''Cause you can'
   metaLevel: {fileID: 0}
@@ -34,13 +35,14 @@ MonoBehaviour:
   targetID: 9
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 10
+  nodeID: 3
   nextTargetID: 14
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
-  timerDelay: 4
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
   timerWindow: 10

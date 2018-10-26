@@ -45,7 +45,7 @@ public class Mission : ScriptableObject
     [Tooltip("Goal target, can ignore")]
     public Target goalTarget;
 
-    [Header("Target Activation (Level 1)")]
+    [Header("Target Profile Overrides (Level 1)")]
     [Tooltip("Activation Profile for Generic Live (Visible) targets")]
     public TargetProfile genericLiveProfile;
     [Tooltip("Activation Profile for Generic Active (Passive) targets")]
@@ -65,7 +65,7 @@ public class Mission : ScriptableObject
     [Tooltip("Activation profile for Goal target")]
     public TargetProfile goalProfile;
 
-    [Header("Follow-On Targets")]
+    [Header("Follow-On Target Overrides")]
     [Tooltip("City CityHall specific follow-on target, can ignore")]
     public Target cityHallFollowOnTarget;
     [Tooltip("City Icon specific follow-on target, can ignore")]

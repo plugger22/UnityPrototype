@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Power Grid
   m_EditorClassIdentifier: 
   description: Glitch out the Power
+  descriptorResistance: Glitch out the Power
   descriptorAuthority: Possible Security Flaw
   reason: Power Grid being shorted out
   metaLevel: {fileID: 0}
@@ -36,13 +37,14 @@ MonoBehaviour:
   targetID: 2
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 1
+  nodeID: 4
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
-  turnDone: 1
+  turnDone: 6
   numOfAttempts: 0
+  turnsWindow: 5
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 9
+  timerWindow: 5
