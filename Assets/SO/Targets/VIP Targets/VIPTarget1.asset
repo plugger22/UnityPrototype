@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: VIPTarget1
   m_EditorClassIdentifier: 
   description: Mayor Gives Speech
-  descriptorAuthority: Schedule has been leaked
+  descriptorAuthority: V.I.P Schedule leaked
   reason: Kill that Sucker
   metaLevel: {fileID: 0}
   targetLevel: 1
@@ -32,13 +32,14 @@ MonoBehaviour:
   targetID: 13
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 4
+  nodeID: 16
   nextTargetID: -1
   isRepeat: 0
   isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
+  turnsWindow: 10
   timerDelay: 4
   timerHardLimit: 0
   timerWindow: 10

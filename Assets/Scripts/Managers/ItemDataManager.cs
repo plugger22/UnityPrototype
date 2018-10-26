@@ -1120,21 +1120,19 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(sideText) == true) { sideText = "Unknown"; }
         if (side.level == globalResistance.level)
         { builder.AppendFormat("An {0}<b>{1}</b>{2} exists at{3}", colourGood, sideText, colourEnd, "\n"); }
-        else { builder.AppendFormat("A {0}<b>{1}</b>{2} exists at{3}", colourBad, sideText, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}<b>{1}</b>{2} identified at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.name, colourEnd, "\n");
         if (side.level == globalResistance.level)
         {
             builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.description, colourEnd, "\n");
-            builder.AppendFormat("{0}<b>{1} gear bonus<b>{2}{3}", colourRebel, target.gear.name, colourEnd, "\n");
-            builder.AppendFormat("{0}<b>{1} bonus</b>{2}", colourRebel, target.actorArc.name, colourEnd);
+            builder.AppendFormat("{0}<b>{1} gear</b>{2} bonus{3}", colourRebel, target.gear.name, colourEnd, "\n");
+            builder.AppendFormat("{0}<b>{1}</b>{2} bonus{3}{4}", colourRebel, target.actorArc.name, colourEnd, "\n", "\n");
         }
         else
-        {
-            builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.descriptorAuthority, colourEnd, "\n");
-            builder.AppendFormat("Window of Vulnerability{0}{1}<b>{2} days</b>{3}", "\n", colourBad, target.timerWindow, colourEnd);
-        }
-            return builder.ToString();
+        { builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, target.descriptorAuthority, colourEnd, "\n", "\n"); }
+        builder.AppendFormat("{0} exists for {1}<b>{2}</b>{3} day{4}", sideText, colourNeutral, target.turnsWindow, colourEnd, target.turnsWindow != 1 ? "s" : "");
+        return builder.ToString();
     }
 
     /// <summary>

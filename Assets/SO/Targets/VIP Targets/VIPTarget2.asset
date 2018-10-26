@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: VIPTarget2
   m_EditorClassIdentifier: 
   description: Whodo Voodoo
-  descriptorAuthority: Schedule has been leaked
+  descriptorAuthority: V.I.P Schedule leaked
   reason: 
   metaLevel: {fileID: 0}
   targetLevel: 1
@@ -39,6 +39,7 @@ MonoBehaviour:
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
+  turnsWindow: 0
   timerDelay: 0
   timerHardLimit: 0
   timerWindow: 0

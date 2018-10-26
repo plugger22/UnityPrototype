@@ -416,10 +416,12 @@ public class NodeManager : MonoBehaviour
     public void ShowNodes(NodeUI nodeUI)
     {
         int data = -1;
+        int counter;
         bool successFlag = true;
         bool nodeTypeFlag = false;
         bool proceedFlag = false;
         string displayText = null;
+        bool isFogOfWar = GameManager.instance.optionScript.fogOfWar;
         //set all nodes to default colour first
         ResetNodes();
         if (GameManager.instance.connScript.resetConnections == true)
@@ -433,34 +435,48 @@ public class NodeManager : MonoBehaviour
         {
             //show all nodes with Targets
             case NodeUI.ShowTargets:
-                //change material for selected nodes (Live and Completed targets)
                 List<Target> tempList = new List<Target>();
-                if (GameManager.instance.optionScript.fogOfWar == false)
+                if (isFogOfWar == false)
                 {
                     //FOW Off
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Active));
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding));
+                    if (tempList.Count > 0)
+                    {
+                        foreach (Target target in tempList)
+                        {
+                            Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
+                            if (nodeTemp != null)
+                            { nodeTemp.SetMaterial(materialActive); }
+                            else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
+                            colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                 }
                 else
                 {
-                    //FOW On
+                    //FOW ON
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Live));
                     tempList.AddRange(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding));
-                }
-                if (tempList.Count > 0)
-                {
-                    foreach (Target target in tempList)
+                    if (tempList.Count > 0)
                     {
-                        Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
-                        if (nodeTemp != null)
-                        { nodeTemp.SetMaterial(materialActive); }
-                        else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
+                        counter = 0;
+                        foreach (Target target in tempList)
+                        {
+                            Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
+                            //only show if target isKnown
+                            if (nodeTemp != null && nodeTemp.isTargetKnown == true)
+                            { nodeTemp.SetMaterial(materialActive); counter++; }
+                            else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
+                            colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                     }
-                    displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
-                        colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                 }
-                else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                 break;
 
             //show all viable move locations for player (nodes adjacent to current location)
@@ -506,7 +522,7 @@ public class NodeManager : MonoBehaviour
                             break;
                         case "Resistance":
                             //resistance -> if not FOW then auto show
-                            if (GameManager.instance.optionScript.fogOfWar == false)
+                            if (isFogOfWar == false)
                             { proceedFlag = true; }
                             break;
                         default:
@@ -559,7 +575,7 @@ public class NodeManager : MonoBehaviour
                             break;
                         case "Authority":
                             //resistance -> if not FOW then auto show
-                            if (GameManager.instance.optionScript.fogOfWar == false)
+                            if (isFogOfWar == false)
                             { proceedFlag = true; }
                             break;
                         default:
@@ -612,7 +628,7 @@ public class NodeManager : MonoBehaviour
                             break;
                         case "Resistance":
                             //resistance -> if not FOW then auto show
-                            if (GameManager.instance.optionScript.fogOfWar == false)
+                            if (isFogOfWar == false)
                             { proceedFlag = true; }
                             break;
                         default:
@@ -768,7 +784,7 @@ public class NodeManager : MonoBehaviour
                 {
                     if (listOfCentreNodes.Count > 0)
                     {
-                        int counter = 0;
+                        counter = 0;
                         foreach (Node node in listOfCentreNodes)
                         {
                             if (node != null)

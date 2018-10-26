@@ -318,7 +318,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.cityHallProfile, mission.cityHallFollowOnTarget);
+                SetTargetDetails(target, node, mission.cityHallProfile, mission.timer, mission.cityHallFollowOnTarget);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID, target.nextTargetID);
             }
@@ -332,7 +332,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.iconProfile, mission.iconFollowOnTarget);
+                SetTargetDetails(target, node, mission.iconProfile, mission.timer, mission.iconFollowOnTarget);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID, target.nextTargetID);
             }
@@ -346,7 +346,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.airportProfile, mission.airportFollowOnTarget);
+                SetTargetDetails(target, node, mission.airportProfile, mission.timer, mission.airportFollowOnTarget);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID, target.nextTargetID);
             }
@@ -360,7 +360,7 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.harbourProfile, mission.harbourFollowOnTarget);
+                SetTargetDetails(target, node, mission.harbourProfile, mission.timer, mission.harbourFollowOnTarget);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
                     target.name, target.targetID, target.nextTargetID);
             }
@@ -441,7 +441,7 @@ public class TargetManager : MonoBehaviour
                                 if (mission.genericLiveProfile != null)
                                 {
                                     //assign target to node
-                                    SetTargetDetails(target, node, mission.genericLiveProfile);
+                                    SetTargetDetails(target, node, mission.genericLiveProfile, mission.timer);
                                     Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                                         target.name, target.targetID);
                                     counter++;
@@ -508,7 +508,7 @@ public class TargetManager : MonoBehaviour
                                 if (mission.genericActiveProfile != null)
                                 {
                                     //assign target to node
-                                    SetTargetDetails(target, node, mission.genericActiveProfile);
+                                    SetTargetDetails(target, node, mission.genericActiveProfile, mission.timer);
                                     Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget ACTIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                                         target.name, target.targetID);
                                     counter++;
@@ -548,7 +548,7 @@ public class TargetManager : MonoBehaviour
             {
                 Target target = mission.vipTarget;
                 //VIP targets don't have follow-on targets (use repeating random node targets instead)
-                SetTargetDetails(target, node, mission.vipProfile);
+                SetTargetDetails(target, node, mission.vipProfile, mission.timer);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignVIPTarget: VIP node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                     target.name, target.targetID);
             }
@@ -568,7 +568,7 @@ public class TargetManager : MonoBehaviour
             if (mission.harbourTarget != null)
             {
                 Target target = mission.storyTarget;
-                SetTargetDetails(target, node, mission.storyProfile);
+                SetTargetDetails(target, node, mission.storyProfile, mission.timer);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                     target.name, target.targetID);
             }
@@ -588,7 +588,7 @@ public class TargetManager : MonoBehaviour
             if (mission.harbourTarget != null)
             {
                 Target target = mission.goalTarget;
-                SetTargetDetails(target, node, mission.goalProfile);
+                SetTargetDetails(target, node, mission.goalProfile, mission.timer);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                     target.name, target.targetID);
             }
@@ -601,7 +601,7 @@ public class TargetManager : MonoBehaviour
     /// NOTE: Target and Node checked for null by calling methods
     /// </summary>
     /// <param name="target"></param>
-    private void SetTargetDetails(Target target, Node node, TargetProfile profile, Target followOnTarget = null)
+    private void SetTargetDetails(Target target, Node node, TargetProfile profile, int maxWindow, Target followOnTarget = null)
     {
         //only proceed to assign target if successfully added to list
         if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
@@ -621,7 +621,9 @@ public class TargetManager : MonoBehaviour
                 //repeat
                 target.isRepeat = profile.isRepeat;
                 target.isSameNode = profile.isSameNode;
-                //window
+                //window -> give default of mission timer (max.) if no value present
+                if (profile.window == 0)
+                { profile.window = maxWindow; }
                 target.timerWindow = profile.window;
                 target.turnsWindow = profile.window;
                 //follow On target
@@ -964,7 +966,7 @@ public class TargetManager : MonoBehaviour
                 break;
             case Status.Live:
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.name, colourEnd));
-                tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+
                 /*//good effects
                 Effect effect = null;
                 for (int i = 0; i < target.listOfGoodEffects.Count; i++)
@@ -985,11 +987,23 @@ public class TargetManager : MonoBehaviour
                 //ongoing effects
                 if (target.OngoingEffect != null)
                 { tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd)); }*/
-                //info level data colour graded
-                tempList.Add(string.Format("{0}Info level{1}  {2}{3}{4}", colourDefault, colourEnd,
-                    GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
-                tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));
-                tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
+
+                if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                {
+                    //resistance player
+                    tempList.Add(string.Format("{0}{1}{2}", colourDefault, target.description, colourEnd));
+                    tempList.Add(string.Format("{0}Info level{1}  {2}<b>{3}</b>{4}", colourDefault, colourEnd,
+                        GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
+                    tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));
+                    tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
+                    tempList.Add(string.Format("Available for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.timerWindow, colourEnd, target.timerWindow != 1 ? "s" : ""));
+                }
+                else
+                {
+                    //authority player
+                    tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourNeutral, target.descriptorAuthority, colourEnd));
+                    tempList.Add(string.Format("Exposed for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.timerWindow, colourEnd, target.timerWindow != 1 ? "s" : ""));
+                }
                 if (GameManager.instance.optionScript.debugData == true)
                 {
                     tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
