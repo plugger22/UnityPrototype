@@ -17,67 +17,85 @@ public class Mission : ScriptableObject
     [Tooltip("Mission Timer -> how many turns")]
     [Range(20, 100)] public int timer = 100;
 
-
     [Header("Objectives")]
     [Tooltip("Primary objective (one) and optional secondary objectives (2 & 3)")]
     public Objective objectiveOne;
     public Objective objectiveTwo;
     public Objective objectiveThree;
 
-
-    [Header("Targets (Level 1)")]
+    [Header("Targets (Base)")]
     [Tooltip("Number of initial Live (visible) targets at start")]
     public int targetsGenericLive;
     [Tooltip("Number of initial Active (hidden) targets at start")]
     public int targetsGenericActive;
     [Tooltip("City CityHall specific target, can ignore")]
-    public Target cityHallTarget;
+    public Target targetBaseCityHall;
     [Tooltip("City Icon specific target, can ignore")]
-    public Target iconTarget;
+    public Target targetBaseIcon;
     [Tooltip("City airport specific target, can ignore")]
-    public Target airportTarget;
+    public Target targetBaseAirport;
     [Tooltip("City harbour specific target, can ignore")]
-    public Target harbourTarget;
+    public Target targetBaseHarbour;
     [Tooltip("VIP target, can ignore")]
-    public Target vipTarget;
+    public Target targetBaseVIP;
     [Tooltip("Story target, can ignore")]
-    public Target storyTarget;
+    public Target targetBaseStory;
     [Tooltip("Goal target, can ignore")]
-    public Target goalTarget;
+    public Target targetBaseGoal;
 
-    [Header("Target Profile Overrides (Level 1)")]
-    [Tooltip("Activation Profile for Generic Live (Visible) targets")]
-    public TargetProfile genericLiveProfile;
-    [Tooltip("Activation Profile for Generic Active (Passive) targets")]
-    public TargetProfile genericActiveProfile;
-    [Tooltip("Activation profile for City Hall target")]
-    public TargetProfile cityHallProfile;
-    [Tooltip("Activation profile for Icon target")]
-    public TargetProfile iconProfile;
-    [Tooltip("Activation profile for Airport target")]
-    public TargetProfile airportProfile;
-    [Tooltip("Activation profile for Harbour target")]
-    public TargetProfile harbourProfile;
-    [Tooltip("Activation profile for VIP target")]
-    public TargetProfile vipProfile;
-    [Tooltip("Activation profile for Story target")]
-    public TargetProfile storyProfile;
-    [Tooltip("Activation profile for Goal target")]
-    public TargetProfile goalProfile;
+    /*[Header("Target Profile Overrides (Base)")]
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseGenericLive;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseGenericActive;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseCityHall;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseIcon;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseAirport;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseHarbour;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseVIP;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseStory;
+    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    public TargetProfile profileBaseGoal;
 
     [Header("Follow-On Target Overrides")]
-    [Tooltip("City CityHall specific follow-on target, can ignore")]
-    public Target cityHallFollowOnTarget;
-    [Tooltip("City Icon specific follow-on target, can ignore")]
-    public Target iconFollowOnTarget;
-    [Tooltip("City airport specific follow-on target, can ignore")]
-    public Target airportFollowOnTarget;
-    [Tooltip("City harbour specific follow-on target, can ignore")]
-    public Target harbourFollowOnTarget;
-    [Tooltip("Story follow-on target, can ignore")]
-    public Target storyFollowOnTarget;
-    [Tooltip("Goal follow-on target, can ignore")]
-    public Target goalFollowOnTarget;
+    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
+    public Target targetFollowCityHall;
+    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
+    public Target targetFollowIcon;
+    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
+    public Target targetFollowAirport;
+    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
+    public Target targetFollowHarbour;
+    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
+    public Target targetFollowStory;
+    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
+    public Target targetFollowGoal;
+
+    [Header("Target Follow-On Profile Overrides")]
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowGenericLive;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowGenericActive;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowCityHall;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowIcon;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowAirport;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowHarbour;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowVIP;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowStory;
+    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
+    public TargetProfile profileFollowGoal;*/
 
     [HideInInspector] public int missionID;
 }

@@ -9,6 +9,7 @@ using gameAPI;
 [CreateAssetMenu(menuName = "Target / Target")]
 public class Target : ScriptableObject
 {
+    [Header("Base data")]
     [Tooltip("Keep short, indicates Opportunity eg. 'Grind traffic to a half', Resistance POV")]
     public string descriptorResistance;
     [Tooltip("Keep short, indicates suspected vulnerability eg. 'Possible Security Break', Authority POV")]
@@ -17,8 +18,8 @@ public class Target : ScriptableObject
     public string reason;
     [Tooltip("Only select an option here if the Target is restricted to a particular metaLevel, otherwise leave as None (null)")]
     public GlobalMeta metaLevel;
-    [Tooltip("From 1 to 3, lowest to highest. Level 1 can trigger a Level 2 which can trigger a level 3")]
-    [Range(1, 3)] public int targetLevel = 1;
+    [Tooltip("Base targets are level 1, follow-on targets in a sequence are numbered consecutively higher")]
+    [Range(1, 5)] public int targetLevel = 1;
 
     [Header("Target Resolution")]
     [Tooltip("Actor arc with special bonus for target resolution (max. 1)")]
@@ -43,21 +44,24 @@ public class Target : ScriptableObject
     [Tooltip("ONGOING effect (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained. Currently MAX of ONE effect allowed")]
     public Effect OngoingEffect;
 
+    [Header("Profile")]
+    [Tooltip("Default target profile")]
+    public TargetProfile profile;
+
     [Header("Linked Sequence")]
-    [Tooltip("GENERIC Targets Only (set via Mission SO for others) -> Generic mission that follows this one. Can have a sequence level 1 - 2 - 3, etc. Optional")]
+    [Tooltip("Target that follows this one, next in a possible sequence. Can be Ignored if you want a 'Oncer'")]
     public Target followOnTarget;
     
 
-    [HideInInspector] public Status targetStatus;      //default status of Dormant
-    [HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live
-    [HideInInspector] public int infoLevel;                        //from 1 to 3 but can be zero in some cases
+    [HideInInspector] public Status targetStatus;                   //default status of Dormant
+    /*[HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live*/
+    [HideInInspector] public int infoLevel;                         //from 1 to 3 but can be zero in some cases
     [HideInInspector] public int targetID;
-    [HideInInspector] public int ongoingID;         //unique ID used to link to ongoing effects, default '0', only valid if > -1
-    [HideInInspector] public bool isKnownByAI;               //is known by the AI?
+    [HideInInspector] public int ongoingID;                         //unique ID used to link to ongoing effects, default '0', only valid if > -1
+    [HideInInspector] public bool isKnownByAI;                      //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
-    [HideInInspector] public int nextTargetID;                      //if target completed, this is the next target to process, only valid if > -1
-    [HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
-    [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node
+    /*[HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
+    [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node*/
 
     //Tracking data
     [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted

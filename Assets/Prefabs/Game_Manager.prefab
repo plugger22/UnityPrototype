@@ -338,6 +338,7 @@ MonoBehaviour:
   actorEffect: 2
   maxTargetInfo: 3
   targetWarning: 2
+  defaultProfile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   StartTargets: 0
   ActiveTargets: 0
   LiveTargets: 0

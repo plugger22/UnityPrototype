@@ -2134,7 +2134,7 @@ public class DataManager : MonoBehaviour
                         if (target != null)
                         {
                             builder.AppendFormat(" {0}, id {1}, level {2}, act {3}, del {4}, win {5}{6}", target.name, target.targetID, target.targetLevel,
-                                target.activation.name, target.timerDelay, target.timerWindow, "\n");
+                                target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
                         }
                         else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
                     }
@@ -2187,13 +2187,13 @@ public class DataManager : MonoBehaviour
                         node = GetNode(target.nodeID);
                         if (node != null)
                         {
-                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, {7}, {8}, id {9}{10}", target.name, target.targetID, target.targetLevel, target.activation.name,
+                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, {7}, {8}, id {9}{10}", target.name, target.targetID, target.targetLevel, target.profile.activation.name,
                                 target.targetStatus, target.timerDelay, target.timerWindow, node.nodeName, node.Arc.name, target.nodeID, "\n");
                         }
                         else
                         {
                             //no error 'cause you want to pick up targets without node data as they are 'Done' targets
-                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, id {7}{8}", target.name, target.targetID, target.targetLevel, target.activation.name,
+                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, id {7}{8}", target.name, target.targetID, target.targetLevel, target.profile.activation.name,
                                 target.targetStatus, target.timerDelay, target.timerWindow, target.nodeID, "\n");
                         }
                     }
@@ -2217,11 +2217,11 @@ public class DataManager : MonoBehaviour
         {
             if (target.Value.followOnTarget != null)
             {
-                if (target.Value.activation != null)
+                if (target.Value.profile.activation != null)
                 {
                     //non-dormant but has follow-on target & valid activation
                     builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, tar id {8}{9}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
-                        target.Value.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
+                        target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
                 }
                 else
                 {
@@ -2233,11 +2233,11 @@ public class DataManager : MonoBehaviour
             else
             {
                 //No followOn target
-                if (target.Value.activation != null)
+                if (target.Value.profile.activation != null)
                 {
                     //active / live / outstanding -> valid activation
                     builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, tar id n.a{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
-                          target.Value.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
+                          target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
                 }
                 else
                 {

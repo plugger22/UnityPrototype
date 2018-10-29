@@ -18,8 +18,8 @@ public class TargetProfile : ScriptableObject
     public int delay;
     [Tooltip("Chance of activating per turn (after delay countdown). Ignored for LIVE")]
     public GlobalChance activation;
-    [Tooltip("Applies to ALL -> The number of turns the target is active for before disappearing. Leave at default 999 if you want target to remain on map permanently")]
-    public int window = 0;
+    [Tooltip("The number of turns the target is active for before disappearing. Leave at default 999 if you want target to remain on map permanently")]
+    public int window = 999;
 
     [Tooltip("Applies to All -> If true the target repeats using the same profile as now")]
     public bool isRepeat;

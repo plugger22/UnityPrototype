@@ -52,6 +52,10 @@ public class TargetManager : MonoBehaviour
     [Tooltip("A Live target will generate a warning message to Resistance player this number of turns before it expires")]
     [Range(1, 3)] public int targetWarning = 2;
 
+    [Header("Default Profile")]
+    [Tooltip("Each target should have a TargetProfile. If not and there is no Mission SO profile, this profile is used as the default")]
+    public TargetProfile defaultProfile;
+
     [HideInInspector] public int StartTargets;
     [HideInInspector] public int ActiveTargets;
     [HideInInspector] public int LiveTargets;
@@ -214,7 +218,7 @@ public class TargetManager : MonoBehaviour
                                     isLive = false;
                                     target.timerHardLimit++;
                                     rndNum = Random.Range(0, 100);
-                                    switch(target.activation.level)
+                                    switch(target.profile.activation.level)
                                     {
                                         case 3:
                                             //Extreme
@@ -237,7 +241,7 @@ public class TargetManager : MonoBehaviour
                                             else if (target.timerHardLimit >= activateLowLimit) { isLive = true; }
                                             break;
                                         default:
-                                            Debug.LogWarningFormat("Invalid activation GlobalChance.level {0}", target.activation.level);
+                                            Debug.LogWarningFormat("Invalid activation GlobalChance.level {0}", target.profile.activation.level);
                                             break;
                                     }
                                     //Target goes Live
@@ -311,58 +315,58 @@ public class TargetManager : MonoBehaviour
         int nodeID;
         Target target;
         //city hall
-        if (mission.cityHallTarget != null)
+        if (mission.targetBaseCityHall != null)
         {
-            target = mission.cityHallTarget;
+            target = mission.targetBaseCityHall;
             nodeID = GameManager.instance.cityScript.cityHallDistrictID;
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.cityHallProfile, mission.timer, mission.cityHallFollowOnTarget);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.nextTargetID);
+                SetTargetDetails(target, node);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
         //icon
-        if (mission.iconTarget != null)
+        if (mission.targetBaseIcon != null)
         {
-            target = mission.iconTarget;
+            target = mission.targetBaseIcon;
             nodeID = GameManager.instance.cityScript.iconDistrictID;
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.iconProfile, mission.timer, mission.iconFollowOnTarget);
+                SetTargetDetails(target, node);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.nextTargetID);
+                    target.name, target.targetID, target.followOnTarget.targetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
         //airport
-        if (mission.airportTarget != null)
+        if (mission.targetBaseAirport != null)
         {
-            target = mission.airportTarget;
+            target = mission.targetBaseAirport;
             nodeID = GameManager.instance.cityScript.airportDistrictID;
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.airportProfile, mission.timer, mission.airportFollowOnTarget);
+                SetTargetDetails(target, node);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.nextTargetID);
+                    target.name, target.targetID, target.followOnTarget.targetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for airportTarget", nodeID); }
         }
         //harbour
-        if (mission.harbourTarget != null)
+        if (mission.targetBaseHarbour != null)
         {
-            target = mission.harbourTarget;
+            target = mission.targetBaseHarbour;
             nodeID = GameManager.instance.cityScript.harbourDistrictID;
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                SetTargetDetails(target, node, mission.harbourProfile, mission.timer, mission.harbourFollowOnTarget);
+                SetTargetDetails(target, node);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.nextTargetID);
+                    target.name, target.targetID, target.followOnTarget.targetID);
             }
         }
     }
@@ -437,19 +441,14 @@ public class TargetManager : MonoBehaviour
                             target = GameManager.instance.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
                             if (target != null)
                             {
-                                //valid target
-                                if (mission.genericLiveProfile != null)
-                                {
-                                    //assign target to node
-                                    SetTargetDetails(target, node, mission.genericLiveProfile, mission.timer);
-                                    Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                                        target.name, target.targetID);
-                                    counter++;
-                                    //delete target to prevent dupes
-                                    if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
-                                    { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.name, target.targetID, nodeArc.nodeArcID); }
-                                }
-                                else { Debug.LogError("Invalid mission.genericLiveProfile (Null)"); }
+                                //assign target to node
+                                SetTargetDetails(target, node);
+                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
+                                    target.name, target.targetID);
+                                counter++;
+                                //delete target to prevent dupes
+                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
+                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.name, target.targetID, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
                         }
@@ -504,19 +503,14 @@ public class TargetManager : MonoBehaviour
                             target = GameManager.instance.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
                             if (target != null)
                             {
-                                //valid target
-                                if (mission.genericActiveProfile != null)
-                                {
-                                    //assign target to node
-                                    SetTargetDetails(target, node, mission.genericActiveProfile, mission.timer);
-                                    Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget ACTIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                                        target.name, target.targetID);
-                                    counter++;
-                                    //delete target to prevent dupes
-                                    if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
-                                    { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.name, target.targetID, nodeArc.nodeArcID); }
-                                }
-                                else { Debug.LogError("Invalid mission.genericActiveProfile (Null)"); }
+                                //assign target to node
+                                SetTargetDetails(target, node);
+                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget ACTIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
+                                    target.name, target.targetID);
+                                counter++;
+                                //delete target to prevent dupes
+                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
+                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.name, target.targetID, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
                         }
@@ -544,11 +538,11 @@ public class TargetManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetRandomTargetNode();
         if (node != null)
         {
-            if (mission.vipTarget != null)
+            if (mission.targetBaseVIP != null)
             {
-                Target target = mission.vipTarget;
+                Target target = mission.targetBaseVIP;
                 //VIP targets don't have follow-on targets (use repeating random node targets instead)
-                SetTargetDetails(target, node, mission.vipProfile, mission.timer);
+                SetTargetDetails(target, node);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignVIPTarget: VIP node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                     target.name, target.targetID);
             }
@@ -565,10 +559,10 @@ public class TargetManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetRandomTargetNode();
         if (node != null)
         {
-            if (mission.harbourTarget != null)
+            if (mission.targetBaseHarbour != null)
             {
-                Target target = mission.storyTarget;
-                SetTargetDetails(target, node, mission.storyProfile, mission.timer);
+                Target target = mission.targetBaseStory;
+                SetTargetDetails(target, node);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                     target.name, target.targetID);
             }
@@ -585,10 +579,10 @@ public class TargetManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetRandomTargetNode();
         if (node != null)
         {
-            if (mission.harbourTarget != null)
+            if (mission.targetBaseHarbour != null)
             {
-                Target target = mission.goalTarget;
-                SetTargetDetails(target, node, mission.goalProfile, mission.timer);
+                Target target = mission.targetBaseGoal;
+                SetTargetDetails(target, node);
                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                     target.name, target.targetID);
             }
@@ -601,17 +595,18 @@ public class TargetManager : MonoBehaviour
     /// NOTE: Target and Node checked for null by calling methods
     /// </summary>
     /// <param name="target"></param>
-    private void SetTargetDetails(Target target, Node node, TargetProfile profile, int maxWindow, Target followOnTarget = null)
+    private void SetTargetDetails(Target target, Node node)
     {
         //only proceed to assign target if successfully added to list
         if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
         {
             //profile must be valid
-            if (profile != null)
+            if (target.profile != null)
             {
                 node.targetID = target.targetID;
                 target.nodeID = node.nodeID;
-                //activation
+
+                /*//profile
                 if (profile.activation != null)
                 { target.activation = profile.activation; }
                 else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
@@ -622,16 +617,13 @@ public class TargetManager : MonoBehaviour
                 target.isRepeat = profile.isRepeat;
                 target.isSameNode = profile.isSameNode;
                 //window -> give default of mission timer (max.) if no value present
-                if (profile.window == 0)
-                { profile.window = maxWindow; }
-                target.timerWindow = profile.window;
-                target.turnsWindow = profile.window;
-                //follow On target
-                if (followOnTarget != null)
-                { target.nextTargetID = followOnTarget.targetID; }
-                else { target.nextTargetID = -1; }
+                if (target.profile.window == 0)
+                { target.profile.window = maxWindow; }*/
+
+                target.timerWindow = target.profile.window;
+                target.turnsWindow = target.profile.window;
                 //status and message
-                switch (profile.trigger.name)
+                switch (target.profile.trigger.name)
                 {
                     case "Live":
                         target.targetStatus = Status.Live;
@@ -642,7 +634,7 @@ public class TargetManager : MonoBehaviour
                         target.targetStatus = Status.Active;
                         break;
                     default:
-                        Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", profile.trigger.name, target.name);
+                        Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", target.profile.trigger.name, target.name);
                         break;
                 }
                 //add to pool
@@ -958,7 +950,7 @@ public class TargetManager : MonoBehaviour
                 tempList.Add(string.Format("{0}<b>Level {1}</b>{2}", colourDefault, target.targetLevel, colourEnd));
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
+                    tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.profile.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
                     tempList.Add(string.Format("timerCountdown {0}", target.timerHardLimit));
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
@@ -1006,7 +998,7 @@ public class TargetManager : MonoBehaviour
                 }
                 if (GameManager.instance.optionScript.debugData == true)
                 {
-                    tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.activation.name));
+                    tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.profile.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
                     tempList.Add(string.Format("timerCountdown {0}", target.timerHardLimit));
                     tempList.Add(string.Format("timerWindow {0}", target.timerWindow));
