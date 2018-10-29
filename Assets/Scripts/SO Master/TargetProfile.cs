@@ -25,6 +25,8 @@ public class TargetProfile : ScriptableObject
     public bool isRepeat;
     [Tooltip("Only applicable for REPEAT profiles -> if true the target repeats at same node, otherwise random node")]
     public bool isSameNode;
+    [Tooltip("If a repeat target you need to specify a Repeat Profile, ignore otherwise")]
+    public TargetProfile repeatProfile;
 
 
     /// <summary>
@@ -35,6 +37,8 @@ public class TargetProfile : ScriptableObject
         Debug.Assert(activation != null, string.Format("Invalid activation (Null) for TargetProfile \"{0}\"", this.name));
         Debug.Assert(trigger != null, string.Format("Invalid trigger (Null) for TargetProfile \"{0}\"", this.name));
         Debug.Assert(window > 0, string.Format("Invalid turnWindow (Zero) for TargetProfile \"{0}\"", this.name));
+        if (isRepeat == true)
+        { Debug.Assert(repeatProfile != null, "Invalid repeatProfile (Null)"); }
     }
 
 }

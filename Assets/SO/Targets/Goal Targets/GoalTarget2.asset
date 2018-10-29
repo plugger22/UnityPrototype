@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: GoalTarget2
   m_EditorClassIdentifier: 
-  description: Big scary thing
   descriptorResistance: Advance Goal
   descriptorAuthority: Loose cannon on deck
   reason: 
@@ -26,17 +25,14 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
+  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   followOnTarget: {fileID: 0}
   targetStatus: 0
-  activation: {fileID: 0}
   infoLevel: 1
   targetID: 20
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  nextTargetID: 0
-  isRepeat: 0
-  isSameNode: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0

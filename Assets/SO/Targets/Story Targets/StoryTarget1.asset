@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: StoryTarget1
   m_EditorClassIdentifier: 
-  description: Personnel Database
   descriptorResistance: Advance Story
   descriptorAuthority: Loose lips sink ships
   reason: Mum is in there somewhere
@@ -26,17 +25,14 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
+  profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
   followOnTarget: {fileID: 0}
-  targetStatus: 2
-  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  targetStatus: 0
   infoLevel: 1
   targetID: 16
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 6
-  nextTargetID: -1
-  isRepeat: 0
-  isSameNode: 0
+  nodeID: -1
   turnSuccess: 0
   turnDone: 6
   numOfAttempts: 0

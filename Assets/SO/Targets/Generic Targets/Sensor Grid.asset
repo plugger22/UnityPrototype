@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: Sensor Grid
   m_EditorClassIdentifier: 
-  description: Penetrate Sensor Grid
   descriptorResistance: Penetrate Sensor Grid
   descriptorAuthority: Possible Security Flaw
   reason: Sensor grid being hacked
@@ -30,17 +29,14 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   OngoingEffect: {fileID: 11400000, guid: 2db19c8db27205d49bc691b891f53077, type: 2}
+  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   followOnTarget: {fileID: 0}
   targetStatus: 0
-  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   infoLevel: 1
   targetID: 3
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  nextTargetID: -1
-  isRepeat: 0
-  isSameNode: 0
   turnSuccess: 0
   turnDone: 6
   numOfAttempts: 0

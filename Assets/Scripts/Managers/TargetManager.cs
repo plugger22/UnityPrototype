@@ -337,8 +337,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.followOnTarget.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
@@ -351,8 +351,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.followOnTarget.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for airportTarget", nodeID); }
         }
@@ -365,8 +365,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}, followON id {5}", node.nodeName, node.Arc.name, nodeID,
-                    target.name, target.targetID, target.followOnTarget.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
+                    target.name, target.targetID);
             }
         }
     }
@@ -442,7 +442,7 @@ public class TargetManager : MonoBehaviour
                             if (target != null)
                             {
                                 //assign target to node
-                                SetTargetDetails(target, node);
+                                SetTargetDetails(target, node, mission.profileGenericLive);
                                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                                     target.name, target.targetID);
                                 counter++;
@@ -504,7 +504,7 @@ public class TargetManager : MonoBehaviour
                             if (target != null)
                             {
                                 //assign target to node
-                                SetTargetDetails(target, node);
+                                SetTargetDetails(target, node, mission.profileGenericActive);
                                 Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget ACTIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
                                     target.name, target.targetID);
                                 counter++;
@@ -595,33 +595,36 @@ public class TargetManager : MonoBehaviour
     /// NOTE: Target and Node checked for null by calling methods
     /// </summary>
     /// <param name="target"></param>
-    private void SetTargetDetails(Target target, Node node)
+    private void SetTargetDetails(Target target, Node node, TargetProfile profileOverride = null)
     {
         //only proceed to assign target if successfully added to list
         if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
         {
+            //override profile or assign default profile to generic target (generics are override or default) and to all other targets (use existing profile or default if null) if they don't have a profile 
+            if (profileOverride != null)
+            { target.profile = profileOverride; }
+            else if ( target.profile == null)
+            { target.profile = defaultProfile; }
+            else if (target.type.name.Equals("Generic") == true)
+            { target.profile = defaultProfile; }
             //profile must be valid
             if (target.profile != null)
             {
+                //ID's
                 node.targetID = target.targetID;
                 target.nodeID = node.nodeID;
-
-                /*//profile
-                if (profile.activation != null)
-                { target.activation = profile.activation; }
-                else { Debug.LogErrorFormat("Invalid profile.activation (Null) for target {0}", target.name); }
-                //delay
-                target.timerDelay = profile.delay;
+                //timers
+                target.timerDelay = target.profile.delay;
                 target.timerHardLimit = 0;
-                //repeat
-                target.isRepeat = profile.isRepeat;
-                target.isSameNode = profile.isSameNode;
-                //window -> give default of mission timer (max.) if no value present
-                if (target.profile.window == 0)
-                { target.profile.window = maxWindow; }*/
-
                 target.timerWindow = target.profile.window;
                 target.turnsWindow = target.profile.window;
+                //defaults (need to set as Target SO could be carrying over data from a previous level)
+                target.isKnownByAI = false;
+                target.turnSuccess = -1;
+                target.turnDone = -1;
+                target.numOfAttempts = 0;
+                target.ongoingID = -1;
+                target.infoLevel = 0;
                 //status and message
                 switch (target.profile.trigger.name)
                 {
@@ -645,207 +648,6 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3}", node.nodeName, node.Arc.name, node.nodeID, target.name); }
     }
-
-
-
-
-
-
-    /*/// <summary>
-    /// Populates a set number of randomly chosen level 1 targets into the level with the indicated status
-    /// </summary>
-    /// <param name="numOfTargets"></param>
-    /// <param name="status"></param>
-    public void SetRandomTargets(int numOfTargetsInput, Status status = Status.Active)
-    {
-        int index, nodeArcID, totalOfType, totalOfTypewithTargets, totalActive, totalLive, totalTargets, endlessCounter, numOfTargets;
-        int counter = 0;
-        bool doneFlag;
-        //dictionary to hold list of already assigned nodeID's to prevent duplicate assignments
-        Dictionary<int, List<int>> dictOfExisting = new Dictionary<int, List<int>>();
-        //if not enough viable targets drop number down to what's doable
-        int numPossibleTargets = GameManager.instance.dataScript.CheckNumOfPossibleTargets();
-        if (numOfTargetsInput > numPossibleTargets) { numOfTargets = numPossibleTargets; }
-        else { numOfTargets = numOfTargetsInput; }
-        //loop and populate
-        List<Target> listOfPossibleTargets = GameManager.instance.dataScript.GetPossibleTargets();
-        for(int i = 0; i < numOfTargets; i++)
-        {
-            //successflag breaks out of while loop if a suitable node is found
-            doneFlag = false;
-            endlessCounter = 0;
-            //keep chosing a node until you find a suitable one (max 5 goes)
-            while (doneFlag == false)
-            {
-                //get a random target
-                index = Random.Range(0, listOfPossibleTargets.Count);
-                Target target = listOfPossibleTargets[index];
-                //get target nodeArcId
-                nodeArcID = target.nodeArc.nodeArcID;
-                //check that there is a suitable spare node available
-                totalOfType = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.Number);
-                totalOfTypewithTargets = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsAll);
-                if ((totalOfType - totalOfTypewithTargets) > 0)
-                {
-                    //get a random node
-                    List<Node> tempNodes = new List<Node>(GameManager.instance.dataScript.GetListOfNodesByType(nodeArcID));
-                    //clean out any nodes with prior targets prior to pruning
-                    if (totalOfTypewithTargets > 0)
-                    {
-                        for(int j = tempNodes.Count - 1; j >= 0; j--)
-                        {
-                            if (tempNodes[j].targetID > -1)
-                            { tempNodes.RemoveAt(j); }
-                        }
-                    }
-                    if (tempNodes.Count > 0)
-                    {
-                        //remove all duplicate nodes from list that already have targets assigned to them
-                        List<Node> prunedListOfNodes = PruneListOfNodes(nodeArcID, dictOfExisting, tempNodes);
-                        if (prunedListOfNodes != null)
-                        {
-                            if (prunedListOfNodes.Count > 0)
-                            {
-                                Node node = prunedListOfNodes[Random.Range(0, prunedListOfNodes.Count)];
-                                //assign targetID to node
-                                node.targetID = target.targetID;
-                                counter++;
-                                Debug.Log(string.Format("TargetManager: Node ID {0}, type \"{1}\", assigned Target ID {2}, \"{3}\"{4}",
-                                    node.nodeID, node.Arc.name, target.targetID, target.name, "\n"));
-                                //reset target status
-                                Target dictTarget = GameManager.instance.dataScript.GetTarget(target.targetID);
-                                dictTarget.targetStatus = status;
-                                //Remove from listOfPossibleTargets
-                                listOfPossibleTargets.RemoveAt(index);
-
-                                //add to dictionary (used to prevent targets being assigned to duplicate nodes)
-                                List<int> listOfNodeID = new List<int>();
-                                if (dictOfExisting.ContainsKey(nodeArcID) == true)
-                                {
-                                    listOfNodeID = dictOfExisting[nodeArcID];
-                                    //add new entry
-                                    listOfNodeID.Add(node.nodeID);
-                                }
-                                else
-                                {
-                                    //new entry in dictionary
-                                    listOfNodeID.Add(node.nodeID);
-                                    try
-                                    { dictOfExisting.Add(nodeArcID, listOfNodeID); }
-                                    catch (ArgumentException)
-                                    { Debug.LogError(string.Format("Invalid nodeArcID {0} (duplicate entry) in dictOfExisting", nodeArcID)); }
-                                }
-
-                                //Update node Array info stats
-                                totalTargets = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsAll) + 1;
-                                GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsAll, totalTargets);
-                                switch (status)
-                                {
-                                    case Status.Active:
-                                        totalActive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsActive) + 1;
-                                        GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsActive, totalActive);
-                                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Active);
-                                        //assign nodeID to target
-                                        target.nodeID = node.nodeID;
-                                        break;
-                                    case Status.Live:
-                                        totalLive = GameManager.instance.dataScript.CheckNodeInfo(nodeArcID, NodeInfo.TargetsLive) + 1;
-                                        GameManager.instance.dataScript.SetNodeInfo(nodeArcID, NodeInfo.TargetsLive, totalLive);
-                                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
-                                        target.nodeID = node.nodeID;
-                                        break;
-                                    default:
-                                        Debug.LogError(string.Format("Invalid status \"{0}\"{1}", status, "\n"));
-                                        break;
-                                }
-                                doneFlag = true;
-                            }
-                            else
-                            {
-                                Debug.LogWarning(string.Format("No available nodes left after pruning for nodeArcID {0}{1}", nodeArcID, "\n"));
-                                doneFlag = true;
-                            }
-                        }
-                        else
-                        {
-                            endlessCounter++;
-                            if (endlessCounter > 5)
-                            {
-                                Debug.LogWarning(string.Format("TargetManager: Breaking out of loop after 5 iterations, for type \"{0}\"{1}", target.nodeArc.name, "\n"));
-                                doneFlag = true;
-                            }
-                            Debug.LogError(string.Format("No nodes available of type {0}. Unable to assign target{1}", target.nodeArc.name, "\n"));
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogWarning(string.Format("TargetManager: Insufficient nodes of type \"{0}\" (zero or less){1}", target.nodeArc.name, "\n"));
-                        doneFlag = true;
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning(string.Format("TargetManager: There are no \"{0}\" nodes without targets remaining{1}", target.nodeArc.name,"\n"));
-                    doneFlag = true;
-                }
-            }
-        }
-        //check tally
-        if (counter == 0)
-        { Debug.LogWarning(string.Format("No nodes were assigned Targets{0}", "\n")); }
-        else if (counter < StartTargets)
-        { Debug.LogWarning(string.Format("TargetManager: Less than the required number of starting nodes assigned targets{0}", "\n")); }
-    }
-
-
-    /// <summary>
-    /// private sub method to take list of Nodes and remove any that match entries in the dictOfExisting to prevent SetRandomTargets assigning targets to duplicate nodes
-    /// </summary>
-    /// <param name="dictOfExisting"></param>
-    /// <param name="tempList"></param>
-    /// <returns></returns>
-    private List<Node> PruneListOfNodes(int nodeArcID, Dictionary<int, List<int>> dictOfExisting, List<Node> tempList)
-    {
-        List<Node> listOfNodes = null;
-        if (tempList != null && dictOfExisting != null)
-        {
-            listOfNodes = new List<Node>(tempList);
-            
-            //lookup dictionary to see if any entries for identical nodeArcID
-            if (dictOfExisting.ContainsKey(nodeArcID))
-            {
-                List<int> listOfExistingNodeID = new List<int>(dictOfExisting[nodeArcID]);
-                //reverse loop parameter node List and delete any that match entries in listOfNodeIDs
-                if (listOfExistingNodeID != null && listOfExistingNodeID.Count > 0)
-                {
-                    int nodeID;
-                    bool isMatch;
-                    for(int i = listOfNodes.Count - 1; i >= 0; i--)
-                    {
-                        isMatch = false;
-                        nodeID = listOfNodes[i].nodeID;
-                        //check for a match with existing
-                        for(int j = 0; j < listOfExistingNodeID.Count; j++)
-                        {
-                            if (nodeID == listOfExistingNodeID[j])
-                            {
-                                isMatch = true;
-                                break;
-                            }
-                        }
-                        if (isMatch == true)
-                        {
-                            //delete entry
-                            listOfNodes.RemoveAt(i);
-                        }
-                    }
-                }
-            }
-            return listOfNodes;
-        }
-        else { Debug.LogError("Invalid dictOfExisting or tempList (either are Null)"); }
-        return listOfNodes;
-    }*/
 
 
     /// <summary>
@@ -1415,6 +1217,9 @@ public class TargetManager : MonoBehaviour
                     target.nodeID = -1;
                     //log
                     Debug.LogFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin completed", target.name, target.targetID);
+                    //
+                    // - - - Follow On target
+                    //
                 }
             }
             else { Debug.LogError("Invalid target (Null)"); isSuccess = false; }

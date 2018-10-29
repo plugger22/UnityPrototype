@@ -43,12 +43,15 @@ public class Mission : ScriptableObject
     [Tooltip("Goal target, can ignore")]
     public Target targetBaseGoal;
 
-    /*[Header("Target Profile Overrides (Base)")]
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseGenericLive;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseGenericActive;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
+    [Header("Generic Target Profile Overrides")]
+    [Tooltip("If a profile is specified here it will override the Generic Target's profile. Can be ignored")]
+    public TargetProfile profileGenericLive;
+    [Tooltip("If a profile is specified here it will override the Generic Target's profile. Can be ignored")]
+    public TargetProfile profileGenericActive;
+    [Tooltip("All followOn Generic targets will use this profile. If ignored, the targets own profile will be used")]
+    public TargetProfile profileGenericFollowOn;
+
+    /*[Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
     public TargetProfile profileBaseCityHall;
     [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
     public TargetProfile profileBaseIcon;

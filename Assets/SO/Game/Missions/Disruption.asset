@@ -20,28 +20,16 @@ MonoBehaviour:
   objectiveThree: {fileID: 0}
   targetsGenericLive: 3
   targetsGenericActive: 3
-  cityHallTarget: {fileID: 11400000, guid: 0709a03dbe8855c4ca63596a7fa53fb7, type: 2}
-  iconTarget: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
-  airportTarget: {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
-  harbourTarget: {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
-  vipTarget: {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
-  storyTarget: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
-  goalTarget: {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
-  genericLiveProfile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
-  genericActiveProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21,
+  targetBaseCityHall: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
+  targetBaseIcon: {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
+  targetBaseAirport: {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  targetBaseHarbour: {fileID: 11400000, guid: 0709a03dbe8855c4ca63596a7fa53fb7, type: 2}
+  targetBaseVIP: {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
+  targetBaseStory: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  targetBaseGoal: {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
+  profileGenericLive: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
+  profileGenericActive: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21,
     type: 2}
-  cityHallProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  iconProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  airportProfile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
-  harbourProfile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
-  vipProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  storyProfile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
-  goalProfile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  cityHallFollowOnTarget: {fileID: 0}
-  iconFollowOnTarget: {fileID: 11400000, guid: 975a5596bd2e1fa45a2dd74b585282c4, type: 2}
-  airportFollowOnTarget: {fileID: 0}
-  harbourFollowOnTarget: {fileID: 0}
-  storyFollowOnTarget: {fileID: 11400000, guid: 9bdb2eb8d989fed44a8782c9ef232a6a,
+  profileGenericFollowOn: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e,
     type: 2}
-  goalFollowOnTarget: {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
   missionID: 1

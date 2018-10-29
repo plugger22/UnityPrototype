@@ -11,7 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: VIPTarget1
   m_EditorClassIdentifier: 
-  description: Mayor Gives Speech
   descriptorResistance: Assassinate Mayor
   descriptorAuthority: V.I.P Schedule leaked
   reason: Kill that Sucker
@@ -26,17 +25,14 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
+  profile: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
   followOnTarget: {fileID: 0}
-  targetStatus: 1
-  activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  targetStatus: 0
   infoLevel: 1
   targetID: 13
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 10
-  nextTargetID: -1
-  isRepeat: 0
-  isSameNode: 0
+  nodeID: -1
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0
