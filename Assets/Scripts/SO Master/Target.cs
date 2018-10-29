@@ -30,7 +30,7 @@ public class Target : ScriptableObject
     public Sprite sprite;
 
     [Header("Category")]
-    public TargetType type;
+    public TargetType targetType;
     [Tooltip("Which Node Arc it applies to, eg. 'Government' -> Only applies if a Generic type target, ignore otherwise")]
     public NodeArc nodeArc;
 
@@ -64,9 +64,9 @@ public class Target : ScriptableObject
     [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node*/
 
     //Tracking data
-    [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted
-    [HideInInspector] public int turnDone;                          //turn # when target done
-    [HideInInspector] public int numOfAttempts;                     //how many attempts made on target
+    [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted, -1 default
+    [HideInInspector] public int turnDone;                          //turn # when target done, -1 default
+    [HideInInspector] public int numOfAttempts;                     //how many attempts made on target, 0 default
     [HideInInspector] public int turnsWindow;                       //number of turns of Live window (info purposes only)
     //Timers
     [HideInInspector] public int timerDelay;                        //delay in turns before target tests for activation
@@ -80,5 +80,6 @@ public class Target : ScriptableObject
     {
         Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(descriptorAuthority) == false, "Invalid descriptorAuthority (Null or Empty)");
+        //NOTE: No need to check profile for Null as handled in TargetManager.cs -> SetTargetDetails (assigns defaultProfile if null)
     }
 }

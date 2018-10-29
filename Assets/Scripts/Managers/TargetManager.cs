@@ -605,7 +605,7 @@ public class TargetManager : MonoBehaviour
             { target.profile = profileOverride; }
             else if ( target.profile == null)
             { target.profile = defaultProfile; }
-            else if (target.type.name.Equals("Generic") == true)
+            else if (target.targetType.name.Equals("Generic") == true)
             { target.profile = defaultProfile; }
             //profile must be valid
             if (target.profile != null)
@@ -1216,10 +1216,47 @@ public class TargetManager : MonoBehaviour
                     node.targetID = -1;
                     target.nodeID = -1;
                     //log
-                    Debug.LogFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin completed", target.name, target.targetID);
+                    Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin completed", target.name, target.targetID);
                     //
                     // - - - Follow On target
                     //
+                    if (target.followOnTarget != null)
+                    {
+                        //if generic target check for profile override
+                        if (target.followOnTarget.targetType.Equals("Generic") == true)
+                        {
+                            Mission mission = GameManager.instance.missionScript.mission;
+                            //use override profile if one available (ignored if not)
+                            if (mission != null)
+                            { SetTargetDetails(target.followOnTarget, node, mission.profileGenericFollowOn); }
+                            else { Debug.LogError("Invalid mission (Null)"); }
+                        }
+                        else { SetTargetDetails(target.followOnTarget, node); }
+                    }
+                    //
+                    // - - - Repeat target - - -
+                    //
+                    else
+                    {
+                        //Generic targets can't repeat
+                        if (target.profile.isRepeat == true )
+                        {
+                            //target can't have been done to repeat
+                            if (target.turnSuccess == -1 && target.targetType.Equals("Generic") == false)
+                            {
+                                //assign repeat profile if present
+                                if (target.profile.repeatProfile != null)
+                                { target.profile = target.profile.repeatProfile; }
+                                else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} repeatProfile Invalid (Null)", target.name, target.targetID); }
+                                //is same node?
+                                if (target.profile.isSameNode == true)
+                                { SetTargetDetails(target, node); }
+                                //random node
+
+                            }
+                            else { Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as successfully attempted", target.name, target.targetID); }
+                        }
+                    }
                 }
             }
             else { Debug.LogError("Invalid target (Null)"); isSuccess = false; }

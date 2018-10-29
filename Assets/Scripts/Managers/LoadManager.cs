@@ -691,9 +691,9 @@ public class LoadManager : MonoBehaviour
                 //assign targets to pools
                 foreach (var target in dictOfTargets)
                 {
-                    if (target.Value.type != null)
+                    if (target.Value.targetType != null)
                     {
-                        switch (target.Value.type.name)
+                        switch (target.Value.targetType.name)
                         {
                             case "Generic":
                                 if (target.Value.nodeArc != null)
