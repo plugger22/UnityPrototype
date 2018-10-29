@@ -19,7 +19,7 @@ MonoBehaviour:
   actorArc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
   gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
-  type: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
+  targetType: {fileID: 0}
   nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
@@ -29,18 +29,18 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   OngoingEffect: {fileID: 11400000, guid: 3f4567a032ff64344a058fc6d262347b, type: 2}
-  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
-  followOnTarget: {fileID: 0}
-  targetStatus: 0
-  infoLevel: 1
+  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  followOnTarget: {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
+  targetStatus: 1
+  infoLevel: 0
   targetID: 1
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
-  turnSuccess: 0
-  turnDone: 6
+  nodeID: 0
+  turnSuccess: -1
+  turnDone: -1
   numOfAttempts: 0
-  turnsWindow: 5
-  timerDelay: 0
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
-  timerWindow: 5
+  timerWindow: 10
