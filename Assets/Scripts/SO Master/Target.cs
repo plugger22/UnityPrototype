@@ -10,6 +10,8 @@ using gameAPI;
 public class Target : ScriptableObject
 {
     [Header("Base data")]
+    [Tooltip("Name of target, used in-game")]
+    public string targetName;
     [Tooltip("Keep short, indicates Opportunity eg. 'Grind traffic to a half', Resistance POV")]
     public string descriptorResistance;
     [Tooltip("Keep short, indicates suspected vulnerability eg. 'Possible Security Break', Authority POV")]

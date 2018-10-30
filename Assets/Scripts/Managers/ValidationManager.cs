@@ -32,17 +32,17 @@ public class ValidationManager : MonoBehaviour
             {
                 //fields
                 if (string.IsNullOrEmpty(target.descriptorResistance) == true)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid description field (Null or Empty)", target.name); }
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid description field (Null or Empty)", target.targetName); }
                 if (target.profile.activation == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid activation field (Null)", target.name); }
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid activation field (Null)", target.targetName); }
                 if (target.nodeArc == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid NodeArc field (Null)", target.name); }
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid NodeArc field (Null)", target.targetName); }
                 if (target.actorArc == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid ActorArc field (Null)", target.name); }
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid ActorArc field (Null)", target.targetName); }
                 if (target.gear == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid Gear field (Null)", target.name); }
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid Gear field (Null)", target.targetName); }
                 if (target.sprite == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid sprite field (Null)", target.name); }
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid sprite field (Null)", target.targetName); }
                 //Good effects
                 if (target.listOfGoodEffects.Count > 0)
                 {
@@ -52,9 +52,9 @@ public class ValidationManager : MonoBehaviour
                         {
                             //should be duration 'Single'
                             if (effect.duration.name.Equals("Single") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Good effect \"{1}\" NOT Single", target.name, effect.name); }
+                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Good effect \"{1}\" NOT Single", target.targetName, effect.name); }
                         }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Good effect (Null)", target.name); }
+                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Good effect (Null)", target.targetName); }
                     }
                 }
                 //Bad effects
@@ -66,9 +66,9 @@ public class ValidationManager : MonoBehaviour
                         {
                             //should be duration 'Single'
                             if (effect.duration.name.Equals("Single") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Bad effect \"{1}\" NOT Single", target.name, effect.name); }
+                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Bad effect \"{1}\" NOT Single", target.targetName, effect.name); }
                         }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Bad effect (Null)", target.name); }
+                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Bad effect (Null)", target.targetName); }
                     }
                 }
                 //Fail effects
@@ -80,9 +80,9 @@ public class ValidationManager : MonoBehaviour
                         {
                             //should be duration 'Single'
                             if (effect.duration.name.Equals("Single") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Fail effect \"{1}\" NOT Single", target.name, effect.name); }
+                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Fail effect \"{1}\" NOT Single", target.targetName, effect.name); }
                         }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Fail effect (Null)", target.name); }
+                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Fail effect (Null)", target.targetName); }
                     }
                 }
                 //Ongoing effects
@@ -90,7 +90,7 @@ public class ValidationManager : MonoBehaviour
                 {
                     //should be duration 'Ongoing'
                     if (target.OngoingEffect.duration.name.Equals("Ongoing") == false)
-                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" ongoing effect \"{1}\" NOT Ongoing", target.name, target.OngoingEffect.name); }
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" ongoing effect \"{1}\" NOT Ongoing", target.targetName, target.OngoingEffect.name); }
                 }
             }
             else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", index); }
@@ -141,12 +141,12 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
     /// Designed to pick up SO's that might have been added in the editor but not added to the arrays (ignored by game if this is the case).
-    /// 'isVerbal' is true for all messages, false for problem messages only
     /// </summary>
     public void ValidateSO()
     {
         int numArray, numAssets;
-        bool isVerbal = true;
+        // 'isVerbal' is true for all messages, false for problem messages only
+        bool isVerbal = false;
         string path;
         //
         // - - - GlobalMeta - - -

@@ -582,7 +582,7 @@ public class ImportManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Target (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.targetName)); counter--; }
             }
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", dictOfTargets.Count, "\n");
             Debug.Assert(dictOfTargets.Count == counter, "Mismatch on count");

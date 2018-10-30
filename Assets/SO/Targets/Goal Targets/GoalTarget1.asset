@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: GoalTarget1
   m_EditorClassIdentifier: 
+  targetName: Goal Target 1
   descriptorResistance: Advance Goal
   descriptorAuthority: Loose cannon on deck
   reason: It's where the AI is
@@ -27,16 +28,16 @@ MonoBehaviour:
   OngoingEffect: {fileID: 0}
   profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   followOnTarget: {fileID: 0}
-  targetStatus: 0
-  infoLevel: 1
-  targetID: 19
+  targetStatus: 4
+  infoLevel: 0
+  targetID: 20
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  turnSuccess: 0
-  turnDone: 0
+  turnSuccess: -1
+  turnDone: 26
   numOfAttempts: 0
   turnsWindow: 10
-  timerDelay: 5
-  timerHardLimit: 0
-  timerWindow: 10
+  timerDelay: 0
+  timerHardLimit: 10
+  timerWindow: 0

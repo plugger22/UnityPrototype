@@ -1274,7 +1274,7 @@ public class TeamManager : MonoBehaviour
                             //contain target and shut down all ongoing node effects
                             GameManager.instance.targetScript.ContainTarget(target);
                             //message
-                            text = string.Format("Target \"{0}\" Contained by {1} {2}", target.name, team.arc.name, team.teamName);
+                            text = string.Format("Target \"{0}\" Contained by {1} {2}", target.targetName, team.arc.name, team.teamName);
                             GameManager.instance.messageScript.TargetContained(text, node, team, target);
                         }
                     }

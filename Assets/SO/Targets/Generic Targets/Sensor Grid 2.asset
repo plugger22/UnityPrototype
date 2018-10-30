@@ -9,38 +9,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: Delivery Bots
+  m_Name: Sensor Grid 2
   m_EditorClassIdentifier: 
-  descriptorResistance: Shut down supply
+  targetName: Sensor Grid 2
+  descriptorResistance: Penetrate Sensor Grid
   descriptorAuthority: Possible Security Flaw
-  reason: Delivery bots being disabled
+  reason: Sensor grid being hacked
   metaLevel: {fileID: 0}
-  targetLevel: 1
-  actorArc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
-  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  targetLevel: 2
+  actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  gear: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
-  nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
+  nodeArc: {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
+  - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  OngoingEffect: {fileID: 11400000, guid: 3f4567a032ff64344a058fc6d262347b, type: 2}
+  OngoingEffect: {fileID: 11400000, guid: 2db19c8db27205d49bc691b891f53077, type: 2}
   profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   followOnTarget: {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
-  targetStatus: 0
-  infoLevel: 1
-  targetID: 1
+  targetStatus: 4
+  infoLevel: 0
+  targetID: 3
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
   turnSuccess: -1
-  turnDone: -1
+  turnDone: 18
   numOfAttempts: 0
   turnsWindow: 10
-  timerDelay: 5
-  timerHardLimit: 0
-  timerWindow: 10
+  timerDelay: 0
+  timerHardLimit: 2
+  timerWindow: 0

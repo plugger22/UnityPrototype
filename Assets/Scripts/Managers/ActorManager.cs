@@ -623,7 +623,7 @@ public class ActorManager : MonoBehaviour
                             //target live and dancing
                             if (targetProceed == true)
                             {
-                                string targetHeader = string.Format("{0}<size=110%>{1}</size>{2}{3}{4}{5}{6}", sideColour, target.name, colourEnd, "\n", colourDefault,
+                                string targetHeader = string.Format("{0}<size=110%>{1}</size>{2}{3}{4}{5}{6}", sideColour, target.targetName, colourEnd, "\n", colourDefault,
                                     target.descriptorResistance, colourEnd);
                                 //button target details
                                 EventButtonDetails targetDetails = new EventButtonDetails()

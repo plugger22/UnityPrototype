@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
+  m_Name: Steal Dossier 1
+  m_EditorClassIdentifier: 
+  targetName: Steal Dossier
+  descriptorResistance: Steal Classified Intel
+  descriptorAuthority: Possible Security Flaw
+  reason: stealing a secret dossier
+  metaLevel: {fileID: 0}
+  targetLevel: 1
+  actorArc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  gear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
+  targetType: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
+  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
+  - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
+  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
+  listOfFailEffects:
+  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
+  OngoingEffect: {fileID: 0}
+  profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
+  followOnTarget: {fileID: 11400000, guid: 4b3cd6537cbd8d8428c54947a8e44f90, type: 2}
+  targetStatus: 4
+  infoLevel: 0
+  targetID: 6
+  ongoingID: -1
+  isKnownByAI: 0
+  nodeID: -1
+  turnSuccess: -1
+  turnDone: 6
+  numOfAttempts: 0
+  turnsWindow: 5
+  timerDelay: 0
+  timerHardLimit: 0
+  timerWindow: 0

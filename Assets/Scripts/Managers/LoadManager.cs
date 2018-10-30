@@ -676,7 +676,7 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Target (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.targetName)); counter--; }
             }
             numDict = dictOfTargets.Count;
             Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", numDict, "\n");

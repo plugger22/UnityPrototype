@@ -2101,7 +2101,7 @@ public class DataManager : MonoBehaviour
                 {
                     listOfTargets.RemoveAt(i);
                     isSuccess = true;
-                    Debug.Log(string.Format("DataManager: Target \"{0}\", ID {1}, successfully removed from {2} List{3}", target.name, target.targetID, status, "\n"));
+                    Debug.Log(string.Format("DataManager: Target \"{0}\", ID {1}, successfully removed from {2} List{3}", target.targetName, target.targetID, status, "\n"));
                     break;
                 }
             }
@@ -2133,7 +2133,7 @@ public class DataManager : MonoBehaviour
                         target = GetTarget(tempList[j]);
                         if (target != null)
                         {
-                            builder.AppendFormat(" {0}, id {1}, level {2}, act {3}, del {4}, win {5}{6}", target.name, target.targetID, target.targetLevel,
+                            builder.AppendFormat(" {0}, id {1}, level {2}, act {3}, del {4}, win {5}{6}", target.targetName, target.targetID, target.targetLevel,
                                 target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
                         }
                         else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
@@ -2187,13 +2187,13 @@ public class DataManager : MonoBehaviour
                         node = GetNode(target.nodeID);
                         if (node != null)
                         {
-                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, {7}, {8}, id {9}{10}", target.name, target.targetID, target.targetLevel, target.profile.activation.name,
+                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, {7}, {8}, id {9}{10}", target.targetName, target.targetID, target.targetLevel, target.profile.activation.name,
                                 target.targetStatus, target.timerDelay, target.timerWindow, node.nodeName, node.Arc.name, target.nodeID, "\n");
                         }
                         else
                         {
                             //no error 'cause you want to pick up targets without node data as they are 'Done' targets
-                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, id {7}{8}", target.name, target.targetID, target.targetLevel, target.profile.activation.name,
+                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, id {7}{8}", target.targetName, target.targetID, target.targetLevel, target.profile.activation.name,
                                 target.targetStatus, target.timerDelay, target.timerWindow, target.nodeID, "\n");
                         }
                     }

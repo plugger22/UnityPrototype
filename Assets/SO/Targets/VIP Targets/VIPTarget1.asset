@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: VIPTarget1
   m_EditorClassIdentifier: 
+  targetName: VIP target 1
   descriptorResistance: Assassinate Mayor
   descriptorAuthority: V.I.P Schedule leaked
   reason: Kill that Sucker
@@ -25,18 +26,18 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
-  profile: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
+  profile: {fileID: 11400000, guid: 5d127dfe7a7cb0d4f8033fbd8a983572, type: 2}
   followOnTarget: {fileID: 0}
-  targetStatus: 0
-  infoLevel: 1
-  targetID: 13
+  targetStatus: 1
+  infoLevel: 0
+  targetID: 21
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
-  turnSuccess: 0
-  turnDone: 0
+  nodeID: 16
+  turnSuccess: -1
+  turnDone: -1
   numOfAttempts: 0
-  turnsWindow: 10
-  timerDelay: 5
-  timerHardLimit: 0
-  timerWindow: 10
+  turnsWindow: 5
+  timerDelay: 0
+  timerHardLimit: 8
+  timerWindow: 5

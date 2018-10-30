@@ -2239,7 +2239,7 @@ public class MessageManager : MonoBehaviour
             message.data2 = target.targetID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} target CONTAINED", target.name);
+            data.itemText = string.Format("{0} target CONTAINED", target.targetName);
             data.topText = "Target Contained";
             data.bottomText = GameManager.instance.itemDataScript.GetTargetContainedDetails(node, team, target);
             data.priority = ItemPriority.Medium;

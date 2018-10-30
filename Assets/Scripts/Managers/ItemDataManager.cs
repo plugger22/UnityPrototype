@@ -1122,7 +1122,7 @@ public class ItemDataManager : MonoBehaviour
         { builder.AppendFormat("An {0}<b>{1}</b>{2} exists at{3}", colourGood, sideText, colourEnd, "\n"); }
         else { builder.AppendFormat("{0}<b>{1}</b>{2} identified at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.targetName, colourEnd, "\n");
         if (side.level == globalResistance.level)
         {
             builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.descriptorResistance, colourEnd, "\n");
@@ -1151,7 +1151,7 @@ public class ItemDataManager : MonoBehaviour
         { builder.AppendFormat("Expired {0}{1}{2} at{3}", colourGood, sideText, colourEnd, "\n"); }
         else { builder.AppendFormat("{0}<b>{1}</b>{2} has been resolved at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}{4}", colourAlert, target.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}{4}", colourAlert, target.targetName, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2} attempt{3} were made on Target{4}", colourNeutral, target.numOfAttempts, colourEnd, target.numOfAttempts != 1 ? "s" : "", "\n");
         builder.AppendFormat("Target was Live for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.turnsWindow, colourEnd, target.turnsWindow != 1 ? "s" : "");
         return builder.ToString();
@@ -1168,7 +1168,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>Opportunity</b>{1} at{2}", colourGood, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}{4}", colourAlert, target.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}{4}", colourAlert, target.targetName, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Will be gone in</b>{0}", "\n");
         builder.AppendFormat("{0}<b>{1}{2} days</b>", colourNeutral, target.timerWindow, colourEnd);
         return builder.ToString();
@@ -1185,7 +1185,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         string actorName = "Unknown";
-        builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, target.targetName, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}{2}", node.nodeName, node.Arc.name, "\n");
         //who did it?
         if (actorID == 999)
@@ -1223,7 +1223,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetTargetContainedDetails(Node node, Team team, Target target)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.name, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.targetName, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         { builder.AppendFormat("<b>Authority has sealed off the situation{0}{1}Ongoing effects cancelled</b>{2}", "\n", colourBad, colourEnd); }

@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: VIPTarget2
   m_EditorClassIdentifier: 
+  targetName: VIP Target 2
   descriptorResistance: Capture Scientist
   descriptorAuthority: V.I.P Schedule leaked
   reason: 
@@ -29,7 +30,7 @@ MonoBehaviour:
   followOnTarget: {fileID: 0}
   targetStatus: 0
   infoLevel: 1
-  targetID: 14
+  targetID: 15
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1

@@ -9,38 +9,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: FollowOn Target
+  m_Name: Automated Patrols 2
   m_EditorClassIdentifier: 
-  descriptorResistance: Follow the leader
+  targetName: Automated Patrols 2
+  descriptorResistance: Disable Guard bots
   descriptorAuthority: Possible Security Flaw
-  reason: being a test target
+  reason: Guard bots being disabled
   metaLevel: {fileID: 0}
-  targetLevel: 1
-  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
-  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  targetLevel: 2
+  actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
-  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  nodeArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: 3dbe36a2c7dd7f6409233ee776253550, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: dece2e6ebb537e547a4420a2f94ec11e, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  OngoingEffect: {fileID: 11400000, guid: 9eef9920ae131f847ac02efc8b347252, type: 2}
-  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
-  followOnTarget: {fileID: 11400000}
-  targetStatus: 0
-  infoLevel: 1
-  targetID: 8
+  OngoingEffect: {fileID: 11400000, guid: 9c5b2651acdfa6a419da0fba38371f96, type: 2}
+  profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
+  followOnTarget: {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
+  targetStatus: 4
+  infoLevel: 0
+  targetID: 0
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  turnSuccess: 0
+  turnSuccess: -1
   turnDone: 6
   numOfAttempts: 0
   turnsWindow: 5
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 5
+  timerWindow: 0

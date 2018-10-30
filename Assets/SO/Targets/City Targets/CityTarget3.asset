@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: CityTarget3
   m_EditorClassIdentifier: 
+  targetName: City Target 3
   descriptorResistance: Meet Informant
   descriptorAuthority: Possible known backdoor
   reason: It's dark and spooky
@@ -27,16 +28,16 @@ MonoBehaviour:
   OngoingEffect: {fileID: 0}
   profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   followOnTarget: {fileID: 0}
-  targetStatus: 0
-  infoLevel: 1
-  targetID: 11
+  targetStatus: 4
+  infoLevel: 0
+  targetID: 12
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  turnSuccess: 0
-  turnDone: 6
+  turnSuccess: -1
+  turnDone: 17
   numOfAttempts: 0
-  turnsWindow: 5
+  turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 0
-  timerWindow: 5
+  timerHardLimit: 1
+  timerWindow: 0

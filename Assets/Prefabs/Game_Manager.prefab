@@ -755,7 +755,10 @@ MonoBehaviour:
   arrayOfTargetProfiles:
   - {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
   - {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  - {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
+  - {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   - {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
+  - {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   arrayOfQualities:
   - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
   - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}
@@ -1254,15 +1257,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 378cee33565b65c42aff9c940e94919c, type: 2}
   arrayOfTargetsGeneric:
   - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
+  - {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
   - {fileID: 11400000, guid: 796d29ef79a7d7341afcfda9e1326752, type: 2}
+  - {fileID: 11400000, guid: 9a6620c460cf35b40bd94460b9637eef, type: 2}
   - {fileID: 11400000, guid: e7385a27d2b48804d9e283f2983e28b0, type: 2}
+  - {fileID: 11400000, guid: bcc7b1c15d6e397438b827203e31b023, type: 2}
   - {fileID: 11400000, guid: 0d9afc7d36c71254b83ddf50a4d1fb72, type: 2}
+  - {fileID: 11400000, guid: 47c6550348fa8db4eb48d70113e62bda, type: 2}
   - {fileID: 11400000, guid: 789e2860d998d244dacaeaafa3e861fa, type: 2}
   - {fileID: 11400000, guid: a918b115649de1e499cb26df4225dafb, type: 2}
+  - {fileID: 11400000, guid: 054dc391feacbf741ae804099909909f, type: 2}
   - {fileID: 11400000, guid: 042e44b6e7253f844813e68e7b09fd9e, type: 2}
+  - {fileID: 11400000, guid: 4b3cd6537cbd8d8428c54947a8e44f90, type: 2}
   - {fileID: 11400000, guid: 5fc54c25ff286c749bf1006c20e9d8c9, type: 2}
+  - {fileID: 11400000, guid: 71752eb9f95efea48bf935d0636f1caf, type: 2}
   - {fileID: 11400000, guid: cc323a0c7ccfa42458531c7eddb74493, type: 2}
-  - {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
+  - {fileID: 11400000, guid: 37c1e4a3c2baff249859912691de130c, type: 2}
   arrayOfTargetsCity:
   - {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
   - {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
@@ -1858,7 +1868,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 3654
+  seed: 0
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0

@@ -2206,7 +2206,7 @@ public class ActionManager : MonoBehaviour
                     if (details != null)
                     {
                         //Target aborted, deal with Capture
-                        details.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.name, colourEnd);
+                        details.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.targetName, colourEnd);
                         EventManager.instance.PostNotification(EventType.Capture, this, details, "ActionManager.cs -> ProcessNodeTarget");
                         return;
                     }
@@ -2224,7 +2224,7 @@ public class ActionManager : MonoBehaviour
                 isAction = true;
                 int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID, true);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
-                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.name, "\n");
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.targetName, "\n");
                 target.numOfAttempts++;
                 int roll = Random.Range(0, 100);
                 if (roll < chance)
@@ -2242,17 +2242,17 @@ public class ActionManager : MonoBehaviour
                     //NO ongoing effects -> target  done with. 
                     else
                     { GameManager.instance.targetScript.SetTargetDone(target, node); }
-                    text = string.Format("Target \"{0}\" successfully attempted", target.name, "\n");
+                    text = string.Format("Target \"{0}\" successfully attempted", target.targetName, "\n");
                     GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                     //random roll
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
-                    text = string.Format("Target {0} attempt SUCCESS", target.name);
+                    text = string.Format("Target {0} attempt SUCCESS", target.targetName);
                     GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
                 }
                 else
                 {
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n");
-                    text = string.Format("Target {0} attempt FAILED", target.name);
+                    text = string.Format("Target {0} attempt FAILED", target.targetName);
                     GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
                 }
                 //set isTargetKnown -> auto if success, % chance otherwise
@@ -2268,14 +2268,14 @@ public class ActionManager : MonoBehaviour
                             node.isTargetKnown = true;
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
                             /*//only authority player should know this
-                            text = string.Format("Target {0} attempt KNOWN", target.name);
+                            text = string.Format("Target {0} attempt KNOWN", target.targetName);
                             GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);*/
                         }
                         else
                         {
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
                             /*//only authority player should know this
-                            text = string.Format("Target {0} attempt UNDETECTED", target.name);
+                            text = string.Format("Target {0} attempt UNDETECTED", target.targetName);
                             GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);*/
                         }
                     }
@@ -2290,7 +2290,7 @@ public class ActionManager : MonoBehaviour
                 //target SUCCESSFUL
                 if (isSuccessful == true)
                 {
-                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt <b>Successful</b>", colourNeutral, target.name, colourEnd, "\n");
+                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt <b>Successful</b>", colourNeutral, target.targetName, colourEnd, "\n");
                     //combine all effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
@@ -2300,12 +2300,12 @@ public class ActionManager : MonoBehaviour
                 {
                     //FAILED target attempt
                     listOfEffects.AddRange(target.listOfFailEffects);
-                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.name, colourEnd, "\n");
+                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.targetName, colourEnd, "\n");
                     if (isZeroInvisibility == false)
                     { builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd); }
                     else
                     { builderBottom.AppendFormat("{0}Authorities are aware of the attempt (due to Zero Invisibility){1}", colourBad, colourEnd); }
-                    text = string.Format("Target \"{0}\" unsuccessfully attempted", target.name, "\n");
+                    text = string.Format("Target \"{0}\" unsuccessfully attempted", target.targetName, "\n");
                     GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                 }
                 //Process effects

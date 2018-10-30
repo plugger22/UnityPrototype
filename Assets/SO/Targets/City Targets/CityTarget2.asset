@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: CityTarget2
   m_EditorClassIdentifier: 
+  targetName: City Target 2
   descriptorResistance: Close Airport
   descriptorAuthority: Possible known backdoor
   reason: Why not?
@@ -27,16 +28,16 @@ MonoBehaviour:
   OngoingEffect: {fileID: 0}
   profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   followOnTarget: {fileID: 0}
-  targetStatus: 0
-  infoLevel: 1
-  targetID: 10
+  targetStatus: 4
+  infoLevel: 0
+  targetID: 11
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  turnSuccess: 0
-  turnDone: 0
+  turnSuccess: -1
+  turnDone: 19
   numOfAttempts: 0
-  turnsWindow: 5
-  timerDelay: 2
-  timerHardLimit: 0
-  timerWindow: 5
+  turnsWindow: 10
+  timerDelay: 0
+  timerHardLimit: 3
+  timerWindow: 0

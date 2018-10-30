@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: Sensor Grid
+  m_Name: Sensor Grid 1
   m_EditorClassIdentifier: 
+  targetName: Sensor Grid
   descriptorResistance: Penetrate Sensor Grid
   descriptorAuthority: Possible Security Flaw
   reason: Sensor grid being hacked
@@ -29,18 +30,18 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   OngoingEffect: {fileID: 11400000, guid: 2db19c8db27205d49bc691b891f53077, type: 2}
-  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
-  followOnTarget: {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
-  targetStatus: 0
-  infoLevel: 1
+  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  followOnTarget: {fileID: 11400000, guid: 47c6550348fa8db4eb48d70113e62bda, type: 2}
+  targetStatus: 4
+  infoLevel: 0
   targetID: 3
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
-  turnSuccess: 0
-  turnDone: 6
+  turnSuccess: -1
+  turnDone: 18
   numOfAttempts: 0
   turnsWindow: 10
-  timerDelay: 4
-  timerHardLimit: 0
-  timerWindow: 10
+  timerDelay: 0
+  timerHardLimit: 2
+  timerWindow: 0
