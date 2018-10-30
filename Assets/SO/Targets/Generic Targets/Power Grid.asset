@@ -19,7 +19,7 @@ MonoBehaviour:
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   gear: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
-  targetType: {fileID: 0}
+  targetType: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   nodeArc: {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
@@ -31,12 +31,12 @@ MonoBehaviour:
   OngoingEffect: {fileID: 11400000, guid: 973e6ac5ed05bbb42a82b68ce083832a, type: 2}
   profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   followOnTarget: {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
-  targetStatus: 2
-  infoLevel: 0
+  targetStatus: 0
+  infoLevel: 1
   targetID: 2
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 11
+  nodeID: -1
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0

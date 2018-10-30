@@ -19,7 +19,7 @@ MonoBehaviour:
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   sprite: {fileID: 0}
-  type: {fileID: 11400000, guid: a46143a253f580b42acc627392cf8001, type: 2}
+  targetType: {fileID: 11400000, guid: a46143a253f580b42acc627392cf8001, type: 2}
   nodeArc: {fileID: 0}
   listOfGoodEffects: []
   listOfBadEffects: []

@@ -591,62 +591,70 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets target activation, status and adds to relevant pools
+    /// Sets target activation, status and adds to relevant pools. Returns true if successful
     /// NOTE: Target and Node checked for null by calling methods
     /// </summary>
     /// <param name="target"></param>
-    private void SetTargetDetails(Target target, Node node, TargetProfile profileOverride = null)
+    private bool SetTargetDetails(Target target, Node node, TargetProfile profileOverride = null)
     {
-        //only proceed to assign target if successfully added to list
-        if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
+        bool isSuccess = true;
+        //check if node doesn't already has a target
+        if (node.targetID == -1)
         {
-            //override profile or assign default profile to generic target (generics are override or default) and to all other targets (use existing profile or default if null) if they don't have a profile 
-            if (profileOverride != null)
-            { target.profile = profileOverride; }
-            else if ( target.profile == null)
-            { target.profile = defaultProfile; }
-            else if (target.targetType.name.Equals("Generic") == true)
-            { target.profile = defaultProfile; }
-            //profile must be valid
-            if (target.profile != null)
+            //only proceed to assign target if successfully added to list
+            if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
             {
-                //ID's
-                node.targetID = target.targetID;
-                target.nodeID = node.nodeID;
-                //timers
-                target.timerDelay = target.profile.delay;
-                target.timerHardLimit = 0;
-                target.timerWindow = target.profile.window;
-                target.turnsWindow = target.profile.window;
-                //defaults (need to set as Target SO could be carrying over data from a previous level)
-                target.isKnownByAI = false;
-                target.turnSuccess = -1;
-                target.turnDone = -1;
-                target.numOfAttempts = 0;
-                target.ongoingID = -1;
-                target.infoLevel = 0;
-                //status and message
-                switch (target.profile.trigger.name)
+                //override profile or assign default profile to generic target (generics are override or default) and to all other targets (use existing profile or default if null) if they don't have a profile 
+                if (profileOverride != null)
+                { target.profile = profileOverride; }
+                else if (target.profile == null)
+                { target.profile = defaultProfile; }
+                else if (target.targetType.name.Equals("Generic") == true)
+                { target.profile = defaultProfile; }
+                //profile must be valid
+                if (target.profile != null)
                 {
-                    case "Live":
-                        target.targetStatus = Status.Live;
-                        string text = string.Format("New target {0}, id {1} at {2}, {3}, id {4}", target.name, target.targetID, node.nodeName, node.Arc.name, node.nodeID);
-                        GameManager.instance.messageScript.TargetNew(text, node, target);
-                        break;
-                    case "Custom":
-                        target.targetStatus = Status.Active;
-                        break;
-                    default:
-                        Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", target.profile.trigger.name, target.name);
-                        break;
+                    //ID's
+                    node.targetID = target.targetID;
+                    target.nodeID = node.nodeID;
+                    //timers
+                    target.timerDelay = target.profile.delay;
+                    target.timerHardLimit = 0;
+                    target.timerWindow = target.profile.window;
+                    target.turnsWindow = target.profile.window;
+                    //defaults (need to set as Target SO could be carrying over data from a previous level)
+                    target.isKnownByAI = false;
+                    target.turnSuccess = -1;
+                    target.turnDone = -1;
+                    target.numOfAttempts = 0;
+                    target.ongoingID = -1;
+                    target.infoLevel = 0;
+                    //status and message
+                    switch (target.profile.trigger.name)
+                    {
+                        case "Live":
+                            target.targetStatus = Status.Live;
+                            string text = string.Format("New target {0}, id {1} at {2}, {3}, id {4}", target.name, target.targetID, node.nodeName, node.Arc.name, node.nodeID);
+                            GameManager.instance.messageScript.TargetNew(text, node, target);
+                            break;
+                        case "Custom":
+                            target.targetStatus = Status.Active;
+                            break;
+                        default:
+                            Debug.LogErrorFormat("Invalid profile.Trigger \"{0}\" for target {1}", target.profile.trigger.name, target.name);
+                            isSuccess = false;
+                            break;
+                    }
+                    //add to pool
+                    if (isSuccess == true)
+                    { GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus); }
                 }
-                //add to pool
-                GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus);
-
+                else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}, targetID {1}", target.name, target.targetID); isSuccess = false; }
             }
-            else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}, targetID {1}", target.name, target.targetID); }
+            else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3}", node.nodeName, node.Arc.name, node.nodeID, target.name);  }
         }
-        else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3}", node.nodeName, node.Arc.name, node.nodeID, target.name); }
+        else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3} (Node already has target)", node.nodeName, node.Arc.name, node.nodeID, target.name); isSuccess = false;}
+        return isSuccess;
     }
 
 
@@ -1181,12 +1189,13 @@ public class TargetManager : MonoBehaviour
     public bool SetTargetDone(Target target, Node node)
     {
         bool isSuccess = true;
+        bool isDone = true;
         if (node != null)
         {
             if (target != null)
             {
                 //remove from current target pool
-                switch(target.targetStatus)
+                switch (target.targetStatus)
                 {
                     case Status.Live:
                         GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
@@ -1205,10 +1214,6 @@ public class TargetManager : MonoBehaviour
                 //continue?
                 if (isSuccess == true)
                 {
-                    target.targetStatus = Status.Done;
-                    target.turnDone = GameManager.instance.turnScript.Turn;
-                    //Add to pool 
-                    GameManager.instance.dataScript.AddTargetToPool(target, Status.Done);
                     //remove from list
                     if (GameManager.instance.dataScript.RemoveNodeFromTargetList(node.nodeID) == false)
                     { Debug.LogWarningFormat("Node id {0} NOT removed from listOfNodesWithTargets", node.nodeID); }
@@ -1222,49 +1227,115 @@ public class TargetManager : MonoBehaviour
                     //
                     if (target.followOnTarget != null)
                     {
-                        //if generic target check for profile override
-                        if (target.followOnTarget.targetType.Equals("Generic") == true)
+                        switch (target.targetType.name)
                         {
-                            Mission mission = GameManager.instance.missionScript.mission;
-                            //use override profile if one available (ignored if not)
-                            if (mission != null)
-                            { SetTargetDetails(target.followOnTarget, node, mission.profileGenericFollowOn); }
-                            else { Debug.LogError("Invalid mission (Null)"); }
+                            case "Generic":
+                                //Generic can't repeat and must follow On to the same node
+                                Mission mission = GameManager.instance.missionScript.mission;
+                                //use override profile if one available (ignored if not)
+                                if (mission != null)
+                                {
+                                    if (mission.profileGenericFollowOn != null)
+                                    {
+                                        if (SetTargetDetails(target.followOnTarget, node, mission.profileGenericFollowOn) == true)
+                                        {
+                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName, 
+                                                node.Arc.name, node.nodeID, target.followOnTarget.name, target.followOnTarget.targetID);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (SetTargetDetails(target.followOnTarget, node) == true)
+                                        {
+                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName, 
+                                                node.Arc.name, node.nodeID, target.followOnTarget.name, target.followOnTarget.targetID);
+                                        }
+                                    }
+                                }
+                                else { Debug.LogError("Invalid mission (Null)"); }
+                                break;
+                            case "City":
+                                //City must follow On to the same node
+                                if (SetTargetDetails(target.followOnTarget, node) == true)
+                                {
+                                    Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On City target \"{3}\", id {4}", node.nodeName, node.Arc.name,
+                                      node.nodeID, target.followOnTarget.name, target.followOnTarget.targetID);
+                                }
+                                break;
+                            default:
+                                //Story / VIP / Goal Follow On targets -> random node
+                                Node nodeRandom = GameManager.instance.dataScript.GetRandomNode();
+                                if (nodeRandom != null)
+                                {
+                                    if (SetTargetDetails(target.followOnTarget, nodeRandom) == true)
+                                    {
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\", id {4}", nodeRandom.nodeName, 
+                                            nodeRandom.Arc.name, nodeRandom.nodeID, target.followOnTarget.name, target.followOnTarget.targetID);
+                                    }
+                                }
+                                else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
+                                break;
                         }
-                        else { SetTargetDetails(target.followOnTarget, node); }
+
                     }
                     //
                     // - - - Repeat target - - -
                     //
-                    else
+                    else if (target.profile.isRepeat == true)
                     {
-                        //Generic targets can't repeat
-                        if (target.profile.isRepeat == true )
+                        //target can't have been done to repeat.
+                        if (target.turnSuccess == -1)
                         {
-                            //target can't have been done to repeat
-                            if (target.turnSuccess == -1 && target.targetType.Equals("Generic") == false)
+                            //Generic targets can't repeat
+                            if (target.targetType.name.Equals("Generic") == false)
                             {
+                                isDone = false;
                                 //assign repeat profile if present
                                 if (target.profile.repeatProfile != null)
                                 { target.profile = target.profile.repeatProfile; }
                                 else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} repeatProfile Invalid (Null)", target.name, target.targetID); }
                                 //is same node?
                                 if (target.profile.isSameNode == true)
-                                { SetTargetDetails(target, node); }
+                                {
+                                    if (SetTargetDetails(target, node) == true)
+                                    {
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\", id {4}", node.nodeName, node.Arc.name,
+                                          node.nodeID, target.name, target.targetID);
+                                    }
+                                }
                                 //random node
-
+                                Node nodeRandom = GameManager.instance.dataScript.GetRandomNode();
+                                if (nodeRandom != null)
+                                {
+                                    if (SetTargetDetails(target, nodeRandom) == true)
+                                    {
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\", id {4}", nodeRandom.nodeName, 
+                                            nodeRandom.Arc.name, nodeRandom.nodeID, target.name, target.targetID);
+                                    }
+                                }
+                                else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
                             }
-                            else { Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as successfully attempted", target.name, target.targetID); }
+                            else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as GENERIC", target.name, target.targetID); }
                         }
+                        else { Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as successfully attempted", target.name, target.targetID); }
+                    }
+                    //
+                    // - - - Target Done (no repeat, no follow On) - - -
+                    //
+                    if (isSuccess == true && isDone == true)
+                    {
+                        target.targetStatus = Status.Done;
+                        target.turnDone = GameManager.instance.turnScript.Turn;
+                        //Add to pool 
+                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Done);
                     }
                 }
             }
             else { Debug.LogError("Invalid target (Null)"); isSuccess = false; }
-
         }
         else { Debug.LogError("Invalid node (Null)"); isSuccess = false; }
         if (isSuccess == false)
-        { Debug.LogFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin FAILED", target.name, target.targetID); }
+        { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin FAILED", target.name, target.targetID); }
         return isSuccess;
     }
 
