@@ -1262,6 +1262,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 042e44b6e7253f844813e68e7b09fd9e, type: 2}
   - {fileID: 11400000, guid: 5fc54c25ff286c749bf1006c20e9d8c9, type: 2}
   - {fileID: 11400000, guid: cc323a0c7ccfa42458531c7eddb74493, type: 2}
+  - {fileID: 11400000, guid: 2320e150a5ea0874098f6e2447f2b74f, type: 2}
   arrayOfTargetsCity:
   - {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
   - {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
