@@ -141,10 +141,12 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
     /// Designed to pick up SO's that might have been added in the editor but not added to the arrays (ignored by game if this is the case).
+    /// 'isVerbal' is true for all messages, false for problem messages only
     /// </summary>
     public void ValidateSO()
     {
         int numArray, numAssets;
+        bool isVerbal = true;
         string path;
         //
         // - - - GlobalMeta - - -
@@ -168,7 +170,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GlobalMeta \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalMeta SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalMeta SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - GlobalChance - - -
         //
@@ -191,7 +197,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GlobalChance \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalChance SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalChance SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - GlobalType - - -
         //
@@ -214,7 +224,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GlobalType \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalType SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalType SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - GlobalSide - - -
         //
@@ -237,7 +251,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GlobalSide \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalSide SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalSide SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - GlobalWho - - -
         //
@@ -260,7 +278,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GlobalWho \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalWho SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalWho SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - EffectApply - - -
         //
@@ -283,7 +305,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING EffectApply \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectApply SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectApply SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - EffectCriteria - - -
         //
@@ -306,7 +332,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING EffectCriteria \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectCriteria SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectCriteria SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - EffectDuration - - -
         //
@@ -329,7 +359,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING EffectDuration \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectDuration SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectDuration SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - EffectOperator - - -
         //
@@ -352,7 +386,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING EffectOperator \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectOperator SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on EffectOperator SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - ContactType - - -
         //
@@ -375,7 +413,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING ContactType \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ContactType SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ContactType SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TargetType - - -
         //
@@ -398,7 +440,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TargetType \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetType SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetType SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TargetTrigger - - -
         //
@@ -421,7 +467,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TargetTrigger \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetTrigger SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetTrigger SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TargetProfile - - -
         //
@@ -444,7 +494,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TargetProfile \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetProfile SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TargetProfile SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Quality - - -
         //
@@ -467,7 +521,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Quality \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Quality SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Quality SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Condition - - -
         //
@@ -490,7 +548,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Condition \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Condition SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Condition SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TraitCategory - - -
         //
@@ -513,7 +575,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TraitCategory \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TraitCategory SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TraitCategory SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TraitEffect - - -
         //
@@ -536,7 +602,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TraitEffect \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TraitEffect SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TraitEffect SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - SecretType - - -
         //
@@ -559,7 +629,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING SecretType \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on SecretType SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on SecretType SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - SecretStatus - - -
         //
@@ -582,7 +656,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING SecretStatus \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on SecretStatus SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on SecretStatus SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - CitySize - - -
         //
@@ -605,7 +683,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING CitySize \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySize SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySize SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - CitySpacing - - -
         //
@@ -628,7 +710,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING CitySpacing \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySpacing SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySpacing SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - CityConnections - - -
         //
@@ -651,7 +737,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING CityConnections \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CityConnections SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CityConnections SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - CitySecurity - - -
         //
@@ -674,7 +764,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING CitySecurity \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySecurity SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySecurity SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TextList - - -
         //
@@ -706,7 +800,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TextList \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TextList SO, array {0}, assets {1} records", numArray, numAssets); }        
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TextList SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - NameSets - - -
         //
@@ -729,7 +827,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING NameSet \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NameSet SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NameSet SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
 
         //
         // - - - NodeDatapoint - - -
@@ -753,7 +855,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING NodeDatapoint \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NodeDatapoint SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NodeDatapoint SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - NodeArc - - -
         //
@@ -776,7 +882,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING NodeArc \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NodeArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NodeArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - NodeCrisis - - -
         //
@@ -799,7 +909,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING NodeCrisis \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NodeCrisis SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on NodeCrisis SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Trait - - -
         //
@@ -822,7 +936,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Trait \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Trait SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Trait SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - ActorArc - - -
         //
@@ -845,7 +963,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING ActorArc \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ActorArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ActorArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Effect - - -
         //
@@ -868,7 +990,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Effect \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Effect SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Effect SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Target - - -
         //
@@ -897,7 +1023,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Target \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Target SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Target SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Action - - -
         //
@@ -920,7 +1050,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Action \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Action SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Action SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - TeamArc - - -
         //
@@ -943,7 +1077,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING TeamArc \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TeamArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on TeamArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Gear - - -
         //
@@ -966,7 +1104,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Gear \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Gear SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Gear SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - GearRarity - - -
         //
@@ -989,7 +1131,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GearRarity \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GearRarity SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GearRarity SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - GearType - - -
         //
@@ -1012,7 +1158,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING GearType \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GearType SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GearType SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - ManageActor - - -
         //
@@ -1035,7 +1185,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING ManageActor \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ManageActor SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ManageActor SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - ManageAction - - -
         //
@@ -1058,7 +1212,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING ManageAction \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ManageAction SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ManageAction SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - ActorConflict - - -
         //
@@ -1081,7 +1239,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING ActorConflict \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ActorConflict SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on ActorConflict SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Secret - - -
         //
@@ -1104,7 +1266,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Secret \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Secret SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Secret SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Faction - - -
         //
@@ -1127,7 +1293,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Faction \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Faction SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Faction SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - CityArc - - -
         //
@@ -1150,7 +1320,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING CityArc \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CityArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CityArc SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - City - - -
         //
@@ -1173,7 +1347,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING City \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on City SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on City SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Objective - - -
         //
@@ -1196,7 +1374,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Objective \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Objective SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Objective SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Organisation - - -
         //
@@ -1219,7 +1401,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Organisation \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Organisation SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Organisation SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Mayor - - -
         //
@@ -1242,7 +1428,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Mayor \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Mayor SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Mayor SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - DecisionAI - - -
         //
@@ -1265,7 +1455,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING DecisionAI \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on DecisionAI SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on DecisionAI SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
         //
         // - - - Mission - - -
         //
@@ -1288,7 +1482,11 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidateSO: array MISSING Mission \"{0}\"", meta.name); }
             }
         }
-        else { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Mission SO, array {0}, assets {1} records", numArray, numAssets); }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Mission SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
 
     }
 
