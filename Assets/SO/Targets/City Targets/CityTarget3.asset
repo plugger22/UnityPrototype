@@ -26,18 +26,20 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
-  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  profileBase: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
-  targetStatus: 4
+  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  targetStatus: 2
   infoLevel: 0
-  targetID: 12
+  targetID: 19
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
+  nodeID: 16
   turnSuccess: -1
-  turnDone: 17
+  turnDone: -1
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 1
-  timerWindow: 0
+  timerHardLimit: 5
+  timerWindow: 1

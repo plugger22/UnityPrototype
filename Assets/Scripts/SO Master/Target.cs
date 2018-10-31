@@ -47,14 +47,17 @@ public class Target : ScriptableObject
     public Effect OngoingEffect;
 
     [Header("Profile")]
-    [Tooltip("Default target profile")]
-    public TargetProfile profile;
+    [Tooltip("Base Profile that each target starts a level with")]
+    public TargetProfile profileBase;
+    
 
     [Header("Linked Sequence")]
+    [Tooltip("If true then a FOLLOW ON target will only be executed if the target has been successfully completed. If false then executed regardless. Ignored for REPEAT targets")]
+    public bool isSuccessNeeded = true;
     [Tooltip("Target that follows this one, next in a possible sequence. Can be Ignored if you want a 'Oncer'")]
     public Target followOnTarget;
     
-
+    [HideInInspector] public TargetProfile profile;                 //Profile that used in code
     [HideInInspector] public Status targetStatus;                   //default status of Dormant
     /*[HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live*/
     [HideInInspector] public int infoLevel;                         //from 1 to 3 but can be zero in some cases
@@ -82,6 +85,7 @@ public class Target : ScriptableObject
     {
         Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(descriptorAuthority) == false, "Invalid descriptorAuthority (Null or Empty)");
+        Debug.Assert(profileBase != null, string.Format("Target {0}, id {1}, has no profileBase (Null)", targetName, targetID));
         //NOTE: No need to check profile for Null as handled in TargetManager.cs -> SetTargetDetails (assigns defaultProfile if null)
     }
 }

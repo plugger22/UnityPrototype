@@ -670,6 +670,8 @@ public class LoadManager : MonoBehaviour
                 target.isKnownByAI = false;
                 target.nodeID = -1;
                 target.ongoingID = -1;
+                //assign baseProfile to working profile
+                target.profile = target.profileBase;
                 //add to dictionary
                 try
                 { dictOfTargets.Add(target.targetID, target); }

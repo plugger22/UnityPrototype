@@ -26,11 +26,13 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects: []
   OngoingEffect: {fileID: 0}
-  profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  profileBase: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
+  profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
   targetStatus: 0
   infoLevel: 1
-  targetID: 19
+  targetID: 26
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1

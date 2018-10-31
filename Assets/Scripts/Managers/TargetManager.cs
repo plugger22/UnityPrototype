@@ -222,22 +222,22 @@ public class TargetManager : MonoBehaviour
                                     {
                                         case 3:
                                             //Extreme
-                                            if (rndNum < activateExtremeChance) { isLive = true; Debug.LogFormat("[Tst] Extreme Roll {0} < {1}", rndNum, activateExtremeChance); }
+                                            if (rndNum < activateExtremeChance) { isLive = true; /*Debug.LogFormat("[Tst] Extreme Roll {0} < {1}", rndNum, activateExtremeChance);*/ }
                                             else if (target.timerHardLimit >= activateExtremeLimit) { isLive = true; }
                                             break;
                                         case 2:
                                             //High
-                                            if (rndNum < activateHighChance) { isLive = true; Debug.LogFormat("[Tst] High Roll {0} < {1}", rndNum, activateHighChance); }
+                                            if (rndNum < activateHighChance) { isLive = true; /*Debug.LogFormat("[Tst] High Roll {0} < {1}", rndNum, activateHighChance);*/ }
                                             else if (target.timerHardLimit >= activateHighLimit) { isLive = true;  }
                                             break;
                                         case 1:
                                             //Medium
-                                            if (rndNum < activateMedChance) { isLive = true; Debug.LogFormat("[Tst] Med Roll {0} < {1}", rndNum, activateMedChance);}
+                                            if (rndNum < activateMedChance) { isLive = true; /*Debug.LogFormat("[Tst] Med Roll {0} < {1}", rndNum, activateMedChance);*/}
                                             else if (target.timerHardLimit >= activateMedLimit) { isLive = true;  }
                                             break;
                                         case 0:
                                             //Low
-                                            if (rndNum < activateLowChance) { isLive = true; Debug.LogFormat("[Tst] Low Roll {0} < {1}", rndNum, activateLowChance); }
+                                            if (rndNum < activateLowChance) { isLive = true; /*Debug.LogFormat("[Tst] Low Roll {0} < {1}", rndNum, activateLowChance);*/ }
                                             else if (target.timerHardLimit >= activateLowLimit) { isLive = true; }
                                             break;
                                         default:
@@ -1236,56 +1236,61 @@ public class TargetManager : MonoBehaviour
                     //
                     if (target.followOnTarget != null)
                     {
-                        switch (target.targetType.name)
+                        //Success required to generate a followOn target?
+                        if (target.isSuccessNeeded == true && target.turnSuccess == -1)
+                        { Debug.LogFormat("[Tst] TargetManager.cs -> SetTargetDone: FollowOn for target \"{0}\" Invalid as target not successfully completed", target.targetName); }
+                        else
                         {
-                            case "Generic":
-                                //Generic can't repeat and must follow On to the same node
-                                Mission mission = GameManager.instance.missionScript.mission;
-                                //use override profile if one available (ignored if not)
-                                if (mission != null)
-                                {
-                                    if (mission.profileGenericFollowOn != null)
+                            switch (target.targetType.name)
+                            {
+                                case "Generic":
+                                    //Generic can't repeat and must follow On to the same node
+                                    Mission mission = GameManager.instance.missionScript.mission;
+                                    //use override profile if one available (ignored if not)
+                                    if (mission != null)
                                     {
-                                        if (SetTargetDetails(target.followOnTarget, node, mission.profileGenericFollowOn) == true)
+                                        if (mission.profileGenericFollowOn != null)
                                         {
-                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName, 
-                                                node.Arc.name, node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                            if (SetTargetDetails(target.followOnTarget, node, mission.profileGenericFollowOn) == true)
+                                            {
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName,
+                                                    node.Arc.name, node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (SetTargetDetails(target.followOnTarget, node) == true)
+                                            {
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName,
+                                                    node.Arc.name, node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                            }
                                         }
                                     }
-                                    else
+                                    else { Debug.LogError("Invalid mission (Null)"); }
+                                    break;
+                                case "City":
+                                    //City must follow On to the same node
+                                    if (SetTargetDetails(target.followOnTarget, node) == true)
                                     {
-                                        if (SetTargetDetails(target.followOnTarget, node) == true)
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On City target \"{3}\", id {4}", node.nodeName, node.Arc.name,
+                                          node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                    }
+                                    break;
+                                default:
+                                    //Story / VIP / Goal Follow On targets -> random node
+                                    Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
+                                    if (nodeRandom != null)
+                                    {
+                                        if (SetTargetDetails(target.followOnTarget, nodeRandom) == true)
                                         {
-                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName, 
-                                                node.Arc.name, node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\", id {4}", nodeRandom.nodeName,
+                                                nodeRandom.Arc.name, nodeRandom.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
                                         }
                                     }
-                                }
-                                else { Debug.LogError("Invalid mission (Null)"); }
-                                break;
-                            case "City":
-                                //City must follow On to the same node
-                                if (SetTargetDetails(target.followOnTarget, node) == true)
-                                {
-                                    Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On City target \"{3}\", id {4}", node.nodeName, node.Arc.name,
-                                      node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
-                                }
-                                break;
-                            default:
-                                //Story / VIP / Goal Follow On targets -> random node
-                                Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
-                                if (nodeRandom != null)
-                                {
-                                    if (SetTargetDetails(target.followOnTarget, nodeRandom) == true)
-                                    {
-                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\", id {4}", nodeRandom.nodeName, 
-                                            nodeRandom.Arc.name, nodeRandom.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
-                                    }
-                                }
-                                else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
-                                break;
+                                    else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
+                                    break;
+                            }
                         }
-
                     }
                     //
                     // - - - Repeat target - - -
@@ -1304,7 +1309,7 @@ public class TargetManager : MonoBehaviour
                                 { target.profile = target.profile.repeatProfile; }
                                 else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} repeatProfile Invalid (Null)", target.targetName, target.targetID); }
                                 //same node
-                                if (target.profile.isSameNode == true)
+                                if (target.profile.isRepeatSameNode == true)
                                 {
                                     if (SetTargetDetails(target, node) == true)
                                     {
