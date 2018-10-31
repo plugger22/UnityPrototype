@@ -38,6 +38,10 @@ public class TurnManager : MonoBehaviour
     private bool allowQuitting = false;
     private Coroutine myCoroutineInfoApp;
 
+    //autorun
+    private int numOfTurns = 0;
+    private bool isAutoRun;
+
     //fast access
     private int teamArcErasure = -1;
 
@@ -140,6 +144,28 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Autoruns game for specified number of turns with the current AI/Player settings
+    /// </summary>
+    public void SetAutoRun(int autoTurns)
+    {
+        numOfTurns = autoTurns;
+        if (autoTurns > 0)
+        {
+            isAutoRun = true;
+            Debug.LogFormat("AUTORUN for {0} turns", numOfTurns);
+            do
+            {
+                ProcessNewTurn();
+                GameManager.instance.dataScript.UpdateCurrentItemData();
+                numOfTurns--;
+            }
+            while (numOfTurns > 0);
+            isAutoRun = false;
+        }
+        else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
+    }
+
+    /// <summary>
     /// master method that handles sequence for ending a turn and commencing a new one
     /// </summary>
     private void ProcessNewTurn()
@@ -184,10 +210,14 @@ public class TurnManager : MonoBehaviour
                 GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
                 if (playerSide != null && currentSide.level == playerSide.level)
                 {
-                    //switch off any node Alerts
-                    GameManager.instance.alertScript.CloseAlertUI(true);
-                    //info App displayed AFTER any end of turn Player interactions
-                    myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
+                    //turn on info App (only if not autorunning)
+                    if (isAutoRun == false)
+                    {
+                        //switch off any node Alerts
+                        GameManager.instance.alertScript.CloseAlertUI(true);
+                        //info App displayed AFTER any end of turn Player interactions
+                        myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
+                    }
                 }
             }
             //There is a winner
@@ -336,9 +366,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public void InitialiseInfoApp(GlobalSide playerSide)
     {
-        MainInfoData data = new MainInfoData();
-        data = GameManager.instance.dataScript.UpdateCurrentItemData();
-        //turn on info App
+        MainInfoData data = GameManager.instance.dataScript.UpdateCurrentItemData();
         EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn");
     }
 

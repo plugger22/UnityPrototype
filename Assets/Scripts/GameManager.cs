@@ -99,6 +99,8 @@ public class GameManager : MonoBehaviour
     public bool isValidateData;
     [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isValidateSO;
+    [Tooltip("Autoruns game for 'x' number of turns with current player/AI settings. Leave at Zero for normal operation")]
+    public int autoRunTurns = 0;
 
     [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
     
@@ -279,6 +281,9 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
+        //AutoRun
+        if (autoRunTurns > 0)
+        { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
     }
     #endregion
 

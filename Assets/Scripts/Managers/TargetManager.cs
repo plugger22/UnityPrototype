@@ -522,7 +522,7 @@ public class TargetManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid nodeArc (Null) in listOfNodeArcs -> No Target assigned"); }
             }
-            else { Debug.LogWarning("No more NodeArcs available"); break; }
+            else { Debug.LogWarning("No more NodeArcs available -> Generic Target allocation cut short"); break; }
             //endless loop prevention
             attempts++;
             if (attempts == 20)
