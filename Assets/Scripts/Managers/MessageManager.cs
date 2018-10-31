@@ -1481,7 +1481,7 @@ public class MessageManager : MonoBehaviour
     /// <returns></returns>
     public Message DecisionRequestTeam(string text, int teamID)
     {
-        Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));
+        /*Debug.Assert(teamID >= 0, string.Format("Invalid teamID {0}", teamID));  NOTE: Causes issues with 'Request Denied, teamID -1' */
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();

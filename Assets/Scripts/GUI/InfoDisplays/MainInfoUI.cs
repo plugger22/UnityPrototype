@@ -390,6 +390,8 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MainInfoDownArrow, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoLeftArrow, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoShowMe, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoRestore, OnEvent, "MainInfoUI");
     }
 
     public void Initialise()
@@ -520,6 +522,12 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case EventType.MainInfoRightArrow:
                 ExecuteRightArrow();
+                break;
+            case EventType.MainInfoShowMe:
+                ExecuteShowMe();
+                break;
+            case EventType.MainInfoRestore:
+                ExecuteRestore();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1151,6 +1159,39 @@ public class MainInfoUI : MonoBehaviour
                 OpenTab(currentTabIndex);
             }
         }
+    }
+
+    /// <summary>
+    /// 'Show Me' a node or connection in an item, switch off infoApp and highlight onmap
+    /// </summary>
+    private void ExecuteShowMe()
+    {
+        //set game state
+        ModalStateData package = new ModalStateData();
+        package.mainState = ModalState.InfoDisplay;
+        package.infoState = ModalInfoSubState.ShowMe;
+        GameManager.instance.inputScript.SetModalState(package);
+        //alert message
+        GameManager.instance.nodeScript.NodeShowFlag = 1;
+        GameManager.instance.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
+        //turn off infoApp
+        mainInfoCanvas.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Restore InfoApp after a 'ShowMe'
+    /// </summary>
+    private void ExecuteRestore()
+    {
+        //set game state
+        ModalStateData package = new ModalStateData();
+        package.mainState = ModalState.InfoDisplay;
+        package.infoState = ModalInfoSubState.MainInfo;
+        GameManager.instance.inputScript.SetModalState(package);
+        //alert message
+        GameManager.instance.alertScript.CloseAlertUI();
+        //turn infoApp back on
+        mainInfoCanvas.gameObject.SetActive(true);
     }
 
     /// <summary>

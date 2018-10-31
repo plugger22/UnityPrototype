@@ -143,83 +143,83 @@ public class InputManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ShowReserves") == true)
+                else if (Input.GetButtonDown("ShowReserves") == true)
                 {
                     EventManager.instance.PostNotification(EventType.InventorySetReserve, this, "Reserve Pool", "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ShowGear") == true)
+                else if (Input.GetButtonDown("ShowGear") == true)
                 {
                     EventManager.instance.PostNotification(EventType.InventorySetGear, this, "Gear Inventory", "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ShowTargets") == true)
+                else if (Input.GetButtonDown("ShowTargets") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ShowSpiders") == true)
+                else if (Input.GetButtonDown("ShowSpiders") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ShowTracers") == true)
+                else if (Input.GetButtonDown("ShowTracers") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ShowTeams") == true)
+                else if (Input.GetButtonDown("ShowTeams") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams, "InputManager.cs -> ProcessInput");
                     return;
                 }
                 //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
-                if (Input.GetButtonDown("NodeArc0") == true)
+                else if (Input.GetButtonDown("NodeArc0") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc0, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc1") == true)
+                else if (Input.GetButtonDown("NodeArc1") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc1, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc2") == true)
+                else if (Input.GetButtonDown("NodeArc2") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc2, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc3") == true)
+                else if (Input.GetButtonDown("NodeArc3") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc3, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc4") == true)
+                else if (Input.GetButtonDown("NodeArc4") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc4, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc5") == true)
+                else if (Input.GetButtonDown("NodeArc5") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc5, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc6") == true)
+                else if (Input.GetButtonDown("NodeArc6") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("NodeArc7") == true)
+                else if (Input.GetButtonDown("NodeArc7") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc7, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ActivityTime") == true)
+                else if (Input.GetButtonDown("ActivityTime") == true)
                 {
                     EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Time, "InputManager.cs -> ProcessInput");
                     return;
                 }
-                if (Input.GetButtonDown("ActivityCount") == true)
+                else if (Input.GetButtonDown("ActivityCount") == true)
                 {
                     EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Count, "InputManager.cs -> ProcessInput");
                     return;
@@ -236,7 +236,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this, null, "InputManager.cs -> ProcessInput");
                             return;
                         }
-                        if (Input.GetButtonDown("Multipurpose") == true)
+                        else if (Input.GetButtonDown("Multipurpose") == true)
                         {
                             EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this, null, "InputManager.cs -> ProcessInput");
                             return;
@@ -248,7 +248,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessInput");
                             return;
                         }
-                        if (Input.GetButtonDown("Multipurpose") == true)
+                        else if (Input.GetButtonDown("Multipurpose") == true)
                         {
                             EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessInput");
                             return;
@@ -260,7 +260,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessInput");
                             return;
                         }
-                        if (Input.GetButtonDown("Multipurpose") == true)
+                        else if (Input.GetButtonDown("Multipurpose") == true)
                         {
                             EventManager.instance.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessInput");
                             return;
@@ -275,7 +275,7 @@ public class InputManager : MonoBehaviour
                                     EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
                                     return;
                                 }
-                                if (Input.GetButtonDown("Multipurpose") == true)
+                                else if (Input.GetButtonDown("Multipurpose") == true)
                                 {
                                     EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
                                     return;
@@ -288,7 +288,7 @@ public class InputManager : MonoBehaviour
                                     EventManager.instance.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessInput");
                                     return;
                                 }
-                                if (Input.GetButtonDown("Multipurpose") == true)
+                                else if (Input.GetButtonDown("Multipurpose") == true)
                                 {
                                     EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessInput");
                                     EventManager.instance.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessInput");
@@ -329,7 +329,7 @@ public class InputManager : MonoBehaviour
                                     EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessInput");
                                     return;
                                 }
-                                if (Input.GetButtonDown("Vertical"))
+                                else if (Input.GetButtonDown("Vertical"))
                                 {
                                     y_axis = Input.GetAxisRaw("Vertical");
                                     if (y_axis > 0)
@@ -337,13 +337,26 @@ public class InputManager : MonoBehaviour
                                     else if (y_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessInput"); }
                                 }
-                                if (Input.GetButtonDown("Horizontal"))
+                                else if (Input.GetButtonDown("Horizontal"))
                                 {
                                     x_axis = Input.GetAxisRaw("Horizontal");
                                     if (x_axis > 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessInput"); }
                                     else if (x_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput"); }
+                                }
+                                else if (Input.GetButtonDown("Multipurpose") == true)
+                                {
+                                    //test run ShowMe -> blank out infoApp
+                                    EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessInput");
+                                }
+
+                                break;
+                            case ModalInfoSubState.ShowMe:
+                                if (Input.GetButtonDown("Multipurpose") == true)
+                                {
+                                    //test run ShowMe -> retore infoApp
+                                    EventManager.instance.PostNotification(EventType.MainInfoRestore, this, null, "InputManager.cs -> ProcessInput");
                                 }
                                 break;
                             default:

@@ -129,6 +129,8 @@ public enum EventType
     MainInfoDownArrow,
     MainInfoLeftArrow,
     MainInfoRightArrow,
+    MainInfoShowMe,
+    MainInfoRestore,
     //City Info
     CityInfoOpen,
     CityInfoClose,

@@ -159,7 +159,7 @@ public class TurnManager : MonoBehaviour
                 GameManager.instance.dataScript.UpdateCurrentItemData();
                 numOfTurns--;
             }
-            while (numOfTurns > 0);
+            while (numOfTurns > 0 && GameManager.instance.win == WinState.None);
             isAutoRun = false;
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
