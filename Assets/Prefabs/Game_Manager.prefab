@@ -753,7 +753,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82ae80a91c839fa48b5292e9c4fde55e, type: 2}
   - {fileID: 11400000, guid: 2281c5546c92be642a0ed77de3ea91b6, type: 2}
   arrayOfTargetProfiles:
+  - {fileID: 11400000, guid: 50c4421234c41294c9d9fe871d9bf305, type: 2}
+  - {fileID: 11400000, guid: 5dcfef1d987cc79488aff9c269178be1, type: 2}
   - {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  - {fileID: 11400000, guid: 5d127dfe7a7cb0d4f8033fbd8a983572, type: 2}
+  - {fileID: 11400000, guid: 9f5df9cd47c9c0740844851ad882bf56, type: 2}
   - {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   - {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
   - {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}

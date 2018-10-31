@@ -222,22 +222,22 @@ public class TargetManager : MonoBehaviour
                                     {
                                         case 3:
                                             //Extreme
-                                            if (rndNum < activateExtremeChance) { isLive = true; }
+                                            if (rndNum < activateExtremeChance) { isLive = true; Debug.LogFormat("[Tst] Extreme Roll {0} < {1}", rndNum, activateExtremeChance); }
                                             else if (target.timerHardLimit >= activateExtremeLimit) { isLive = true; }
                                             break;
                                         case 2:
                                             //High
-                                            if (rndNum < activateHighChance) { isLive = true; }
-                                            else if (target.timerHardLimit >= activateHighLimit) { isLive = true; }
+                                            if (rndNum < activateHighChance) { isLive = true; Debug.LogFormat("[Tst] High Roll {0} < {1}", rndNum, activateHighChance); }
+                                            else if (target.timerHardLimit >= activateHighLimit) { isLive = true;  }
                                             break;
                                         case 1:
                                             //Medium
-                                            if (rndNum < activateMedChance) { isLive = true; }
-                                            else if (target.timerHardLimit >= activateMedLimit) { isLive = true; }
+                                            if (rndNum < activateMedChance) { isLive = true; Debug.LogFormat("[Tst] Med Roll {0} < {1}", rndNum, activateMedChance);}
+                                            else if (target.timerHardLimit >= activateMedLimit) { isLive = true;  }
                                             break;
                                         case 0:
                                             //Low
-                                            if (rndNum < activateLowChance) { isLive = true; }
+                                            if (rndNum < activateLowChance) { isLive = true; Debug.LogFormat("[Tst] Low Roll {0} < {1}", rndNum, activateLowChance); }
                                             else if (target.timerHardLimit >= activateLowLimit) { isLive = true; }
                                             break;
                                         default:
@@ -1273,7 +1273,7 @@ public class TargetManager : MonoBehaviour
                                 break;
                             default:
                                 //Story / VIP / Goal Follow On targets -> random node
-                                Node nodeRandom = GameManager.instance.dataScript.GetRandomNode();
+                                Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
                                 if (nodeRandom != null)
                                 {
                                     if (SetTargetDetails(target.followOnTarget, nodeRandom) == true)
@@ -1303,7 +1303,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.profile.repeatProfile != null)
                                 { target.profile = target.profile.repeatProfile; }
                                 else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} repeatProfile Invalid (Null)", target.targetName, target.targetID); }
-                                //is same node?
+                                //same node
                                 if (target.profile.isSameNode == true)
                                 {
                                     if (SetTargetDetails(target, node) == true)
@@ -1313,16 +1313,29 @@ public class TargetManager : MonoBehaviour
                                     }
                                 }
                                 //random node
-                                Node nodeRandom = GameManager.instance.dataScript.GetRandomNode();
-                                if (nodeRandom != null)
+                                else
                                 {
-                                    if (SetTargetDetails(target, nodeRandom) == true)
+                                    //City targets can't have random repeats
+                                    if (target.targetType.name.Equals("City") == false)
                                     {
-                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\", id {4}", nodeRandom.nodeName, 
-                                            nodeRandom.Arc.name, nodeRandom.nodeID, target.targetName, target.targetID);
+                                        Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
+                                        if (nodeRandom != null)
+                                        {
+                                            if (SetTargetDetails(target, nodeRandom) == true)
+                                            {
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\", id {4}", nodeRandom.nodeName,
+                                                    nodeRandom.Arc.name, nodeRandom.nodeID, target.targetName, target.targetID);
+                                            }
+                                        }
+                                        else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
+                                    }
+                                    else
+                                    {
+                                        Debug.LogWarningFormat("CITY target {0}, id {1}, can't have a Repeating RANDOM node (must be Same)", target.targetName, target.targetID);
+                                        //set target as done, put in pool, etc. (below)
+                                        isDone = true;
                                     }
                                 }
-                                else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
                             }
                             else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as GENERIC", target.targetName, target.targetID); }
                         }

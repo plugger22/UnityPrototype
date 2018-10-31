@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85e475f7931d775429ca745f57cea651, type: 3}
-  m_Name: _Repeat Often 5d Med 5w Same
+  m_Name: Custom 5d Med 5w Rpt Rnd
   m_EditorClassIdentifier: 
-  descriptor: Default activation profile
+  descriptor: custom activation profile
   trigger: {fileID: 11400000, guid: 82ae80a91c839fa48b5292e9c4fde55e, type: 2}
   delay: 5
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   window: 5
   isRepeat: 1
-  isSameNode: 1
-  repeatProfile: {fileID: 11400000}
+  isSameNode: 0
+  repeatProfile: {fileID: 11400000, guid: 50c4421234c41294c9d9fe871d9bf305, type: 2}

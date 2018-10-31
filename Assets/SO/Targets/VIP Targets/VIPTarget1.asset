@@ -33,11 +33,11 @@ MonoBehaviour:
   targetID: 21
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 16
+  nodeID: 13
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 5
-  timerDelay: 0
-  timerHardLimit: 8
+  timerDelay: 5
+  timerHardLimit: 0
   timerWindow: 5
