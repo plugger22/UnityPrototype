@@ -346,15 +346,6 @@ public class InputManager : MonoBehaviour
                                     else if (x_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput"); }
                                 }
-                                /*else if (Input.GetButtonDown("Multipurpose") == true)
-                                {
-                                    //Show Me button or 'Space' key
-                                    EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessInput");
-                                    return;
-                                }*/
-                                break;
-                            default:
-                                Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);
                                 break;
                         }
                         break;
