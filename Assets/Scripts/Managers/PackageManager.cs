@@ -284,8 +284,6 @@ namespace packageAPI
         public int connID = -1;                     //if > -1 then 'Show Me' button will activate and user can press to see where the connection is on teh map (can be used together with nodeID)
         public int buttonData;                      //data to send when button pressed (can ignore) -> Must have both buttonData AND buttonEvent for a button to display
         public EventType buttonEvent;               //event to trigger when button pressed (can ignore) -> Must have both buttonData AND buttonEvent for a button to display
-
-
     }
 
     /// <summary>
@@ -296,4 +294,15 @@ namespace packageAPI
         public int renownCost;
         public string tooltip;
     }
+
+    /// <summary>
+    /// Data package passed to GUIManager.cs -> SetShowMe to provide a return event to be called when user returns to calling UI element
+    /// </summary>
+    public class ShowMeData
+    {
+        public EventType restoreEvent;
+        public int nodeID = -1;             //if > -1 the relevant node is highlighted in ModalState.ShowMe
+        public int connID = -1;             //if > -1 the relevant connection is highlighted in ModalState.ShowMe
+    }
+
 }

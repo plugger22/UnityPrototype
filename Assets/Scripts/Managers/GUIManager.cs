@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using gameAPI;
 using TMPro;
 using modalAPI;
+using packageAPI;
 
 /// <summary>
 /// Customises and Manages the main GUI
@@ -87,7 +88,7 @@ public class GUIManager : MonoBehaviour
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
                                                                       //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
-    private EventType showMeRestore;                                  //event type that is called whenever a ShowMe event is triggered (triggering event stores event so it knows where to go back to)
+    private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
 
     //colour palette 
     private string colourAlert;
@@ -391,17 +392,17 @@ public class GUIManager : MonoBehaviour
     /// Sets event type to call when a 'Show Me' event is restored, eg. UI element hidden, map showing and user presses any key to exit map and restore UI element (eg. MainInfoApp)
     /// </summary>
     /// <param name="restoreEvent"></param>
-    public void SetShowMeRestore(EventType restoreEvent)
+    public void SetShowMe(ShowMeData data)
     {
-        if (restoreEvent != EventType.None)
-        { showMeRestore = restoreEvent; }
-        else { Debug.LogWarning("Invalid restoreEvent (None)"); }
+        if (data != null)
+        { showMeData = data; }
+        else { Debug.LogError("Invalid ShowMeData package (Null)"); }
     }
 
     /// <summary>
     /// Restore map back to calling UI Element after a ShowMe event
     /// </summary>
     private void ExecuteShowMeRestore()
-    { EventManager.instance.PostNotification(showMeRestore, this, null,  "GUIManager.cs -> ShowMeRestore"); }
+    { EventManager.instance.PostNotification(showMeData.restoreEvent, this, null,  "GUIManager.cs -> ShowMeRestore"); }
 
 }

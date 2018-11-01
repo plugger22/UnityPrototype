@@ -125,7 +125,9 @@ public class MainInfoUI : MonoBehaviour
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
-    /*private int numOfMaxItem = -1;                                   // (max) count of items in current list / page*/
+    private int currentItemNodeID = -1;
+    private int currentItemConnID = -1;
+    
     private GameObject[] arrayItemMain;
     private TextMeshProUGUI[] arrayItemText;
     private Image[] arrayItemIcon;
@@ -903,6 +905,7 @@ public class MainInfoUI : MonoBehaviour
         ItemData data = listOfCurrentPageItemData[itemIndex];
         if (data != null)
         {
+            //main item data
             details_text_top.text = data.topText;
             details_text_bottom.text = data.bottomText;
             if (data.sprite != null)
@@ -921,6 +924,9 @@ public class MainInfoUI : MonoBehaviour
                 buttonDecision.gameObject.SetActive(true);
                 buttonHelp.gameObject.SetActive(false);
             }*/
+            //show me data
+            currentItemNodeID = data.nodeID;
+            currentItemConnID = data.connID;
             if (data.nodeID > -1 || data.connID > -1)
             {
                 //hide help and make button active
@@ -952,7 +958,13 @@ public class MainInfoUI : MonoBehaviour
                 arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);
             }
         }
-        else { Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex); }
+        else
+        {
+            Debug.LogWarningFormat("Invalid ItemData for listOfCurrentPageItemData[{0}]", itemIndex);
+            //set default values for showMe data so data doesn't carry over
+            currentItemNodeID = -1;
+            currentItemConnID = -1;
+        }
     }
 
     /*/// <summary>
@@ -1181,7 +1193,11 @@ public class MainInfoUI : MonoBehaviour
         package.mainState = ModalState.ShowMe;
         GameManager.instance.inputScript.SetModalState(package);
         //store restore event
-        GameManager.instance.guiScript.SetShowMeRestore(EventType.MainInfoRestore);
+        ShowMeData data = new ShowMeData();
+        data.restoreEvent = EventType.MainInfoRestore;
+        data.nodeID = currentItemNodeID;
+        data.connID = currentItemConnID;
+        GameManager.instance.guiScript.SetShowMe(data);
         //alert message
         GameManager.instance.nodeScript.NodeShowFlag = 1;
         GameManager.instance.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
