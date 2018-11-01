@@ -23,7 +23,8 @@ public class MainInfoUI : MonoBehaviour
     public Button buttonBack;
     public Button buttonForward;
     public Button buttonHelp;                       //bottom of RHS panel
-    public Button buttonDecision;                   //bottom of RHS panel
+    public Button buttonItem;                       //bottom of RHS panel, eg. 'Show Me'
+    public TextMeshProUGUI buttonItemText;
 
     [Header("LHS Miscellanous")]
     public TextMeshProUGUI page_header;
@@ -113,7 +114,7 @@ public class MainInfoUI : MonoBehaviour
     private ButtonInteraction buttonInteractionBack;
     private ButtonInteraction buttonInteractionForward;
     /*private ButtonInteraction buttonInteractionHelp;*/
-    private ButtonInteraction buttonInteractionDecision;
+    private ButtonInteraction buttonInteractionItem;
 
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
@@ -224,20 +225,21 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonForward != null, "Invalid buttonForward (Null)");
         Debug.Assert(buttonHelp != null, "Invalid buttonHelp (Null)");
-        Debug.Assert(buttonDecision != null, "Invalid buttonDecisions (Null)");
+        Debug.Assert(buttonItem != null, "Invalid buttonDecisions (Null)");
+        Debug.Assert(buttonItemText != null, "Invalid buttonItemText (Null)");
         //set button interaction events
         buttonInteractionClose = buttonClose.GetComponent<ButtonInteraction>();
         buttonInteractionHome = buttonHome.GetComponent<ButtonInteraction>();
         buttonInteractionBack = buttonBack.GetComponent<ButtonInteraction>();
         buttonInteractionForward = buttonForward.GetComponent<ButtonInteraction>();
         /*buttonInteractionHelp = buttonHelp.GetComponent<ButtonInteraction>();*/
-        buttonInteractionDecision = buttonDecision.GetComponent<ButtonInteraction>();
+        buttonInteractionItem = buttonItem.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractionClose != null, "Invalid buttonInteractionClose (Null)");
         Debug.Assert(buttonInteractionHome != null, "Invalid buttonInteractionHome (Null)");
         Debug.Assert(buttonInteractionBack != null, "Invalid buttonInteractionBack (Null)");
         Debug.Assert(buttonInteractionForward != null, "Invalid buttonInteractionForward (Null)");
         /*Debug.Assert(buttonInteractionHelp != null, "Invalid buttonInteractionHelp (Null)");*/
-        Debug.Assert(buttonInteractionDecision != null, "Invalid buttonInteractionDecision (Null)");
+        Debug.Assert(buttonInteractionItem != null, "Invalid buttonInteractionDecision (Null)");
         buttonInteractionClose.SetButton(EventType.MainInfoClose);
         buttonInteractionHome.SetButton(EventType.MainInfoHome);
         buttonInteractionBack.SetButton(EventType.MainInfoBack);
@@ -881,7 +883,7 @@ public class MainInfoUI : MonoBehaviour
         }
         //hide both RHS buttons (help and decision)
         buttonHelp.gameObject.SetActive(false);
-        buttonDecision.gameObject.SetActive(false);
+        buttonItem.gameObject.SetActive(false);
         //redrawn main page
         DisplayItemPage(tabIndex);
         //assign default info icon
@@ -910,13 +912,21 @@ public class MainInfoUI : MonoBehaviour
             }
             //if no sprite, switch off default info sprite and leave blak
             else { details_image.gameObject.SetActive(false); }
-            //display button if event & data present
+            /*//display button if event & data present
             if (data.buttonEvent > EventType.None && data.buttonData != -1)
             {
                 //set button event
                 buttonInteractionDecision.SetButton(data.buttonEvent, data.buttonData);
                 //hide help and make button active
                 buttonDecision.gameObject.SetActive(true);
+                buttonHelp.gameObject.SetActive(false);
+            }*/
+            if (data.nodeID > -1 || data.connID > -1)
+            {
+                //hide help and make button active
+                buttonInteractionItem.SetButton(EventType.MainInfoShowMe);
+                buttonItemText.text = "Show Me";
+                buttonItem.gameObject.SetActive(true);
                 buttonHelp.gameObject.SetActive(false);
             }
             else
@@ -925,7 +935,7 @@ public class MainInfoUI : MonoBehaviour
 
                 //set tooltip interaction -> TO DO
 
-                buttonDecision.gameObject.SetActive(false);
+                buttonItem.gameObject.SetActive(false);
                 //display help only if available
                 if (data.help > -1)
                 { buttonHelp.gameObject.SetActive(true); }

@@ -345,17 +345,11 @@ public class InputManager : MonoBehaviour
                                     else if (x_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput"); }
                                 }
-                                else if (Input.GetButtonDown("Multipurpose") == true)
-                                {
-                                    //test run ShowMe -> blank out infoApp
-                                    EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessInput");
-                                }
-
                                 break;
                             case ModalInfoSubState.ShowMe:
                                 if (Input.GetButtonDown("Multipurpose") == true)
                                 {
-                                    //test run ShowMe -> retore infoApp
+                                    //'Show Me' -> retore infoApp
                                     EventManager.instance.PostNotification(EventType.MainInfoRestore, this, null, "InputManager.cs -> ProcessInput");
                                 }
                                 break;

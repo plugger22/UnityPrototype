@@ -2060,6 +2060,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
+            data.nodeID = node.nodeID;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
