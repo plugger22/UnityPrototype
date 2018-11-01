@@ -125,19 +125,20 @@ public class InputManager : MonoBehaviour
     public void ProcessInput()
     {
         float x_axis, y_axis;
-        //Global input
-        if (Input.GetButton("ExitGame") == true)
-        {
-            EventManager.instance.PostNotification(EventType.ExitGame, this, null, "InputManager.cs -> ProcessInput");
-            //GameManager.instance.Quit();
-            return;
-        }
+
 
         //Game State dependant input
         switch (_gameState)
         {
             case GameState.Normal:
-                if (Input.GetButtonDown("NewTurn") == true)
+                if (Input.GetButton("ExitGame") == true)
+                {
+                    //can only exit while in Normal mode
+                    EventManager.instance.PostNotification(EventType.ExitGame, this, null, "InputManager.cs -> ProcessInput");
+                    //GameManager.instance.Quit();
+                    return;
+                }
+                else if (Input.GetButtonDown("NewTurn") == true)
                 {
                     //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
                     EventManager.instance.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessInput");
@@ -297,7 +298,7 @@ public class InputManager : MonoBehaviour
                                 break;
                         }
                         break;
-                        
+
                     case ModalState.ActionMenu:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
@@ -345,18 +346,22 @@ public class InputManager : MonoBehaviour
                                     else if (x_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput"); }
                                 }
-                                break;
-                            case ModalInfoSubState.ShowMe:
-                                if (Input.GetButtonDown("Multipurpose") == true)
+                                /*else if (Input.GetButtonDown("Multipurpose") == true)
                                 {
-                                    //'Show Me' -> retore infoApp
-                                    EventManager.instance.PostNotification(EventType.MainInfoRestore, this, null, "InputManager.cs -> ProcessInput");
-                                }
+                                    //Show Me button or 'Space' key
+                                    EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessInput");
+                                    return;
+                                }*/
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid _modalInfoState \"{0}\"", _modalInfoState);
                                 break;
                         }
+                        break;
+                    case ModalState.ShowMe:
+                        //'Show Me' -> retore infoApp
+                        if (Input.anyKey == true)
+                        { EventManager.instance.PostNotification(EventType.ShowMeRestore, this, null, "InputManager.cs -> ProcessInput"); }
                         break;
                 }
                 break;

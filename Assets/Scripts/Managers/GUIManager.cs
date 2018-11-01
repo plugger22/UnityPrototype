@@ -87,6 +87,7 @@ public class GUIManager : MonoBehaviour
     private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
                                                                       //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
+    private EventType showMeRestore;                                  //event type that is called whenever a ShowMe event is triggered (triggering event stores event so it knows where to go back to)
 
     //colour palette 
     private string colourAlert;
@@ -223,6 +224,7 @@ public class GUIManager : MonoBehaviour
         //event listener
         /*EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");*/
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
+        EventManager.instance.AddListener(EventType.ShowMeRestore, OnEvent, "GUIManager");
     }
 
 
@@ -239,6 +241,9 @@ public class GUIManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.ShowMeRestore:
+                ExecuteShowMeRestore();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -351,7 +356,6 @@ public class GUIManager : MonoBehaviour
                         details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the RESISTANCE side only", colourNeutral, colourEnd);
                         break;
                 }
-
                 break;
             case AlertType.HackingInitialising:
                 details.textTop = "Jacking into Authority AI. Initialising Icebreakers.";
@@ -381,4 +385,23 @@ public class GUIManager : MonoBehaviour
         }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> SetAlertMessage");
     }
+
+
+    /// <summary>
+    /// Sets event type to call when a 'Show Me' event is restored, eg. UI element hidden, map showing and user presses any key to exit map and restore UI element (eg. MainInfoApp)
+    /// </summary>
+    /// <param name="restoreEvent"></param>
+    public void SetShowMeRestore(EventType restoreEvent)
+    {
+        if (restoreEvent != EventType.None)
+        { showMeRestore = restoreEvent; }
+        else { Debug.LogWarning("Invalid restoreEvent (None)"); }
+    }
+
+    /// <summary>
+    /// Restore map back to calling UI Element after a ShowMe event
+    /// </summary>
+    private void ExecuteShowMeRestore()
+    { EventManager.instance.PostNotification(showMeRestore, this, null,  "GUIManager.cs -> ShowMeRestore"); }
+
 }

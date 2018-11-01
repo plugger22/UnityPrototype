@@ -925,7 +925,7 @@ public class MainInfoUI : MonoBehaviour
             {
                 //hide help and make button active
                 buttonInteractionItem.SetButton(EventType.MainInfoShowMe);
-                buttonItemText.text = "Show Me";
+                buttonItemText.text = "SHOW ME";
                 buttonItem.gameObject.SetActive(true);
                 buttonHelp.gameObject.SetActive(false);
             }
@@ -1178,9 +1178,10 @@ public class MainInfoUI : MonoBehaviour
     {
         //set game state
         ModalStateData package = new ModalStateData();
-        package.mainState = ModalState.InfoDisplay;
-        package.infoState = ModalInfoSubState.ShowMe;
+        package.mainState = ModalState.ShowMe;
         GameManager.instance.inputScript.SetModalState(package);
+        //store restore event
+        GameManager.instance.guiScript.SetShowMeRestore(EventType.MainInfoRestore);
         //alert message
         GameManager.instance.nodeScript.NodeShowFlag = 1;
         GameManager.instance.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
@@ -1196,7 +1197,6 @@ public class MainInfoUI : MonoBehaviour
         //set game state
         ModalStateData package = new ModalStateData();
         package.mainState = ModalState.InfoDisplay;
-        package.infoState = ModalInfoSubState.MainInfo;
         GameManager.instance.inputScript.SetModalState(package);
         //alert message
         GameManager.instance.alertScript.CloseAlertUI();
