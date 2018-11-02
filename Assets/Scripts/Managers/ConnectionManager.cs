@@ -247,11 +247,11 @@ public class ConnectionManager : MonoBehaviour
         return isSuccess;
     }
 
-        /// <summary>
-        /// event driven -> start coroutine
-        /// </summary>
-        /// <param name="nodeID"></param>
-        private void StartFlashingConnection(int connID)
+    /// <summary>
+    /// event driven -> start coroutine
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void StartFlashingConnection(int connID)
     {
         Connection connection = GameManager.instance.dataScript.GetConnection(connID);
         if (connection != null)

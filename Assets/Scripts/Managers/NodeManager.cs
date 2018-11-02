@@ -2442,5 +2442,8 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfNodes (Null) -> Crisis checks cancelled"); }
     }
 
+
+
+
     //new methods above here
 }

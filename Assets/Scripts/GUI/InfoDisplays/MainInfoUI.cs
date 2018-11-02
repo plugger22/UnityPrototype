@@ -931,7 +931,7 @@ public class MainInfoUI : MonoBehaviour
             {
                 //hide help and make button active
                 buttonInteractionItem.SetButton(EventType.MainInfoShowMe);
-                buttonItemText.text = "SHOW ME";
+                buttonItemText.text = "Show Me";
                 buttonItem.gameObject.SetActive(true);
                 buttonHelp.gameObject.SetActive(false);
             }
@@ -1187,22 +1187,15 @@ public class MainInfoUI : MonoBehaviour
     /// 'Show Me' a node or connection in an item, switch off infoApp and highlight onmap
     /// </summary>
     private void ExecuteShowMe()
-    {
-        //set game state
-        ModalStateData package = new ModalStateData();
-        package.mainState = ModalState.ShowMe;
-        GameManager.instance.inputScript.SetModalState(package);
-        //store restore event
+    {        
+        //turn off infoApp
+        mainInfoCanvas.gameObject.SetActive(false);
+        //pass data package to GUIManager.cs
         ShowMeData data = new ShowMeData();
         data.restoreEvent = EventType.MainInfoRestore;
         data.nodeID = currentItemNodeID;
         data.connID = currentItemConnID;
         GameManager.instance.guiScript.SetShowMe(data);
-        //alert message
-        GameManager.instance.nodeScript.NodeShowFlag = 1;
-        GameManager.instance.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
-        //turn off infoApp
-        mainInfoCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -1213,6 +1206,7 @@ public class MainInfoUI : MonoBehaviour
         //set game state
         ModalStateData package = new ModalStateData();
         package.mainState = ModalState.InfoDisplay;
+        package.infoState = ModalInfoSubState.MainInfo;
         GameManager.instance.inputScript.SetModalState(package);
         //alert message
         GameManager.instance.alertScript.CloseAlertUI();
@@ -1242,9 +1236,7 @@ public class MainInfoUI : MonoBehaviour
         else { buttonForward.gameObject.SetActive(false); }
     }
 
-
-
-
+       
     /// <summary>
     /// Set background image and cancel button for the appropriate side
     /// </summary>

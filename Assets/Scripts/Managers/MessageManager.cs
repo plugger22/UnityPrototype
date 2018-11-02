@@ -324,6 +324,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = node.Arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -852,6 +853,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.Traits;
             data.side = message.side;
+            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -901,6 +903,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -947,6 +951,8 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
+            data.nodeID = destinationNode.nodeID;
+            data.connID = connection.connID;
             data.delay = delay;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -989,6 +995,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             data.delay = delay;
             //add
@@ -1033,6 +1040,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = nodeID;
             data.help = 1;
             data.delay = delay;
             //add
@@ -1090,6 +1098,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = nodeID;
+            data.connID = connID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1148,6 +1158,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.capturedSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1204,6 +1215,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.releasedSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1426,6 +1438,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = mayor.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.connID = connection.connID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1581,6 +1594,7 @@ public class MessageManager : MonoBehaviour
                     data.sprite = team.arc.sprite;
                     data.tab = ItemTab.ALERTS;
                     data.side = message.side;
+                    data.nodeID = node.nodeID;
                     data.help = 1;
                     //add
                     GameManager.instance.dataScript.AddItemData(data);
@@ -1629,6 +1643,7 @@ public class MessageManager : MonoBehaviour
                     data.sprite = team.arc.sprite;
                     data.tab = ItemTab.ALERTS;
                     data.side = message.side;
+                    data.nodeID = node.nodeID;
                     data.help = 1;
                     GameManager.instance.dataScript.AddItemData(data);
                 }
@@ -1670,6 +1685,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = team.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1710,6 +1726,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = team.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1753,6 +1770,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = team.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2001,6 +2019,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = gear.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2059,8 +2078,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = target.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
-            data.help = 1;
             data.nodeID = node.nodeID;
+            data.help = 1;          
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -2113,6 +2132,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = target.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2154,6 +2174,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = target.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddItemData(data);
@@ -2205,6 +2226,7 @@ public class MessageManager : MonoBehaviour
                 data.sprite = target.sprite;
                 data.tab = ItemTab.ALERTS;
                 data.side = message.side;
+                data.nodeID = node.nodeID;
                 data.help = 1;
                 //add
                 GameManager.instance.dataScript.AddMessage(message);
@@ -2247,6 +2269,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = target.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2348,6 +2371,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
             data.tab = ItemTab.Effects;
             data.side = message.side;
+            data.nodeID = ongoing.node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2414,6 +2438,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = sprite;
             data.tab = ItemTab.Effects;
             data.side = message.side;
+            if (node != null)
+            { data.nodeID = node.nodeID; }
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2560,6 +2586,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
+            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);

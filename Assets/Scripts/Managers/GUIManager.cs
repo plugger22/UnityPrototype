@@ -244,7 +244,7 @@ public class GUIManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.ShowMeRestore:
-                ExecuteShowMeRestore();
+                ShowMeRestore();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -395,14 +395,41 @@ public class GUIManager : MonoBehaviour
     public void SetShowMe(ShowMeData data)
     {
         if (data != null)
-        { showMeData = data; }
+        {
+            showMeData = data;
+            if (data.nodeID > -1 || data.connID > -1)
+            {
+                //set game state
+                ModalStateData package = new ModalStateData();
+                package.mainState = ModalState.ShowMe;
+                GameManager.instance.inputScript.SetModalState(package);
+                //alert message
+                GameManager.instance.nodeScript.NodeShowFlag = 1;
+                GameManager.instance.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
+                //highlight
+                if (data.nodeID > -1)
+                { EventManager.instance.PostNotification(EventType.FlashNodeStart, this, showMeData.nodeID, "GUIManager.cs -> SetShowMe"); }
+                if (data.connID > -1)
+                { EventManager.instance.PostNotification(EventType.FlashConnectionStart, this, showMeData.connID, "GUIManager.cs -> SetShowMe"); }
+            }
+            else { Debug.LogWarning("GUIManager.cs -> SetShowMe: There are no node or connections to show"); }
+        }
         else { Debug.LogError("Invalid ShowMeData package (Null)"); }
     }
 
     /// <summary>
     /// Restore map back to calling UI Element after a ShowMe event
     /// </summary>
-    private void ExecuteShowMeRestore()
-    { EventManager.instance.PostNotification(showMeData.restoreEvent, this, null,  "GUIManager.cs -> ShowMeRestore"); }
+    private void ShowMeRestore()
+    {
+        //reset node back to normal, if required
+        if (showMeData.nodeID > -1)
+        { EventManager.instance.PostNotification(EventType.FlashNodeStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        //reset connection back to normal, if required
+        if (showMeData.connID > -1)
+        { EventManager.instance.PostNotification(EventType.FlashConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        //reactivate calling UI element
+        EventManager.instance.PostNotification(showMeData.restoreEvent, this, null,  "GUIManager.cs -> ShowMeRestore");
+    }
 
 }

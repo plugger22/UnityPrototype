@@ -170,12 +170,12 @@ public class ContactManager : MonoBehaviour
                     if (actor.CheckTraitEffect(actorContactEffectHigh) == true)
                     {
                         contact.effectiveness++;
-                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for {0} contact, {1}", contact.type.name, contact.nameFirst), "to raise their Effectiveness +1");
+                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.type.name, contact.nameFirst), "to raise their Effectiveness +1");
                     }
                     if (actor.CheckTraitEffect(actorContactEffectLow) == true)
                     {
                         contact.effectiveness--;
-                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for {0} contact, {1}", contact.type.name, contact.nameFirst), "to lower their Effectiveness -1");
+                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.type.name, contact.nameFirst), "to lower their Effectiveness -1");
                     }
                     //keep effectiveness with bounds
                     contact.effectiveness = Mathf.Clamp(contact.effectiveness, 1, 3);
