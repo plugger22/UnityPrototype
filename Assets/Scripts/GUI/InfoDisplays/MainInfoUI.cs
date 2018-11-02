@@ -142,6 +142,9 @@ public class MainInfoUI : MonoBehaviour
     //flares
     private Coroutine myCoroutineFlareSW;
     /*private Vector3 startFlareLocalPosition;*/
+
+    //tooltips
+    private GenericTooltipUI itemButtonTooltip;
     //tabs
     private int currentTabIndex = -1;
     private int maxTabIndex;
@@ -169,11 +172,8 @@ public class MainInfoUI : MonoBehaviour
     string colourHighlight;
     string colourGrey;
     string colourAlert;
+    string colourRebel;
     /*string colourNormal;
-    string colourAlert;
-    string colourHighlight;
-    string colourResistance;
-    
     string colourGood;
     string colourError;
     string colourInvalid;
@@ -246,6 +246,9 @@ public class MainInfoUI : MonoBehaviour
         buttonInteractionHome.SetButton(EventType.MainInfoHome);
         buttonInteractionBack.SetButton(EventType.MainInfoBack);
         buttonInteractionForward.SetButton(EventType.MainInfoForward);
+        //tooltips
+        itemButtonTooltip = buttonItem.GetComponent<GenericTooltipUI>();
+        Debug.Assert(itemButtonTooltip != null, "Invalid itemButtonTooltip (Null)");
         //scrollRect & ScrollBar
         Debug.Assert(scrollBackground != null, "Invalid scrollBackground (Null)");
         Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
@@ -460,6 +463,8 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(flashTimer > -1.0f, "Invalid flashTimer (-1f)");
         //Set starting Initialisation states
         InitialiseItems();
+        //Tooltips
+        InitialiseTooltips();
     }
 
     private void InitialiseItems()
@@ -474,6 +479,15 @@ public class MainInfoUI : MonoBehaviour
             arrayItemBorder[index].gameObject.SetActive(true);
             arrayItemBackground[index].gameObject.SetActive(true);
         }
+    }
+
+    private void InitialiseTooltips()
+    {
+        //itemButton
+        itemButtonTooltip.tooltipHeader = string.Format("{0}Show Me{1}", colourRebel, colourEnd);
+        itemButtonTooltip.tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
+        itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourHighlight, colourEnd);
+        itemButtonTooltip.x_offset = 100;
     }
 
     /// <summary>
@@ -548,10 +562,8 @@ public class MainInfoUI : MonoBehaviour
         colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        
-        colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
-        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);

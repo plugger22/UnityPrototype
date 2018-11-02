@@ -4280,7 +4280,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -28670,6 +28670,7 @@ GameObject:
   - component: {fileID: 1535862488}
   - component: {fileID: 1535862487}
   - component: {fileID: 1535862490}
+  - component: {fileID: 1535862491}
   m_Layer: 5
   m_Name: item_button
   m_TagString: Untagged
@@ -28782,6 +28783,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1535862491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1535862485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!1 &1553332779
 GameObject:
   m_ObjectHideFlags: 0
