@@ -260,9 +260,18 @@ namespace gameAPI
                         if (count > 0)
                         {
                             if (exclusionList.Exists(x => x == contact.contactID) == false)
+                            {
+                                //add weighted contact
+                                for (int i = 0; i < contact.effectiveness; i++)
+                                { tempList.Add(contact); }
+                            }
+                        }
+                        else
+                        {
+                            //add weighted contact
+                            for (int i = 0; i < contact.effectiveness; i++)
                             { tempList.Add(contact); }
                         }
-                        else { tempList.Add(contact); }
                     }
                     else { Debug.LogError("Invalid contact (Null)"); }
                 }

@@ -156,6 +156,7 @@
         Actor_Conflict,
         Actor_Trait,
         Actor_Contact,
+        Actor_Contact_Target_Rumour,
         //Target
         Target_New,
         Target_Expired,

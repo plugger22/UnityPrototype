@@ -17,7 +17,9 @@ public class Target : ScriptableObject
     [Tooltip("Keep short, indicates suspected vulnerability eg. 'Possible Security Break', Authority POV")]
     public string descriptorAuthority;
     [Tooltip("In format '[due to]...', keep short")]
-    public string reason;
+    public string reasonText;
+    [Tooltip("Rumour text in format '[they'll be a chance soon to]....")]
+    public string rumourText;
     [Tooltip("Only select an option here if the Target is restricted to a particular metaLevel, otherwise leave as None (null)")]
     public GlobalMeta metaLevel;
     [Tooltip("Base targets are level 1, follow-on targets in a sequence are numbered consecutively higher")]

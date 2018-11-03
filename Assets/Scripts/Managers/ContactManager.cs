@@ -1,6 +1,5 @@
 ﻿using gameAPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,15 +23,18 @@ public class ContactManager : MonoBehaviour
 
     [Header("Confidence Levels")]
     [Tooltip("Confidence level of a High Effectiveness contact ('3'), eg. % chance of being correct")]
-    [Range(1, 100)] public int confidenceHigh = 85;
+    [Range(1, 100)] public int confidenceHigh = 100;
     [Tooltip("Confidence level of a Medium Effectiveness contact ('2'), eg. % chance of being correct")]
-    [Range(1, 100)] public int confidenceMed = 60;
+    [Range(1, 100)] public int confidenceMed = 75;
     [Tooltip("Confidence level of a Low Effectiveness contact ('1'), eg. % chance of being correct")]
-    [Range(1, 100)] public int confidenceLow = 35;
+    [Range(1, 100)] public int confidenceLow = 50;
 
     [Header("Rumours")]
     [Tooltip("Chance of somebody learning about an Active target, per turn")]
     [Range(0, 10)] public int rumourTarget = 5;
+
+    private int[] arrayOfContactNetworks;   //use for determining which actor's network of contacts was used
+    private Actor[] arrayOfActors;          //used for contact activity. Updated from DataManager.cs each turn
 
     private static int contactIDCounter = 0;              //used to sequentially number contactID's
 
@@ -46,6 +48,10 @@ public class ContactManager : MonoBehaviour
 
     public void Initialise()
     {
+        //collections
+        int numOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        arrayOfContactNetworks = new int[numOfOnMapActors];
+        arrayOfActors = new Actor[numOfOnMapActors];
         //seed contact pool
         CreateContacts(numOfPoolContacts);
         //fast acess fields
@@ -87,6 +93,7 @@ public class ContactManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
+        InitialiseNetworkArrays();
         CheckTargetRumours();
     }
 
@@ -541,6 +548,31 @@ public class ContactManager : MonoBehaviour
     }
 
     /// <summary>
+    /// each turn updates arrays needed for contact activities
+    /// </summary>
+    private void InitialiseNetworkArrays()
+    {
+        //Need to set up actors and contacts ready for assignment
+        arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        //loop actors and create an int array containing tally of their contact network effectiveness, indexed to actorSlotID
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    { arrayOfContactNetworks[i] = actor.GetContactNetworkEffectiveness(); }
+                }
+                else { arrayOfContactNetworks[i] = 0; }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+    }
+
+    /// <summary>
     /// Checks all active targets, per turn, for possible rumours. Called by TargetManager.cs -> StartTurnLate
     /// </summary>
     public void CheckTargetRumours()
@@ -569,27 +601,10 @@ public class ContactManager : MonoBehaviour
                 //have any rumours been triggered?
                 if (numOfTargets > 0)
                 {
-                    //Need to set up actors and contacts ready for assignment
-                    Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-                    int[] arrayOfContactNetworks = new int[4];
-                    
-                    //loop actors and create an int array containing tally of their contact network effectiveness, indexed to actorSlotID
-                    if (arrayOfActors != null)
-                    {
-                        for (int i = 0; i < arrayOfActors.Length; i++)
-                        {
-                            //check actor is present in slot (not vacant)
-                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
-                            {
-                                Actor actor = arrayOfActors[i];
-                                if (actor != null)
-                                { arrayOfContactNetworks[i] = actor.GetContactNetworkEffectiveness(); }
-                            }
-                            arrayOfContactNetworks[i] = 0;
-                        }   
-                    }
-                    else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-                    //loop targets and assign to actors and their contacts
+
+                    //
+                    // - - - loop targets and assign to actors and their contacts
+                    //
                     int slotID;
                     for (int i = 0; i < numOfTargets; i++)
                     {
@@ -609,6 +624,25 @@ public class ContactManager : MonoBehaviour
                                     target.AddContactRumour(contact.contactID);
                                     Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} {1}, id {2} learns of target {3}, id {4}{5}", contact.nameFirst, contact.nameLast,
                                         contact.contactID, target.targetName, target.targetID, "\n");
+                                    //correct node used? -> depends on contact effectiveness
+                                    Node node = null;
+                                    //city targets always have the correct node (would be silly to have an airport target not at the airport)
+                                    if (target.targetType.name.Equals("City") == true)
+                                    { node = node = GameManager.instance.dataScript.GetNode(target.nodeID); }
+                                    else
+                                    {
+                                        if (CheckContactIsReliable(contact) == true)
+                                        { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
+                                        else { node = GameManager.instance.dataScript.GetRandomNode(); }
+                                    }
+                                    //if valid node generate message
+                                    if (node != null)
+                                    {
+                                        string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
+                                        GameManager.instance.messageScript.ActorContactTargetRumour(text, actor, node, contact, target);
+                                    }
+                                    else { Debug.LogWarning("Invalid node (Null)"); }
+
                                 }
                                 else { Debug.LogWarning("Invalid random contact (Null)"); }
                             }
@@ -645,6 +679,26 @@ public class ContactManager : MonoBehaviour
             }
         }
         return slotID;
+    }
+
+    /// <summary>
+    /// Contacts have a % chance of telling the correct information based on their effectiveness. Returns true if contact is correct, false otherwise.
+    /// NOTE: Contact checked for Null by calling method
+    /// </summary>
+    /// <param name="contact"></param>
+    /// <returns></returns>
+    private bool CheckContactIsReliable(Contact contact)
+    {
+        bool isCorrect = false;
+        int rndNum = Random.Range(0, 100);
+        switch(contact.effectiveness)
+        {
+            case 3: if (rndNum < confidenceHigh) { isCorrect = true; } break;
+            case 2: if (rndNum < confidenceMed) { isCorrect = true; } break;
+            case 1: if (rndNum < confidenceLow) { isCorrect = true; } break;
+            default: Debug.LogWarningFormat("Invalid contact effectiveness {0}", contact.effectiveness); break;
+        }
+        return isCorrect;
     }
 
     //new methods above here

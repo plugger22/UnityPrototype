@@ -2317,7 +2317,7 @@ public class ActionManager : MonoBehaviour
                 if (isSuccessful == true && target.OngoingEffect != null)
                 {
                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
-                    dataInput.ongoingText = target.reason;
+                    dataInput.ongoingText = target.reasonText;
                     //add to target so it can link to effects
                     target.ongoingID = dataInput.ongoingID;
                 }

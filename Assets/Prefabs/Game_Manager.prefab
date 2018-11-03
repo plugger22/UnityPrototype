@@ -1877,7 +1877,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 10
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
@@ -1969,10 +1969,10 @@ MonoBehaviour:
   numOfPoolContacts: 50
   numOfPoolThreshold: 10
   numOfPoolTopUp: 20
-  confidenceHigh: 85
-  confidenceMed: 60
-  confidenceLow: 35
-  rumourTarget: 10
+  confidenceHigh: 100
+  confidenceMed: 50
+  confidenceLow: 25
+  rumourTarget: 5
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1

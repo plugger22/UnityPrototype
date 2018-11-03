@@ -913,6 +913,51 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// One of a Resistance Actors network of contacts learns of a rumour
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="isGained"></param>
+    /// <returns></returns>
+    public Message ActorContactTargetRumour(string text, Actor actor, Node node, Contact contact, Target target)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        Debug.Assert(target != null, "Invalid target (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Contact_Target_Rumour;
+            message.side = globalResistance;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            message.data3 = target.targetID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s network of contacts learns of a RUMOUR", actor.arc.name);
+            data.topText = string.Format("{0}'s Contact", actor.actorName);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorContactTargetRumourDetails(actor, node, contact, target);
+            data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - AI - - -
     //

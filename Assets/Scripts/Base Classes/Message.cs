@@ -18,6 +18,7 @@ namespace gameAPI
         public int data0;                   //3 x general purpose data points whose meaning depends on MessageType
         public int data1;
         public int data2;
+        public int data3;
 
         public bool isPublic;               //display if true
 
@@ -38,6 +39,7 @@ namespace gameAPI
             data0 = -1;
             data1 = -1;
             data2 = -1;
+            data3 = -1;
             isPublic = false;
         }
 

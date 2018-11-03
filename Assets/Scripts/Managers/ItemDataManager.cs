@@ -443,7 +443,41 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// One of actor's network of contacts learns of a rumour about a forthcoming target
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public string GetActorContactTargetRumourDetails(Actor actor, Node node, Contact contact, Target target)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5}{6}{7}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "heard a rumour that", "\n", "\n");
+        builder.AppendFormat("There'll be a chance soon to{0}", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, "Steal a dossier", colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("Confidence level {0}<b>{1}</b>{2}", colourBad, GetConfidenceLevel(contact.effectiveness), colourEnd);
+        return builder.ToString();
+    }
 
+    /// <summary>
+    /// subMethod to return a colour formatted string based on contact's effectiveness
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    private string GetConfidenceLevel(int level)
+    {
+        string confidenceLevel = "Unknown";
+        switch(level)
+        {
+            case 3: confidenceLevel = string.Format("{0}High{1}", colourGood, colourEnd); break;
+            case 2: confidenceLevel = string.Format("{0}Medium{1}", colourNeutral, colourEnd); break;
+            case 1: confidenceLevel = string.Format("{0}Low{1}", colourBad, colourEnd); break;
+        }
+        return confidenceLevel;
+    }
 
     //
     // - - - Gear - - -

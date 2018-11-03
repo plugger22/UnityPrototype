@@ -165,7 +165,6 @@ public class TargetManager : MonoBehaviour
     private void StartTurnEarly()
     {
         CheckTargets();
-        GameManager.instance.contactScript.CheckTargetRumours();
     }
 
     /// <summary>
