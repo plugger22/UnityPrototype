@@ -77,6 +77,8 @@ public class Target : ScriptableObject
     [HideInInspector] public int timerDelay;                        //delay in turns before target tests for activation
     [HideInInspector] public int timerHardLimit;                    //back stop timer, triggered once activations commence. If target hasn't activated randomly by the time timer reaches zero then does so
     [HideInInspector] public int timerWindow;                       //number of turns target, once live, stays that way before disappearing, set to turnWindow on activation
+    //Contact Rumours
+    [HideInInspector] public List<int> listOfRumourContacts = new List<int>();  //list of all contactID's who have heard a rumour about this target (Active targets only)
 
     /// <summary>
     /// Data Validation
@@ -88,4 +90,23 @@ public class Target : ScriptableObject
         Debug.Assert(profileBase != null, string.Format("Target {0}, id {1}, has no profileBase (Null)", targetName, targetID));
         //NOTE: No need to check profile for Null as handled in TargetManager.cs -> SetTargetDetails (assigns defaultProfile if null)
     }
+
+    /// <summary>
+    /// Add a contact who has learned of a rumour about the target
+    /// </summary>
+    /// <param name="contactID"></param>
+    public void AddContactRumour(int contactID)
+    {
+        Debug.Assert(contactID > -1, "Invalid contactID (less than zero)");
+        listOfRumourContacts.Add(contactID);
+    }
+
+    /// <summary>
+    /// Checks listOfRmourContacts and returns true if the contact has already learnt a rumour about target
+    /// </summary>
+    /// <param name="contactID"></param>
+    /// <returns></returns>
+    public bool CheckRumourContact(int contactID)
+    { return listOfRumourContacts.Exists(x => x == contactID); }
+
 }

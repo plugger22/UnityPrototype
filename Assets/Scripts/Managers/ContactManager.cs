@@ -59,10 +59,10 @@ public class ContactManager : MonoBehaviour
         Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
         Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
         //event Listeners
-        /*EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");*/
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");
     }
 
-    /*/// <summary>
+    /// <summary>
     /// handles events
     /// </summary>
     /// <param name="eventType"></param>
@@ -80,13 +80,15 @@ public class ContactManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }*/
+    }
 
-
-    /*private void StartTurnLate()
+    /// <summary>
+    /// Start Turn Late events
+    /// </summary>
+    private void StartTurnLate()
     {
-
-    }*/
+        CheckTargetRumours();
+    }
 
     /// <summary>
     /// create new Resistance contacts and place them dictionary, unassigned
@@ -581,7 +583,7 @@ public class ContactManager : MonoBehaviour
                             {
                                 Actor actor = arrayOfActors[i];
                                 if (actor != null)
-                                { arrayOfContactNetworks[i] = actor.GetContactsEffectiveness(); }
+                                { arrayOfContactNetworks[i] = actor.GetContactNetworkEffectiveness(); }
                             }
                             arrayOfContactNetworks[i] = 0;
                         }   
@@ -591,6 +593,7 @@ public class ContactManager : MonoBehaviour
                     int slotID;
                     for (int i = 0; i < numOfTargets; i++)
                     {
+                        Target target = listOfRumourTargets[i];
                         //determine which actor's network of contacts heard the rumour (could be anyone, not worth checking for contact at specific node as player could game system with this knowledge)
                         slotID = CheckWhichContactNetwork(arrayOfContactNetworks);
                         if (slotID > -1)
@@ -599,10 +602,13 @@ public class ContactManager : MonoBehaviour
                             if (actor != null)
                             {
                                 //get a random (weighted by effectiveness) contact from the actor's contact network
-                                Contact contact = actor.GetRandomContact();
+                                Contact contact = actor.GetRandomContact(target.listOfRumourContacts);
                                 if (contact != null)
                                 {
-
+                                    //add contact to target list
+                                    target.AddContactRumour(contact.contactID);
+                                    Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} {1}, id {2} learns of target {3}, id {4}{5}", contact.nameFirst, contact.nameLast,
+                                        contact.contactID, target.targetName, target.targetID, "\n");
                                 }
                                 else { Debug.LogWarning("Invalid random contact (Null)"); }
                             }

@@ -226,7 +226,7 @@ namespace gameAPI
         /// returns a sum of the effectiveness levels of all the actors contact
         /// </summary>
         /// <returns></returns>
-        public int GetContactsEffectiveness()
+        public int GetContactNetworkEffectiveness()
         {
             int tally = 0;
             foreach(var contact in dictOfContacts)
@@ -236,6 +236,41 @@ namespace gameAPI
                 else { Debug.LogError("Invalid contact (Null) in dictOfContacts"); }
             }
             return tally;
+        }
+
+        /// <summary>
+        /// Returns a random contact from the actor's network of contacts (excludes any that have already on the 'ExclusionList' of contactID's). Returns null if can't find any or a problem.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public Contact GetRandomContact(List<int> exclusionList)
+        {
+            int count;
+            Contact contact = null;
+            if (exclusionList != null)
+            {
+                count = exclusionList.Count;
+                //create a  temp list of all contacts in network that aren't on the exclusion list
+                List<Contact> tempList = new List<Contact>();
+                foreach (var networkContact in dictOfContacts)
+                {
+                    contact = networkContact.Value;
+                    if (contact != null)
+                    {
+                        if (count > 0)
+                        {
+                            if (exclusionList.Exists(x => x == contact.contactID) == false)
+                            { tempList.Add(contact); }
+                        }
+                        else { tempList.Add(contact); }
+                    }
+                    else { Debug.LogError("Invalid contact (Null)"); }
+                }
+                //randomly choose one contact from list and return
+                contact = tempList[Random.Range(0, tempList.Count)];
+            }
+            else { Debug.LogWarning("Invalid exclusionList (Null)"); }
+            return contact;
         }
 
         //

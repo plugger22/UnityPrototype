@@ -1969,6 +1969,10 @@ MonoBehaviour:
   numOfPoolContacts: 50
   numOfPoolThreshold: 10
   numOfPoolTopUp: 20
+  confidenceHigh: 85
+  confidenceMed: 60
+  confidenceLow: 35
+  rumourTarget: 10
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1

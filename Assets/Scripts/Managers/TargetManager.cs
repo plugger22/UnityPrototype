@@ -115,7 +115,7 @@ public class TargetManager : MonoBehaviour
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TargetManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TargetManager");
     }
 
 
@@ -133,8 +133,8 @@ public class TargetManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
-            case EventType.StartTurnLate:
-                StartTurnLate();
+            case EventType.StartTurnEarly:
+                StartTurnEarly();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -162,7 +162,7 @@ public class TargetManager : MonoBehaviour
     /// <summary>
     /// loops nodes, checks all targets and updates isTargetKnown status
     /// </summary>
-    private void StartTurnLate()
+    private void StartTurnEarly()
     {
         CheckTargets();
         GameManager.instance.contactScript.CheckTargetRumours();
