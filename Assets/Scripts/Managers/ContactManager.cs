@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,6 +12,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class ContactManager : MonoBehaviour
 {
+    [Header("Base Data")]
     [Tooltip("How many contacts per level of influence/connections that the actor has")]
     [Range(1,3)] public int contactsPerLevel = 2;
     [Tooltip("Number of contacts to initially seed the contact pool with")]
@@ -19,6 +21,18 @@ public class ContactManager : MonoBehaviour
     [Range(5, 20)] public int numOfPoolThreshold = 10;
     [Tooltip("Number of contacts to top up the pool with once the threshold is reached")]
     [Range(10, 50)] public int numOfPoolTopUp = 20;
+
+    [Header("Confidence Levels")]
+    [Tooltip("Confidence level of a High Effectiveness contact ('3'), eg. % chance of being correct")]
+    [Range(1, 100)] public int confidenceHigh = 85;
+    [Tooltip("Confidence level of a Medium Effectiveness contact ('2'), eg. % chance of being correct")]
+    [Range(1, 100)] public int confidenceMed = 60;
+    [Tooltip("Confidence level of a Low Effectiveness contact ('1'), eg. % chance of being correct")]
+    [Range(1, 100)] public int confidenceLow = 35;
+
+    [Header("Rumours")]
+    [Tooltip("Chance of somebody learning about an Active target, per turn")]
+    [Range(0, 10)] public int rumourTarget = 5;
 
     private static int contactIDCounter = 0;              //used to sequentially number contactID's
 
@@ -44,7 +58,35 @@ public class ContactManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
         Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
+        //event Listeners
+        /*EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");*/
     }
+
+    /*/// <summary>
+    /// handles events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.StartTurnLate:
+                StartTurnLate();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }*/
+
+
+    /*private void StartTurnLate()
+    {
+
+    }*/
 
     /// <summary>
     /// create new Resistance contacts and place them dictionary, unassigned
@@ -495,4 +537,109 @@ public class ContactManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// Checks all active targets, per turn, for possible rumours. Called by TargetManager.cs -> StartTurnLate
+    /// </summary>
+    public void CheckTargetRumours()
+    {
+        int numOfTargets;
+        List<Target> listOfActiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Active);
+        List<Target> listOfRumourTargets = new List<Target>();  //temp list to hold targets that have triggered a rumour
+        if (listOfActiveTargets != null)
+        {
+            numOfTargets = listOfActiveTargets.Count;
+            if (numOfTargets > 0)
+            {
+                //loop targets, check for a rumour
+                for (int i = 0; i < numOfTargets; i++)
+                {
+                    Target target = listOfActiveTargets[i];
+                    if (target != null)
+                    {
+                        if (Random.Range(0, 100) < rumourTarget)
+                        { listOfRumourTargets.Add(target); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid target (Null) for listOfActiveTargets[{0}]", i); }
+                }
+                numOfTargets = listOfRumourTargets.Count;
+                Debug.LogFormat("[Cont] ContactManager.cs -> CheckTargetRumours: {0} rumours triggered for Active Targets this turn", numOfTargets);
+                //have any rumours been triggered?
+                if (numOfTargets > 0)
+                {
+                    //Need to set up actors and contacts ready for assignment
+                    Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                    int[] arrayOfContactNetworks = new int[4];
+                    
+                    //loop actors and create an int array containing tally of their contact network effectiveness, indexed to actorSlotID
+                    if (arrayOfActors != null)
+                    {
+                        for (int i = 0; i < arrayOfActors.Length; i++)
+                        {
+                            //check actor is present in slot (not vacant)
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                            {
+                                Actor actor = arrayOfActors[i];
+                                if (actor != null)
+                                { arrayOfContactNetworks[i] = actor.GetContactsEffectiveness(); }
+                            }
+                            arrayOfContactNetworks[i] = 0;
+                        }   
+                    }
+                    else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+                    //loop targets and assign to actors and their contacts
+                    int slotID;
+                    for (int i = 0; i < numOfTargets; i++)
+                    {
+                        //determine which actor's network of contacts heard the rumour (could be anyone, not worth checking for contact at specific node as player could game system with this knowledge)
+                        slotID = CheckWhichContactNetwork(arrayOfContactNetworks);
+                        if (slotID > -1)
+                        {
+                            Actor actor = arrayOfActors[slotID];
+                            if (actor != null)
+                            {
+                                //get a random (weighted by effectiveness) contact from the actor's contact network
+                                Contact contact = actor.GetRandomContact();
+                                if (contact != null)
+                                {
+
+                                }
+                                else { Debug.LogWarning("Invalid random contact (Null)"); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for SlotID {0}", slotID); }
+                        }
+                        else { Debug.LogWarning("Invalid slotID (-1) for Target"); }
+                    }
+                }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfActiveTargets (Null) -> No target rumours generated"); }
+    }
+
+    /// <summary>
+    /// Takes an array of each actors contact network (effectiveness tally) and randomly (weighted) returns the slotID of the chosen actor (their network of contacts has sourced the info), -1 if a problem
+    /// </summary>
+    /// <param name="arrayOfNetworks"></param>
+    /// <returns></returns>
+    private int CheckWhichContactNetwork(int[] arrayOfNetworks)
+    {
+        int slotID = -1;
+        int totalEffectiveness = arrayOfNetworks.Sum();
+        //Randomly (weighted) determine which actor's network of contacts found the info (loop array until a rolling tally of arraydata exceeds rndNum)
+        int rndNum = Random.Range(0, totalEffectiveness);
+        int tally = 0;
+        for (int i = 0; i < arrayOfNetworks.Length; i++)
+        {
+            tally += arrayOfNetworks[i];
+            if (tally - rndNum >= 0)
+            {
+                //found the correct slot
+                slotID = i;
+                break;
+            }
+        }
+        return slotID;
+    }
+
+    //new methods above here
 }

@@ -22,7 +22,8 @@ public class Contact
     public ContactStatus status;
     public bool isMale;                 //Male if true, female if false
     public bool isTurned;               //working for Authority as an informant
-    
-    
+
+    //stats
+    [HideInInspector] int statsRumours;     //number of rumours learnt
 
 }

@@ -165,6 +165,7 @@ public class TargetManager : MonoBehaviour
     private void StartTurnLate()
     {
         CheckTargets();
+        GameManager.instance.contactScript.CheckTargetRumours();
     }
 
     /// <summary>

@@ -222,6 +222,22 @@ namespace gameAPI
             return null;
         }
 
+        /// <summary>
+        /// returns a sum of the effectiveness levels of all the actors contact
+        /// </summary>
+        /// <returns></returns>
+        public int GetContactsEffectiveness()
+        {
+            int tally = 0;
+            foreach(var contact in dictOfContacts)
+            {
+                if (contact.Value != null)
+                { tally += contact.Value.effectiveness; }
+                else { Debug.LogError("Invalid contact (Null) in dictOfContacts"); }
+            }
+            return tally;
+        }
+
         //
         // - - - Conditions - - -
         //
