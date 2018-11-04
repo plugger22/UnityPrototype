@@ -46,6 +46,7 @@ public class LoadManager : MonoBehaviour
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
+    public TextList[] arrayOfShortTextLists;
 
     [Header("TextList Related SO's")]
     public NameSet[] arrayOfNameSets;
@@ -206,6 +207,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfDistrictTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No DistrictTextLists present"); }
+        //
+        // - - - Text Lists Shorts (not stored in a collection)
+        //
+        numArray = arrayOfShortTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfShortTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
         //
         // - - - NameSets (not stored in a collection)
         //

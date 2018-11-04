@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Steal Dossier 2
   descriptorResistance: Steal Classified Intel
   descriptorAuthority: Possible Security Flaw
-  reason: stealing a secret dossier
+  reasonText: Stolen Dossier
+  rumourText: Steal a Dossier
   metaLevel: {fileID: 0}
   targetLevel: 2
   actorArc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
@@ -48,3 +49,4 @@ MonoBehaviour:
   timerDelay: 0
   timerHardLimit: 2
   timerWindow: 0
+  listOfRumourContacts: 

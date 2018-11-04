@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: ContactEmergency
   m_EditorClassIdentifier: 
   descriptor: Emergency personnel Contacts
+  category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
   randomList:
   - Bounty Hunter
   - Fireman

@@ -16,7 +16,7 @@ public class Target : ScriptableObject
     public string descriptorResistance;
     [Tooltip("Keep short, indicates suspected vulnerability eg. 'Possible Security Break', Authority POV")]
     public string descriptorAuthority;
-    [Tooltip("In format '[due to]...', keep short")]
+    [Tooltip("Onging effects. In format '[due to]...', keep short")]
     public string reasonText;
     [Tooltip("Rumour text in format '[they'll be a chance soon to]....")]
     public string rumourText;

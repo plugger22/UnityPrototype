@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Sensor Grid
   descriptorResistance: Penetrate Sensor Grid
   descriptorAuthority: Possible Security Flaw
-  reason: Sensor grid being hacked
+  reasonText: Breached Sensor Grid
+  rumourText: Penetrate Sensor Grid
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
@@ -47,3 +48,4 @@ MonoBehaviour:
   timerDelay: 0
   timerHardLimit: 0
   timerWindow: 3
+  listOfRumourContacts: 

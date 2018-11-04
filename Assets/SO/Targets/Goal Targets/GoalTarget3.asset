@@ -14,12 +14,13 @@ MonoBehaviour:
   targetName: Goal Target 3
   descriptorResistance: Advance Goal
   descriptorAuthority: Loose cannon on deck
-  reason: 
+  reasonText: Attaining a Goal
+  rumourText: Meet your Goal
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 0}
   gear: {fileID: 0}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 51f529f1815bf554e9166edd1ecbb5ca, type: 2}
   nodeArc: {fileID: 0}
   listOfGoodEffects: []
@@ -43,3 +44,4 @@ MonoBehaviour:
   timerDelay: 0
   timerHardLimit: 0
   timerWindow: 0
+  listOfRumourContacts: 

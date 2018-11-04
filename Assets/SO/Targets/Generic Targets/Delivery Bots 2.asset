@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Delivery Bots 2
   descriptorResistance: Shut down supply
   descriptorAuthority: Possible Security Flaw
-  reason: Delivery bots being disabled
+  reasonText: Disabled Delivery bots
+  rumourText: Disable Delivery Bots
   metaLevel: {fileID: 0}
   targetLevel: 2
   actorArc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
@@ -34,16 +35,17 @@ MonoBehaviour:
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
-  targetStatus: 1
-  infoLevel: 0
+  targetStatus: 0
+  infoLevel: 1
   targetID: 3
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 3
+  nodeID: -1
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 5
-  timerDelay: 0
-  timerHardLimit: 3
+  timerDelay: 5
+  timerHardLimit: 0
   timerWindow: 5
+  listOfRumourContacts: 

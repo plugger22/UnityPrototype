@@ -622,8 +622,10 @@ public class ContactManager : MonoBehaviour
                                 {
                                     //add contact to target list
                                     target.AddContactRumour(contact.contactID);
-                                    Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} {1}, id {2} learns of target {3}, id {4}{5}", contact.nameFirst, contact.nameLast,
-                                        contact.contactID, target.targetName, target.targetID, "\n");
+
+                                    /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} {1}, id {2} learns of target {3}, id {4}{5}", contact.nameFirst, contact.nameLast,
+                                        contact.contactID, target.targetName, target.targetID, "\n");*/
+
                                     //correct node used? -> depends on contact effectiveness
                                     Node node = null;
                                     //city targets always have the correct node (would be silly to have an airport target not at the airport)

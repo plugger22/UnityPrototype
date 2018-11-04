@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortRumourAction
+  m_EditorClassIdentifier: 
+  descriptor: "format '[Contact][Reason] there'll be a chance soon'. \nUsed in ActorContactRumour
+    messages\nLinked to ItemDataManager.cs"
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  randomList:
+  - there'll be a chance soon to
+  - there'll be an opportunity soon to
+  - there could be a chance to
+  - there could be an opportunity to
+  - there'll be window soon to
+  - it may be possible soon to
+  - there may be an opening soon to
+  - it may be feasible soon to
+  - there could be potential soon to
+  - there could be an opening soon to

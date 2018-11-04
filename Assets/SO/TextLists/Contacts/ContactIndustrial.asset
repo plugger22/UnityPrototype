@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: ContactIndustrial
   m_EditorClassIdentifier: 
   descriptor: Industrial type contacts
+  category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
   randomList:
   - Warehouse Packer
   - Engine Reconditioner

@@ -14,12 +14,13 @@ MonoBehaviour:
   targetName: City Target 2
   descriptorResistance: Close Airport
   descriptorAuthority: Possible known backdoor
-  reason: Why not?
+  reasonText: a Disrupted Airport
+  rumourText: Shutdown the Airport
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: a46143a253f580b42acc627392cf8001, type: 2}
   nodeArc: {fileID: 0}
   listOfGoodEffects: []
@@ -35,11 +36,12 @@ MonoBehaviour:
   targetID: 18
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 15
+  nodeID: 25
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 10
-  timerWindow: 6
+  timerHardLimit: 1
+  timerWindow: 5
+  listOfRumourContacts: 0c00000012000000

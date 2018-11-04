@@ -942,7 +942,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts learns of a RUMOUR", actor.arc.name);
-            data.topText = string.Format("{0}'s Contact", actor.actorName);
+            data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.instance.itemDataScript.GetActorContactTargetRumourDetails(actor, node, contact, target);
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;

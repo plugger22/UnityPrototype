@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Automated Patrols 2
   descriptorResistance: Disable Guard bots
   descriptorAuthority: Possible Security Flaw
-  reason: Guard bots being disabled
+  reasonText: Disabled Guard bots
+  rumourText: Disable Guard bots
   metaLevel: {fileID: 0}
   targetLevel: 2
   actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
@@ -47,3 +48,4 @@ MonoBehaviour:
   timerDelay: 1
   timerHardLimit: 0
   timerWindow: 5
+  listOfRumourContacts: 

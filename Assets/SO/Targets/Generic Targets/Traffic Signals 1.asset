@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Traffic Signals
   descriptorResistance: Grind traffic to a halt
   descriptorAuthority: Possible Security Flaw
-  reason: Traffic signals being hacked
+  reasonText: Disrupted Traffic Signals
+  rumourText: Disrupt Traffic Signals
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
@@ -47,3 +48,4 @@ MonoBehaviour:
   timerDelay: 0
   timerHardLimit: 0
   timerWindow: 0
+  listOfRumourContacts: 

@@ -14,12 +14,13 @@ MonoBehaviour:
   targetName: Story Target 1
   descriptorResistance: Advance Story
   descriptorAuthority: Loose lips sink ships
-  reason: Mum is in there somewhere
+  reasonText: Resolving the Story
+  rumourText: Resolve the Story
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
   gear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
   nodeArc: {fileID: 0}
   listOfGoodEffects: []
@@ -30,16 +31,17 @@ MonoBehaviour:
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
-  targetStatus: 4
+  targetStatus: 2
   infoLevel: 0
   targetID: 24
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
+  nodeID: 24
   turnSuccess: -1
-  turnDone: 18
+  turnDone: -1
   numOfAttempts: 0
   turnsWindow: 5
   timerDelay: 0
-  timerHardLimit: 10
-  timerWindow: 0
+  timerHardLimit: 5
+  timerWindow: 1
+  listOfRumourContacts: 0c0000000300000012000000270000000e000000

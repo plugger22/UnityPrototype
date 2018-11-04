@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Survelliance Grid
   descriptorResistance: Hack Survelliance Grid
   descriptorAuthority: Possible Security Flaw
-  reason: Surveillance Grid being hacked
+  reasonText: Hacked Survelliance Grid
+  rumourText: Hack Survelliance Grid
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
@@ -40,11 +41,12 @@ MonoBehaviour:
   targetID: 13
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 0
+  nodeID: 11
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 5
-  timerWindow: 1
+  timerHardLimit: 1
+  timerWindow: 5
+  listOfRumourContacts: 18000000

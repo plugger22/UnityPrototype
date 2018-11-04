@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: City Target One
   descriptorResistance: Blow up a famous Icon
   descriptorAuthority: Possible known backdoor
-  reason: '''Cause you can'
+  reasonText: a fierce Explosion
+  rumourText: Blow up an Icon
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
@@ -32,16 +33,17 @@ MonoBehaviour:
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  targetStatus: 2
+  targetStatus: 1
   infoLevel: 0
   targetID: 17
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 9
+  nodeID: 11
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 5
-  timerWindow: 1
+  timerHardLimit: 6
+  timerWindow: 10
+  listOfRumourContacts: 03000000060000001000000021000000

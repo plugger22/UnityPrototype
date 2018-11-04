@@ -10,6 +10,13 @@ using packageAPI;
 /// </summary>
 public class ItemDataManager : MonoBehaviour
 {
+
+    [Header("TextList Shorts")]
+    [Tooltip("Random pick list used for Actor Rumour messages, format '[Contact] has heard that'")]
+    public TextList shortRumourHeard;
+    [Tooltip("Random pick list used for Actor Rumour message, format '[Contact][shortRumourHeard] there'll be a chance soon to'")]
+    public TextList shortRumourAction;
+
     //fast access
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
@@ -29,6 +36,11 @@ public class ItemDataManager : MonoBehaviour
 
     public void Initialise()
     {
+        //textlists
+        Debug.Assert(shortRumourHeard != null, "Invalid shortRumourHeard (Null)");
+        Debug.Assert(shortRumourAction != null, "Invalid shortRumourAction (Null)");
+        Debug.Assert(shortRumourHeard.category.name.Equals("Shorts") == true, "Invalid shortRumourHeard (wrong Category)");
+        Debug.Assert(shortRumourAction.category.name.Equals("Shorts") == true, "Invalid shortRumourAction (wrong Category)");
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
@@ -454,11 +466,12 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorContactTargetRumourDetails(Actor actor, Node node, Contact contact, Target target)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5}{6}{7}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "heard a rumour that", "\n", "\n");
-        builder.AppendFormat("There'll be a chance soon to{0}", "\n");
-        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, "Steal a dossier", colourEnd, "\n", "\n");
+        string textHeard = shortRumourHeard.GetRandomRecord(false);
+        string textAction = shortRumourAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textHeard, textAction, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, target.rumourText, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("Confidence level {0}<b>{1}</b>{2}", colourBad, GetConfidenceLevel(contact.effectiveness), colourEnd);
+        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
         return builder.ToString();
     }
 
@@ -472,9 +485,9 @@ public class ItemDataManager : MonoBehaviour
         string confidenceLevel = "Unknown";
         switch(level)
         {
-            case 3: confidenceLevel = string.Format("{0}High{1}", colourGood, colourEnd); break;
-            case 2: confidenceLevel = string.Format("{0}Medium{1}", colourNeutral, colourEnd); break;
-            case 1: confidenceLevel = string.Format("{0}Low{1}", colourBad, colourEnd); break;
+            case 3: confidenceLevel = string.Format("{0}Confidence Level High{1}", colourGood, colourEnd); break;
+            case 2: confidenceLevel = string.Format("{0}Confidence Level Medium{1}", colourNeutral, colourEnd); break;
+            case 1: confidenceLevel = string.Format("{0}Confidence Level Low{1}", colourBad, colourEnd); break;
         }
         return confidenceLevel;
     }

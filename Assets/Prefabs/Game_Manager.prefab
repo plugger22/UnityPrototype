@@ -888,6 +888,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   - {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
   - {fileID: 11400000, guid: f2ec3998326528a4c820b31d04acec8e, type: 2}
+  arrayOfShortTextLists:
+  - {fileID: 11400000, guid: 3b6cb7fa1bf12e944aa1290eed955b2b, type: 2}
+  - {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -1890,6 +1893,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09c1a281db95944bada7fa8f2660faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shortRumourHeard: {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
+  shortRumourAction: {fileID: 11400000, guid: 3b6cb7fa1bf12e944aa1290eed955b2b, type: 2}
 --- !u!114 &114785469297181100
 MonoBehaviour:
   m_ObjectHideFlags: 1

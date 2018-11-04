@@ -14,12 +14,13 @@ MonoBehaviour:
   targetName: Goal Target 1
   descriptorResistance: Advance Goal
   descriptorAuthority: Loose cannon on deck
-  reason: It's where the AI is
+  reasonText: Attaining a Goal
+  rumourText: Meet your Goal
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
   gear: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 51f529f1815bf554e9166edd1ecbb5ca, type: 2}
   nodeArc: {fileID: 0}
   listOfGoodEffects: []
@@ -30,16 +31,17 @@ MonoBehaviour:
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
-  targetStatus: 2
+  targetStatus: 1
   infoLevel: 0
   targetID: 27
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 12
+  nodeID: 9
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 7
-  timerWindow: 3
+  timerHardLimit: 6
+  timerWindow: 10
+  listOfRumourContacts: 2a000000220000000b000000

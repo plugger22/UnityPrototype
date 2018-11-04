@@ -14,12 +14,13 @@ MonoBehaviour:
   targetName: VIP target 1
   descriptorResistance: Assassinate Mayor
   descriptorAuthority: V.I.P Schedule leaked
-  reason: Kill that Sucker
+  reasonText: Killing the Mayor
+  rumourText: Assassinate the Mayor
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
   gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 00209517fd7d8b9428fc7aaaf74d6d88, type: 2}
   nodeArc: {fileID: 0}
   listOfGoodEffects: []
@@ -29,17 +30,18 @@ MonoBehaviour:
   profileBase: {fileID: 11400000, guid: 5d127dfe7a7cb0d4f8033fbd8a983572, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
-  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  targetStatus: 4
+  profile: {fileID: 11400000, guid: 5d127dfe7a7cb0d4f8033fbd8a983572, type: 2}
+  targetStatus: 1
   infoLevel: 0
   targetID: 21
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
+  nodeID: 21
   turnSuccess: -1
-  turnDone: 18
+  turnDone: -1
   numOfAttempts: 0
-  turnsWindow: 10
+  turnsWindow: 5
   timerDelay: 0
-  timerHardLimit: 2
-  timerWindow: 0
+  timerHardLimit: 6
+  timerWindow: 5
+  listOfRumourContacts: 120000002200000007000000

@@ -14,7 +14,8 @@ MonoBehaviour:
   targetName: Power Grid 2
   descriptorResistance: Glitch out the Power
   descriptorAuthority: Possible Security Flaw
-  reason: Power Grid being shorted out
+  reasonText: Disrupted Power Supply
+  rumourText: Disrupt Power Supply
   metaLevel: {fileID: 0}
   targetLevel: 2
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
@@ -44,6 +45,7 @@ MonoBehaviour:
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 5
-  timerDelay: 10
+  timerDelay: 5
   timerHardLimit: 0
   timerWindow: 5
+  listOfRumourContacts: 

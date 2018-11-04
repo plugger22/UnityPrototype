@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: DistrictsSydney
   m_EditorClassIdentifier: 
   descriptor: Sydney district names
+  category: {fileID: 11400000, guid: 8c3d71e162950234e9ea67442945c204, type: 2}
   randomList:
   - Alexandria
   - Annandale
