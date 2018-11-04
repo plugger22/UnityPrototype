@@ -16,4 +16,12 @@ public class NameSet : ScriptableObject
     [Tooltip("TextList for LAST names. Need 100 records")]
     public TextList lastNames;
 
+    public void OnEnable()
+    {
+        Debug.Assert(firstMaleNames != null, "Invalid firstMaleNames (Null)");
+        Debug.Assert(firstFemaleNames != null, "Invalid firstFemaleNames (Null)");
+        Debug.Assert(lastNames != null, "Invalid lastNames (Null)");
+
+    }
+
 }

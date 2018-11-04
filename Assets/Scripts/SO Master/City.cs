@@ -52,7 +52,10 @@ public class City : ScriptableObject
     {
         Debug.Assert(Arc != null, "Invalid CityArc (Null)");
         Debug.Assert(country != null, "Invalid Country (Null)");
+        Debug.Assert(iconDistrict != null, "Invalid iconDistrict (Null)");
+        Debug.Assert(airportDistrict != null, "Invalid airportDistrict (Null)");
         Debug.Assert(districtNames != null, "Invalid TextList of DistrictNames (Null)");
+        Debug.Assert(districtNames.category.name.Equals("Districts") == true, "Invalid districtNames TextList (wrong Category)");
     }
 
     /// <summary>

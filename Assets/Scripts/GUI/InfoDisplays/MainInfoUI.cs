@@ -18,12 +18,13 @@ public class MainInfoUI : MonoBehaviour
 
     [Header("Buttons")]
     public Button buttonClose;
-    public Button buttonInfo;                       //next to panel close button
+    public Button buttonInfo;                               //next to panel close button
     public Button buttonHome;
     public Button buttonBack;
     public Button buttonForward;
-    public Button buttonHelp;                       //bottom of RHS panel
-    public Button buttonItem;                       //bottom of RHS panel, eg. 'Show Me'
+    public Button buttonHelpCentre;                         //bottom of RHS panel (centred below, NO 'Show Me' button present)
+    public Button buttonHelpCombined;                       //bottom of RHS panel (bottom right, in line with 'Show Me' button)
+    public Button buttonItem;                               //bottom of RHS panel, eg. 'Show Me'
     public TextMeshProUGUI buttonItemText;
 
     [Header("LHS Miscellanous")]
@@ -226,7 +227,8 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(buttonHome != null, "Invalid buttonHome (Null)");
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonForward != null, "Invalid buttonForward (Null)");
-        Debug.Assert(buttonHelp != null, "Invalid buttonHelp (Null)");
+        Debug.Assert(buttonHelpCentre != null, "Invalid buttonHelp (Null)");
+        Debug.Assert(buttonHelpCombined != null, "Invalid buttonHelpCombined (Null)");
         Debug.Assert(buttonItem != null, "Invalid buttonDecisions (Null)");
         Debug.Assert(buttonItemText != null, "Invalid buttonItemText (Null)");
         //set button interaction events
@@ -487,7 +489,7 @@ public class MainInfoUI : MonoBehaviour
         itemButtonTooltip.tooltipHeader = string.Format("{0}Show Me{1}", colourRebel, colourEnd);
         itemButtonTooltip.tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
         itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourHighlight, colourEnd);
-        itemButtonTooltip.x_offset = 100;
+        itemButtonTooltip.x_offset = 125;
     }
 
     /// <summary>
@@ -896,7 +898,8 @@ public class MainInfoUI : MonoBehaviour
             details_text_bottom.text = results.Item2;
         }
         //hide both RHS buttons (help and decision)
-        buttonHelp.gameObject.SetActive(false);
+        buttonHelpCentre.gameObject.SetActive(false);
+        buttonHelpCombined.gameObject.SetActive(false);
         buttonItem.gameObject.SetActive(false);
         //redrawn main page
         DisplayItemPage(tabIndex);
@@ -936,7 +939,7 @@ public class MainInfoUI : MonoBehaviour
                 buttonDecision.gameObject.SetActive(true);
                 buttonHelp.gameObject.SetActive(false);
             }*/
-            //show me data
+            //Show me data
             currentItemNodeID = data.nodeID;
             currentItemConnID = data.connID;
             if (data.nodeID > -1 || data.connID > -1)
@@ -945,7 +948,8 @@ public class MainInfoUI : MonoBehaviour
                 buttonInteractionItem.SetButton(EventType.MainInfoShowMe);
                 buttonItemText.text = "Show Me";
                 buttonItem.gameObject.SetActive(true);
-                buttonHelp.gameObject.SetActive(false);
+                buttonHelpCentre.gameObject.SetActive(false);
+                buttonHelpCombined.gameObject.SetActive(true);
             }
             else
             {
@@ -954,10 +958,11 @@ public class MainInfoUI : MonoBehaviour
                 //set tooltip interaction -> TO DO
 
                 buttonItem.gameObject.SetActive(false);
+                buttonHelpCombined.gameObject.SetActive(false);
                 //display help only if available
                 if (data.help > -1)
-                { buttonHelp.gameObject.SetActive(true); }
-                else { buttonHelp.gameObject.SetActive(false); }
+                { buttonHelpCentre.gameObject.SetActive(true); }
+                else { buttonHelpCentre.gameObject.SetActive(false); }
             }
             //remove highlight
             if (highlightIndex != itemIndex)
