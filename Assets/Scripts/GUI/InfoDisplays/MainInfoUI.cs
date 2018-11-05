@@ -56,6 +56,16 @@ public class MainInfoUI : MonoBehaviour
     public GameObject main_item_17;
     public GameObject main_item_18;
     public GameObject main_item_19;
+    public GameObject main_item_20;
+    public GameObject main_item_21;
+    public GameObject main_item_22;
+    public GameObject main_item_23;
+    public GameObject main_item_24;
+    public GameObject main_item_25;
+    public GameObject main_item_26;
+    public GameObject main_item_27;
+    public GameObject main_item_28;
+    public GameObject main_item_29;
 
     [Header("LHS Active tabs")]
     //page tabs -> active
@@ -124,7 +134,7 @@ public class MainInfoUI : MonoBehaviour
     private int maxHighlightIndex = -1;
     private int viewTurnNumber = -1;                                 //turn number of data being viewed
     private int currentTurn = -1;                                    //cached current turn # (SetMainInfo)
-    private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 20
+    private int numOfItemsTotal = 30;                                //hardwired Max number of items -> 30
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
@@ -273,16 +283,26 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(main_item_7 != null, "Invalid item_7 (Null)");
         Debug.Assert(main_item_8 != null, "Invalid item_8 (Null)");
         Debug.Assert(main_item_9 != null, "Invalid item_9 (Null)");
-        Debug.Assert(main_item_10 != null, "Invalid item_0 (Null)");
-        Debug.Assert(main_item_11 != null, "Invalid item_1 (Null)");
-        Debug.Assert(main_item_12 != null, "Invalid item_2 (Null)");
-        Debug.Assert(main_item_13 != null, "Invalid item_3 (Null)");
-        Debug.Assert(main_item_14 != null, "Invalid item_4 (Null)");
-        Debug.Assert(main_item_15 != null, "Invalid item_5 (Null)");
-        Debug.Assert(main_item_16 != null, "Invalid item_6 (Null)");
-        Debug.Assert(main_item_17 != null, "Invalid item_7 (Null)");
-        Debug.Assert(main_item_18 != null, "Invalid item_8 (Null)");
-        Debug.Assert(main_item_19 != null, "Invalid item_9 (Null)");
+        Debug.Assert(main_item_10 != null, "Invalid item_10 (Null)");
+        Debug.Assert(main_item_11 != null, "Invalid item_11 (Null)");
+        Debug.Assert(main_item_12 != null, "Invalid item_12 (Null)");
+        Debug.Assert(main_item_13 != null, "Invalid item_13 (Null)");
+        Debug.Assert(main_item_14 != null, "Invalid item_14 (Null)");
+        Debug.Assert(main_item_15 != null, "Invalid item_15 (Null)");
+        Debug.Assert(main_item_16 != null, "Invalid item_16 (Null)");
+        Debug.Assert(main_item_17 != null, "Invalid item_17 (Null)");
+        Debug.Assert(main_item_18 != null, "Invalid item_18 (Null)");
+        Debug.Assert(main_item_19 != null, "Invalid item_19 (Null)");
+        Debug.Assert(main_item_20 != null, "Invalid item_20 (Null)");
+        Debug.Assert(main_item_21 != null, "Invalid item_21 (Null)");
+        Debug.Assert(main_item_22 != null, "Invalid item_22 (Null)");
+        Debug.Assert(main_item_23 != null, "Invalid item_23 (Null)");
+        Debug.Assert(main_item_24 != null, "Invalid item_24 (Null)");
+        Debug.Assert(main_item_25 != null, "Invalid item_25 (Null)");
+        Debug.Assert(main_item_26 != null, "Invalid item_26 (Null)");
+        Debug.Assert(main_item_27 != null, "Invalid item_27 (Null)");
+        Debug.Assert(main_item_28 != null, "Invalid item_28 (Null)");
+        Debug.Assert(main_item_29 != null, "Invalid item_29 (Null)");
         arrayItemMain[0] = main_item_0;
         arrayItemMain[1] = main_item_1;
         arrayItemMain[2] = main_item_2;
@@ -303,6 +323,16 @@ public class MainInfoUI : MonoBehaviour
         arrayItemMain[17] = main_item_17;
         arrayItemMain[18] = main_item_18;
         arrayItemMain[19] = main_item_19;
+        arrayItemMain[20] = main_item_20;
+        arrayItemMain[21] = main_item_21;
+        arrayItemMain[22] = main_item_22;
+        arrayItemMain[23] = main_item_23;
+        arrayItemMain[24] = main_item_24;
+        arrayItemMain[25] = main_item_25;
+        arrayItemMain[26] = main_item_26;
+        arrayItemMain[27] = main_item_27;
+        arrayItemMain[28] = main_item_28;
+        arrayItemMain[29] = main_item_29;
         //active tab array
         Debug.Assert(tab_active_0 != null, "Invalid tab_active_0 (Null)");
         Debug.Assert(tab_active_1 != null, "Invalid tab_active_1 (Null)");
@@ -445,7 +475,7 @@ public class MainInfoUI : MonoBehaviour
                         //attached interaction script
                         MainInfoRightItemUI itemScript = child.GetComponent<MainInfoRightItemUI>();
                         if (itemScript != null)
-                        { itemScript.SetItemIndex(index); }
+                        { itemScript.SetItemIndex(index, numOfItemsTotal); }
                         else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
                     }
                     else if (child.name.Equals("icon") == true)
@@ -1403,5 +1433,11 @@ public class MainInfoUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Max number of items the InfoApp can handle
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxNumOfItems()
+    { return numOfItemsTotal; }
     //new methods above here
 }

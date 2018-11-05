@@ -11,13 +11,14 @@ public class MainInfoRightItemUI : MonoBehaviour, IPointerClickHandler
 
     private int itemIndex = -1;          //assigned at start by MainInfoUI, corresponds to listOfCurrentPageData[index]
 
+
     /// <summary>
     /// sets item index
     /// </summary>
     /// <param name="index"></param>
-    public void SetItemIndex(int index)
+    public void SetItemIndex(int index, int maxItemNumber)
     {
-        Debug.Assert(index > -1 && index < 20, "Invalid index (must be > -1 && < 20)");
+        Debug.Assert(index > -1 && index < maxItemNumber, string.Format("Invalid index (must be > -1 && < {0})", maxItemNumber));
         itemIndex = index;
         /*Debug.LogFormat("[Tst] MainInfoRightItemUI.cs -> SetItemIndex: itemIndex {0}{1}", itemIndex, "\n");*/
     }
