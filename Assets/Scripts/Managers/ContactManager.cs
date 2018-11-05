@@ -630,7 +630,7 @@ public class ContactManager : MonoBehaviour
                                     Node node = null;
                                     //city targets always have the correct node (would be silly to have an airport target not at the airport)
                                     if (target.targetType.name.Equals("City") == true)
-                                    { node = node = GameManager.instance.dataScript.GetNode(target.nodeID); }
+                                    { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
                                     else
                                     {
                                         if (CheckContactIsReliable(contact) == true)

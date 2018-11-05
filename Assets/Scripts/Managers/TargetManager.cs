@@ -91,18 +91,6 @@ public class TargetManager : MonoBehaviour
         Debug.Assert(activateLowLimit > activateMedLimit, "invalid activateLowLimit (should be more than MED)");
         Debug.Assert(activateMedLimit > activateHighLimit, "invalid activateMedLimit (should be more than HIGH)");
         Debug.Assert(activateHighLimit > activateExtremeLimit, "invalid activateHighLimit (should be more than EXTREME)");
-
-        /*//calculate limits
-        int numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
-        StartTargets = numOfNodes * startPercentTargets / 100;
-        MaxTargets = numOfNodes * maxPercentTargets / 100;
-        ActiveTargets = MaxTargets - StartTargets;
-        ActiveTargets = Mathf.Max(0, ActiveTargets);*/
-        /*Debug.LogFormat("TargetManager.cs -> Initialise: MaxTargets {0}, StartTargets {1}, ActiveTargets {2}, LiveTargets {3}{4}", MaxTargets, StartTargets, ActiveTargets, LiveTargets, "\n");
-        //Set initialise targets on map
-        SetRandomTargets(1, Status.Active);
-        SetRandomTargets(StartTargets, Status.Live);*/
-
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
@@ -1238,7 +1226,7 @@ public class TargetManager : MonoBehaviour
                     {
                         //Success required to generate a followOn target?
                         if (target.isSuccessNeeded == true && target.turnSuccess == -1)
-                        { Debug.LogFormat("[Tst] TargetManager.cs -> SetTargetDone: FollowOn for target \"{0}\" Invalid as target not successfully completed", target.targetName); }
+                        { Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: FollowOn for target \"{0}\" Invalid as target not successfully completed", target.targetName); }
                         else
                         {
                             switch (target.targetType.name)

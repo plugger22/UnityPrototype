@@ -860,7 +860,7 @@ public class DebugGUI : MonoBehaviour
                     case 13:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.helpScript.DisplayHelp();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 500), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 800), analysis, customBackground);
                         break;
                     //Ongoing Register
                     case 14:

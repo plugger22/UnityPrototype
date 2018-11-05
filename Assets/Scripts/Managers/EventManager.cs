@@ -119,10 +119,12 @@ public enum EventType
 
     //Main Info
     MainInfoOpen,
+    MainInfoOpenInterim,
     MainInfoClose,
     MainInfoTabOpen,
     MainInfoShowDetails,
     MainInfoHome,
+    MainInfoEnd,
     MainInfoBack,
     MainInfoForward,
     MainInfoUpArrow,

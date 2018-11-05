@@ -33,7 +33,13 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat(" Utility Nodes -> F7{0}{1}", "\n", "\n");
         builder.AppendFormat(" Debug Show -> D{0}{1}", "\n", "\n");
         builder.AppendFormat(" Activity Time -> F9{0}", "\n");
-        builder.AppendFormat(" Activity Count -> F10{0}", "\n");
+        builder.AppendFormat(" Activity Count -> F10{0}{1}", "\n", "\n");
+        builder.AppendFormat(" MainInfoApp display -> I{0}", "\n");
+        builder.AppendFormat(" MainInfoApp ShowMe -> Space{0}", "\n");
+        builder.AppendFormat(" MainInfoApp Home -> Home{0}", "\n");
+        builder.AppendFormat(" MainInfoApp End -> End{0}", "\n");
+        builder.AppendFormat(" MainInfoApp Back -> PageDn{0}", "\n");
+        builder.AppendFormat(" MainInfoApp Forward -> PageUp{0}", "\n");
         return builder.ToString();
     }
 

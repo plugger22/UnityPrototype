@@ -184,14 +184,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
 
     //global SO's (enum equivalents)
-    /*private Dictionary<string, GlobalMeta> dictOfGlobalMeta = new Dictionary<string, GlobalMeta>();         //Key -> GlobalMeta.name, Value -> GlobalMeta
-    private Dictionary<string, GlobalChance> dictOfGlobalChance = new Dictionary<string, GlobalChance>();   //Key -> GlobalChance.name, Value -> GlobalChance
-    private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();         //Key -> GlobalType.name, Value -> GlobalType
-    private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();         //Key -> GlobalSide.name, Value -> GlobalSide
-    private Dictionary<string, GlobalWho> dictOfGlobalWho = new Dictionary<string, GlobalWho>();            //Key -> GlobaWho.name, Value -> GlobalWho*/
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
-    /*private Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = new Dictionary<string, NodeDatapoint>();   //Key -> NodeDatapoint.name, Value -> NodeDatapoint*/
 
     //
     // - - - Initialisation - - -
@@ -249,37 +243,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// stuff that is done a lot later in the process (dependant on other stuff being done first). Must be after metaScript.Initialise()
-    /// </summary>
-    public void InitialiseFinal()
-    {
-        /*//
-        // - - - Possible Targets - - - 
-        //
-        int currentMetaLevel = GameManager.instance.metaScript.metaLevel.level;
-        foreach (var target in dictOfTargets)
-        {
-            //add to list of Possible targets if a level 1 target & nodes of the required type are available
-            if (target.Value.targetLevel == 1)
-            {
-                //check target is the correct metaLevel or that no metaLevel has been specified
-                if (target.Value.metaLevel == null || target.Value.metaLevel.level == currentMetaLevel)
-                {
-                    //add to list of Possible targets
-                    if (CheckNodeInfo(target.Value.nodeArc.nodeArcID, NodeInfo.Number) > 0)
-                    { possibleTargetsPool.Add(target.Value); }
-                    else
-                    {
-                        Debug.Log(string.Format("DataManager: {0} has been ignored as there are no required node types present (\"{1}\"){2}",
-                            target.Value.name, target.Value.nodeArc.name, "\n"));
-                    }
-                }
-            }
-        }
-        Debug.Log(string.Format("DataManager: Initialise -> possibleTargetPool has {0} records{1}", possibleTargetsPool.Count, "\n"));*/
-    }
-
     //
     // - - - Info Flow (Notifications)- - - 
     //
@@ -308,6 +271,13 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid ItemData (Null)"); }
     }
+
+    /// <summary>
+    /// NOTE: Use this ONLY to access already processed data, eg. you want to display the MainInfoApp during a turn (UpdateCurrentInfoData has already been run at turn start)
+    /// </summary>
+    /// <returns></returns>
+    public MainInfoData GetCurrentInfoData()
+    { return currentInfoData; }
 
     /// <summary>
     /// Master method to take all ItemData's for the turn, add them to the array of Lists by tab and priority, package them into a MainInfoData ready for MainInfoUI.cs
@@ -1982,13 +1952,6 @@ public class DataManager : MonoBehaviour
         }
         return node;
     }
-
-    /*/// <summary>
-    /// returns possibleTargetsPool.Count
-    /// </summary>
-    /// <returns></returns>
-    public int CheckNumOfPossibleTargets()
-    { return possibleTargetsPool.Count; }*/
 
     public Dictionary<int, Target> GetDictOfTargets()
     { return dictOfTargets; }

@@ -389,10 +389,12 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoOpenInterim, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoEnd, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoUpArrow, OnEvent, "MainInfoUI");
@@ -513,6 +515,9 @@ public class MainInfoUI : MonoBehaviour
                 MainInfoData data = Param as MainInfoData;
                 SetMainInfo(data);
                 break;
+            case EventType.MainInfoOpenInterim:
+                OpenMainInfoBetweenTurns();
+                break;
             case EventType.MainInfoClose:
                 CloseMainInfo();
                 break;
@@ -524,6 +529,9 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case EventType.MainInfoHome:
                 ExecuteButtonHome();
+                break;
+            case EventType.MainInfoEnd:
+                ExecuteButtonEnd();
                 break;
             case EventType.MainInfoBack:
                 ExecuteButtonBack();
@@ -616,6 +624,7 @@ public class MainInfoUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid MainInfoData package (Null)"); }
     }
+
 
     /// <summary>
     /// Updates cached data in dictionary
@@ -1057,6 +1066,22 @@ public class MainInfoUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Open MainInfoApp between turns 
+    /// </summary>
+    private void OpenMainInfoBetweenTurns()
+    {
+        if (currentTurn > 0)
+        {
+            MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
+            if (data != null)
+            {
+                SetMainInfo(data);
+            }
+            else { Debug.LogWarning("Invalid MainInfoData (Null)"); }
+        }
+    }
+
+    /// <summary>
     /// press Home button -> jump to current turn
     /// </summary>
     private void ExecuteButtonHome()
@@ -1083,12 +1108,39 @@ public class MainInfoUI : MonoBehaviour
     }
 
     /// <summary>
+    /// press End shortcut key -> jump to first turn
+    /// </summary>
+    private void ExecuteButtonEnd()
+    {
+        //get & update data
+        viewTurnNumber = 0;
+        MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
+        if (data != null)
+        {
+            UpdateData(data);
+            //Open last used tab
+            if (currentTabIndex > -1)
+            { OpenTab(currentTabIndex); }
+            else
+            {
+                //default to main tab -> should never be used
+                Debug.Assert(currentTabIndex < 0, "Invalid currentTabIndex (< 0)");
+                OpenTab(0);
+            }
+            //update button status
+            UpdateNavigationStatus();
+        }
+        else { Debug.LogWarning("Invalid data (Null)"); }
+    }
+
+    /// <summary>
     /// press Back button -> go back one turn (until start)
     /// </summary>
     private void ExecuteButtonBack()
     {
         //get & update data
         viewTurnNumber -= 1;
+        viewTurnNumber = Mathf.Max(0, viewTurnNumber);
         MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
         if (data != null)
         {
@@ -1115,6 +1167,7 @@ public class MainInfoUI : MonoBehaviour
     {
         //get & update data
         viewTurnNumber += 1;
+        viewTurnNumber = Mathf.Min(currentTurn, viewTurnNumber);
         MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
         if (data != null)
         {
