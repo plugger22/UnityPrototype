@@ -1875,12 +1875,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 60662
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 1
   win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
@@ -1977,7 +1977,8 @@ MonoBehaviour:
   confidenceHigh: 100
   confidenceMed: 50
   confidenceLow: 25
-  rumourTarget: 5
+  rumourTarget: 10
+  maxRumoursTarget: 2
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1

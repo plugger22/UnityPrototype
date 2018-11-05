@@ -133,6 +133,8 @@ public enum EventType
     MainInfoRightArrow,
     MainInfoShowMe,
     MainInfoRestore,
+    MainInfoTickerFaster,
+    MainInfoTickerSlower,
     //ShowMe
     ShowMeRestore,
     //City Info

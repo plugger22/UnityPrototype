@@ -36,6 +36,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
 
+    [Header("Alerts")]
+    [Tooltip("Default time that Alerts stay on screen before disappearing")]
+    [Range(1f, 5f)] public float alertDefaultTime = 3.0f;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantAuthorityActor;

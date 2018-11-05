@@ -344,6 +344,16 @@ public class InputManager : MonoBehaviour
                                     //Keyboard shortcut for go to start (day 1) -> End
                                     EventManager.instance.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessInput StartDay \"{0}\"", Input.inputString.ToUpper()));
                                 }
+                                else if (Input.GetButtonDown("Plus") == true)
+                                {
+                                    //Keyboard shortcut to increase speed of ticker tape
+                                    EventManager.instance.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessInput Plus \"{0}\"", Input.inputString.ToUpper()));
+                                }
+                                else if (Input.GetButtonDown("Minus") == true)
+                                {
+                                    //Keyboard shortcut to decrease speed of ticker tape
+                                    EventManager.instance.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessInput Minus \"{0}\"", Input.inputString.ToUpper()));
+                                }
                                 break;
                         }
                         break;

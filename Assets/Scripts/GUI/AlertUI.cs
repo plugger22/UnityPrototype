@@ -12,7 +12,17 @@ public class AlertUI : MonoBehaviour
     public GameObject alertObject;                                      //provides the text alert at top of map for ShowNodes
     public TextMeshProUGUI alertText;
 
+    private Coroutine myCoroutine;
+    private float timeToDisplay;                                        //how long the Alert will stay on screen (there is a global default and a manual override). Auto leaves if closed.
+    private float timeDefault;                                          //default time to display alert
+
     private static AlertUI alertUI;
+
+    public void Awake()
+    {
+        timeDefault = GameManager.instance.guiScript.alertDefaultTime;
+        Debug.Assert(timeDefault > 0, "Invalid timeDefault (must be > Zero)");
+    }
 
     /// <summary>
     /// provide a static reference to the AlertUI that can be accessed from any script
@@ -31,10 +41,10 @@ public class AlertUI : MonoBehaviour
 
 
     /// <summary>
-    /// display AlertUI with appropriate text
+    /// display AlertUI with appropriate text. Time is how long alert will stay on screen. Leave at default '0' for the default timer value to be used (it's greater than zero)
     /// </summary>
     /// <param name="text"></param>
-    public void SetAlertUI(string text)
+    public void SetAlertUI(string text, float timeForAlertToShow = 0)
     {
         if (alertObject != null)
         {
@@ -45,6 +55,11 @@ public class AlertUI : MonoBehaviour
                     alertText.text = text;
                     //show on screen
                     alertObject.SetActive(true);
+                    //start coroutine for set time
+                    timeToDisplay = timeForAlertToShow;
+                    if (timeToDisplay == 0f)
+                    { timeToDisplay = timeDefault; }
+                    myCoroutine = StartCoroutine("AlertTimer");
                     Debug.LogFormat("[UI] AlertUI.cs -> SetAlertUI{0}", "\n");
                 }
                 else { Debug.LogErrorFormat("Invalid text parameter (Null or empty){0}", "\n"); }
@@ -64,12 +79,25 @@ public class AlertUI : MonoBehaviour
             Debug.LogFormat("[UI] AlertUI.cs -> CloseAlertUI{0}", "\n");
             alertObject.SetActive(false);
             GameManager.instance.nodeScript.NodeShowFlag = 0;
+            //stop coroutine if still running
+            if (myCoroutine != null)
+            { StopCoroutine("AlertTimer"); }
             if (resetFlag == true)
             {
                 //redraw to remove highlighted nodes
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "AlertUI.cs -> CloseAlertUI");
             }
         }
+    }
+
+    /// <summary>
+    /// Coroutine to ensure Alert is displayed for a set period before disappearing
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator AlertTimer()
+    {
+        yield return new WaitForSeconds(timeToDisplay);
+        CloseAlertUI();
     }
 
     //new methods above here

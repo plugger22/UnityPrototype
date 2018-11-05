@@ -101,7 +101,9 @@ public class MainInfoUI : MonoBehaviour
     [Header("Ticker Text")]
     public GameObject tickerObject;
     public TextMeshProUGUI tickerText;
-    public float ScrollSpeed = 10;
+    public float tickerSpeed = 10;
+    public float tickerSpeedMax = 20;
+    public float tickerSpeedMin = 5;
 
 
     [Header("Globals")]
@@ -172,7 +174,7 @@ public class MainInfoUI : MonoBehaviour
 
     //colours
     string colourDefault;
-    string colourHighlight;
+    string colourNeutral;
     string colourGrey;
     string colourAlert;
     string colourRebel;
@@ -405,6 +407,8 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoShowMe, OnEvent, "MainInfoUI");
         EventManager.instance.AddListener(EventType.MainInfoRestore, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoTickerFaster, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoTickerSlower, OnEvent, "MainInfoUI");
     }
 
     public void Initialise()
@@ -492,7 +496,7 @@ public class MainInfoUI : MonoBehaviour
         //itemButton
         itemButtonTooltip.tooltipHeader = string.Format("{0}Show Me{1}", colourRebel, colourEnd);
         itemButtonTooltip.tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
-        itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourHighlight, colourEnd);
+        itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
         itemButtonTooltip.x_offset = 125;
     }
 
@@ -559,6 +563,12 @@ public class MainInfoUI : MonoBehaviour
             case EventType.MainInfoRestore:
                 ExecuteRestore();
                 break;
+            case EventType.MainInfoTickerFaster:
+                ExecuteTickerFaster();
+                break;
+            case EventType.MainInfoTickerSlower:
+                ExecuteTickerSlower();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -571,7 +581,7 @@ public class MainInfoUI : MonoBehaviour
     public void SetColours()
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
@@ -883,6 +893,8 @@ public class MainInfoUI : MonoBehaviour
         { StopCoroutine(myCoroutineMeeting); }
         if (myCoroutineTicker != null)
         { StopCoroutine(myCoroutineTicker); }
+        //switch of AlertUI 
+        GameManager.instance.alertScript.CloseAlertUI();
         /*StopFlares();*/
         //set game state
         isRunning = false;
@@ -985,7 +997,7 @@ public class MainInfoUI : MonoBehaviour
                 { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[highlightIndex].itemText, colourEnd); }
                 highlightIndex = itemIndex;
                 //highlight item -> show as yellow
-                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourHighlight, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);
+                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);
             }
         }
         else
@@ -1019,46 +1031,46 @@ public class MainInfoUI : MonoBehaviour
         {
             case ItemTab.ALERTS:
                 textTop = "Incoming Messages";
-                builder.AppendFormat("{0}<b>Click</b>{1} on an {2}<b>Item</b>{3}{4}for more information", colourHighlight, colourEnd, colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("{0}<b>Click</b>{1} on an {2}<b>Item</b>{3}{4}for more information", colourNeutral, colourEnd, colourNeutral, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append("Items are ordered by priority");
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}<b>No action required</b>{1}", colourHighlight, colourEnd);
+                builder.AppendFormat("{0}<b>No action required</b>{1}", colourNeutral, colourEnd);
                 break;
             case ItemTab.Request:
                 textTop = "Make a Request";
-                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}", colourHighlight, colourEnd, "\n",
+                builder.AppendFormat("You can request a {0}<b>Meeting</b>{1}{2}{3}<b>OTHER PARTIES</b>{4} can request a meeting with you{5}{6}", colourNeutral, colourEnd, "\n",
                     colourAlert, colourEnd, "\n", "\n");
-                builder.AppendFormat("You can, <i>if you wish</i>,{0}select {1}<b>ONE</b>{2} request", "\n", colourHighlight, colourEnd);
+                builder.AppendFormat("You can, <i>if you wish</i>,{0}select {1}<b>ONE</b>{2} request", "\n", colourNeutral, colourEnd);
                 builder.AppendFormat("{0}{1}The meeting will be at the {2}<b>Start</b>{3}{4}of the {5}<b>Next</b>{6} day", "\n", "\n",
-                    colourHighlight, colourEnd, "\n", colourHighlight, colourEnd);
+                    colourNeutral, colourEnd, "\n", colourNeutral, colourEnd);
                 break;
             case ItemTab.Meeting:
                 textTop = "Resolve a Meeting";
-                builder.AppendFormat("During your Meeting you can{0}choose {1}<b>ONE</b>{2} option", "\n", colourHighlight, colourEnd);
+                builder.AppendFormat("During your Meeting you can{0}choose {1}<b>ONE</b>{2} option", "\n", colourNeutral, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("If you decide to do nothing{0}the {1}<b>DEFAULT OPTION</b>{2}{3}will be chosen for you", "\n", colourAlert, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("There will be a {0}<b>Cooldown period</b>{1}{2}before you can meet this{3}person, faction or organisation{4}again", colourHighlight, colourEnd,
+                builder.AppendFormat("There will be a {0}<b>Cooldown period</b>{1}{2}before you can meet this{3}person, faction or organisation{4}again", colourNeutral, colourEnd,
                     "\n", "\n", "\n");
                 break;
             case ItemTab.Effects:
                 textTop = "Ongoing Effects";
                 builder.AppendFormat("All effects currently impacting{0}the game", "\n");
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("Sorted by type{0}{1}Mouseover {2}<b>Icons</b>{3} to see type", "\n", "\n", colourHighlight, colourEnd);
+                builder.AppendFormat("Sorted by type{0}{1}Mouseover {2}<b>Icons</b>{3} to see type", "\n", "\n", colourNeutral, colourEnd);
                 break;
             case ItemTab.Traits:
                 textTop = "Traits Used";
-                builder.AppendFormat("{0}All traits used by Subordinates{1}{2}at the start of this or the previous day", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("{0}All traits used by Subordinates{1}{2}at the start of this or the previous day", colourNeutral, colourEnd, "\n");
                 break;
             case ItemTab.Random:
                 textTop = "Random Outcomes";
-                builder.AppendFormat("{0}All important events that required{1}{2}a random roll are shown here", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("{0}All important events that required{1}{2}a random roll are shown here", colourNeutral, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append("Events are for the start of this or the Previous day");
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("All rolls use a{0}{1}<b>Percentage</b>{2}{3}1d100 die", "\n", colourHighlight, colourEnd, "\n");
+                builder.AppendFormat("All rolls use a{0}{1}<b>Percentage</b>{2}{3}1d100 die", "\n", colourNeutral, colourEnd, "\n");
                 break;
             default:
                 //Mystery tab, doesn't exist
@@ -1290,6 +1302,28 @@ public class MainInfoUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Increase speed of MainInfo Ticker
+    /// </summary>
+    private void ExecuteTickerFaster()
+    {
+        tickerSpeed++;
+        tickerSpeed = Mathf.Min(tickerSpeedMax, tickerSpeed);
+        //feedback to player
+        GameManager.instance.alertScript.SetAlertUI(string.Format("{0}<b>News Ticker Speed increased to {1}</b>{2}", colourNeutral, tickerSpeed, colourEnd));
+    }
+
+    /// <summary>
+    /// Decrease speed of MainInfo Ticker
+    /// </summary>
+    private void ExecuteTickerSlower()
+    {
+        tickerSpeed--;
+        tickerSpeed = Mathf.Max(tickerSpeedMin, tickerSpeed);
+        //feedback to player
+        GameManager.instance.alertScript.SetAlertUI(string.Format("</b>News Ticker Speed decreased to {0}</b>", tickerSpeed));
+    }
+
+    /// <summary>
     /// subMethod to update status of three navigation buttons. Contains all necessary logic to auto set buttons
     /// </summary>
     /// <param name="isHome"></param>
@@ -1364,7 +1398,7 @@ public class MainInfoUI : MonoBehaviour
             tickerRectTransform.position = new Vector3(-scrollPosition % width, startPosition.y, startPosition.z);
             if (scrollPosition >= width) { scrollPosition = 0; }
             /*Debug.LogFormat("[Tst] scrollPosition -> {0}, width -> {1}, scrollPosition % width -> {2}{3}", scrollPosition, width, scrollPosition % width, "\n");*/
-            scrollPosition += ScrollSpeed * 10 * Time.deltaTime;
+            scrollPosition += tickerSpeed * 10 * Time.deltaTime;
             yield return null;
         }
     }
