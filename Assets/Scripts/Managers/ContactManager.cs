@@ -32,6 +32,8 @@ public class ContactManager : MonoBehaviour
     [Header("Rumours")]
     [Tooltip("Chance of somebody learning about an Active target, per turn")]
     [Range(0, 10)] public int rumourTarget = 5;
+    [Tooltip("Maximum number of Target Rumours allowed per turn (avoids a RNG spam)")]
+    [Range(1, 5)] public int maxRumoursTarget = 2;
 
     private int[] arrayOfContactNetworks;   //use for determining which actor's network of contacts was used
     private Actor[] arrayOfActors;          //used for contact activity. Updated from DataManager.cs each turn
@@ -578,6 +580,7 @@ public class ContactManager : MonoBehaviour
     public void CheckTargetRumours()
     {
         int numOfTargets;
+        int numOfRumours = 0;
         List<Target> listOfActiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Active);
         List<Target> listOfRumourTargets = new List<Target>();  //temp list to hold targets that have triggered a rumour
         if (listOfActiveTargets != null)
@@ -601,7 +604,6 @@ public class ContactManager : MonoBehaviour
                 //have any rumours been triggered?
                 if (numOfTargets > 0)
                 {
-
                     //
                     // - - - loop targets and assign to actors and their contacts
                     //
@@ -620,6 +622,13 @@ public class ContactManager : MonoBehaviour
                                 Contact contact = actor.GetRandomContact(target.listOfRumourContacts);
                                 if (contact != null)
                                 {
+                                    numOfRumours++;
+                                    //check max num of target rumours per turn not exceeded
+                                    if (numOfRumours == maxRumoursTarget)
+                                    {
+                                        /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: MAXIMUM num of target rumours reach {0}", numOfRumours);*/
+                                        break;
+                                    }
                                     //add contact to target list
                                     target.AddContactRumour(contact.contactID);
 
@@ -644,9 +653,8 @@ public class ContactManager : MonoBehaviour
                                         GameManager.instance.messageScript.ActorContactTargetRumour(text, actor, node, contact, target);
                                     }
                                     else { Debug.LogWarning("Invalid node (Null)"); }
-
                                 }
-                                else { Debug.LogWarning("Invalid random contact (Null)"); }
+                                else { Debug.LogFormat("No random contact (Null) for Actor {0}, {1}, id {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n"); }
                             }
                             else { Debug.LogWarningFormat("Invalid actor (Null) for SlotID {0}", slotID); }
                         }

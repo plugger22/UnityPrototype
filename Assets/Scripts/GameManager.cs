@@ -560,7 +560,7 @@ public class GameManager : MonoBehaviour
         if (nodeScript.NodeRedraw == true)
         { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
         //Handle Game Input
-        if (Input.anyKey == true)
+        if (Input.anyKeyDown == true)
         { inputScript.ProcessInput(); }
     }
 

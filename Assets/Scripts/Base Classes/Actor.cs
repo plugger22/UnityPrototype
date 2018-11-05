@@ -249,34 +249,39 @@ namespace gameAPI
             Contact contact = null;
             if (exclusionList != null)
             {
-                count = exclusionList.Count;
-                //create a  temp list of all contacts in network that aren't on the exclusion list
-                List<Contact> tempList = new List<Contact>();
-                foreach (var networkContact in dictOfContacts)
+                if (dictOfContacts.Count > 0)
                 {
-                    contact = networkContact.Value;
-                    if (contact != null)
+                    count = exclusionList.Count;
+                    //create a  temp list of all contacts in network that aren't on the exclusion list
+                    List<Contact> tempList = new List<Contact>();
+                    foreach (var networkContact in dictOfContacts)
                     {
-                        if (count > 0)
+                        contact = networkContact.Value;
+                        if (contact != null)
                         {
-                            if (exclusionList.Exists(x => x == contact.contactID) == false)
+                            if (count > 0)
+                            {
+                                if (exclusionList.Exists(x => x == contact.contactID) == false)
+                                {
+                                    //add weighted contact
+                                    for (int i = 0; i < contact.effectiveness; i++)
+                                    { tempList.Add(contact); }
+                                }
+                            }
+                            else
                             {
                                 //add weighted contact
                                 for (int i = 0; i < contact.effectiveness; i++)
                                 { tempList.Add(contact); }
                             }
                         }
-                        else
-                        {
-                            //add weighted contact
-                            for (int i = 0; i < contact.effectiveness; i++)
-                            { tempList.Add(contact); }
-                        }
+                        else { Debug.LogError("Invalid contact (Null)"); }
                     }
-                    else { Debug.LogError("Invalid contact (Null)"); }
+                    //randomly choose one contact from list and return
+                    if (tempList.Count > 0)
+                    { contact = tempList[Random.Range(0, tempList.Count)]; }
                 }
-                //randomly choose one contact from list and return
-                contact = tempList[Random.Range(0, tempList.Count)];
+                else { Debug.LogFormat("{0}, {1}, id {2} has NO CONTACTS{3}", actorName, arc.name, actorID, "\n"); }
             }
             else { Debug.LogWarning("Invalid exclusionList (Null)"); }
             return contact;

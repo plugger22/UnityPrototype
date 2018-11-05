@@ -156,6 +156,8 @@ public class MainInfoUI : MonoBehaviour
     //ItemData
     private List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];       //One dataset for each tab (excluding Help tab)
     List<ItemData> listOfCurrentPageItemData;                                               //current data for currently displayed page
+    //is MainINfoApp active?
+    private bool isRunning;
     //flashers
     private bool isRequestFlasherOn;
     private bool isMeetingFlasherOn;
@@ -616,6 +618,7 @@ public class MainInfoUI : MonoBehaviour
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
+            isRunning = true;
             ModalStateData package = new ModalStateData();
             package.mainState = ModalState.InfoDisplay;
             package.infoState = ModalInfoSubState.MainInfo;
@@ -882,6 +885,7 @@ public class MainInfoUI : MonoBehaviour
         { StopCoroutine(myCoroutineTicker); }
         /*StopFlares();*/
         //set game state
+        isRunning = false;
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
     }
@@ -1070,7 +1074,8 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     private void OpenMainInfoBetweenTurns()
     {
-        if (currentTurn > 0)
+        //can't do on first turn (needs to be initialised at least once) or if already running
+        if (currentTurn > 0 && isRunning == false)
         {
             MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
             if (data != null)
