@@ -856,7 +856,7 @@ public class NodeManager : MonoBehaviour
             NodeShowFlag = 1;
             //active AlertUI
             if (string.IsNullOrEmpty(displayText) == false)
-            { GameManager.instance.alertScript.SetAlertUI(displayText); }
+            { GameManager.instance.alertScript.SetAlertUI(displayText, 999); }
         }
     }
 

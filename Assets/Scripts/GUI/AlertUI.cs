@@ -18,7 +18,7 @@ public class AlertUI : MonoBehaviour
 
     private static AlertUI alertUI;
 
-    public void Awake()
+    public void Start()
     {
         timeDefault = GameManager.instance.guiScript.alertDefaultTime;
         Debug.Assert(timeDefault > 0, "Invalid timeDefault (must be > Zero)");
