@@ -89,7 +89,8 @@ public class LevelManager : MonoBehaviour
         //Dijkstra
         dijkstra = new DijkstraMethods();
         Debug.Assert(dijkstra != null, "Invalid dijkstra (Null)");
-        dijkstra.Initialise();
+        dijkstra.Initialise(listOfNodes);
+        dijkstra.GetShortestPath(0);
     }
 
     /// <summary>

@@ -14,21 +14,20 @@ namespace dijkstraAPI
         /// <summary>
         /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm
         /// </summary>
-        public void Initialise()
+        public void Initialise(List<Node> listOfNodes)
         {
             List<NodeD> listOfNodeD = new List<NodeD>();
             Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
-            Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-            if (dictOfNodes != null)
+            if (listOfNodes != null)
             {
                 if (dictOfNodeD != null)
                 {
                     //loop nodes and populate listOfNodeD
-                    foreach (var node in dictOfNodes)
+                    foreach (Node node in listOfNodes)
                     {
-                        if (node.Value != null)
+                        if (node != null)
                         {
-                            NodeD nodeD = new NodeD(int.MaxValue, node.Value.nodeID, node.Value.nodeName);
+                            NodeD nodeD = new NodeD(int.MaxValue, node.nodeID, node.nodeName);
                             //add nodeD to collections
                             if (nodeD != null)
                             {
@@ -44,22 +43,22 @@ namespace dijkstraAPI
                             }
                             
                         }
-                        else { Debug.LogWarning("Invalid node (Null) in dictOfNodes"); }
+                        else { Debug.LogWarning("Invalid node (Null) in listOfNodes"); }
                     }
-                    //loop dictOfNodes again  and add Neighbour data to NodeD's
-                    foreach (var node in dictOfNodes)
+                    //loop listOfNodes again  and add Neighbour data to NodeD's
+                    foreach (Node node in listOfNodes)
                     {
-                        if (node.Value != null)
+                        if (node != null)
                         {
                             //get mirror nodeD
                             NodeD nodeD = null;
-                            if (dictOfNodeD.ContainsKey(node.Value.nodeID) == true)
-                            { nodeD = dictOfNodeD[node.Value.nodeID]; }
+                            if (dictOfNodeD.ContainsKey(node.nodeID) == true)
+                            { nodeD = dictOfNodeD[node.nodeID]; }
                             if (nodeD != null)
                             {
                                 List<int> weights = new List<int>();
                                 List<NodeD> edges = new List<NodeD>();
-                                List<Node> listOfNeighbours = node.Value.GetNeighbouringNodes();
+                                List<Node> listOfNeighbours = node.GetNeighbouringNodes();
                                 if (listOfNeighbours != null)
                                 {
                                     //loop node neighbours and add edges and weights (assume all are value 1)
@@ -86,19 +85,39 @@ namespace dijkstraAPI
                                         nodeD.Weights = weights;
                                     }
                                 }
-                                else { Debug.LogWarningFormat("Invalid listOfNeighbours (Null) for node {0}, {1}, id {2}", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID); }
+                                else { Debug.LogWarningFormat("Invalid listOfNeighbours (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
                             }
-                            else { Debug.LogWarningFormat("Invalid nodeD (Null) for node {0}, {1}, id {2}", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID); }
+                            else { Debug.LogWarningFormat("Invalid nodeD (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
                         }
-                        else { Debug.LogWarning("Invalid node (Null) in dictOfNodes"); }
+                        else { Debug.LogWarning("Invalid node (Null) in listOfNodes"); }
                     }
-
                     Debug.LogFormat("[Tst] DijkstraMethods.cs -> Initialise: dictOfNodeD's has {0} records", dictOfNodeD.Count);
-
                 }
                 else { Debug.LogError("Invalid dictOfNodeD (Null)"); }
             }
-            else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+            else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
+
+
+        /// <summary>
+        /// Shortest path from source node to all other nodes
+        /// </summary>
+        public void GetShortestPath(int nodeID)
+        {
+            Debug.Assert(nodeID > -1, "Invalid nodeID (Must be > Zero)");
+            Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
+            if (dictOfNodeD != null)
+            {
+                List<NodeD> nodeList = new List<NodeD>(dictOfNodeD.Values);
+                Algorithm algo = new Algorithm();
+                int[] pi = null;
+                List<int> S = algo.Dijkstra(ref pi, ref nodeList, nodeID);
+                Debug.LogFormat("[Tst] DijkstraMethods -> GetShortestPath: S has {0} records", S.Count);
+            }
+            else { Debug.LogError("Invalid dictOfNodeD (Null)"); }
+        }
+
+
+        //new methods above here
     }
 }
