@@ -1433,11 +1433,8 @@ public class MainInfoUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Max number of items the InfoApp can handle
-    /// </summary>
-    /// <returns></returns>
-    public int GetMaxNumOfItems()
-    { return numOfItemsTotal; }
+
+
+
     //new methods above here
 }

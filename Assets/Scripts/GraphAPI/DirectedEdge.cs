@@ -35,7 +35,7 @@ namespace GraphAPI
         { return w; }
 
         public string GetDirectedEdgeString()
-        { return string.Format("{0} -> {1], weight {2:F3}", v, w, Weight); }
+        { return string.Format("{0} -> {1}, weight {2:F3}", v, w, Weight); }
 
     }
 
