@@ -6,6 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using GraphAPI;
 using gameAPI;
+using dijkstraAPI;
 using System.Text;
 
 public enum NodeArcTally { Current, Minimum, Count };   //used for indexing of arrayOfNodeArcTotals
@@ -46,6 +47,8 @@ public class LevelManager : MonoBehaviour
     private BoxCollider boxColliderStart;
     private BoxCollider boxColliderEnd;
 
+    private DijkstraMethods dijkstra;
+
     private List<NodeArc>[] listOfConnArcsDefault;      //Note that the array is indexed from 0 and that the node Connetions are from 1 (so -1 to numOfConnections to access correct list in array)
     private List<NodeArc>[] listOfConnArcsPreferred;    //Note that the array is indexed from 0 and that the node Connetions are from 1 (so -1 to numOfConnections to access correct list in array)
 
@@ -83,6 +86,10 @@ public class LevelManager : MonoBehaviour
         AssignSecurityLevels();
         InitialiseDistrictNames();
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
+        //Dijkstra
+        dijkstra = new DijkstraMethods();
+        Debug.Assert(dijkstra != null, "Invalid dijkstra (Null)");
+        dijkstra.Initialise();
     }
 
     /// <summary>

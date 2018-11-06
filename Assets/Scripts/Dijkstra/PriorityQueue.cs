@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Dijkstra
+namespace dijkstraAPI
 {
 
     public class PriorityQueue
@@ -66,7 +66,7 @@ namespace Dijkstra
             {
                 NodeD aNode = nodeList[i];
 
-                if (node.Id == aNode.Id)
+                if (node.ID == aNode.ID)
                     return i;
             }
 

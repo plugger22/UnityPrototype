@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
+using dijkstraAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,6 +142,7 @@ public class DataManager : MonoBehaviour
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
     private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                        //Key -> nodeID, Value -> Node
+    private Dictionary<int, NodeD> dictOfNodeD = new Dictionary<int, NodeD>();                      //Key -> id, Value -> NodeD (Dijkstra API)
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
@@ -1456,6 +1458,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, Node> GetDictOfNodes()
     { return dictOfNodes; }
+
+    public Dictionary<int, NodeD> GetDictOfNodeD()
+    { return dictOfNodeD; }
 
     public List<Node> GetListOfAllNodes()
     { return listOfNodes; }

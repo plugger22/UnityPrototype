@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Dijkstra
+namespace dijkstraAPI
 {
     /// <summary>
     /// Node class for Dijkstra algo
@@ -35,7 +35,7 @@ namespace Dijkstra
             }
         }
 
-        public int Id
+        public int ID
         {
             get
             {

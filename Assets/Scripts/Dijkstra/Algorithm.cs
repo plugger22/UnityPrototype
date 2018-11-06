@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Dijkstra
+namespace dijkstraAPI
 {
     public class Algorithm
     {
@@ -19,7 +19,7 @@ namespace Dijkstra
             {
                 NodeD u = Q.extractMin();
 
-                S.Add(u.Id);
+                S.Add(u.ID);
 
                 for (int i = 0; i < u.Adjacency.Count; i++)
                 {
@@ -48,7 +48,7 @@ namespace Dijkstra
             if (v.Distance > u.Distance + w)
             {
                 v.Distance = u.Distance + w;
-                pi[v.Id] = u.Id;
+                pi[v.ID] = u.ID;
             }
         }
     }
