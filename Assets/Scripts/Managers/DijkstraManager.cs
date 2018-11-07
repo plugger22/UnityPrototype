@@ -2,34 +2,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using dijkstraAPI;
+using gameAPI;
 using UnityEngine;
+
+/// <summary>
+/// subclass used to pass results of dijkstra algo to the calling method (InitialiseNodeData)
+/// </summary>
+public class DijkstraData
+{
+    public int[] arrayOfPaths;                     //corresponds to dijkstra pi[] array
+    public List<int> listOfOrder;                  //corresponds to dijkstra List <int> S, list of all other nodes from closest to furtherst
+    public int[] arrayOfDistances;                 //list of all NodeD's with distances for the recent ca
+
+    /*/// <summary>
+    /// Constructor that auto sizes array to numOfNodes -> NOTE: NO need to initialise collections
+    /// </summary>
+    /// <param name="numOfNodes"></param>
+    public DijkstraData(int numOfNodes)
+    {
+        listOfOrder = new List<int>();
+        arrayOfPaths = new int[numOfNodes];
+    }*/
+}
 
 /// <summary>
 /// Handles all Dijkstra algorithm functionality
 /// </summary>
 public class DijkstraManager : MonoBehaviour
 {
+    private Algorithm algorithm;
+    private int numOfNodes;             //used for sizing dijkstra dict arrays
 
 
 
-
+    public void Awake()
+    {
+        algorithm = new Algorithm();
+    }
     /// <summary>
     /// Start sequence
     /// </summary>
     public void Initialise()
     {
-        InitialiseData();
-        InitialisePaths();
+        numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
+        InitialiseDictData();
+        InitialiseNodeData();
     }
 
 
     /// <summary>
     /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm
     /// </summary>
-    private void InitialiseData()
+    private void InitialiseDictData()
     {
         //existing nodes
         List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
+        Debug.Assert(listOfNodes.Count == numOfNodes, string.Format("Mismatch on Node Count, listOfNodes {0} vs. numOfNodes {1}", listOfNodes.Count, numOfNodes));
         //set up mirror dijkstra friendly nodes (refered to as 'nodeD')
         List<NodeD> listOfNodeD = new List<NodeD>();
         Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
@@ -116,30 +144,121 @@ public class DijkstraManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
-    /// <summary>
-    /// Set up path and distance data
-    /// </summary>
-    private void InitialisePaths()
-    {
-        GetShortestPath(0);
-    }
+
 
     /// <summary>
-    /// Shortest path from source node to all other nodes
+    /// Shortest path from source node to all other nodes. Returns Dijkstra data package, null if a problem
     /// </summary>
-    public void GetShortestPath(int nodeID)
+    public DijkstraData GetShortestPath(int nodeID, List<NodeD> nodeList)
     {
         Debug.Assert(nodeID > -1, "Invalid nodeID (Must be > Zero)");
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
-        if (dictOfNodeD != null)
-        {
-            List<NodeD> nodeList = new List<NodeD>(dictOfNodeD.Values);
-            Algorithm algo = new Algorithm();
-            int[] pi = null;
-            List<int> S = algo.Dijkstra(ref pi, ref nodeList, nodeID);
-            Debug.LogFormat("[Tst] DijkstraMethods -> GetShortestPath: S has {0} records", S.Count);
+        DijkstraData data = new DijkstraData();
+        
+        if (nodeList != null)
+        {           
+            int[] pi = new int[numOfNodes];
+            List<int> S = algorithm.Dijkstra(ref pi, ref nodeList, nodeID);
+            data.listOfOrder = S;
+            data.arrayOfPaths = pi;
+            //create distance array
+            int[] arrayOfDistances = new int[numOfNodes];
+            for (int i = 0; i < nodeList.Count; i++)
+            { arrayOfDistances[nodeList[i].ID] = nodeList[i].Distance; }
+            data.arrayOfDistances = arrayOfDistances;
+            /*Debug.LogFormat("[Tst] DijkstraMethods -> GetShortestPath: S has {0} records", S.Count);*/
         }
-        else { Debug.LogError("Invalid dictOfNodeD (Null)"); }
+        else { Debug.LogError("Invalid nodeList (Null)"); data = null; }
+        return data;
     }
 
+    /// <summary>
+    /// Runs dijkstra algo on all nodes and initialises up main dijkstra collection (dictOfDijkstra)
+    /// </summary>
+    private void InitialiseNodeData()
+    {
+        int nodeID, indexPath, indexWeighted, indexUnweighted, indexMain;
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
+        Dictionary<int, int[,]> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstra();
+        if (dictOfNodes != null)
+        {
+            if (dictOfDijkstra != null)
+            {
+                if (dictOfNodeD != null)
+                {
+                    //array constants
+                    indexMain = (int)NodeDijkstra.Count;
+                    indexPath = (int)NodeDijkstra.Path;
+                    indexUnweighted = (int)NodeDijkstra.UnWeighted;
+                    indexWeighted = (int)NodeDijkstra.Weighted;
+                    //list Of NodeD's to pass to algo
+                    List<NodeD> nodeList = new List<NodeD>(dictOfNodeD.Values);
+                    //loop all nodes
+                    foreach (var node in dictOfNodes)
+                    {
+                        if (node.Value != null)
+                        {
+                            nodeID = node.Value.nodeID;
+                            //reset distances in nodeList (otherwise algo gives incorrect data)
+                            for (int i = 0; i < nodeList.Count; i++)
+                            { nodeList[i].Distance = int.MaxValue; }
+                            DijkstraData data = GetShortestPath(nodeID, nodeList);
+                            if (data != null)
+                            {
+                                //create data array
+                                int[,] arrayOfData = new int[indexMain, numOfNodes];
+                                //populate array
+                                for (int indexNode = 0; indexNode < numOfNodes; indexNode++)
+                                {
+                                    arrayOfData[indexPath, indexNode] = data.arrayOfPaths[indexNode];
+                                    //unweighted distance to indexed Node (all connections assumed to have a weight of 1)
+                                    arrayOfData[indexUnweighted, indexNode] = data.arrayOfDistances[indexNode];
+                                    //default data for weighted (not yet calculated)
+                                    arrayOfData[indexWeighted, indexNode] = -1;
+                                }
+                                //add entry to dictionary
+                                try
+                                { dictOfDijkstra.Add(node.Value.nodeID, arrayOfData); }
+                                catch (ArgumentNullException)
+                                { Debug.LogError("Invalid NodeD (Null)"); }
+                                catch (ArgumentException)
+                                { Debug.LogError(string.Format("Invalid (duplicate) node {0}, {1}, id {2}", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID)); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid DijkstraData package (Null) for node {0}, {1} ID {2}", node.Value.nodeName, node.Value.Arc.name, nodeID); }
+                        }
+                        else { Debug.LogWarning("Invalid node (Null)"); }
+                    }
+                }
+                else { Debug.LogError("Invalid dictOfNodeD (null)"); }
+            }
+            else { Debug.LogError("Invalid dictOfDijkstra (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// Debug method that takes two nodeID's and shows a flashing connection path between the two
+    /// </summary>
+    /// <param name="nodeSourceID"></param>
+    /// <param name="nodeDestinationID"></param>
+    public void DebugShowPath(int nodeSourceID, int nodeDestinationID)
+    {
+        Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        List<Connection> listOfConnections = new List<Connection>();
+        Node nodeSource = GameManager.instance.dataScript.GetNode(nodeSourceID);
+        if (nodeSource != null)
+        {
+            Connection connection = nodeSource.GetConnection(nodeDestinationID);
+            if (connection != null)
+            {
+                //add to list
+                listOfConnections.Add(connection);
+            }
+            else { Debug.LogWarningFormat("Invalid connection (Null) between node {0}, {1}, id {2} and nodeDestinationID {3}", nodeSource.nodeName, nodeSource.Arc.name, nodeSource, nodeDestinationID); }
+        }
+        else { Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeSourceID); }
+    }
+
+    //new methods above here
 }

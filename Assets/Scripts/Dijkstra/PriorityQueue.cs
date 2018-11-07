@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 namespace dijkstraAPI
 {
-
+    /// <summary>
+    /// Minimum value Priority Queue
+    /// </summary>
     public class PriorityQueue
     {
         int heapSize;
