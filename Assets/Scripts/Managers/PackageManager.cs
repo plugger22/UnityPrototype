@@ -305,4 +305,16 @@ namespace packageAPI
         public int connID = -1;             //if > -1 the relevant connection is highlighted in ModalState.ShowMe
     }
 
+
+    /// <summary>
+    /// used for storing Dijkstra data in dictOfDijkstra
+    /// </summary>
+    public class PathData
+    {
+        public int[] pathArray;                  //nodeID index, path back to source node via lookup
+        public int[] unweightedArray;            //nodeID index, distance back to source node assuming unweighted (1 each) connections
+        public int[] weightedArray;              //nodeID index, distance back to source node assuming weighted (1 + (int)ConnectionType 'security') connections
+    }
+
+    //new classes above here
 }

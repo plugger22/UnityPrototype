@@ -145,7 +145,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, NodeD> dictOfNodeD = new Dictionary<int, NodeD>();                      //Key -> id, Value -> NodeD (Dijkstra API)
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
-    private Dictionary<int, int[,]> dictOfDijkstra = new Dictionary<int, int[,]>();                 //Key -> nodeID, Value -> int array [NodeDijkstra.enum, 0 to num_of_nodes]
+    private Dictionary<int, PathData> dictOfDijkstra = new Dictionary<int, PathData>();             //Key -> nodeID, Value -> PathData
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
@@ -1463,8 +1463,20 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, NodeD> GetDictOfNodeD()
     { return dictOfNodeD; }
 
-    public Dictionary<int, int[,]> GetDictOfDijkstra()
+    public Dictionary<int, PathData> GetDictOfDijkstra()
     { return dictOfDijkstra; }
+
+    /// <summary>
+    /// returns PathData package for relevant source nodeID (Dijkstra), Null otherwise
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public PathData GetDijkstraPath(int nodeID)
+    {
+        if (dictOfDijkstra.ContainsKey(nodeID) == true)
+        { return dictOfDijkstra[nodeID]; }
+        return null;
+    }
 
     public List<Node> GetListOfAllNodes()
     { return listOfNodes; }

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using dijkstraAPI;
 using gameAPI;
+using packageAPI;
 using UnityEngine;
 
 /// <summary>
-/// subclass used to pass results of dijkstra algo to the calling method (InitialiseNodeData)
+/// local class used to pass results of dijkstra algo to the calling method (InitialiseNodeData)
 /// </summary>
 public class DijkstraData
 {
@@ -24,6 +25,7 @@ public class DijkstraData
         arrayOfPaths = new int[numOfNodes];
     }*/
 }
+
 
 /// <summary>
 /// Handles all Dijkstra algorithm functionality
@@ -176,21 +178,16 @@ public class DijkstraManager : MonoBehaviour
     /// </summary>
     private void InitialiseNodeData()
     {
-        int nodeID, indexPath, indexWeighted, indexUnweighted, indexMain;
+        int nodeID;
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
-        Dictionary<int, int[,]> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstra();
+        Dictionary<int, PathData> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstra();
         if (dictOfNodes != null)
         {
             if (dictOfDijkstra != null)
             {
                 if (dictOfNodeD != null)
                 {
-                    //array constants
-                    indexMain = (int)NodeDijkstra.Count;
-                    indexPath = (int)NodeDijkstra.Path;
-                    indexUnweighted = (int)NodeDijkstra.UnWeighted;
-                    indexWeighted = (int)NodeDijkstra.Weighted;
                     //list Of NodeD's to pass to algo
                     List<NodeD> nodeList = new List<NodeD>(dictOfNodeD.Values);
                     //loop all nodes
@@ -203,22 +200,19 @@ public class DijkstraManager : MonoBehaviour
                             for (int i = 0; i < nodeList.Count; i++)
                             { nodeList[i].Distance = int.MaxValue; }
                             DijkstraData data = GetShortestPath(nodeID, nodeList);
+                            PathData path = new PathData();
                             if (data != null)
                             {
-                                //create data array
-                                int[,] arrayOfData = new int[indexMain, numOfNodes];
                                 //populate array
                                 for (int indexNode = 0; indexNode < numOfNodes; indexNode++)
                                 {
-                                    arrayOfData[indexPath, indexNode] = data.arrayOfPaths[indexNode];
-                                    //unweighted distance to indexed Node (all connections assumed to have a weight of 1)
-                                    arrayOfData[indexUnweighted, indexNode] = data.arrayOfDistances[indexNode];
-                                    //default data for weighted (not yet calculated)
-                                    arrayOfData[indexWeighted, indexNode] = -1;
+                                    path.pathArray[indexNode] = data.arrayOfPaths[indexNode];
+                                    path.unweightedArray[indexNode] = data.arrayOfDistances[indexNode];
+                                    path.weightedArray[indexNode] = -1;
                                 }
                                 //add entry to dictionary
                                 try
-                                { dictOfDijkstra.Add(node.Value.nodeID, arrayOfData); }
+                                { dictOfDijkstra.Add(node.Value.nodeID, path); }
                                 catch (ArgumentNullException)
                                 { Debug.LogError("Invalid NodeD (Null)"); }
                                 catch (ArgumentException)
@@ -237,7 +231,7 @@ public class DijkstraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Debug method that takes two nodeID's and shows a flashing connection path between the two
+    /// Debug method that takes two nodeID's and shows a flashing connection path between the two (Unweighted pathing)
     /// </summary>
     /// <param name="nodeSourceID"></param>
     /// <param name="nodeDestinationID"></param>
@@ -245,19 +239,28 @@ public class DijkstraManager : MonoBehaviour
     {
         Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
         Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        int nextNodeID;
         List<Connection> listOfConnections = new List<Connection>();
-        Node nodeSource = GameManager.instance.dataScript.GetNode(nodeSourceID);
-        if (nodeSource != null)
+        //get path array
+        PathData data = GameManager.instance.dataScript.GetDijkstraPath(nodeSourceID);
+        if (data != null)
         {
-            Connection connection = nodeSource.GetConnection(nodeDestinationID);
-            if (connection != null)
+            //find destinationID in pathArray
+            nextNodeID = data.pathArray[nodeDestinationID];
+            Node nodeSource = GameManager.instance.dataScript.GetNode(nodeSourceID);
+            if (nodeSource != null)
             {
-                //add to list
-                listOfConnections.Add(connection);
+                Connection connection = nodeSource.GetConnection(nodeDestinationID);
+                if (connection != null)
+                {
+                    //add to list
+                    listOfConnections.Add(connection);
+                }
+                else { Debug.LogWarningFormat("Invalid connection (Null) between node {0}, {1}, id {2} and nodeDestinationID {3}", nodeSource.nodeName, nodeSource.Arc.name, nodeSource, nodeDestinationID); }
             }
-            else { Debug.LogWarningFormat("Invalid connection (Null) between node {0}, {1}, id {2} and nodeDestinationID {3}", nodeSource.nodeName, nodeSource.Arc.name, nodeSource, nodeDestinationID); }
+            else { Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeSourceID); }
         }
-        else { Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeSourceID); }
+        else { Debug.LogWarningFormat("Invalid PathData (Null) for nodeSourceID {0}", nodeSourceID); }
     }
 
     //new methods above here
