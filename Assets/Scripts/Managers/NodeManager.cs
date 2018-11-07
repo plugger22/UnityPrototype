@@ -1082,6 +1082,36 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Displays nodeID's on node faces
+    /// </summary>
+    /// <param name="highlightID"></param>
+    public void ShowAllNodeID()
+    {
+        int data;
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
+        {
+            //loop nodes
+            foreach (Node node in listOfNodes)
+            {
+                if (node != null)
+                {
+                    if (node.faceObject != null)
+                    {
+                        data = node.nodeID;
+                        node.faceText.text = data.ToString();
+                        node.faceText.color = Color.yellow;
+                    }
+                    else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
+                }
+                else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+    }
+
+
+    /// <summary>
     /// returns a colour to display face Text on a node depending on value (which varies depending on activityUI)
     /// </summary>
     /// <param name="data"></param>

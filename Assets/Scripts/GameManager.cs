@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public CityManager cityScript;                  //City Manager
     [HideInInspector] public ObjectiveManager objectiveScript;        //Objectives Manager
     [HideInInspector] public NodeManager nodeScript;                  //Node Manager
+    [HideInInspector] public DijkstraManager dijkstraScript;          //Dijkstra Manager
     [HideInInspector] public TeamManager teamScript;                  //Team Manager
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
     [HideInInspector] public CaptureManager captureScript;            //Capture Manager
@@ -152,6 +153,7 @@ public class GameManager : MonoBehaviour
         targetScript = GetComponent<TargetManager>();
         optionScript = GetComponent<OptionManager>();
         nodeScript = GetComponent<NodeManager>();
+        dijkstraScript = GetComponent<DijkstraManager>();
         teamScript = GetComponent<TeamManager>();
         gearScript = GetComponent<GearManager>();
         messageScript = GetComponent<MessageManager>();
@@ -220,6 +222,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(targetScript != null, "Invalid targetScript (Null)");
         Debug.Assert(optionScript != null, "Invalid optionScript (Null)");
         Debug.Assert(nodeScript != null, "Invalid nodeScript (Null)");
+        Debug.Assert(dijkstraScript != null, "Invalid dijkstraScript (Null)");
         Debug.Assert(teamScript != null, "Invalid teamScript (Null)");
         Debug.Assert(gearScript != null, "Invalid gearScript (Null)");
         Debug.Assert(messageScript != null, "Invalid messageScript (Null)");
@@ -383,6 +386,10 @@ public class GameManager : MonoBehaviour
         //Message Manager -> InitialseLate -> after CityManager
         startMethod.handler = GameManager.instance.messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
+        listOfStartMethods.Add(startMethod);
+        //Dijkstra Manager -> Initialise -> after dataScript & LevelScript
+        startMethod.handler = GameManager.instance.dijkstraScript.Initialise;
+        startMethod.className = "DijkstraManager";
         listOfStartMethods.Add(startMethod);
         //Secret Manager -> after dataScript and before playerScript
         startMethod.handler = GameManager.instance.secretScript.Initialise;

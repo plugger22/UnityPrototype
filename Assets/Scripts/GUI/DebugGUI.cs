@@ -733,6 +733,13 @@ public class DebugGUI : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.CrisisNodes, "DebugGUI.cs -> OnGUI");
             }
 
+            //sixth button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Show NodeID"))
+            {
+                Debug.Log("[Dbg] Button -> Show All NodeID's");
+                GameManager.instance.nodeScript.ShowAllNodeID();
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
