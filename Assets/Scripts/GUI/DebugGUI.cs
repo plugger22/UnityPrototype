@@ -752,9 +752,6 @@ public class DebugGUI : MonoBehaviour
                     case GUIStatus.None:
                         debugDisplay = 37;
                         break;
-                    case GUIStatus.ShowPath:
-                        debugDisplay = 38;
-                        break;
                     case GUIStatus.ShowPathOff:
                         debugDisplay = 39;
                         break;
@@ -1094,7 +1091,7 @@ public class DebugGUI : MonoBehaviour
                         {
                             optionPath = "Path OFF";
                             status = GUIStatus.ShowPathOff;
-                            GameManager.instance.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1));
+                            textOutput = GameManager.instance.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1));
                         }
                         break;
                     //Swith Path OFF
@@ -1135,6 +1132,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.isKnownContact:
                         debugDisplay = 32;
+                        break;
+                    case GUIStatus.ShowPath:
+                        debugDisplay = 38;
                         break;
                 }
                 break;

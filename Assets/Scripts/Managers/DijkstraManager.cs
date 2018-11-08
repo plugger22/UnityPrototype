@@ -236,7 +236,7 @@ public class DijkstraManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeSourceID"></param>
     /// <param name="nodeDestinationID"></param>
-    public void DebugShowPath(int nodeSourceID, int nodeDestinationID)
+    public string DebugShowPath(int nodeSourceID, int nodeDestinationID)
     {
         Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
         Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
@@ -245,15 +245,16 @@ public class DijkstraManager : MonoBehaviour
             List<Connection> listOfConnections = GetPath(nodeSourceID, nodeDestinationID);
             if (listOfConnections != null)
             {
-                //debug print out connections list
+                /*//debug print out connections list
                 for (int index = 0; index < listOfConnections.Count; index++)
-                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }
+                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }*/
                 //flash connections
                 EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStart, this, listOfConnections, "DijkstraManager.cs -> DebugShowPath");
             }
             else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for sourceID {0} and destinationID {1}", nodeSourceID, nodeDestinationID); }
         }
         else { Debug.LogWarningFormat("Invalid input nodes (Matching), nodeSourceID {0}, nodeDestinationID {1}", nodeSourceID, nodeDestinationID); }
+        return "debugShowPath";   /* here for dEbugGUI purposes only*/
     }
 
     /// <summary>
