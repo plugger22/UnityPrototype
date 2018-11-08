@@ -68,7 +68,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             //connection Highlight?
             if (connID > -1 && isConnectionHighlightOn == false)
             {
-                EventManager.instance.PostNotification(EventType.FlashConnectionStart, this, connID, "GenericTooltipUI.cs -> OnPointerEnter");
+                EventManager.instance.PostNotification(EventType.FlashSingleConnectionStart, this, connID, "GenericTooltipUI.cs -> OnPointerEnter");
                 isConnectionHighlightOn = true;
             }
         }
@@ -94,7 +94,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             //cancel connection highlight
             if (connID > -1 && isConnectionHighlightOn == true)
             {
-                EventManager.instance.PostNotification(EventType.FlashConnectionStop, this, connID, "GenericTooltipUI.cs -> OnPointerExit");
+                EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, connID, "GenericTooltipUI.cs -> OnPointerExit");
                 isConnectionHighlightOn = false;
             }
         }

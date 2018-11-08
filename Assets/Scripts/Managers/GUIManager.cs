@@ -414,7 +414,7 @@ public class GUIManager : MonoBehaviour
                 if (data.nodeID > -1)
                 { EventManager.instance.PostNotification(EventType.FlashNodeStart, this, showMeData.nodeID, "GUIManager.cs -> SetShowMe"); }
                 if (data.connID > -1)
-                { EventManager.instance.PostNotification(EventType.FlashConnectionStart, this, showMeData.connID, "GUIManager.cs -> SetShowMe"); }
+                { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStart, this, showMeData.connID, "GUIManager.cs -> SetShowMe"); }
             }
             else { Debug.LogWarning("GUIManager.cs -> SetShowMe: There are no node or connections to show"); }
         }
@@ -431,7 +431,7 @@ public class GUIManager : MonoBehaviour
         { EventManager.instance.PostNotification(EventType.FlashNodeStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
         //reset connection back to normal, if required
         if (showMeData.connID > -1)
-        { EventManager.instance.PostNotification(EventType.FlashConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
         //reactivate calling UI element
         EventManager.instance.PostNotification(showMeData.restoreEvent, this, null,  "GUIManager.cs -> ShowMeRestore");
     }

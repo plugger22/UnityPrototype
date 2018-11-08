@@ -16,8 +16,10 @@ public class ConnectionManager : MonoBehaviour
     [HideInInspector] public bool resetConnections;                      //used for temp changes in connection states, if true run RestoreConnections
 
     private bool isFlashOn = false;                                 //used for flashing Connection coroutine
-    private ConnectionType secLvl;                                  //used to save existing security level of connection prior to flashing
-    private Coroutine myCoroutine;
+    private ConnectionType secLvl;                                  //used to save existing security level of a single connection prior to flashing
+    private List<ConnectionType> listOfSecLevels;                   //stores sec lvl of multiple connections to enable restoration after flashing
+    private List<Connection> listOfFlashConnections;                //list of connections (copy) for multiple flashing connection event.
+    private Coroutine myCoroutine;                                  //ginle handler. Can only run one ConnectionManager coroutine at a time (eg. single / multiple flashing connections)
 
     //fast access
     private float flashConnectionTime;
@@ -29,9 +31,13 @@ public class ConnectionManager : MonoBehaviour
         Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
         //Data Collections
         InitialiseListOfConnections();
+        listOfSecLevels = new List<ConnectionType>();
+        listOfFlashConnections = new List<Connection>();
         //register listener
-        EventManager.instance.AddListener(EventType.FlashConnectionStart, OnEvent, "ConnectionManager");
-        EventManager.instance.AddListener(EventType.FlashConnectionStop, OnEvent, "ConnectionManager");
+        EventManager.instance.AddListener(EventType.FlashSingleConnectionStart, OnEvent, "ConnectionManager");
+        EventManager.instance.AddListener(EventType.FlashSingleConnectionStop, OnEvent, "ConnectionManager");
+        EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStart, OnEvent, "ConnectionManager");
+        EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStop, OnEvent, "ConnectionManager");
     }
 
     /// <summary>
@@ -45,11 +51,17 @@ public class ConnectionManager : MonoBehaviour
         //detect event type
         switch (eventType)
         {
-            case EventType.FlashConnectionStart:
-                StartFlashingConnection((int)Param);
+            case EventType.FlashSingleConnectionStart:
+                StartFlashingSingleConnection((int)Param);
                 break;
-            case EventType.FlashConnectionStop:
-                StopFlashingConnection((int)Param);
+            case EventType.FlashSingleConnectionStop:
+                StopFlashingSingleConnection((int)Param);
+                break;
+            case EventType.FlashMultipleConnectionsStart:
+                StartFlashingMultipleConnections((List<Connection>)Param);
+                break;
+            case EventType.FlashMultipleConnectionsStop:
+                StopFlashingMultipleConnections();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -251,15 +263,14 @@ public class ConnectionManager : MonoBehaviour
     /// event driven -> start coroutine
     /// </summary>
     /// <param name="nodeID"></param>
-    private void StartFlashingConnection(int connID)
+    private void StartFlashingSingleConnection(int connID)
     {
         Connection connection = GameManager.instance.dataScript.GetConnection(connID);
         if (connection != null)
         {
             isFlashOn = false;
             secLvl = connection.SecurityLevel;
-
-            myCoroutine = StartCoroutine("FlashingConnection", connection);
+            myCoroutine = StartCoroutine("FlashSingleConnection", connection);
         }
         else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
     }
@@ -267,7 +278,7 @@ public class ConnectionManager : MonoBehaviour
     /// <summary>
     /// event driven -> stop coroutine
     /// </summary>
-    private void StopFlashingConnection(int connID)
+    private void StopFlashingSingleConnection(int connID)
     {
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
@@ -288,7 +299,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     /// <param name="connection"></param>
     /// <returns></returns>
-    IEnumerator FlashingConnection(Connection connection)
+    IEnumerator FlashSingleConnection(Connection connection)
     {
         //forever loop
         for (; ; )
@@ -304,6 +315,101 @@ public class ConnectionManager : MonoBehaviour
             {
                 connection.SetMaterial(secLvl);
                 //NodeRedraw = true;
+                isFlashOn = false;
+                yield return new WaitForSecondsRealtime(flashConnectionTime);
+            }
+        }
+    }
+
+    /// <summary>
+    /// event driven -> start coroutine
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void StartFlashingMultipleConnections(List<Connection> listOfConnections)
+    {
+        if (listOfConnections != null)
+        {
+            int numOfConn = listOfConnections.Count;
+            if (numOfConn > 0)
+            {
+                bool isError = false;
+                //do a quick run through to check all connections are valid to avoid constant checks during flashing sequence
+                for (int i = 0; i < numOfConn; i++)
+                {
+                    Connection connection = listOfConnections[i];
+                    if (connection == null)
+                    {
+                        Debug.LogWarning("Invalid connection (Null)");
+                        isError = true;
+                    }
+                }
+                //O.K to proceed
+                if (isError == false)
+                {
+                    //clear list of any previous data
+                    listOfSecLevels.Clear();
+                    //security levels
+                    for (int i = 0; i < numOfConn; i++)
+                    { listOfSecLevels.Add(listOfConnections[i].SecurityLevel); }
+                    isFlashOn = false;
+                    //copy data into local list for access when stopping coroutine
+                    listOfFlashConnections = listOfConnections;
+                    myCoroutine = StartCoroutine("FlashMultipleConnections", listOfConnections);
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfConnections (must be > Zero)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
+    }
+
+    /// <summary>
+    /// event driven -> stop coroutine
+    /// </summary>
+    private void StopFlashingMultipleConnections()
+    {
+        if (listOfFlashConnections != null)
+        {
+            if (myCoroutine != null)
+            { StopCoroutine(myCoroutine); }
+            int numOfConn = listOfFlashConnections.Count;
+            //resture original security level material
+            for (int i = 0; i < numOfConn; i++)
+            { listOfFlashConnections[i].SetMaterial(listOfSecLevels[i]); }
+        }
+        else { Debug.LogWarning("Invalid listOfFlashConnections (Null)"); }
+    }
+
+
+    /// <summary>
+    /// coroutine to flash a list of connections
+    /// NOTE: listOfConnections checked for null as are individual connections within and for > zero count by calling procedure
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <returns></returns>
+    IEnumerator FlashMultipleConnections(List<Connection> listOfConnections)
+    {
+        int numOfConn = listOfConnections.Count;
+        //forever loop
+        for (; ; )
+        {
+            if (isFlashOn == false)
+            {
+                for (int i = 0; i < numOfConn; i++)
+                {
+                    Connection connection = listOfConnections[i];
+                    connection.SetMaterial(ConnectionType.Active);
+                }
+                isFlashOn = true;
+                yield return new WaitForSecondsRealtime(flashConnectionTime);
+            }
+            else
+            {
+                for (int i = 0; i < numOfConn; i++)
+                {
+                    Connection connection = listOfConnections[i];
+                    //resture original security level material
+                    connection.SetMaterial(listOfSecLevels[i]);
+                }
                 isFlashOn = false;
                 yield return new WaitForSecondsRealtime(flashConnectionTime);
             }

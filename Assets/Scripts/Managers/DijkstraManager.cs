@@ -16,7 +16,7 @@ public class DijkstraData
     public int[] arrayOfDistances;                 //list of all NodeD's with distances for the recent ca
 
     /*/// <summary>
-    /// Constructor that auto sizes array to numOfNodes -> NOTE: NO need to initialise collections
+    /// Constructor that auto sizes array to numOfNodes => Not necessary as collections are initialised in code by referencing another collection
     /// </summary>
     /// <param name="numOfNodes"></param>
     public DijkstraData(int numOfNodes)
@@ -49,6 +49,7 @@ public class DijkstraManager : MonoBehaviour
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         InitialiseDictData();
         InitialiseNodeData();
+
     }
 
 
@@ -200,7 +201,7 @@ public class DijkstraManager : MonoBehaviour
                             for (int i = 0; i < nodeList.Count; i++)
                             { nodeList[i].Distance = int.MaxValue; }
                             DijkstraData data = GetShortestPath(nodeID, nodeList);
-                            PathData path = new PathData();
+                            PathData path = new PathData(numOfNodes);
                             if (data != null)
                             {
                                 //populate array
@@ -239,28 +240,74 @@ public class DijkstraManager : MonoBehaviour
     {
         Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
         Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
-        int nextNodeID;
+        if (nodeSourceID != nodeDestinationID)
+        {
+            List<Connection> listOfConnections = GetPath(nodeSourceID, nodeDestinationID);
+            if (listOfConnections != null)
+            {
+                //debug print out connections list
+                for (int index = 0; index < listOfConnections.Count; index++)
+                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }
+                //flash connections
+                EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStart, this, listOfConnections, "DijkstraManager.cs -> DebugShowPath");
+            }
+            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for sourceID {0} and destinationID {1}", nodeSourceID, nodeDestinationID); }
+        }
+        else { Debug.LogWarningFormat("Invalid input nodes (Matching), nodeSourceID {0}, nodeDestinationID {1}", nodeSourceID, nodeDestinationID); }
+    }
+
+    /// <summary>
+    /// given two nodes method returns a list of sequential cnnnections between the two. If 'isReverseOrder' is true then returns connections in order destination to source, otherwise opposite (default)
+    /// </summary>
+    /// <param name="nodeSourceID"></param>
+    /// <param name="nodeDestinationID"></param>
+    /// <returns></returns>
+    private List<Connection> GetPath(int nodeSourceID, int nodeDestinationID, bool isReverseOrder = false)
+    {
+        int nodeCurrentID, nodeNextID;
+        bool isError = false;
         List<Connection> listOfConnections = new List<Connection>();
+
         //get path array
         PathData data = GameManager.instance.dataScript.GetDijkstraPath(nodeSourceID);
         if (data != null)
         {
             //find destinationID in pathArray
-            nextNodeID = data.pathArray[nodeDestinationID];
-            Node nodeSource = GameManager.instance.dataScript.GetNode(nodeSourceID);
-            if (nodeSource != null)
+            nodeCurrentID = nodeDestinationID;
+            do
             {
-                Connection connection = nodeSource.GetConnection(nodeDestinationID);
-                if (connection != null)
+                nodeNextID = data.pathArray[nodeCurrentID];
+                Node nodeCurrent = GameManager.instance.dataScript.GetNode(nodeCurrentID);
+                if (nodeCurrent != null)
                 {
-                    //add to list
-                    listOfConnections.Add(connection);
+                    Connection connection = nodeCurrent.GetConnection(nodeNextID);
+                    if (connection != null)
+                    {
+                        //add to list
+                        listOfConnections.Add(connection);
+                        //swap nodes ready for next iteration
+                        nodeCurrentID = nodeNextID;
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid connection (Null) between current node {0}, {1}, id {2} and nodeNextID {3}", nodeCurrent.nodeName, nodeCurrent.Arc.name, nodeCurrent, nodeDestinationID);
+                        isError = true;
+                    }
                 }
-                else { Debug.LogWarningFormat("Invalid connection (Null) between node {0}, {1}, id {2} and nodeDestinationID {3}", nodeSource.nodeName, nodeSource.Arc.name, nodeSource, nodeDestinationID); }
+                else
+                {
+                    Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeCurrentID);
+                    isError = true;
+                }
             }
-            else { Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeSourceID); }
+            while (isError == false && nodeCurrentID != nodeSourceID);
         }
         else { Debug.LogWarningFormat("Invalid PathData (Null) for nodeSourceID {0}", nodeSourceID); }
+
+        //do I need to reverse the list?
+        if (isReverseOrder == false)
+        { listOfConnections.Reverse(); }
+        return listOfConnections;
     }
 
     //new methods above here

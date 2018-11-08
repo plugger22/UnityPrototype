@@ -22,9 +22,11 @@ public enum EventType
     CreateGearNodeMenu,
     //highlighted node or connection
     FlashNodeStart,
-    FlashConnectionStart,
     FlashNodeStop,
-    FlashConnectionStop,
+    FlashSingleConnectionStart,
+    FlashSingleConnectionStop,
+    FlashMultipleConnectionsStart,
+    FlashMultipleConnectionsStop,
     //CloseTeamPicker
     ShowTargetNodes,
     NodeDisplay,
