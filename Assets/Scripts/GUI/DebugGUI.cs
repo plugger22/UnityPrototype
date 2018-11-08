@@ -1091,7 +1091,7 @@ public class DebugGUI : MonoBehaviour
                         {
                             optionPath = "Path OFF";
                             status = GUIStatus.ShowPathOff;
-                            textOutput = GameManager.instance.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1));
+                            textOutput = GameManager.instance.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1), true);
                         }
                         break;
                     //Swith Path OFF

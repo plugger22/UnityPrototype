@@ -32,6 +32,18 @@ public class DijkstraData
 /// </summary>
 public class DijkstraManager : MonoBehaviour
 {
+
+    [Header("Connection Weights")]
+    [Tooltip("Weight assigned to a connection with NO security level by the Dijkstra Alogrithm")]
+    [Range(1, 6)] public int weightNONE = 1;
+    [Tooltip("Weight assigned to a connection with LOW security level by the Dijkstra Alogrithm")]
+    [Range(1, 6)] public int weightLOW = 3;
+    [Tooltip("Weight assigned to a connection with MEDIUM security level by the Dijkstra Alogrithm")]
+    [Range(1, 6)] public int weightMEDIUM = 4;
+    [Tooltip("Weight assigned to a connection with HIGH security level by the Dijkstra Alogrithm")]
+    [Range(1, 6)] public int weightHIGH = 5;
+
+
     private Algorithm algorithm;
     private int numOfNodes;             //used for sizing dijkstra dict arrays
 
@@ -40,30 +52,133 @@ public class DijkstraManager : MonoBehaviour
     public void Awake()
     {
         algorithm = new Algorithm();
+        //logic checks
+        Debug.Assert(weightNONE < weightLOW, "Invalid weightNONE (must be < weightLOW)");
+        Debug.Assert(weightLOW < weightMEDIUM, "Invalid weightLOW (must be < weightMEDIUM)");
+        Debug.Assert(weightMEDIUM < weightHIGH, "Invalid weightMEDIUM (must be < weightHIGH)");
     }
+
     /// <summary>
     /// Start sequence
     /// </summary>
     public void Initialise()
     {
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
-        InitialiseDictData();
+        //Unweighted
+        InitialiseDictDataUnweighted();
         InitialiseNodeDataUnweighted();
-
+        //Weighted
+        InitialiseDictDataWeighted();
+        InitialiseNodeDataWeighted();
     }
 
 
     /// <summary>
-    /// Use standard graphAPI data to set up Dijkstra Graph (dictOfNodeD, used for both weighted and unweighted) ready for algorithm
+    /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm. Unweighted
     /// </summary>
-    private void InitialiseDictData()
+    private void InitialiseDictDataUnweighted()
     {
         //existing nodes
         List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
         Debug.Assert(listOfNodes.Count == numOfNodes, string.Format("Mismatch on Node Count, listOfNodes {0} vs. numOfNodes {1}", listOfNodes.Count, numOfNodes));
         //set up mirror dijkstra friendly nodes (refered to as 'nodeD')
         List<NodeD> listOfNodeD = new List<NodeD>();
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
+        if (listOfNodes != null)
+        {
+            if (dictOfNodeD != null)
+            {
+                //loop nodes and populate listOfNodeD
+                foreach (Node node in listOfNodes)
+                {
+                    if (node != null)
+                    {
+                        NodeD nodeD = new NodeD(int.MaxValue, node.nodeID, node.nodeName);
+                        //add nodeD to collections
+                        if (nodeD != null)
+                        {
+                            //list
+                            listOfNodeD.Add(nodeD);
+                            //add to dict
+                            try
+                            { dictOfNodeD.Add(nodeD.ID, nodeD); }
+                            catch (ArgumentNullException)
+                            { Debug.LogError("Invalid NodeD (Null)"); }
+                            catch (ArgumentException)
+                            { Debug.LogError(string.Format("Invalid (duplicate) nodeD.ID \"{0}\" for NodeD \"{1}\"", nodeD.ID, nodeD.Name)); }
+                        }
+                        else { Debug.LogWarning("Invalid nodeD (Null) -> Failed initialisaction"); }
+                    }
+                    else { Debug.LogWarning("Invalid node (Null) in listOfNodes"); }
+                }
+                //loop listOfNodes again  and add Neighbour data to NodeD's
+                foreach (Node node in listOfNodes)
+                {
+                    if (node != null)
+                    {
+                        //get mirror nodeD
+                        NodeD nodeD = null;
+                        if (dictOfNodeD.ContainsKey(node.nodeID) == true)
+                        { nodeD = dictOfNodeD[node.nodeID]; }
+                        if (nodeD != null)
+                        {
+                            List<int> listOfWeights = new List<int>();
+                            List<NodeD> listOfEdges = new List<NodeD>();
+                            List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                            if (listOfNeighbours != null)
+                            {
+                                //loop node neighbours and add edges and weights (assume all are value 1)
+                                if (listOfNeighbours.Count > 0)
+                                {
+                                    foreach (Node neighbour in listOfNeighbours)
+                                    {
+                                        //create entry for each neighbour, default weight of 1 for all
+                                        listOfWeights.Add(1);
+                                        //find nodeD in dict
+                                        NodeD nodeDNeighbour = null;
+                                        if (dictOfNodeD.ContainsKey(neighbour.nodeID) == true)
+                                        { nodeDNeighbour = dictOfNodeD[neighbour.nodeID]; }
+                                        //add to NodeD edge list (neighbouring nodes)
+                                        if (nodeDNeighbour != null)
+                                        { listOfEdges.Add(nodeDNeighbour); }
+                                        else { Debug.LogWarningFormat("Invalid nodeDNeighbour (Null) for neighbour {0}, {1}, id {2}", neighbour.nodeName, neighbour.Arc.name, neighbour.nodeID); }
+                                    }
+                                    //add to nodeD
+                                    nodeD.Adjacency = listOfEdges;
+                                    nodeD.Weights = listOfWeights;
+                                }
+                                else
+                                {
+                                    //no neighbours
+                                    nodeD.Adjacency = listOfEdges;
+                                    nodeD.Weights = listOfWeights;
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid listOfNeighbours (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid nodeD (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                    }
+                    else { Debug.LogWarning("Invalid node (Null) in listOfNodes"); }
+                }
+                /*Debug.LogFormat("[Tst] DijkstraMethods.cs -> Initialise: dictOfNodeD's has {0} records", dictOfNodeD.Count);*/
+            }
+            else { Debug.LogError("Invalid dictOfNodeD (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+    }
+
+
+    /// <summary>
+    /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm. Weighted
+    /// </summary>
+    private void InitialiseDictDataWeighted()
+    {
+        //existing nodes
+        List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
+        Debug.Assert(listOfNodes.Count == numOfNodes, string.Format("Mismatch on Node Count, listOfNodes {0} vs. numOfNodes {1}", listOfNodes.Count, numOfNodes));
+        //set up mirror dijkstra friendly nodes (refered to as 'nodeD')
+        List<NodeD> listOfNodeD = new List<NodeD>();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDWeighted();
         if (listOfNodes != null)
         {
             if (dictOfNodeD != null)
@@ -113,7 +228,33 @@ public class DijkstraManager : MonoBehaviour
                                     foreach (Node neighbour in listOfNeighbours)
                                     {
                                         //create entry for each neighbour
-                                        listOfWeights.Add(1);
+                                        Connection connection = node.GetConnection(neighbour.nodeID);
+                                        if (connection != null)
+                                        {
+                                            //get weight of connection based on Security level
+                                            switch(connection.SecurityLevel)
+                                            {
+                                                case ConnectionType.None:
+                                                    listOfWeights.Add(weightNONE);
+                                                    break;
+                                                case ConnectionType.LOW:
+                                                    listOfWeights.Add(weightLOW);
+                                                    break;
+                                                case ConnectionType.MEDIUM:
+                                                    listOfWeights.Add(weightMEDIUM);
+                                                    break;
+                                                case ConnectionType.HIGH:
+                                                    listOfWeights.Add(weightHIGH);
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //assign a default weight of '1' if a problem
+                                            listOfWeights.Add(1);
+                                            Debug.LogWarningFormat("Invalid connection (Null) between node {0}, id {1} and neighbour {2}, id {3}", node.nodeName, node.nodeID, neighbour.nodeName, neighbour.nodeID);
+                                        }
+
                                         //find nodeD in dict
                                         NodeD nodeDNeighbour = null;
                                         if (dictOfNodeD.ContainsKey(neighbour.nodeID) == true)
@@ -154,7 +295,7 @@ public class DijkstraManager : MonoBehaviour
     {
         int nodeID;
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeD();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
         Dictionary<int, PathData> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstraUnweighted();
         if (dictOfNodes != null)
         {
@@ -196,9 +337,66 @@ public class DijkstraManager : MonoBehaviour
                         else { Debug.LogWarning("Invalid node (Null)"); }
                     }
                 }
-                else { Debug.LogError("Invalid dictOfNodeD (null)"); }
+                else { Debug.LogError("Invalid dictOfNodeD (null) Unweighted"); }
             }
-            else { Debug.LogError("Invalid dictOfDijkstra (Null)"); }
+            else { Debug.LogError("Invalid dictOfDijkstra (Null) Unweighted"); }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+
+    /// <summary>
+    /// Runs dijkstra algo on all nodes and initialises up main dijkstra collection (dictOfDijkstra). Weighted
+    /// </summary>
+    private void InitialiseNodeDataWeighted()
+    {
+        int nodeID;
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDWeighted();
+        Dictionary<int, PathData> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstraWeighted();
+        if (dictOfNodes != null)
+        {
+            if (dictOfDijkstra != null)
+            {
+                if (dictOfNodeD != null)
+                {
+                    //list Of NodeD's to pass to algo
+                    List<NodeD> nodeList = new List<NodeD>(dictOfNodeD.Values);
+                    //loop all nodes
+                    foreach (var node in dictOfNodes)
+                    {
+                        if (node.Value != null)
+                        {
+                            nodeID = node.Value.nodeID;
+                            //reset distances in nodeList (otherwise algo gives incorrect data)
+                            for (int i = 0; i < nodeList.Count; i++)
+                            { nodeList[i].Distance = int.MaxValue; }
+                            DijkstraData data = GetShortestPath(nodeID, nodeList);
+                            PathData path = new PathData(numOfNodes);
+                            if (data != null)
+                            {
+                                //populate array
+                                for (int indexNode = 0; indexNode < numOfNodes; indexNode++)
+                                {
+                                    path.pathArray[indexNode] = data.arrayOfPaths[indexNode];
+                                    path.distanceArray[indexNode] = data.arrayOfDistances[indexNode];
+                                }
+                                //add entry to dictionary
+                                try
+                                { dictOfDijkstra.Add(node.Value.nodeID, path); }
+                                catch (ArgumentNullException)
+                                { Debug.LogError("Invalid NodeD (Null)"); }
+                                catch (ArgumentException)
+                                { Debug.LogError(string.Format("Invalid (duplicate) node {0}, {1}, id {2}", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID)); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid DijkstraData package (Null) for node {0}, {1} ID {2}", node.Value.nodeName, node.Value.Arc.name, nodeID); }
+                        }
+                        else { Debug.LogWarning("Invalid node (Null)"); }
+                    }
+                }
+                else { Debug.LogError("Invalid dictOfNodeD (null) Weighted"); }
+            }
+            else { Debug.LogError("Invalid dictOfDijkstra (Null) Weighted"); }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
@@ -310,6 +508,15 @@ public class DijkstraManager : MonoBehaviour
         if (isReverseOrder == false)
         { listOfConnections.Reverse(); }
         return listOfConnections;
+    }
+
+    /// <summary>
+    /// run whenever connection security levels change. Do so before calculating shortest path.
+    /// </summary>
+    public void RecalculateWeightedData()
+    {
+        InitialiseDictDataWeighted();
+        InitialiseNodeDataWeighted();
     }
 
     //new methods above here

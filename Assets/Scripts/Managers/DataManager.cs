@@ -142,7 +142,8 @@ public class DataManager : MonoBehaviour
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
     private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                        //Key -> nodeID, Value -> Node
-    private Dictionary<int, NodeD> dictOfNodeD = new Dictionary<int, NodeD>();                      //Key -> id, Value -> NodeD (Dijkstra API)
+    private Dictionary<int, NodeD> dictOfNodeDUnweighted = new Dictionary<int, NodeD>();            //Key -> id, Value -> NodeD (Dijkstra API), Unweighted
+    private Dictionary<int, NodeD> dictOfNodeDWeighted = new Dictionary<int, NodeD>();              //Key -> id, Value -> NodeD (Dijkstra API), Weighted
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
     private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();   //Key -> nodeID, Value -> PathData
@@ -1461,8 +1462,11 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Node> GetDictOfNodes()
     { return dictOfNodes; }
 
-    public Dictionary<int, NodeD> GetDictOfNodeD()
-    { return dictOfNodeD; }
+    public Dictionary<int, NodeD> GetDictOfNodeDUnweighted()
+    { return dictOfNodeDUnweighted; }
+
+    public Dictionary<int, NodeD> GetDictOfNodeDWeighted()
+    { return dictOfNodeDWeighted; }
 
     public Dictionary<int, PathData> GetDictOfDijkstraUnweighted()
     { return dictOfDijkstraUnweighted; }
