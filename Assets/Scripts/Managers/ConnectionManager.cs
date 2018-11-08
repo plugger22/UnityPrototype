@@ -268,9 +268,13 @@ public class ConnectionManager : MonoBehaviour
         Connection connection = GameManager.instance.dataScript.GetConnection(connID);
         if (connection != null)
         {
+            if (myCoroutine == null)
+            { 
             isFlashOn = false;
             secLvl = connection.SecurityLevel;
             myCoroutine = StartCoroutine("FlashSingleConnection", connection);
+            }
+            else { Debug.LogWarning("Invalid myCoroutine (should be Null), can't run FlashingSingleConnections as another connection coroutine already running"); }
         }
         else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
     }
@@ -281,7 +285,10 @@ public class ConnectionManager : MonoBehaviour
     private void StopFlashingSingleConnection(int connID)
     {
         if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
         //resture original security level material
         Connection connection = GameManager.instance.dataScript.GetConnection(connID);
         if (connection != null)
@@ -329,35 +336,39 @@ public class ConnectionManager : MonoBehaviour
     {
         if (listOfConnections != null)
         {
-            int numOfConn = listOfConnections.Count;
-            if (numOfConn > 0)
+            if (myCoroutine == null)
             {
-                bool isError = false;
-                //do a quick run through to check all connections are valid to avoid constant checks during flashing sequence
-                for (int i = 0; i < numOfConn; i++)
+                int numOfConn = listOfConnections.Count;
+                if (numOfConn > 0)
                 {
-                    Connection connection = listOfConnections[i];
-                    if (connection == null)
+                    bool isError = false;
+                    //do a quick run through to check all connections are valid to avoid constant checks during flashing sequence
+                    for (int i = 0; i < numOfConn; i++)
                     {
-                        Debug.LogWarning("Invalid connection (Null)");
-                        isError = true;
+                        Connection connection = listOfConnections[i];
+                        if (connection == null)
+                        {
+                            Debug.LogWarning("Invalid connection (Null)");
+                            isError = true;
+                        }
+                    }
+                    //O.K to proceed
+                    if (isError == false)
+                    {
+                        //clear list of any previous data
+                        listOfSecLevels.Clear();
+                        //security levels
+                        for (int i = 0; i < numOfConn; i++)
+                        { listOfSecLevels.Add(listOfConnections[i].SecurityLevel); }
+                        isFlashOn = false;
+                        //copy data into local list for access when stopping coroutine
+                        listOfFlashConnections = listOfConnections;
+                        myCoroutine = StartCoroutine("FlashMultipleConnections", listOfConnections);
                     }
                 }
-                //O.K to proceed
-                if (isError == false)
-                {
-                    //clear list of any previous data
-                    listOfSecLevels.Clear();
-                    //security levels
-                    for (int i = 0; i < numOfConn; i++)
-                    { listOfSecLevels.Add(listOfConnections[i].SecurityLevel); }
-                    isFlashOn = false;
-                    //copy data into local list for access when stopping coroutine
-                    listOfFlashConnections = listOfConnections;
-                    myCoroutine = StartCoroutine("FlashMultipleConnections", listOfConnections);
-                }
+                else { Debug.LogWarning("Invalid listOfConnections (must be > Zero)"); }
             }
-            else { Debug.LogWarning("Invalid listOfConnections (must be > Zero)"); }
+            else { Debug.LogWarning("Invalid myCoroutine (should be Null), can't run FlashingMultipleConnections as another connection coroutine already running"); }
         }
         else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
     }
@@ -370,7 +381,10 @@ public class ConnectionManager : MonoBehaviour
         if (listOfFlashConnections != null)
         {
             if (myCoroutine != null)
-            { StopCoroutine(myCoroutine); }
+            {
+                StopCoroutine(myCoroutine);
+                myCoroutine = null;
+            }
             int numOfConn = listOfFlashConnections.Count;
             //resture original security level material
             for (int i = 0; i < numOfConn; i++)

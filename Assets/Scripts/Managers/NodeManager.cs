@@ -967,8 +967,6 @@ public class NodeManager : MonoBehaviour
                     }
                 }
             }
-            /*//debug -> stop any multiple flashing connection coroutine that may be running
-            EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStop, this, null, "NodeManager.cs -> RedrawNodes");*/
             //reset flag to prevent constant redraws
             NodeRedraw = false;
         }

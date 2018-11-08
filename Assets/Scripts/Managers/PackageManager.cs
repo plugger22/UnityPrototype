@@ -307,13 +307,12 @@ namespace packageAPI
 
 
     /// <summary>
-    /// used for storing Dijkstra data in dictOfDijkstra
+    /// used for storing Dijkstra data in dictOfDijkstra (unweighted path calcs)
     /// </summary>
     public class PathData
     {
         public int[] pathArray;                  //nodeID index, path back to source node via lookup
-        public int[] unweightedArray;            //nodeID index, distance back to source node assuming unweighted (1 each) connections
-        public int[] weightedArray;              //nodeID index, distance back to source node assuming weighted (1 + (int)ConnectionType 'security') connections
+        public int[] distanceArray;            //nodeID index, distance back to source node assuming unweighted (1 each) connections
 
         /// <summary>
         /// Constructor called with array size (number of nodes on map)
@@ -322,8 +321,7 @@ namespace packageAPI
         public PathData(int numOfNodes)
         {
             pathArray = new int[numOfNodes];
-            unweightedArray = new int[numOfNodes];
-            weightedArray = new int[numOfNodes];
+            distanceArray = new int[numOfNodes];
         }
 
     }

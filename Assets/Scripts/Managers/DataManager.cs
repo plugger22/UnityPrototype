@@ -145,7 +145,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, NodeD> dictOfNodeD = new Dictionary<int, NodeD>();                      //Key -> id, Value -> NodeD (Dijkstra API)
     private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
-    private Dictionary<int, PathData> dictOfDijkstra = new Dictionary<int, PathData>();             //Key -> nodeID, Value -> PathData
+    private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();   //Key -> nodeID, Value -> PathData
+    private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();     //Key -> nodeID, Value -> PathData
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
@@ -1463,18 +1464,33 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, NodeD> GetDictOfNodeD()
     { return dictOfNodeD; }
 
-    public Dictionary<int, PathData> GetDictOfDijkstra()
-    { return dictOfDijkstra; }
+    public Dictionary<int, PathData> GetDictOfDijkstraUnweighted()
+    { return dictOfDijkstraUnweighted; }
+
+    public Dictionary<int, PathData> GetDictOfDijkstraWeighted()
+    { return dictOfDijkstraWeighted; }
 
     /// <summary>
-    /// returns PathData package for relevant source nodeID (Dijkstra), Null otherwise
+    /// returns PathData package for relevant source nodeID (Dijkstra), Null otherwise, Unweighted pathing
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public PathData GetDijkstraPath(int nodeID)
+    public PathData GetDijkstraPathUnweighted(int nodeID)
     {
-        if (dictOfDijkstra.ContainsKey(nodeID) == true)
-        { return dictOfDijkstra[nodeID]; }
+        if (dictOfDijkstraUnweighted.ContainsKey(nodeID) == true)
+        { return dictOfDijkstraUnweighted[nodeID]; }
+        return null;
+    }
+
+    /// <summary>
+    /// returns PathData package for relevant source nodeID (Dijkstra), Null otherwise, Weighted pathing
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public PathData GetDijkstraPathWeighted(int nodeID)
+    {
+        if (dictOfDijkstraWeighted.ContainsKey(nodeID) == true)
+        { return dictOfDijkstraWeighted[nodeID]; }
         return null;
     }
 
