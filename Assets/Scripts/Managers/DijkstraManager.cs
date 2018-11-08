@@ -426,34 +426,6 @@ public class DijkstraManager : MonoBehaviour
         return data;
     }
 
-
-    /// <summary>
-    /// Debug method that takes two nodeID's and shows a flashing connection path between the two (Unweighted pathing by default, set 'isWeighted' to true for weighted pathing based on last set of calcs)
-    /// </summary>
-    /// <param name="nodeSourceID"></param>
-    /// <param name="nodeDestinationID"></param>
-    public string DebugShowPath(int nodeSourceID, int nodeDestinationID, bool isWeighted = false)
-    {
-        Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
-        Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
-        if (nodeSourceID != nodeDestinationID)
-        {
-            List<Connection> listOfConnections = GetPath(nodeSourceID, nodeDestinationID, isWeighted);
-            if (listOfConnections != null)
-            {
-                /*//debug print out connections list
-                for (int index = 0; index < listOfConnections.Count; index++)
-                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }*/
-
-                //flash connections
-                EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStart, this, listOfConnections, "DijkstraManager.cs -> DebugShowPath");
-            }
-            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for sourceID {0} and destinationID {1}", nodeSourceID, nodeDestinationID); }
-        }
-        else { Debug.LogWarningFormat("Invalid input nodes (Matching), nodeSourceID {0}, nodeDestinationID {1}", nodeSourceID, nodeDestinationID); }
-        return "debugShowPath";   /* here for dEbugGUI purposes only*/
-    }
-
     /// <summary>
     /// given two nodes method returns a list of sequential cnnnections between the two. If 'isReverseOrder' is true then returns connections in order destination to source, otherwise opposite (default)
     /// 'isWeighted' true uses data from dictOfDijkstraWeighted (last calculated), if false then used dictOfDijkstraUnweighted data.
@@ -461,7 +433,7 @@ public class DijkstraManager : MonoBehaviour
     /// <param name="nodeSourceID"></param>
     /// <param name="nodeDestinationID"></param>
     /// <returns></returns>
-    private List<Connection> GetPath(int nodeSourceID, int nodeDestinationID, bool isWeighted, bool isReverseOrder = false)
+    public List<Connection> GetPath(int nodeSourceID, int nodeDestinationID, bool isWeighted, bool isReverseOrder = false)
     {
         int nodeCurrentID, nodeNextID;
         bool isError = false;
@@ -515,8 +487,88 @@ public class DijkstraManager : MonoBehaviour
     /// </summary>
     public void RecalculateWeightedData()
     {
+        //empty out collections
+        GameManager.instance.dataScript.SetWeightedDijkstraDataClear();
+        //recalculate
         InitialiseDictDataWeighted();
         InitialiseNodeDataWeighted();
+        //log
+        Debug.Log("DijkstraManager.cs -> RecalculateWeightedData: Data successfully recalculated");
+    }
+
+    /// <summary>
+    /// Gets distance of shortest path between two nodes. Weighted. Returns 0 if a problem
+    /// </summary>
+    /// <param name="nodeSourceID"></param>
+    /// <param name="nodeDestinationID"></param>
+    /// <returns></returns>
+    public int GetDistanceWeighted(int nodeSourceID, int nodeDestinationID)
+    {
+        int distance = 0;
+        Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
+        Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
+        if (nodeSourceID != nodeDestinationID)
+        {
+            PathData data = GameManager.instance.dataScript.GetDijkstraPathWeighted(nodeSourceID);
+            if (data != null)
+            { distance = data.distanceArray[nodeDestinationID]; }
+            else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
+        }
+        else { Debug.LogWarningFormat("Invalid nodeID's (sourceID {0} must be Different from destinationID {1})", nodeSourceID, nodeDestinationID); }
+        /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceWeighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
+        return distance;
+    }
+
+    /// <summary>
+    /// Gets distance of shortest path between two nodes. Unweighted. Returns 0 if a problem
+    /// </summary>
+    /// <param name="nodeSourceID"></param>
+    /// <param name="nodeDestinationID"></param>
+    /// <returns></returns>
+    public int GetDistanceUnweighted(int nodeSourceID, int nodeDestinationID)
+    {
+        int distance = 0;
+        Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
+        Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
+        if (nodeSourceID != nodeDestinationID)
+        {
+            PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodeSourceID);
+            if (data != null)
+            { distance = data.distanceArray[nodeDestinationID]; }
+            else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
+        }
+        else { Debug.LogWarningFormat("Invalid nodeID's (sourceID {0} must be Different from destinationID {1})", nodeSourceID, nodeDestinationID); }
+        /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceUnweighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
+        return distance;
+    }
+
+    
+
+    /// <summary>
+    /// Debug method that takes two nodeID's and shows a flashing connection path between the two (Unweighted pathing by default, set 'isWeighted' to true for weighted pathing based on last set of calcs)
+    /// </summary>
+    /// <param name="nodeSourceID"></param>
+    /// <param name="nodeDestinationID"></param>
+    public string DebugShowPath(int nodeSourceID, int nodeDestinationID, bool isWeighted = false)
+    {
+        Debug.Assert(nodeSourceID < numOfNodes && nodeSourceID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        Debug.Assert(nodeDestinationID < numOfNodes && nodeDestinationID > -1, "Invalid nodeSourceID (must be btwn Zero and max. nodeID #)");
+        if (nodeSourceID != nodeDestinationID)
+        {
+            List<Connection> listOfConnections = GetPath(nodeSourceID, nodeDestinationID, isWeighted);
+            if (listOfConnections != null)
+            {
+                /*//debug print out connections list
+                for (int index = 0; index < listOfConnections.Count; index++)
+                { Debug.LogFormat("[Tst] DijkstraManager.cs -> DebugShowPath: listOfConnections[{0}] from {1} to {2}", index, listOfConnections[index].GetNode1(), listOfConnections[index].GetNode2()); }*/
+
+                //flash connections
+                EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStart, this, listOfConnections, "DijkstraManager.cs -> DebugShowPath");
+            }
+            else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for sourceID {0} and destinationID {1}", nodeSourceID, nodeDestinationID); }
+        }
+        else { Debug.LogWarningFormat("Invalid input nodes (Matching), nodeSourceID {0}, nodeDestinationID {1}", nodeSourceID, nodeDestinationID); }
+        return string.Format("Distance {0}", GetDistanceWeighted(nodeSourceID, nodeDestinationID));   /* here for dEbugGUI purposes only*/
     }
 
     //new methods above here

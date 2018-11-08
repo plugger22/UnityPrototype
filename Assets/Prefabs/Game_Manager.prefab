@@ -1504,6 +1504,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62061f3b31d03b84fbcfb82f88ae921d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weightNONE: 1
+  weightLOW: 2
+  weightMEDIUM: 3
+  weightHIGH: 4
 --- !u!114 &114604419301691642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1855,6 +1859,7 @@ MonoBehaviour:
   cityScript: {fileID: 0}
   objectiveScript: {fileID: 0}
   nodeScript: {fileID: 0}
+  dijkstraScript: {fileID: 0}
   teamScript: {fileID: 0}
   gearScript: {fileID: 0}
   captureScript: {fileID: 0}

@@ -758,6 +758,13 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+            //eigth button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Recalc Weighted"))
+            {
+                Debug.Log("[Dbg] Button -> Recaculate Weighted Dijkstra data");
+                GameManager.instance.dijkstraScript.RecalculateWeightedData();
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //

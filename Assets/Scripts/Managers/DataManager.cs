@@ -1475,26 +1475,35 @@ public class DataManager : MonoBehaviour
     { return dictOfDijkstraWeighted; }
 
     /// <summary>
-    /// returns PathData package for relevant source nodeID (Dijkstra), Null otherwise, Unweighted pathing
+    /// empties out Weighted Dijkstra collections prior to a recalculation
     /// </summary>
-    /// <param name="nodeID"></param>
-    /// <returns></returns>
-    public PathData GetDijkstraPathUnweighted(int nodeID)
+    public void SetWeightedDijkstraDataClear()
     {
-        if (dictOfDijkstraUnweighted.ContainsKey(nodeID) == true)
-        { return dictOfDijkstraUnweighted[nodeID]; }
+        dictOfDijkstraWeighted.Clear();
+        dictOfNodeDWeighted.Clear();
+    }
+
+    /// <summary>
+    /// returns PathData package for relevant Source nodeID (Dijkstra), Null otherwise, Unweighted pathing
+    /// </summary>
+    /// <param name="sourceNodeID"></param>
+    /// <returns></returns>
+    public PathData GetDijkstraPathUnweighted(int sourceNodeID)
+    {
+        if (dictOfDijkstraUnweighted.ContainsKey(sourceNodeID) == true)
+        { return dictOfDijkstraUnweighted[sourceNodeID]; }
         return null;
     }
 
     /// <summary>
-    /// returns PathData package for relevant source nodeID (Dijkstra), Null otherwise, Weighted pathing
+    /// returns PathData package for relevant Source nodeID (Dijkstra), Null otherwise, Weighted pathing
     /// </summary>
-    /// <param name="nodeID"></param>
+    /// <param name="sourceNodeID"></param>
     /// <returns></returns>
-    public PathData GetDijkstraPathWeighted(int nodeID)
+    public PathData GetDijkstraPathWeighted(int sourceNodeID)
     {
-        if (dictOfDijkstraWeighted.ContainsKey(nodeID) == true)
-        { return dictOfDijkstraWeighted[nodeID]; }
+        if (dictOfDijkstraWeighted.ContainsKey(sourceNodeID) == true)
+        { return dictOfDijkstraWeighted[sourceNodeID]; }
         return null;
     }
 

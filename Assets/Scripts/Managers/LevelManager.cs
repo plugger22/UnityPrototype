@@ -986,7 +986,7 @@ public class LevelManager : MonoBehaviour
                             }
                             if (counter == 1)
                             {
-                                //Harbour
+                                //Harbour (not all cities have harbours)
                                 if (string.IsNullOrEmpty(city.harbourDistrict) == false)
                                 {
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Harbour at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
@@ -994,7 +994,7 @@ public class LevelManager : MonoBehaviour
                                     record.Key.specialName = "Harbour";
                                     GameManager.instance.cityScript.harbourDistrictID = record.Key.nodeID;
                                 }
-                                else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }
+                                /*else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }*/
                                 break;
                             }
                             counter++;
