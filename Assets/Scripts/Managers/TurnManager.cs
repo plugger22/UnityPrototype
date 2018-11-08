@@ -267,9 +267,9 @@ public class TurnManager : MonoBehaviour
         Debug.LogFormat("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
         UpdateStates();
-        //debug
+        /*//debug
         if (Turn == 1)
-        { GameManager.instance.dijkstraScript.DebugShowPath(0, 14); }
+        { GameManager.instance.dijkstraScript.DebugShowPath(0, 14); }*/
     }
 
     /// <summary>

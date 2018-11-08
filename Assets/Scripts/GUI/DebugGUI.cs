@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
 using packageAPI;
+using System;
 
 /// <summary>
 /// debug GUI, on demand (HotKey 'D' -> On, HotKey 'H' -> Off)
@@ -10,7 +11,7 @@ using packageAPI;
 public class DebugGUI : MonoBehaviour
 {
     //for whenever interaction is needed
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff}
 
     public GUIStyle customBackground;
 
@@ -53,6 +54,7 @@ public class DebugGUI : MonoBehaviour
     private string optionAITraceback;
     private string optionAIScreamer;
     private string optionRenownUI;
+    private string optionPath;
 
     private void Awake()
     {
@@ -70,6 +72,7 @@ public class DebugGUI : MonoBehaviour
         optionAITraceback = "AITraceback ON";
         optionAIScreamer = "AIScreamer ON";
         optionRenownUI = "Renown UI OFF";
+        optionPath = "Input Path";
     }
 
     // Update is called once per frame
@@ -740,6 +743,24 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.nodeScript.ShowAllNodeID();
             }
 
+            //seventh button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionPath))
+            {
+                Debug.LogFormat("[Dbg] Button -> {0}", optionPath);
+                switch (status)
+                {
+                    case GUIStatus.None:
+                        debugDisplay = 37;
+                        break;
+                    case GUIStatus.ShowPath:
+                        debugDisplay = 38;
+                        break;
+                    case GUIStatus.ShowPathOff:
+                        debugDisplay = 39;
+                        break;
+                }
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
@@ -1054,6 +1075,33 @@ public class DebugGUI : MonoBehaviour
                         /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
                         analysis = GameManager.instance.dataScript.DebugShowTargetDict();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 800), analysis, customBackground);
+                        break;
+                    //Show / Toggle Path (between two nodes)
+                    case 37:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input Source nodeID");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Destination nodeID");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        textOutput = null;
+                        optionPath = "Show Path";
+                        status = GUIStatus.ShowPath;
+                        break;
+                    //Show Path processing and Output
+                    case 38:
+                        if (textOutput == null)
+                        {
+                            optionPath = "Path OFF";
+                            status = GUIStatus.ShowPathOff;
+                            GameManager.instance.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1));
+                        }
+                        break;
+                    //Swith Path OFF
+                    case 39:
+                        EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStop, this, "DebugGUI.cs -> OnGUI");
+                        status = GUIStatus.None;
+                        optionPath = "Input Path";
                         break;
                 }
             }
