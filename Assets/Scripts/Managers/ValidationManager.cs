@@ -137,6 +137,46 @@ public class ValidationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generic method to validate an SO type via an Asset Search on hard drive vs. the equivalent array in LoadManager.cs
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <param name="arraySO"></param>
+    private void ValidateSOGeneric<T>(T value, T[] arraySO) where T:ScriptableObject
+    {
+        int numArray, numAssets;
+        // 'isVerbal' is true for all messages, false for problem messages only
+        bool isVerbal = true;
+        string path;
+        //
+        // - - - GlobalMeta - - -
+        //
+        var metaGUID = AssetDatabase.FindAssets(string.Format("t:{0}", typeof(T).Name), new[] { "Assets/SO" });
+        numArray = arraySO.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on {0}, array {1}, assets {2} records", typeof(T).Name, numArray, numAssets);
+            T[] arrayTemp = arraySO;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(T));
+                //get object
+                T meta = metaObject as T;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING {0} \"{1}\"", value.name, meta.name); }
+            }
+        }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on {0} SO, array {1}, assets {2} records", typeof(T).Name, numArray, numAssets); }
+        }
+    }
 
     /// <summary>
     /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
@@ -148,7 +188,9 @@ public class ValidationManager : MonoBehaviour
         // 'isVerbal' is true for all messages, false for problem messages only
         bool isVerbal = false;
         string path;
-        //
+
+
+        /*//
         // - - - GlobalMeta - - -
         //
         var metaGUID = AssetDatabase.FindAssets("t:GlobalMeta", new[] { "Assets/SO" });
@@ -174,11 +216,15 @@ public class ValidationManager : MonoBehaviour
         {
             if (isVerbal == true)
             { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalMeta SO, array {0}, assets {1} records", numArray, numAssets); }
-        }
+        }*/
+        GlobalMeta globalMeta = ScriptableObject.CreateInstance<GlobalMeta>();
+        ValidateSOGeneric<GlobalMeta>(globalMeta, GameManager.instance.loadScript.arrayOfGlobalMeta);
+        Destroy(globalMeta);
+
         //
         // - - - GlobalChance - - -
         //
-        metaGUID = AssetDatabase.FindAssets("t:GlobalChance", new[] { "Assets/SO" });
+        var metaGUID = AssetDatabase.FindAssets("t:GlobalChance", new[] { "Assets/SO" });
         numArray = GameManager.instance.loadScript.arrayOfGlobalChance.Length;
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
