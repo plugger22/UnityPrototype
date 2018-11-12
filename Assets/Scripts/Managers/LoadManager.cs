@@ -31,8 +31,11 @@ public class LoadManager : MonoBehaviour
     public CitySpacing[] arrayOfCitySpacing;
     public CityConnections[] arrayOfCityConnections;
     public CitySecurity[] arrayOfCitySecurity;
-    
-    
+    public Damage[] arrayOfDamages;
+    public Challenge[] arrayOfChallenges;
+    public Nemesis[] arrayOfNemesis;
+    public Scenario[] arrayOfScenarios;
+
     [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
     public TraitCategory[] arrayOfTraitCategories;
@@ -41,7 +44,6 @@ public class LoadManager : MonoBehaviour
     public SecretStatus[] arrayOfSecretStatus;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
-
     [Header("TextLists -> One for each Category")]
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
@@ -83,6 +85,7 @@ public class LoadManager : MonoBehaviour
     public Mayor[] arrayOfMayors;
     public DecisionAI[] arrayOfDecisionAI;
     public Mission[] arrayOfMissions;
+
 
 
     public void InitialiseStart()
@@ -249,6 +252,34 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySecurity has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySecurity present"); }
+        //
+        // - - - Damage (not stored in a collection)
+        //
+        numArray = arrayOfDamages.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfDamages has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Damages present"); }
+        //
+        // - - - Challenge (not stored in a collection)
+        //
+        numArray = arrayOfChallenges.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfChallenges has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Challenges present"); }
+        //
+        // - - - Nemesis (not stored in a collection)
+        //
+        numArray = arrayOfNemesis.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNemesis has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Nemesis present"); }
+        //
+        // - - - Scenario (not stored in a collection)
+        //
+        numArray = arrayOfScenarios.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfScenarios has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Scenarios present"); }
         //
         // - - - Quality
         //

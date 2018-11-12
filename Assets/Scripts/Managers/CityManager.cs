@@ -66,10 +66,10 @@ public class CityManager : MonoBehaviour
     public void InitialiseEarly()
     {
         //get random current city -> Placeholder
-            // need to do this once at very start of a new game (set up all cities, set up data in the city SO's)
-            // need to get list of all cities here from mapManager.cs
-            // need to initialise levels (run graphs and get node totals) and store seeds so the cities can be duplicated
-            // need to initialise all relevant info in city.SO's
+        // need to do this once at very start of a new game (set up all cities, set up data in the city SO's)
+        // need to get list of all cities here from mapManager.cs
+        // need to initialise levels (run graphs and get node totals) and store seeds so the cities can be duplicated
+        // need to initialise all relevant info in city.SO's
 
         city = GameManager.instance.dataScript.GetRandomCity();
         isLoyaltyCheckedThisTurn = false;
@@ -87,7 +87,6 @@ public class CityManager : MonoBehaviour
     public void InitialiseLate()
     {
         CityLoyalty = city.baseLoyalty;
-        /*CityLoyalty = 1;*/
         //initialise number of districts
         city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
         //Placeholder
@@ -167,6 +166,13 @@ public class CityManager : MonoBehaviour
     /// <returns></returns>
     public City GetCity()
     { return city; }
+
+    public void SetCity(City city)
+    {
+        if (city != null)
+        { this.city = city; }
+        else { Debug.LogError("Invalid city (Null)"); }
+    }
 
     /// <summary>
     /// returns city name in a Player side colour formatted string   

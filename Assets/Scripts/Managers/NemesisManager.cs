@@ -8,6 +8,7 @@ using UnityEngine;
 public class NemesisManager : MonoBehaviour
 {
 
+    [HideInInspector] public Nemesis nemesis;
 
     /// <summary>
     /// Initialise data ready for Nemesis

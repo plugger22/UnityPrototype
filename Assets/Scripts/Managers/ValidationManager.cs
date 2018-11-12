@@ -750,7 +750,7 @@ public class ValidationManager : MonoBehaviour
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
         {
-            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on CityConnection SO, array {0}, assets {1} records", numArray, numAssets);
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on CitySecurity SO, array {0}, assets {1} records", numArray, numAssets);
             CitySecurity[] arrayTemp = GameManager.instance.loadScript.arrayOfCitySecurity;
             foreach (var guid in metaGUID)
             {
@@ -768,6 +768,114 @@ public class ValidationManager : MonoBehaviour
         {
             if (isVerbal == true)
             { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on CitySecurity SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
+        //
+        // - - - Damage - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Damage", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfDamages.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Damage SO, array {0}, assets {1} records", numArray, numAssets);
+            Damage[] arrayTemp = GameManager.instance.loadScript.arrayOfDamages;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Damage));
+                //get object
+                Damage meta = metaObject as Damage;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Damage \"{0}\"", meta.name); }
+            }
+        }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Damage SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
+        //
+        // - - - Challenge - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Challenge", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfChallenges.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Challenge SO, array {0}, assets {1} records", numArray, numAssets);
+            Challenge[] arrayTemp = GameManager.instance.loadScript.arrayOfChallenges;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Challenge));
+                //get object
+                Challenge meta = metaObject as Challenge;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Challenge \"{0}\"", meta.name); }
+            }
+        }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Challenge SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
+        //
+        // - - - Nemesis - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Nemesis", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfNemesis.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Nemesis SO, array {0}, assets {1} records", numArray, numAssets);
+            Nemesis[] arrayTemp = GameManager.instance.loadScript.arrayOfNemesis;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Nemesis));
+                //get object
+                Nemesis meta = metaObject as Nemesis;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Nemesis \"{0}\"", meta.name); }
+            }
+        }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Nemesis SO, array {0}, assets {1} records", numArray, numAssets); }
+        }
+        //
+        // - - - Scenario - - -
+        //
+        metaGUID = AssetDatabase.FindAssets("t:Scenario", new[] { "Assets/SO" });
+        numArray = GameManager.instance.loadScript.arrayOfScenarios.Length;
+        numAssets = metaGUID.Length;
+        if (numAssets != numArray)
+        {
+            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Scenario SO, array {0}, assets {1} records", numArray, numAssets);
+            Scenario[] arrayTemp = GameManager.instance.loadScript.arrayOfScenarios;
+            foreach (var guid in metaGUID)
+            {
+                //get path
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                //get SO
+                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(Scenario));
+                //get object
+                Scenario meta = metaObject as Scenario;
+                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                { Debug.LogFormat("[Val] ValidateSO: array MISSING Scenario \"{0}\"", meta.name); }
+            }
+        }
+        else
+        {
+            if (isVerbal == true)
+            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Scenario SO, array {0}, assets {1} records", numArray, numAssets); }
         }
         //
         // - - - TextList - - -

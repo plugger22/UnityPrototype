@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
+  m_Name: Test Scenario
+  m_EditorClassIdentifier: 
+  descriptor: Rebel HQ have requested maximum disruption to the City of London. Spare
+    no effort and take no heed of collateral damage.
+  city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
+  mission: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
+  challenge: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b, type: 2}

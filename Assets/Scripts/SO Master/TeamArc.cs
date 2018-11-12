@@ -6,7 +6,7 @@ using gameAPI;
 /// <summary>
 /// Team SO. Name of SO is the name of the Team, eg. "Control"
 /// </summary>
-[CreateAssetMenu(menuName = "TeamArc")]
+[CreateAssetMenu(menuName = "Authority / TeamArc")]
 public class TeamArc : ScriptableObject
 {
     public int TeamArcID { get; set; }

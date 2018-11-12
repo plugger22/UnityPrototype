@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
     [HideInInspector] public GlobalManager globalScript;              //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
+    [HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
     [HideInInspector] public NewsManager newsScript;                  //News Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ContactManager contactScript;            //Contact Manager
@@ -138,6 +139,7 @@ public class GameManager : MonoBehaviour
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
         globalScript = GetComponent<GlobalManager>();
+        scenarioScript = GetComponent<ScenarioManager>();
         actorScript = GetComponent<ActorManager>();
         contactScript = GetComponent<ContactManager>();
         actionScript = GetComponent<ActionManager>();
@@ -208,6 +210,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(dataScript != null, "Invalid dataScript (Null)");
         Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
+        Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
         Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
         Debug.Assert(contactScript != null, "Invalid contactScript (Null)");
         Debug.Assert(actionScript != null, "Invalid actionScript (Null)");
@@ -291,7 +294,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region StartSequence
+    #region StartUp Sequence
     /// <summary>
     /// set up list of delegates ready for initialisation (do this because there are two version of initialisation, performance monitoring ON or OFF)
     /// </summary>
@@ -349,9 +352,15 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.guiScript.Initialise;
         startMethod.className = "GUIManager";
         listOfStartMethods.Add(startMethod);
-        //City Manager InitialiseEarly -> before levelScript
+
+        /*//City Manager InitialiseEarly -> before levelScript
         startMethod.handler = GameManager.instance.cityScript.InitialiseEarly;
-        startMethod.className = "CityManager";
+        startMethod.className = "CityManager";*/
+
+        listOfStartMethods.Add(startMethod);
+        //Scenario Manager InitialiseEarly -> before levelScript
+        startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
+        startMethod.className = "ScenarioManager Early";
         listOfStartMethods.Add(startMethod);
         //Objective Manager
         startMethod.handler = GameManager.instance.objectiveScript.Initialise;
@@ -381,11 +390,17 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfStartMethods.Add(startMethod);
-        //City Manager -> InitialiseLate -> after levelScript.Initialise
+
+        /*//City Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
-        startMethod.className = "CityManager";
+        startMethod.className = "CityManager";*/
+
         listOfStartMethods.Add(startMethod);
-        //Message Manager -> InitialseLate -> after CityManager
+        //Scenario Manager -> InitialiseLate -> after levelScript.Initialise
+        startMethod.handler = GameManager.instance.scenarioScript.InitialiseLate;
+        startMethod.className = "ScenarioManager Late";
+        listOfStartMethods.Add(startMethod);
+        //Message Manager -> InitialseLate -> after ScenarioManager
         startMethod.handler = GameManager.instance.messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
         listOfStartMethods.Add(startMethod);
@@ -421,10 +436,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.actionScript.Initialise;
         startMethod.className = "ActionManager";
         listOfStartMethods.Add(startMethod);
-        //Target Manager
+
+        /*//Target Manager
         startMethod.handler = GameManager.instance.targetScript.Initialise;
         startMethod.className = "TargetManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);*/
+
         //Node Manager
         startMethod.handler = GameManager.instance.nodeScript.Initialise;
         startMethod.className = "NodeManager";
@@ -457,10 +474,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.aiScript.Initialise;
         startMethod.className = "AIManager";
         listOfStartMethods.Add(startMethod);
-        //Nemesis Manager
+
+        /*//Nemesis Manager
         startMethod.handler = GameManager.instance.nemesisScript.Initialise;
         startMethod.className = "NemesisManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);*/
+
         //Capture Manager
         startMethod.handler = GameManager.instance.captureScript.Initialise;
         startMethod.className = "CaptureManager";
@@ -485,10 +504,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.connScript.Initialise;
         startMethod.className = "ConnectionManager";
         listOfStartMethods.Add(startMethod);
-        //Mission Manager
+
+        /*//Mission Manager
         startMethod.handler = GameManager.instance.missionScript.Initialise;
         startMethod.className = "MissionManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);*/
+
         //City Info UI
         startMethod.handler = GameManager.instance.cityInfoScript.Initialise;
         startMethod.className = "CityInfoUI";

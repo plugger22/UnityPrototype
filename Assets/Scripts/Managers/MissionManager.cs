@@ -8,15 +8,16 @@ using gameAPI;
 /// </summary>
 public class MissionManager : MonoBehaviour
 {
-
-    public Mission mission;
+    [HideInInspector] public Mission mission;
 
     /// <summary>
     /// Initialisation
     /// </summary>
     public void Initialise()
     {
-        Debug.Assert(mission != null, "Invalid mission (Null)");
+        Debug.Assert(mission != null, "Invalid Mission (Null)");
+        //initialise and assign targets
+        GameManager.instance.targetScript.Initialise();
         GameManager.instance.targetScript.AssignTargets(mission);
     }
 

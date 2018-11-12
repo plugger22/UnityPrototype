@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 114395521989347528}
   - component: {fileID: 114584680957149894}
   - component: {fileID: 114609542619572500}
+  - component: {fileID: 114837532667670244}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -792,6 +793,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1aee0b03d952ecc41bd988455e6c1cc2, type: 2}
   - {fileID: 11400000, guid: 9727e9f580280554a89f898c53fab226, type: 2}
   - {fileID: 11400000, guid: 65025356131db0a468e180716d1507ac, type: 2}
+  arrayOfDamages:
+  - {fileID: 11400000, guid: ba236e6190500134fa90136ccabcd897, type: 2}
+  - {fileID: 11400000, guid: 0b2f393110b5cdb45b51fd1d1b14988e, type: 2}
+  - {fileID: 11400000, guid: badd844d98788e0428d3e501e36a6361, type: 2}
+  - {fileID: 11400000, guid: ca83c2626332e1b4d9297cb960ea7f2d, type: 2}
+  - {fileID: 11400000, guid: da4f5bc217c4a59419ab5c935ecbd002, type: 2}
+  arrayOfChallenges:
+  - {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869, type: 2}
+  - {fileID: 11400000, guid: 2716f7a6e92cbf8488ce0f415769dd75, type: 2}
+  - {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b, type: 2}
+  - {fileID: 11400000, guid: 338cc5cc4c7726448bb8cc125e0b0633, type: 2}
+  - {fileID: 11400000, guid: 750b7e706a7903f42a026227fed14058, type: 2}
+  arrayOfNemesis:
+  - {fileID: 11400000, guid: 42cdd5ebcf56c1940bf0d05178a658b0, type: 2}
+  - {fileID: 11400000, guid: 0b7e5b572514c724daebe40bf7b1bf26, type: 2}
+  - {fileID: 11400000, guid: cc4b646e220990741a5f0d7f7b6e51bb, type: 2}
+  - {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
+  - {fileID: 11400000, guid: 99ec0c72c1b29a041b3d8a8dc0f4923b, type: 2}
+  arrayOfScenarios:
+  - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
@@ -1551,6 +1572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0fc1fd2c30aca4d8782513f6a7136d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nemesis: {fileID: 0}
 --- !u!114 &114621988062562700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1854,6 +1876,7 @@ MonoBehaviour:
   guiScript: {fileID: 0}
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
+  scenarioScript: {fileID: 0}
   newsScript: {fileID: 0}
   actorScript: {fileID: 0}
   contactScript: {fileID: 0}
@@ -1992,6 +2015,18 @@ MonoBehaviour:
   maxNumOfObjectives: 3
   objectivesTotal: 0
   objectivesCurrent: 0
+--- !u!114 &114837532667670244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed8a8f750e783646bb957eb54a86402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenario: {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
 --- !u!114 &114851938744220614
 MonoBehaviour:
   m_ObjectHideFlags: 1

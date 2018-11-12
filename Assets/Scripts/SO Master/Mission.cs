@@ -14,8 +14,7 @@ public class Mission : ScriptableObject
     [Tooltip("Player briefing")]
     [TextArea] public string briefing;
     [TextArea] public string devNotes;
-    [Tooltip("Mission Timer -> how many turns")]
-    [Range(20, 100)] public int timer = 100;
+
 
     [Header("Objectives")]
     [Tooltip("Primary objective (one) and optional secondary objectives (2 & 3)")]
