@@ -564,7 +564,7 @@ public class Node : MonoBehaviour
     /// <summary>
     /// Everytime player moves to a new node you have to call this to update master list of NodeID's that contain all valid move locations for the player's next move
     /// </summary>
-    public void SetMoveNodes()
+    public void SetPlayerMoveNodes()
     {
         List<int> listOfNodeID = new List<int>();
         foreach (Node node in listOfNeighbourNodes)

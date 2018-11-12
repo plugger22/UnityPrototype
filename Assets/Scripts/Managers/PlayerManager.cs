@@ -125,6 +125,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        //assign player to a starting node (Sprawl)
         int nodeID = 0;
         _playerNameAuthority = "Evil Eddy";
         _playerNameResistance = "Cameron";
@@ -132,15 +133,19 @@ public class PlayerManager : MonoBehaviour
         int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
         Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
         if (node != null)
-        {
-            nodeID = node.nodeID;
-            //initialise move list
-            node.SetMoveNodes();
-        }
+        { nodeID = node.nodeID; }
         else
-        { Debug.LogWarning("PlayerManager: Invalid node (Null). Player placed in node '0' by default"); }
-        //set player node
-        GameManager.instance.nodeScript.nodePlayer = nodeID;
+        { Debug.LogWarning("PlayerManager: Invalid Player starting node (Null). Player placed in node '0' by default"); }
+        Node nodeTemp = GameManager.instance.dataScript.GetNode(nodeID);
+        if (nodeTemp != null)
+        {
+            //initialise move list
+            nodeTemp.SetPlayerMoveNodes();
+            //set player node
+            GameManager.instance.nodeScript.nodePlayer = nodeID;
+            Debug.LogFormat("[Ply] PlayerManager.cs -> Initialise: Player starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n");
+        }
+        else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
         isEndOfTurnGearCheck = false;
         //fast access fields (BEFORE set stats below)
         globalAuthority = GameManager.instance.globalScript.sideAuthority;

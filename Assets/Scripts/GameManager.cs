@@ -22,7 +22,7 @@ public struct StartMethod
 [Serializable]
 public class GameManager : MonoBehaviour
 {
-    #region variables
+    #region Components
     public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
     [HideInInspector] public StartManager startScript;                //Start Manager
     [HideInInspector] public LevelManager levelScript;                //Level Manager
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
     [HideInInspector] public CaptureManager captureScript;            //Capture Manager
     [HideInInspector] public AIManager aiScript;                      //AI Manager
+    [HideInInspector] public NemesisManager nemesisScript;            //Nemesis Manager
     [HideInInspector] public ResistanceManager rebelScript;           //Resistance Manager
     [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
     [HideInInspector] public MessageManager messageScript;            //Message Manager
@@ -87,9 +88,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActorPanelUI actorPanelScript;           //Actor Panel UI
     [HideInInspector] public BasePanelUI basePanelScript;             //Base Panel UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
-    
+    #endregion
 
-                                                                   
+    #region Variables
     [Tooltip("Leave as default 0 for random")]
     public int seed = 0;                                            //random seed
     [Tooltip("If true Player side set to Authority")]               //DEBUG
@@ -106,11 +107,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
     
     private List<StartMethod> listOfStartMethods = new List<StartMethod>();
-
-
     #endregion
 
-    #region awake
+    #region Awake method
     /// <summary>
     /// Constructor
     /// </summary>
@@ -171,6 +170,7 @@ public class GameManager : MonoBehaviour
         inputScript = GetComponent<InputManager>();
         captureScript = GetComponent<CaptureManager>();
         aiScript = GetComponent<AIManager>();
+        nemesisScript = GetComponent<NemesisManager>();
         rebelScript = GetComponent<ResistanceManager>();
         authorityScript = GetComponent<AuthorityManager>();
         //Get UI static references -> from PanelManager
@@ -240,6 +240,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(inputScript != null, "Invalid inputScript (Null)");
         Debug.Assert(captureScript != null, "Invalid captureScript (Null)");
         Debug.Assert(aiScript != null, "Invalid aiScript (Null)");
+        Debug.Assert(nemesisScript != null, "Invalid nemesisScript (Null)");
         Debug.Assert(rebelScript != null, "Invalid rebelScript (Null)");
         Debug.Assert(authorityScript != null, "Invalid authorityScript (Null)");
         //singletons
@@ -266,7 +267,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region start
+    #region Start method
     private void Start()
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
@@ -290,6 +291,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region StartSequence
     /// <summary>
     /// set up list of delegates ready for initialisation (do this because there are two version of initialisation, performance monitoring ON or OFF)
     /// </summary>
@@ -455,6 +457,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.aiScript.Initialise;
         startMethod.className = "AIManager";
         listOfStartMethods.Add(startMethod);
+        //Nemesis Manager
+        startMethod.handler = GameManager.instance.nemesisScript.Initialise;
+        startMethod.className = "NemesisManager";
+        listOfStartMethods.Add(startMethod);
         //Capture Manager
         startMethod.handler = GameManager.instance.captureScript.Initialise;
         startMethod.className = "CaptureManager";
@@ -511,8 +517,9 @@ public class GameManager : MonoBehaviour
             listOfStartMethods.Add(startMethod);
         }
     }
+    #endregion
 
-
+    #region Performance Monitoring or not
     /// <summary>
     /// Initialise game start sequence with no performance monitoring
     /// </summary>
@@ -557,7 +564,9 @@ public class GameManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfStartMethods (Null)"); }
     }
+    #endregion
 
+    #region Update method
     /// <summary>
     /// Only update in the entire code base -> handles redraws and input
     /// </summary>
@@ -570,8 +579,7 @@ public class GameManager : MonoBehaviour
         if (Input.anyKeyDown == true)
         { inputScript.ProcessInput(); }
     }
-
-   
+    #endregion
 
     //place methods above here
 }

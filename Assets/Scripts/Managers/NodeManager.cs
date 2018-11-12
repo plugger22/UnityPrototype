@@ -58,6 +58,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of player
+    [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
     private bool isFlashOn = false;                                 //used for flashing Node coroutine
@@ -90,6 +91,7 @@ public class NodeManager : MonoBehaviour
     private Material materialHighlight;
     private Material materialActive;
     private Material materialPlayer;
+    private Material materialNemesis;
     //flash
     private float flashNodeTime;
 
@@ -219,6 +221,7 @@ public class NodeManager : MonoBehaviour
         materialHighlight = GetNodeMaterial(NodeType.Highlight);
         materialActive = GetNodeMaterial(NodeType.Active);
         materialPlayer = GetNodeMaterial(NodeType.Player);
+        materialNemesis = GetNodeMaterial(NodeType.Nemesis);
         crisisBaseChanceDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceDoubled");
         crisisBaseChanceHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceHalved");
         crisisTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerHigh");
@@ -229,6 +232,7 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
+        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
         Debug.Assert(crisisBaseChanceDoubled > -1, "Invalid crisisBaseChanceDoubled (-1)");
         Debug.Assert(crisisBaseChanceHalved > -1, "Invalid crisisBaseChanceHalved (-1)");
         Debug.Assert(crisisTimerHigh > -1, "Invalid crisisTimerHigh (-1)");
@@ -952,6 +956,7 @@ public class NodeManager : MonoBehaviour
                 }
                 if (proceedFlag == true)
                 {
+                    //Player node
                     if (nodePlayer > -1)
                     {
                         Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
@@ -962,6 +967,30 @@ public class NodeManager : MonoBehaviour
                             {
                                 nodeRenderer = node.GetComponent<Renderer>();
                                 nodeRenderer.material = materialPlayer;
+                            }
+                        }
+                    }
+                }
+                //Nemesis current node (Resistance side only if FOW ON)
+                proceedFlag = true;
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                {
+                    if (GameManager.instance.optionScript.fogOfWar == true)
+                    { proceedFlag = false; }
+                }
+                if (proceedFlag == true)
+                {
+                    //Nemesis ndoe
+                    if (nodeNemesis > -1)
+                    {
+                        Node node = GameManager.instance.dataScript.GetNode(nodeNemesis);
+                        if (node != null)
+                        {
+                            //only do so if it's a normal node, otherwise ignore
+                            if (node.GetMaterial() == materialNormal)
+                            {
+                                nodeRenderer = node.GetComponent<Renderer>();
+                                nodeRenderer.material = materialNemesis;
                             }
                         }
                     }
@@ -1799,7 +1828,7 @@ public class NodeManager : MonoBehaviour
                 //update Player node
                 nodePlayer = moveDetails.nodeID;
                 //update move list
-                node.SetMoveNodes();
+                node.SetPlayerMoveNodes();
                 string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));

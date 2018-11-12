@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 114851938744220614}
   - component: {fileID: 114395521989347528}
   - component: {fileID: 114584680957149894}
+  - component: {fileID: 114609542619572500}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -557,6 +558,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f3d7e5a2f7823a54d8de41438a2b1137, type: 2}
   - {fileID: 2100000, guid: e775ef34bd82c88438e614619163b088, type: 2}
   - {fileID: 2100000, guid: e627b327e59799847a9aa7a0c5cd69b5, type: 2}
+  - {fileID: 2100000, guid: 8290b263c7ec738488ec931a79bf5beb, type: 2}
   nodePrimaryChance: 20
   nodeActiveMinimum: 3
   moveInvisibilityDelay: 4
@@ -577,6 +579,7 @@ MonoBehaviour:
   connCounter: 0
   nodeHighlight: -1
   nodePlayer: 0
+  nodeNemesis: -1
   nodeCaptured: -1
   outcomeNodeSecurity: {fileID: 0}
   outcomeNodeStability: {fileID: 0}
@@ -1537,6 +1540,17 @@ MonoBehaviour:
   typeMovement: {fileID: 0}
   typeRecovery: {fileID: 0}
   typePersuasion: {fileID: 0}
+--- !u!114 &114609542619572500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa0fc1fd2c30aca4d8782513f6a7136d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114621988062562700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1864,6 +1878,7 @@ MonoBehaviour:
   gearScript: {fileID: 0}
   captureScript: {fileID: 0}
   aiScript: {fileID: 0}
+  nemesisScript: {fileID: 0}
   rebelScript: {fileID: 0}
   authorityScript: {fileID: 0}
   messageScript: {fileID: 0}
