@@ -137,46 +137,6 @@ public class ValidationManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Generic method to validate an SO type via an Asset Search on hard drive vs. the equivalent array in LoadManager.cs
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="value"></param>
-    /// <param name="arraySO"></param>
-    private void ValidateSOGeneric<T>(T value, T[] arraySO) where T:ScriptableObject
-    {
-        int numArray, numAssets;
-        // 'isVerbal' is true for all messages, false for problem messages only
-        bool isVerbal = true;
-        string path;
-        //
-        // - - - GlobalMeta - - -
-        //
-        var metaGUID = AssetDatabase.FindAssets(string.Format("t:{0}", typeof(T).Name), new[] { "Assets/SO" });
-        numArray = arraySO.Length;
-        numAssets = metaGUID.Length;
-        if (numAssets != numArray)
-        {
-            Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on {0}, array {1}, assets {2} records", typeof(T).Name, numArray, numAssets);
-            T[] arrayTemp = arraySO;
-            foreach (var guid in metaGUID)
-            {
-                //get path
-                path = AssetDatabase.GUIDToAssetPath(guid);
-                //get SO
-                UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(T));
-                //get object
-                T meta = metaObject as T;
-                if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
-                { Debug.LogFormat("[Val] ValidateSO: array MISSING {0} \"{1}\"", value.name, meta.name); }
-            }
-        }
-        else
-        {
-            if (isVerbal == true)
-            { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on {0} SO, array {1}, assets {2} records", typeof(T).Name, numArray, numAssets); }
-        }
-    }
 
     /// <summary>
     /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
@@ -184,10 +144,245 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     public void ValidateSO()
     {
-        int numArray, numAssets;
+        /*int numArray, numAssets;
         // 'isVerbal' is true for all messages, false for problem messages only
         bool isVerbal = false;
-        string path;
+        string path;*/
+
+        //GlobalMeta
+        GlobalMeta globalMeta = ScriptableObject.CreateInstance<GlobalMeta>();
+        ValidateSOGeneric<GlobalMeta>(globalMeta, GameManager.instance.loadScript.arrayOfGlobalMeta);
+        Destroy(globalMeta);
+        //GlobalChance
+        GlobalChance globalChance = ScriptableObject.CreateInstance<GlobalChance>();
+        ValidateSOGeneric<GlobalChance>(globalChance, GameManager.instance.loadScript.arrayOfGlobalChance);
+        Destroy(globalChance);
+        //GlobalType
+        GlobalType globalType = ScriptableObject.CreateInstance<GlobalType>();
+        ValidateSOGeneric<GlobalType>(globalType, GameManager.instance.loadScript.arrayOfGlobalType);
+        Destroy(globalType);
+        //GlobalSide
+        GlobalSide globalSide = ScriptableObject.CreateInstance<GlobalSide>();
+        ValidateSOGeneric<GlobalSide>(globalSide, GameManager.instance.loadScript.arrayOfGlobalSide);
+        Destroy(globalSide);
+        //GlobalWho
+        GlobalWho globalWho = ScriptableObject.CreateInstance<GlobalWho>();
+        ValidateSOGeneric<GlobalWho>(globalWho, GameManager.instance.loadScript.arrayOfGlobalWho);
+        Destroy(globalWho);
+        //EffectApply
+        EffectApply effectApply = ScriptableObject.CreateInstance<EffectApply>();
+        ValidateSOGeneric<EffectApply>(effectApply, GameManager.instance.loadScript.arrayOfEffectApply);
+        Destroy(effectApply);
+        //EffectCriteria
+        EffectCriteria effectCriteria = ScriptableObject.CreateInstance<EffectCriteria>();
+        ValidateSOGeneric<EffectCriteria>(effectCriteria, GameManager.instance.loadScript.arrayOfEffectCriteria);
+        Destroy(effectCriteria);
+        //EffectDuration
+        EffectDuration effectDuration = ScriptableObject.CreateInstance<EffectDuration>();
+        ValidateSOGeneric<EffectDuration>(effectDuration, GameManager.instance.loadScript.arrayOfEffectDuration);
+        Destroy(effectDuration);
+        //EffectOperator
+        EffectOperator effectOperator = ScriptableObject.CreateInstance<EffectOperator>();
+        ValidateSOGeneric<EffectOperator>(effectOperator, GameManager.instance.loadScript.arrayOfEffectOperator);
+        Destroy(effectOperator);
+        //ContactType
+        ContactType contactType = ScriptableObject.CreateInstance<ContactType>();
+        ValidateSOGeneric<ContactType>(contactType, GameManager.instance.loadScript.arrayOfContactTypes);
+        Destroy(contactType);
+        //TargetType
+        TargetType targetType = ScriptableObject.CreateInstance<TargetType>();
+        ValidateSOGeneric<TargetType>(targetType, GameManager.instance.loadScript.arrayOfTargetTypes);
+        Destroy(targetType);
+        //TargetTrigger
+        TargetTrigger targetTrigger = ScriptableObject.CreateInstance<TargetTrigger>();
+        ValidateSOGeneric<TargetTrigger>(targetTrigger, GameManager.instance.loadScript.arrayOfTargetTriggers);
+        Destroy(targetTrigger);
+        //TargetProfile
+        TargetProfile targetProfile = ScriptableObject.CreateInstance<TargetProfile>();
+        ValidateSOGeneric<TargetProfile>(targetProfile, GameManager.instance.loadScript.arrayOfTargetProfiles);
+        Destroy(targetProfile);
+        //Quality
+        Quality quality = ScriptableObject.CreateInstance<Quality>();
+        ValidateSOGeneric<Quality>(quality, GameManager.instance.loadScript.arrayOfQualities);
+        Destroy(quality);
+        //Condition
+        Condition condition = ScriptableObject.CreateInstance<Condition>();
+        ValidateSOGeneric<Condition>(condition, GameManager.instance.loadScript.arrayOfConditions);
+        Destroy(condition);
+        //TraitCategory
+        TraitCategory traitCategory = ScriptableObject.CreateInstance<TraitCategory>();
+        ValidateSOGeneric<TraitCategory>(traitCategory, GameManager.instance.loadScript.arrayOfTraitCategories);
+        Destroy(traitCategory);
+        //TraitEffect
+        TraitEffect traitEffect = ScriptableObject.CreateInstance<TraitEffect>();
+        ValidateSOGeneric<TraitEffect>(traitEffect, GameManager.instance.loadScript.arrayOfTraitEffects);
+        Destroy(traitEffect);
+        //SecretType
+        SecretType secretType = ScriptableObject.CreateInstance<SecretType>();
+        ValidateSOGeneric<SecretType>(secretType, GameManager.instance.loadScript.arrayOfSecretTypes);
+        Destroy(secretType);
+        //SecretStatus
+        SecretStatus secretStatus = ScriptableObject.CreateInstance<SecretStatus>();
+        ValidateSOGeneric<SecretStatus>(secretStatus, GameManager.instance.loadScript.arrayOfSecretStatus);
+        Destroy(secretStatus);
+        //CityArc
+        CityArc cityArc = ScriptableObject.CreateInstance<CityArc>();
+        ValidateSOGeneric<CityArc>(cityArc, GameManager.instance.loadScript.arrayOfCityArcs);
+        Destroy(cityArc);
+        //City
+        City city = ScriptableObject.CreateInstance<City>();
+        ValidateSOGeneric<City>(city, GameManager.instance.loadScript.arrayOfCities);
+        Destroy(city);
+        //CitySize
+        CitySize citySize = ScriptableObject.CreateInstance<CitySize>();
+        ValidateSOGeneric<CitySize>(citySize, GameManager.instance.loadScript.arrayOfCitySize);
+        Destroy(citySize);
+        //CitySpacing
+        CitySpacing citySpacing = ScriptableObject.CreateInstance<CitySpacing>();
+        ValidateSOGeneric<CitySpacing>(citySpacing, GameManager.instance.loadScript.arrayOfCitySpacing);
+        Destroy(citySpacing);
+        //CityConnections
+        CityConnections cityConnections = ScriptableObject.CreateInstance<CityConnections>();
+        ValidateSOGeneric<CityConnections>(cityConnections, GameManager.instance.loadScript.arrayOfCityConnections);
+        Destroy(cityConnections);
+        //CitySecurity
+        CitySecurity citySecurity = ScriptableObject.CreateInstance<CitySecurity>();
+        ValidateSOGeneric<CitySecurity>(citySecurity, GameManager.instance.loadScript.arrayOfCitySecurity);
+        Destroy(citySecurity);
+        //Damage
+        Damage damage = ScriptableObject.CreateInstance<Damage>();
+        ValidateSOGeneric<Damage>(damage, GameManager.instance.loadScript.arrayOfDamages);
+        Destroy(damage);
+        //Challenge
+        Challenge challenge = ScriptableObject.CreateInstance<Challenge>();
+        ValidateSOGeneric<Challenge>(challenge, GameManager.instance.loadScript.arrayOfChallenges);
+        Destroy(challenge);
+        //Nemesis
+        Nemesis nemesis = ScriptableObject.CreateInstance<Nemesis>();
+        ValidateSOGeneric<Nemesis>(nemesis, GameManager.instance.loadScript.arrayOfNemesis);
+        Destroy(nemesis);
+        //Scenario
+        Scenario scenario = ScriptableObject.CreateInstance<Scenario>();
+        ValidateSOGeneric<Scenario>(scenario, GameManager.instance.loadScript.arrayOfScenarios);
+        Destroy(scenario);
+        //NameSet
+        NameSet nameSet = ScriptableObject.CreateInstance<NameSet>();
+        ValidateSOGeneric<NameSet>(nameSet, GameManager.instance.loadScript.arrayOfNameSets);
+        Destroy(nameSet);
+        //NodeDatapoint
+        NodeDatapoint nodeDatapoint = ScriptableObject.CreateInstance<NodeDatapoint>();
+        ValidateSOGeneric<NodeDatapoint>(nodeDatapoint, GameManager.instance.loadScript.arrayOfNodeDatapoints);
+        Destroy(nodeDatapoint);
+        //NodeArc
+        NodeArc nodeArc = ScriptableObject.CreateInstance<NodeArc>();
+        ValidateSOGeneric<NodeArc>(nodeArc, GameManager.instance.loadScript.arrayOfNodeArcs);
+        Destroy(nodeArc);
+        //NodeCrisis
+        NodeCrisis nodeCrisis = ScriptableObject.CreateInstance<NodeCrisis>();
+        ValidateSOGeneric<NodeCrisis>(nodeCrisis, GameManager.instance.loadScript.arrayOfNodeCrisis);
+        Destroy(nodeCrisis);
+        //Trait
+        Trait trait = ScriptableObject.CreateInstance<Trait>();
+        ValidateSOGeneric<Trait>(trait, GameManager.instance.loadScript.arrayOfTraits);
+        Destroy(trait);
+        //ActorArc
+        ActorArc actorArc = ScriptableObject.CreateInstance<ActorArc>();
+        ValidateSOGeneric<ActorArc>(actorArc, GameManager.instance.loadScript.arrayOfActorArcs);
+        Destroy(actorArc);
+        //Effect
+        Effect effect = ScriptableObject.CreateInstance<Effect>();
+        ValidateSOGeneric<Effect>(effect, GameManager.instance.loadScript.arrayOfEffects);
+        Destroy(effect);
+        //Action
+        Action action = ScriptableObject.CreateInstance<Action>();
+        ValidateSOGeneric<Action>(action, GameManager.instance.loadScript.arrayOfActions);
+        Destroy(action);
+        //TeamArc
+        TeamArc teamArc = ScriptableObject.CreateInstance<TeamArc>();
+        ValidateSOGeneric<TeamArc>(teamArc, GameManager.instance.loadScript.arrayOfTeamArcs);
+        Destroy(teamArc);
+        //Gear
+        Gear gear = ScriptableObject.CreateInstance<Gear>();
+        ValidateSOGeneric<Gear>(gear, GameManager.instance.loadScript.arrayOfGear);
+        Destroy(gear);
+        //GearRarity
+        GearRarity gearRarity = ScriptableObject.CreateInstance<GearRarity>();
+        ValidateSOGeneric<GearRarity>(gearRarity, GameManager.instance.loadScript.arrayOfGearRarity);
+        Destroy(gearRarity);
+        //GearType
+        GearType gearType = ScriptableObject.CreateInstance<GearType>();
+        ValidateSOGeneric<GearType>(gearType, GameManager.instance.loadScript.arrayOfGearType);
+        Destroy(gearType);
+        //ManageActor
+        ManageActor manageActor = ScriptableObject.CreateInstance<ManageActor>();
+        ValidateSOGeneric<ManageActor>(manageActor, GameManager.instance.loadScript.arrayOfManageActors);
+        Destroy(manageActor);
+        //ManageAction
+        ManageAction manageAction = ScriptableObject.CreateInstance<ManageAction>();
+        ValidateSOGeneric<ManageAction>(manageAction, GameManager.instance.loadScript.arrayOfManageActions);
+        Destroy(manageAction);
+        //ActorConflict
+        ActorConflict actorConflict = ScriptableObject.CreateInstance<ActorConflict>();
+        ValidateSOGeneric<ActorConflict>(actorConflict, GameManager.instance.loadScript.arrayOfActorConflicts);
+        Destroy(actorConflict);
+        //Secret
+        Secret secret = ScriptableObject.CreateInstance<Secret>();
+        ValidateSOGeneric<Secret>(secret, GameManager.instance.loadScript.arrayOfSecrets);
+        Destroy(secret);
+        //Faction
+        Faction faction = ScriptableObject.CreateInstance<Faction>();
+        ValidateSOGeneric<Faction>(faction, GameManager.instance.loadScript.arrayOfFactions);
+        Destroy(faction);
+        //Objective
+        Objective objective = ScriptableObject.CreateInstance<Objective>();
+        ValidateSOGeneric<Objective>(objective, GameManager.instance.loadScript.arrayOfObjectives);
+        Destroy(objective);
+        //Organisation
+        Organisation organisation = ScriptableObject.CreateInstance<Organisation>();
+        ValidateSOGeneric<Organisation>(organisation, GameManager.instance.loadScript.arrayOfOrganisations);
+        Destroy(organisation);
+        //Mayor
+        Mayor mayor = ScriptableObject.CreateInstance<Mayor>();
+        ValidateSOGeneric<Mayor>(mayor, GameManager.instance.loadScript.arrayOfMayors);
+        Destroy(mayor);
+        //DecisionAI
+        DecisionAI decisionAI = ScriptableObject.CreateInstance<DecisionAI>();
+        ValidateSOGeneric<DecisionAI>(decisionAI, GameManager.instance.loadScript.arrayOfDecisionAI);
+        Destroy(decisionAI);
+        //Mission
+        Mission mission = ScriptableObject.CreateInstance<Mission>();
+        ValidateSOGeneric<Mission>(mission, GameManager.instance.loadScript.arrayOfMissions);
+        Destroy(mission);
+        //
+        // - - - TextList - - -
+        //
+        TextList textList = ScriptableObject.CreateInstance<TextList>();
+        //combine all text list arrays into a single list for validation checks
+        List<TextList> listOfAllTextLists = new List<TextList>();
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
+        //NOTE: add extra text lists here (as above)
+        TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
+        ValidateSOGeneric<TextList>(textList, arrayOfTextLists);
+        Destroy(textList);
+        //
+        // - - - Target - - -
+        //
+        Target target = ScriptableObject.CreateInstance<Target>();
+        //combine all text list arrays into a single list for validation checks
+        List<Target> listOfTargets = new List<Target>();
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsGeneric);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsCity);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsVIP);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsStory);
+        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsGoal);
+        //NOTE: add extra target lists here (as above)
+        Target[] arrayOfTargetLists = listOfTargets.ToArray();
+        ValidateSOGeneric<Target>(target, arrayOfTargetLists);
+        Destroy(target);
+
 
 
         /*//
@@ -216,10 +411,7 @@ public class ValidationManager : MonoBehaviour
         {
             if (isVerbal == true)
             { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on GlobalMeta SO, array {0}, assets {1} records", numArray, numAssets); }
-        }*/
-        GlobalMeta globalMeta = ScriptableObject.CreateInstance<GlobalMeta>();
-        ValidateSOGeneric<GlobalMeta>(globalMeta, GameManager.instance.loadScript.arrayOfGlobalMeta);
-        Destroy(globalMeta);
+        }
 
         //
         // - - - GlobalChance - - -
@@ -332,7 +524,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - EffectApply - - -
         //
-        metaGUID = AssetDatabase.FindAssets("t:EffectApply", new[] { "Assets/SO" });
+        var metaGUID = AssetDatabase.FindAssets("t:EffectApply", new[] { "Assets/SO" });
         numArray = GameManager.instance.loadScript.arrayOfEffectApply.Length;
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
@@ -818,7 +1010,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Damage - - -
         //
-        metaGUID = AssetDatabase.FindAssets("t:Damage", new[] { "Assets/SO" });
+        var metaGUID = AssetDatabase.FindAssets("t:Damage", new[] { "Assets/SO" });
         numArray = GameManager.instance.loadScript.arrayOfDamages.Length;
         numAssets = metaGUID.Length;
         if (numAssets != numArray)
@@ -1165,7 +1357,7 @@ public class ValidationManager : MonoBehaviour
         if (numAssets != numArray)
         {
             Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on Target SO, array {0}, assets {1} records", numArray, numAssets);
-            /*Target[] arrayTemp = GameManager.instance.loadScript.arrayOfTargets;*/
+            //Target[] arrayTemp = GameManager.instance.loadScript.arrayOfTargets;
             foreach (var guid in metaGUID)
             {
                 //get path
@@ -1641,9 +1833,57 @@ public class ValidationManager : MonoBehaviour
         {
             if (isVerbal == true)
             { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on Mission SO, array {0}, assets {1} records", numArray, numAssets); }
-        }
+        }*/
 
     }
 
+    /// <summary>
+    /// Generic method to validate an SO type via an Asset Search on hard drive vs. the equivalent array in LoadManager.cs
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <param name="arraySO"></param>
+    private void ValidateSOGeneric<T>(T value, T[] arraySO) where T : ScriptableObject
+    {
+        if (value != null)
+        {
+            if (arraySO != null)
+            {
+                int numArray, numAssets;
+                // 'isVerbal' is true for displaying ALL messages, false for problem messages only
+                bool isVerbal = false;
+                string path;
+                // Validate SO
+                var metaGUID = AssetDatabase.FindAssets(string.Format("t:{0}", typeof(T).Name), new[] { "Assets/SO" });
+                numArray = arraySO.Length;
+                numAssets = metaGUID.Length;
+                if (numAssets != numArray)
+                {
+                    Debug.LogWarningFormat("[Val] ValidateSO: MISMATCH on {0}, array {1}, assets {2} records", typeof(T).Name, numArray, numAssets);
+                    T[] arrayTemp = arraySO;
+                    foreach (var guid in metaGUID)
+                    {
+                        //get path
+                        path = AssetDatabase.GUIDToAssetPath(guid);
+                        //get SO
+                        UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(T));
+                        //get object
+                        T meta = metaObject as T;
+                        if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                        { Debug.LogFormat("[Val] ValidateSO: array MISSING {0} \"{1}\"", value.name, meta.name); }
+                    }
+                }
+                else
+                {
+                    if (isVerbal == true)
+                    { Debug.LogFormat("[Val] ValidateSO: Checksum O.K on {0} SO, array {1}, assets {2} records", typeof(T).Name, numArray, numAssets); }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid arraySO for {0}", typeof(T).Name); }
+        }
+        else { Debug.LogWarning("Invalid T Value (Null)"); }
+    }
 
+
+    //new methods above here
 }

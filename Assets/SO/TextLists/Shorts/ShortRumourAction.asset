@@ -15,13 +15,13 @@ MonoBehaviour:
     messages\nLinked to ItemDataManager.cs"
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   randomList:
-  - there'll be a chance soon to
-  - there'll be an opportunity soon to
+  - there'll soon be a chance to
+  - there'll soon be an opportunity to
   - there could be a chance to
   - there could be an opportunity to
-  - there'll be window soon to
-  - it may be possible soon to
-  - there may be an opening soon to
-  - it may be feasible soon to
-  - there could be potential soon to
-  - there could be an opening soon to
+  - there'll soon be window to
+  - it may soon be possible to
+  - there may soon be an opening to
+  - it may soon be feasible to
+  - there could soon be potential to
+  - there could soon be an opening to

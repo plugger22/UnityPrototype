@@ -29,7 +29,7 @@ public class Mayor : ScriptableObject
     /// </summary>
     private void OnEnable()
     {
-        Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        /*Debug.Assert(sprite != null, "Invalid sprite (Null)");*/
     }
 
     //

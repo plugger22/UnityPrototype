@@ -30,9 +30,9 @@ public class ActorArc : ScriptableObject
     /// </summary>
     private void OnEnable()
     {
-        Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        /*Debug.Assert(sprite != null, "Invalid sprite (Null)");
         Debug.Assert(nodeAction != null, "Invalid nodeAction (Null)");
-        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(side != null, "Invalid side (Null)");*/
     }
 
 }

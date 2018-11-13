@@ -23,9 +23,9 @@ public class Scenario : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.Assert(city != null, "Invalid city (Null) for Scenario");
+        /*Debug.Assert(city != null, "Invalid city (Null) for Scenario");
         Debug.Assert(mission != null, "Invalid mission (Null) for Scenario");
-        Debug.Assert(challenge != null, "Invalid challenge (Null) for Scenario");
+        Debug.Assert(challenge != null, "Invalid challenge (Null) for Scenario");*/
     }
 
 

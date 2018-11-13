@@ -24,7 +24,7 @@ public class Nemesis : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.Assert(damage != null, string.Format("Invalid damage (Null) for nenesis {0}", this.name));
+        /*Debug.Assert(damage != null, string.Format("Invalid damage (Null) for nenesis {0}", this.name));*/
     }
 
 }
