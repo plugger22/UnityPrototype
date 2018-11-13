@@ -290,6 +290,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.Centre:
                     case NodeUI.NearNeighbours:
                     case NodeUI.DecisionNodes:
+                    case NodeUI.LoiterNodes:
                     case NodeUI.CrisisNodes:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:

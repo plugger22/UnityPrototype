@@ -6,6 +6,11 @@ using UnityEngine;
 /// </summary>
 public class NemesisManager : MonoBehaviour
 {
+    [Header("Loiter Nodes")]
+    [Tooltip("How many nodes in listOfMostConnectedNodes to consider as potential loiter nodes.")]
+    [Range(1, 10)] public int loiterNodePoolSize = 5;
+    [Tooltip("If a possible loiter node is within this distance (Dijkstra unweighted), or less, of another loiter node, it is eliminated")]
+    [Range(0, 3)] public int loiterDistanceCheck = 2;
 
     [HideInInspector] public Nemesis nemesis;
 
@@ -93,7 +98,7 @@ public class NemesisManager : MonoBehaviour
                         counter++;
                     }
                     //check limit isn't exceeded
-                    if (counter == 5)
+                    if (counter == loiterNodePoolSize)
                     { break; }
                 }
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: TOP X -> there are {0} loiter nodes", listOfLoiterNodes.Count);
@@ -106,7 +111,7 @@ public class NemesisManager : MonoBehaviour
                     if (centreNode != null)
                     {
                         distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(centreNode.nodeID, node.nodeID);
-                        if (distance <= 2)
+                        if (distance <= loiterDistanceCheck)
                         {
                             //too close, exclude node
                             Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);
@@ -128,7 +133,7 @@ public class NemesisManager : MonoBehaviour
                         {
                             //check distance
                             distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
-                            if (distance <= 2)
+                            if (distance <= loiterDistanceCheck)
                             {
                                 //too close, remove current node from list (make sure at least one node is remaining)
                                 counter = listOfLoiterNodes.Count;
