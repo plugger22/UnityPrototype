@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -66,12 +65,15 @@ public class NemesisManager : MonoBehaviour
                         {
                             //found the ideal node, job done
                             centreNode = node;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is a CENTRE nodeID {0}", centreNode.nodeID);
                             break;
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid node (Null) for listOfMostConnected[{0}]", index); }
                 }
-                //Take the top 3 most connected nodes (excluding centreNode, if any) and add to loiterList
+                if (centreNode == null)
+                    { Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is NO Centre node"); }
+                //Take the top 'x' most connected nodes (excluding centreNode, if any) and add to loiterList
                 counter = 0;
                 for (int index = 0; index < numOfNodes; index++)
                 {
@@ -84,12 +86,20 @@ public class NemesisManager : MonoBehaviour
                             listOfLoiterNodes.Add(node);
                             counter++;
                         }
-                        if (counter == 3)
-                        { break; }
                     }
+                    else
+                    {
+                        listOfLoiterNodes.Add(node);
+                        counter++;
+                    }
+                    //check limit isn't exceeded
+                    if (counter == 5)
+                    { break; }
                 }
-                //Check all nodes in list (reverse loop) to see if they have any neighbours within a set distance. Remove from list if so.
-                for (int index = listOfLoiterNodes.Count -1; index >= 0; index--)
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: TOP X -> there are {0} loiter nodes", listOfLoiterNodes.Count);
+
+                //Check all nodes in list (reverse loop list) to see if they have any neighbours within a set distance. Remove from list if so. Should be at least one node remaining.
+                for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
                 {
                     Node node = listOfLoiterNodes[index];
                     //check against centre node, if any
@@ -99,14 +109,57 @@ public class NemesisManager : MonoBehaviour
                         if (distance <= 2)
                         {
                             //too close, exclude node
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);
                             listOfLoiterNodes.RemoveAt(index);
+                            continue;
+                        }
+                    }
+                }
+                //Check remaining that loiter nodes aren't too close to each other (reverse loop list) Least connected nodes are checked and deleted before most connected (at list[0])
+                for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
+                {
+                    Node node = listOfLoiterNodes[index];
+                    //check against all other nodes in list
+                    for (int i = 0; i < listOfLoiterNodes.Count; i++)
+                    {
+                        Node nodeTemp = listOfLoiterNodes[i];
+                        //not the same node?
+                        if (nodeTemp.nodeID != node.nodeID)
+                        {
+                            //check distance
+                            distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
+                            if (distance <= 2)
+                            {
+                                //too close, remove current node from list (make sure at least one node is remaining)
+                                counter = listOfLoiterNodes.Count;
+                                if (centreNode != null)
+                                { counter++; }
+                                //only delete if more than one node remaining
+                                if (counter > 1)
+                                {
+                                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);
+                                    listOfLoiterNodes.RemoveAt(index);
+                                    break;
+                                }
+                                else
+                                {
+                                    Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
             }
             else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
+            //add centre node to list, if present
+            if (centreNode != null)
+            { listOfLoiterNodes.Add(centreNode); }
+            //how many remaining
+            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: FINAL -> there are {0} loiter nodes", listOfLoiterNodes.Count);
         }
         else { Debug.LogError("Invalid listOfMostConnectedNodes (Null)"); }
     }
 
+    //new methods above here
 }

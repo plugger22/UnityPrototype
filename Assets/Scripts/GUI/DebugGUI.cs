@@ -107,7 +107,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 100), "Action Menu", customBackground);
             //background box (Level)
-            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2), "Level Menu", customBackground);
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 30), "Level Menu", customBackground);
 
             //
             // - - - Data (first box)
@@ -763,6 +763,13 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Recaculate Weighted Dijkstra data");
                 GameManager.instance.dijkstraScript.RecalculateWeightedData();
+            }
+            
+            //ninth button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Loiter Nodes"))
+            {
+                Debug.Log("[Dbg] Button -> Show Loiter Nodes");
+                GameManager.instance.nodeScript.ShowNodes(NodeUI.LoiterNodes);
             }
 
             //

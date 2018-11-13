@@ -697,6 +697,29 @@ public class NodeManager : MonoBehaviour
                     displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Connected districts", colourEnd);
                 }
                 break;
+            case NodeUI.LoiterNodes:
+                List<Node> loiterList = GameManager.instance.dataScript.GetListOfLoiterNodes();
+                if (loiterList != null)
+                {
+                    if (loiterList.Count > 0)
+                    {
+                        foreach (Node node in loiterList)
+                        {
+                            if (node != null)
+                            { node.SetMaterial(materialActive); }
+                            else { Debug.LogWarning("Invalid node (Null)"); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, loiterList.Count, colourEnd, colourHighlight,
+                            loiterList.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid loiterList (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Loiter districts", colourEnd);
+                }
+                break;
             case NodeUI.DecisionNodes:
                 //highlight nodes in DataManager.cs -> ListOfDecisionNodes (ones used for AI 'connection Security' decisions)
                 List<Node> decisionList = GameManager.instance.dataScript.GetListOfDecisionNodes();
