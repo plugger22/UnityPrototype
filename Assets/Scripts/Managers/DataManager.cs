@@ -30,6 +30,7 @@ public class DataManager : MonoBehaviour
     private List<List<Node>> listOfNodesByType = new List<List<Node>>();                        //List containing Lists of Nodes by type -> index[NodeArcID]
     private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
     private List<Node> listOfDecisionNodes = new List<Node>();                                  //dynamic list of nodes used for connection security level decisions
+    private List<Node> listOfLoiterNodes = new List<Node>();                                    //nodes where the nemesis can go to and wait until something happens
     private List<Node> listOfCrisisNodes = new List<Node>();
     private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
@@ -1666,6 +1667,9 @@ public class DataManager : MonoBehaviour
 
     public List<Node> GetListOfMostConnectedNodes()
     { return listOfMostConnectedNodes; }
+
+    public List<Node> GetListOfLoiterNodes()
+    { return listOfLoiterNodes; }
 
     public List<Node> GetListOfDecisionNodes()
     { return listOfDecisionNodes; }

@@ -14,8 +14,8 @@ public class ContactType : ScriptableObject
 
     public void OnEnable()
     {
-        /*Debug.Assert(pickList != null, string.Format("Invalid pickList (Null) for ContactType \"{0}\"", this.name));
-        Debug.Assert(pickList.category.name.Equals("Contacts") == true, "Invalid pickList TextList (wrong Category)");*/
+        Debug.Assert(pickList != null, string.Format("Invalid pickList (Null) for ContactType \"{0}\"", this.name));
+        Debug.Assert(pickList.category.name.Equals("Contacts") == true, "Invalid pickList TextList (wrong Category)");
     }
 
 }

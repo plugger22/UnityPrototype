@@ -52,10 +52,10 @@ public class CityArc : ScriptableObject
 
     public void OnEnable()
     {
-        /*Debug.Assert(size != null, "Invalid CitySize (Null)");
+        Debug.Assert(size != null, "Invalid CitySize (Null)");
         Debug.Assert(spacing != null, "Invalid CitySpacing (Null)");
         Debug.Assert(connections != null, "Invalid CityConnections (Null)");
-        Debug.Assert(security != null, "Invalid CitySecurity (Null)");*/
+        Debug.Assert(security != null, "Invalid CitySecurity (Null)");
     }
 
 }

@@ -355,9 +355,9 @@ public class GameManager : MonoBehaviour
 
         /*//City Manager InitialiseEarly -> before levelScript
         startMethod.handler = GameManager.instance.cityScript.InitialiseEarly;
-        startMethod.className = "CityManager";*/
+        startMethod.className = "CityManager";
+        listOfStartMethods.Add(startMethod);*/
 
-        listOfStartMethods.Add(startMethod);
         //Scenario Manager InitialiseEarly -> before levelScript
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
@@ -393,9 +393,22 @@ public class GameManager : MonoBehaviour
 
         /*//City Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
-        startMethod.className = "CityManager";*/
+        startMethod.className = "CityManager";
+        listOfStartMethods.Add(startMethod);*/
 
+        //Dijkstra Manager -> Initialise -> after dataScript & LevelScript
+        startMethod.handler = GameManager.instance.dijkstraScript.Initialise;
+        startMethod.className = "DijkstraManager";
         listOfStartMethods.Add(startMethod);
+        //Faction Manager
+        startMethod.handler = GameManager.instance.factionScript.Initialise;
+        startMethod.className = "FactionManager";
+        listOfStartMethods.Add(startMethod);
+        //AI Manager -> after factionScript, before ScenarioManager -> InitialiseLate
+        startMethod.handler = GameManager.instance.aiScript.Initialise;
+        startMethod.className = "AIManager";
+        listOfStartMethods.Add(startMethod);
+
         //Scenario Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseLate;
         startMethod.className = "ScenarioManager Late";
@@ -404,18 +417,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
         listOfStartMethods.Add(startMethod);
-        //Dijkstra Manager -> Initialise -> after dataScript & LevelScript
-        startMethod.handler = GameManager.instance.dijkstraScript.Initialise;
-        startMethod.className = "DijkstraManager";
-        listOfStartMethods.Add(startMethod);
+
         //Secret Manager -> after dataScript and before playerScript
         startMethod.handler = GameManager.instance.secretScript.Initialise;
         startMethod.className = "SecretManager";
         listOfStartMethods.Add(startMethod);
-        //Faction Manager
-        startMethod.handler = GameManager.instance.factionScript.Initialise;
-        startMethod.className = "FactionManager";
-        listOfStartMethods.Add(startMethod);
+
         //Input Manager
         startMethod.handler = GameManager.instance.inputScript.Initialise;
         startMethod.className = "InputManager";
@@ -469,16 +476,6 @@ public class GameManager : MonoBehaviour
 
         /*//Dice Manager
         diceScript.Initialise();*/
-
-        //AI Manager -> after factionScript
-        startMethod.handler = GameManager.instance.aiScript.Initialise;
-        startMethod.className = "AIManager";
-        listOfStartMethods.Add(startMethod);
-
-        /*//Nemesis Manager
-        startMethod.handler = GameManager.instance.nemesisScript.Initialise;
-        startMethod.className = "NemesisManager";
-        listOfStartMethods.Add(startMethod);*/
 
         //Capture Manager
         startMethod.handler = GameManager.instance.captureScript.Initialise;

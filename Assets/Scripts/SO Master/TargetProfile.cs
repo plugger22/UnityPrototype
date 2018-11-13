@@ -34,8 +34,8 @@ public class TargetProfile : ScriptableObject
     /// </summary>
     public void OnEnable()
     {
-        /*Debug.Assert(activation != null, string.Format("Invalid activation (Null) for TargetProfile \"{0}\"", this.name));
-        Debug.Assert(trigger != null, string.Format("Invalid trigger (Null) for TargetProfile \"{0}\"", this.name));*/
+        Debug.Assert(activation != null, string.Format("Invalid activation (Null) for TargetProfile \"{0}\"", this.name));
+        Debug.Assert(trigger != null, string.Format("Invalid trigger (Null) for TargetProfile \"{0}\"", this.name));
         Debug.Assert(window > 0, string.Format("Invalid turnWindow (Zero) for TargetProfile \"{0}\"", this.name));
         if (isRepeat == true)
         { Debug.Assert(repeatProfile != null, "Invalid repeatProfile (Null)"); }

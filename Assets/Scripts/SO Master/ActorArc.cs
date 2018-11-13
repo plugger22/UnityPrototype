@@ -25,14 +25,15 @@ public class ActorArc : ScriptableObject
     [Tooltip("The type of Gear the actor prefers (you gain a renown transfer from them for giving them this type of gear)")]
     public GearType preferredGear;
 
+
     /// <summary>
     /// initialisation
     /// </summary>
     private void OnEnable()
     {
-        /*Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        Debug.Assert(sprite != null, "Invalid sprite (Null)");
         Debug.Assert(nodeAction != null, "Invalid nodeAction (Null)");
-        Debug.Assert(side != null, "Invalid side (Null)");*/
+        Debug.Assert(side != null, "Invalid side (Null)");
     }
 
 }

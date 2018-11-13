@@ -87,9 +87,9 @@ public class Target : ScriptableObject
     /// </summary>
     public void OnEnable()
     {
-        /*Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(descriptorAuthority) == false, "Invalid descriptorAuthority (Null or Empty)");
-        Debug.Assert(profileBase != null, string.Format("Target {0}, id {1}, has no profileBase (Null)", targetName, targetID));*/
+        Debug.Assert(profileBase != null, string.Format("Target {0}, id {1}, has no profileBase (Null)", targetName, targetID));
 
         //NOTE: No need to check profile for Null as handled in TargetManager.cs -> SetTargetDetails (assigns defaultProfile if null)
     }

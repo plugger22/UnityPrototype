@@ -18,9 +18,9 @@ public class NameSet : ScriptableObject
 
     public void OnEnable()
     {
-        /*Debug.Assert(firstMaleNames != null, "Invalid firstMaleNames (Null)");
+        Debug.Assert(firstMaleNames != null, "Invalid firstMaleNames (Null)");
         Debug.Assert(firstFemaleNames != null, "Invalid firstFemaleNames (Null)");
-        Debug.Assert(lastNames != null, "Invalid lastNames (Null)");*/
+        Debug.Assert(lastNames != null, "Invalid lastNames (Null)");
 
     }
 

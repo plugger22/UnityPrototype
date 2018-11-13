@@ -76,6 +76,17 @@ public class CityManager : MonoBehaviour
         loyaltyMinTimer = 0;
         loyaltyMaxTimer = 0;
 
+        //Placeholder -> do early so factionManager.cs can have data in start sequence
+        city.mayor = GameManager.instance.dataScript.GetRandomMayor();
+        if (city.mayor != null)
+        {
+            city.faction = city.mayor.faction;
+            Debug.LogFormat("CityManager.cs -> City {0}, {1},  Trait {2}, Faction {3}{4}", city.name, city.mayor.name, city.mayor.trait.tag, city.mayor.faction.name, "\n");
+            //initialise authority faction (determined by mayor's faction
+            GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
+        }
+        else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
+
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CityManager");
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "CityManager");
@@ -89,16 +100,7 @@ public class CityManager : MonoBehaviour
         CityLoyalty = city.baseLoyalty;
         //initialise number of districts
         city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
-        //Placeholder
-        city.mayor = GameManager.instance.dataScript.GetRandomMayor();
-        if (city.mayor != null)
-        {
-            city.faction = city.mayor.faction;
-            Debug.LogFormat("CityManager.cs -> City {0}, {1},  Trait {2}, Faction {3}{4}", city.name, city.mayor.name, city.mayor.trait.tag, city.mayor.faction.name, "\n");
-            //initialise authority faction (determined by mayor's faction
-            GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
-        }
-        else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
+
         //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);
         //set up base panel UI
