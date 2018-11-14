@@ -50,7 +50,10 @@ public class NemesisManager : MonoBehaviour
         GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
         Node nodeTemp = GameManager.instance.dataScript.GetNode(nemesisNodeID);
         if (nodeTemp != null)
-        { Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n"); }
+        {
+            nemesisNode = nodeTemp;
+            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n");
+        }
         else { Debug.LogErrorFormat("Invalid nodeNemesis (Null) nodeID {0}", nemesisNodeID); }
         //Nemesis AI
         mode = NemesisMode.Normal;
