@@ -305,6 +305,14 @@ public class DebugGUI : MonoBehaviour
                 }
                }
 
+            //nineteenth button
+            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "Nemesis Data"))
+            {
+                Debug.Log("[Dbg] Button -> Nemesis Data");
+                if (debugDisplay != 40)
+                { debugDisplay = 40; }
+                else { debugDisplay = 0; }
+            }
 
             //
             // - - - Options (second box)
@@ -1113,6 +1121,12 @@ public class DebugGUI : MonoBehaviour
                         EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStop, this, "DebugGUI.cs -> OnGUI");
                         status = GUIStatus.None;
                         optionPath = "Input Path";
+                        break;
+                    //Nemesis Data
+                    case 40:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.nemesisScript.DebugShowNemesisStatus();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }

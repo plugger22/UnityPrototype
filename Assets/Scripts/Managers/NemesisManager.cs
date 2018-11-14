@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -292,10 +293,10 @@ public class NemesisManager : MonoBehaviour
     public void ProcessNemesisActivity(int playerTargetNodeID, bool immediateFlag)
     {
         int nodeID = GameManager.instance.nodeScript.nodeNemesis;
-        bool isProceed = true;
         nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
         if (nemesisNode != null)
         {
+            bool isProceed = true;
             //player carrying out a set goal for a set period of time, keep doing so unless immediate flag set
             if (duration > 0)
             {
@@ -318,38 +319,48 @@ public class NemesisManager : MonoBehaviour
                 else
                 {
                     //no recent player activity
+
+                    //DEBUG -> Chance to change goals
+
+                    ProcessContinueWithGoal();
                 }
             }
             else
             {
-                //
-                // - - - Continue with existing goal
-                //
-                switch (goal)
-                {
-                    case NemesisGoal.Ambush:
-
-                        break;
-                    case NemesisGoal.Search:
-
-                        break;
-                    case NemesisGoal.MoveToNode:
-
-                        break;
-                    case NemesisGoal.Loiter:
-                        //nemesis already at loiter node? -> if so IDLE, if not move towards loiter node at a speed of 1
-                        if (nemesisNode.isLoiterNode == true)
-                        { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: goal {0}, At Loiter Node {1}, id {2}, IDLE{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n"); }
-                        else
-                        { ProcessMoveNemesis(nemesisNode.loiter.neighbourID); }
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Invalid NemesisGoal \"{0}\"", goal);
-                        break;
-                }
+                // Continue with existing goal
+                ProcessContinueWithGoal();
             }
         }
         else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// Nemesis proceeds with curent goal
+    /// </summary>
+    private void ProcessContinueWithGoal()
+    {
+        switch (goal)
+        {
+            case NemesisGoal.Ambush:
+
+                break;
+            case NemesisGoal.Search:
+
+                break;
+            case NemesisGoal.MoveToNode:
+
+                break;
+            case NemesisGoal.Loiter:
+                //nemesis already at loiter node? -> if so IDLE, if not move towards loiter node at a speed of 1
+                if (nemesisNode.isLoiterNode == true)
+                { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: goal {0}, At Loiter Node {1}, id {2}, IDLE{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n"); }
+                else
+                { ProcessMoveNemesis(nemesisNode.loiter.neighbourID); }
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid NemesisGoal \"{0}\"", goal);
+                break;
+        }
     }
 
     /// <summary>
@@ -368,6 +379,7 @@ public class NemesisManager : MonoBehaviour
             {
                 //update nodeManage
                 GameManager.instance.nodeScript.nodeNemesis = nodeID;
+                GameManager.instance.nodeScript.NodeRedraw = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis moves to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
                 //check for player at same node
                 if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
@@ -464,6 +476,28 @@ public class NemesisManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }
     }
 
+    /// <summary>
+    /// Debug method to display nemesis status
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowNemesisStatus()
+    {
+        StringBuilder builder = new StringBuilder();
+        //current status
+        builder.AppendFormat(" Nemesis Status{0}{1}", "\n", "\n");
+        builder.AppendFormat(" mode: {0}{1}", mode, "\n");
+        builder.AppendFormat(" goal: {0}{1}", goal, "\n");
+        builder.AppendFormat(" duration: {0}{1}", duration, "\n");
+        builder.AppendFormat(" targetNodeID: {0}{1}", targetNodeID, "\n");
+        builder.AppendFormat(" nemesis node: {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+        //nemesis stats
+        builder.AppendFormat(" {0}{1}{2}",  "\n", nemesis.name, "\n");
+        builder.AppendFormat(" movement: {0}{1}", nemesis.movement, "\n");
+        builder.AppendFormat(" search: {0}{1}", nemesis.searchRating, "\n");
+        builder.AppendFormat(" stealth: {0}{1}", nemesis.stealthRating, "\n");
+        builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
+        return builder.ToString();
+    }
 
     //new methods above here
 }
