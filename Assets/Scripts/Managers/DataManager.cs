@@ -776,6 +776,63 @@ public class DataManager : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// return a list of all Nodes where an actor has contacts, returns empty list if none
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public List<Node> GetListOfActorContactNodes(int slotID)
+    {
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
+        List<Node> listOfNodes = new List<Node>();
+        //get actor
+        Actor actor = GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+        if (actor != null)
+        {
+            if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
+            {
+                List<int> listOfNodeID = new List<int>(dictOfActorContacts[actor.actorID]);
+                if (listOfNodeID != null)
+                {
+                    //loop through list and convert nodeID's to Nodes
+                    for (int i = 0; i < listOfNodeID.Count; i++)
+                    {
+                        Node node = GetNode(listOfNodeID[i]);
+                        if (node != null)
+                        {
+                            //add node to return list
+                            listOfNodes.Add(node);
+                        }
+                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodeID[i]); }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfNodeID (null) for actor {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
+        return listOfNodes;
+    }
+
+    /// <summary>
+    /// returns a list of actors who have a contact at node, Null if none. Resistance Only
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <param name="isCurrentSide"></param>
+    /// <returns></returns>
+    public List<int> CheckContactResistanceAtNode(int nodeID, bool isCurrentSide = true)
+    {
+        List<int> tempList = null;
+        if (dictOfNodeContactsResistance != null)
+        {
+            if (dictOfNodeContactsResistance.ContainsKey(nodeID) == true)
+            { tempList = dictOfNodeContactsResistance[nodeID]; }
+        }
+        else { Debug.LogWarning("Invalid tempDict (Resistance or Authority) (Null)"); }
+        return tempList;
+    }
+
     /// <summary>
     /// Overloaded. Based on side. Returns null if not either Authority or Resistance
     /// </summary>
@@ -1036,7 +1093,7 @@ public class DataManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                                                        GameManager.instance.messageScript.ActorContact(text, actor, node, contact, false, reason);
+                                                        GameManager.instance.messageScript.ContactChange(text, actor, node, contact, false, reason);
                                                     }
                                                     else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                                                 }
@@ -1150,7 +1207,7 @@ public class DataManager : MonoBehaviour
                     if (node != null)
                     {
                         string text = string.Format("{0} Aquires {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                        GameManager.instance.messageScript.ActorContact(text, actor, node, contact);
+                        GameManager.instance.messageScript.ContactChange(text, actor, node, contact);
                     }
                     else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                 }
@@ -1246,7 +1303,7 @@ public class DataManager : MonoBehaviour
                         if (node != null)
                         {
                             string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                            GameManager.instance.messageScript.ActorContact(text, actor, node, contact, false);
+                            GameManager.instance.messageScript.ContactChange(text, actor, node, contact, false);
                         }
                         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                     }
@@ -1323,42 +1380,7 @@ public class DataManager : MonoBehaviour
         return contactResult;
     }
 
-    /// <summary>
-    /// return a list of all Nodes where an actor has contacts, returns empty list if none
-    /// </summary>
-    /// <param name="actorID"></param>
-    /// <returns></returns>
-    public List<Node> GetListOfActorContacts(int slotID)
-    {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        List<Node> listOfNodes = new List<Node>();
-        //get actor
-        Actor actor = GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
-        if (actor != null)
-        {
-            if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
-            {
-                List<int> listOfNodeID = new List<int>(dictOfActorContacts[actor.actorID]);
-                if (listOfNodeID != null)
-                {
-                    //loop through list and convert nodeID's to Nodes
-                    for (int i = 0; i < listOfNodeID.Count; i++)
-                    {
-                        Node node = GetNode(listOfNodeID[i]);
-                        if (node != null)
-                        {
-                            //add node to return list
-                            listOfNodes.Add(node);
-                        }
-                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodeID[i]); }
-                    }
-                }
-                else { Debug.LogErrorFormat("Invalid listOfNodeID (null) for actor {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
-            }
-        }
-        else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
-        return listOfNodes;
-    }
+
 
     /// <summary>
     /// Returns a list of ActorArc names (default Current side to enable both sides tooltips to work correctly while debugging) for all contacts at node. Returns empty string if none.

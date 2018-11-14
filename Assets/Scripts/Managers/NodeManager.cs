@@ -905,7 +905,7 @@ public class NodeManager : MonoBehaviour
             nodeTemp.SetMaterial(materialActive);
         }*/
 
-        List<Node> tempNodeList = GameManager.instance.dataScript.GetListOfActorContacts(slotID);
+        List<Node> tempNodeList = GameManager.instance.dataScript.GetListOfActorContactNodes(slotID);
         foreach(Node node in tempNodeList)
         {
             //change material for selected nodes

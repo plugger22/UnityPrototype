@@ -666,7 +666,7 @@ public class AIManager : MonoBehaviour
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
         //Nemesis
-        GameManager.instance.nemesisScript.ProcessNemesisActivity(playerTargetNodeID);
+        GameManager.instance.nemesisScript.ProcessNemesisActivity(playerTargetNodeID, immediateFlagResistance);
 
         //reset flags
         immediateFlagResistance = false;

@@ -418,7 +418,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public string GetActorContactDetails(string reason, Actor actor, Node node, Contact contact, bool isGained)
+    public string GetContactDetails(string reason, Actor actor, Node node, Contact contact, bool isGained)
     {
         StringBuilder builder = new StringBuilder();
         string verb, colourVerb, effectiveVerb, colourEffective;
@@ -463,13 +463,33 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="target"></param>
     /// <returns></returns>
-    public string GetActorContactTargetRumourDetails(Actor actor, Node node, Contact contact, Target target)
+    public string GetContactTargetRumourDetails(Actor actor, Node node, Contact contact, Target target)
     {
         StringBuilder builder = new StringBuilder();
         string textHeard = shortRumourHeard.GetRandomRecord(false);
         string textAction = shortRumourAction.GetRandomRecord(false);
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textHeard, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, target.rumourText, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// One of actor's network of contacts spots the Nemesis
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public string GetContactNemesisSpottedDetails(Actor actor, Node node, Contact contact, Nemesis nemesis)
+    {
+        StringBuilder builder = new StringBuilder();
+        string textHeard = shortRumourHeard.GetRandomRecord(false);
+        string textAction = shortRumourAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textHeard, textAction, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
         return builder.ToString();

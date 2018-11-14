@@ -871,7 +871,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public Message ActorContact(string text, Actor actor, Node node, Contact contact, bool isGained = true, string reason = null)
+    public Message ContactChange(string text, Actor actor, Node node, Contact contact, bool isGained = true, string reason = null)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(node != null, "Invalid node (Null)");
@@ -880,8 +880,8 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.ACTOR;
-            message.subType = MessageSubType.Actor_Contact;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Change;
             message.side = globalResistance;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
@@ -898,7 +898,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("{0}, Loses an existing CONTACT", actor.arc.name);
                 data.topText = "Contact Lost";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetActorContactDetails(reason, actor, node, contact, isGained);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactDetails(reason, actor, node, contact, isGained);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.ALERTS;
@@ -922,7 +922,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public Message ActorContactTargetRumour(string text, Actor actor, Node node, Contact contact, Target target)
+    public Message ContactTargetRumour(string text, Actor actor, Node node, Contact contact, Target target)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(node != null, "Invalid node (Null)");
@@ -932,8 +932,8 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.ACTOR;
-            message.subType = MessageSubType.Actor_Contact_Target_Rumour;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Target_Rumour;
             message.side = globalResistance;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
@@ -943,8 +943,52 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts learns of a RUMOUR", actor.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetActorContactTargetRumourDetails(actor, node, contact, target);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactTargetRumourDetails(actor, node, contact, target);
             data.priority = ItemPriority.Low;
+            data.sprite = actor.arc.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// One of a Resistance Actors network of contacts spots the Nemesis
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="isGained"></param>
+    /// <returns></returns>
+    public Message ContactNemesisSpotted(string text, Actor actor, Node node, Contact contact, Nemesis nemesis)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Nemesis_Spotted;
+            message.side = globalResistance;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s network of contacts spots your NEMESIS", actor.arc.name);
+            data.topText = string.Format("{0} gets a CALL", actor.actorName);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis);
+            data.priority = ItemPriority.High;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;

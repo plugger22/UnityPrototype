@@ -92,6 +92,8 @@
     public enum AIType { None, Team, Decision }
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                             //used for toggling debugGUI.cs  AI data
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
+    public enum NemesisMode {  Normal, Hunt }
+    public enum NemesisGoal { MoveToNode, Loiter, Ambush, Search}
 
     //
     // - - - Dice - - -
@@ -103,7 +105,7 @@
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive, AI }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT }
     public enum MessageSubType
     {
         None,
@@ -156,8 +158,10 @@
         Actor_Reassured,
         Actor_Conflict,
         Actor_Trait,
-        Actor_Contact,
-        Actor_Contact_Target_Rumour,
+        //Contact
+        Contact_Change,
+        Contact_Target_Rumour,
+        Contact_Nemesis_Spotted,
         //Target
         Target_New,
         Target_Expired,

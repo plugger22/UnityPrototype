@@ -650,7 +650,7 @@ public class ContactManager : MonoBehaviour
                                     if (node != null)
                                     {
                                         string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
-                                        GameManager.instance.messageScript.ActorContactTargetRumour(text, actor, node, contact, target);
+                                        GameManager.instance.messageScript.ContactTargetRumour(text, actor, node, contact, target);
                                     }
                                     else { Debug.LogWarning("Invalid node (Null)"); }
                                 }

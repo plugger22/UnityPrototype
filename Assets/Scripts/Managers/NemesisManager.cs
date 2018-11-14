@@ -1,4 +1,5 @@
-﻿using packageAPI;
+﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,13 @@ public class NemesisManager : MonoBehaviour
     [Range(0, 3)] public int loiterDistanceCheck = 2;
 
     [HideInInspector] public Nemesis nemesis;
+
+    //Nemesis AI
+    private NemesisMode mode;
+    private NemesisGoal goal;
+    private int duration;                   //if goal is fixed for a set time then no new goal can be assigned until the duration countdown has expired
+    private int targetNodeID;               //if goal is 'MoveToNode' this is the node being moved towards
+    private Node nemesisNode;               //current node where nemesis is, updated by ProcessNemesisActivity
 
     /// <summary>
     /// Initialise data ready for Nemesis
@@ -43,6 +51,10 @@ public class NemesisManager : MonoBehaviour
         if (nodeTemp != null)
         { Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n"); }
         else { Debug.LogErrorFormat("Invalid nodeNemesis (Null) nodeID {0}", nemesisNodeID); }
+        //Nemesis AI
+        mode = NemesisMode.Normal;
+        goal = NemesisGoal.Loiter;
+        duration = 3; //nemesis does nothing for 'x' turns at game start
         //Set up datafor Nemesis
         SetLoiterNodes();
         SetLoiterData();
@@ -277,17 +289,181 @@ public class NemesisManager : MonoBehaviour
     /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives a playerTargetNodeID, if worth doing so and -1 if nothing to report)
     /// </summary>
     /// <param name="playerTargetNodeID"></param>
-    public void ProcessNemesisActivity(int playerTargetNodeID)
+    public void ProcessNemesisActivity(int playerTargetNodeID, bool immediateFlag)
     {
-        if (playerTargetNodeID > -1)
+        int nodeID = GameManager.instance.nodeScript.nodeNemesis;
+        bool isProceed = true;
+        nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
+        if (nemesisNode != null)
         {
-            //recent player activity
+            //player carrying out a set goal for a set period of time, keep doing so unless immediate flag set
+            if (duration > 0)
+            {
+                if (immediateFlag == true) { isProceed = true; }
+                else { isProceed = false; }
+                //decrement duration
+                duration--;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: TargetNodeID {0}, ImmediateFlag {1}, duration {2}, isProceed {3}{4}", targetNodeID, immediateFlag, duration, isProceed, "\n");
+            }
+
+            if (isProceed == true)
+            {
+                //
+                // - - - Possible new goal
+                //
+                if (playerTargetNodeID > -1)
+                {
+                    //recent player activity
+                }
+                else
+                {
+                    //no recent player activity
+                }
+            }
+            else
+            {
+                //
+                // - - - Continue with existing goal
+                //
+                switch (goal)
+                {
+                    case NemesisGoal.Ambush:
+
+                        break;
+                    case NemesisGoal.Search:
+
+                        break;
+                    case NemesisGoal.MoveToNode:
+
+                        break;
+                    case NemesisGoal.Loiter:
+                        //nemesis already at loiter node? -> if so IDLE, if not move towards loiter node at a speed of 1
+                        if (nemesisNode.isLoiterNode == true)
+                        { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: goal {0}, At Loiter Node {1}, id {2}, IDLE{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n"); }
+                        else
+                        { ProcessMoveNemesis(nemesisNode.loiter.neighbourID); }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid NemesisGoal \"{0}\"", goal);
+                        break;
+                }
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// method to move nemesis. Handles admin and player and contact interaction checks. 
+    /// NOTE: Assumed to be a single link move.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void ProcessMoveNemesis(int nodeID)
+    {
+        //check if node is a neighbour of current nemesis node (assumed to be a single link move)
+        if (nemesisNode.CheckNeighbourNodeID(nodeID) == true)
+        {
+            //update nemesisManager
+            nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
+            if (nemesisNode != null)
+            {
+                //update nodeManage
+                GameManager.instance.nodeScript.nodeNemesis = nodeID;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis moves to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+                //check for player at same node
+                if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                { ProcessPlayerInteraction(); }
+                //check for Resistance contact at same node
+                List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                if (tempList != null)
+                { ProcessContactInteraction(tempList); }
+            }
+            else { Debug.LogWarningFormat("Invalid move node {Null) for nodeID {0}", nodeID); }
+        }
+        else {
+            Debug.LogWarningFormat("Invalid move nodeId (Doesn't match any of neighbours) for nodeID {0} and nemesisNode {1}, {2}, id {3}{4}", nodeID, nemesisNode.nodeName, nemesisNode.Arc.name,
+         nemesisNode.nodeID, "\n");
+        }
+    }
+
+    /// <summary>
+    /// nemesis and player at same node
+    /// </summary>
+    private void ProcessPlayerInteraction()
+    {
+        //player spotted if nemesis search rating >= player invisibility
+        int searchRating = nemesis.searchRating;
+        //adjust for mode
+        if (mode == NemesisMode.Normal)
+        { searchRating--; }
+        if (searchRating >= GameManager.instance.playerScript.Invisibility)
+        {
+            //player SPOTTED
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
         }
         else
         {
-            //no recent player activity
+            //player NOT spotted
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Player NOT Spotted at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
         }
     }
+
+    /// <summary>
+    /// nemesis at same node as one or more resistance contacts
+    /// </summary>
+    /// <param name="listOfActorsWithContactsAtNode"></param>
+    private void ProcessContactInteraction(List<int> listOfActorsWithContactsAtNode)
+    {
+        Actor actor;
+        Contact contact;
+        if (listOfActorsWithContactsAtNode != null)
+        {
+            int numOfActors = listOfActorsWithContactsAtNode.Count;
+            if (numOfActors > 0)
+            {
+                //nemesis searchRating
+                int stealthRating = nemesis.stealthRating;
+                //adjust for mode
+                if (mode == NemesisMode.Hunt)
+                { stealthRating--; }
+                //loop actors with contacts
+                for (int i = 0; i < numOfActors; i++)
+                {
+                    actor = GameManager.instance.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
+                    if (actor != null)
+                    {
+                        contact = actor.GetContact(nemesisNode.nodeID);
+                        if (contact != null)
+                        {
+                            //check nemesis stealth rating vs. contact effectiveness
+                            if (contact.effectiveness >= stealthRating)
+                            {
+                                //contact spots Nemesis
+                                string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
+                                    contact.job, nemesisNode.nodeName, nemesisNode.nodeID);
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
+                                GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, nemesisNode, contact, nemesis);
+                                //no need to check anymore as one sighting is enough
+                                break;
+                            }
+                            else
+                            {
+                                //contact Fails to spot Nemesis
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}", 
+                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
+                            }
+                        }
+                        else { Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, nemesisNode.nodeName,
+                         nemesisNode.Arc.name, nemesisNode.nodeID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Empty)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }
+    }
+
 
     //new methods above here
 }
