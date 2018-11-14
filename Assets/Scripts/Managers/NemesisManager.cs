@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using packageAPI;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -44,6 +45,7 @@ public class NemesisManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid nodeNemesis (Null) nodeID {0}", nemesisNodeID); }
         //Set up datafor Nemesis
         SetLoiterNodes();
+        SetLoiterData();
     }
 
     /// <summary>
@@ -164,6 +166,127 @@ public class NemesisManager : MonoBehaviour
             Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: FINAL -> there are {0} loiter nodes", listOfLoiterNodes.Count);
         }
         else { Debug.LogError("Invalid listOfMostConnectedNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// Takes loiter nodes and configueres a LoiterData package for each individual node for quick reference by nemesis
+    /// </summary>
+    private void SetLoiterData()
+    {
+        int tempNodeID, shortestNodeID, tempDistance, shortestDistance, numOfLoiterNodes, v1, v2;
+        int counter = 0;
+        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
+        List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Connection> listOfConnections = new List<Connection>();
+        Connection connection;
+        if (listOfLoiterNodes != null)
+        {
+            numOfLoiterNodes = listOfLoiterNodes.Count;
+            if (numOfLoiterNodes > 0)
+            {
+                if (listOfAllNodes != null)
+                {
+                    //loop all nodes
+                    for (int index = 0; index < listOfAllNodes.Count; index++)
+                    {
+                        LoiterData data = new LoiterData();
+                        Node node = listOfAllNodes[index];
+                        if (node != null)
+                        {
+                            //check if node is a loiter node
+                            if (listOfLoiterNodes.Exists(x => x.nodeID == node.nodeID) == true)
+                            {
+                                //Loiter node
+                                data.nodeID = node.nodeID;
+                                data.distance = 0;
+                                data.neighbourID = node.nodeID;
+                            }
+                            else
+                            {
+                                //NOT a loiter node
+                                shortestNodeID = -1;
+                                shortestDistance = 999;
+                                //check distance to all loiter nodes and get closest
+                                for (int i = 0; i < numOfLoiterNodes; i++)
+                                {
+                                    tempNodeID = listOfLoiterNodes[i].nodeID;
+                                    tempDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, tempNodeID);
+                                    if (tempDistance < shortestDistance)
+                                    {
+                                        shortestDistance = tempDistance;
+                                        shortestNodeID = tempNodeID;
+                                    }
+                                }
+                                data.nodeID = shortestNodeID;
+                                data.distance = shortestDistance;
+                                //get path to nearest loiter node
+                                if (shortestNodeID > -1)
+                                {
+                                    listOfConnections = GameManager.instance.dijkstraScript.GetPath(node.nodeID, shortestNodeID, false);
+                                    if (listOfConnections != null)
+                                    {
+                                        //get first connection (from source node)
+                                        connection = listOfConnections[0];
+                                        if (connection != null)
+                                        {
+                                            v1 = connection.GetNode1();
+                                            v2 = connection.GetNode2();
+                                            if (v1 == node.nodeID || v2 == node.nodeID)
+                                            {
+                                                if (v1 == node.nodeID)
+                                                { data.neighbourID = v2; }
+                                                else { data.neighbourID = v1; }
+                                                //check neighbourID is valid for node
+                                                if (node.CheckNeighbourNodeID(data.neighbourID) == false)
+                                                {
+                                                    Debug.LogWarningFormat("Invalid data.neighbourID (doesn't correspond with node neighbours) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID);
+                                                    data.neighbourID = -1;
+                                                }
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid connection (endpoints don't match nodeID) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                        }
+                                        else { Debug.LogWarningFormat("Invalid listOfConnections[0] (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for source nodeID {0} and destination nodeID {1}", node.nodeID, shortestNodeID); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid shortestNodeID (-1) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfAllNodes[{0}]", index); }
+                        //store loiter data
+                        if (data.distance > -1 && data.nodeID > -1 && data.neighbourID > -1)
+                        {
+                            node.loiter = data;
+                            counter++;
+                            if (data.distance == 0)
+                            { node.isLoiterNode = true; }
+                            else { node.isLoiterNode = false; }
+                        }
+                        else { Debug.LogWarningFormat("Invalid loiterData (missing data) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                    }
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterData: LoiterData successfully initialised in {0} nodes", counter);
+                }
+                else { Debug.LogError("Invalid listOfAllNodes (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfLoiterNodes (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives a playerTargetNodeID, if worth doing so and -1 if nothing to report)
+    /// </summary>
+    /// <param name="playerTargetNodeID"></param>
+    public void ProcessNemesisActivity(int playerTargetNodeID)
+    {
+        if (playerTargetNodeID > -1)
+        {
+            //recent player activity
+        }
+        else
+        {
+            //no recent player activity
+        }
     }
 
     //new methods above here

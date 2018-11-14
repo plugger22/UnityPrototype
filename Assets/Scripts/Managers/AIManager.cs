@@ -310,6 +310,8 @@ public class AIManager : MonoBehaviour
     private string resistancePreferredArc;
     private int authorityMaxTasksPerTurn;                               //how many tasks the AI can undertake in a turns
     private int resistanceMaxTasksPerTurn;
+    //player target (Nemesis / Erasure teams)
+    private int playerTargetNodeID;                                     //most likely node where player is, -1 if no viable recent information available
 
     //decision data
     private float connSecRatio;
@@ -663,6 +665,8 @@ public class AIManager : MonoBehaviour
         ProcessDecisionTask();
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
+        //Nemesis
+        GameManager.instance.nemesisScript.ProcessNemesisActivity(playerTargetNodeID);
 
         //reset flags
         immediateFlagResistance = false;
@@ -1456,11 +1460,11 @@ public class AIManager : MonoBehaviour
         if (numOfTeams > 0)
         {
             //get target node
-            int targetNodeID = ProcessErasureTarget();
-            if (targetNodeID > -1)
+            playerTargetNodeID = ProcessErasureTarget();
+            if (playerTargetNodeID > -1)
             {
                 //get near neighbours as potential node targets
-                Node node = GameManager.instance.dataScript.GetNode(targetNodeID);
+                Node node = GameManager.instance.dataScript.GetNode(playerTargetNodeID);
                 if (node != null)
                 {
                     List<Node> listOfNearNeighbours = node.GetNearNeighbours();
@@ -1540,7 +1544,7 @@ public class AIManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid listOfNearNeighbours for nodeID {0}", node.nodeID); }
                 }
-                else { Debug.LogWarningFormat("Invalid target node (Null) for nodeID {0}", targetNodeID); }
+                else { Debug.LogWarningFormat("Invalid target node (Null) for nodeID {0}", playerTargetNodeID); }
             }
             else
             {

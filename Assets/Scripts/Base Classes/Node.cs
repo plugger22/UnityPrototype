@@ -25,6 +25,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
     [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
     [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)
+    [HideInInspector] public bool isLoiterNode;              //true if a loiter node for Nemesis
     [HideInInspector] public bool isConnectedNode;           //true if node is in the listMostConnectedNodes
     [HideInInspector] public bool isChokepointNode;          //true if node is a chokepoint (one connection between it and another subgraph)
 
@@ -46,6 +47,8 @@ public class Node : MonoBehaviour
     [HideInInspector] public int crisisTimer;           //counts down a node crisis
     [HideInInspector] public int waitTimer;             //counts down interval between possible crisis
     [HideInInspector] public NodeCrisis crisis = null;             //type of Nodecrisis, eg. "Riot"
+
+    [HideInInspector] public LoiterData loiter;         //pre-configured data at game start to aid nemesis moving to the nearest loiter node
 
 
     private Coroutine myCoroutine;
@@ -408,16 +411,17 @@ public class Node : MonoBehaviour
                     List<string> activityList = null;
                     if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
                     { activityList = GetActivityInfo(); }
-                    //show node ID only if debug data option is true
+                    //DEBUG Data
                     string textType, textName;
                     if (GameManager.instance.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
                         /*textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
                             Convert.ToInt32(isChokepointNode));*/
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                        /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                         { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactResistance, isContactKnown); }
-                        else { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactAuthority, isContactKnown); }
+                        else { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactAuthority, isContactKnown); }*/
+                        textName = string.Format("L id {0}, dist {1}, N id {2}", loiter.nodeID, loiter.distance, loiter.neighbourID);
                     }
                     else
                     {
@@ -534,6 +538,14 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetNeighbouringNodes()
     { return listOfNeighbourNodes; }
+
+    /// <summary>
+    /// returns true if supplied nodeID corresponds with a node in the listOfNeighbourNodes
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool CheckNeighbourNodeID(int nodeID)
+    { return listOfNeighbourNodes.Exists(x => x.nodeID == nodeID); }
 
     /// <summary>
     /// Get list of all nodes within a 2 connection radius
