@@ -642,9 +642,11 @@ public class ContactManager : MonoBehaviour
                                     { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
                                     else
                                     {
+                                        //reliable report, correct node
                                         if (CheckContactIsReliable(contact) == true)
                                         { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
-                                        else { node = GameManager.instance.dataScript.GetRandomNode(); }
+                                        //unrelaible report, use a random neighbouring node
+                                        else { node = node.GetRandomNeighbour(); }
                                     }
                                     //if valid node generate message
                                     if (node != null)
@@ -697,7 +699,7 @@ public class ContactManager : MonoBehaviour
     /// </summary>
     /// <param name="contact"></param>
     /// <returns></returns>
-    private bool CheckContactIsReliable(Contact contact)
+    public bool CheckContactIsReliable(Contact contact)
     {
         bool isCorrect = false;
         int rndNum = Random.Range(0, 100);

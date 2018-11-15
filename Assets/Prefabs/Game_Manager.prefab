@@ -799,6 +799,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: badd844d98788e0428d3e501e36a6361, type: 2}
   - {fileID: 11400000, guid: ca83c2626332e1b4d9297cb960ea7f2d, type: 2}
   - {fileID: 11400000, guid: da4f5bc217c4a59419ab5c935ecbd002, type: 2}
+  - {fileID: 11400000, guid: abe106254ab83204f9e732d8b964e2b1, type: 2}
   arrayOfChallenges:
   - {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869, type: 2}
   - {fileID: 11400000, guid: 2716f7a6e92cbf8488ce0f415769dd75, type: 2}
@@ -811,6 +812,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc4b646e220990741a5f0d7f7b6e51bb, type: 2}
   - {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
   - {fileID: 11400000, guid: 99ec0c72c1b29a041b3d8a8dc0f4923b, type: 2}
+  - {fileID: 11400000, guid: 83135a0a144c8484e9cd286353bb1239, type: 2}
   arrayOfScenarios:
   - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   arrayOfConditions:
@@ -916,6 +918,8 @@ MonoBehaviour:
   arrayOfShortTextLists:
   - {fileID: 11400000, guid: 3b6cb7fa1bf12e944aa1290eed955b2b, type: 2}
   - {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
+  - {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
+  - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -1572,6 +1576,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0fc1fd2c30aca4d8782513f6a7136d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loiterNodePoolSize: 5
+  loiterDistanceCheck: 2
   nemesis: {fileID: 0}
 --- !u!114 &114621988062562700
 MonoBehaviour:
@@ -1949,8 +1955,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f09c1a281db95944bada7fa8f2660faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shortRumourHeard: {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
+  shortRumourAware: {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
   shortRumourAction: {fileID: 11400000, guid: 3b6cb7fa1bf12e944aa1290eed955b2b, type: 2}
+  shortNemesisAware: {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
+  shortNemesisAction: {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
 --- !u!114 &114785469297181100
 MonoBehaviour:
   m_ObjectHideFlags: 1

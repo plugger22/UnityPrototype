@@ -9,22 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortRumourHeard
+  m_Name: ShortNemesisAware
   m_EditorClassIdentifier: 
-  descriptor: 'format ''[Contact]'' heard a rumour that''
+  descriptor: 'format ''[Contact] ''insists'' [that they] [saw a] nemesis [at]
 
-    Used in ActorContactRumour messages
+    Used in ContactNemesisSpotted messages
 
     Linked to ItemDataManager.cs'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   randomList:
-  - heard a rumour that
-  - heard a whisper that
-  - insists that
-  - has learnt that
-  - has heard that
-  - swears that
-  - is convinced that
-  - has been told that
-  - reports that
-  - has heard on the grapevine that
+  - swears
+  - insists
+  - maintains
+  - is convinced
+  - maintains
+  - contends
+  - claims
+  - affirms
+  - vouches
+  - attests
+  - declares

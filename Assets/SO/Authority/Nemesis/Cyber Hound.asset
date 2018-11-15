@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cfda4ec6dc7fe64f97c880f233e7ea6, type: 3}
+  m_Name: Cyber Hound
+  m_EditorClassIdentifier: 
+  descriptor: A robot hound that, given a DNA scent, will sniff out and run down it's
+    prey. A bite from the Cyber Hound will embed a tracking device in the target.
+  movement: 1
+  searchRating: 3
+  stealthRating: 1
+  damage: {fileID: 11400000, guid: abe106254ab83204f9e732d8b964e2b1, type: 2}

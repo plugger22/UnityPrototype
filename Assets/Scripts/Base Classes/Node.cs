@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Node : MonoBehaviour
 {
@@ -538,6 +539,13 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetNeighbouringNodes()
     { return listOfNeighbourNodes; }
+
+    /// <summary>
+    /// Returns a random neighbouring node, null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public Node GetRandomNeighbour()
+    { return listOfNeighbourNodes[Random.Range(0, listOfNeighbourNodes.Count)]; }
 
     /// <summary>
     /// returns true if supplied nodeID corresponds with a node in the listOfNeighbourNodes

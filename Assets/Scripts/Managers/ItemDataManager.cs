@@ -13,9 +13,13 @@ public class ItemDataManager : MonoBehaviour
 
     [Header("TextList Shorts")]
     [Tooltip("Random pick list used for Actor Rumour messages, format '[Contact] has heard that'")]
-    public TextList shortRumourHeard;
+    public TextList shortRumourAware;
     [Tooltip("Random pick list used for Actor Rumour message, format '[Contact][shortRumourHeard] there'll be a chance soon to'")]
     public TextList shortRumourAction;
+    [Tooltip("Random pick list used for Nemesis Spotted message, format '[Contact] shortNemesisAware [that they] shortNemesisActoin [a] [Nemesis]")]
+    public TextList shortNemesisAware;
+    [Tooltip("Random pick list used for Nemesis Spotted message, format '[Contact] shortNemesisAware [that they] shortNemesisActoin [a] [Nemesis]")]
+    public TextList shortNemesisAction;
 
     //fast access
     private GlobalSide globalResistance;
@@ -37,9 +41,9 @@ public class ItemDataManager : MonoBehaviour
     public void Initialise()
     {
         //textlists
-        Debug.Assert(shortRumourHeard != null, "Invalid shortRumourHeard (Null)");
+        Debug.Assert(shortRumourAware != null, "Invalid shortRumourHeard (Null)");
         Debug.Assert(shortRumourAction != null, "Invalid shortRumourAction (Null)");
-        Debug.Assert(shortRumourHeard.category.name.Equals("Shorts") == true, "Invalid shortRumourHeard (wrong Category)");
+        Debug.Assert(shortRumourAware.category.name.Equals("Shorts") == true, "Invalid shortRumourHeard (wrong Category)");
         Debug.Assert(shortRumourAction.category.name.Equals("Shorts") == true, "Invalid shortRumourAction (wrong Category)");
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -466,9 +470,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetContactTargetRumourDetails(Actor actor, Node node, Contact contact, Target target)
     {
         StringBuilder builder = new StringBuilder();
-        string textHeard = shortRumourHeard.GetRandomRecord(false);
+        string textAware = shortRumourAware.GetRandomRecord(false);
         string textAction = shortRumourAction.GetRandomRecord(false);
-        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textHeard, textAction, "\n", "\n");
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, target.rumourText, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
@@ -486,9 +490,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetContactNemesisSpottedDetails(Actor actor, Node node, Contact contact, Nemesis nemesis)
     {
         StringBuilder builder = new StringBuilder();
-        string textHeard = shortRumourHeard.GetRandomRecord(false);
-        string textAction = shortRumourAction.GetRandomRecord(false);
-        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textHeard, textAction, "\n", "\n");
+        string textAware = shortNemesisAware.GetRandomRecord(false);
+        string textAction = shortNemesisAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));

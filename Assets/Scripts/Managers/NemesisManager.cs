@@ -88,14 +88,15 @@ public class NemesisManager : MonoBehaviour
                         {
                             //found the ideal node, job done
                             centreNode = node;
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is a CENTRE nodeID {0}", centreNode.nodeID);
+                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is a CENTRE nodeID {0}", centreNode.nodeID);*/
                             break;
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid node (Null) for listOfMostConnected[{0}]", index); }
                 }
-                if (centreNode == null)
-                    { Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is NO Centre node"); }
+                /*if (centreNode == null)
+                    { Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is NO Centre node"); }*/
+
                 //Take the top 'x' most connected nodes (excluding centreNode, if any) and add to loiterList
                 counter = 0;
                 for (int index = 0; index < numOfNodes; index++)
@@ -119,7 +120,8 @@ public class NemesisManager : MonoBehaviour
                     if (counter == loiterNodePoolSize)
                     { break; }
                 }
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: TOP X -> there are {0} loiter nodes", listOfLoiterNodes.Count);
+               
+                /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: TOP X -> there are {0} loiter nodes", listOfLoiterNodes.Count);*/
 
                 //Check all nodes in list (reverse loop list) to see if they have any neighbours within a set distance. Remove from list if so. Should be at least one node remaining.
                 for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
@@ -132,7 +134,9 @@ public class NemesisManager : MonoBehaviour
                         if (distance <= loiterDistanceCheck)
                         {
                             //too close, exclude node
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);
+                            
+                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);*/
+
                             listOfLoiterNodes.RemoveAt(index);
                             continue;
                         }
@@ -160,13 +164,13 @@ public class NemesisManager : MonoBehaviour
                                 //only delete if more than one node remaining
                                 if (counter > 1)
                                 {
-                                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);
+                                    /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);*/
                                     listOfLoiterNodes.RemoveAt(index);
                                     break;
                                 }
                                 else
                                 {
-                                    Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");
+                                    /*Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");*/
                                     break;
                                 }
                             }
@@ -452,12 +456,16 @@ public class NemesisManager : MonoBehaviour
                             //check nemesis stealth rating vs. contact effectiveness
                             if (contact.effectiveness >= stealthRating)
                             {
+                                //check contact reliabiity -> if not use a random neighbouring node
+                                Node node = nemesisNode;
+                                if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
+                                { node = nemesisNode.GetRandomNeighbour(); }
                                 //contact spots Nemesis
                                 string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
-                                    contact.job, nemesisNode.nodeName, nemesisNode.nodeID);
+                                    contact.job, node.nodeName, node.nodeID);
                                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
-                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
-                                GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, nemesisNode, contact, nemesis);
+                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeID, "\n");
+                                GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
                                 //no need to check anymore as one sighting is enough
                                 break;
                             }
