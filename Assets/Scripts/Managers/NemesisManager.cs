@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System.Collections.Generic;
 using System.Text;
@@ -27,6 +28,16 @@ public class NemesisManager : MonoBehaviour
     private int duration;                   //if goal is fixed for a set time then no new goal can be assigned until the duration countdown has expired
     private int targetNodeID;               //if goal is 'MoveToNode' this is the node being moved towards
     private Node nemesisNode;               //current node where nemesis is, updated by ProcessNemesisActivity
+
+    //colour palette 
+    private string colourGood;
+    private string colourNeutral;
+    private string colourGrey;
+    private string colourBad;
+    private string colourNormal;
+    private string colourAlert;
+    private string colourEnd;
+
 
     /// <summary>
     /// Initialise data ready for Nemesis
@@ -66,7 +77,42 @@ public class NemesisManager : MonoBehaviour
         //Set up datafor Nemesis
         SetLoiterNodes();
         SetLoiterData();
+        //event listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
+    }
 
+    /// <summary>
+    /// handles events
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// set colour palette for Generic Tool tip
+    /// </summary>
+    public void SetColours()
+    {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -445,23 +491,19 @@ public class NemesisManager : MonoBehaviour
     {
         //player spotted if nemesis search rating >= player invisibility
         int searchRating = GetSearchRatingAdjusted();
-        //adjust for mode
-        if (mode == NemesisMode.Normal)
-        { searchRating--; }
         if (searchRating >= GameManager.instance.playerScript.Invisibility)
         {
             //player SPOTTED
-            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-
-            //TO DO -> cause damage / message
-
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+            //cause damage / message
+            ProcessPlayerDamage();
             //set flag to prevent nemesis acting immediately again at start of player's turn (gives them one turn's grace to get out of dodge)
             hasActed = true;
         }
         else
         {
             //player NOT spotted
-            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Player NOT Spotted at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: Player NOT Spotted at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //warn player (only if resistance side)
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
             {
@@ -493,8 +535,8 @@ public class NemesisManager : MonoBehaviour
     {
         int searchRating = nemesis.searchRating;
         //adjust for mode
-        if (mode == NemesisMode.Normal)
-        { searchRating--; }
+        if (goal == NemesisGoal.Search)
+        { searchRating++; }
         return searchRating;
     }
 
@@ -527,7 +569,7 @@ public class NemesisManager : MonoBehaviour
             int numOfActors = listOfActorsWithContactsAtNode.Count;
             if (numOfActors > 0)
             {
-                //nemesis searchRating
+                //nemesis stealthRating
                 int stealthRating = GetStealthRatingAdjusted();
                 //loop actors with contacts
                 for (int i = 0; i < numOfActors; i++)
@@ -622,6 +664,62 @@ public class NemesisManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// called whenever Nemesis spots and catches player. Both assumed to be at the same node
+    /// </summary>
+    private void ProcessPlayerDamage()
+    {
+        string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("at {0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
+        Damage damage = nemesis.damage;
+        if (damage != null)
+        {
+            switch (damage.name)
+            {
+                case "Capture":
+                    builder.AppendFormat("{0}Player Captured!{1}", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Player Incarcerated{3}", "\n", "\n", colourAlert, colourEnd);
+                    break;
+                case "Discredit":
+                    builder.AppendFormat("{0}Player Descredited!{1}", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Major Renown Loss{3}", "\n", "\n", colourAlert, colourEnd);
+                    break;
+                case "Image":
+                    builder.AppendFormat("{0}Player Imaged!{1}", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Permanent loss of Invisibility{3}", "\n", "\n", colourAlert, colourEnd);
+                    break;
+                case "Kill":
+                    builder.AppendFormat("{0}Player Killed!{1}", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Game Over{3}", "\n", "\n", colourAlert, colourEnd);
+                    break;
+                case "Tag":
+                    builder.AppendFormat("{0}Player Tagged!{1}", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Player Actions unavailable{3}", "\n", "\n", colourAlert, colourEnd);
+                    break;
+                case "Wound":
+                    builder.AppendFormat("{0}Player Wounded!{1}", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}Maximum 1 Action per turn{3}", "\n", "\n", colourAlert, colourEnd);
+                    break;
+                default:
+                    builder.AppendFormat("Damage is of an unknown kind");
+                    Debug.LogWarningFormat("Invalid damage \"{0}\"", damage.name);
+                    break;
+            }
+            //player damaged outcome window
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            {
+                textTop = text,
+                textBottom = builder.ToString(),
+                sprite = GameManager.instance.guiScript.aiAlertSprite,
+                isAction = false,
+                side = GameManager.instance.globalScript.sideResistance
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NemesisManager.cs -> ProcessPlayerDamage");
+        }
+        else { Debug.LogWarning("Invalid damage (Null)"); }
+    }
+
 
     //
     // - - - Debug - - -
@@ -645,10 +743,10 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" hasActed: {0}{1}", hasActed, "\n");
         builder.AppendFormat(" hasWarning: {0}{1}", hasWarning, "\n");
         //nemesis stats
-        builder.AppendFormat("-{0}{1}{2}",  "\n", nemesis.name, "\n");
+        builder.AppendFormat("{0} {1}{2}",  "\n", nemesis.name, "\n");
         builder.AppendFormat(" movement: {0}{1}", nemesis.movement, "\n");
-        builder.AppendFormat(" search: {0}{1}", nemesis.searchRating, "\n");
-        builder.AppendFormat(" stealth: {0}{1}", nemesis.stealthRating, "\n");
+        builder.AppendFormat(" search: {0}, adjusted: {1}{2}", nemesis.searchRating, GetSearchRatingAdjusted(), "\n");
+        builder.AppendFormat(" stealth: {0}, adjusted: {1}{2}", nemesis.stealthRating, GetStealthRatingAdjusted(), "\n");
         builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
         return builder.ToString();
     }
