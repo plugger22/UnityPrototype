@@ -97,6 +97,7 @@ public class ContactManager : MonoBehaviour
     {
         InitialiseNetworkArrays();
         CheckTargetRumours();
+        GameManager.instance.nemesisScript.CheckNemesisContactSighting();
     }
 
     /// <summary>
@@ -641,18 +642,20 @@ public class ContactManager : MonoBehaviour
                                     if (target.targetType.name.Equals("City") == true)
                                     { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
                                     else
-                                    {
-                                        //reliable report, correct node
-                                        if (CheckContactIsReliable(contact) == true)
-                                        { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
-                                        //unrelaible report, use a random neighbouring node
-                                        else { node = node.GetRandomNeighbour(); }
-                                    }
+                                    { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
                                     //if valid node generate message
                                     if (node != null)
                                     {
-                                        string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
-                                        GameManager.instance.messageScript.ContactTargetRumour(text, actor, node, contact, target);
+                                        Node nodeTemp = node;
+                                        //unreliable report, use a random neighbouring node
+                                        if (CheckContactIsReliable(contact) == false)
+                                        { nodeTemp = node.GetRandomNeighbour(); }
+                                        if (nodeTemp != null)
+                                        {
+                                            string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
+                                            GameManager.instance.messageScript.ContactTargetRumour(text, actor, nodeTemp, contact, target);
+                                        }
+                                        else { Debug.LogWarningFormat("Invalid nodeTemp (Null) neighbouring node to {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
                                     }
                                     else { Debug.LogWarning("Invalid node (Null)"); }
                                 }
@@ -710,8 +713,17 @@ public class ContactManager : MonoBehaviour
             case 1: if (rndNum < confidenceLow) { isCorrect = true; } break;
             default: Debug.LogWarningFormat("Invalid contact effectiveness {0}", contact.effectiveness); break;
         }
+        //log
+        if (isCorrect == false)
+        {
+            Debug.LogFormat("[Con] ContactManager.cs -> CheckContactIsReliable: Contact {0}, {1}, id {2}, Effect {3}, FAILED reliability test{4}", contact.nameFirst, contact.job, contact.contactID, 
+                contact.effectiveness, "\n");
+        }
         return isCorrect;
     }
+
+
+
 
     //new methods above here
 }

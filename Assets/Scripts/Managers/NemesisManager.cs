@@ -17,6 +17,10 @@ public class NemesisManager : MonoBehaviour
 
     [HideInInspector] public Nemesis nemesis;
 
+    private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
+    private bool hasActed;                  //flag set true if Nemesis has spotted player and caused Damage during the AI phase
+    private bool hasWarning;                //flag set true if Nemesis at same node, hasn't spotted player, and a warning issued ("You sense a dark shadow..."). Stops a double warning
+
     //Nemesis AI
     private NemesisMode mode;
     private NemesisGoal goal;
@@ -62,6 +66,35 @@ public class NemesisManager : MonoBehaviour
         //Set up datafor Nemesis
         SetLoiterNodes();
         SetLoiterData();
+
+    }
+
+    /// <summary>
+    /// called by AIManager.cs -> AISideAuthority, handles all nemesis turn processing methods
+    /// </summary>
+    public void ProcessNemesis(int playerTargetNodeID, bool immediateFlagResistance)
+    {
+        ProcessNemesisAdminStart();
+        CheckNemesisAtPlayerNode();
+        ProcessNemesisActivity(playerTargetNodeID, immediateFlagResistance);
+        ProcessNemesisAdminEnd();
+    }
+
+    /// <summary>
+    /// Nemesis related matters that need to be reset, or taken care off, prior to nemesis turn processing
+    /// </summary>
+    private void ProcessNemesisAdminStart()
+    {
+        hasMoved = false;
+        hasActed = false;
+    }
+
+    /// <summary>
+    /// Nemesis related matters that need to be reset, or taken care off, at end of nemesis turn processing
+    /// </summary>
+    private void ProcessNemesisAdminEnd()
+    {
+        hasWarning = false;
     }
 
     /// <summary>
@@ -387,6 +420,7 @@ public class NemesisManager : MonoBehaviour
                 //update nodeManage
                 GameManager.instance.nodeScript.nodeNemesis = nodeID;
                 GameManager.instance.nodeScript.NodeRedraw = true;
+                hasMoved = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis moves to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
                 //check for player at same node
                 if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
@@ -410,7 +444,7 @@ public class NemesisManager : MonoBehaviour
     private void ProcessPlayerInteraction()
     {
         //player spotted if nemesis search rating >= player invisibility
-        int searchRating = nemesis.searchRating;
+        int searchRating = GetSearchRatingAdjusted();
         //adjust for mode
         if (mode == NemesisMode.Normal)
         { searchRating--; }
@@ -418,12 +452,66 @@ public class NemesisManager : MonoBehaviour
         {
             //player SPOTTED
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+
+            //TO DO -> cause damage / message
+
+            //set flag to prevent nemesis acting immediately again at start of player's turn (gives them one turn's grace to get out of dodge)
+            hasActed = true;
         }
         else
         {
             //player NOT spotted
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Player NOT Spotted at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+            //warn player (only if resistance side)
+            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+            {
+                //prevent a double warning if player moves into a node with nemesis and nemesis is stationary
+                if (hasWarning == false)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    if (node != null)
+                    {
+                        hasWarning = true;
+                        string text = string.Format("You feel the presence of a <b>DARK SHADOW</b> at {0}, {1} district", node.nodeName, node.Arc.name);
+                        string itemText = "You feel the presence of a DARK SHADOW";
+                        string topText = "Something is WRONG";
+                        string reason = "Could it be that your NEMESIS is nearby?";
+                        string warning = "Your instincts urge you to move, NOW";
+                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, true, true);
+                    }
+                    else { Debug.LogWarning("Invalid nodePlayer (Null)"); }
+                }
+            }
         }
+    }
+
+    /// <summary>
+    /// returns Nemesis Search rating after adjusting for mode and activiy
+    /// </summary>
+    /// <returns></returns>
+    private int GetSearchRatingAdjusted()
+    {
+        int searchRating = nemesis.searchRating;
+        //adjust for mode
+        if (mode == NemesisMode.Normal)
+        { searchRating--; }
+        return searchRating;
+    }
+
+    /// <summary>
+    /// returns Nemesis Stealth rating after adjusting for mode and activiy
+    /// </summary>
+    /// <returns></returns>
+    private int GetStealthRatingAdjusted()
+    {
+        int stealthRating = nemesis.stealthRating;
+        //adjust for mode
+        if (mode == NemesisMode.Hunt)
+        { stealthRating--; }
+        //adjust for goal
+        if (goal == NemesisGoal.Ambush)
+        { stealthRating++; }
+        return stealthRating;
     }
 
     /// <summary>
@@ -440,10 +528,7 @@ public class NemesisManager : MonoBehaviour
             if (numOfActors > 0)
             {
                 //nemesis searchRating
-                int stealthRating = nemesis.stealthRating;
-                //adjust for mode
-                if (mode == NemesisMode.Hunt)
-                { stealthRating--; }
+                int stealthRating = GetStealthRatingAdjusted();
                 //loop actors with contacts
                 for (int i = 0; i < numOfActors; i++)
                 {
@@ -463,8 +548,8 @@ public class NemesisManager : MonoBehaviour
                                 //contact spots Nemesis
                                 string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
                                     contact.job, node.nodeName, node.nodeID);
-                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
-                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeID, "\n");
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
+                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
                                 GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
                                 //no need to check anymore as one sighting is enough
                                 break;
@@ -488,6 +573,61 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Check if nemesis spotted by Contacts at start of a turn where the nemesis hasn't moved
+    /// </summary>
+    public void CheckNemesisContactSighting()
+    {
+        if (hasMoved == false)
+        {
+            int nodeID = GameManager.instance.nodeScript.nodeNemesis;
+            if (nodeID > -1)
+            {
+                //check for Resistance contact at same node
+                List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                if (tempList != null)
+                { GameManager.instance.nemesisScript.ProcessContactInteraction(tempList); }
+            }
+            else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
+        }
+    }
+
+    /// <summary>
+    /// check if nemesis is at the same node as the player. Used when nemesis hasn't moved (start of turn, 'isPlayerMove' false) and when player moving to a new node ('isPlayerMove' true)
+    /// if nemesis stationary at start of turn there is a further check to prevent nemesis damaging the player twice in a row if they have already done so during the AI turn
+    /// </summary>
+    public void CheckNemesisAtPlayerNode(bool isPlayerMove = false)
+    {
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        {
+            bool isCheckNeeded = false;
+            if (isPlayerMove == false)
+            {
+                //start of turn (player hasn't moved) and nemesis hasn't moved
+                if (hasMoved == false)
+                {
+                    //can only check if nemesis didn't damage the player during the AI turn (gives the player a chance to leave)
+                    if (hasActed == false)
+                    { isCheckNeeded = true; }
+                }
+            }
+            //player moving to a new node, automatic check
+            else { isCheckNeeded = true; }
+            //proceed with a check
+            if (isCheckNeeded == true)
+            {
+                //both at same node
+                if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                { ProcessPlayerInteraction(); }
+            }
+        }
+    }
+
+
+    //
+    // - - - Debug - - -
+    //
+
+    /// <summary>
     /// Debug method to display nemesis status
     /// </summary>
     /// <returns></returns>
@@ -501,8 +641,11 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" duration: {0}{1}", duration, "\n");
         builder.AppendFormat(" targetNodeID: {0}{1}", targetNodeID, "\n");
         builder.AppendFormat(" nemesis node: {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+        builder.AppendFormat(" hasMoved: {0}{1}", hasMoved, "\n");
+        builder.AppendFormat(" hasActed: {0}{1}", hasActed, "\n");
+        builder.AppendFormat(" hasWarning: {0}{1}", hasWarning, "\n");
         //nemesis stats
-        builder.AppendFormat(" {0}{1}{2}",  "\n", nemesis.name, "\n");
+        builder.AppendFormat("-{0}{1}{2}",  "\n", nemesis.name, "\n");
         builder.AppendFormat(" movement: {0}{1}", nemesis.movement, "\n");
         builder.AppendFormat(" search: {0}{1}", nemesis.searchRating, "\n");
         builder.AppendFormat(" stealth: {0}{1}", nemesis.stealthRating, "\n");

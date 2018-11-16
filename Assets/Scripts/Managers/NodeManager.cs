@@ -1960,9 +1960,9 @@ public class NodeManager : MonoBehaviour
             captureDetails.effects = string.Format("{0}The move went bad{1}", colourNeutral, colourEnd);
             EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
         }
-        //Normal Move  Outcome
         else
         {
+            //Normal Move  Outcome
             outcomeDetails.textTop = "Player has moved";
             outcomeDetails.textBottom = data.text;
             outcomeDetails.sprite = GameManager.instance.guiScript.alarmSprite;
@@ -1970,6 +1970,8 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
             outcomeDetails.reason = "Player Move";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
+            //Nemesis, if at same node, can interact and damage player
+            GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
         }
     }
 
