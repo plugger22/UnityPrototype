@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cfda4ec6dc7fe64f97c880f233e7ea6, type: 3}
   m_Name: Bounty Hunter
   m_EditorClassIdentifier: 
-  descriptor: A freelance human who hunts prey on behalf of the AI for monetary reward.
-    They aim to capture their target and sell them to the AI. Requires a positive
-    ID prior to engagement.
+  descriptor: A freelance humanoid who hunts prey for monetary reward. They aim to
+    capture their target and ransom them.
   movement: 1
   searchRating: 2
   stealthRating: 2

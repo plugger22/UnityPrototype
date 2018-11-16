@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: A humanoid droid with the sole aim of hunting down and wounding it's
     target. It's goal is to inflict a crippling injury but without the complications
-    of death. Requires a positive ID.
+    of death.
   movement: 1
   searchRating: 2
   stealthRating: 1

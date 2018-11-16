@@ -16,6 +16,12 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("If a possible loiter node is within this distance (Dijkstra unweighted), or less, of another loiter node, it is eliminated")]
     [Range(0, 3)] public int loiterDistanceCheck = 2;
 
+    [Header("Logic")]
+    [Tooltip("Chance of a nemesis switching from an Idle to a Loiter goal (provided not already present at LoiterNode)")]
+    [Range(0, 100)] public int chanceIdleToLoiter = 50;
+    [Tooltip("Number of turns Nemesis goes Offline after damaging the player (allows the player to clear the datum)")]
+    [Range(0, 10)] public int damageDurationOffLine = 3;
+
     [HideInInspector] public Nemesis nemesis;
 
     private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
@@ -71,8 +77,8 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid nodeNemesis (Null) nodeID {0}", nemesisNodeID); }
         //Nemesis AI
-        mode = NemesisMode.Normal;
-        goal = NemesisGoal.Loiter;
+        mode = NemesisMode.Inactive;
+        goal = NemesisGoal.Idle;
         duration = 3; //nemesis does nothing for 'x' turns at game start
         //Set up datafor Nemesis
         SetLoiterNodes();
@@ -392,7 +398,33 @@ public class NemesisManager : MonoBehaviour
                 duration--;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: TargetNodeID {0}, ImmediateFlag {1}, duration {2}, isProceed {3}{4}", targetNodeID, immediateFlag, duration, isProceed, "\n");
             }
-
+            //do nothing if inactive & duration > 0, swap to normal mode and proceed otherwise
+            if (mode == NemesisMode.Inactive)
+            {
+                if (duration == 0)
+                {
+                    //chane mode to Normal
+                    mode = NemesisMode.Normal;
+                    goal = NemesisGoal.Idle;
+                    isProceed = true;
+                    //message
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Nemesis Mode changed from INACTIVE to NORMAL{0}", "\n");
+                    string text = string.Format("{0} Nemesis comes online", nemesis.name);
+                    string itemText = "Your NEMESIS comes Online";
+                    string topText = "Nemesis goes ACTIVE";
+                    string reason = string.Format("<b>{0} Nemesis</b>", nemesis.name);
+                    string warning = string.Format("{0}", nemesis.descriptor);
+                    GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                }
+                else
+                {
+                    isProceed = false;
+                    goal = NemesisGoal.Idle;
+                }
+            }
+            //
+            // - - - Proceed - - -
+            //
             if (isProceed == true)
             {
                 //
@@ -436,10 +468,31 @@ public class NemesisManager : MonoBehaviour
             case NemesisGoal.MoveToNode:
 
                 break;
+            case NemesisGoal.Idle:
+                //do nothing, chance to switch to Loiter goal
+                if (mode != NemesisMode.Inactive)
+                {
+                    //not already at a LoiterNode
+                    if (nemesisNode.isLoiterNode == false)
+                    {
+                        //chance to switch to Loiter goal
+                        if (Random.Range(0, 100) < chanceIdleToLoiter)
+                        {
+                            goal = NemesisGoal.Loiter;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from IDLE to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
+                    }
+                }
+                break;
             case NemesisGoal.Loiter:
-                //nemesis already at loiter node? -> if so IDLE, if not move towards loiter node at a speed of 1
+                //nemesis already at loiter node?
                 if (nemesisNode.isLoiterNode == true)
-                { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: goal {0}, At Loiter Node {1}, id {2}, IDLE{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n"); }
+                {
+                    //at LoiterNode, switch to Idle
+                    goal = NemesisGoal.Idle;
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ContinueWithGoal: At Loiter Node {1}, id {2}, changes to IDLE{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
+                }
+                //not yet at LoiterNode, move towards nearest at speed 1
                 else
                 { ProcessMoveNemesis(nemesisNode.loiter.neighbourID); }
                 break;
@@ -497,6 +550,19 @@ public class NemesisManager : MonoBehaviour
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //cause damage / message
             ProcessPlayerDamage();
+            //place Nemesis OFFLINE for a period
+            mode = NemesisMode.Inactive;
+            goal = NemesisGoal.Idle;
+            duration = damageDurationOffLine;
+            if (duration > 0)
+            {
+                string text = string.Format("Nemesis goes Offline for {0} turns after Damaging player{1}", duration, "\n");
+                string itemText = "NEMESIS goes OFFLINE for a short while";
+                string topText = "Nemesis OFFLINE";
+                string reason = string.Format("<b>{0} Nemesis</b>", nemesis.name);
+                string warning = "Rebel HQ STRONGLY ADVISE that you get the h*ll out of there!";
+                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+            }
             //set flag to prevent nemesis acting immediately again at start of player's turn (gives them one turn's grace to get out of dodge)
             hasActed = true;
         }
@@ -619,17 +685,21 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void CheckNemesisContactSighting()
     {
-        if (hasMoved == false)
+        //ignored if nemesis inactive
+        if (mode != NemesisMode.Inactive)
         {
-            int nodeID = GameManager.instance.nodeScript.nodeNemesis;
-            if (nodeID > -1)
+            if (hasMoved == false)
             {
-                //check for Resistance contact at same node
-                List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
-                if (tempList != null)
-                { GameManager.instance.nemesisScript.ProcessContactInteraction(tempList); }
+                int nodeID = GameManager.instance.nodeScript.nodeNemesis;
+                if (nodeID > -1)
+                {
+                    //check for Resistance contact at same node
+                    List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                    if (tempList != null)
+                    { GameManager.instance.nemesisScript.ProcessContactInteraction(tempList); }
+                }
+                else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
             }
-            else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
         }
     }
 
@@ -639,27 +709,31 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void CheckNemesisAtPlayerNode(bool isPlayerMove = false)
     {
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        //ignored if nemesis inactive
+        if (mode != NemesisMode.Inactive)
         {
-            bool isCheckNeeded = false;
-            if (isPlayerMove == false)
+            if (GameManager.instance.playerScript.status == ActorStatus.Active)
             {
-                //start of turn (player hasn't moved) and nemesis hasn't moved
-                if (hasMoved == false)
+                bool isCheckNeeded = false;
+                if (isPlayerMove == false)
                 {
-                    //can only check if nemesis didn't damage the player during the AI turn (gives the player a chance to leave)
-                    if (hasActed == false)
-                    { isCheckNeeded = true; }
+                    //start of turn (player hasn't moved) and nemesis hasn't moved
+                    if (hasMoved == false)
+                    {
+                        //can only check if nemesis didn't damage the player during the AI turn (gives the player a chance to leave)
+                        if (hasActed == false)
+                        { isCheckNeeded = true; }
+                    }
                 }
-            }
-            //player moving to a new node, automatic check
-            else { isCheckNeeded = true; }
-            //proceed with a check
-            if (isCheckNeeded == true)
-            {
-                //both at same node
-                if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                { ProcessPlayerInteraction(); }
+                //player moving to a new node, automatic check
+                else { isCheckNeeded = true; }
+                //proceed with a check
+                if (isCheckNeeded == true)
+                {
+                    //both at same node
+                    if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                    { ProcessPlayerInteraction(); }
+                }
             }
         }
     }
