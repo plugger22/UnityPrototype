@@ -403,9 +403,9 @@ public class NemesisManager : MonoBehaviour
             {
                 if (duration == 0)
                 {
-                    //chane mode to Normal
+                    //change mode to Normal, goal to Loiter
                     mode = NemesisMode.Normal;
-                    goal = NemesisGoal.Idle;
+                    goal = NemesisGoal.Loiter;
                     isProceed = true;
                     //message
                     Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Nemesis Mode changed from INACTIVE to NORMAL{0}", "\n");
@@ -481,6 +481,7 @@ public class NemesisManager : MonoBehaviour
                             goal = NemesisGoal.Loiter;
                             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from IDLE to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
                         }
+                        else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis retains IDLE goal, current nodeID {0}{1}", nemesisNode.nodeID, "\n"); }
                     }
                 }
                 break;
@@ -516,14 +517,14 @@ public class NemesisManager : MonoBehaviour
             nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
             if (nemesisNode != null)
             {
-                //update nodeManage
+                //update nodeManager
                 GameManager.instance.nodeScript.nodeNemesis = nodeID;
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 hasMoved = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis moves to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
                 //check for player at same node
                 if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                { ProcessPlayerInteraction(); }
+                { ProcessPlayerInteraction(false); }
                 //check for Resistance contact at same node
                 List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
                 if (tempList != null)
@@ -538,9 +539,9 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// nemesis and player at same node
+    /// nemesis and player at same node. For end of turn checks set 'isPlayerMove' to false as this tweaks modal setting of outcome window to handle MainInfoApp, leave as default true otherwise
     /// </summary>
-    private void ProcessPlayerInteraction()
+    private void ProcessPlayerInteraction(bool isPlayerMove = true)
     {
         //player spotted if nemesis search rating >= player invisibility
         int searchRating = GetSearchRatingAdjusted();
@@ -549,7 +550,7 @@ public class NemesisManager : MonoBehaviour
             //player SPOTTED
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //cause damage / message
-            ProcessPlayerDamage();
+            ProcessPlayerDamage(isPlayerMove);
             //place Nemesis OFFLINE for a period
             mode = NemesisMode.Inactive;
             goal = NemesisGoal.Idle;
@@ -732,16 +733,16 @@ public class NemesisManager : MonoBehaviour
                 {
                     //both at same node
                     if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                    { ProcessPlayerInteraction(); }
+                    { ProcessPlayerInteraction(isPlayerMove); }
                 }
             }
         }
     }
 
     /// <summary>
-    /// called whenever Nemesis spots and catches player. Both assumed to be at the same node
+    /// called whenever Nemesis spots and catches player. Both assumed to be at the same node. 'isModalOutcomeNormal' set false (auto) only if end of turn check and tweaks outcome window modal setting
     /// </summary>
-    private void ProcessPlayerDamage()
+    private void ProcessPlayerDamage(bool isOutcomeModalNormal)
     {
         string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
         StringBuilder builder = new StringBuilder();
@@ -789,6 +790,12 @@ public class NemesisManager : MonoBehaviour
                 isAction = false,
                 side = GameManager.instance.globalScript.sideResistance
             };
+            //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+            if (isOutcomeModalNormal == false)
+            {
+                outcomeDetails.modalLevel = 2;
+                outcomeDetails.modalState = ModalState.InfoDisplay;
+            }
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NemesisManager.cs -> ProcessPlayerDamage");
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }
