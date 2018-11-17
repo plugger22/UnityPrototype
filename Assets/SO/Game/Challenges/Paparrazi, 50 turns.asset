@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 50
   nemesis: {fileID: 11400000, guid: cc4b646e220990741a5f0d7f7b6e51bb, type: 2}
+  gracePeriod: 3

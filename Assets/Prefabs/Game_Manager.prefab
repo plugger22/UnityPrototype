@@ -1578,6 +1578,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loiterNodePoolSize: 5
   loiterDistanceCheck: 2
+  chanceIdleToLoiter: 50
+  damageDurationOffLine: 3
+  chanceTracerSpotHigh: 10
+  chanceTracerSpotMed: 25
+  chanceTracerSpotLow: 50
+  chanceTracerSpotZero: 100
   nemesis: {fileID: 0}
 --- !u!114 &114621988062562700
 MonoBehaviour:
@@ -1937,7 +1943,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 49059
+  seed: 29723
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0

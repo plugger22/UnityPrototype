@@ -22,6 +22,16 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("Number of turns Nemesis goes Offline after damaging the player (allows the player to clear the datum)")]
     [Range(0, 10)] public int damageDurationOffLine = 3;
 
+    [Header("Spotted by Tracer")]
+    [Tooltip("Chance of a nemesis with a HIGH adjusted stealth rating ('3+'), being spotted in any node with Tracer coverage")]
+    [Range(0, 100)] public int chanceTracerSpotHigh = 10;
+    [Tooltip("Chance of a nemesis with a MED adjusted stealth rating ('2'), being spotted in any node with Tracer coverage")]
+    [Range(0, 100)] public int chanceTracerSpotMed = 25;
+    [Tooltip("Chance of a nemesis with a LOW adjusted stealth rating ('1'), being spotted in any node with Tracer coverage")]
+    [Range(0, 100)] public int chanceTracerSpotLow = 50;
+    [Tooltip("Chance of a nemesis with a ZERO adjusted stealth rating ('0'), being spotted in any node with Tracer coverage")]
+    [Range(0, 100)] public int chanceTracerSpotZero = 100;
+
     [HideInInspector] public Nemesis nemesis;
 
     private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
@@ -126,6 +136,7 @@ public class NemesisManager : MonoBehaviour
     {
         ProcessNemesisAdminStart();
         CheckNemesisAtPlayerNode();
+        CheckNemesisContactSighting();
         ProcessNemesisActivity(playerTargetNodeID, immediateFlagResistance);
         ProcessNemesisAdminEnd();
     }
@@ -531,6 +542,8 @@ public class NemesisManager : MonoBehaviour
                 List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
                 if (tempList != null)
                 { ProcessContactInteraction(tempList); }
+                //check for Tracer Sighting
+                CheckNemesisTracerSighting();
             }
             else { Debug.LogWarningFormat("Invalid move node {Null) for nodeID {0}", nodeID); }
         }
@@ -707,10 +720,61 @@ public class NemesisManager : MonoBehaviour
                     //check for Resistance contact at same node
                     List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
                     if (tempList != null)
-                    { GameManager.instance.nemesisScript.ProcessContactInteraction(tempList); }
+                    {ProcessContactInteraction(tempList); }
                 }
                 else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
             }
+        }
+    }
+
+    /// <summary>
+    /// check if nemesis spotted by Tracers that are covering the node they are currently in. Will run regardless of 'hasWarning' (additional info from a secondary source)
+    /// </summary>
+    public void CheckNemesisTracerSighting()
+    {
+        if (nemesisNode.isTracerActive == true)
+        {
+            bool isSpotted = false;
+            //nemesis stealthRating
+            int stealthRating = GetStealthRatingAdjusted();
+            stealthRating = Mathf.Clamp(stealthRating, 0, 3);
+            int rndNum = Random.Range(0, 100);
+            int needNum = -1;
+            switch (stealthRating)
+            {
+                case 3:
+                    if (rndNum <= chanceTracerSpotHigh)
+                    { needNum = chanceTracerSpotHigh; isSpotted = true; }
+                    break;
+                case 2:
+                    if (rndNum <= chanceTracerSpotMed)
+                    { needNum = chanceTracerSpotMed; isSpotted = true; }
+                    break;
+                case 1:
+                    if (rndNum <= chanceTracerSpotLow)
+                    { needNum = chanceTracerSpotLow; isSpotted = true; }
+                    break;
+                case 0:
+                    if (rndNum <= chanceTracerSpotZero)
+                    { needNum = chanceTracerSpotZero; isSpotted = true; }
+                    break;
+            }
+            if (isSpotted == true)
+            {
+                //resistance player only
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                {
+                    hasWarning = true;
+                    //SPOTTED -> node is always correct
+                    string text = string.Format("You feel the presence of a <b>DARK SHADOW</b> at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
+                    string itemText = "TRACER picks up an ANOMALOUS reading";
+                    string topText = "THREAT DETECTED";
+                    string reason = string.Format("Hostile body detected at{0}{1}, {2}<b>{3}</b>{4} district", "\n", nemesisNode.nodeName, colourAlert, nemesisNode.Arc.name, colourEnd);
+                    string warning = "Rebel HQ suspect a serious threat to your person";
+                    GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, true, true);
+                }
+            }
+            else { Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer FAILED to spot, need < {0} rolled {1}{2}", needNum, rndNum, "\n"); }
         }
     }
 
