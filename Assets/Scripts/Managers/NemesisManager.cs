@@ -136,7 +136,7 @@ public class NemesisManager : MonoBehaviour
     {
         ProcessNemesisAdminStart();
         CheckNemesisAtPlayerNode();
-        CheckNemesisContactSighting();
+        CheckNemesisTracerSighting();
         ProcessNemesisActivity(playerTargetNodeID, immediateFlagResistance);
         ProcessNemesisAdminEnd();
     }
@@ -764,7 +764,6 @@ public class NemesisManager : MonoBehaviour
                 //resistance player only
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
-                    hasWarning = true;
                     //SPOTTED -> node is always correct
                     string text = string.Format("You feel the presence of a <b>DARK SHADOW</b> at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
                     string itemText = "TRACER picks up an ANOMALOUS reading";
