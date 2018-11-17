@@ -619,47 +619,53 @@ public class ContactManager : MonoBehaviour
                             Actor actor = arrayOfActors[slotID];
                             if (actor != null)
                             {
-                                //get a random (weighted by effectiveness) contact from the actor's contact network
-                                Contact contact = actor.GetRandomContact(target.listOfRumourContacts);
-                                if (contact != null)
+                                //only active actors can work their contact network
+                                if (actor.Status == ActorStatus.Active)
                                 {
-                                    numOfRumours++;
-                                    //check max num of target rumours per turn not exceeded
-                                    if (numOfRumours == maxRumoursTarget)
+                                    //get a random (weighted by effectiveness) contact from the actor's contact network
+                                    Contact contact = actor.GetRandomContact(target.listOfRumourContacts);
+                                    if (contact != null)
                                     {
-                                        /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: MAXIMUM num of target rumours reach {0}", numOfRumours);*/
-                                        break;
-                                    }
-                                    //add contact to target list
-                                    target.AddContactRumour(contact.contactID);
-
-                                    /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} {1}, id {2} learns of target {3}, id {4}{5}", contact.nameFirst, contact.nameLast,
-                                        contact.contactID, target.targetName, target.targetID, "\n");*/
-
-                                    //correct node used? -> depends on contact effectiveness
-                                    Node node = null;
-                                    //city targets always have the correct node (would be silly to have an airport target not at the airport)
-                                    if (target.targetType.name.Equals("City") == true)
-                                    { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
-                                    else
-                                    { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
-                                    //if valid node generate message
-                                    if (node != null)
-                                    {
-                                        Node nodeTemp = node;
-                                        //unreliable report, use a random neighbouring node
-                                        if (CheckContactIsReliable(contact) == false)
-                                        { nodeTemp = node.GetRandomNeighbour(); }
-                                        if (nodeTemp != null)
+                                        numOfRumours++;
+                                        //check max num of target rumours per turn not exceeded
+                                        if (numOfRumours == maxRumoursTarget)
                                         {
-                                            string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
-                                            GameManager.instance.messageScript.ContactTargetRumour(text, actor, nodeTemp, contact, target);
+                                            /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: MAXIMUM num of target rumours reach {0}", numOfRumours);*/
+                                            break;
                                         }
-                                        else { Debug.LogWarningFormat("Invalid nodeTemp (Null) neighbouring node to {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                        //add contact to target list
+                                        target.AddContactRumour(contact.contactID);
+
+                                        /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} {1}, id {2} learns of target {3}, id {4}{5}", contact.nameFirst, contact.nameLast,
+                                            contact.contactID, target.targetName, target.targetID, "\n");*/
+
+                                        //correct node used? -> depends on contact effectiveness
+                                        Node node = null;
+                                        //city targets always have the correct node (would be silly to have an airport target not at the airport)
+                                        if (target.targetType.name.Equals("City") == true)
+                                        { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
+                                        else
+                                        { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
+                                        //if valid node generate message
+                                        if (node != null)
+                                        {
+                                            Node nodeTemp = node;
+                                            //unreliable report, use a random neighbouring node
+                                            if (CheckContactIsReliable(contact) == false)
+                                            { nodeTemp = node.GetRandomNeighbour(); }
+                                            if (nodeTemp != null)
+                                            {
+                                                string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
+                                                GameManager.instance.messageScript.ContactTargetRumour(text, actor, nodeTemp, contact, target);
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid nodeTemp (Null) neighbouring node to {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                        }
+                                        else { Debug.LogWarning("Invalid node (Null)"); }
                                     }
-                                    else { Debug.LogWarning("Invalid node (Null)"); }
+                                    else { Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: No random contact (Null) for Actor {0}, {1}, id {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n"); }
                                 }
-                                else { Debug.LogFormat("No random contact (Null) for Actor {0}, {1}, id {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n"); }
+                                else { Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                        actor.arc.name, actor.actorID, "\n"); }
                             }
                             else { Debug.LogWarningFormat("Invalid actor (Null) for SlotID {0}", slotID); }
                         }

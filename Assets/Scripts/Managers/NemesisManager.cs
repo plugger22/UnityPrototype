@@ -52,34 +52,32 @@ public class NemesisManager : MonoBehaviour
     {
         //assign nemesis to a starting node
         int nemesisNodeID = -1;
-        Node node = GameManager.instance.dataScript.GetRandomNode();
+        //Nemesis always starts at city Centre
+        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.cityScript.cityHallDistrictID);
         if (node != null)
-        { nemesisNodeID = node.nodeID; }
+        {
+            nemesisNodeID = node.nodeID;
+            nemesisNode = node;
+            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+            //assign node
+            GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        //Nemesis AI
+        int gracePeriod = GameManager.instance.scenarioScript.scenario.challenge.gracePeriod;
+        if (gracePeriod > 0)
+        {
+            //grace period, start inactive
+            mode = NemesisMode.Inactive;
+            goal = NemesisGoal.Idle;
+        }
         else
         {
-            //invalid node, switch to default nodeID '0'
-            nemesisNodeID = 0;
-            Debug.LogWarning("Invalid nemesis starting Node (Null), nemesis given default node '0'");
+            //NO grace period, start in normal mode, waiting for signs of player
+            mode = NemesisMode.Normal;
+            goal = NemesisGoal.Loiter;
         }
-        if (nemesisNodeID == GameManager.instance.nodeScript.nodePlayer)
-        {
-            //same node as Player, switch to default nodeID '1'
-            nemesisNodeID = 1;
-            Debug.LogWarning("Invalid nemesis starting Node (same as Player), nemesis given default node '1'");
-        }
-        //assign node
-        GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
-        Node nodeTemp = GameManager.instance.dataScript.GetNode(nemesisNodeID);
-        if (nodeTemp != null)
-        {
-            nemesisNode = nodeTemp;
-            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n");
-        }
-        else { Debug.LogErrorFormat("Invalid nodeNemesis (Null) nodeID {0}", nemesisNodeID); }
-        //Nemesis AI
-        mode = NemesisMode.Inactive;
-        goal = NemesisGoal.Idle;
-        duration = 3; //nemesis does nothing for 'x' turns at game start
+        duration = gracePeriod; //nemesis does nothing for 'x' turns at game start
         //Set up datafor Nemesis
         SetLoiterNodes();
         SetLoiterData();
@@ -401,20 +399,24 @@ public class NemesisManager : MonoBehaviour
             //do nothing if inactive & duration > 0, swap to normal mode and proceed otherwise
             if (mode == NemesisMode.Inactive)
             {
-                if (duration == 0)
+                //message kicks in one turn early
+                if (duration == 1)
                 {
-                    //change mode to Normal, goal to Loiter
-                    mode = NemesisMode.Normal;
-                    goal = NemesisGoal.Loiter;
-                    isProceed = true;
                     //message
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Nemesis Mode changed from INACTIVE to NORMAL{0}", "\n");
                     string text = string.Format("{0} Nemesis comes online", nemesis.name);
                     string itemText = "Your NEMESIS comes Online";
                     string topText = "Nemesis goes ACTIVE";
                     string reason = string.Format("<b>{0} Nemesis</b>", nemesis.name);
                     string warning = string.Format("{0}", nemesis.descriptor);
                     GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                }
+                else if (duration == 0)
+                {
+                    //change mode to Normal, goal to Loiter
+                    mode = NemesisMode.Normal;
+                    goal = NemesisGoal.Loiter;
+                    isProceed = true;
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Nemesis Mode changed from INACTIVE to NORMAL{0}", "\n");
                 }
                 else
                 {
@@ -644,34 +646,42 @@ public class NemesisManager : MonoBehaviour
                     actor = GameManager.instance.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
                     if (actor != null)
                     {
-                        contact = actor.GetContact(nemesisNode.nodeID);
-                        if (contact != null)
+                        //only active actors can work their contact network
+                        if (actor.Status == ActorStatus.Active)
                         {
-                            //check nemesis stealth rating vs. contact effectiveness
-                            if (contact.effectiveness >= stealthRating)
+                            contact = actor.GetContact(nemesisNode.nodeID);
+                            if (contact != null)
                             {
-                                //check contact reliabiity -> if not use a random neighbouring node
-                                Node node = nemesisNode;
-                                if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
-                                { node = nemesisNode.GetRandomNeighbour(); }
-                                //contact spots Nemesis
-                                string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
-                                    contact.job, node.nodeName, node.nodeID);
-                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
-                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
-                                GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
-                                //no need to check anymore as one sighting is enough
-                                break;
+                                //check nemesis stealth rating vs. contact effectiveness
+                                if (contact.effectiveness >= stealthRating)
+                                {
+                                    //check contact reliabiity -> if not use a random neighbouring node
+                                    Node node = nemesisNode;
+                                    if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
+                                    { node = nemesisNode.GetRandomNeighbour(); }
+                                    //contact spots Nemesis
+                                    string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
+                                        contact.job, node.nodeName, node.nodeID);
+                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
+                                        contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
+                                    GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
+                                    //no need to check anymore as one sighting is enough
+                                    break;
+                                }
+                                else
+                                {
+                                    //contact Fails to spot Nemesis
+                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                        contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
+                                }
                             }
                             else
-                            {
-                                //contact Fails to spot Nemesis
-                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}", 
-                                    contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
-                            }
+                            { Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, nemesisNode.nodeName,
+                                    nemesisNode.Arc.name, nemesisNode.nodeID); }
                         }
-                        else { Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, nemesisNode.nodeName,
-                         nemesisNode.Arc.name, nemesisNode.nodeID); }
+                        else
+                        {  Debug.LogFormat("[Con] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                actor.arc.name, actor.actorID, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }
                 }
@@ -744,43 +754,42 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     private void ProcessPlayerDamage(bool isOutcomeModalNormal)
     {
-        string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("at {0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
         Damage damage = nemesis.damage;
         if (damage != null)
         {
             switch (damage.name)
             {
                 case "Capture":
-                    builder.AppendFormat("{0}Player Captured!{1}", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}Player Incarcerated{3}", "\n", "\n", colourAlert, colourEnd);
+
                     break;
                 case "Discredit":
-                    builder.AppendFormat("{0}Player Descredited!{1}", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}Major Renown Loss{3}", "\n", "\n", colourAlert, colourEnd);
+
                     break;
                 case "Image":
-                    builder.AppendFormat("{0}Player Imaged!{1}", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}Permanent loss of Invisibility{3}", "\n", "\n", colourAlert, colourEnd);
+
                     break;
                 case "Kill":
-                    builder.AppendFormat("{0}Player Killed!{1}", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}Game Over{3}", "\n", "\n", colourAlert, colourEnd);
+
                     break;
                 case "Tag":
-                    builder.AppendFormat("{0}Player Tagged!{1}", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}Player Actions unavailable{3}", "\n", "\n", colourAlert, colourEnd);
+
                     break;
                 case "Wound":
-                    builder.AppendFormat("{0}Player Wounded!{1}", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}Maximum 1 Action per turn{3}", "\n", "\n", colourAlert, colourEnd);
+
                     break;
                 default:
                     builder.AppendFormat("Damage is of an unknown kind");
                     Debug.LogWarningFormat("Invalid damage \"{0}\"", damage.name);
                     break;
             }
+            string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
+            builder.AppendFormat("at {0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
+            builder.AppendFormat("{0}<b>Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);
+            builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effect, colourEnd);
+            //Message
+            string msgText = string.Format("Player has been {0} by their {1} Nemesis", nemesis.damage.tag, nemesis.name);
+            GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effect, nemesisNode.nodeID);
             //player damaged outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {

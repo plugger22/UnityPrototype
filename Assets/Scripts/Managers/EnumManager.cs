@@ -117,6 +117,7 @@
         Plyr_Move,
         Plyr_Renown,
         Plyr_Secret,
+        Plyr_Damage,
         //Team
         Team_Add,
         Team_Deploy,

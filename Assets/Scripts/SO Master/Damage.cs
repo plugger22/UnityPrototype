@@ -11,4 +11,9 @@ public class Damage : ScriptableObject
     [Tooltip("In game tooltiop")]
     public string descriptor;
 
+    [Tooltip("Used in Messages, format '[You have been] ...")]
+    public string tag;
+
+    [Tooltip("Used in Messages, keep short, self contained explanation of damage effects")]
+    [TextArea] public string effect;
 }

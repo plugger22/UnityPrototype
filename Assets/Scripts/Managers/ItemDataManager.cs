@@ -204,6 +204,23 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Returns a colour formatted string for ItemData string message
+    /// Player damaged by Nemesis
+    /// </summary>
+    /// <param name="damageInfo"></param>
+    /// <param name="damageEffect"></param>
+    /// <returns></returns>
+    public string GetPlayerDamageDetails(string damageInfo, string damageEffect)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(damageInfo) == false)
+        { builder.AppendFormat("You have been {0}{1}{2}", damageInfo, "\n", "\n"); }
+        if (string.IsNullOrEmpty(damageEffect) == false)
+        { builder.AppendFormat("{0}{1}{2}", colourAlert, damageEffect, colourEnd); }
+        return builder.ToString();
+    }
+
 
     //
     // - - - Actor - - -

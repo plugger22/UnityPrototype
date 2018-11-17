@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Name: Kill
   m_EditorClassIdentifier: 
   descriptor: Target is terminated with extreme prejudice
+  tag: Killed
+  effect: You have been injected with a slow acting lethal gene tailored virus. You
+    days are numbered.

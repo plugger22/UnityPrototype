@@ -401,6 +401,42 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Player Spotted and Damaged by Nemesis
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="dataID"></param>
+    /// <returns></returns>
+    public Message PlayerDamage(string text, string damageInfo, string damageEffect, int nodeID)
+    {
+        Debug.Assert(nodeID >= 0, string.Format("Invalid dataID {0}", nodeID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Damage;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = nodeID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = "Nemesis Attacks";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerDamageDetails(damageInfo, damageEffect);
+            data.itemText = "You have been Damaged by your NEMESIS";
+            data.priority = ItemPriority.Low;
+            data.sprite = playerSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //

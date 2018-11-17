@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Name: Capture
   m_EditorClassIdentifier: 
   descriptor: Target is captured and ransomed off
+  tag: Captured
+  effect: You have been captured and your fate is uncertain

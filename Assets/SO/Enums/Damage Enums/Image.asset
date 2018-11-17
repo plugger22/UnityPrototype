@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Name: Image
   m_EditorClassIdentifier: 
   descriptor: Target is positively ID'd
+  tag: Imaged
+  effect: You likeness, full body recognition dataset and your DNA have  all been
+    obtained by the Authority. You are now a known quantity

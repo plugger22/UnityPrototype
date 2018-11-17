@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Name: Wound
   m_EditorClassIdentifier: 
   descriptor: Target is dealt a crippling wound
+  tag: Wounded
+  effect: You have suffered a crippling wound designed to hinder you more than harm
+    you. You are severely restricted in what you can do.
