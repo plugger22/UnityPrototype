@@ -163,6 +163,7 @@
         Contact_Change,
         Contact_Target_Rumour,
         Contact_Nemesis_Spotted,
+        Tracer_Nemesis_Spotted,
         //Target
         Target_New,
         Target_Expired,

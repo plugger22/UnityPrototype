@@ -1025,7 +1025,43 @@ public class MessageManager : MonoBehaviour
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.instance.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis);
             data.priority = ItemPriority.High;
-            data.sprite = actor.arc.sprite;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Nemesis spotted by a Resistance Tracer
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message TracerNemesisSpotted(string text, Node node)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Tracer_Nemesis_Spotted;
+            message.side = globalResistance;
+            message.data0 = node.nodeID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "TRACER picks up an ANOMALOUS reading";
+            data.topText = "Threat Detected";
+            data.bottomText = GameManager.instance.itemDataScript.GetTracerNemesisSpottedDetails(node);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.nodeID = node.nodeID;

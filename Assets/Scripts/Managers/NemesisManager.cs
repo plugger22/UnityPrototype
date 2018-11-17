@@ -417,7 +417,7 @@ public class NemesisManager : MonoBehaviour
                     string text = string.Format("{0} Nemesis comes online", nemesis.name);
                     string itemText = "Your NEMESIS comes Online";
                     string topText = "Nemesis goes ACTIVE";
-                    string reason = string.Format("<b>{0} Nemesis</b>", nemesis.name);
+                    string reason = string.Format("{0}<b>{1} Nemesis</b>", "\n", nemesis.name);
                     string warning = string.Format("{0}", nemesis.descriptor);
                     GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                 }
@@ -742,36 +742,24 @@ public class NemesisManager : MonoBehaviour
             int needNum = -1;
             switch (stealthRating)
             {
-                case 3:
-                    if (rndNum <= chanceTracerSpotHigh)
-                    { needNum = chanceTracerSpotHigh; isSpotted = true; }
-                    break;
-                case 2:
-                    if (rndNum <= chanceTracerSpotMed)
-                    { needNum = chanceTracerSpotMed; isSpotted = true; }
-                    break;
-                case 1:
-                    if (rndNum <= chanceTracerSpotLow)
-                    { needNum = chanceTracerSpotLow; isSpotted = true; }
-                    break;
-                case 0:
-                    if (rndNum <= chanceTracerSpotZero)
-                    { needNum = chanceTracerSpotZero; isSpotted = true; }
-                    break;
+                case 3: needNum = chanceTracerSpotHigh; break;
+                case 2: needNum = chanceTracerSpotMed;  break;
+                case 1: needNum = chanceTracerSpotLow;  break;
+                case 0: needNum = chanceTracerSpotZero; break;
+                default: Debug.LogWarningFormat("Invalid stealthRating {0}", stealthRating); break;
             }
+            //random check
+            if (rndNum <= needNum)
+            { isSpotted = true; }
+            //Spotted
             if (isSpotted == true)
             {
-                //resistance player only
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                {
-                    //SPOTTED -> node is always correct
-                    string text = string.Format("You feel the presence of a <b>DARK SHADOW</b> at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
-                    string itemText = "TRACER picks up an ANOMALOUS reading";
-                    string topText = "THREAT DETECTED";
-                    string reason = string.Format("Hostile body detected at{0}{1}, {2}<b>{3}</b>{4} district", "\n", nemesisNode.nodeName, colourAlert, nemesisNode.Arc.name, colourEnd);
-                    string warning = "Rebel HQ suspect a serious threat to your person";
-                    GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, true, true);
-                }
+                Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer SUCCEEDS, need < {0} rolled {1}{2}", needNum, rndNum, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer spots Nemesis at {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+                GameManager.instance.messageScript.GeneralRandom("Tracer spots Nemesis", "Tracer Sighting", needNum, rndNum);
+                //SPOTTED -> node is always correct
+                string text = string.Format("Tracer picks up an Anomalous reading at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
+                GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode);
             }
             else { Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer FAILED to spot, need < {0} rolled {1}{2}", needNum, rndNum, "\n"); }
         }

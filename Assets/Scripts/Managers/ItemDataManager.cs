@@ -517,6 +517,21 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// A resistance tracer picks up signs of the Nemesis
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetTracerNemesisSpottedDetails(Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>Hostile body</b> detected by {0}<b>Tracer</b>{1}{2}{3}", colourNeutral, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Rebel HQ</b> suspect a {0}<b>serious threat</b>{1} to your person{2}{3}", colourBad, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// subMethod to return a colour formatted string based on contact's effectiveness
     /// </summary>
     /// <param name="level"></param>
