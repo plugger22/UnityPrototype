@@ -22,7 +22,7 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("Chance of a nemesis switching from an Loiter to an Idle goal (provided not already present at LoiterNode)")]
     [Range(0, 100)] public int chanceLoiterToIdle = 15;
     [Tooltip("Chance of a nemesis switching from an Loiter to an Ambush goal (provided not already present at LoiterNode)")]
-    [Range(0, 100)] public int chanceLoiterToAmbush = 20;
+    [Range(0, 100)] public int chanceLoiterToAmbush = 15;
     [Tooltip("Duration of an Ambush")]
     [Range(1, 5)] public int durationAmbush = 2;
 
@@ -408,6 +408,7 @@ public class NemesisManager : MonoBehaviour
             //player carrying out a set goal for a set period of time, keep doing so unless immediate flag set
             if (duration > 0)
             {
+                //immediate flag breaks duration cycle
                 if (immediateFlag == true) { isProceed = true; }
                 else { isProceed = false; }
                 //decrement duration
@@ -452,14 +453,14 @@ public class NemesisManager : MonoBehaviour
                 //
                 if (playerTargetNodeID > -1)
                 {
-                    //recent player activity
+                    //recent player activity -> Hunt mode
+                    mode = NemesisMode.Hunt;
+                    targetNodeID = playerTargetNodeID;
+                    ProcessNemesisHunt(immediateFlag);
                 }
                 else
                 {
                     //no recent player activity
-
-                    //DEBUG -> Chance to change goals
-
                     ProcessNemesisGoal();
                 }
             }
@@ -473,6 +474,36 @@ public class NemesisManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// Player activity detected this turn
+    /// </summary>
+    /// <param name="isImmediate"></param>
+    private void ProcessNemesisHunt(bool isImmediate)
+    {
+        //get distance between nemesis and target (player activity) node
+        int distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nemesisNode.nodeID, targetNodeID);
+        //immediate flag (confirmed Player activity)
+        if (isImmediate == true)
+        {
+            switch (distance)
+            {
+                case 0:
+
+                    break;
+                case 1:
+                case 2:
+                    //move towards player at full speed
+                    goal = NemesisGoal.MoveToNode;
+                    ProcessNemesisMoveTo();
+                    break;
+                default:
+                    //more than 2 away
+
+                    break;
+            }
+        }
     }
 
     /// <summary>
@@ -563,7 +594,37 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// method to move nemesis. Handles admin and player and contact interaction checks. 
+    /// specific MoveTo goal where Nemesis heads to a target nodeID at their maximum move allowance
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void ProcessNemesisMoveTo()
+    {
+        //Get path to 
+        List<Connection> listOfConnections = GameManager.instance.dijkstraScript.GetPath(nemesisNode.nodeID, targetNodeID, false);
+        if (listOfConnections != null)
+        {
+            int numOfLinks = listOfConnections.Count;
+            if (numOfLinks > 0)
+            {
+                //get nemesis move allowance
+                int moveAllowance = nemesis.movement;
+                if (moveAllowance > 0)
+                {
+                    do
+                    {
+                        moveAllowance--;
+                    }
+                    while (moveAllowance == 0);
+                }
+                else { Debug.LogWarning("Nemesis moveAllowance invalid (Zero)"); }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfConnections (Empty) between nemesis nodeID {0} and target node ID {1}", nemesisNode.nodeID, targetNodeID); }
+        }
+        else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
+    }
+
+    /// <summary>
+    /// method to move nemesis one link. Handles admin and player and contact interaction checks. 
     /// NOTE: Assumed to be a single link move.
     /// </summary>
     /// <param name="nodeID"></param>
