@@ -19,8 +19,15 @@ public class NemesisManager : MonoBehaviour
     [Header("Logic")]
     [Tooltip("Chance of a nemesis switching from an Idle to a Loiter goal (provided not already present at LoiterNode)")]
     [Range(0, 100)] public int chanceIdleToLoiter = 50;
+    [Tooltip("Chance of a nemesis switching from an Loiter to an Idle goal (provided not already present at LoiterNode)")]
+    [Range(0, 100)] public int chanceLoiterToIdle = 25;
+    [Tooltip("Chance of a nemesis switching from an Loiter to an Ambush goal (provided not already present at LoiterNode)")]
+    [Range(0, 100)] public int chanceLoiterToAmbush = 25;
+    [Tooltip("Duration of an Ambush")]
+    [Range(1, 5)] public int durationAmbush = 2;
+
     [Tooltip("Number of turns Nemesis goes Offline after damaging the player (allows the player to clear the datum)")]
-    [Range(0, 10)] public int damageDurationOffLine = 3;
+    [Range(0, 10)] public int durationDamageOffLine = 3;
 
     [Header("Spotted by Tracer")]
     [Tooltip("Chance of a nemesis with a HIGH adjusted stealth rating ('3+'), being spotted in any node with Tracer coverage")]
@@ -453,13 +460,16 @@ public class NemesisManager : MonoBehaviour
 
                     //DEBUG -> Chance to change goals
 
-                    ProcessContinueWithGoal();
+                    ProcessNemesisGoal();
                 }
             }
             else
             {
-                // Continue with existing goal
-                ProcessContinueWithGoal();
+                if (mode != NemesisMode.Inactive)
+                {
+                    // Continue with existing goal
+                    ProcessNemesisGoal();
+                }
             }
         }
         else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
@@ -468,12 +478,27 @@ public class NemesisManager : MonoBehaviour
     /// <summary>
     /// Nemesis proceeds with curent goal
     /// </summary>
-    private void ProcessContinueWithGoal()
+    private void ProcessNemesisGoal()
     {
         switch (goal)
         {
             case NemesisGoal.Ambush:
-
+                if (duration > 0)
+                { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with AMBUSH, duration {0},  nodeID {1}{2}", duration, nemesisNode.nodeID, "\n"); }
+                else
+                {
+                    //change goal
+                    if (mode == NemesisMode.Normal)
+                    {
+                        goal = NemesisGoal.Loiter;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from AMBUSH to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                    }
+                    else if (mode == NemesisMode.Hunt)
+                    {
+                        goal = NemesisGoal.Search;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from AMBUSH to SEARCH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                    }
+                }
                 break;
             case NemesisGoal.Search:
 
@@ -482,33 +507,54 @@ public class NemesisManager : MonoBehaviour
 
                 break;
             case NemesisGoal.Idle:
-                //do nothing, chance to switch to Loiter goal
-                if (mode != NemesisMode.Inactive)
-                {
-                    //not already at a LoiterNode
-                    if (nemesisNode.isLoiterNode == false)
+                    //chance to switch to Loiter goal
+                    if (Random.Range(0, 100) < chanceIdleToLoiter)
                     {
-                        //chance to switch to Loiter goal
-                        if (Random.Range(0, 100) < chanceIdleToLoiter)
-                        {
-                            goal = NemesisGoal.Loiter;
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from IDLE to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
-                        }
-                        else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis retains IDLE goal, current nodeID {0}{1}", nemesisNode.nodeID, "\n"); }
+                        goal = NemesisGoal.Loiter;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from IDLE to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
                     }
-                }
+                    else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis retains IDLE goal, current nodeID {0}{1}", nemesisNode.nodeID, "\n"); }
                 break;
             case NemesisGoal.Loiter:
                 //nemesis already at loiter node?
                 if (nemesisNode.isLoiterNode == true)
                 {
-                    //at LoiterNode, switch to Idle
-                    goal = NemesisGoal.Idle;
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> ContinueWithGoal: At Loiter Node {1}, id {2}, changes to IDLE{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
+                    //at loiter node, chance to switch to Ambush
+                    if (Random.Range(0, 100) < chanceLoiterToAmbush)
+                    {
+                        goal = NemesisGoal.Ambush;
+                        duration = durationAmbush;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to AMBUSH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                    }
+                    else
+                    {
+                        //at LoiterNode
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ContinueWithGoal: At Loiter Node {1}, id {2}, do NOTHING{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
+                    }
                 }
                 //not yet at LoiterNode, move towards nearest at speed 1
                 else
-                { ProcessMoveNemesis(nemesisNode.loiter.neighbourID); }
+                {
+                    //chance to switch to IDLE
+                    if (Random.Range(0, 100) < chanceLoiterToIdle)
+                    {
+                        goal = NemesisGoal.Idle;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to IDLE, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                    }
+                    //chance to switch to AMBUSH
+                    else if (Random.Range(0, 100) < chanceLoiterToAmbush)
+                    {
+                        goal = NemesisGoal.Ambush;
+                        duration = durationAmbush;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to AMBUSH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                    }
+                    //Continue with Loiter mode
+                    else
+                    {
+                        ProcessMoveNemesis(nemesisNode.loiter.neighbourID);
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                    }
+                }
                 break;
             default:
                 Debug.LogWarningFormat("Invalid NemesisGoal \"{0}\"", goal);
@@ -569,7 +615,7 @@ public class NemesisManager : MonoBehaviour
             //place Nemesis OFFLINE for a period
             mode = NemesisMode.Inactive;
             goal = NemesisGoal.Idle;
-            duration = damageDurationOffLine;
+            duration = durationDamageOffLine;
             if (duration > 0)
             {
                 string text = string.Format("Nemesis goes Offline for {0} turns after Damaging player{1}", duration, "\n");
@@ -634,7 +680,7 @@ public class NemesisManager : MonoBehaviour
         { stealthRating--; }
         //adjust for goal
         if (goal == NemesisGoal.Ambush)
-        { stealthRating++; }
+        { stealthRating += 999; }
         return stealthRating;
     }
 
@@ -675,7 +721,7 @@ public class NemesisManager : MonoBehaviour
                                     //contact spots Nemesis
                                     string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
                                         contact.job, node.nodeName, node.nodeID);
-                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
+                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
                                         contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
                                     GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
                                     //no need to check anymore as one sighting is enough
@@ -684,7 +730,7 @@ public class NemesisManager : MonoBehaviour
                                 else
                                 {
                                     //contact Fails to spot Nemesis
-                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
                                         contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
                                 }
                             }
@@ -737,7 +783,7 @@ public class NemesisManager : MonoBehaviour
             bool isSpotted = false;
             //nemesis stealthRating
             int stealthRating = GetStealthRatingAdjusted();
-            stealthRating = Mathf.Clamp(stealthRating, 0, 3);
+            stealthRating = Mathf.Max(stealthRating, 0);
             int rndNum = Random.Range(0, 100);
             int needNum = -1;
             switch (stealthRating)
@@ -746,7 +792,7 @@ public class NemesisManager : MonoBehaviour
                 case 2: needNum = chanceTracerSpotMed;  break;
                 case 1: needNum = chanceTracerSpotLow;  break;
                 case 0: needNum = chanceTracerSpotZero; break;
-                default: Debug.LogWarningFormat("Invalid stealthRating {0}", stealthRating); break;
+                default: needNum = 999; break;
             }
             //random check
             if (rndNum <= needNum)

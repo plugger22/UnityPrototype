@@ -1579,7 +1579,10 @@ MonoBehaviour:
   loiterNodePoolSize: 5
   loiterDistanceCheck: 2
   chanceIdleToLoiter: 50
-  damageDurationOffLine: 3
+  chanceLoiterToIdle: 25
+  chanceLoiterToAmbush: 25
+  durationAmbush: 2
+  durationDamageOffLine: 3
   chanceTracerSpotHigh: 10
   chanceTracerSpotMed: 25
   chanceTracerSpotLow: 50
@@ -1943,7 +1946,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 29723
+  seed: 14932
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
