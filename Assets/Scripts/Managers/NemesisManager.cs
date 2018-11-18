@@ -20,9 +20,9 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("Chance of a nemesis switching from an Idle to a Loiter goal (provided not already present at LoiterNode)")]
     [Range(0, 100)] public int chanceIdleToLoiter = 50;
     [Tooltip("Chance of a nemesis switching from an Loiter to an Idle goal (provided not already present at LoiterNode)")]
-    [Range(0, 100)] public int chanceLoiterToIdle = 25;
+    [Range(0, 100)] public int chanceLoiterToIdle = 15;
     [Tooltip("Chance of a nemesis switching from an Loiter to an Ambush goal (provided not already present at LoiterNode)")]
-    [Range(0, 100)] public int chanceLoiterToAmbush = 25;
+    [Range(0, 100)] public int chanceLoiterToAmbush = 20;
     [Tooltip("Duration of an Ambush")]
     [Range(1, 5)] public int durationAmbush = 2;
 
