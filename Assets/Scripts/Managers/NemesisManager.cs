@@ -287,8 +287,12 @@ public class NemesisManager : MonoBehaviour
                 break;
             case NemesisMode.HUNT:
                 mode = NemesisMode.HUNT;
+                
                 durationMode = Random.Range(1, 10);
-                durationMode = data0;
+                if (data0 > -1)
+                {goal = NemesisGoal.MoveToNode; }
+                else { goal = NemesisGoal.SEARCH; }
+                targetNodeID = data0;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (durationMode {0}){1}", durationMode, "\n");
                 break;
             default:
