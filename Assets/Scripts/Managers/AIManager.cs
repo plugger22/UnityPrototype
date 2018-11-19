@@ -633,8 +633,6 @@ public class AIManager : MonoBehaviour
         UpdateResources(globalResistance);
         //reset flags
         immediateFlagAuthority = false;
-        //temp
-
     }
 
     /// <summary>

@@ -2326,24 +2326,28 @@ public class ActionManager : MonoBehaviour
                 {
                     foreach (Effect effect in listOfEffects)
                     {
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                        if (effectReturn != null)
+                        if (effect != null)
                         {
-                            //update stringBuilder texts (Bottom only)
-                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                            builderBottom.Append(effectReturn.bottomText);
-                            //exit effect loop on error
-                            if (effectReturn.errorFlag == true) { break; }
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                            if (effectReturn != null)
+                            {
+                                //update stringBuilder texts (Bottom only)
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(effectReturn.bottomText);
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
+                            }
+                            else
+                            {
+                                builderTop.AppendLine();
+                                builderTop.Append("Error");
+                                builderBottom.AppendLine();
+                                builderBottom.Append("Error");
+                                effectReturn.errorFlag = true;
+                                break;
+                            }
                         }
-                        else
-                        {
-                            builderTop.AppendLine();
-                            builderTop.Append("Error");
-                            builderBottom.AppendLine();
-                            builderBottom.Append("Error");
-                            effectReturn.errorFlag = true;
-                            break;
-                        }
+                        else { Debug.LogWarning("Invalid effect (Null)"); }
                     }
                 }
                 //

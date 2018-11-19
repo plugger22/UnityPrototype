@@ -1579,8 +1579,8 @@ MonoBehaviour:
   loiterNodePoolSize: 5
   loiterDistanceCheck: 2
   chanceIdleToLoiter: 50
-  chanceLoiterToIdle: 25
-  chanceLoiterToAmbush: 25
+  chanceLoiterToIdle: 15
+  chanceLoiterToAmbush: 15
   durationAmbush: 2
   durationDamageOffLine: 3
   chanceTracerSpotHigh: 10
