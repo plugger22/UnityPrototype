@@ -429,6 +429,7 @@ public class DijkstraManager : MonoBehaviour
     /// <summary>
     /// given two nodes method returns a list of sequential cnnnections between the two. If 'isReverseOrder' is true then returns connections in order destination to source, otherwise opposite (default)
     /// 'isWeighted' true uses data from dictOfDijkstraWeighted (last calculated), if false then used dictOfDijkstraUnweighted data.
+    /// Returns null if a problem or if there is no connection, also for distance 0 situations (both nodes are the same)
     /// </summary>
     /// <param name="nodeSourceID"></param>
     /// <param name="nodeDestinationID"></param>
@@ -438,47 +439,51 @@ public class DijkstraManager : MonoBehaviour
         int nodeCurrentID, nodeNextID;
         bool isError = false;
         List<Connection> listOfConnections = new List<Connection>();
-        //get path array (weighted / unweighted)
-        PathData data;
-        if (isWeighted == false)
-        { data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodeSourceID); }
-        else { data = GameManager.instance.dataScript.GetDijkstraPathWeighted(nodeSourceID); }
-        if (data != null)
+        if (nodeSourceID != nodeDestinationID)
         {
-            //find destinationID in pathArray
-            nodeCurrentID = nodeDestinationID;
-            do
+            //get path array (weighted / unweighted)
+            PathData data;
+            if (isWeighted == false)
+            { data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodeSourceID); }
+            else { data = GameManager.instance.dataScript.GetDijkstraPathWeighted(nodeSourceID); }
+            if (data != null)
             {
-                nodeNextID = data.pathArray[nodeCurrentID];
-                Node nodeCurrent = GameManager.instance.dataScript.GetNode(nodeCurrentID);
-                if (nodeCurrent != null)
+                //find destinationID in pathArray
+                nodeCurrentID = nodeDestinationID;
+                do
                 {
-                    Connection connection = nodeCurrent.GetConnection(nodeNextID);
-                    if (connection != null)
+                    nodeNextID = data.pathArray[nodeCurrentID];
+                    Node nodeCurrent = GameManager.instance.dataScript.GetNode(nodeCurrentID);
+                    if (nodeCurrent != null)
                     {
-                        //add to list
-                        listOfConnections.Add(connection);
-                        //swap nodes ready for next iteration
-                        nodeCurrentID = nodeNextID;
+                        Connection connection = nodeCurrent.GetConnection(nodeNextID);
+                        if (connection != null)
+                        {
+                            //add to list
+                            listOfConnections.Add(connection);
+                            //swap nodes ready for next iteration
+                            nodeCurrentID = nodeNextID;
+                        }
+                        else
+                        {
+                            Debug.LogWarningFormat("Invalid connection (Null) between current node {0}, {1}, id {2} and nodeNextID {3}", nodeCurrent.nodeName, nodeCurrent.Arc.name, nodeCurrent, nodeDestinationID);
+                            isError = true;
+                        }
                     }
                     else
                     {
-                        Debug.LogWarningFormat("Invalid connection (Null) between current node {0}, {1}, id {2} and nodeNextID {3}", nodeCurrent.nodeName, nodeCurrent.Arc.name, nodeCurrent, nodeDestinationID);
+                        Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeCurrentID);
                         isError = true;
                     }
                 }
-                else
-                {
-                    Debug.LogWarningFormat("Invalid nodeSource (Null) for id {0}", nodeCurrentID);
-                    isError = true;
-                }
+                while (isError == false && nodeCurrentID != nodeSourceID);
             }
-            while (isError == false && nodeCurrentID != nodeSourceID);
+            else { Debug.LogWarningFormat("Invalid PathData (Null) for nodeSourceID {0}", nodeSourceID); }
+            //do I need to reverse the list?
+            if (isReverseOrder == false)
+            { listOfConnections.Reverse(); }
         }
-        else { Debug.LogWarningFormat("Invalid PathData (Null) for nodeSourceID {0}", nodeSourceID); }
-        //do I need to reverse the list?
-        if (isReverseOrder == false)
-        { listOfConnections.Reverse(); }
+        else { listOfConnections = null; }
         return listOfConnections;
     }
 
@@ -537,7 +542,6 @@ public class DijkstraManager : MonoBehaviour
             { distance = data.distanceArray[nodeDestinationID]; }
             else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
         }
-        else { Debug.LogWarningFormat("Invalid nodeID's (sourceID {0} must be Different from destinationID {1})", nodeSourceID, nodeDestinationID); }
         /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceUnweighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
         return distance;
     }

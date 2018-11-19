@@ -1468,11 +1468,12 @@ public class AIManager : MonoBehaviour
         int score, tally;
         int numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve);
         int currentTurn = GameManager.instance.turnScript.Turn;
+        //get target node -> do so prior to team # check as number needed for Nemesis AI
+        playerTargetNodeID = ProcessErasureTarget();
+        Debug.LogFormat("[Aim] AIManager.cs -> ProcessErasureData: playerTargetNodeID {0} (used for Erasure teams and Nemesis AI)", playerTargetNodeID);
         //only bother proceeding if there are spider teams available to deploy
         if (numOfTeams > 0)
         {
-            //get target node
-            playerTargetNodeID = ProcessErasureTarget();
             if (playerTargetNodeID > -1)
             {
                 //get near neighbours as potential node targets
