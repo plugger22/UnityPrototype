@@ -85,23 +85,18 @@ public class NemesisManager : MonoBehaviour
             GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
         }
         else { Debug.LogError("Invalid node (Null)"); }
-        //Nemesis AI
-        int gracePeriod = GameManager.instance.scenarioScript.scenario.challenge.gracePeriod;
-        if (gracePeriod > 0)
+        //Nemesis AI -> nemesis does nothing for 'x' turns at game start
+        durationMode = GameManager.instance.scenarioScript.scenario.challenge.gracePeriod;
+        if (durationMode > 0)
         {
             //grace period, start inactive
-            mode = NemesisMode.Inactive;
-            goal = NemesisGoal.IDLE;
+            SetNemesisMode(NemesisMode.Inactive);
         }
         else
         {
             //NO grace period, start in normal mode, waiting for signs of player
-            mode = NemesisMode.NORMAL;
-            goal = NemesisGoal.LOITER;
+            SetNemesisMode(NemesisMode.NORMAL);
         }
-        targetNodeID = -1;
-        targetDistance = -1;
-        durationMode = gracePeriod; //nemesis does nothing for 'x' turns at game start
         //Set up datafor Nemesis
         SetLoiterNodes();
         SetLoiterData();
@@ -173,235 +168,6 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets up a list (max 3) of nodes which are well-connected and, hopefully, centred, where the nemesis can sit and wait for developments
-    /// </summary>
-    private void SetLoiterNodes()
-    {
-        int numOfNodes, counter, distance;
-        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
-        List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
-        Node centreNode = null;
-        if (listOfMostConnected != null)
-        {
-            if (listOfLoiterNodes != null)
-            {
-                numOfNodes = listOfMostConnected.Count;
-                //loop through most Connected looking for the first instance of a centre, connected node (the most connected are checked first, least connected last)
-                for (int index = 0; index < numOfNodes; index++)
-                {
-                    Node node = listOfMostConnected[index];
-                    if (node != null)
-                    {
-                        if (node.isCentreNode == true)
-                        {
-                            //found the ideal node, job done
-                            centreNode = node;
-                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is a CENTRE nodeID {0}", centreNode.nodeID);*/
-                            break;
-                        }
-                    }
-                    else { Debug.LogErrorFormat("Invalid node (Null) for listOfMostConnected[{0}]", index); }
-                }
-                /*if (centreNode == null)
-                    { Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is NO Centre node"); }*/
-
-                //Take the top 'x' most connected nodes (excluding centreNode, if any) and add to loiterList
-                counter = 0;
-                for (int index = 0; index < numOfNodes; index++)
-                {
-                    Node node = listOfMostConnected[index];
-                    //check not the centreNode
-                    if (centreNode != null)
-                    {
-                        if (node.nodeID != centreNode.nodeID)
-                        {
-                            listOfLoiterNodes.Add(node);
-                            counter++;
-                        }
-                    }
-                    else
-                    {
-                        listOfLoiterNodes.Add(node);
-                        counter++;
-                    }
-                    //check limit isn't exceeded
-                    if (counter == loiterNodePoolSize)
-                    { break; }
-                }
-               
-                /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: TOP X -> there are {0} loiter nodes", listOfLoiterNodes.Count);*/
-
-                //Check all nodes in list (reverse loop list) to see if they have any neighbours within a set distance. Remove from list if so. Should be at least one node remaining.
-                for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
-                {
-                    Node node = listOfLoiterNodes[index];
-                    //check against centre node, if any
-                    if (centreNode != null)
-                    {
-                        distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(centreNode.nodeID, node.nodeID);
-                        if (distance <= loiterDistanceCheck)
-                        {
-                            //too close, exclude node
-                            
-                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);*/
-
-                            listOfLoiterNodes.RemoveAt(index);
-                            continue;
-                        }
-                    }
-                }
-                //Check remaining that loiter nodes aren't too close to each other (reverse loop list) Least connected nodes are checked and deleted before most connected (at list[0])
-                for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
-                {
-                    Node node = listOfLoiterNodes[index];
-                    //check against all other nodes in list
-                    for (int i = 0; i < listOfLoiterNodes.Count; i++)
-                    {
-                        Node nodeTemp = listOfLoiterNodes[i];
-                        //not the same node?
-                        if (nodeTemp.nodeID != node.nodeID)
-                        {
-                            //check distance
-                            distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
-                            if (distance <= loiterDistanceCheck)
-                            {
-                                //too close, remove current node from list (make sure at least one node is remaining)
-                                counter = listOfLoiterNodes.Count;
-                                if (centreNode != null)
-                                { counter++; }
-                                //only delete if more than one node remaining
-                                if (counter > 1)
-                                {
-                                    /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);*/
-                                    listOfLoiterNodes.RemoveAt(index);
-                                    break;
-                                }
-                                else
-                                {
-                                    /*Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");*/
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
-            //add centre node to list, if present
-            if (centreNode != null)
-            { listOfLoiterNodes.Add(centreNode); }
-            //how many remaining
-            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: FINAL -> there are {0} loiter nodes", listOfLoiterNodes.Count);
-        }
-        else { Debug.LogError("Invalid listOfMostConnectedNodes (Null)"); }
-    }
-
-    /// <summary>
-    /// Takes loiter nodes and configueres a LoiterData package for each individual node for quick reference by nemesis
-    /// </summary>
-    private void SetLoiterData()
-    {
-        int tempNodeID, shortestNodeID, tempDistance, shortestDistance, numOfLoiterNodes, v1, v2;
-        int counter = 0;
-        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
-        List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        List<Connection> listOfConnections = new List<Connection>();
-        Connection connection;
-        if (listOfLoiterNodes != null)
-        {
-            numOfLoiterNodes = listOfLoiterNodes.Count;
-            if (numOfLoiterNodes > 0)
-            {
-                if (listOfAllNodes != null)
-                {
-                    //loop all nodes
-                    for (int index = 0; index < listOfAllNodes.Count; index++)
-                    {
-                        LoiterData data = new LoiterData();
-                        Node node = listOfAllNodes[index];
-                        if (node != null)
-                        {
-                            //check if node is a loiter node
-                            if (listOfLoiterNodes.Exists(x => x.nodeID == node.nodeID) == true)
-                            {
-                                //Loiter node
-                                data.nodeID = node.nodeID;
-                                data.distance = 0;
-                                data.neighbourID = node.nodeID;
-                            }
-                            else
-                            {
-                                //NOT a loiter node
-                                shortestNodeID = -1;
-                                shortestDistance = 999;
-                                //check distance to all loiter nodes and get closest
-                                for (int i = 0; i < numOfLoiterNodes; i++)
-                                {
-                                    tempNodeID = listOfLoiterNodes[i].nodeID;
-                                    tempDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, tempNodeID);
-                                    if (tempDistance < shortestDistance)
-                                    {
-                                        shortestDistance = tempDistance;
-                                        shortestNodeID = tempNodeID;
-                                    }
-                                }
-                                data.nodeID = shortestNodeID;
-                                data.distance = shortestDistance;
-                                //get path to nearest loiter node
-                                if (shortestNodeID > -1)
-                                {
-                                    listOfConnections = GameManager.instance.dijkstraScript.GetPath(node.nodeID, shortestNodeID, false);
-                                    if (listOfConnections != null)
-                                    {
-                                        //get first connection (from source node)
-                                        connection = listOfConnections[0];
-                                        if (connection != null)
-                                        {
-                                            v1 = connection.GetNode1();
-                                            v2 = connection.GetNode2();
-                                            if (v1 == node.nodeID || v2 == node.nodeID)
-                                            {
-                                                if (v1 == node.nodeID)
-                                                { data.neighbourID = v2; }
-                                                else { data.neighbourID = v1; }
-                                                //check neighbourID is valid for node
-                                                if (node.CheckNeighbourNodeID(data.neighbourID) == false)
-                                                {
-                                                    Debug.LogWarningFormat("Invalid data.neighbourID (doesn't correspond with node neighbours) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID);
-                                                    data.neighbourID = -1;
-                                                }
-                                            }
-                                            else { Debug.LogWarningFormat("Invalid connection (endpoints don't match nodeID) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
-                                        }
-                                        else { Debug.LogWarningFormat("Invalid listOfConnections[0] (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
-                                    }
-                                    else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for source nodeID {0} and destination nodeID {1}", node.nodeID, shortestNodeID); }
-                                }
-                                else { Debug.LogWarningFormat("Invalid shortestNodeID (-1) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
-                            }
-                        }
-                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfAllNodes[{0}]", index); }
-                        //store loiter data
-                        if (data.distance > -1 && data.nodeID > -1 && data.neighbourID > -1)
-                        {
-                            node.loiter = data;
-                            counter++;
-                            if (data.distance == 0)
-                            { node.isLoiterNode = true; }
-                            else { node.isLoiterNode = false; }
-                        }
-                        else { Debug.LogWarningFormat("Invalid loiterData (missing data) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
-                    }
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterData: LoiterData successfully initialised in {0} nodes", counter);
-                }
-                else { Debug.LogError("Invalid listOfAllNodes (Null)"); }
-            }
-            else { Debug.LogError("Invalid listOfLoiterNodes (Empty)"); }
-        }
-        else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
-    }
-
-    /// <summary>
     /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives a playerTargetNodeID, if worth doing so and -1 if nothing to report)
     /// </summary>
     /// <param name="playerTargetNodeID"></param>
@@ -425,7 +191,8 @@ public class NemesisManager : MonoBehaviour
                 else { isProceed = false; }
                 //decrement duration
                 durationGoal--;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: TargetNodeID {0}, ImmediateFlag {1}, duration {2}, isProceed {3}{4}", targetNodeID, immediateFlag, durationGoal, isProceed, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: TargetNodeID {0}, ImmediateFlag {1}, duration Mode {2} Goal {3}, isProceed {4}{5}", targetNodeID, immediateFlag, 
+                    durationMode, durationGoal, isProceed, "\n");
             }
             //do nothing if inactive & duration > 0, swap to normal mode and proceed otherwise
             switch (mode)
@@ -445,30 +212,20 @@ public class NemesisManager : MonoBehaviour
                     else if (durationMode == 0)
                     {
                         //change mode to Normal, goal to Loiter
-                        mode = NemesisMode.NORMAL;
-                        goal = NemesisGoal.LOITER;
+                        SetNemesisMode(NemesisMode.NORMAL);
                         //set to true in case new player target info is available
                         isProceed = true;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Nemesis Mode changed from INACTIVE to NORMAL{0}", "\n");
                     }
                     else
-                    {
-                        isProceed = false;
-                        goal = NemesisGoal.IDLE;
-                    }
+                    { isProceed = false; }
                     break;
                 case NemesisMode.HUNT:
                     if (durationMode == 0)
                     {
                         //swap back to normal Mod
-                        mode = NemesisMode.NORMAL;
-                        goal = NemesisGoal.LOITER;
-                        durationGoal = 0;
-                        targetNodeID = -1;
-                        targetDistance = -1;
+                        SetNemesisMode(NemesisMode.NORMAL);
                         //set to true in case new player target info is available
                         isProceed = true;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Nemesis Mode changed from HUNT to NORMAL{0}", "\n");
                     }
                     break;
             }
@@ -483,8 +240,7 @@ public class NemesisManager : MonoBehaviour
                 if (playerTargetNodeID > -1)
                 {
                     //recent player activity -> Hunt mode
-                    mode = NemesisMode.HUNT;
-                    targetNodeID = playerTargetNodeID;
+                    SetNemesisMode(NemesisMode.HUNT, playerTargetNodeID);
                     ProcessNemesisHunt();
                 }
                 else
@@ -496,14 +252,50 @@ public class NemesisManager : MonoBehaviour
             else
             {
                 targetDistance = -1;
-                if (mode != NemesisMode.Inactive)
-                {
-                    // Continue with existing goal
-                    ProcessNemesisGoal();
-                }
+                // Continue with existing goal
+                ProcessNemesisGoal();
             }
         }
         else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// sets mode and all associated variables in a consistent manner. 'data0' is a general purpose data point with variable meanings depending on mode
+    /// </summary>
+    /// <param name="mode"></param>
+    private void SetNemesisMode(NemesisMode requiredMode, int data0 = -1)
+    {
+        switch (requiredMode)
+        {
+            case NemesisMode.Inactive:
+                //NOTE: durationMode for Inactive set locally by the calling metod
+                mode = NemesisMode.Inactive;
+                goal = NemesisGoal.IDLE;
+                durationGoal = 0;
+                targetNodeID = -1;
+                targetDistance = -1;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE{0}", "\n");
+                break;
+            case NemesisMode.NORMAL:
+                mode = NemesisMode.NORMAL;
+                goal = NemesisGoal.LOITER;
+                durationMode = 0;
+                durationGoal = 0;
+                targetNodeID = -1;
+                targetDistance = -1;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to NORMAL{0}", "\n");
+                break;
+            case NemesisMode.HUNT:
+                mode = NemesisMode.HUNT;
+                durationMode = Random.Range(1, 10);
+                durationMode = data0;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (durationMode {0}){1}", durationMode, "\n");
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid mode \"{0}\"", mode);
+                break;
+            
+        }
     }
 
     /// <summary>
@@ -514,7 +306,7 @@ public class NemesisManager : MonoBehaviour
     {
         //get distance between nemesis and target (player activity) node
         targetDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nemesisNode.nodeID, targetNodeID);
-        
+        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0}{1}", targetDistance, "\n");
         //immediate flag (confirmed Player activity) -> overrides current goal
         if (isImmediate == true)
         {
@@ -524,8 +316,9 @@ public class NemesisManager : MonoBehaviour
                     //switch to search mode
                     goal = NemesisGoal.SEARCH;
                     durationGoal = 3;
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance ZERO, switch to SEARCH goal{0}", "\n");
                     //adjust mode duration to ensure they stay in synch
-                    durationMode = Mathf.Max(durationMode, durationGoal);
+                    durationMode = Mathf.Max(durationMode, durationGoal);                    
                     break;
                 case 1:
                     //chance to switch to search mode
@@ -533,6 +326,7 @@ public class NemesisManager : MonoBehaviour
                     {
                         goal = NemesisGoal.SEARCH;
                         durationGoal = 3;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance ONE, switch to SEARCH goal{0}", "\n");
                         //adjust mode duration to ensure they stay in synch
                         durationMode = Mathf.Max(durationMode, durationGoal);
                     }
@@ -540,6 +334,7 @@ public class NemesisManager : MonoBehaviour
                     else
                     {
                         goal = NemesisGoal.MoveToNode;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance ONE, switch to MOVETO goal{0}", "\n");
                         ProcessNemesisMoveTo();
                     }
                     break;
@@ -549,6 +344,7 @@ public class NemesisManager : MonoBehaviour
                     {
                         goal = NemesisGoal.SEARCH;
                         durationGoal = 3;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance TWO, switch to SEARCH goal{0}", "\n");
                         //adjust mode duration to ensure they stay in synch
                         durationMode = Mathf.Max(durationMode, durationGoal);
                     }
@@ -556,6 +352,7 @@ public class NemesisManager : MonoBehaviour
                     else
                     {
                         goal = NemesisGoal.MoveToNode;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance TWO, switch to MOVETO goal{0}", "\n");
                         ProcessNemesisMoveTo();
                     }
                     break;
@@ -563,6 +360,7 @@ public class NemesisManager : MonoBehaviour
                     //more than 2 away
                     //move towards player at full speed
                     goal = NemesisGoal.MoveToNode;
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance > 2, switch to MOVETO goal{0}", "\n");
                     ProcessNemesisMoveTo();
                     break;
             }
@@ -579,42 +377,47 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     private void ProcessNemesisGoal()
     {
-        switch (goal)
+        if (mode != NemesisMode.Inactive)
         {
-            case NemesisGoal.AMBUSH:
-                if (durationGoal > 0)
-                { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with AMBUSH, duration {0},  nodeID {1}{2}", durationGoal, nemesisNode.nodeID, "\n"); }
-                else
-                {
-                    //change goal
-                    if (mode == NemesisMode.NORMAL)
+            switch (goal)
+            {
+                case NemesisGoal.AMBUSH:
+                    if (durationGoal > 0)
+                    { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with AMBUSH, duration {0},  nodeID {1}{2}", durationGoal, nemesisNode.nodeID, "\n"); }
+                    else
                     {
-                        goal = NemesisGoal.LOITER;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from AMBUSH to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        //change goal
+                        if (mode == NemesisMode.NORMAL)
+                        {
+                            goal = NemesisGoal.LOITER;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from AMBUSH to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
+                        else if (mode == NemesisMode.HUNT)
+                        {
+                            goal = NemesisGoal.SEARCH;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from AMBUSH to SEARCH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
                     }
-                    else if (mode == NemesisMode.HUNT)
+                    break;
+                case NemesisGoal.SEARCH:
+                    //HUNT mode only -> chance to move to a random node or stay searching in current node
+                    if (Random.Range(0, 100) < 50)
                     {
-                        goal = NemesisGoal.SEARCH;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from AMBUSH to SEARCH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        //move to a random neighbouring node
+                        Node node = nemesisNode.GetRandomNeighbour();
+                        if (node != null)
+                        {
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: SEARCH goal, move to NEIGHBOUR{0}", "\n");
+                            ProcessNemesisMove(node.nodeID);
+                        }
+                        else { Debug.LogWarning("Invalid neighbouring node (Null)"); }
                     }
-                }
-                break;
-            case NemesisGoal.SEARCH:
-                //HUNT mode only -> chance to move to a random node or stay searching in current node
-                if (Random.Range(0, 100) < 50)
-                {
-                    //move to a random neighbouring node
-                    Node node = nemesisNode.GetRandomNeighbour();
-                    if (node != null)
-                    { ProcessNemesisMove(node.nodeID); }
-                    else { Debug.LogWarning("Invalid neighbouring node (Null)"); }
-                }
-                break;
-            case NemesisGoal.MoveToNode:
-                //HUNT mode only
-                ProcessNemesisMoveTo();
-                break;
-            case NemesisGoal.IDLE:
+                    break;
+                case NemesisGoal.MoveToNode:
+                    //HUNT mode only
+                    ProcessNemesisMoveTo();
+                    break;
+                case NemesisGoal.IDLE:
                     //NORMAL mode only -> chance to switch to Loiter goal
                     if (Random.Range(0, 100) < chanceIdleToLoiter)
                     {
@@ -622,51 +425,52 @@ public class NemesisManager : MonoBehaviour
                         Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from IDLE to LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
                     }
                     else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis retains IDLE goal, current nodeID {0}{1}", nemesisNode.nodeID, "\n"); }
-                break;
-            case NemesisGoal.LOITER:
-                //NORMAL mode only -> nemesis already at loiter node?
-                if (nemesisNode.isLoiterNode == true)
-                {
-                    //at loiter node, chance to switch to Ambush
-                    if (Random.Range(0, 100) < chanceLoiterToAmbush)
+                    break;
+                case NemesisGoal.LOITER:
+                    //NORMAL mode only -> nemesis already at loiter node?
+                    if (nemesisNode.isLoiterNode == true)
                     {
-                        goal = NemesisGoal.AMBUSH;
-                        durationGoal = durationAmbush;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to AMBUSH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        //at loiter node, chance to switch to Ambush
+                        if (Random.Range(0, 100) < chanceLoiterToAmbush)
+                        {
+                            goal = NemesisGoal.AMBUSH;
+                            durationGoal = durationAmbush;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to AMBUSH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
+                        else
+                        {
+                            //at LoiterNode
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ContinueWithGoal: At Loiter Node {1}, id {2}, do NOTHING{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
+                        }
                     }
+                    //not yet at LoiterNode, move towards nearest at speed 1
                     else
                     {
-                        //at LoiterNode
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ContinueWithGoal: At Loiter Node {1}, id {2}, do NOTHING{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
+                        //chance to switch to IDLE
+                        if (Random.Range(0, 100) < chanceLoiterToIdle)
+                        {
+                            goal = NemesisGoal.IDLE;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to IDLE, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
+                        //chance to switch to AMBUSH
+                        else if (Random.Range(0, 100) < chanceLoiterToAmbush)
+                        {
+                            goal = NemesisGoal.AMBUSH;
+                            durationGoal = durationAmbush;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to AMBUSH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
+                        //Continue with Loiter mode
+                        else
+                        {
+                            ProcessNemesisMove(nemesisNode.loiter.neighbourID);
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                        }
                     }
-                }
-                //not yet at LoiterNode, move towards nearest at speed 1
-                else
-                {
-                    //chance to switch to IDLE
-                    if (Random.Range(0, 100) < chanceLoiterToIdle)
-                    {
-                        goal = NemesisGoal.IDLE;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to IDLE, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
-                    }
-                    //chance to switch to AMBUSH
-                    else if (Random.Range(0, 100) < chanceLoiterToAmbush)
-                    {
-                        goal = NemesisGoal.AMBUSH;
-                        durationGoal = durationAmbush;
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis changes goal from LOITER to AMBUSH, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
-                    }
-                    //Continue with Loiter mode
-                    else
-                    {
-                        ProcessNemesisMove(nemesisNode.loiter.neighbourID);
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
-                    }
-                }
-                break;
-            default:
-                Debug.LogWarningFormat("Invalid NemesisGoal \"{0}\"", goal);
-                break;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid NemesisGoal \"{0}\"", goal);
+                    break;
+            }
         }
     }
 
@@ -747,7 +551,7 @@ public class NemesisManager : MonoBehaviour
                 GameManager.instance.nodeScript.nodeNemesis = nodeID;
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 hasMoved = true;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis moves to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis MOVES to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
                 //check for player at same node
                 if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
                 { isSpotted = ProcessPlayerInteraction(false); }
@@ -784,15 +588,14 @@ public class NemesisManager : MonoBehaviour
             //cause damage / message
             ProcessPlayerDamage(isPlayerMove);
             //place Nemesis OFFLINE for a period
-            mode = NemesisMode.Inactive;
-            goal = NemesisGoal.IDLE;
+            SetNemesisMode(NemesisMode.Inactive);
             durationMode = durationDamageOffLine;
             if (durationMode > 0)
             {
                 string text = string.Format("Nemesis goes Offline for {0} turns after Damaging player{1}", durationMode, "\n");
                 string itemText = "NEMESIS goes OFFLINE for a short while";
                 string topText = "Nemesis OFFLINE";
-                string reason = string.Format("<b>{0} Nemesis</b>", nemesis.name);
+                string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                 string warning = "Rebel HQ STRONGLY ADVISE that you get the h*ll out of there!";
                 GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
             }
@@ -1052,6 +855,7 @@ public class NemesisManager : MonoBehaviour
                     Debug.LogWarningFormat("Invalid damage \"{0}\"", damage.name);
                     break;
             }
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
             string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
             builder.AppendFormat("at {0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
             builder.AppendFormat("{0}<b>Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);
@@ -1079,6 +883,238 @@ public class NemesisManager : MonoBehaviour
         else { Debug.LogWarning("Invalid damage (Null)"); }
     }
 
+    //
+    // - - - Loiter - - -
+    //
+
+    /// <summary>
+    /// Sets up a list (max 3) of nodes which are well-connected and, hopefully, centred, where the nemesis can sit and wait for developments
+    /// </summary>
+    private void SetLoiterNodes()
+    {
+        int numOfNodes, counter, distance;
+        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
+        List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
+        Node centreNode = null;
+        if (listOfMostConnected != null)
+        {
+            if (listOfLoiterNodes != null)
+            {
+                numOfNodes = listOfMostConnected.Count;
+                //loop through most Connected looking for the first instance of a centre, connected node (the most connected are checked first, least connected last)
+                for (int index = 0; index < numOfNodes; index++)
+                {
+                    Node node = listOfMostConnected[index];
+                    if (node != null)
+                    {
+                        if (node.isCentreNode == true)
+                        {
+                            //found the ideal node, job done
+                            centreNode = node;
+                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is a CENTRE nodeID {0}", centreNode.nodeID);*/
+                            break;
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for listOfMostConnected[{0}]", index); }
+                }
+                /*if (centreNode == null)
+                    { Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: CENTRE -> there is NO Centre node"); }*/
+
+                //Take the top 'x' most connected nodes (excluding centreNode, if any) and add to loiterList
+                counter = 0;
+                for (int index = 0; index < numOfNodes; index++)
+                {
+                    Node node = listOfMostConnected[index];
+                    //check not the centreNode
+                    if (centreNode != null)
+                    {
+                        if (node.nodeID != centreNode.nodeID)
+                        {
+                            listOfLoiterNodes.Add(node);
+                            counter++;
+                        }
+                    }
+                    else
+                    {
+                        listOfLoiterNodes.Add(node);
+                        counter++;
+                    }
+                    //check limit isn't exceeded
+                    if (counter == loiterNodePoolSize)
+                    { break; }
+                }
+
+                /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: TOP X -> there are {0} loiter nodes", listOfLoiterNodes.Count);*/
+
+                //Check all nodes in list (reverse loop list) to see if they have any neighbours within a set distance. Remove from list if so. Should be at least one node remaining.
+                for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
+                {
+                    Node node = listOfLoiterNodes[index];
+                    //check against centre node, if any
+                    if (centreNode != null)
+                    {
+                        distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(centreNode.nodeID, node.nodeID);
+                        if (distance <= loiterDistanceCheck)
+                        {
+                            //too close, exclude node
+
+                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);*/
+
+                            listOfLoiterNodes.RemoveAt(index);
+                            continue;
+                        }
+                    }
+                }
+                //Check remaining that loiter nodes aren't too close to each other (reverse loop list) Least connected nodes are checked and deleted before most connected (at list[0])
+                for (int index = listOfLoiterNodes.Count - 1; index >= 0; index--)
+                {
+                    Node node = listOfLoiterNodes[index];
+                    //check against all other nodes in list
+                    for (int i = 0; i < listOfLoiterNodes.Count; i++)
+                    {
+                        Node nodeTemp = listOfLoiterNodes[i];
+                        //not the same node?
+                        if (nodeTemp.nodeID != node.nodeID)
+                        {
+                            //check distance
+                            distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
+                            if (distance <= loiterDistanceCheck)
+                            {
+                                //too close, remove current node from list (make sure at least one node is remaining)
+                                counter = listOfLoiterNodes.Count;
+                                if (centreNode != null)
+                                { counter++; }
+                                //only delete if more than one node remaining
+                                if (counter > 1)
+                                {
+                                    /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);*/
+                                    listOfLoiterNodes.RemoveAt(index);
+                                    break;
+                                }
+                                else
+                                {
+                                    /*Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");*/
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
+            //add centre node to list, if present
+            if (centreNode != null)
+            { listOfLoiterNodes.Add(centreNode); }
+            //how many remaining
+            Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: FINAL -> there are {0} loiter nodes", listOfLoiterNodes.Count);
+        }
+        else { Debug.LogError("Invalid listOfMostConnectedNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// Takes loiter nodes and configueres a LoiterData package for each individual node for quick reference by nemesis
+    /// </summary>
+    private void SetLoiterData()
+    {
+        int tempNodeID, shortestNodeID, tempDistance, shortestDistance, numOfLoiterNodes, v1, v2;
+        int counter = 0;
+        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
+        List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Connection> listOfConnections = new List<Connection>();
+        Connection connection;
+        if (listOfLoiterNodes != null)
+        {
+            numOfLoiterNodes = listOfLoiterNodes.Count;
+            if (numOfLoiterNodes > 0)
+            {
+                if (listOfAllNodes != null)
+                {
+                    //loop all nodes
+                    for (int index = 0; index < listOfAllNodes.Count; index++)
+                    {
+                        LoiterData data = new LoiterData();
+                        Node node = listOfAllNodes[index];
+                        if (node != null)
+                        {
+                            //check if node is a loiter node
+                            if (listOfLoiterNodes.Exists(x => x.nodeID == node.nodeID) == true)
+                            {
+                                //Loiter node
+                                data.nodeID = node.nodeID;
+                                data.distance = 0;
+                                data.neighbourID = node.nodeID;
+                            }
+                            else
+                            {
+                                //NOT a loiter node
+                                shortestNodeID = -1;
+                                shortestDistance = 999;
+                                //check distance to all loiter nodes and get closest
+                                for (int i = 0; i < numOfLoiterNodes; i++)
+                                {
+                                    tempNodeID = listOfLoiterNodes[i].nodeID;
+                                    tempDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, tempNodeID);
+                                    if (tempDistance < shortestDistance)
+                                    {
+                                        shortestDistance = tempDistance;
+                                        shortestNodeID = tempNodeID;
+                                    }
+                                }
+                                data.nodeID = shortestNodeID;
+                                data.distance = shortestDistance;
+                                //get path to nearest loiter node
+                                if (shortestNodeID > -1)
+                                {
+                                    listOfConnections = GameManager.instance.dijkstraScript.GetPath(node.nodeID, shortestNodeID, false);
+                                    if (listOfConnections != null)
+                                    {
+                                        //get first connection (from source node)
+                                        connection = listOfConnections[0];
+                                        if (connection != null)
+                                        {
+                                            v1 = connection.GetNode1();
+                                            v2 = connection.GetNode2();
+                                            if (v1 == node.nodeID || v2 == node.nodeID)
+                                            {
+                                                if (v1 == node.nodeID)
+                                                { data.neighbourID = v2; }
+                                                else { data.neighbourID = v1; }
+                                                //check neighbourID is valid for node
+                                                if (node.CheckNeighbourNodeID(data.neighbourID) == false)
+                                                {
+                                                    Debug.LogWarningFormat("Invalid data.neighbourID (doesn't correspond with node neighbours) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID);
+                                                    data.neighbourID = -1;
+                                                }
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid connection (endpoints don't match nodeID) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                        }
+                                        else { Debug.LogWarningFormat("Invalid listOfConnections[0] (Null) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid listOfConnections (Null) for source nodeID {0} and destination nodeID {1}", node.nodeID, shortestNodeID); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid shortestNodeID (-1) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfAllNodes[{0}]", index); }
+                        //store loiter data
+                        if (data.distance > -1 && data.nodeID > -1 && data.neighbourID > -1)
+                        {
+                            node.loiter = data;
+                            counter++;
+                            if (data.distance == 0)
+                            { node.isLoiterNode = true; }
+                            else { node.isLoiterNode = false; }
+                        }
+                        else { Debug.LogWarningFormat("Invalid loiterData (missing data) for node {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                    }
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterData: LoiterData successfully initialised in {0} nodes", counter);
+                }
+                else { Debug.LogError("Invalid listOfAllNodes (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfLoiterNodes (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfLoiterNodes (Null)"); }
+    }
 
     //
     // - - - Debug - - -

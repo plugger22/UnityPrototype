@@ -1097,6 +1097,20 @@ public class AIManager : MonoBehaviour
                         break;
                     case MessageSubType.AI_Immediate:
                         //immediate flag is set by EffectManager.cs -> ProcessEffect (Invisibility) prior to this
+                        if (message.data1 > -1)
+                        {
+                            //player move, add to connections queue -> destination nodeID and turn created
+                            if (message.data0 > -1)
+                            { GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated)); }
+                            else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
+                        }
+                        else
+                        {
+                            //node activity, add to node queue -> destination nodeID and turn created
+                            if (message.data0 > -1)
+                            { GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated)); }
+                            else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
+                        }
                         break;
                     case MessageSubType.AI_Reboot:
                     case MessageSubType.AI_Alert:
@@ -1382,6 +1396,7 @@ public class AIManager : MonoBehaviour
         int nodeReturnID = -1;
         Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
         Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        Debug.LogFormat("[Tst] AIManager.cs -> ProcessErasureTarget: queueRecentConnections {0} records, queueRecentNodes {1} records{2}", queueRecentConnections.Count, queueRecentNodes.Count, "\n");
         if (queueRecentConnections != null && queueRecentNodes != null)
         {
             int currentTurn = GameManager.instance.turnScript.Turn;
