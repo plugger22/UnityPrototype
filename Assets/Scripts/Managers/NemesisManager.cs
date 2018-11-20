@@ -23,6 +23,8 @@ public class NemesisManager : MonoBehaviour
     [Range(0, 100)] public int chanceLoiterToIdle = 15;
     [Tooltip("Chance of a nemesis switching from an Loiter to an Ambush goal (provided not already present at LoiterNode)")]
     [Range(0, 100)] public int chanceLoiterToAmbush = 15;
+    [Tooltip("While at Loiter node, chance nemesis will move to a random neighbouring node (will move back next turn)")]
+    [Range(0, 100)] public int chanceLoiterToNeighbour = 50;
 
     [Header("AMBUSH Logic")]
     [Tooltip("Duration of an Ambush Goal")]
@@ -33,6 +35,10 @@ public class NemesisManager : MonoBehaviour
     [Range(0, 100)] public int chanceSearchNeighbour = 75;
     [Tooltip("Chance of ceasing MoveToNode and switching to Search mode when ONE or TWO links from target Node")]
     [Range(0, 100)] public int chanceStartEarlySearch = 25;
+
+    [Header("HUNT mode Logic")]
+    [Tooltip("When Nemesis switches to Hunt mode it will be for this number of turns plus 1d10 random turns in total")]
+    [Range(1, 5)] public int durationHuntMode = 3;
 
     [Tooltip("Number of turns Nemesis goes Offline after damaging the player (allows the player to clear the datum)")]
     [Range(0, 10)] public int durationDamageOffLine = 3;
@@ -186,6 +192,14 @@ public class NemesisManager : MonoBehaviour
         int nodeID = GameManager.instance.nodeScript.nodeNemesis;
         nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
         isImmediate = immediateFlag;
+        //only use playerTargetNodeID if different from previous turns value (the AIManager.cs -> ProcessErasureTarget method kicks out a dirty data stream with lots of repeats)
+        int newTargetNodeID = playerTargetNodeID;
+        if (newTargetNodeID == targetNodeID)
+        {
+            //repeat target, ignore
+            newTargetNodeID = -1;
+            targetNodeID = -1;
+        }
         //mode counter
         if (durationMode > 0)
         { durationMode--; }
@@ -201,9 +215,9 @@ public class NemesisManager : MonoBehaviour
                 else { isProceed = false; }
                 //decrement duration
                 durationGoal--;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: playerTargetNodeID {0}, ImmediateFlag {1}, duration Mode {2} Goal {3}, isProceed {4}{5}", playerTargetNodeID, immediateFlag, 
-                    durationMode, durationGoal, isProceed, "\n");
             }
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, isProceed {5}{6}", 
+                    playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, isProceed, "\n");
             //do nothing if inactive & duration > 0, swap to normal mode and proceed otherwise
             switch (mode)
             {
@@ -221,10 +235,14 @@ public class NemesisManager : MonoBehaviour
                     }
                     else if (durationMode == 0)
                     {
-                        //change mode to Normal, goal to Loiter
-                        SetNemesisMode(NemesisMode.NORMAL);
-                        //set to true in case new player target info is available
-                        isProceed = true;
+                        //No action, change mode to Normal, goal to Loiter
+                        if (newTargetNodeID < 0)
+                        {
+                            SetNemesisMode(NemesisMode.NORMAL);
+                            isProceed = false;
+                        }
+                        else
+                        { isProceed = true; }
                     }
                     else
                     { isProceed = false; }
@@ -247,10 +265,10 @@ public class NemesisManager : MonoBehaviour
                 //
                 // - - - Possible new goal
                 //
-                if (playerTargetNodeID > -1)
+                if (newTargetNodeID > -1)
                 {
                     //recent player activity -> Hunt mode
-                    SetNemesisMode(NemesisMode.HUNT, playerTargetNodeID);
+                    SetNemesisMode(NemesisMode.HUNT, newTargetNodeID);
                     ProcessNemesisHunt();
                 }
                 else
@@ -275,6 +293,7 @@ public class NemesisManager : MonoBehaviour
     /// <param name="mode"></param>
     private void SetNemesisMode(NemesisMode requiredMode, int data0 = -1)
     {
+        NemesisMode previousMode = mode;
         switch (requiredMode)
         {
             case NemesisMode.Inactive:
@@ -283,7 +302,7 @@ public class NemesisManager : MonoBehaviour
                 SetNemesisGoal(NemesisGoal.IDLE);
                 targetNodeID = -1;
                 targetDistance = -1;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE{0}", "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE (previously {0}){1}", previousMode, "\n");
                 break;
             case NemesisMode.NORMAL:
                 mode = NemesisMode.NORMAL;
@@ -291,16 +310,16 @@ public class NemesisManager : MonoBehaviour
                 durationMode = 0;
                 targetNodeID = -1;
                 targetDistance = -1;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to NORMAL{0}", "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to NORMAL (previously {0}){1}", previousMode, "\n");
                 break;
             case NemesisMode.HUNT:
                 mode = NemesisMode.HUNT;
-                durationMode = Random.Range(1, 10);
+                durationMode = durationHuntMode + Random.Range(1, 10);
                 if (data0 > -1)
                 {SetNemesisGoal(NemesisGoal.MoveToNode); }
                 else { SetNemesisGoal(NemesisGoal.SEARCH); }
                 targetNodeID = data0;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (durationMode {0}){1}", durationMode, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}){1}", previousMode, "\n");
                 break;
             default:
                 Debug.LogWarningFormat("Invalid mode \"{0}\"", requiredMode);
@@ -321,7 +340,7 @@ public class NemesisManager : MonoBehaviour
         {
             case NemesisGoal.MoveToNode:
                 goal = NemesisGoal.MoveToNode;
-                durationGoal = 999;
+                durationGoal = durationMode;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisGoal: Nemesis Goal set to MoveToNode (previously {0}){1}", previousGoal, "\n");
                 break;
             case NemesisGoal.IDLE:
@@ -439,7 +458,7 @@ public class NemesisManager : MonoBehaviour
                         Node node = nemesisNode.GetRandomNeighbour();
                         if (node != null)
                         {
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: SEARCH goal, move to NEIGHBOUR{0}", "\n");
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: SEARCH goal, move to NEIGHBOUR{0}", "\n");
                             ProcessNemesisMove(node.nodeID);
                         }
                         else { Debug.LogWarning("Invalid neighbouring node (Null)"); }
@@ -453,19 +472,28 @@ public class NemesisManager : MonoBehaviour
                     //NORMAL mode only -> chance to switch to Loiter goal
                     if (Random.Range(0, 100) < chanceIdleToLoiter)
                     { SetNemesisGoal(NemesisGoal.LOITER); }
-                    else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis retains IDLE goal, current nodeID {0}{1}", nemesisNode.nodeID, "\n"); }
+                    else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: Nemesis retains IDLE goal, current nodeID {0}{1}", nemesisNode.nodeID, "\n"); }
                     break;
                 case NemesisGoal.LOITER:
                     //NORMAL mode only -> nemesis already at loiter node?
                     if (nemesisNode.isLoiterNode == true)
                     {
-                        //at loiter node, chance to switch to Ambush
-                        if (Random.Range(0, 100) < chanceLoiterToAmbush)
-                        { SetNemesisGoal(NemesisGoal.AMBUSH); }
+                        //at loiter node, chance to move to a random neighbour (one turn only, will revert back to loiter node)
+                        if (Random.Range(0, 100) < chanceLoiterToNeighbour)
+                        {
+                            //move to a random neighbouring node
+                            Node node = nemesisNode.GetRandomNeighbour();
+                            if (node != null)
+                            {
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: LOITER goal, move to NEIGHBOUR{0}", "\n");
+                                ProcessNemesisMove(node.nodeID);
+                            }
+                            else { Debug.LogWarning("Invalid neighbouring node (Null)"); }
+                        }
                         else
                         {
                             //at LoiterNode
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> ContinueWithGoal: At Loiter Node {1}, id {2}, do NOTHING{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: At Loiter Node {1}, id {2}, do NOTHING{3}", goal, nemesisNode.nodeName, nemesisNode.nodeID, "\n");
                         }
                     }
                     //not yet at LoiterNode, move towards nearest at speed 1
@@ -481,7 +509,7 @@ public class NemesisManager : MonoBehaviour
                         else
                         {
                             ProcessNemesisMove(nemesisNode.loiter.neighbourID);
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisContinueWithGoal: Nemesis continues with LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: Nemesis continues with LOITER, current nodeID {0}{1}", nemesisNode.nodeID, "\n");
                         }
                     }
                     break;
