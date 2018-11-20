@@ -140,7 +140,9 @@ public class AIManager : MonoBehaviour
     [Tooltip("How many of the most recent AI activities are tracked (keeps this number of most recent in a priorityQueue)")]
     [Range(0, 10)] public int numOfActivitiesTracked = 5;
     [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Erasure team AI processing")]
-    [Range(0, 5)] public int trackerNumOfTurnsAgo = 2;
+    [Range(0, 5)] public int trackerNumOfTurnsAgoErasure = 2;
+    [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Nemesis AI processing")]
+    [Range(0, 5)] public int trackerNumOfTurnsAgoNemesis = 2;
 
     [Header("Nodes")]
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
@@ -666,8 +668,7 @@ public class AIManager : MonoBehaviour
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
         //Nemesis
-        ProcessNemesisTarget();
-        GameManager.instance.nemesisScript.ProcessNemesis(playerTargetNodeID, immediateFlagResistance);
+        GameManager.instance.nemesisScript.ProcessNemesis(ProcessNemesisTarget(), immediateFlagResistance);
         //reset flags
         immediateFlagResistance = false;
         isHacked = false;
@@ -1421,7 +1422,7 @@ public class AIManager : MonoBehaviour
                     }
                 }
                 //if was within previous 2 turns then this is the target node (definite player activity)
-                if (currentTurn - turnConn <= trackerNumOfTurnsAgo)
+                if (currentTurn - turnConn <= trackerNumOfTurnsAgoErasure)
                 {
                     nodeReturnID = connID;
                     if (connID > -1)
@@ -1440,7 +1441,7 @@ public class AIManager : MonoBehaviour
                             nodeID = data.data0;
                         }
                     }
-                    if (currentTurn - turnNode <= trackerNumOfTurnsAgo)
+                    if (currentTurn - turnNode <= trackerNumOfTurnsAgoErasure)
                     {
                         listOfErasureAILog.Add(string.Format("Target: Recent Node nodeID {0}, turn {1}", nodeID, turnNode));
                         //check if matches any recent connection activity
@@ -1472,7 +1473,35 @@ public class AIManager : MonoBehaviour
     private int ProcessNemesisTarget()
     {
         int nodeReturnID = -1;
-        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        int nodeID = -1;
+        int turnNum = -1;
+        int currentTurn = GameManager.instance.turnScript.Turn;
+        int numOfRecords = listOfPlayerActivity.Count;
+        if (numOfRecords > 0)
+        {
+            Debug.LogFormat("[Tst] AIManager.cs -> ProcessNemesisTarget: listOfPlayerActivity has {0} records{1}", numOfRecords, "\n");
+            for (int i = 0; i < numOfRecords; i++)
+            {
+                AITracker tracker = listOfPlayerActivity[i];
+                if (tracker != null)
+                {
+                    //examine connection activity queue and find the most recent
+                    if (tracker.turn > turnNum)
+                    {
+                        turnNum = tracker.turn;
+                        nodeID = tracker.data0;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid tracker (Null) for listOfPlayerActivity[{0}]", i); }
+            }
+            //was it within the last 2 turns?
+            if (currentTurn - turnNum <= trackerNumOfTurnsAgoNemesis)
+            { nodeReturnID = nodeID; }
+            else { Debug.LogFormat("[Aim] NemesisManager.cs -> ProcessNemesisTarget: Player activity to far back and IGNORED, currentTurn {0}, activityTurn {1}{2}", currentTurn, turnNum); }
+        }
+        return nodeReturnID;
+
+        /*Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
         Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
         Debug.LogFormat("[Tst] AIManager.cs -> ProcessNemesisTarget: queueRecentConnections {0} records, queueRecentNodes {1} records{2}", queueRecentConnections.Count, queueRecentNodes.Count, "\n");
         if (queueRecentConnections != null && queueRecentNodes != null)
@@ -1535,7 +1564,7 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Aim]  -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID, "\n");
         }
         else { Debug.LogWarning("Invalid queue (Null)"); }
-        return nodeReturnID;
+        return nodeReturnID;*/
     }
 
     /// <summary>
@@ -4791,6 +4820,30 @@ public class AIManager : MonoBehaviour
         }
         else { builderList.AppendFormat("No records{0}", "\n"); }
         return builderList.ToString();
+    }
+
+    /// <summary>
+    /// Show list of player Activity (used for Nemesis AI)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowPlayerActivity()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0} -listOfPlayerActivity{1}", "\n", "\n");
+        int numOfRecords = listOfPlayerActivity.Count;
+        if (numOfRecords > 0)
+        {
+            for (int i = 0; i < numOfRecords; i++)
+            {
+                AITracker data = listOfPlayerActivity[i];
+                if (data != null)
+                { builder.AppendFormat(" turn {0}, nodeID {1}{2}", data.turn, data.data0, "\n"); }
+                else { Debug.LogWarning("Invalid AITracker data (Null)"); }
+            }
+        }
+        else { builder.Append(" No records present"); }
+
+        return builder.ToString();
     }
 
 

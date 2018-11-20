@@ -194,7 +194,7 @@ public class NemesisManager : MonoBehaviour
         nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
         isImmediate = immediateFlag;
         //only use playerTargetNodeID if different from previous turns value (the AIManager.cs -> ProcessErasureTarget method kicks out a dirty data stream with lots of repeats)
-        if (playerTargetNodeID == targetNodeID)
+        if (playerTargetNodeID == targetNodeID || playerTargetNodeID == moveToNodeID)
         {
             if (immediateFlag == false)
             {
@@ -414,7 +414,8 @@ public class NemesisManager : MonoBehaviour
                 {
                     case 0:
                         //switch to search mode
-                        SetNemesisGoal(NemesisGoal.SEARCH);
+                        if (goal != NemesisGoal.SEARCH)
+                        { SetNemesisGoal(NemesisGoal.SEARCH); }
                         break;
                     case 1:
                         //chance to switch to search mode
@@ -423,7 +424,8 @@ public class NemesisManager : MonoBehaviour
                         //move towards player at full speed
                         else
                         {
-                            SetNemesisGoal(NemesisGoal.MoveToNode);
+                            if (goal != NemesisGoal.MoveToNode)
+                            { SetNemesisGoal(NemesisGoal.MoveToNode); }
                             ProcessNemesisMoveTo();
                         }
                         break;
@@ -434,14 +436,16 @@ public class NemesisManager : MonoBehaviour
                         //move towards player at full speed
                         else
                         {
-                            SetNemesisGoal(NemesisGoal.MoveToNode);
+                            if (goal != NemesisGoal.MoveToNode)
+                            { SetNemesisGoal(NemesisGoal.MoveToNode); }
                             ProcessNemesisMoveTo();
                         }
                         break;
                     default:
                         //more than 2 away
                         //move towards player at full speed
-                        SetNemesisGoal(NemesisGoal.MoveToNode);
+                        if (goal != NemesisGoal.MoveToNode)
+                        { SetNemesisGoal(NemesisGoal.MoveToNode); }
                         ProcessNemesisMoveTo();
                         break;
                 }
@@ -1249,6 +1253,8 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" search: {0}, adjusted: {1}{2}", nemesis.searchRating, GetSearchRatingAdjusted(), "\n");
         builder.AppendFormat(" stealth: {0}, adjusted: {1}{2}", nemesis.stealthRating, GetStealthRatingAdjusted(), "\n");
         builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
+        //listOfPlayerActivity (AI Manager)
+        builder.AppendFormat("{0}{1}", "\n", GameManager.instance.aiScript.DebugShowPlayerActivity());
         return builder.ToString();
     }
 
