@@ -436,6 +436,8 @@ public class DijkstraManager : MonoBehaviour
     /// <returns></returns>
     public List<Connection> GetPath(int nodeSourceID, int nodeDestinationID, bool isWeighted, bool isReverseOrder = false)
     {
+        Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
+        Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
         int nodeCurrentID, nodeNextID;
         bool isError = false;
         List<Connection> listOfConnections = new List<Connection>();

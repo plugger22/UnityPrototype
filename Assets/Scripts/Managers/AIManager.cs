@@ -408,6 +408,8 @@ public class AIManager : MonoBehaviour
     List<string> listOfErasureAILog = new List<string>();
     List<string> listOfPlayerEffects = new List<string>();
     List<string> listOfPlayerEffectDescriptors = new List<string>();
+    //nemesis
+    List<AITracker> listOfPlayerActivity = new List<AITracker>();
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
     List<AITask> listOfTasksFinal = new List<AITask>();
@@ -664,6 +666,7 @@ public class AIManager : MonoBehaviour
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
         //Nemesis
+        ProcessNemesisTarget();
         GameManager.instance.nemesisScript.ProcessNemesis(playerTargetNodeID, immediateFlagResistance);
         //reset flags
         immediateFlagResistance = false;
@@ -693,6 +696,8 @@ public class AIManager : MonoBehaviour
         listOfErasureNodes.Clear();
         //other
         listOfErasureAILog.Clear();
+        //nemesis
+        listOfPlayerActivity.Clear();
         //AITasks
         listOfTasksFinal.Clear();
         listOfTasksPotential.Clear();
@@ -1074,6 +1079,8 @@ public class AIManager : MonoBehaviour
                             connection.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> destination nodeID and turn created
                             GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
+                            //add to Nemesis list
+                            listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                         }
                         else { Debug.LogWarning(string.Format("Invalid connection (Null) for connID {0} -> AI data NOT extracted", message.data1)); }
                         break;
@@ -1396,7 +1403,78 @@ public class AIManager : MonoBehaviour
         int nodeReturnID = -1;
         Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
         Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
-        Debug.LogFormat("[Tst] AIManager.cs -> ProcessErasureTarget: queueRecentConnections {0} records, queueRecentNodes {1} records{2}", queueRecentConnections.Count, queueRecentNodes.Count, "\n");
+        if (queueRecentConnections != null && queueRecentNodes != null)
+        {
+            int currentTurn = GameManager.instance.turnScript.Turn;
+            int connID = -1;
+            int turnConn = 0;
+            //if there isn't any confirmed player activity within the specified time frame then there is no target node
+            if (queueRecentConnections.Count > 0)
+            {
+                //examine connection activity queue and find the most recent
+                foreach (AITracker data in queueRecentConnections)
+                {
+                    if (data.turn > turnConn)
+                    {
+                        turnConn = data.turn;
+                        connID = data.data0;
+                    }
+                }
+                //if was within previous 2 turns then this is the target node (definite player activity)
+                if (currentTurn - turnConn <= trackerNumOfTurnsAgo)
+                {
+                    nodeReturnID = connID;
+                    if (connID > -1)
+                    { listOfErasureAILog.Add(string.Format("Target: Recent Connection nodeID {0}, turn {1}", nodeReturnID, turnConn)); }
+                }
+                else
+                {
+                    int nodeID = -1;
+                    int turnNode = -1;
+                    //check for most recent turn activity (could be player or actor)
+                    foreach (AITracker data in queueRecentNodes)
+                    {
+                        if (data.turn > turnNode)
+                        {
+                            turnNode = data.turn;
+                            nodeID = data.data0;
+                        }
+                    }
+                    if (currentTurn - turnNode <= trackerNumOfTurnsAgo)
+                    {
+                        listOfErasureAILog.Add(string.Format("Target: Recent Node nodeID {0}, turn {1}", nodeID, turnNode));
+                        //check if matches any recent connection activity
+                        foreach (AITracker data in queueRecentConnections)
+                        {
+                            if (data.data0 == nodeID)
+                            {
+                                //a match -> Player was confirmed as being at this node
+                                nodeReturnID = nodeID;
+                                listOfErasureAILog.Add(string.Format("Target: Confirmed Conn Activity for ID {0}, turn {1}", nodeID, turnNode));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if (nodeReturnID > 0)
+            { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
+            else { listOfErasureAILog.Add("No viable target node found"); }
+            Debug.LogFormat("[Aim]  -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID, "\n");
+        }
+        else { Debug.LogWarning("Invalid queue (Null)"); }
+        return nodeReturnID;
+    }
+
+    /// <summary>
+    /// Determines the target node to be used as a focal point for Nemesis AI calculations. Returns -1 if none found. Called by AISideAuthority
+    /// </summary>
+    private int ProcessNemesisTarget()
+    {
+        int nodeReturnID = -1;
+        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        Debug.LogFormat("[Tst] AIManager.cs -> ProcessNemesisTarget: queueRecentConnections {0} records, queueRecentNodes {1} records{2}", queueRecentConnections.Count, queueRecentNodes.Count, "\n");
         if (queueRecentConnections != null && queueRecentNodes != null)
         {
             int currentTurn = GameManager.instance.turnScript.Turn;
@@ -1468,12 +1546,11 @@ public class AIManager : MonoBehaviour
         int score, tally;
         int numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve);
         int currentTurn = GameManager.instance.turnScript.Turn;
-        //get target node -> do so prior to team # check as number needed for Nemesis AI
-        playerTargetNodeID = ProcessErasureTarget();
-        Debug.LogFormat("[Aim] AIManager.cs -> ProcessErasureData: playerTargetNodeID {0} (used for Erasure teams and Nemesis AI)", playerTargetNodeID);
         //only bother proceeding if there are spider teams available to deploy
         if (numOfTeams > 0)
         {
+            //get target node
+            playerTargetNodeID = ProcessErasureTarget();
             if (playerTargetNodeID > -1)
             {
                 //get near neighbours as potential node targets

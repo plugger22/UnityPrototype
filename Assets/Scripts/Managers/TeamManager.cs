@@ -638,8 +638,8 @@ public class TeamManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogWarning(string.Format("Node Add team operation failed for \"{0} {1}\" (could be duplicate)",
-                                    team.arc.name, team.teamName));
+                                /*Debug.LogWarning(string.Format("Node Add team operation failed for \"{0} {1}\" (could be duplicate)",
+                                    team.arc.name, team.teamName));*/
                                 successFlag = false;
                             }
                         }
