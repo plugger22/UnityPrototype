@@ -158,12 +158,12 @@ public class NemesisManager : MonoBehaviour
     /// <summary>
     /// called by AIManager.cs -> AISideAuthority, handles all nemesis turn processing methods
     /// </summary>
-    public void ProcessNemesis(int playerTargetNodeID, bool immediateFlagResistance)
+    public void ProcessNemesis(AITracker tracker, bool immediateFlagResistance)
     {
         ProcessNemesisAdminStart();
         CheckNemesisAtPlayerNode();
         CheckNemesisTracerSighting();
-        ProcessNemesisActivity(playerTargetNodeID, immediateFlagResistance);
+        ProcessNemesisActivity(tracker, immediateFlagResistance);
         ProcessNemesisAdminEnd();
     }
 
@@ -188,11 +188,24 @@ public class NemesisManager : MonoBehaviour
     /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives a playerTargetNodeID, if worth doing so and -1 if nothing to report)
     /// </summary>
     /// <param name="playerTargetNodeID"></param>
-    public void ProcessNemesisActivity(int playerTargetNodeID, bool immediateFlag)
+    public void ProcessNemesisActivity(AITracker tracker, bool immediateFlag)
     {
+        int playerTargetNodeID = -1;
+        int modifier = 0;
         int nodeID = GameManager.instance.nodeScript.nodeNemesis;
         nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
         isImmediate = immediateFlag;
+        //convert tracker data to useable format
+        if (tracker != null)
+        {
+            playerTargetNodeID = tracker.data0;
+            //acts as a DM for hunt duration, the older the information is, the bigger the modifier
+            modifier = GameManager.instance.turnScript.Turn - tracker.turn;
+        }
+        else
+        {
+
+        }
         //only use playerTargetNodeID if different from previous turns value (the AIManager.cs -> ProcessErasureTarget method kicks out a dirty data stream with lots of repeats)
         if (playerTargetNodeID == targetNodeID || playerTargetNodeID == moveToNodeID)
         {
@@ -284,7 +297,7 @@ public class NemesisManager : MonoBehaviour
                 if (targetNodeID > -1)
                 {
                     //recent player activity -> Hunt mode
-                    SetNemesisMode(NemesisMode.HUNT);
+                    SetNemesisMode(NemesisMode.HUNT, modifier);
                     ProcessNemesisHunt();
                 }
                 else
@@ -307,7 +320,7 @@ public class NemesisManager : MonoBehaviour
     /// sets mode and all associated variables in a consistent manner
     /// </summary>
     /// <param name="mode"></param>
-    private void SetNemesisMode(NemesisMode requiredMode)
+    private void SetNemesisMode(NemesisMode requiredMode, int modifier = 0)
     {
         NemesisMode previousMode = mode;
         switch (requiredMode)
@@ -333,7 +346,8 @@ public class NemesisManager : MonoBehaviour
             case NemesisMode.HUNT:
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}){1}", previousMode, "\n");
                 mode = NemesisMode.HUNT;
-                durationMode = durationHuntMode + Random.Range(1, 10);
+                durationMode = durationHuntMode + Random.Range(1, 10) - modifier;
+                durationMode = Mathf.Max(1, durationMode);
                 if (targetNodeID > -1)
                 {
                     //target available
@@ -345,7 +359,7 @@ public class NemesisManager : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Invalid mode \"{0}\"", requiredMode);
                 break;
-            
+
         }
     }
 
@@ -1253,8 +1267,8 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" search: {0}, adjusted: {1}{2}", nemesis.searchRating, GetSearchRatingAdjusted(), "\n");
         builder.AppendFormat(" stealth: {0}, adjusted: {1}{2}", nemesis.stealthRating, GetStealthRatingAdjusted(), "\n");
         builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
-        //listOfPlayerActivity (AI Manager)
-        builder.AppendFormat("{0}{1}", "\n", GameManager.instance.aiScript.DebugShowPlayerActivity());
+        /*//listOfPlayerActivity (AI Manager)
+        builder.AppendFormat("{0}{1}", "\n", GameManager.instance.aiScript.DebugShowPlayerActivity());*/
         return builder.ToString();
     }
 
