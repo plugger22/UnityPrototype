@@ -103,7 +103,8 @@ MonoBehaviour:
   priorityMediumWeight: 2
   priorityLowWeight: 1
   numOfActivitiesTracked: 5
-  trackerNumOfTurnsAgo: 2
+  trackerNumOfTurnsAgoErasure: 2
+  trackerNumOfTurnsAgoNemesis: 2
   nodeConnectionThreshold: 3
   nodeActivityCountFactor: 1
   nodeActivityTimeFactor: 4
@@ -1579,9 +1580,13 @@ MonoBehaviour:
   loiterNodePoolSize: 5
   loiterDistanceCheck: 2
   chanceIdleToLoiter: 50
-  chanceLoiterToIdle: 15
-  chanceLoiterToAmbush: 15
+  chanceLoiterToIdle: 10
+  chanceLoiterToAmbush: 20
+  chanceLoiterToNeighbour: 50
   durationAmbush: 2
+  chanceSearchNeighbour: 75
+  chanceStartEarlySearch: 25
+  durationHuntMode: 3
   durationDamageOffLine: 3
   chanceTracerSpotHigh: 10
   chanceTracerSpotMed: 25

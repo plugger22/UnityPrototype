@@ -1464,7 +1464,8 @@ public class AIManager : MonoBehaviour
             if (nodeReturnID > 0)
             { listOfErasureAILog.Add(string.Format("Target: nodeReturnID {0}", nodeReturnID)); }
             else { listOfErasureAILog.Add("No viable target node found"); }
-            Debug.LogFormat("[Aim]  -> ProcessErasureTarget: target nodeID {0}{1}", nodeReturnID, "\n");
+            Debug.LogFormat("[Aim]  -> ProcessErasureTarget: queueRecentConnected {0} records, queueRecentNodes {1} records, target nodeID {2}{3}", queueRecentConnections.Count,  
+                queueRecentNodes.Count, nodeReturnID, "\n");
         }
         else { Debug.LogWarning("Invalid queue (Null)"); }
         return nodeReturnID;
@@ -1476,7 +1477,6 @@ public class AIManager : MonoBehaviour
     private AITracker ProcessNemesisTarget()
     {
         AITracker targetTracker = null;
-        int nodeID = -1;
         int turnNum = -1;
         int numOfRecords = listOfPlayerActivity.Count;
         if (numOfRecords > 0)

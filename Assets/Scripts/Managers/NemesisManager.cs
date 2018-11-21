@@ -20,9 +20,9 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("Chance of a nemesis switching from an Idle to a Loiter goal (provided not already present at LoiterNode)")]
     [Range(0, 100)] public int chanceIdleToLoiter = 50;
     [Tooltip("Chance of a nemesis switching from an Loiter to an Idle goal (provided not already present at LoiterNode)")]
-    [Range(0, 100)] public int chanceLoiterToIdle = 15;
+    [Range(0, 100)] public int chanceLoiterToIdle = 10;
     [Tooltip("Chance of a nemesis switching from an Loiter to an Ambush goal (provided not already present at LoiterNode)")]
-    [Range(0, 100)] public int chanceLoiterToAmbush = 15;
+    [Range(0, 100)] public int chanceLoiterToAmbush = 20;
     [Tooltip("While at Loiter node, chance nemesis will move to a random neighbouring node (will move back next turn)")]
     [Range(0, 100)] public int chanceLoiterToNeighbour = 50;
 
@@ -191,20 +191,17 @@ public class NemesisManager : MonoBehaviour
     public void ProcessNemesisActivity(AITracker tracker, bool immediateFlag)
     {
         int playerTargetNodeID = -1;
-        int modifier = 0;
+        int turnDifference = 0;
         int nodeID = GameManager.instance.nodeScript.nodeNemesis;
         nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
         isImmediate = immediateFlag;
-        //convert tracker data to useable format
+        //convert tracker data to useable format (No need for null check as it's a 'do nothing' option in this case)
         if (tracker != null)
         {
             playerTargetNodeID = tracker.data0;
             //acts as a DM for hunt duration, the older the information is, the bigger the modifier
-            modifier = GameManager.instance.turnScript.Turn - tracker.turn;
-        }
-        else
-        {
-
+            turnDifference = GameManager.instance.turnScript.Turn - tracker.turn;
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: AITracker Data, turn {0}, nodeID {1}, turnDifference {2}{3}", tracker.turn, tracker.data0, turnDifference, "\n");
         }
         //only use playerTargetNodeID if different from previous turns value (the AIManager.cs -> ProcessErasureTarget method kicks out a dirty data stream with lots of repeats)
         if (playerTargetNodeID == targetNodeID || playerTargetNodeID == moveToNodeID)
@@ -273,12 +270,22 @@ public class NemesisManager : MonoBehaviour
                     { isProceed = false; }
                     break;
                 case NemesisMode.HUNT:
-                    if (durationMode == 0 && targetNodeID == -1)
+                    if (durationMode == 0)
                     {
-                        //swap back to normal mode
-                        SetNemesisMode(NemesisMode.NORMAL);
-                        //set to true in case new player target info is available
-                        isProceed = true;
+                        //timer run out and no viable target present
+                        if (targetNodeID == -1)
+                        {
+                            //swap back to normal mode
+                            Debug.LogFormat("[Nem} NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, switch to NORMAL{0}", "\n");
+                            SetNemesisMode(NemesisMode.NORMAL);
+                            isProceed = false;
+                        }
+                        else
+                        {
+                            //new player target info is available
+                            Debug.LogFormat("[Nem} NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, NEW Target info available{0}", "\n");
+                            isProceed = true;
+                        }
                     }
                     break;
             }
@@ -296,13 +303,40 @@ public class NemesisManager : MonoBehaviour
                 //
                 if (targetNodeID > -1)
                 {
-                    //recent player activity -> Hunt mode
-                    SetNemesisMode(NemesisMode.HUNT, modifier);
-                    ProcessNemesisHunt();
+                    //recent player activity
+                    if (mode == NemesisMode.HUNT)
+                    {
+                        //already in Hunt mode, do we switch to a new target or continue with existing? (algorithm means the older the information the less likely Nemesis is to abandon current target)
+                        int threshold = 100 - (turnDifference * 20);
+                        int rndNum = Random.Range(0, 100);
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Recent ACTIVITY, roll {0} vs {1} (turnDifference {2}){3}", rndNum, threshold, turnDifference, "\n");
+                        if ( rndNum < threshold == true)
+                        {
+                            //reset hunt mode and chase new target
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> isProceed True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
+                            SetNemesisMode(NemesisMode.HUNT, turnDifference);
+                            ProcessNemesisHunt();
+                        }
+                        else
+                        {
+                            //continue with existing hunt mode but bump up the timers a little
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> isProceed True -> ProcessNemesisActivity: Recent ACTIVITY -> Continue with Exisitng (timers +2){0}", "\n");
+                            durationMode += 2;
+                            durationGoal += 2;
+                        }
+                    }
+                    else
+                    {
+                        //in Normal mode, switch to Hunt
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isProceed True -> Recent ACTIVITY -> Switch Mode to HUNT{0}", "\n");
+                        SetNemesisMode(NemesisMode.HUNT, turnDifference);
+                        ProcessNemesisHunt();
+                    }
                 }
                 else
                 {
                     //no recent player activity
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isProceed True -> NO Activity -> Continue ({0}, {1}){2}", mode, goal, "\n");
                     ProcessNemesisGoal();
                 }
             }
@@ -310,6 +344,7 @@ public class NemesisManager : MonoBehaviour
             {
                 targetDistance = -1;
                 // Continue with existing goal
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isProceed FALSE -> NO Activity -> Continue ({0}, {1}){2}", mode, goal, "\n");
                 ProcessNemesisGoal();
             }
         }
@@ -411,7 +446,7 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player activity detected this turn
+    /// Player activity detected this turn (HUNT mode / MOVETO goal)
     /// </summary>
     /// <param name="isImmediate"></param>
     private void ProcessNemesisHunt()
@@ -420,7 +455,7 @@ public class NemesisManager : MonoBehaviour
         {
             //get distance between nemesis and target (player activity) node
             targetDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nemesisNode.nodeID, targetNodeID);
-            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0}{1}", targetDistance, "\n");
+            
             //immediate flag (confirmed Player activity) -> overrides current goal
             if (isImmediate == true)
             {
@@ -429,29 +464,46 @@ public class NemesisManager : MonoBehaviour
                     case 0:
                         //switch to search mode
                         if (goal != NemesisGoal.SEARCH)
-                        { SetNemesisGoal(NemesisGoal.SEARCH); }
+                        {
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to SEARCH{1}", targetDistance, "\n");
+                            SetNemesisGoal(NemesisGoal.SEARCH);
+                        }
                         break;
                     case 1:
                         //chance to switch to search mode
                         if (Random.Range(0, 100) < chanceStartEarlySearch)
-                        { SetNemesisGoal(NemesisGoal.SEARCH); }
+                        {
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to SEARCH{1}", targetDistance, "\n");
+                            SetNemesisGoal(NemesisGoal.SEARCH);
+                        }
                         //move towards player at full speed
                         else
                         {
                             if (goal != NemesisGoal.MoveToNode)
-                            { SetNemesisGoal(NemesisGoal.MoveToNode); }
+                            {
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to MoveTo{1}", targetDistance, "\n");
+                                SetNemesisGoal(NemesisGoal.MoveToNode);
+                            }
+                            else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> CONTINUE MoveTo{1}", targetDistance, "\n"); }
                             ProcessNemesisMoveTo();
                         }
                         break;
                     case 2:
                         //chance to switch to search mode
                         if (Random.Range(0, 100) < chanceStartEarlySearch)
-                        { SetNemesisGoal(NemesisGoal.SEARCH); }
+                        {
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to SEARCH{1}", targetDistance, "\n");
+                            SetNemesisGoal(NemesisGoal.SEARCH);
+                        }
                         //move towards player at full speed
                         else
                         {
                             if (goal != NemesisGoal.MoveToNode)
-                            { SetNemesisGoal(NemesisGoal.MoveToNode); }
+                            {
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to MoveTo{1}", targetDistance, "\n");
+                                SetNemesisGoal(NemesisGoal.MoveToNode);
+                            }
+                            else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> CONTINUE MoveTo{1}", targetDistance, "\n"); }
                             ProcessNemesisMoveTo();
                         }
                         break;
@@ -459,7 +511,10 @@ public class NemesisManager : MonoBehaviour
                         //more than 2 away
                         //move towards player at full speed
                         if (goal != NemesisGoal.MoveToNode)
-                        { SetNemesisGoal(NemesisGoal.MoveToNode); }
+                        {
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> CONTINUE MoveTo{1}", targetDistance, "\n");
+                            SetNemesisGoal(NemesisGoal.MoveToNode);
+                        }
                         ProcessNemesisMoveTo();
                         break;
                 }
