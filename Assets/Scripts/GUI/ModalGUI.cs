@@ -48,7 +48,9 @@ public class ModalGUI : MonoBehaviour
                     //Block
                     modal0.SetActive(true);
                     modal1.SetActive(true);
-                    modalLevel = 1;
+                    //if already 2, don't change (eg. outcome window open on top of the InfoApp)
+                    if (modalLevel != 2)
+                    { modalLevel = 1; }
                 }
                 else
                 {
@@ -76,6 +78,7 @@ public class ModalGUI : MonoBehaviour
                 Debug.LogError(string.Format("Invalid modalLevel {0}", modalLevel));
                 break;
         }
+        Debug.LogFormat("[Inp] ModalGUI.cs -> SetModalMasks: modal0 {0}, modal1 {1}, modal2 {2}, level {3}{4}", modal0.activeSelf, modal1.activeSelf, modal2.activeSelf, modalLevel, "\n");
     }
 
 
