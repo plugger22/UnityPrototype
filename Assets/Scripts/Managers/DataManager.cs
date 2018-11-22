@@ -3766,13 +3766,17 @@ public class DataManager : MonoBehaviour
                     //if isPublic true then store in Pending dictionary
                     if (message.displayDelay > 0)
                     { AddMessageExisting(message, MessageCategory.Pending); }
-                    else { AddMessageExisting(message, MessageCategory.Current); }
+                    else
+                    {
+                        AddMessageExisting(message, MessageCategory.Current);
+                        //AI message (Pending AI messages accessed in due course)
+                        if (message.type == MessageType.AI)
+                        { AIMessage(message); }
+                    }
                     break;
                 case false:
                     //if isPublic False then store in Archive dictionary
                     AddMessageExisting(message, MessageCategory.Archive);
-                    if (message.type == gameAPI.MessageType.AI)
-                    { AIMessage(message); }
                     break;
             }
         }

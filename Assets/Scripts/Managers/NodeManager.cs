@@ -1846,6 +1846,7 @@ public class NodeManager : MonoBehaviour
     {
         if (moveDetails != null)
         {
+            Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: ModalMoveDetails nodeID {0}, change {1}, delay {2}{3}", moveDetails.nodeID, moveDetails.changeInvisibility, moveDetails.ai_Delay, "\n");
             Node node = GameManager.instance.dataScript.GetNode(moveDetails.nodeID);
             if (node != null)
             {
@@ -1854,8 +1855,12 @@ public class NodeManager : MonoBehaviour
                 //update move list
                 node.SetPlayerMoveNodes();
                 //message
-                Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}, AI knows in {3} turn{4}{5}", node.nodeName, node.Arc.name, node.nodeID, 
-                    moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" :"", "\n");
+                if (moveDetails.changeInvisibility != 0)
+                {
+                    Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}, SPOTTED, AI knows in {3} turn{4}{5}", node.nodeName, node.Arc.name, node.nodeID,
+                      moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", "\n");
+                }
+                else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
                 string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
@@ -1897,6 +1902,7 @@ public class NodeManager : MonoBehaviour
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.nodeName, node.Arc.name, moveDetails.nodeID);
                         GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
+                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: {0}{1}", textAI, "\n");
                         //AI Immediate message
                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                         {

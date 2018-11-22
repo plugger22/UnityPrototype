@@ -111,6 +111,7 @@ namespace modalAPI
 
         public ModalMoveDetails()
         {
+            changeInvisibility = 0;
             ai_Delay = -1;
             gearID = -1;
         }

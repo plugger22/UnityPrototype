@@ -1232,6 +1232,7 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Immediate;
             message.side = globalBoth;
+            message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = connID;
             message.data2 = actorID;
