@@ -1854,13 +1854,15 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetPlayerMoveNodes();
-                //message
+                
+                /*//message
                 if (moveDetails.changeInvisibility != 0)
                 {
                     Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}, SPOTTED, AI knows in {3} turn{4}{5}", node.nodeName, node.Arc.name, node.nodeID,
                       moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", "\n");
                 }
-                else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
+                else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }*/
+
                 string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
