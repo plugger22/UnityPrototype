@@ -89,7 +89,7 @@ public class GUIManager : MonoBehaviour
     public Sprite priorityLowSprite;
 
 
-    private bool[] isBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+    private bool[] arrayIsBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
                                                                       //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
     private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
@@ -223,9 +223,9 @@ public class GUIManager : MonoBehaviour
         #endregion
 
         //make sure blocking layers are all set to false
-        isBlocked = new bool[numOfModalLevels + 1];
-        for (int i = 0; i < isBlocked.Length; i++)
-        { isBlocked[i] = false; }
+        arrayIsBlocked = new bool[numOfModalLevels + 1];
+        for (int i = 0; i < arrayIsBlocked.Length; i++)
+        { arrayIsBlocked[i] = false; }
         //event listener
         /*EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");*/
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
@@ -284,7 +284,7 @@ public class GUIManager : MonoBehaviour
     public void SetIsBlocked(bool isBlocked, int level = 1)
     {
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
-        this.isBlocked[level] = isBlocked;
+        arrayIsBlocked[level] = isBlocked;
         Debug.Log(string.Format("GUIManager: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
         GameManager.instance.modalGUIScript.SetModalMasks(isBlocked, level);
     }
@@ -297,7 +297,7 @@ public class GUIManager : MonoBehaviour
     public bool CheckIsBlocked(int level = 1)
     {
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
-        return isBlocked[level];
+        return arrayIsBlocked[level];
     }
 
 

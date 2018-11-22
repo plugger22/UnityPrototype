@@ -111,7 +111,10 @@ public class ModalOutcome : MonoBehaviour
 
    
 
-    //public void SetModalOutcome(Side side, string textTop, string textBottom, Sprite sprite = null)
+    /// <summary>
+    /// Initiate Modal Outcome window
+    /// </summary>
+    /// <param name="details"></param>
     public void SetModalOutcome(ModalOutcomeDetails details)
     {
         if (details != null)

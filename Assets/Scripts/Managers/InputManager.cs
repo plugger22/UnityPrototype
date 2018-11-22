@@ -282,79 +282,83 @@ public class InputManager : MonoBehaviour
                         }
                         break;
                     case ModalState.InfoDisplay:
-                        //what type of info display?
-                        switch (_modalInfoState)
+                        //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
+                        if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
                         {
-                            case ModalInfoSubState.CityInfo:
-                                if (Input.GetButtonDown("Cancel") == true)
-                                {
-                                    EventManager.instance.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessInput Cancel");
-                                }
-                                break;
-                            case ModalInfoSubState.AIInfo:
-                                if (Input.GetButtonDown("Cancel") == true)
-                                {
-                                    EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessInput Cancel");
-                                }
-                                break;
-                            case ModalInfoSubState.MainInfo:
-                                if (Input.GetButtonDown("Cancel") == true)
-                                {
-                                    EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessInput Cancel");
-                                }
-                                else if (Input.GetButtonDown("Vertical"))
-                                {
-                                    y_axis = Input.GetAxisRaw("Vertical");
-                                    if (y_axis > 0)
-                                    { EventManager.instance.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessInput Vertical"); }
-                                    else if (y_axis < 0)
-                                    { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessInput Vertical"); }
-                                }
-                                else if (Input.GetButtonDown("Horizontal"))
-                                {
-                                    x_axis = Input.GetAxisRaw("Horizontal");
-                                    if (x_axis > 0)
-                                    { EventManager.instance.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessInput Horizontal"); }
-                                    else if (x_axis < 0)
-                                    { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput Horizontal"); }
-                                }
-                                else if (Input.GetButtonDown("Multipurpose") == true)
-                                {
-                                    //Space bar is keyboard shortcut for 'Show Me' button
-                                    EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessInput Multipurpose");
-                                    Input.ResetInputAxes();
-                                }
-                                else if (Input.GetButtonDown("DayAhead") == true)
-                                {
-                                    //Keyboard shortcut for forward a day -> PgUp
-                                    EventManager.instance.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessInput DayAhead \"{0}\"", Input.inputString.ToUpper()));
-                                }
-                                else if (Input.GetButtonDown("DayBehind") == true)
-                                {
-                                    //Keyboard shortcut for back a day -> PgUp
-                                    EventManager.instance.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessInput DayBehind \"{0}\"", Input.inputString.ToUpper()));
-                                }
-                                else if (Input.GetButtonDown("CurrentDay") == true)
-                                {
-                                    //Keyboard shortcut for go to current day (Home) day -> Home
-                                    EventManager.instance.PostNotification(EventType.MainInfoHome, this, null, string.Format("InputManager.cs -> ProcessInput CurrentDay \"{0}\"", Input.inputString.ToUpper()));
-                                }
-                                else if (Input.GetButtonDown("StartDay") == true)
-                                {
-                                    //Keyboard shortcut for go to start (day 1) -> End
-                                    EventManager.instance.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessInput StartDay \"{0}\"", Input.inputString.ToUpper()));
-                                }
-                                else if (Input.GetButtonDown("Plus") == true)
-                                {
-                                    //Keyboard shortcut to increase speed of ticker tape
-                                    EventManager.instance.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessInput Plus \"{0}\"", Input.inputString.ToUpper()));
-                                }
-                                else if (Input.GetButtonDown("Minus") == true)
-                                {
-                                    //Keyboard shortcut to decrease speed of ticker tape
-                                    EventManager.instance.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessInput Minus \"{0}\"", Input.inputString.ToUpper()));
-                                }
-                                break;
+                            //what type of info display?
+                            switch (_modalInfoState)
+                            {
+                                case ModalInfoSubState.CityInfo:
+                                    if (Input.GetButtonDown("Cancel") == true)
+                                    {
+                                        EventManager.instance.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessInput Cancel");
+                                    }
+                                    break;
+                                case ModalInfoSubState.AIInfo:
+                                    if (Input.GetButtonDown("Cancel") == true)
+                                    {
+                                        EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessInput Cancel");
+                                    }
+                                    break;
+                                case ModalInfoSubState.MainInfo:
+                                    if (Input.GetButtonDown("Cancel") == true)
+                                    {
+                                        EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessInput Cancel");
+                                    }
+                                    else if (Input.GetButtonDown("Vertical"))
+                                    {
+                                        y_axis = Input.GetAxisRaw("Vertical");
+                                        if (y_axis > 0)
+                                        { EventManager.instance.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessInput Vertical"); }
+                                        else if (y_axis < 0)
+                                        { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessInput Vertical"); }
+                                    }
+                                    else if (Input.GetButtonDown("Horizontal"))
+                                    {
+                                        x_axis = Input.GetAxisRaw("Horizontal");
+                                        if (x_axis > 0)
+                                        { EventManager.instance.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessInput Horizontal"); }
+                                        else if (x_axis < 0)
+                                        { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessInput Horizontal"); }
+                                    }
+                                    else if (Input.GetButtonDown("Multipurpose") == true)
+                                    {
+                                        //Space bar is keyboard shortcut for 'Show Me' button
+                                        EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessInput Multipurpose");
+                                        Input.ResetInputAxes();
+                                    }
+                                    else if (Input.GetButtonDown("DayAhead") == true)
+                                    {
+                                        //Keyboard shortcut for forward a day -> PgUp
+                                        EventManager.instance.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessInput DayAhead \"{0}\"", Input.inputString.ToUpper()));
+                                    }
+                                    else if (Input.GetButtonDown("DayBehind") == true)
+                                    {
+                                        //Keyboard shortcut for back a day -> PgUp
+                                        EventManager.instance.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessInput DayBehind \"{0}\"", Input.inputString.ToUpper()));
+                                    }
+                                    else if (Input.GetButtonDown("CurrentDay") == true)
+                                    {
+                                        //Keyboard shortcut for go to current day (Home) day -> Home
+                                        EventManager.instance.PostNotification(EventType.MainInfoHome, this, null, string.Format("InputManager.cs -> ProcessInput CurrentDay \"{0}\"", Input.inputString.ToUpper()));
+                                    }
+                                    else if (Input.GetButtonDown("StartDay") == true)
+                                    {
+                                        //Keyboard shortcut for go to start (day 1) -> End
+                                        EventManager.instance.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessInput StartDay \"{0}\"", Input.inputString.ToUpper()));
+                                    }
+                                    else if (Input.GetButtonDown("Plus") == true)
+                                    {
+                                        //Keyboard shortcut to increase speed of ticker tape
+                                        EventManager.instance.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessInput Plus \"{0}\"", Input.inputString.ToUpper()));
+                                    }
+                                    else if (Input.GetButtonDown("Minus") == true)
+                                    {
+                                        //Keyboard shortcut to decrease speed of ticker tape
+                                        EventManager.instance.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessInput Minus \"{0}\"", Input.inputString.ToUpper()));
+                                    }
+                                    break;
+                            }
                         }
                         break;
                     case ModalState.ShowMe:
