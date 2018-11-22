@@ -118,7 +118,7 @@ public class CaptureManager : MonoBehaviour
     private void CapturePlayer(CaptureDetails details)
     {
         //PLAYER CAPTURED
-        string text = string.Format("Player Captured at \"{0}\", {1}", details.node.nodeName, details.node.Arc.name);
+        string text = string.Format("Player Captured at \"{0}\", {1} by {2} {3} team", details.node.nodeName, details.node.Arc.name, details.team.teamName, details.team.arc.name);
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?

@@ -65,6 +65,7 @@ public class NemesisManager : MonoBehaviour
     private int durationGoal;               //if goal is fixed for a set time then no new goal can be assigned until the duration countdown has expired
     private int durationMode;               //used in Hunt & Inactive modes as a countdown timer, which drops nemesis back into Normal mode once zero
     private Node nemesisNode;               //current node where nemesis is, updated by ProcessNemesisActivity
+    private AITracker trackerDebug;         //tracker data passed to NemesisActivity, stored here each turn for Debugging purposes only
 
     //player tracking info
     private int targetNodeID;               //new targetNodeID (checked each turn) -> sets moveToNodeID
@@ -185,7 +186,7 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives a playerTargetNodeID, if worth doing so and -1 if nothing to report)
+    /// master AI for nemesis. AIManager.cs -> ProcessErasureTarget provides an update on recent player activity and gives AITracker data (null if nothing to reports)
     /// </summary>
     /// <param name="playerTargetNodeID"></param>
     public void ProcessNemesisActivity(AITracker tracker, bool immediateFlag)
@@ -195,6 +196,8 @@ public class NemesisManager : MonoBehaviour
         int nodeID = GameManager.instance.nodeScript.nodeNemesis;
         nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
         isImmediate = immediateFlag;
+        trackerDebug = tracker;
+        bool isPossibleNewGoal = false;
         //convert tracker data to useable format (No need for null check as it's a 'do nothing' option in this case)
         if (tracker != null)
         {
@@ -209,7 +212,7 @@ public class NemesisManager : MonoBehaviour
             if (immediateFlag == false)
             {
                 //repeat target, ignore
-                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Repeat target (playerTargetNodeID {0}) Immediate false -> IGNORED{1}", playerTargetNodeID, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: REPEAT target (playerTargetNodeID {0}) Immediate FALSE -> IGNORED{1}", playerTargetNodeID, "\n");
                 targetNodeID = -1;
             }
             else
@@ -218,7 +221,7 @@ public class NemesisManager : MonoBehaviour
                 if (playerTargetNodeID == nemesisNode.nodeID)
                 {
                     //repeat target, ignore
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Repeat target (playerTargetNodeID {0}) Immediate True -> IGNORED{1}", playerTargetNodeID, "\n");
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: REPEAT target (playerTargetNodeID {0}) Immediate TRUE -> IGNORED{1}", playerTargetNodeID, "\n");
                     targetNodeID = -1;
                 }
             }
@@ -230,13 +233,12 @@ public class NemesisManager : MonoBehaviour
         //big picture logic
         if (nemesisNode != null)
         {
-            bool isProceed = true;
             //player carrying out a set goal for a set period of time, keep doing so unless immediate flag set
             if (durationGoal > 0)
             {
                 //immediate flag breaks duration cycle
-                if (immediateFlag == true) { isProceed = true; }
-                else { isProceed = false; }
+                if (immediateFlag == true) { isPossibleNewGoal = true; }
+                else { isPossibleNewGoal = false; }
                 //decrement duration
                 durationGoal--;
             }
@@ -261,13 +263,13 @@ public class NemesisManager : MonoBehaviour
                         if (targetNodeID < 0)
                         {
                             SetNemesisMode(NemesisMode.NORMAL);
-                            isProceed = false;
+                            isPossibleNewGoal = false;
                         }
                         else
-                        { isProceed = true; }
+                        { isPossibleNewGoal = true; }
                     }
                     else
-                    { isProceed = false; }
+                    { isPossibleNewGoal = false; }
                     break;
                 case NemesisMode.HUNT:
                     if (durationMode == 0)
@@ -276,27 +278,27 @@ public class NemesisManager : MonoBehaviour
                         if (targetNodeID == -1)
                         {
                             //swap back to normal mode
-                            Debug.LogFormat("[Nem} NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, switch to NORMAL{0}", "\n");
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, switch to NORMAL{0}", "\n");
                             SetNemesisMode(NemesisMode.NORMAL);
-                            isProceed = false;
+                            isPossibleNewGoal = false;
                         }
                         else
                         {
                             //new player target info is available
-                            Debug.LogFormat("[Nem} NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, NEW Target info available{0}", "\n");
-                            isProceed = true;
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, NEW Target info available{0}", "\n");
+                            isPossibleNewGoal = true;
                         }
                     }
                     break;
             }
             //status
             Debug.LogFormat("[Nem] Status Start: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, {5} {6}, isProceed {7}{8}",
-                playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, mode, goal, isProceed, "\n");
+                playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, mode, goal, isPossibleNewGoal, "\n");
             Debug.LogFormat("[Nem] Status Start: Nemesis at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //
             // - - - Proceed - - -
             //
-            if (isProceed == true)
+            if (isPossibleNewGoal == true)
             {
                 //
                 // - - - Possible new goal
@@ -1322,8 +1324,15 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" search: {0}, adjusted: {1}{2}", nemesis.searchRating, GetSearchRatingAdjusted(), "\n");
         builder.AppendFormat(" stealth: {0}, adjusted: {1}{2}", nemesis.stealthRating, GetStealthRatingAdjusted(), "\n");
         builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
-        /*//listOfPlayerActivity (AI Manager)
-        builder.AppendFormat("{0}{1}", "\n", GameManager.instance.aiScript.DebugShowPlayerActivity());*/
+        //AITracker (passed from AIManager)
+        builder.AppendFormat("{0} - Tracker Data (AIManager.cs){1}", "\n", "\n");
+        if (trackerDebug != null)
+        {
+            builder.AppendFormat(" activity on Turn {0}{1}", trackerDebug.turn, "\n");
+            builder.AppendFormat(" at nodeID {0}{1}", trackerDebug.data0, "\n");
+        }
+        else
+        { builder.AppendFormat(" Nothing to report{0}", "\n"); }
         return builder.ToString();
     }
 
