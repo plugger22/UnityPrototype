@@ -999,7 +999,8 @@ public class NodeManager : MonoBehaviour
                 proceedFlag = true;
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
-                    if (GameManager.instance.optionScript.fogOfWar == true)
+                    //Nemesis has a separate FOW setting
+                    if (GameManager.instance.nemesisScript.isShown == false)
                     { proceedFlag = false; }
                 }
                 if (proceedFlag == true)

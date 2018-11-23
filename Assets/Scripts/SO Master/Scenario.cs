@@ -20,6 +20,10 @@ public class Scenario : ScriptableObject
     [Tooltip("Challenge (difficulty) of the scenario")]
     public Challenge challenge;
 
+    [Tooltip("Scenerio Timer -> how many turns")]
+    [Range(20, 100)] public int timer = 100;
+
+
 
     public void OnEnable()
     {

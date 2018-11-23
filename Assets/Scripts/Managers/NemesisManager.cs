@@ -54,10 +54,14 @@ public class NemesisManager : MonoBehaviour
     [Range(0, 100)] public int chanceTracerSpotZero = 100;
 
     [HideInInspector] public Nemesis nemesis;
+    [HideInInspector] public bool isShown;        //Fog of War setting for Nemesis
 
+    //flags
     private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
     private bool hasActed;                  //flag set true if Nemesis has spotted player and caused Damage during the AI phase
     private bool hasWarning;                //flag set true if Nemesis at same node, hasn't spotted player, and a warning issued ("You sense a dark shadow..."). Stops a double warning
+
+
 
     //Nemesis AI
     private NemesisMode mode;
@@ -90,6 +94,8 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        //Debug (FOW OFF)
+        isShown = true;
         //assign nemesis to a starting node
         int nemesisNodeID = -1;
         //Nemesis always starts at city Centre
@@ -388,7 +394,7 @@ public class NemesisManager : MonoBehaviour
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}), duration {1}{2}", previousMode, durationMode, "\n");
                 mode = NemesisMode.HUNT;
                 durationMode = durationHuntMode + Random.Range(1, 10) - modifier;
-                durationMode = Mathf.Max(1, durationMode);
+                durationMode = Mathf.Max(2, durationMode);
                 if (targetNodeID > -1)
                 {
                     //target available

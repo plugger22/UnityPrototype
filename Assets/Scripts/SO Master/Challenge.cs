@@ -9,8 +9,6 @@ using UnityEngine;
 public class Challenge : ScriptableObject
 {
 
-    [Tooltip("Scenerio Timer -> how many turns")]
-    [Range(20, 100)] public int timer = 100;
 
     [Tooltip("Nemesis that will be chasing the player. Leave blank if none")]
     public Nemesis nemesis;

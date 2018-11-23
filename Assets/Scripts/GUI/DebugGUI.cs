@@ -348,14 +348,19 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Toggle Fog Of War");
                 if (GameManager.instance.optionScript.fogOfWar == true)
                 {
+                    //sets both FOW and Nemesis settings in tandem
                     GameManager.instance.optionScript.fogOfWar = false;
+                    GameManager.instance.nemesisScript.isShown = true;
                     optionFogOfWar = "Fog Of War ON";
                 }
                 else
                 {
                     GameManager.instance.optionScript.fogOfWar = true;
+                    GameManager.instance.nemesisScript.isShown = false;
                     optionFogOfWar = "Fog Of War OFF";
                 }
+                //redraw and update nodes
+                GameManager.instance.nodeScript.NodeRedraw = true;
             }
 
             //fourth button
