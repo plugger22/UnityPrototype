@@ -1091,7 +1091,7 @@ public class AIManager : MonoBehaviour
                         break;
                     case MessageSubType.AI_Node:
                     case MessageSubType.AI_Detected:
-                        //Get Node and add Activity data
+                        //Player Detected Hacking with Traceback ON -> Get Node and add Activity data
                         Node node = GameManager.instance.dataScript.GetNode(message.data0);
                         if (node != null)
                         {
@@ -1115,7 +1115,11 @@ public class AIManager : MonoBehaviour
                         {
                             //player move, add to connections queue -> destination nodeID and turn created
                             if (message.data0 > -1)
-                            { GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated)); }
+                            {
+                                GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
+                                //add to Nemesis list
+                                listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
+                            }
                             else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
                         }
                         else
@@ -1125,8 +1129,6 @@ public class AIManager : MonoBehaviour
                             { GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated)); }
                             else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
                         }
-                        //add to Nemesis list
-                        listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                         break;
                     case MessageSubType.AI_Reboot:
                     case MessageSubType.AI_Alert:
@@ -3965,7 +3967,7 @@ public class AIManager : MonoBehaviour
                             //Detected by AITrackback results in immediate notification regardless of circumstances (unless detection negated by Gear)
                             immediateFlagResistance = true;
                             text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                            GameManager.instance.messageScript.AIImmediateActivity(text, "AI Traceback", GameManager.instance.nodeScript.nodePlayer, -1);
+                            GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, 0);
                         }
                         else
                         {

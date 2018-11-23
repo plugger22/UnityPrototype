@@ -1582,7 +1582,7 @@ MonoBehaviour:
   chanceLoiterToNeighbour: 50
   durationAmbush: 2
   chanceSearchNeighbour: 75
-  chanceStartEarlySearch: 25
+  chanceStartEarlySearch: 15
   durationHuntMode: 3
   durationDamageOffLine: 3
   chanceTracerSpotHigh: 10

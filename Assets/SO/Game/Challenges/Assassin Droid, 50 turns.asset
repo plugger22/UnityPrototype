@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Name: Assassin Droid, 50 turns
   m_EditorClassIdentifier: 
   timer: 50
-  nemesis: {fileID: 11400000, guid: cc4b646e220990741a5f0d7f7b6e51bb, type: 2}
+  nemesis: {fileID: 11400000, guid: 42cdd5ebcf56c1940bf0d05178a658b0, type: 2}
+  gracePeriod: 0

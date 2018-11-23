@@ -34,7 +34,7 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("Chance of searching a random neighbouring node")]
     [Range(0, 100)] public int chanceSearchNeighbour = 75;
     [Tooltip("Chance of ceasing MoveToNode and switching to Search mode when ONE or TWO links from target Node")]
-    [Range(0, 100)] public int chanceStartEarlySearch = 25;
+    [Range(0, 100)] public int chanceStartEarlySearch = 15;
 
     [Header("HUNT mode Logic")]
     [Tooltip("When Nemesis switches to Hunt mode it will be for this number of turns plus 1d10 random turns in total")]
@@ -252,6 +252,7 @@ public class NemesisManager : MonoBehaviour
                     //message kicks in one turn early
                     if (durationMode == 1)
                     {
+                        isPossibleNewGoal = false;
                         //message
                         string text = string.Format("{0} Nemesis comes online", nemesis.name);
                         string itemText = "Your NEMESIS comes Online";
@@ -372,7 +373,7 @@ public class NemesisManager : MonoBehaviour
                 targetNodeID = -1;
                 moveToNodeID = -1;
                 targetDistance = -1;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE (previously {0}){1}", previousMode, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE (previously {0}), duration {1}{2}", previousMode, durationMode, "\n");
                 break;
             case NemesisMode.NORMAL:
                 mode = NemesisMode.NORMAL;
@@ -384,7 +385,7 @@ public class NemesisManager : MonoBehaviour
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to NORMAL (previously {0}){1}", previousMode, "\n");
                 break;
             case NemesisMode.HUNT:
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}){1}", previousMode, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}), duration {1}{2}", previousMode, durationMode, "\n");
                 mode = NemesisMode.HUNT;
                 durationMode = durationHuntMode + Random.Range(1, 10) - modifier;
                 durationMode = Mathf.Max(1, durationMode);
@@ -686,7 +687,7 @@ public class NemesisManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarningFormat("Nemesis node id {0} and moveTOnode id {1} are identical. Switched to Search Mode", nemesisNode.nodeID, moveToNodeID);
+            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisMoveTo: Nemesis node id {0} and moveTOnode id {1} are identical. Switch to Search Mode", nemesisNode.nodeID, moveToNodeID);
             //already at target destination, switch to search mode
             SetNemesisGoal(NemesisGoal.SEARCH);
         }

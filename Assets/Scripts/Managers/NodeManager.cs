@@ -1345,16 +1345,16 @@ public class NodeManager : MonoBehaviour
                 {
                     //player loses one level of invisibility each time they traverse a security rated connection
                     adjustInvisibility = -1;
-                    if (GameManager.instance.playerScript.Invisibility <= 1)
+                    if (GameManager.instance.playerScript.Invisibility <= 0)
                     {
-                        //invisibility will be zero, or less, if move. Immediate notification
+                        //invisibility <= zero, if move. Immediate notification
                         moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
                           colourEnd);
                         moveDetails.ai_Delay = 0;
                     }
                     else
                     {
-                        //invisibility reduces, still above zero
+                        //invisibility reduces, zero or above
                         moveDetails.ai_Delay = secLevel;
                         moveDetail = string.Format("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd, colourNeutral,
                           moveDetails.ai_Delay, colourEnd, colourBad, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
@@ -1874,49 +1874,78 @@ public class NodeManager : MonoBehaviour
                 //
                 if (moveDetails.changeInvisibility != 0)
                 {
-                    //display
-                    builder.AppendLine();
-                    builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourBad, moveDetails.changeInvisibility > 0 ? "+" : "",
-                        moveDetails.changeInvisibility, colourEnd);
-                    //player invisibility
-                    int invisibility = GameManager.instance.playerScript.Invisibility;
-                    if (invisibility <= 0)
-                    {
-                        //moving while invisibility already 0 triggers immediate alert flag
-                        GameManager.instance.aiScript.immediateFlagResistance = true;
-                        builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourBad, colourEnd);
-                    }
-                    else if (invisibility > 1)
-                    {
-                        builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
-                            moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
-                    }
-                    else
-                    { builder.AppendFormat("{0}{1}{2}Authority will know next turn{3}", "\n", "\n", colourBad, colourEnd); }
-                    //update invisibility
-                    invisibility += moveDetails.changeInvisibility;
-                    invisibility = Mathf.Max(0, invisibility);
-                    GameManager.instance.playerScript.Invisibility = invisibility;
-                    //AI message
                     Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
                     if (connection != null)
                     {
-                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
-                            node.nodeName, node.Arc.name, moveDetails.nodeID);
-
-                        if (invisibility > 0)
-                        { GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay); }
-                        
-                        /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: {0}{1}", textAI, "\n");*/
-
-                        //AI Immediate message
-                        if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                        //AI message
+                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, moveDetails.nodeID);
+                        //display
+                        builder.AppendLine();
+                        builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourBad, moveDetails.changeInvisibility > 0 ? "+" : "",
+                            moveDetails.changeInvisibility, colourEnd);
+                        //player invisibility
+                        int invisibility = GameManager.instance.playerScript.Invisibility;
+                        if (invisibility <= 0)
                         {
+                            //moving while invisibility already 0 triggers immediate alert flag
+                            GameManager.instance.aiScript.immediateFlagResistance = true;
+                            builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourBad, colourEnd);
+                            //AI Immediate notification
                             GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
                                 "Moving", moveDetails.nodeID, moveDetails.connectionID);
                         }
+                        else
+                        {
+                            //normal adjusted security level delay, eg. low gives a 3 turn delay
+                            builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
+                                moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                            //AI delayed notification
+                            GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
+                        }
+
+                        /*else if (invisibility >= 1)
+                        {
+                            builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
+                                moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                            //AI delayed notification
+                            GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
+                        }
+                        else
+                        {
+                            //if invisibility 1 (will drop to zero), authority knows next turn
+                            builder.AppendFormat("{0}{1}{2}Authority will know next turn{3}", "\n", "\n", colourBad, colourEnd);
+                            GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, 1);
+                        }*/
+
+                        //update invisibility
+                        invisibility += moveDetails.changeInvisibility;
+                        invisibility = Mathf.Max(0, invisibility);
+                        GameManager.instance.playerScript.Invisibility = invisibility;
+
+                        /*//AI message
+                        Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
+                        if (connection != null)
+                        {
+                            string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
+                                node.nodeName, node.Arc.name, moveDetails.nodeID);
+
+                            if (invisibility > 0)
+                            {
+                                //AI delayed notification
+                                GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
+                            }
+                            else
+                            {
+                                //AI Immediate notification
+                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
+                                    "Moving", moveDetails.nodeID, moveDetails.connectionID);
+                            }
+                        }
+                        else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }*/
+
                     }
-                    else { Debug.LogError(string.Format("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID)); }
+                    else { Debug.LogErrorFormat("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID); }
                 }
                 else
                 {
