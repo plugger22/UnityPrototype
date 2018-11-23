@@ -227,6 +227,9 @@ public class NemesisManager : MonoBehaviour
             }
         }
         else { targetNodeID = playerTargetNodeID; }
+        //new target
+        if (targetNodeID > -1)
+        { isPossibleNewGoal = true; }
         //mode counter
         if (durationMode > 0)
         { durationMode--; }
@@ -292,8 +295,8 @@ public class NemesisManager : MonoBehaviour
                     break;
             }
             //status
-            Debug.LogFormat("[Nem] Status Start: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, {5} {6}, isProceed {7}{8}",
-                playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, mode, goal, isPossibleNewGoal, "\n");
+            Debug.LogFormat("[Nem] Status Start: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, isNewGoal {5}, ({6} {7}), {8}",
+                playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, isPossibleNewGoal, mode, goal,  "\n");
             Debug.LogFormat("[Nem] Status Start: Nemesis at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //
             // - - - Proceed - - -
@@ -315,14 +318,14 @@ public class NemesisManager : MonoBehaviour
                         if ( rndNum < threshold == true)
                         {
                             //reset hunt mode and chase new target
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> isProceed True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
                             SetNemesisMode(NemesisMode.HUNT, turnDifference);
                             ProcessNemesisHunt();
                         }
                         else
                         {
                             //continue with existing hunt mode but bump up the timers a little
-                            Debug.LogFormat("[Nem] NemesisManager.cs -> isProceed True -> ProcessNemesisActivity: Recent ACTIVITY -> Continue with Exisitng (timers +2){0}", "\n");
+                            Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Continue with Exisitng (timers +2){0}", "\n");
                             durationMode += 2;
                             durationGoal += 2;
                         }
@@ -330,7 +333,7 @@ public class NemesisManager : MonoBehaviour
                     else
                     {
                         //in Normal mode, switch to Hunt
-                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isProceed True -> Recent ACTIVITY -> Switch Mode to HUNT{0}", "\n");
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isNewGoal True -> Recent ACTIVITY -> Switch Mode to HUNT{0}", "\n");
                         SetNemesisMode(NemesisMode.HUNT, turnDifference);
                         ProcessNemesisHunt();
                     }
@@ -338,7 +341,7 @@ public class NemesisManager : MonoBehaviour
                 else
                 {
                     //no recent player activity
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isProceed True -> NO Activity -> Continue ({0}, {1}){2}", mode, goal, "\n");
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isNewGoal True -> NO Activity -> Continue ({0}, {1}){2}", mode, goal, "\n");
                     ProcessNemesisGoal();
                 }
             }
@@ -346,7 +349,7 @@ public class NemesisManager : MonoBehaviour
             {
                 targetDistance = -1;
                 // Continue with existing goal
-                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isProceed FALSE -> NO Activity -> Continue ({0}, {1}){2}", mode, goal, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isNewGoal FALSE -> NO Activity -> Continue ({0}, {1}){2}", mode, goal, "\n");
                 ProcessNemesisGoal();
             }
         }

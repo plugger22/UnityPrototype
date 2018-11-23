@@ -1079,7 +1079,12 @@ public class AIManager : MonoBehaviour
                             connection.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> destination nodeID and turn created
                             GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
-                            //add to Nemesis list
+
+                            /*//add to Nemesis list -> don't double up on AI_Immediate messages -> NOTE: Not necessary as PlayerMove msg's don't double up anymore
+                            if (message.turnCreated != GameManager.instance.turnScript.Turn)
+                            { listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated)); }*/
+
+                            //Add to Nemesis List
                             listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                         }
                         else { Debug.LogWarning(string.Format("Invalid connection (Null) for connID {0} -> AI data NOT extracted", message.data1)); }
@@ -1093,6 +1098,8 @@ public class AIManager : MonoBehaviour
                             node.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> nodeID and turn created
                             GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated));
+                            //add to Nemesis list
+                            listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                         }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0} -> AI data NOT extracted", message.data0)); }
                         break;
@@ -1108,11 +1115,7 @@ public class AIManager : MonoBehaviour
                         {
                             //player move, add to connections queue -> destination nodeID and turn created
                             if (message.data0 > -1)
-                            {
-                                GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
-                                //add to Nemesis list
-                                listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
-                            }
+                            { GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated)); }
                             else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
                         }
                         else
@@ -1122,6 +1125,8 @@ public class AIManager : MonoBehaviour
                             { GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated)); }
                             else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
                         }
+                        //add to Nemesis list
+                        listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                         break;
                     case MessageSubType.AI_Reboot:
                     case MessageSubType.AI_Alert:
@@ -3887,6 +3892,7 @@ public class AIManager : MonoBehaviour
                 {
                     //AI DETECTS hacking attempt
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                    Debug.LogFormat("[Ply] AIManager.cs -> UpdateHackingStatus: Player HACKS AI and is DETECTED{0}", "\n");
                     GameManager.instance.messageScript.GeneralRandom("Hacking attempt DETECTED", "Detection", chance, rnd, true);
                     isDetected = true;
                     hackingAttemptsDetected++;
@@ -3935,16 +3941,18 @@ public class AIManager : MonoBehaviour
                             //Player loses a level of invisiblity
                             int invisibility = GameManager.instance.playerScript.Invisibility;
                             invisibility -= 1;
-                            if (invisibility < 0)
+
+                            /*if (invisibility < 0)
                             {
                                 //AI knows immediately
                                 traceBackDelay = 0;
                                 invisibility = 0;
-                            }
+                            }*/
+
                             GameManager.instance.playerScript.Invisibility = invisibility;
                             //immediate flag activity
 
-                            if (traceBackDelay == 0)
+                            /*if (traceBackDelay == 0)
                             {
                                 immediateFlagResistance = true;
                                 text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
@@ -3952,7 +3960,12 @@ public class AIManager : MonoBehaviour
                             }
                             //AI notification
                             text = "AI Hacking attempt detected (TraceBack)";
-                            GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);
+                            GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);*/
+
+                            //Detected by AITrackback results in immediate notification regardless of circumstances (unless detection negated by Gear)
+                            immediateFlagResistance = true;
+                            text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
+                            GameManager.instance.messageScript.AIImmediateActivity(text, "AI Traceback", GameManager.instance.nodeScript.nodePlayer, -1);
                         }
                         else
                         {
@@ -3995,6 +4008,7 @@ public class AIManager : MonoBehaviour
                 else
                 {
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt Undetected, need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                    Debug.LogFormat("[Ply] AIManager.cs -> UpdateHackingStatus: Player HACKS AI and is NOT Detected{0}", "\n");
                     GameManager.instance.messageScript.GeneralRandom("Hacking attempt Undetected", "Detection", chance, rnd, true);
                     //no change to status
                     switch (aiAlertStatus)

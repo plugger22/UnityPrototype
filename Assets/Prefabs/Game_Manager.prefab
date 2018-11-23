@@ -243,9 +243,9 @@ MonoBehaviour:
   customBackground:
     m_Name: 
     m_Normal:
-      m_Background: {fileID: 2800000, guid: d7aadb6206f14774e8fe877a72bb235a, type: 3}
+      m_Background: {fileID: 2800000, guid: 968c95c521a144942bcb53ab0dba230e, type: 3}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
+      m_TextColor: {r: 0.9693124, g: 0.9716981, b: 0.38959593, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
@@ -253,7 +253,7 @@ MonoBehaviour:
     m_Active:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+      m_TextColor: {r: 0.28835887, g: 0.5826658, b: 0.754717, a: 1}
     m_Focused:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
@@ -311,9 +311,6 @@ MonoBehaviour:
   offset_x: 5
   offset_y: 4
   box_x: 10
-  box_option: 0
-  box_action: 0
-  box_level: 0
   box_y: 10
   box_width: 130
   box_height: 400

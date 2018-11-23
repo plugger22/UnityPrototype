@@ -1846,7 +1846,9 @@ public class NodeManager : MonoBehaviour
     {
         if (moveDetails != null)
         {
-            Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: ModalMoveDetails nodeID {0}, change {1}, delay {2}{3}", moveDetails.nodeID, moveDetails.changeInvisibility, moveDetails.ai_Delay, "\n");
+
+            /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: ModalMoveDetails nodeID {0}, change {1}, delay {2}{3}", moveDetails.nodeID, moveDetails.changeInvisibility, moveDetails.ai_Delay, "\n");*/
+
             Node node = GameManager.instance.dataScript.GetNode(moveDetails.nodeID);
             if (node != null)
             {
@@ -1854,16 +1856,14 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetPlayerMoveNodes();
-                
-                /*//message
+                //message
                 if (moveDetails.changeInvisibility != 0)
                 {
                     Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}, SPOTTED, AI knows in {3} turn{4}{5}", node.nodeName, node.Arc.name, node.nodeID,
                       moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", "\n");
                 }
-                else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }*/
-
-                string destination = string.Format("\"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
+                else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
+                string destination = string.Format("\"{0}\", {1} district", node.nodeName, node.Arc.name);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
@@ -1880,7 +1880,7 @@ public class NodeManager : MonoBehaviour
                         moveDetails.changeInvisibility, colourEnd);
                     //player invisibility
                     int invisibility = GameManager.instance.playerScript.Invisibility;
-                    if (invisibility == 0)
+                    if (invisibility <= 0)
                     {
                         //moving while invisibility already 0 triggers immediate alert flag
                         GameManager.instance.aiScript.immediateFlagResistance = true;
@@ -1903,8 +1903,12 @@ public class NodeManager : MonoBehaviour
                     {
                         string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}",
                             node.nodeName, node.Arc.name, moveDetails.nodeID);
-                        GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
-                        Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: {0}{1}", textAI, "\n");
+
+                        if (invisibility > 0)
+                        { GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay); }
+                        
+                        /*Debug.LogFormat("[Tst] NodeManager.cs -> ProcessPlayerMove: {0}{1}", textAI, "\n");*/
+
                         //AI Immediate message
                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                         {
@@ -1974,7 +1978,7 @@ public class NodeManager : MonoBehaviour
         else
         {
             //Normal Move  Outcome
-            outcomeDetails.textTop = "Player has moved";
+            outcomeDetails.textTop = string.Format("You have been {0}DETECTED{1} moving to", colourBad, colourEnd);
             outcomeDetails.textBottom = data.text;
             outcomeDetails.sprite = GameManager.instance.guiScript.alarmSprite;
             outcomeDetails.isAction = true;

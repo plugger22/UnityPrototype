@@ -28,18 +28,16 @@ public class DebugGUI : MonoBehaviour
     [Tooltip("Space between buttons")]
     public int offset_y;      
     public int box_x;
-    [Tooltip("x coord for the options box")]
-    public int box_option;
-    [Tooltip("x coord for the actions box")]
-    public int box_action;
-    [Tooltip("x coord for the levels box")]
-    public int box_level; 
     public int box_y;
     public int box_width;
     public int box_height;
     [Tooltip("gap at start between header and first button")]
-    public int gap_y; 
+    public int gap_y;
 
+    private int box_info;
+    private int box_option;
+    private int box_action;
+    private int box_level; 
     private int button_width;
     private int targetToggle = 0;
     private string textInput_0 = "what";
@@ -59,7 +57,8 @@ public class DebugGUI : MonoBehaviour
     private void Awake()
     {
         button_width = box_width - (2 * offset_x);
-        box_option = box_x * 2 + box_width;
+        box_option = box_x;
+        box_info = box_x * 2 + box_width;
         box_action = box_x * 3 + box_width * 2;
         box_level = box_x * 4 + box_width * 3;
         //option strings
@@ -100,10 +99,10 @@ public class DebugGUI : MonoBehaviour
 
 
             customBackground.alignment = TextAnchor.UpperCenter;
-            //background box (Data)
-            GUI.Box(new Rect(box_x, box_y, box_width, box_height + 100), "Info Menu", customBackground);
+            //background box (Info)
+            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 100), "Info Menu", customBackground);
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height), "Option Menu", customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 40), "Option Menu", customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 100), "Action Menu", customBackground);
             //background box (Level)
@@ -114,7 +113,7 @@ public class DebugGUI : MonoBehaviour
             //
 
             //first button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Help"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Help"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Help");
                 if (debugDisplay != 13)
@@ -123,7 +122,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Lists"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Lists"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Actor Lists");
                 if (debugDisplay != 7)
@@ -132,7 +131,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Actor Pools"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Actor Pools"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Actor Pools");
                 if (debugDisplay != 6)
@@ -141,7 +140,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Player Stats"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Player Stats"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Player Stats");
                 if (debugDisplay != 8)
@@ -150,7 +149,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Game State"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Game State"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Game State");
                 if (debugDisplay != 5)
@@ -160,7 +159,7 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "City Analysis"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "City Analysis"))
             {
                 Debug.Log("[Dbg] Button -> Toggle City Analysis");
                 if (debugDisplay != 1)
@@ -169,7 +168,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //seventh button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Actions Register"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Actions Register"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Actions Register");
                 if (debugDisplay != 15)
@@ -178,7 +177,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eigth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Ongoing Register"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Ongoing Register"))
             {
                 Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
                 if (debugDisplay != 14)
@@ -187,7 +186,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Factions"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Factions"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Factions");
                 if (debugDisplay != 11)
@@ -196,16 +195,16 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "AI Reboot"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
             {
-                Debug.Log("[Dbg] Button -> Force AI Reboot");
-                GameManager.instance.aiScript.RebootCommence();
+                /*Debug.Log("[Dbg] Button -> Force AI Reboot");
+                GameManager.instance.aiScript.RebootCommence();*/
             }
 
             //eleventh button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Toggle Teams"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Team Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Team Data");
+                Debug.Log("[Dbg] Button -> Team Data");
                 //toggles sequentially through team data displays and then switches off
                 switch (teamStatus)
                 {
@@ -221,9 +220,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twelth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Toggle Messages"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Message Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Messages");
+                Debug.Log("[Dbg] Button -> Message Data");
                 //toggles sequentially through message dictionaries and then switches off
                 switch(msgStatus)
                 {
@@ -237,7 +236,7 @@ public class DebugGUI : MonoBehaviour
         
 
             //thirteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Toggle AI Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "AI Data"))
             {
                 Debug.Log("[Dbg] Button -> AI Data");
                 switch(aiStatus)
@@ -252,7 +251,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Gear Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Gear Data"))
             {
                 Debug.Log("[Dbg] Button -> Gear Data");
                 if (debugDisplay != 24)
@@ -261,7 +260,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Secret Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Secret Data"))
             {
                 Debug.Log("[Dbg] Button -> Secret Data");
                 if (debugDisplay != 25)
@@ -270,7 +269,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sixteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Crisis Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Crisis Data"))
             {
                 Debug.Log("[Dbg] Button -> Crisis Data");
                 if (debugDisplay != 26)
@@ -279,7 +278,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sevenTeenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts"))
             {
                 //resistance only
                 if (GameManager.instance.turnScript.currentSide.level == GameManager.instance.globalScript.sideResistance.level)
@@ -292,9 +291,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eightennth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 17 + button_height * 17, button_width, button_height), "Toggle Targets"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 17 + button_height * 17, button_width, button_height), "Target Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Targets");
+                Debug.Log("[Dbg] Button -> Target Data");
                 //toggles sequentially through target info displays and then switches off
                 switch (targetToggle)
                 {
@@ -306,7 +305,7 @@ public class DebugGUI : MonoBehaviour
                }
 
             //nineteenth button
-            if (GUI.Button(new Rect(box_x + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "Nemesis Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "Nemesis Data"))
             {
                 Debug.Log("[Dbg] Button -> Nemesis Data");
                 if (debugDisplay != 40)
@@ -668,15 +667,23 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+
             //thirteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Give Secret"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "AI Reboot"))
+            {
+                Debug.Log("[Dbg] Button -> Force AI Reboot");
+                GameManager.instance.aiScript.RebootCommence();
+            }
+
+            //thirteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Give Secret"))
             {
                 Debug.Log("[Dbg] Button -> Give Player a Random Secret");
                 GameManager.instance.playerScript.DebugAddRandomSecret();
             }
 
             //fourteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Add Contact"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 17 + button_height * 17, button_width, button_height), "Add Contact"))
             {
                 Debug.Log("[Dbg] Button -> Add Contact");
                 if (debugDisplay != 27)
@@ -685,7 +692,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 17 + button_height * 17, button_width, button_height), "Remove Contact"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "Remove Contact"))
             {
                 Debug.Log("[Dbg] Button -> Remove Contact");
                 if (debugDisplay != 29)
@@ -695,7 +702,7 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "isContactKnown"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 19 + button_height * 19, button_width, button_height), "isContactKnown"))
             {
                 Debug.Log("[Dbg] Button -> Set isContactKnown True");
                 if (debugDisplay != 31)

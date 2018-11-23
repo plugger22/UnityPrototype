@@ -28,6 +28,7 @@ public class CaptureManager : MonoBehaviour
     private string colourGood;
     private string colourNeutral;
     private string colourBad;
+    private string colourAlert;
     private string colourEnd;
 
 
@@ -89,6 +90,7 @@ public class CaptureManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -115,10 +117,10 @@ public class CaptureManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <param name="team"></param>
-    private void CapturePlayer(CaptureDetails details)
+    private void CapturePlayer(CaptureDetails details, bool isStartOfTurn = false)
     {
         //PLAYER CAPTURED
-        string text = string.Format("Player Captured at \"{0}\", {1} by {2} {3} team", details.node.nodeName, details.node.Arc.name, details.team.teamName, details.team.arc.name);
+        string text = string.Format("Player Captured at \"{0}\", {1} by {2}{3}{4} {5}", details.node.nodeName, details.node.Arc.name, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?
@@ -187,6 +189,12 @@ public class CaptureManager : MonoBehaviour
             isAction = false,
             side = GameManager.instance.globalScript.sideResistance
         };
+        //happened during turn processing (outcome window will overlay InfoApp)
+        if (isStartOfTurn == true)
+        {
+            outcomeDetails.modalLevel = 2;
+            outcomeDetails.modalState = ModalState.InfoDisplay;
+        }
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer");
     }
 
@@ -504,7 +512,7 @@ public class CaptureManager : MonoBehaviour
             {
                 //Player captured
                 details.effects = string.Format("{0}They kicked in the door before you could get out of bed{1}", colourNeutral, colourEnd);
-                CapturePlayer(details);
+                CapturePlayer(details, true);
             }
         }
     }
