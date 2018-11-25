@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5965289cf99416943b7327e0e9f88d78, type: 3}
-  m_Name: Assassin Droid, 50 turns
+  m_Name: Assassin Droid
   m_EditorClassIdentifier: 
-  timer: 50
-  nemesis: {fileID: 11400000, guid: 42cdd5ebcf56c1940bf0d05178a658b0, type: 2}
-  gracePeriod: 0
+  nemesisFirst: {fileID: 11400000, guid: 42cdd5ebcf56c1940bf0d05178a658b0, type: 2}
+  gracePeriodFirst: 3
+  nemesisSecond: {fileID: 0}
+  gracePeriodSecond: 0

@@ -9,7 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5965289cf99416943b7327e0e9f88d78, type: 3}
-  m_Name: Scum Bot, 50 turns
+  m_Name: Scum Bot
   m_EditorClassIdentifier: 
-  timer: 50
-  nemesis: {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
+  nemesisFirst: {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
+  gracePeriodFirst: 3
+  nemesisSecond: {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
+  gracePeriodSecond: 3

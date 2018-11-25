@@ -60,7 +60,7 @@ public class NemesisManager : MonoBehaviour
     private bool hasMoved;                  //flag set true if Nemesis has moved during AI phase, reset at start of next AI phase
     private bool hasActed;                  //flag set true if Nemesis has spotted player and caused Damage during the AI phase
     private bool hasWarning;                //flag set true if Nemesis at same node, hasn't spotted player, and a warning issued ("You sense a dark shadow..."). Stops a double warning
-
+    private bool isFirstNemesis;            //flag set true if first Nemesis, false for arrival of second Nemesis
 
 
     //Nemesis AI
@@ -96,6 +96,7 @@ public class NemesisManager : MonoBehaviour
     {
         //Debug (FOW OFF)
         isShown = true;
+        isFirstNemesis = true;
         //assign nemesis to a starting node
         int nemesisNodeID = -1;
         //Nemesis always starts at city Centre
@@ -110,7 +111,7 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid node (Null)"); }
         //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationMode = GameManager.instance.scenarioScript.scenario.challenge.gracePeriod;
+        durationMode = GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
         if (durationMode > 0)
         {
             //grace period, start inactive
@@ -167,11 +168,14 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void ProcessNemesis(AITracker tracker, bool immediateFlagResistance)
     {
-        ProcessNemesisAdminStart();
-        CheckNemesisAtPlayerNode();
-        CheckNemesisTracerSighting();
-        ProcessNemesisActivity(tracker, immediateFlagResistance);
-        ProcessNemesisAdminEnd();
+        if (nemesis != null)
+        {
+            ProcessNemesisAdminStart();
+            CheckNemesisAtPlayerNode();
+            CheckNemesisTracerSighting();
+            ProcessNemesisActivity(tracker, immediateFlagResistance);
+            ProcessNemesisAdminEnd();
+        }
     }
 
     /// <summary>
@@ -755,7 +759,9 @@ public class NemesisManager : MonoBehaviour
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //cause damage / message
             ProcessPlayerDamage(isPlayerMove);
-            //place Nemesis OFFLINE for a period
+            hasActed = true;
+
+            /*//place Nemesis OFFLINE for a period
             SetNemesisMode(NemesisMode.Inactive);
             durationMode = durationDamageOffLine;
             if (durationMode > 0)
@@ -768,7 +774,36 @@ public class NemesisManager : MonoBehaviour
                 GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
             }
             //set flag to prevent nemesis acting immediately again at start of player's turn (gives them one turn's grace to get out of dodge)
-            hasActed = true;
+            hasActed = true;*/
+
+            //Nemesis has done their job, new nemesis arrives?
+            if (isFirstNemesis == true)
+            {
+                //get second nemesis
+                isFirstNemesis = false;
+                nemesis = GameManager.instance.scenarioScript.scenario.challenge.nemesisSecond;
+                if (nemesis != null)
+                {
+                    //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
+                    SetNemesisMode(NemesisMode.Inactive);
+                    durationMode = durationDamageOffLine + GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
+                    string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationMode, "\n");
+                    if (durationMode > 0)
+                    {
+                        string text = string.Format("Nemesis goes Offline for {0} turns after Damaging player{1}", durationMode, "\n");
+                        string itemText = "NEMESIS goes OFFLINE for a short while";
+                        string topText = "Nemesis OFFLINE";
+                        string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
+                        string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
+                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                    }
+                }
+            }
+            else
+            {
+                //2nd Nemesis has done it's job -> no more nemesis
+            }
+
         }
         else
         {

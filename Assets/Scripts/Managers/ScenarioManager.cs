@@ -51,9 +51,9 @@ public class ScenarioManager : MonoBehaviour
             //
             // - - - Nemesis -> may or may not be present - - - 
             //
-            if (scenario.challenge.nemesis != null)
+            if (scenario.challenge.nemesisFirst != null)
             {
-                GameManager.instance.nemesisScript.nemesis = scenario.challenge.nemesis;
+                GameManager.instance.nemesisScript.nemesis = scenario.challenge.nemesisFirst;
                 GameManager.instance.nemesisScript.Initialise();
             }
             else { Debug.LogFormat("[Nem] ScenarioManager.cs -> InitialiseLate: No Nemesis present in Scenario{0}", "\n"); }
