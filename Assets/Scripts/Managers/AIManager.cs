@@ -1493,7 +1493,8 @@ public class AIManager : MonoBehaviour
                 AITracker tracker = listOfPlayerActivity[i];
                 if (tracker != null)
                 {
-                    Debug.LogFormat("[Tst] AIManager.cs -> ProcessNemesisTarget: player Activity, turnNum {1}, nodeID {2}{3}", numOfRecords, tracker.turn, tracker.data0, "\n");
+                    /*Debug.LogFormat("[Tst] AIManager.cs -> ProcessNemesisTarget: player Activity, turnNum {1}, nodeID {2}{3}", numOfRecords, tracker.turn, tracker.data0, "\n");*/
+
                     //examine connection activity queue and find the most recent
                     if (tracker.turn > turnNum)
                     {

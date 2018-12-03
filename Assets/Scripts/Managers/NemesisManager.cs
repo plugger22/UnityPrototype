@@ -222,7 +222,8 @@ public class NemesisManager : MonoBehaviour
             playerTargetNodeID = tracker.data0;
             //acts as a DM for hunt duration, the older the information is, the bigger the modifier
             turnDifference = GameManager.instance.turnScript.Turn - tracker.turn;
-            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: AITracker Data, turn {0}, nodeID {1}, turnDifference {2}{3}", tracker.turn, tracker.data0, turnDifference, "\n");
+            if (mode != NemesisMode.Inactive)
+            { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: AITracker Data, turn {0}, nodeID {1}, turnDifference {2}{3}", tracker.turn, tracker.data0, turnDifference, "\n"); }
         }
         //only use playerTargetNodeID if different from previous turns value (the AIManager.cs -> ProcessErasureTarget method kicks out a dirty data stream with lots of repeats)
         if (playerTargetNodeID == targetNodeID || playerTargetNodeID == moveToNodeID)
@@ -230,7 +231,8 @@ public class NemesisManager : MonoBehaviour
             if (immediateFlag == false)
             {
                 //repeat target, ignore
-                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: REPEAT target (playerTargetNodeID {0}) Immediate FALSE -> IGNORED{1}", playerTargetNodeID, "\n");
+                if (mode != NemesisMode.Inactive)
+                { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: REPEAT target (playerTargetNodeID {0}) Immediate FALSE -> IGNORED{1}", playerTargetNodeID, "\n"); }
                 targetNodeID = -1;
             }
             else
@@ -239,7 +241,8 @@ public class NemesisManager : MonoBehaviour
                 if (playerTargetNodeID == nemesisNode.nodeID)
                 {
                     //repeat target, ignore
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: REPEAT target (playerTargetNodeID {0}) Immediate TRUE -> IGNORED{1}", playerTargetNodeID, "\n");
+                    if (mode != NemesisMode.Inactive)
+                    { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: REPEAT target (playerTargetNodeID {0}) Immediate TRUE -> IGNORED{1}", playerTargetNodeID, "\n"); }
                     targetNodeID = -1;
                 }
             }
@@ -271,6 +274,16 @@ public class NemesisManager : MonoBehaviour
                     if (durationMode == 1)
                     {
                         isPossibleNewGoal = false;
+                        //message - warning
+                        string text = string.Format("Reports of a {0} about to come online", nemesis.name);
+                        string itemText = "Reports of forthcoming NEMESIS Activity";
+                        string topText = "Nemesis Heads Up";
+                        string reason = string.Format("{0}<b>Rebel HQ indicate there are signs of your Nemesis stirring</b>", "\n");
+                        string warning = "Nemesis activity can be expected shortly";
+                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                    }
+                    else if (durationMode == 0)
+                    {
                         //message
                         string text = string.Format("{0} Nemesis comes online", nemesis.name);
                         string itemText = "Your NEMESIS comes Online";
@@ -278,9 +291,6 @@ public class NemesisManager : MonoBehaviour
                         string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                         string warning = string.Format("{0}", nemesis.descriptor);
                         GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
-                    }
-                    else if (durationMode == 0)
-                    {
                         //No action, change mode to Normal, goal to Loiter
                         if (targetNodeID < 0)
                         {
@@ -316,9 +326,12 @@ public class NemesisManager : MonoBehaviour
                     break;
             }
             //status
-            Debug.LogFormat("[Nem] Status Start: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, isNewGoal {5}, ({6} {7}), {8}",
-                playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, isPossibleNewGoal, mode, goal,  "\n");
-            Debug.LogFormat("[Nem] Status Start: Nemesis at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+            if (mode != NemesisMode.Inactive)
+            {
+                Debug.LogFormat("[Nem] Status Start: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, isNewGoal {5}, ({6} {7}), {8}",
+                    playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, isPossibleNewGoal, mode, goal, "\n");
+                Debug.LogFormat("[Nem] Status Start: Nemesis at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+            }
             //
             // - - - Proceed - - -
             //
@@ -341,9 +354,9 @@ public class NemesisManager : MonoBehaviour
                             //reset hunt mode and chase new target
                             Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
                             SetNemesisMode(NemesisMode.HUNT, turnDifference);
+                            ProcessNemesisHunt();
                             string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
                             GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
-                            ProcessNemesisHunt();
                         }
                         else
                         {
@@ -358,9 +371,10 @@ public class NemesisManager : MonoBehaviour
                         //in Normal mode, switch to Hunt
                         Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isNewGoal True -> Recent ACTIVITY -> Switch Mode to HUNT{0}", "\n");
                         SetNemesisMode(NemesisMode.HUNT, turnDifference);
+                        ProcessNemesisHunt();
                         string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
                         GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
-                        ProcessNemesisHunt();
+                        
                     }
                 }
                 else
