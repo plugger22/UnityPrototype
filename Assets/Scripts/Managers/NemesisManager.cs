@@ -164,21 +164,19 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// called by AIManager.cs -> AISideAuthority, handles all nemesis turn processing methods
+    /// called by AIManager.cs -> AISideAuthority, handles all nemesis turn processing methods. 
+    /// NOTE: Nemesis checked for null by calling method
     /// </summary>
     public void ProcessNemesis(AITracker tracker, bool immediateFlagResistance)
     {
+        ProcessNemesisAdminStart();
+        CheckNemesisAtPlayerNode();
+        //NOTE: Need to as Nemesis can find player and switch to a null nemesis in CheckNemesisAtPlayerNode
         if (nemesis != null)
         {
-            ProcessNemesisAdminStart();
-            CheckNemesisAtPlayerNode();
-            //NOTE: Need to check again as Nemesis can find player and switch to a null nemesis in CheckNemesisAtPlayerNode
-            if (nemesis != null)
-            {
-                CheckNemesisTracerSighting();
-                ProcessNemesisActivity(tracker, immediateFlagResistance);
-                ProcessNemesisAdminEnd();
-            }
+            CheckNemesisTracerSighting();
+            ProcessNemesisActivity(tracker, immediateFlagResistance);
+            ProcessNemesisAdminEnd();
         }
     }
 

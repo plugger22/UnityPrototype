@@ -668,8 +668,11 @@ public class AIManager : MonoBehaviour
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
         //Nemesis
-        AITracker tracker = ProcessNemesisTarget();
-        GameManager.instance.nemesisScript.ProcessNemesis(tracker, immediateFlagResistance);
+        if (GameManager.instance.nemesisScript.nemesis != null)
+        {
+            AITracker tracker = ProcessNemesisTarget();
+            GameManager.instance.nemesisScript.ProcessNemesis(tracker, immediateFlagResistance);
+        }
         //reset flags
         immediateFlagResistance = false;
         isHacked = false;
