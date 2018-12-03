@@ -136,6 +136,7 @@
         AI_Countermeasure,
         AI_Alert,
         AI_Detected,
+        AI_Nemesis,
         //Decision
         Decision_Global,
         Decision_Connection,                    //increaes connection security level
@@ -174,6 +175,7 @@
         Ongoing_Created,
         Ongoing_Current,
         Ongoing_Expired,
+        Ongoing_Nemesis,
         //Active
         Active_Effect,
         //Node

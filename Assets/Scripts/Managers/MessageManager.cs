@@ -1074,6 +1074,84 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+
+
+    /// <summary>
+    /// Nemesis Ongoing Status -> InfoApp 'Effect' tab
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public Message NemesisOngoingEffect(string text, int nodeID, Nemesis nemesis)
+    {
+        Debug.Assert(nodeID > -1, "Invalid node (less than Zeros)");
+        Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Nemesis;
+            message.side = globalBoth;
+            message.data0 = nodeID;
+            message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
+            message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0} Nemesis current Status", nemesis.name);
+            data.topText = "Nemesis Status";
+            data.bottomText = GameManager.instance.itemDataScript.GetNemesisOngoingEffectDetails(nemesis, message.data1);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Used whenever Nemesis goes in or out of Hunt mode
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="nemesis"></param>
+    /// <returns></returns>
+    public Message NemesisNewMode(string text, int nodeID, Nemesis nemesis)
+    {
+        Debug.Assert(nodeID > -1, "Invalid node (less than Zeros)");
+        Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.AI;
+            message.subType = MessageSubType.AI_Nemesis;
+            message.side = globalBoth;
+            message.data0 = nodeID;
+            message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
+            message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0} Nemesis changes mode", nemesis.name);
+            data.topText = "New Nemesis Mode";
+            data.bottomText = GameManager.instance.itemDataScript.GetNemesisNewModeDetails(nemesis, message.data1);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - AI - - -
     //

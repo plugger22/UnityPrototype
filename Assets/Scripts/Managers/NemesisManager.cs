@@ -193,6 +193,14 @@ public class NemesisManager : MonoBehaviour
     private void ProcessNemesisAdminEnd()
     {
         hasWarning = false;
+        //Ongoing effect message
+        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
+        if (node != null)
+        {
+            string text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, node.nodeName, node.Arc.name, mode);
+            GameManager.instance.messageScript.NemesisOngoingEffect(text, node.nodeID, nemesis);
+        }
+        else { Debug.LogError("Invalid node (Null) for Nemesis"); }
     }
 
     /// <summary>
@@ -294,6 +302,8 @@ public class NemesisManager : MonoBehaviour
                             //swap back to normal mode
                             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, switch to NORMAL{0}", "\n");
                             SetNemesisMode(NemesisMode.NORMAL);
+                            string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
+                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
                             isPossibleNewGoal = false;
                         }
                         else
@@ -331,6 +341,8 @@ public class NemesisManager : MonoBehaviour
                             //reset hunt mode and chase new target
                             Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
                             SetNemesisMode(NemesisMode.HUNT, turnDifference);
+                            string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
+                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
                             ProcessNemesisHunt();
                         }
                         else
@@ -346,6 +358,8 @@ public class NemesisManager : MonoBehaviour
                         //in Normal mode, switch to Hunt
                         Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isNewGoal True -> Recent ACTIVITY -> Switch Mode to HUNT{0}", "\n");
                         SetNemesisMode(NemesisMode.HUNT, turnDifference);
+                        string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
+                        GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
                         ProcessNemesisHunt();
                     }
                 }
@@ -802,8 +816,9 @@ public class NemesisManager : MonoBehaviour
             else
             {
                 //2nd Nemesis has done it's job -> no more nemesis
+                nemesis = null;
+                SetNemesisMode(NemesisMode.Inactive);
             }
-
         }
         else
         {
@@ -837,7 +852,7 @@ public class NemesisManager : MonoBehaviour
     /// returns Nemesis Search rating after adjusting for mode and activiy
     /// </summary>
     /// <returns></returns>
-    private int GetSearchRatingAdjusted()
+    public int GetSearchRatingAdjusted()
     {
         int searchRating = nemesis.searchRating;
         //adjust for mode
@@ -850,7 +865,7 @@ public class NemesisManager : MonoBehaviour
     /// returns Nemesis Stealth rating after adjusting for mode and activiy
     /// </summary>
     /// <returns></returns>
-    private int GetStealthRatingAdjusted()
+    public int GetStealthRatingAdjusted()
     {
         int stealthRating = nemesis.stealthRating;
         //adjust for mode
@@ -1380,6 +1395,29 @@ public class NemesisManager : MonoBehaviour
         { builder.AppendFormat(" Nothing to report{0}", "\n"); }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// returns true if Nemesis is active (Normal or Hunt modes), false if Inactive
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNemesisActive()
+    {
+        if (mode != NemesisMode.Inactive) { return true; }
+        return false;
+    }
+
+    /// <summary>
+    /// returns true if Nemesis currently has an Ambush goal, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNemesisAmbush()
+    {
+        if (goal == NemesisGoal.AMBUSH) { return true; }
+        return false;
+    }
+
+    public NemesisMode GetNemesisMode()
+    { return mode; }
 
     //new methods above here
 }

@@ -532,6 +532,73 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Nemesis Ongoing effect status (displayed every turn Nemesis is onMap)
+    /// </summary>
+    /// <param name="nemesis"></param>
+    /// <returns></returns>
+    public string GetNemesisOngoingEffectDetails(Nemesis nemesis, int search)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0} Nemesis is{1}", nemesis.name, "\n");
+        NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
+        switch (mode)
+        {
+            case NemesisMode.Inactive:
+                builder.AppendFormat("{0}<b>INACTIVE</b>{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}<b>You are currently in no danger</b>{2}", "\n", colourGood, colourEnd);
+                break;
+            case NemesisMode.NORMAL:
+                builder.AppendFormat("in {0}<b>NORMAL</b>{1} mode{2}", colourNeutral, colourEnd, "\n");
+                if (GameManager.instance.nemesisScript.CheckNemesisAmbush() == true)
+                { builder.AppendFormat("currently lurking in {0}<b>AMBUSH</b>{1}{2}", colourBad, colourEnd, "\n"); }
+                builder.AppendFormat("{0}You will be found if in the {1}<b>SAME District</b>{2} and your {3}<b>Invisibility</b>{4} is {5}<b>{6}, or less<b>{7}{8}", "\n", colourAlert, colourEnd, colourAlert, colourEnd,
+                    colourNeutral, search, colourEnd, "\n");
+                builder.AppendFormat("{0}Can move {1}<b>{2}</b>{3} District{4} a day", "\n", colourNeutral, nemesis.movement, colourEnd, nemesis.movement != 1 ? "s" : "", "\n");
+                break;
+            case NemesisMode.HUNT:
+                builder.AppendFormat("in {0}<b>HUNT</b>{1} mode{2}", colourBad, colourEnd, "\n");
+                builder.AppendFormat("{0}You will be found if in the {1}<b>SAME District</b>{2} and your {3}<b>Invisibility</b>{4} is {5}<b>{6}, or less<b>{7}{8}", "\n", colourAlert, colourEnd, colourAlert, colourEnd,
+                    colourNeutral, search, colourEnd, "\n");
+                builder.AppendFormat("{0}Can move {1}<b>{2}</b>{3} District{4} a day", "\n", colourNeutral, nemesis.movement, colourEnd, nemesis.movement != 1 ? "s" : "", "\n");
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid Nemesis mode \"{0}\"", mode);
+                break;
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Generated whenever nemesis changes between Normal and Hunt modes
+    /// </summary>
+    /// <param name="nemesis"></param>
+    /// <param name="search"></param>
+    /// <returns></returns>
+    public string  GetNemesisNewModeDetails(Nemesis nemesis, int search)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0} Nemesis changes{1}", nemesis.name, "\n");
+        NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
+        switch (mode)
+        {
+            case NemesisMode.NORMAL:
+                builder.AppendFormat("to {0}<b>NORMAL</b>{1} mode{2}", colourNeutral, colourEnd, "\n");
+                builder.AppendFormat("{0}You will be found if in the {1}<b>SAME District</b>{2} and your {3}<b>Invisibility</b>{4} is {5}<b>{6}, or less<b>{7}{8}", "\n", colourAlert, colourEnd, colourAlert, colourEnd,
+                    colourNeutral, search, colourEnd, "\n");
+                break;
+            case NemesisMode.HUNT:
+                builder.AppendFormat("to {0}<b>HUNT</b>{1} mode{2}", colourBad, colourEnd, "\n");
+                builder.AppendFormat("{0}You will be found if in the {1}<b>SAME District</b>{2} and your {3}<b>Invisibility</b>{4} is {5}<b>{6}, or less<b>{7}{8}", "\n", colourAlert, colourEnd, colourAlert, colourEnd,
+                    colourNeutral, search, colourEnd, "\n");
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid Nemesis mode \"{0}\"", mode);
+                break;
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// subMethod to return a colour formatted string based on contact's effectiveness
     /// </summary>
     /// <param name="level"></param>
