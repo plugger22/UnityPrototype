@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nemesisFirst: {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
   gracePeriodFirst: 3
-  nemesisSecond: {fileID: 11400000, guid: 99ec0c72c1b29a041b3d8a8dc0f4923b, type: 2}
-  gracePeriodSecond: 3
+  nemesisSecond: {fileID: 0}
+  gracePeriodSecond: 0

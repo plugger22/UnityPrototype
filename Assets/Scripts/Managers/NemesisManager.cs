@@ -172,9 +172,13 @@ public class NemesisManager : MonoBehaviour
         {
             ProcessNemesisAdminStart();
             CheckNemesisAtPlayerNode();
-            CheckNemesisTracerSighting();
-            ProcessNemesisActivity(tracker, immediateFlagResistance);
-            ProcessNemesisAdminEnd();
+            //NOTE: Need to check again as Nemesis can find player and switch to a null nemesis in CheckNemesisAtPlayerNode
+            if (nemesis != null)
+            {
+                CheckNemesisTracerSighting();
+                ProcessNemesisActivity(tracker, immediateFlagResistance);
+                ProcessNemesisAdminEnd();
+            }
         }
     }
 
@@ -194,13 +198,16 @@ public class NemesisManager : MonoBehaviour
     {
         hasWarning = false;
         //Ongoing effect message
-        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
-        if (node != null)
+        if (nemesis != null)
         {
-            string text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, node.nodeName, node.Arc.name, mode);
-            GameManager.instance.messageScript.NemesisOngoingEffect(text, node.nodeID, nemesis);
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
+            if (node != null)
+            {
+                string text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, node.nodeName, node.Arc.name, mode);
+                GameManager.instance.messageScript.NemesisOngoingEffect(text, node.nodeID, nemesis);
+            }
+            else { Debug.LogError("Invalid node (Null) for Nemesis"); }
         }
-        else { Debug.LogError("Invalid node (Null) for Nemesis"); }
     }
 
     /// <summary>
@@ -788,22 +795,6 @@ public class NemesisManager : MonoBehaviour
             //cause damage / message
             ProcessPlayerDamage(isPlayerMove);
             hasActed = true;
-
-            /*//place Nemesis OFFLINE for a period
-            SetNemesisMode(NemesisMode.Inactive);
-            durationMode = durationDamageOffLine;
-            if (durationMode > 0)
-            {
-                string text = string.Format("Nemesis goes Offline for {0} turns after Damaging player{1}", durationMode, "\n");
-                string itemText = "NEMESIS goes OFFLINE for a short while";
-                string topText = "Nemesis OFFLINE";
-                string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
-                string warning = "Rebel HQ STRONGLY ADVISE that you get the h*ll out of there!";
-                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
-            }
-            //set flag to prevent nemesis acting immediately again at start of player's turn (gives them one turn's grace to get out of dodge)
-            hasActed = true;*/
-
             //Nemesis has done their job, new nemesis arrives?
             if (isFirstNemesis == true)
             {
@@ -818,8 +809,8 @@ public class NemesisManager : MonoBehaviour
                     string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationMode, "\n");
                     if (durationMode > 0)
                     {
-                        string text = string.Format("Nemesis goes Offline for {0} turns after Damaging player{1}", durationMode, "\n");
-                        string itemText = "NEMESIS goes OFFLINE for a short while";
+                        string text = string.Format("New Nemesis in {0} turns after player damaged{1}", durationMode, "\n");
+                        string itemText = "Rumours of a new NEMESIS";
                         string topText = "Nemesis OFFLINE";
                         string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                         string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
