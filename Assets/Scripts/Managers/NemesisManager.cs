@@ -760,12 +760,16 @@ public class NemesisManager : MonoBehaviour
                 //check for player at same node
                 if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
                 { isSpotted = ProcessPlayerInteraction(false); }
-                //check for Resistance contact at same node
-                List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
-                if (tempList != null)
-                { ProcessContactInteraction(tempList); }
-                //check for Tracer Sighting
-                CheckNemesisTracerSighting();
+                //Player interaction can result in nemesis damaging player and leaving with no follow-on nemesis
+                if (nemesis != null)
+                {
+                    //check for Resistance contact at same node
+                    List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                    if (tempList != null)
+                    { ProcessContactInteraction(tempList); }
+                    //check for Tracer Sighting
+                    CheckNemesisTracerSighting();
+                }
             }
             else { Debug.LogWarningFormat("Invalid move node {Null) for nodeID {0}", nodeID); }
         }
@@ -815,12 +819,29 @@ public class NemesisManager : MonoBehaviour
                         GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                     }
                 }
+                //no more nemesis after first
+                else
+                {
+                    string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
+                    string itemText = "NEMESIS threat eases";
+                    string topText = "Nemesis M.I.A";
+                    string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
+                    string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
+                    GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                }
             }
             else
             {
                 //2nd Nemesis has done it's job -> no more nemesis
                 nemesis = null;
                 SetNemesisMode(NemesisMode.Inactive);
+                //message
+                string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
+                string itemText = "NEMESIS threat eases";
+                string topText = "Nemesis M.I.A";
+                string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
+                string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
+                GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
             }
         }
         else

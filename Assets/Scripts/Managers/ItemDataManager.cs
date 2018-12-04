@@ -215,7 +215,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(damageInfo) == false)
-        { builder.AppendFormat("You have been {0}<b>{1}</b>{2}", damageInfo, "\n", "\n"); }
+        { builder.AppendFormat("You have been <b>{0}</b>{1}{2}", damageInfo, "\n", "\n"); }
         if (string.IsNullOrEmpty(damageEffect) == false)
         { builder.AppendFormat("{0}<b>{1}</b>{2}", colourAlert, damageEffect, colourEnd); }
         return builder.ToString();
