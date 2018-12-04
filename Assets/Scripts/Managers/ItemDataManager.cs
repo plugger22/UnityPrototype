@@ -539,6 +539,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetNemesisOngoingEffectDetails(Nemesis nemesis, int search)
     {
         StringBuilder builder = new StringBuilder();
+        //find on invis 1 or 2, colourNeutral, if 3 or less, colourBad
+        string colourSearch = colourNeutral;
+        if (search == 3) { colourSearch = colourBad; }
         builder.AppendFormat("<b>{0}</b> Nemesis is{1}", nemesis.name, "\n");
         NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
         switch (mode)
@@ -550,15 +553,17 @@ public class ItemDataManager : MonoBehaviour
             case NemesisMode.NORMAL:
                 builder.AppendFormat("in {0}<b>NORMAL</b>{1} mode{2}", colourNeutral, colourEnd, "\n");
                 if (GameManager.instance.nemesisScript.CheckNemesisAmbush() == true)
-                { builder.AppendFormat("currently lurking in {0}<b>AMBUSH</b>{1}{2}", colourBad, colourEnd, "\n"); }
+                { builder.AppendFormat("lurking in {0}<b>AMBUSH</b>{1}{2}", colourBad, colourEnd, "\n"); }
                 builder.AppendFormat("{0}Nemesis will find you if in the {1}{2}<b>SAME District</b>{3}{4}and your <b>Invisibility</b> is {5}{6}<b>{7}, or less<b>{8}{9}", "\n", "\n", colourAlert, colourEnd, "\n",
-                     "\n", colourNeutral, search, colourEnd, "\n");
+                     "\n", colourSearch, search, colourEnd, "\n");
                 builder.AppendFormat("{0}Can move {1}<b>{2}</b>{3} District{4} a day", "\n", colourNeutral, nemesis.movement, colourEnd, nemesis.movement != 1 ? "s" : "", "\n");
                 break;
             case NemesisMode.HUNT:
                 builder.AppendFormat("in {0}<b>HUNT</b>{1} mode{2}", colourBad, colourEnd, "\n");
+                if (GameManager.instance.nemesisScript.CheckNemesisSearch() == true)
+                { builder.AppendFormat("actively {0}<b>SEARCHING</b>{1}{2}", colourBad, colourEnd, "\n"); }
                 builder.AppendFormat("{0}Nemesis will find you if in the {1}{2}<b>SAME District</b>{3}{4}and your <b>Invisibility</b> is {5}{6}<b>{7}, or less<b>{8}{9}", "\n", "\n", colourAlert, colourEnd, "\n",
-                     "\n", colourNeutral, search, colourEnd, "\n");
+                     "\n", colourSearch, search, colourEnd, "\n");
                 builder.AppendFormat("{0}Can move {1}<b>{2}</b>{3} District{4} a day", "\n", colourNeutral, nemesis.movement, colourEnd, nemesis.movement != 1 ? "s" : "", "\n");
                 break;
             default:
@@ -577,6 +582,9 @@ public class ItemDataManager : MonoBehaviour
     public string  GetNemesisNewModeDetails(Nemesis nemesis, int search)
     {
         StringBuilder builder = new StringBuilder();
+        //find on invis 1 or 2, colourNeutral, if 3 or less, colourBad
+        string colourSearch = colourNeutral;
+        if (search == 3) { colourSearch = colourBad; }
         builder.AppendFormat("<b>{0}</b> Nemesis changes{1}", nemesis.name, "\n");
         NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
         switch (mode)
@@ -584,12 +592,12 @@ public class ItemDataManager : MonoBehaviour
             case NemesisMode.NORMAL:
                 builder.AppendFormat("to {0}<b>NORMAL</b>{1} mode{2}", colourNeutral, colourEnd, "\n");
                 builder.AppendFormat("{0}Nemesis will find you if in the {1}{2}<b>SAME District</b>{3}{4}and your <b>Invisibility</b> is {5}{6}<b>{7}, or less<b>{8}{9}", "\n", "\n", colourAlert, colourEnd, "\n",
-                     "\n", colourNeutral, search, colourEnd, "\n");
+                       "\n", colourSearch, search, colourEnd, "\n");
                 break;
             case NemesisMode.HUNT:
                 builder.AppendFormat("to {0}<b>HUNT</b>{1} mode{2}", colourBad, colourEnd, "\n");
                 builder.AppendFormat("{0}Nemesis will find you if in the {1}{2}<b>SAME District</b>{3}{4}and your <b>Invisibility</b> is {5}{6}<b>{7}, or less<b>{8}{9}", "\n", "\n", colourAlert, colourEnd, "\n",
-                     "\n", colourNeutral, search, colourEnd, "\n");
+                     "\n", colourSearch, search, colourEnd, "\n");
                 break;
             default:
                 Debug.LogWarningFormat("Invalid Nemesis mode \"{0}\"", mode);

@@ -51,17 +51,17 @@ public class AuthorityManager : MonoBehaviour
             {
                 case AuthoritySecurityState.APB:
                     isDone = true;
-                    itemText = string.Format("Authority implements a {0}", state);
+                    itemText = "Authority implements an ALL POINTS BULLETIN";
                     decID = securityAPB;
                     break;
                 case AuthoritySecurityState.SecurityAlert:
                     isDone = true;
-                    itemText = string.Format("Authority implements a {0}", state);
+                    itemText = "Authority implements a SECURITY ALERT";
                     decID = securityAlert;
                     break;
                 case AuthoritySecurityState.SurveillanceCrackdown:
                     isDone = true;
-                    itemText = string.Format("Authority implements a {0}", state);
+                    itemText = "Authority implements a SURVEILLANCE CRACKDOWN";
                     decID = securityCrackdown;
                     break;
                 default:

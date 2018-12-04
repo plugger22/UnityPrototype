@@ -360,8 +360,8 @@ public class NemesisManager : MonoBehaviour
                             Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
                             SetNemesisMode(NemesisMode.HUNT, turnDifference);
                             ProcessNemesisHunt();
-                            string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
-                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                            /*string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
+                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis); EDIT > Not needed as already in HUNT mode*/
                         }
                         else
                         {
@@ -1437,6 +1437,16 @@ public class NemesisManager : MonoBehaviour
     public bool CheckNemesisAmbush()
     {
         if (goal == NemesisGoal.AMBUSH) { return true; }
+        return false;
+    }
+
+    /// <summary>
+    /// returns true if Nemesis currently has a Search goal, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNemesisSearch()
+    {
+        if (goal == NemesisGoal.SEARCH) { return true; }
         return false;
     }
 

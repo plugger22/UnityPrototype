@@ -125,27 +125,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        //assign player to a starting node (Sprawl)
-        int nodeID = 0;
-        _playerNameAuthority = "Evil Eddy";
-        _playerNameResistance = "Cameron";
-        //place Player in a random start location (Sprawl node)
-        int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
-        Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
-        if (node != null)
-        { nodeID = node.nodeID; }
-        else
-        { Debug.LogWarning("PlayerManager: Invalid Player starting node (Null). Player placed in node '0' by default"); }
-        Node nodeTemp = GameManager.instance.dataScript.GetNode(nodeID);
-        if (nodeTemp != null)
-        {
-            //initialise move list
-            nodeTemp.SetPlayerMoveNodes();
-            //set player node
-            GameManager.instance.nodeScript.nodePlayer = nodeID;
-            Debug.LogFormat("[Ply] PlayerManager.cs -> Initialise: Player starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n");
-        }
-        else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
+        //gear check
         isEndOfTurnGearCheck = false;
         //fast access fields (BEFORE set stats below)
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
@@ -163,7 +143,11 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
-
+        //Debug
+        _playerNameAuthority = "Evil Eddy";
+        _playerNameResistance = "Cameron";
+        //place Player in a random start location (Sprawl node)
+        InitialisePlayerStartNode();
         //set stats
         Renown = 0;
         Invisibility = 3;
@@ -171,11 +155,44 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
         //give the player a random secret (PLACEHOLDER -> should be player choice)
         GetRandomStartSecret();
-        //message
-        string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
-        GameManager.instance.messageScript.PlayerMove(text, node, 0, 0, true);
         //register event listeners
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
+    }
+
+    /// <summary>
+    /// starts player at a random SPRAWL node, error if not or if City Hall district (player can't start here as nemesis always starts from there)
+    /// </summary>
+    private void InitialisePlayerStartNode()
+    {
+        //assign player to a starting node (Sprawl)
+        int nodeID = 0;
+        int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
+        if (nodeArcID > -1)
+        {
+            if (nodeArcID != GameManager.instance.cityScript.cityHallDistrictID)
+            {
+                Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
+                if (node != null)
+                { nodeID = node.nodeID; }
+                else
+                { Debug.LogWarning("PlayerManager: Invalid Player starting node (Null). Player placed in node '0' by default"); }
+                Node nodeTemp = GameManager.instance.dataScript.GetNode(nodeID);
+                if (nodeTemp != null)
+                {
+                    //initialise move list
+                    nodeTemp.SetPlayerMoveNodes();
+                    //set player node
+                    GameManager.instance.nodeScript.nodePlayer = nodeID;
+                    Debug.LogFormat("[Ply] PlayerManager.cs -> Initialise: Player starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n");
+                    //message
+                    string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
+                    GameManager.instance.messageScript.PlayerMove(text, node, 0, 0, true);
+                }
+                else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
+            }
+            else { Debug.LogError("Invalid player start node (City Hall location)"); }
+        }
+        else { Debug.LogError("Invalid player start node (Not a SPRAWL district)"); }
     }
 
     /// <summary>

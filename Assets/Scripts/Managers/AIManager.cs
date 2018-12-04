@@ -4435,12 +4435,12 @@ public class AIManager : MonoBehaviour
             chance = Mathf.Clamp(chance, 0, 100);
             //put together tooltip string
             builder.AppendFormat("{0}Chance of Being Detected{1}", colourAlert, colourEnd);
-            builder.AppendFormat("{0}{1}<size=95%>Base +{2} </size>{3}", "\n", colourNeutral, hackingDetectBaseChance * 0.1, colourEnd);
+            builder.AppendFormat("{0}<size=95%>Base +{1} </size>", "\n", hackingDetectBaseChance * 0.1);
             if (textMayor.Length > 0) { builder.Append(textMayor); }
             if (textProtocols.Length > 0) { builder.Append(textProtocols); }
             if (textGear.Length > 0) { builder.Append(textGear); }
             if (textStressed.Length > 0) { builder.Append(textStressed); }
-            builder.AppendFormat("{0}{1}<size=95%>Total +{2}</size>{3}", "\n", colourNeutral, chance * 0.1, colourEnd);
+            builder.AppendFormat("{0}{1}<size=95%>Total +{2}{3}</size>", "\n", colourNeutral, chance * 0.1, colourEnd);
             builder.AppendFormat("{0}{1}<size=110%>DETECTION {2} %</size>{3}", "\n", "<mark=#FFFFFF4D>", chance, "</mark>");
             detectText = builder.ToString();
         }
