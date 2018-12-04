@@ -29,11 +29,17 @@ public class ContactManager : MonoBehaviour
     [Tooltip("Confidence level of a Low Effectiveness contact ('1'), eg. % chance of being correct")]
     [Range(1, 100)] public int confidenceLow = 50;
 
-    [Header("Rumours")]
+    [Header("Target Rumours")]
     [Tooltip("Chance of somebody learning about an Active target, per turn")]
     [Range(0, 10)] public int rumourTarget = 5;
     [Tooltip("Maximum number of Target Rumours allowed per turn (avoids a RNG spam)")]
     [Range(1, 5)] public int maxRumoursTarget = 2;
+
+    [Header("Team Spotting")]
+    [Tooltip("Base chance (multiplied by contact effectiveness) of somebody spotting an Authority team in the same node, per turn")]
+    [Range(0, 10)] public int spotTeamChance = 10;
+    [Tooltip("Maximum number of Teams that can be spotted per turn (avoids a RNG spam)")]
+    [Range(1, 5)] public int maxSpotTeam = 2;
 
     private int[] arrayOfContactNetworks;   //use for determining which actor's network of contacts was used
     private Actor[] arrayOfActors;          //used for contact activity. Updated from DataManager.cs each turn

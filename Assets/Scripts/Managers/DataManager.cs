@@ -819,9 +819,8 @@ public class DataManager : MonoBehaviour
     /// returns a list of actors who have a contact at node, Null if none. Resistance Only
     /// </summary>
     /// <param name="nodeID"></param>
-    /// <param name="isCurrentSide"></param>
     /// <returns></returns>
-    public List<int> CheckContactResistanceAtNode(int nodeID, bool isCurrentSide = true)
+    public List<int> CheckContactResistanceAtNode(int nodeID)
     {
         List<int> tempList = null;
         if (dictOfNodeContactsResistance != null)

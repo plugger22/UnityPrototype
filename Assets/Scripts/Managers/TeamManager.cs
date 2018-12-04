@@ -36,6 +36,8 @@ public class TeamManager : MonoBehaviour
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+    private int spotTeamChance = -1;
+    private int maxSpotTeam = -1;
 
     private string colourEffect;
     private string colourTeam;
@@ -54,6 +56,12 @@ public class TeamManager : MonoBehaviour
         //fast acess fields -> BEFORE InitialiseTeams below
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        spotTeamChance = GameManager.instance.contactScript.spotTeamChance;
+        maxSpotTeam = GameManager.instance.contactScript.maxSpotTeam;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(spotTeamChance > -1, "Invalid spotTeamChance (less than Zero)");
+        Debug.Assert(maxSpotTeam > -1, "Invalid maxSpotTeam (less than Zero)");
         //Teams
         int teamArcCount = 0;
         Debug.Assert(listOfTeamPrioritiesHigh != null, "Invalid listOfTeamPrioritiesHigh (Null)");
@@ -164,6 +172,8 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
+        int chance;
+        int tally = 0;
         List<int> teamPool = new List<int>();
         //set turnSide 
         GameManager.instance.turnScript.currentSide = globalAuthority;
@@ -190,6 +200,7 @@ public class TeamManager : MonoBehaviour
         teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap));
         if (teamPool != null)
         {
+
             for (int i = 0; i < teamPool.Count; i++)
             {
                 Team team = GameManager.instance.dataScript.GetTeam(teamPool[i]);
@@ -198,7 +209,6 @@ public class TeamManager : MonoBehaviour
                     //check timer 
                     if (team.timer < 0)
                     {
-
                         //Timer expired, team automatically recalled to InTransit pool
                         Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
                         if (node != null)
@@ -235,6 +245,69 @@ public class TeamManager : MonoBehaviour
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.nodeID)); }
+                    }
+                    else
+                    {
+                        //Check contact team sightings -> Resistance Player only
+                        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                        {
+                            //haven't exceeded max number of team spots allowed per turn
+                            if (tally < maxSpotTeam)
+                            {
+                                //get node
+                                Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                                if (node != null)
+                                {
+                                    //contact at node
+                                    if (node.isContactResistance == true)
+                                    {
+                                        //not within tracer coverage (Resistance player can already see teams, no need to duplicate)
+                                        if (node.isTracerActive == false)
+                                        {
+                                            List<int> listOfActors = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
+                                            if (listOfActors != null)
+                                            {
+                                                //loop actors and check all relevant contacts
+                                                int count = listOfActors.Count;
+                                                if (count > 0)
+                                                {
+                                                    for (int index = 0; index < count; index++)
+                                                    {
+                                                        Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[index]);
+                                                        if (actor != null)
+                                                        {
+                                                            //actor must active
+                                                            if (actor.Status == ActorStatus.Active)
+                                                            {
+                                                                Contact contact = actor.GetContact(node.nodeID);
+                                                                if (contact != null)
+                                                                {
+                                                                    chance = contact.effectiveness * spotTeamChance;
+                                                                    //determine if actor spots team
+                                                                    if (Random.Range(0, 100) < chance)
+                                                                    {
+                                                                        //team spotted -> Messages
+                                                                        Debug.LogFormat("[Cont] TeamManager.cs -> StartTurnLate: {0} {1}, {2} spots {3} Team at {4}, {5}, id {6}{7}", contact.nameFirst,
+                                                                            contact.nameLast, contact.type, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                                                        //update tally of successful spots
+                                                                        tally++;
+                                                                    }
+                                                                }
+                                                                else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                                            }
+                                                        }
+                                                        else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors.actorID {0}", listOfActors[index]); }
+                                                    }
+                                                }
+                                                else { Debug.LogErrorFormat("Invalid listOfActors (Empty) for nodeID {0}", node.nodeID); }
+                                            }
+                                            else { Debug.LogErrorFormat("Invalid listOfActors (Null) for nodeID {0}", node.nodeID); }
+                                        }
+                                    }
+                                }
+                                else { Debug.LogErrorFormat("Invalid node (Null) for team.nodeID {0}", team.nodeID); }
+                            }
+                        }
                     }
                 }
                 else { Debug.LogError(string.Format("Invalid team (null) for TeamID {0}", teamPool[i])); }
