@@ -239,7 +239,8 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// Returns a random contact from the actor's network of contacts (excludes any that have already on the 'ExclusionList' of contactID's). Returns null if can't find any or a problem.
+        /// Returns a random contact from the actor's network of contacts (excludes any that have already on the 'ExclusionList' of contactID's and any non-ACTIVE Contacts). 
+        /// Returns null if can't find any or a problem.
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
@@ -259,20 +260,23 @@ namespace gameAPI
                         contact = networkContact.Value;
                         if (contact != null)
                         {
-                            if (count > 0)
+                            if (contact.status == ContactStatus.Active)
                             {
-                                if (exclusionList.Exists(x => x == contact.contactID) == false)
+                                if (count > 0)
+                                {
+                                    if (exclusionList.Exists(x => x == contact.contactID) == false)
+                                    {
+                                        //add weighted contact
+                                        for (int i = 0; i < contact.effectiveness; i++)
+                                        { tempList.Add(contact); }
+                                    }
+                                }
+                                else
                                 {
                                     //add weighted contact
                                     for (int i = 0; i < contact.effectiveness; i++)
                                     { tempList.Add(contact); }
                                 }
-                            }
-                            else
-                            {
-                                //add weighted contact
-                                for (int i = 0; i < contact.effectiveness; i++)
-                                { tempList.Add(contact); }
                             }
                         }
                         else { Debug.LogError("Invalid contact (Null)"); }

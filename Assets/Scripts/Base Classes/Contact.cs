@@ -24,6 +24,8 @@ public class Contact
     public bool isTurned;               //working for Authority as an informant
 
     //stats
-    [HideInInspector] int statsRumours;     //number of rumours learnt
+    [HideInInspector] public int statsRumours;     //number of target rumours learnt
+    [HideInInspector] public int statsNemesis;     //number of times spotted Nemesis
+    [HideInInspector] public int statsTeams;       //number of times spotted Teams
 
 }

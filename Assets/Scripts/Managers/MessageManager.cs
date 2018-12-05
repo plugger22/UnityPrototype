@@ -1039,6 +1039,51 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// One of Resistance Actor's network of contacts spots an Authority Team
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public Message ContactTeamSpotted(string text, Actor actor, Node node, Contact contact, Team team)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        Debug.Assert(team != null, "Invalid team (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Team_Spotted;
+            message.side = globalResistance;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            message.data3 = team.teamID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s network of contacts spots an Authority TEAM", actor.arc.name);
+            data.topText = string.Format("{0} gets a CALL", actor.actorName);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactTeamSpottedDetails(actor, node, contact, team);
+            data.priority = ItemPriority.Medium;
+            data.sprite = actor.arc.sprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Nemesis spotted by a Resistance Tracer
     /// </summary>
     /// <param name="text"></param>

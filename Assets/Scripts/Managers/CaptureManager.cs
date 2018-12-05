@@ -120,7 +120,7 @@ public class CaptureManager : MonoBehaviour
     private void CapturePlayer(CaptureDetails details, bool isStartOfTurn = false)
     {
         //PLAYER CAPTURED
-        string text = string.Format("Player Captured at \"{0}\", {1} by {2}{3}{4} {5}", details.node.nodeName, details.node.Arc.name, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
+        string text = string.Format("Player Captured at \"{0}\", {1} district by {2}{3}{4} {5}", details.node.nodeName, details.node.Arc.name, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?

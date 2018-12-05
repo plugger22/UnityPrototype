@@ -16,10 +16,10 @@ public class ItemDataManager : MonoBehaviour
     public TextList shortRumourAware;
     [Tooltip("Random pick list used for Actor Rumour message, format '[Contact][shortRumourHeard] there'll be a chance soon to'")]
     public TextList shortRumourAction;
-    [Tooltip("Random pick list used for Nemesis Spotted message, format '[Contact] shortNemesisAware [that they] shortNemesisActoin [a] [Nemesis]")]
-    public TextList shortNemesisAware;
-    [Tooltip("Random pick list used for Nemesis Spotted message, format '[Contact] shortNemesisAware [that they] shortNemesisActoin [a] [Nemesis]")]
-    public TextList shortNemesisAction;
+    [Tooltip("Random pick list used for Nemesis & Team Spotted message, format '[Contact] shortContactAware [that they] shortContactAction [a] [Nemesis / Team]")]
+    public TextList shortContactAware;
+    [Tooltip("Random pick list used for Nemesis & Team Spotted message, format '[Contact] shortContactAware [that they] shortContactAction [a] [Nemesis / Team]")]
+    public TextList shortContactAction;
 
     //fast access
     private GlobalSide globalResistance;
@@ -43,8 +43,12 @@ public class ItemDataManager : MonoBehaviour
         //textlists
         Debug.Assert(shortRumourAware != null, "Invalid shortRumourHeard (Null)");
         Debug.Assert(shortRumourAction != null, "Invalid shortRumourAction (Null)");
+        Debug.Assert(shortContactAware != null, "Invalid shortContactAware (Null)");
+        Debug.Assert(shortContactAction != null, "Invalid shortContactAction (Null)");
         Debug.Assert(shortRumourAware.category.name.Equals("Shorts") == true, "Invalid shortRumourHeard (wrong Category)");
         Debug.Assert(shortRumourAction.category.name.Equals("Shorts") == true, "Invalid shortRumourAction (wrong Category)");
+        Debug.Assert(shortContactAware.category.name.Equals("Shorts") == true, "Invalid shortContactAware (wrong Category)");
+        Debug.Assert(shortContactAction.category.name.Equals("Shorts") == true, "Invalid shortContactAction (wrong Category)");
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
@@ -507,10 +511,30 @@ public class ItemDataManager : MonoBehaviour
     public string GetContactNemesisSpottedDetails(Actor actor, Node node, Contact contact, Nemesis nemesis)
     {
         StringBuilder builder = new StringBuilder();
-        string textAware = shortNemesisAware.GetRandomRecord(false);
-        string textAction = shortNemesisAction.GetRandomRecord(false);
+        string textAware = shortContactAware.GetRandomRecord(false);
+        string textAction = shortContactAction.GetRandomRecord(false);
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// One of actor's network of contacts spots an Authority Team
+    /// </summary>
+    /// <param name=""></param>
+    /// <param name=""></param>
+    /// <param name=""></param>
+    /// <param name=""></param>
+    /// <returns></returns>
+    public string GetContactTeamSpottedDetails(Actor actor, Node node, Contact contact, Team team)
+    {
+        StringBuilder builder = new StringBuilder();
+        string textAware = shortContactAware.GetRandomRecord(false);
+        string textAction = shortContactAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2} team{3}{4}", colourNeutral, team.arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
         return builder.ToString();
@@ -539,9 +563,15 @@ public class ItemDataManager : MonoBehaviour
     public string GetNemesisOngoingEffectDetails(Nemesis nemesis, int search)
     {
         StringBuilder builder = new StringBuilder();
-        //find on invis 1 or 2, colourNeutral, if 3 or less, colourBad
+        //colour code invis detection threshold based on search rating
         string colourSearch = colourNeutral;
-        if (search == 3) { colourSearch = colourBad; }
+        switch (search)
+        {
+            case 3: colourSearch = colourBad; break;
+            case 2: colourSearch = colourNeutral; break;
+            case 1: colourSearch = colourGood; break;
+            default: Debug.LogWarningFormat("Invalid nemesis Search rating \"{0}\"", search); break;
+        }
         builder.AppendFormat("<b>{0}</b> Nemesis is{1}", nemesis.name, "\n");
         NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
         switch (mode)
@@ -1038,9 +1068,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetAICaptureDetails(string actorName, string actorArcName, Node node, Team team)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
         builder.AppendFormat("{0}<b>has been CAPTURED</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
-        builder.AppendFormat("at {0}, {1}{2}{3}by {4} {5}{6}", node.nodeName, node.Arc.name, "\n", colourNeutral, team.arc.name, team.teamName, colourEnd);
+        builder.AppendFormat("at <b>{0}, {1}</b> district{2}by {3}<b>{4} {5}</b>{6}", node.nodeName, node.Arc.name, "\n", colourNeutral, team.arc.name, team.teamName, colourEnd);
         return builder.ToString();
     }
 

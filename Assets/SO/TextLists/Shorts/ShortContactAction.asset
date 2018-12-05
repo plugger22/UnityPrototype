@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortNemesisAction
+  m_Name: ShortContactAction
   m_EditorClassIdentifier: 
   descriptor: 'format ''[Contact] [insists] [that they] ''saw'' [a] [nemesis] [at]
 
-    Used in ContactNemesisSpotted messages
+    Used in ContactNemesis/TeamSpotted messages
 
     Linked to ItemDataManager.cs'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
@@ -31,7 +31,7 @@ MonoBehaviour:
   - eyeballed
   - followed
   - marked
-  - noted the prexence of
+  - noted the presence of
   - spied
   - sat and watched
   - tripped over

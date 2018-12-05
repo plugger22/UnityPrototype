@@ -172,7 +172,6 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        int chance;
         int tally = 0;
         List<int> teamPool = new List<int>();
         //set turnSide 
@@ -206,13 +205,14 @@ public class TeamManager : MonoBehaviour
                 Team team = GameManager.instance.dataScript.GetTeam(teamPool[i]);
                 if (team != null)
                 {
-                    //check timer 
-                    if (team.timer < 0)
+                    Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                    if (node != null)
                     {
-                        //Timer expired, team automatically recalled to InTransit pool
-                        Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
-                        if (node != null)
+                        //check timer 
+                        if (team.timer < 0)
                         {
+                            //Timer expired, team automatically recalled to InTransit pool
+
                             if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
                             {
                                 //Human Authority Player
@@ -243,78 +243,126 @@ public class TeamManager : MonoBehaviour
                                 string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
                                 GameManager.instance.messageScript.TeamAutoRecall(text, node, team);
                             }
+
                         }
-                        else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.nodeID)); }
-                    }
-                    else
-                    {
-                        //Check contact team sightings -> Resistance Player only
-                        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+
+                        else
                         {
-                            //haven't exceeded max number of team spots allowed per turn
-                            if (tally < maxSpotTeam)
+                            //timer O.K
+                            Debug.LogFormat("[Tea] TeamManager.cs -> StartTurnLate: {0} team, id {1} currently at {2}, {3}, id {4}{5}", team.arc.name, team.teamID,
+                                node.nodeName, node.Arc.name, node.nodeID, "\n");
+                            //Check contact team sightings -> Resistance Player only
+                            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                             {
-                                //get node
-                                Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
-                                if (node != null)
+                                if (tally < maxSpotTeam)
                                 {
-                                    //contact at node
-                                    if (node.isContactResistance == true)
-                                    {
-                                        //not within tracer coverage (Resistance player can already see teams, no need to duplicate)
-                                        if (node.isTracerActive == false)
-                                        {
-                                            List<int> listOfActors = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
-                                            if (listOfActors != null)
-                                            {
-                                                //loop actors and check all relevant contacts
-                                                int count = listOfActors.Count;
-                                                if (count > 0)
-                                                {
-                                                    for (int index = 0; index < count; index++)
-                                                    {
-                                                        Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[index]);
-                                                        if (actor != null)
-                                                        {
-                                                            //actor must active
-                                                            if (actor.Status == ActorStatus.Active)
-                                                            {
-                                                                Contact contact = actor.GetContact(node.nodeID);
-                                                                if (contact != null)
-                                                                {
-                                                                    chance = contact.effectiveness * spotTeamChance;
-                                                                    //determine if actor spots team
-                                                                    if (Random.Range(0, 100) < chance)
-                                                                    {
-                                                                        //team spotted -> Messages
-                                                                        Debug.LogFormat("[Cont] TeamManager.cs -> StartTurnLate: {0} {1}, {2} spots {3} Team at {4}, {5}, id {6}{7}", contact.nameFirst,
-                                                                            contact.nameLast, contact.type, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
-                                                                        //update tally of successful spots
-                                                                        tally++;
-                                                                    }
-                                                                }
-                                                                else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); }
-                                                            }
-                                                        }
-                                                        else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors.actorID {0}", listOfActors[index]); }
-                                                    }
-                                                }
-                                                else { Debug.LogErrorFormat("Invalid listOfActors (Empty) for nodeID {0}", node.nodeID); }
-                                            }
-                                            else { Debug.LogErrorFormat("Invalid listOfActors (Null) for nodeID {0}", node.nodeID); }
-                                        }
-                                    }
+                                    if (ProcessContactInteraction(team, node) == true)
+                                    { tally++; }
                                 }
-                                else { Debug.LogErrorFormat("Invalid node (Null) for team.nodeID {0}", team.nodeID); }
                             }
                         }
                     }
+                    else { Debug.LogError(string.Format("Invalid node (null) for TeamID {0} and team.NodeID {1}", teamPool[i], team.nodeID)); }
                 }
                 else { Debug.LogError(string.Format("Invalid team (null) for TeamID {0}", teamPool[i])); }
             }
         }
         else { Debug.LogError("Invalid teamPool (Null) -> no teams with expired timers recalled from OnMap"); }
     }
+
+    /// <summary>
+    /// Checks each onMap team to see if they are spotted by a contact at the same node. Returns true if team spotted, false otherwise
+    /// Team and Node checked for Null by calling method
+    /// </summary>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    private bool ProcessContactInteraction(Team team, Node node)
+    {
+        int chance, rndNum;
+        bool isSpotted = false;
+        //contact at node
+        if (node.isContactResistance == true)
+        {
+            //not within tracer coverage (Resistance player can already see teams, no need to duplicate)
+            if (node.isTracerActive == false)
+            {
+                List<int> listOfActors = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
+                if (listOfActors != null)
+                {
+                    //loop actors and check all relevant contacts
+                    int count = listOfActors.Count;
+                    if (count > 0)
+                    {
+                        for (int index = 0; index < count; index++)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[index]);
+                            if (actor != null)
+                            {
+                                //actor must active
+                                if (actor.Status == ActorStatus.Active)
+                                {
+                                    Contact contact = actor.GetContact(node.nodeID);
+                                    if (contact != null)
+                                    {
+                                        if (contact.status == ContactStatus.Active)
+                                        {
+                                            chance = contact.effectiveness * spotTeamChance;
+                                            //determine if actor spots team
+                                            rndNum = Random.Range(0, 100);
+                                            if (rndNum < chance)
+                                            {
+                                                //team spotted
+                                                isSpotted = true;
+                                                //check contact reliabiity -> if not use a random neighbouring node
+                                                Node nodeMsg;
+                                                if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
+                                                { nodeMsg = node.GetRandomNeighbour(); }
+                                                else { nodeMsg = node; }
+                                                //message
+                                                Debug.LogFormat("[Cont] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} spots {3} team at {4}, {5}, id {6}{7}", contact.nameFirst,
+                                                    contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                                string text = string.Format("{0} team, id {1}, has been spotted by Contact {2} {3}, {4}, at district {5}, id {6}", team.teamName, team.teamID, 
+                                                    contact.nameFirst, contact.nameLast, contact.job, node.nodeName, node.nodeID);
+                                                GameManager.instance.messageScript.ContactTeamSpotted(text, actor, nodeMsg, contact, team);
+                                                //update contact stats
+                                                contact.statsTeams++;
+                                            }
+                                            else
+                                            {
+                                                Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} FAILS TO spot {3} Team at {4}, {5}, id {6} (need {7}, rolled {8}){9}",
+                                                    contact.nameFirst, contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, chance, rndNum, "\n");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} INACTIVE & doesn't spot {3} Team at {4}, {5}, id {6}{7}",
+                                                contact.nameFirst, contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                        }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors.actorID {0}", listOfActors[index]); }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfActors (Empty) for nodeID {0}", node.nodeID); }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfActors (Null) for nodeID {0}", node.nodeID); }
+            }
+            else
+            {
+                Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: No Contact Spotting as WITHIN TRACER COvERAGE at {0}, {1}, id {2} for {3} team, id {4}{5}",
+                    node.nodeName, node.Arc.name, node.nodeID, team.arc.name, team.teamID, "\n");
+            }
+        }
+        else
+        {
+            Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: No Contact Spotting as NO CONTACT at {0}, {1}, id {2} for {3} team, id {4}{5}", node.nodeName, node.Arc.name,
+         node.nodeID, team.arc.name, team.teamID, "\n");
+        }
+        return isSpotted;
+    }
+
 
     /// <summary>
     /// Sets up intial Reserve pool of teams and related collections
@@ -1304,14 +1352,17 @@ public class TeamManager : MonoBehaviour
                 //deletes any KNOWN Resistance contacts
                 if (node.isContactKnown == true)
                 {
-                    int numRemoved = GameManager.instance.dataScript.RemoveContactsNode(node.nodeID, "due to an ERASURE Team", false, globalResistance);
-                    if (numRemoved > 0)
+                    if (node.isContactResistance == true)
                     {
-                        //message
-                        text = string.Format("{0} {1}: {2} known Contact{3} ERASED at {4}, {5}", team.arc.name, team.teamName, numRemoved, numRemoved != 1 ? "s" : "", node.nodeName, node.Arc.name);
-                        itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
-                        effectText = string.Format("{0}{1} Resistance Contact{2} ERASED{3}", colourGood, numRemoved, numRemoved != 1 ? "s" : "", colourEnd);
-                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                        int numRemoved = GameManager.instance.dataScript.RemoveContactsNode(node.nodeID, "due to an ERASURE Team", false, globalResistance);
+                        if (numRemoved > 0)
+                        {
+                            //message
+                            text = string.Format("{0} {1}: {2} known Contact{3} ERASED at {4}, {5}", team.arc.name, team.teamName, numRemoved, numRemoved != 1 ? "s" : "", node.nodeName, node.Arc.name);
+                            itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                            effectText = string.Format("{0}{1} Resistance Contact{2} ERASED{3}", colourGood, numRemoved, numRemoved != 1 ? "s" : "", colourEnd);
+                            GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                        }
                     }
                     else
                     {
@@ -1320,8 +1371,8 @@ public class TeamManager : MonoBehaviour
                         itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                         effectText = string.Format("{0}Zero KNOWN Resistance Contacts ERASED{1}", colourNeutral, colourEnd);
                         GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
-                        //error condition -> shouldn't happen
-                        Debug.LogWarningFormat("Zero Known contacts at nodeID {0} Erased by teamID {1}{2}", node.nodeID, team.teamID, "\n");
+                        /*//error condition -> shouldn't happen
+                        Debug.LogWarningFormat("Zero Known contacts at nodeID {0} Erased by teamID {1}{2}", node.nodeID, team.teamID, "\n");*/
                     }
                     //Authority no longer has any knowledge of contacts at node
                     node.isContactKnown = false;

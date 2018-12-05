@@ -169,13 +169,14 @@ public class PlayerManager : MonoBehaviour
         int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
         if (nodeArcID > -1)
         {
-            if (nodeArcID != GameManager.instance.cityScript.cityHallDistrictID)
+            Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
+            if (node != null)
+            { nodeID = node.nodeID; }
+            else
+            { Debug.LogWarning("PlayerManager: Invalid Player starting node (Null). Player placed in node '0' by default"); }
+            //can't be at City Hall (Nemesis starting location) -> not possible as not a SPRAWL district but check anyway
+            if (nodeID != GameManager.instance.cityScript.cityHallDistrictID)
             {
-                Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
-                if (node != null)
-                { nodeID = node.nodeID; }
-                else
-                { Debug.LogWarning("PlayerManager: Invalid Player starting node (Null). Player placed in node '0' by default"); }
                 Node nodeTemp = GameManager.instance.dataScript.GetNode(nodeID);
                 if (nodeTemp != null)
                 {
@@ -190,9 +191,9 @@ public class PlayerManager : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
             }
-            else { Debug.LogError("Invalid player start node (City Hall location)"); }
+            else { Debug.LogError("Invalid player start node (Not a SPRAWL district)"); }
         }
-        else { Debug.LogError("Invalid player start node (Not a SPRAWL district)"); }
+        else { Debug.LogError("Invalid player start node (City Hall location)"); }
     }
 
     /// <summary>

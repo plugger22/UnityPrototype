@@ -1590,6 +1590,7 @@ MonoBehaviour:
   chanceTracerSpotLow: 50
   chanceTracerSpotZero: 100
   nemesis: {fileID: 0}
+  isShown: 0
 --- !u!114 &114621988062562700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1948,7 +1949,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 14932
+  seed: 46965
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
@@ -1968,8 +1969,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shortRumourAware: {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
   shortRumourAction: {fileID: 11400000, guid: 3b6cb7fa1bf12e944aa1290eed955b2b, type: 2}
-  shortNemesisAware: {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
-  shortNemesisAction: {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
+  shortContactAware: {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
+  shortContactAction: {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
 --- !u!114 &114785469297181100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2066,6 +2067,8 @@ MonoBehaviour:
   confidenceLow: 25
   rumourTarget: 10
   maxRumoursTarget: 2
+  spotTeamChance: 10
+  maxSpotTeam: 2
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1

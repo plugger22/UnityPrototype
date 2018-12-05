@@ -928,27 +928,33 @@ public class NemesisManager : MonoBehaviour
                             contact = actor.GetContact(nemesisNode.nodeID);
                             if (contact != null)
                             {
-                                //check nemesis stealth rating vs. contact effectiveness
-                                if (contact.effectiveness >= stealthRating)
+                                //contact active
+                                if (contact.status == ContactStatus.Active)
                                 {
-                                    //check contact reliabiity -> if not use a random neighbouring node
-                                    Node node = nemesisNode;
-                                    if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
-                                    { node = nemesisNode.GetRandomNeighbour(); }
-                                    //contact spots Nemesis
-                                    string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
-                                        contact.job, node.nodeName, node.nodeID);
-                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
-                                        contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
-                                    GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
-                                    //no need to check anymore as one sighting is enough
-                                    break;
-                                }
-                                else
-                                {
-                                    //contact Fails to spot Nemesis
-                                    Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
-                                        contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
+                                    //check nemesis stealth rating vs. contact effectiveness
+                                    if (contact.effectiveness >= stealthRating)
+                                    {
+                                        //check contact reliabiity -> if not use a random neighbouring node
+                                        Node node = nemesisNode;
+                                        if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
+                                        { node = nemesisNode.GetRandomNeighbour(); }
+                                        //contact spots Nemesis
+                                        string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
+                                            contact.job, node.nodeName, node.nodeID);
+                                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
+                                            contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
+                                        GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
+                                        //contact stats
+                                        contact.statsNemesis++;
+                                        //no need to check anymore as one sighting is enough
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        //contact Fails to spot Nemesis
+                                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                            contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
+                                    }
                                 }
                             }
                             else
