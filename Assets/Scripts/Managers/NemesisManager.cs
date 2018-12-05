@@ -377,8 +377,12 @@ public class NemesisManager : MonoBehaviour
                         Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: isNewGoal True -> Recent ACTIVITY -> Switch Mode to HUNT{0}", "\n");
                         SetNemesisMode(NemesisMode.HUNT, turnDifference);
                         ProcessNemesisHunt();
-                        string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
-                        GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                        //Chance nemesis could catch player in ProcessNemesisHunt -> MoveTo and revert to Null if no follow-on nemesis
+                        if (nemesis != null)
+                        {
+                            string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
+                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                        }
                         
                     }
                 }
