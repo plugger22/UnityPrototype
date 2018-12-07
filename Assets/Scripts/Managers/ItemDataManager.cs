@@ -1169,7 +1169,7 @@ public class ItemDataManager : MonoBehaviour
             builder.AppendFormat("{0}<b>{1}</b>{2}", colourSide, warning, colourEnd);
         }
         if (duration > 0)
-        { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
+        { builder.AppendFormat("{0}{1}<b>Duration {2}{3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (protocolLevelNew > 0)
         { builder.AppendFormat("{0}{1}{2} AI Security Protocol now <b>Level {3}</b>{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd);  }
         return builder.ToString();
@@ -1198,7 +1198,7 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(description) == false)
         { builder.AppendFormat("{0}", description); }
         if (duration > 0)
-        { builder.AppendFormat("{0}{1}{2}<b>Duration {3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
+        { builder.AppendFormat("{0}{1}<b>Duration {2}{3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
         { builder.AppendFormat("{0}{1}{2}<b>City Loyalty {3}{4}</b>{5}", "\n", "\n", duration > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
         if (crisisAdjust != 0)
@@ -1231,10 +1231,23 @@ public class ItemDataManager : MonoBehaviour
     /// <param name=""></param>
     /// <param name=""></param>
     /// <returns></returns>
-    public string GetDecisionOngoingEffectDetails(string topText, string bottomText)
+    public string GetDecisionOngoingEffectDetails(string topText, string middleText, string bottomText)
     {
         StringBuilder builder = new StringBuilder();
-
+        if (string.IsNullOrEmpty(topText) == false)
+        { builder.AppendFormat("<b>{0}</b>", topText, "\n", "\n"); }
+        if (string.IsNullOrEmpty(middleText) == false)
+        {
+            if (builder.Length > 0)
+            { builder.AppendLine(); builder.AppendLine(); }
+            builder.Append(middleText);
+        }
+        if (string.IsNullOrEmpty(bottomText) == false)
+        {
+            if (builder.Length > 0)
+            { builder.AppendLine(); builder.AppendLine(); }
+            builder.AppendFormat("<b>{0}</b>", bottomText);
+        }
         return builder.ToString();
     }
 

@@ -1817,7 +1817,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="bottomText"></param>
     /// <param name="aiDecID"></param>
     /// <returns></returns>
-    public Message DecisionOngoingEffect(string text, string itemText, string topText, string bottomText, int aiDecID)
+    public Message DecisionOngoingEffect(string text, string itemText, string topText, string middleText, string bottomText, int aiDecID)
     {
         Debug.Assert(aiDecID > -1, "Invalid aiDecID (less than Zeros)");
         Debug.Assert(string.IsNullOrEmpty(itemText) == false, "Invalid itemText (Null or Empty)");
@@ -1833,7 +1833,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "Nemesis Status";
-            data.bottomText = GameManager.instance.itemDataScript.GetDecisionOngoingEffectDetails(topText, bottomText);
+            data.bottomText = GameManager.instance.itemDataScript.GetDecisionOngoingEffectDetails(topText, middleText, bottomText);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.Effects;

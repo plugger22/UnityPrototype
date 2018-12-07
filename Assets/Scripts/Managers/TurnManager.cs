@@ -331,7 +331,8 @@ public class TurnManager : MonoBehaviour
                 Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
-
+        //Ongoing effects from AI Decisions
+        GameManager.instance.aiScript.ProcessOngoingEffects();
     }
 
     /// <summary>

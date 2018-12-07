@@ -4801,6 +4801,93 @@ public class AIManager : MonoBehaviour
         return builder.ToString();
     }*/
 
+    /// <summary>
+    /// provide Ongoing effect msg's in the infoApp for any relevant active decisions
+    /// </summary>
+    public void ProcessOngoingEffects()
+    {
+        int aiDecID;
+        string text, itemText, topText, middleText, bottomText/* ,colourEffect*/;
+
+        /*//side dependant colour
+        colourEffect = colourAlert;
+        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+        { colourEffect = colourGood; }*/
+
+        //
+        // - - - Network decisions - - -
+        //
+        //Screamer
+        if (isScreamer == true)
+        {
+            aiDecID = decisionScreamer.aiDecID;
+            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}{3}", decisionScreamer.name.ToUpper(), timerScreamer, timerScreamer != 1 ? "s" : "", "\n");
+            itemText = string.Format("AI hacking countermeasure {0} in force", decisionScreamer.name.ToUpper());
+            topText = decisionScreamer.descriptor;
+            middleText = string.Format("{0}{1}{2}", colourAlert, decisionScreamer.tooltipDescriptor, colourEnd);
+            bottomText = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerScreamer, timerScreamer != 1 ? "s" : "", colourEnd);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+        }
+        //Traceback
+        if (isTraceBack == true)
+        {
+            aiDecID = decisionTraceBack.aiDecID;
+            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}{3}", decisionTraceBack.name.ToUpper(), timerTraceBack, timerTraceBack != 1 ? "s" : "", "\n");
+            itemText = string.Format("AI hacking countermeasure {0} in force", decisionTraceBack.name.ToUpper());
+            topText = decisionTraceBack.descriptor;
+            middleText = string.Format("{0}{1}{2}", colourAlert, decisionTraceBack.tooltipDescriptor, colourEnd);
+            bottomText = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerTraceBack, timerTraceBack != 1 ? "s" : "", colourEnd);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+        }
+        //Offline
+        if (isOffline == true)
+        {
+            aiDecID = decisionOffline.aiDecID;
+            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}{3}", decisionOffline.name.ToUpper(), timerOffline, timerOffline != 1 ? "s" : "", "\n");
+            itemText = string.Format("AI hacking countermeasure {0} in force", decisionOffline.name.ToUpper());
+            topText = decisionOffline.descriptor;
+            middleText = string.Format("{0}{1}{2}", colourAlert, decisionOffline.tooltipDescriptor, colourEnd);
+            bottomText = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerOffline, timerOffline != 1 ? "s" : "", colourEnd);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+        }
+        //
+        // - - - Security decisions - - -
+        //
+        switch (GameManager.instance.turnScript.authoritySecurityState)
+        {
+            case AuthoritySecurityState.APB:
+                aiDecID = decisionAPB.aiDecID;
+                text = string.Format("AI Security countermeasure {0} in place{1}", decisionAPB.name.ToUpper(), "\n");
+                itemText = string.Format("AI Security countermeasure {0} in force", decisionAPB.name.ToUpper());
+                topText = decisionAPB.descriptor;
+                middleText = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
+                bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                break;
+            case AuthoritySecurityState.SecurityAlert:
+                aiDecID = decisionSecAlert.aiDecID;
+                text = string.Format("AI Security countermeasure {0} in place{1}", decisionSecAlert.name.ToUpper(), "\n");
+                itemText = string.Format("AI Security countermeasure {0} in force", decisionSecAlert.name.ToUpper());
+                topText = decisionSecAlert.descriptor;
+                middleText = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
+                bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                break;
+            case AuthoritySecurityState.SurveillanceCrackdown:
+                aiDecID = decisionCrackdown.aiDecID;
+                text = string.Format("AI Security countermeasure {0} in place{1}", decisionCrackdown.name.ToUpper(), "\n");
+                itemText = string.Format("AI Security countermeasure {0} in force", decisionCrackdown.name.ToUpper());
+                topText = decisionCrackdown.descriptor;
+                middleText = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
+                bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
+                break;
+            
+        }
+    }
 
 
     //new methods above here

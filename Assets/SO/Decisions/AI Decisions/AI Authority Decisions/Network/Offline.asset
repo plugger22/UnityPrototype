@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: Offline
   m_EditorClassIdentifier: 
   descriptor: AI isolates itself from all external access
-  tooltipDescriptor: 'AI will be Offline for a short while and cannot be Hacked. '
+  warning: 
+  tooltipDescriptor: AI will be Offline for a short while and <b>Cannot be Hacked</b>
   type: {fileID: 11400000, guid: 69c9367e7434c194c9e9179f5c4403e2, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 3
