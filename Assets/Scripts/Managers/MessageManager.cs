@@ -1201,6 +1201,7 @@ public class MessageManager : MonoBehaviour
     // - - - AI - - -
     //
 
+
     /// <summary>
     /// AI notification of a Player move if they were spotted, returns Null if text invalid
     /// </summary>
@@ -1797,6 +1798,45 @@ public class MessageManager : MonoBehaviour
             data.priority = ItemPriority.Low;
             data.sprite = mayor.sprite;
             data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Ongoing decision effects
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="itemText"></param>
+    /// <param name="topText"></param>
+    /// <param name="bottomText"></param>
+    /// <param name="aiDecID"></param>
+    /// <returns></returns>
+    public Message DecisionOngoingEffect(string text, string itemText, string topText, string bottomText, int aiDecID)
+    {
+        Debug.Assert(aiDecID > -1, "Invalid aiDecID (less than Zeros)");
+        Debug.Assert(string.IsNullOrEmpty(itemText) == false, "Invalid itemText (Null or Empty)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Decision;
+            message.side = globalBoth;
+            message.data0 = aiDecID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = itemText;
+            data.topText = "Nemesis Status";
+            data.bottomText = GameManager.instance.itemDataScript.GetDecisionOngoingEffectDetails(topText, bottomText);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.Effects;
             data.side = message.side;
             data.help = 1;
             //add

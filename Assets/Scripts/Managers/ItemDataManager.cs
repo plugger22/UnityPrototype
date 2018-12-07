@@ -1216,12 +1216,25 @@ public class ItemDataManager : MonoBehaviour
     public string GetDecisionConnectionDetails(Connection connection, ConnectionType secLevel)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("Connection between {0}{1}{2} and {3}{4}{5} districts", colourNeutral, connection.node1.nodeName, colourEnd, colourNeutral, connection.node2.nodeName, colourEnd);
+        builder.AppendFormat("Connection between {0}<b>{1}</b>{2} and {3}<b>{4}</b>{5} districts", colourNeutral, connection.node1.nodeName, colourEnd, colourNeutral, connection.node2.nodeName, colourEnd);
         builder.AppendLine(); builder.AppendLine();
         string colourSecurity = colourBad;
         if (secLevel == ConnectionType.MEDIUM) { colourSecurity = colourNeutral; }
         else if (secLevel == ConnectionType.LOW) { colourSecurity = colourGood; }
         builder.AppendFormat("Security level now {0}<b>{1}</b>{2}", colourSecurity, secLevel, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Ongoing decision effect
+    /// </summary>
+    /// <param name=""></param>
+    /// <param name=""></param>
+    /// <returns></returns>
+    public string GetDecisionOngoingEffectDetails(string topText, string bottomText)
+    {
+        StringBuilder builder = new StringBuilder();
+
         return builder.ToString();
     }
 
