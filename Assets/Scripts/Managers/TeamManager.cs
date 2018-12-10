@@ -327,17 +327,17 @@ public class TeamManager : MonoBehaviour
                                                 //update contact stats
                                                 contact.statsTeams++;
                                             }
-                                            else
+                                            /*else
                                             {
                                                 Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} FAILS TO spot {3} Team at {4}, {5}, id {6} (need {7}, rolled {8}){9}",
                                                     contact.nameFirst, contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, chance, rndNum, "\n");
-                                            }
+                                            }*/
                                         }
-                                        else
+                                        /*else
                                         {
                                             Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} INACTIVE & doesn't spot {3} Team at {4}, {5}, id {6}{7}",
                                                 contact.nameFirst, contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
-                                        }
+                                        }*/
                                     }
                                     else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                 }
@@ -349,17 +349,17 @@ public class TeamManager : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("Invalid listOfActors (Null) for nodeID {0}", node.nodeID); }
             }
-            else
+            /*else
             {
                 Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: No Contact Spotting as WITHIN TRACER COvERAGE at {0}, {1}, id {2} for {3} team, id {4}{5}",
                     node.nodeName, node.Arc.name, node.nodeID, team.arc.name, team.teamID, "\n");
-            }
+            }*/
         }
-        else
+        /*else
         {
             Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnLate: No Contact Spotting as NO CONTACT at {0}, {1}, id {2} for {3} team, id {4}{5}", node.nodeName, node.Arc.name,
          node.nodeID, team.arc.name, team.teamID, "\n");
-        }
+        }*/
         return isSpotted;
     }
 

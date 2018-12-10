@@ -3319,7 +3319,7 @@ public class AIManager : MonoBehaviour
         timerPolicy = aiPolicyTimer;
         policyName = task.name0;
         policyEffectCrisis = nodeCrisisModifier;
-        policyEffectLoyalty = cityLoyalty;
+        policyEffectLoyalty = loyaltyChange;
         //trait -> PolicyWonk
         if (city.mayor.CheckTraitEffect(aiPolicyTimerDoubled) == true)
         {
@@ -3568,7 +3568,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack);
         string itemText = "AI TRACEBACK countermeasures implemented";
         string warning = "Hacker's Location revealed if detected";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerTraceBack);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerTraceBack - 1);
         return isTraceBack;
     }
 
@@ -3587,7 +3587,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer);
         string itemText = "AI SCREAMER countermeasures implemented";
         string warning = "Hacker, if detected, becomes <b>STRESSED</b>";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerScreamer);
+        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerScreamer - 1);
         return isScreamer;
     }
 
@@ -3603,7 +3603,7 @@ public class AIManager : MonoBehaviour
         { timerOffline = aiCounterMeasureTimer * 2; }
         else { timerOffline = aiCounterMeasureTimer; }
         //Message
-        string msgText = string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline);
+        string msgText = string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline - 1);
         string itemText = "AI OFFLINE countermeasures implemented";
         string warning = "AI cannot be hacked";
         GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerOffline);
@@ -3842,7 +3842,6 @@ public class AIManager : MonoBehaviour
             { CancelPolicy(); }
             else
             {
-                
                 if (string.IsNullOrEmpty(policyName) == false)
                 {
                     int aiDecID = GameManager.instance.dataScript.GetAIDecisionID(policyName);
@@ -4887,6 +4886,9 @@ public class AIManager : MonoBehaviour
                 middleText = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
                 bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                break;
+            case AuthoritySecurityState.Normal:
+                //Nothing happens here but needed to avoid triggering default statement
                 break;
             default:
                 Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);

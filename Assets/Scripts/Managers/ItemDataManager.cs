@@ -1200,7 +1200,7 @@ public class ItemDataManager : MonoBehaviour
         if (duration > 0)
         { builder.AppendFormat("{0}{1}<b>Duration {2}{3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
-        { builder.AppendFormat("{0}{1}{2}<b>City Loyalty {3}{4}</b>{5}", "\n", "\n", duration > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
+        { builder.AppendFormat("{0}{1}{2}<b>City Loyalty {3}{4}</b>{5}", "\n", "\n", loyaltyAdjust > 0 ? colourStart : colourFinish, loyaltyAdjust > 0 ? "+" : "", loyaltyAdjust, colourEnd); }
         if (crisisAdjust != 0)
         { builder.AppendFormat("{0}{1}{2}<b>District Crisis {3}% less likely</b>{4}", "\n", "\n", colourCrisis, crisisAdjust, colourEnd); }
         return builder.ToString();
@@ -1272,20 +1272,20 @@ public class ItemDataManager : MonoBehaviour
         if (changeInLoyalty > 0)
         {
             //loyalty increases
-            builder.AppendFormat("{0}{1}{2}<b>Loyalty now {3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}<b>Loyalty now {2}{3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
             //change
-            builder.AppendFormat("Loyalty increased by {0}<b>+{1}</b>{2}", colourSideGood, changeInLoyalty, colourEnd);
+            builder.AppendFormat("<b>Loyalty increased by {0}+{1}</b>{2}", colourSideGood, changeInLoyalty, colourEnd);
         }
         else
         {
             //loyalty decresed
-            builder.AppendFormat("{0}{1}{2}<b>Loyalty now {3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}<b>Loyalty now {2}{3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
             //change
-            builder.AppendFormat("Loyalty decreased by {0}<b>{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
+            builder.AppendFormat("<b>Loyalty decreased by {0}{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
         }
         //reason
         if (string.IsNullOrEmpty(reason) == false)
-        { builder.AppendFormat("{0}{1}due to {2}{3}{4}", "\n", "\n", colourNeutral, reason, colourEnd); }
+        { builder.AppendFormat("{0}{1}due to {2}<b>{3}</b>{4}", "\n", "\n", colourNeutral, reason, colourEnd); }
         return builder.ToString();
     }
 
