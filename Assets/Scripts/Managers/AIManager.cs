@@ -3352,7 +3352,7 @@ public class AIManager : MonoBehaviour
         else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.data2); }
         //admin
         string msgText = string.Format("Authority implements {0} policy", policyName);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.data2, timerPolicy, loyaltyChange, nodeCrisisModifier);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.data2, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
         msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
         string reasonText = string.Format("{0} policy", policyName);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
@@ -3842,17 +3842,28 @@ public class AIManager : MonoBehaviour
             { CancelPolicy(); }
             else
             {
-                //warning notification
-                msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
-                string itemText = string.Format("City Wide {0} policy in force", policyName);
-                string reason = string.Format("{0} policy, {1} turn{2} remaining{3}{4}", policyName, timerPolicy, timerPolicy != 1 ? "s" : "", "\n", "\n");
-                string warning = string.Format("District Crisis chance -{0} %", policyEffectCrisis);
-                //display warning as Red normally, Green if player is Authority
-                bool isBad = true;
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                { isBad = false; }
-                else { GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Policy In Force", reason, warning, false, isBad); }
-                Debug.LogFormat("[Aim] -> UpdateCounterMeasureTimers: timerPolicy now {0}{1}", timerPolicy, "\n");
+                
+                if (string.IsNullOrEmpty(policyName) == false)
+                {
+                    int aiDecID = GameManager.instance.dataScript.GetAIDecisionID(policyName);
+                    if (aiDecID > -1)
+                    {
+                        DecisionAI policy = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+                        if (policy != null)
+                        {
+                            //ongoing effect message
+                            msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
+                            string itemText = string.Format("City Wide {0} policy in force", policyName);
+                            string topText = policy.descriptor;
+                            string middleText = string.Format("{0}{1}{2}", colourAlert, policy.tooltipDescriptor, colourEnd);
+                            string bottomText = string.Format("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, timerPolicy, timerPolicy != 1 ? "s" : "", colourEnd);
+                            GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, aiDecID);
+                        }
+                        else { Debug.LogErrorFormat("Invalid policy (Null) for aiDecID {0}", aiDecID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid aiDecID (-1) for policyName \"{0}\"", policyName); }
+                }
+                else { Debug.LogError("Invalid policyName (Null)"); }
             }
         }
         //Handout
@@ -4803,17 +4814,12 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// provide Ongoing effect msg's in the infoApp for any relevant active decisions
+    /// NOTE: NodeCrisis policies (max one active) are done via AIManager.cs -> UpdateCounterMeasureTimers
     /// </summary>
     public void ProcessOngoingEffects()
     {
         int aiDecID;
         string text, itemText, topText, middleText, bottomText/* ,colourEffect*/;
-
-        /*//side dependant colour
-        colourEffect = colourAlert;
-        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
-        { colourEffect = colourGood; }*/
-
         //
         // - - - Network decisions - - -
         //
