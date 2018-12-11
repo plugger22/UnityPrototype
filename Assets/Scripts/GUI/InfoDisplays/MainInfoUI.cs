@@ -1119,12 +1119,21 @@ public class MainInfoUI : MonoBehaviour
         //can't do on first turn (needs to be initialised at least once) or if already running
         if (currentTurn > 0 && isRunning == false)
         {
-            MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
-            if (data != null)
+            //only if player is active
+            if (GameManager.instance.playerScript.status == ActorStatus.Active)
             {
-                SetMainInfo(data);
+                MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
+                if (data != null)
+                {
+                    SetMainInfo(data);
+                }
+                else { Debug.LogWarning("Invalid MainInfoData (Null)"); }
             }
-            else { Debug.LogWarning("Invalid MainInfoData (Null)"); }
+            else
+            {
+                //outcome message explaining why not
+                GameManager.instance.guiScript.SetAlertMessage(AlertType.PlayerStatus);
+            }
         }
     }
 

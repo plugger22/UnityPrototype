@@ -195,15 +195,15 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerMoveDetails(Node node, int changeInvisibility, int aiDelay)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2} now at{3}{4}", colourNeutral, GameManager.instance.playerScript.PlayerName, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}, a {1}{2}{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        builder.AppendFormat("{0}<b>{1}</b>{2} now at{3}{4}", colourNeutral, GameManager.instance.playerScript.PlayerName, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}, a {1}<b>{2}</b>{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         if (GameManager.instance.optionScript.debugData == true)
         { builder.AppendFormat(", ID {0}", node.nodeID); }
         if (changeInvisibility != 0)
         {
-            builder.AppendFormat("{0}{1}{2}Player SPOTTED{3}<b>Invisibility {4}</b>{5}", "\n", "\n", colourBad, "\n", changeInvisibility, colourEnd);
+            builder.AppendFormat("{0}{1}{2}<b>Player SPOTTED{3}Invisibility {4}</b>{5}", "\n", "\n", colourBad, "\n", changeInvisibility, colourEnd);
             if (aiDelay > 0)
-            { builder.AppendFormat("{0}{1}Authority will know in {2}<b>{3}</b>{4}{5} turn{6}{7}", "\n", colourAlert, colourNeutral, aiDelay, colourEnd, colourAlert, aiDelay != 1 ? "s" : "", colourEnd); }
+            { builder.AppendFormat("{0}{1}{2}<b>Authority will know in {3}{4}{5}{6} turn{7}</b>{8}", "\n", "\n", colourAlert, colourNeutral, aiDelay, colourEnd, colourAlert, aiDelay != 1 ? "s" : "", colourEnd); }
         }
         return builder.ToString();
     }
@@ -243,7 +243,7 @@ public class ItemDataManager : MonoBehaviour
         {
             //Player
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("{0}{1}, PLAYER{2}{3}{4}{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
+            { builder.AppendFormat("<b>{0}{1}, PLAYER</b>{2}{3}<b>{4}</b>{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
             builder.AppendFormat("{0}PLAYER{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, GameManager.instance.playerScript.status, colourEnd);
         }
         else
@@ -251,7 +251,7 @@ public class ItemDataManager : MonoBehaviour
             //Actor
             if (string.IsNullOrEmpty(reason) == false)
             { builder.AppendFormat("{0}, {1}{2}{3}{4}{5}{6}{7}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", reason, "\n", "\n"); }
-            builder.AppendFormat("{0}{1}{2} status now {3}<b>{4}</b>{5}", colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd);
+            builder.AppendFormat("{0}<b>{1}</b>{2} status now {3}<b>{4}</b>{5}", colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd);
         }
         if (string.IsNullOrEmpty(details) == false)
         { builder.AppendFormat("{0}{1}{2}", "\n", "\n", details); }
@@ -1502,7 +1502,7 @@ public class ItemDataManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player
-                builder.AppendFormat("{0}, PLAYER{1}{2}", GameManager.instance.playerScript.PlayerName, "\n", "\n");
+                builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
             }
             else
             {
@@ -1510,7 +1510,7 @@ public class ItemDataManager : MonoBehaviour
                 if (actor != null)
                 {
                     //actor
-                    builder.AppendFormat("{0}, {1}{2}{3}", actor.actorName, actor.arc.name, "\n", "\n");
+                    builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
                 }
                 else { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", actorID); }
             }
@@ -1518,7 +1518,7 @@ public class ItemDataManager : MonoBehaviour
         else if (node != null)
         {
             //node
-            builder.AppendFormat("{0}, {1}, district{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
+            builder.AppendFormat("{0}, {1}<b>{2}</b>{3}, district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         }
         //details
         if (string.IsNullOrEmpty(detailsTop) == false)

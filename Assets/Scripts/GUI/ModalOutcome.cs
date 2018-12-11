@@ -119,6 +119,9 @@ public class ModalOutcome : MonoBehaviour
     {
         if (details != null)
         {
+            //exit any generic or node tooltips
+            GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
+            GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             reason = details.reason;
             //set modal true
             GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);

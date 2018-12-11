@@ -321,17 +321,17 @@ public class GUIManager : MonoBehaviour
                 switch (GameManager.instance.playerScript.status)
                 {
                     case ActorStatus.Captured:
-                        details.textTop = string.Format("This action can't be taken because the Player has been {0}Captured{1}", colourBad, colourEnd);
+                        details.textTop = string.Format("This action can't be taken because you have been {0}Captured{1}", colourBad, colourEnd);
                         break;
                     case ActorStatus.Inactive:
                         switch (GameManager.instance.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
-                                details.textTop = string.Format("This action can't be taken because the Player is undergoing a {0}Breakdown{1} (Stress)",
+                                details.textTop = string.Format("This action can't be taken because you are undergoing a {0}Breakdown{1} (Stress)",
                                     colourBad, colourEnd);
                                 break;
-                            default:
-                                details.textTop = string.Format("{0}This action can't be taken because the Player is indisposed{1}", colourAlert, colourEnd);
+                            case ActorInactive.LieLow:
+                                details.textTop = string.Format("This action can't be taken because you are {0}Lying Low{1}", colourNeutral, colourEnd);
                                 break;
                         }
                         break;

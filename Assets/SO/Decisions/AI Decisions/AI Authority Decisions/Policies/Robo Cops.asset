@@ -11,11 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
   m_Name: Robo Cops
   m_EditorClassIdentifier: 
-  descriptor: AI puts Robo Cops onto the streets
+  descriptor: Mayor puts Robo Cops onto the streets
+  warning: 
   tooltipDescriptor: Fully autonomous RoboCops will patrol the city. <b>City Loyalty</b>
     will decrease. The chance of a district having a <b>Crisis</b> will lessen. <b>Medium
     impact</b>
   type: {fileID: 11400000, guid: 5175eb9926cb3ed488c0dae40930a76d, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 2
-  aiDecID: 10
+  aiDecID: 17

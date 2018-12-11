@@ -5,6 +5,7 @@ using UnityEngine;
 using gameAPI;
 using packageAPI;
 using System.Text;
+using modalAPI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -368,7 +369,41 @@ public class TurnManager : MonoBehaviour
     public void InitialiseInfoApp(GlobalSide playerSide)
     {
         MainInfoData data = GameManager.instance.dataScript.UpdateCurrentItemData();
-        EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn");
+        //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
+        ActorStatus playerStatus = GameManager.instance.playerScript.status;
+        if ( playerStatus == ActorStatus.Active)
+        { EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
+        else
+        {
+            Sprite sprite = GameManager.instance.guiScript.errorSprite;
+            string text = "Unknown";
+            switch(playerStatus)
+            {
+                case ActorStatus.Captured:
+                    text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
+                    sprite = GameManager.instance.guiScript.capturedSprite;
+                    break;
+                case ActorStatus.Inactive:
+                    switch(GameManager.instance.playerScript.inactiveStatus)
+                    {
+                        case ActorInactive.Breakdown:
+                            text = string.Format("You are undergoing a {0}BREAKDOWN{1}", colourBad, colourEnd);
+                            sprite = GameManager.instance.guiScript.infoSprite;
+                            break;
+                        case ActorInactive.LieLow:
+                            text = string.Format("You are {0}LYING LOW{1}", colourNeutral, colourEnd);
+                            sprite = GameManager.instance.guiScript.infoSprite;
+                            break;
+                    }
+                    break;
+            }
+            //Non-active status -> generate a message
+            ModalOutcomeDetails details = new ModalOutcomeDetails();
+            details.textTop = text;
+            details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
+            details.sprite = sprite;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
     }
 
     public void ChangeSide(GlobalSide side)
