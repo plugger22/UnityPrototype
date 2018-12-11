@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
   m_Name: Christmas Hampers
   m_EditorClassIdentifier: 
-  descriptor: Mayor hands out Chrismas Hampers
+  descriptor: Mayor hands out Christmas Hampers
+  warning: 
   tooltipDescriptor: 'It''s not Christmas but does it matter? They are handing out
     FOOD. Fancy food at that. <b>City Loyalty will increase</b>.
 

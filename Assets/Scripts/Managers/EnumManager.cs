@@ -178,6 +178,7 @@
         Ongoing_Expired,
         Ongoing_Nemesis,
         Ongoing_Decision,
+        Ongoing_Node,
         //Active
         Active_Effect,
         //Node

@@ -352,7 +352,7 @@ public class NodeManager : MonoBehaviour
                 ProcessNodeTimers();
                 ProcessNodeCrisis();
                 //Must be AFTER ProcessNodeTimers
-                CheckOngoingEffects();
+                ProcessOngoingEffects();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -2060,8 +2060,10 @@ public class NodeManager : MonoBehaviour
     /// <summary>
     /// Generates messages for 'Effect' tab in InfoApp
     /// </summary>
-    private void CheckOngoingEffects()
+    private void ProcessOngoingEffects()
     {
+        string text;
+        //Ongoing node effects
         Dictionary<int, EffectDataOngoing> dictOfOngoingEffects = GameManager.instance.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoingEffects != null)
         {
@@ -2078,6 +2080,22 @@ public class NodeManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid dictOfOngoingEffects (Null)"); }
+        //Nodes with a valid Crisis wait period
+        Dictionary<int, Node> tempDict = GameManager.instance.dataScript.GetDictOfNodes();
+        if (tempDict != null)
+        {
+            foreach (var node in tempDict)
+            {
+                if (node.Value.waitTimer > 0)
+                {
+                    //Info App ongoing effect message
+                    text = string.Format("{0}, {1}, id {2} district cannot have a crisis for another {3} turn{4}", node.Value.nodeName, node.Value.Arc.name, node.Value.nodeID, node.Value.waitTimer,
+                        node.Value.waitTimer != 1 ? "s" : "");
+                    GameManager.instance.messageScript.NodeOngoingEffect(text, node.Value);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
     /// <summary>

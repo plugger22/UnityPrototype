@@ -1307,7 +1307,7 @@ public class ItemDataManager : MonoBehaviour
         string colourSideBad = colourBad;
         if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
         { colourSideGood = colourBad; colourSideBad = colourGood; }
-        builder.AppendFormat("{0}, {1}{2}", node.nodeName, node.Arc.name, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         if (node.crisisTimer > 0)
         {
             //crisis commences
@@ -1329,10 +1329,24 @@ public class ItemDataManager : MonoBehaviour
             {
                 //crisis explodes
                 builder.AppendFormat("{0}<b>Crisis EXPLODES</b>{1}{2}{3}", colourSideGood, colourEnd, "\n", "\n");
-                builder.AppendFormat("{0}{1} crisis has spun out of control{2}{3}{4}", colourAlert, node.crisis.tag, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}<b>{1}</b> crisis has spun out of control{2}{3}{4}", colourAlert, node.crisis.tag, colourEnd, "\n", "\n");
                 builder.AppendFormat("{0}<b>City Loyalty -{1}</b>{2}", colourSideGood, reductionInCityLoyalty, colourEnd);
             }
         }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Node that is immune to a crisis for a period due to recent upheavals
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetNodeOngoingEffectDetails(Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Is <b>Immune to Crisis</b> due to recent upheavals{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, node.waitTimer, node.waitTimer != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }
 

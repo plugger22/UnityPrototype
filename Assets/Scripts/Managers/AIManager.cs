@@ -618,7 +618,7 @@ public class AIManager : MonoBehaviour
     {
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
@@ -3415,7 +3415,7 @@ public class AIManager : MonoBehaviour
         string handoutDescription = "Unknown";
         DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.data2);
         if (decision != null)
-        { handoutDescription = decision.descriptor; }
+        { handoutDescription = string.Format("<b>{0}</b>", decision.descriptor); }
         else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.data2); }
         //admin
         string msgText = string.Format("Authority implements {0} policy", task.name0);
@@ -3854,7 +3854,9 @@ public class AIManager : MonoBehaviour
                             msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
                             string itemText = string.Format("City Wide {0} policy in force", policyName);
                             string topText = policy.descriptor;
-                            string middleText = string.Format("{0}{1}{2}", colourAlert, policy.tooltipDescriptor, colourEnd);
+                            string middleText = string.Format("{0}<b>District Crisis chance -{1}%{2}{3}City Loyalty +{4}</b>{5}{6}{7}Applies once policy ends{8}", colourBad, policyEffectCrisis, "\n", "\n", 
+                                policyEffectLoyalty, colourEnd, "\n", colourAlert, colourEnd);
+                            
                             string bottomText = string.Format("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, timerPolicy, timerPolicy != 1 ? "s" : "", colourEnd);
                             GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, aiDecID);
                         }

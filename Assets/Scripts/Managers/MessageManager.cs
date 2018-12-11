@@ -2921,6 +2921,38 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    public Message NodeOngoingEffect(string text, Node node)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Node;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = node.nodeID;
+            message.data1 = node.waitTimer;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0}, {1}, district temporarily IMMUNE to CRISIS", node.nodeName, node.Arc.name);
+            data.topText = "District Immunity";
+            data.bottomText = GameManager.instance.itemDataScript.GetNodeOngoingEffectDetails(node);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Cities - - -
     //
