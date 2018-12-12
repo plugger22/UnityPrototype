@@ -35,7 +35,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                     break;
                 case PointerEventData.InputButton.Right:
                     if (GameManager.instance.guiScript.CheckIsBlocked() == false)
-                    {                        
+                    {
                         //Action Menu -> not valid if AI is active for side
                         if (GameManager.instance.sideScript.CheckInteraction() == false)
                         { proceedFlag = false; alertType = AlertType.SideStatus; }
@@ -75,9 +75,6 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             { GameManager.instance.guiScript.SetAlertMessage(alertType); }
                         }
                     }
-                    break;
-                default:
-                    Debug.LogError("Unknown InputButton");
                     break;
             }
         }

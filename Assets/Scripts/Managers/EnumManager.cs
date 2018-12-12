@@ -178,6 +178,7 @@
         Ongoing_Expired,
         Ongoing_Nemesis,
         Ongoing_Decision,
+        Ongoing_Warning,
         Ongoing_Node,
         Ongoing_LieLow,
         //Active

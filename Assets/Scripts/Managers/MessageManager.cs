@@ -1497,6 +1497,47 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// warning, eg. Actor can be captured 'cause invisibility zero -> InfoApp effect
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="sprite"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message ActorWarningOngoing(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID)
+    {
+        Debug.Assert(sprite != null, "Invalid spirte (Null)");
+        Debug.Assert(actorID > -1, "Invalid actorID (less than Zero)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Warning;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = text;
+            data.topText = "Warning";
+            data.bottomText = GameManager.instance.itemDataScript.GetActorWarningOngoingDetails(detailsTop, detailsBottom);
+            data.priority = ItemPriority.Low;
+            data.sprite = sprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// AI notification of Player or Actor (Resistance) being released from capture
     /// </summary>
     /// <param name="text"></param>

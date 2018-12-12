@@ -3697,7 +3697,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.inactiveStatus == ActorInactive.LieLow)
                         {
                             string text = string.Format("{0}, {1}, is LYING LOW", actor.actorName, actor.arc.name);
-                            string topText = string.Format("{0}{1} is deliberately keeping a low profile{2}", colourAlert, actor.actorName, colourEnd);
+                            string topText = string.Format("{0}{1} is deliberately keeping a <b>Low Profile</b>{2}", colourAlert, actor.actorName, colourEnd);
                             string bottomText = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
                             GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
                         }
@@ -4288,11 +4288,12 @@ public class ActorManager : MonoBehaviour
     /// <param name="actor"></param>
     private void ProcessInvisibilityWarning(Actor actor)
     {
-        string msgText = string.Format("{0} Invisibility Zero. Risk of capture", actor.arc.name);
+        Debug.Assert(actor != null, "Invalid actor (Null)");
         string itemText = string.Format("{0} at risk of Capture", actor.arc.name);
-        string reason = string.Format("{0}, {1}{2}{3}{4}Invisibility at Zero", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
-        string warning = "Can be CAPTURED";
-        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Invisibility Zero", reason, warning, false);
+        string detailsTop = string.Format("{0}<b>{1}, {2}{3}{4}</b>{5}{6}<b>Invisibility</b> at {7}<b>Zero</b>{8}", "\n", actor.actorName, colourAlert, actor.arc.name, colourEnd, 
+            "\n", "\n", colourNeutral, colourEnd);
+        string detailsBottom = string.Format("{0}<b>Can be CAPTURED</b>{1}", colourAlert, colourEnd);
+        GameManager.instance.messageScript.ActorWarningOngoing(itemText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
     }
 
     /// <summary>

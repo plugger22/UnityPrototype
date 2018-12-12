@@ -459,6 +459,28 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Warning, eg. 'Actor can be captured 'cause invis is Zero', InfoApp 'Effects' tab
+    /// </summary>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetActorWarningOngoingDetails(string detailsTop, string detailsBottom)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(detailsTop) == false)
+        { builder.Append(detailsTop); }
+        if (string.IsNullOrEmpty(detailsBottom) == false)
+        {
+            if (builder.Length > 0)
+            { builder.AppendLine(); builder.AppendLine(); }
+            builder.Append(detailsBottom);
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Actor gains or loses a Contact
     /// </summary>
     /// <param name="actor"></param>

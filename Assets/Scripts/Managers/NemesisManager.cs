@@ -786,7 +786,7 @@ public class NemesisManager : MonoBehaviour
 
     /// <summary>
     /// nemesis and player at same node. For end of turn checks set 'isPlayerMove' to false as this tweaks modal setting of outcome window to handle MainInfoApp, leave as default true otherwise
-    /// returns true if player spotted by nemesis
+    /// returns true if player spotted by nemesis. Can't be spotted if lying low
     /// </summary>
     private bool ProcessPlayerInteraction(bool isPlayerMove = true)
     {
@@ -795,37 +795,54 @@ public class NemesisManager : MonoBehaviour
         int searchRating = GetSearchRatingAdjusted();
         if (searchRating >= GameManager.instance.playerScript.Invisibility)
         {
-            //player SPOTTED
-            isSpotted = true;
-            Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-            //cause damage / message
-            ProcessPlayerDamage(isPlayerMove);
-            hasActed = true;
-            //Nemesis has done their job, new nemesis arrives?
-            if (isFirstNemesis == true)
+            //can't be spotted if Lying Low
+            if (GameManager.instance.playerScript.inactiveStatus != ActorInactive.LieLow)
             {
-                //get second nemesis
-                isFirstNemesis = false;
-                nemesis = GameManager.instance.scenarioScript.scenario.challenge.nemesisSecond;
-                if (nemesis != null)
+                //player SPOTTED
+                isSpotted = true;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+                //cause damage / message
+                ProcessPlayerDamage(isPlayerMove);
+                hasActed = true;
+                //Nemesis has done their job, new nemesis arrives?
+                if (isFirstNemesis == true)
                 {
-                    //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
-                    SetNemesisMode(NemesisMode.Inactive);
-                    durationMode = durationDamageOffLine + GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
-                    string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationMode, "\n");
-                    if (durationMode > 0)
+                    //get second nemesis
+                    isFirstNemesis = false;
+                    nemesis = GameManager.instance.scenarioScript.scenario.challenge.nemesisSecond;
+                    if (nemesis != null)
                     {
-                        string text = string.Format("New Nemesis in {0} turns after player damaged{1}", durationMode, "\n");
-                        string itemText = "Rumours of a new NEMESIS";
-                        string topText = "Nemesis OFFLINE";
-                        string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
-                        string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
-                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                        //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
+                        SetNemesisMode(NemesisMode.Inactive);
+                        durationMode = durationDamageOffLine + GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
+                        string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationMode, "\n");
+                        if (durationMode > 0)
+                        {
+                            string text = string.Format("New Nemesis in {0} turns after player damaged{1}", durationMode, "\n");
+                            string itemText = "Rumours of a new NEMESIS";
+                            string topText = "Nemesis OFFLINE";
+                            string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
+                            string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
+                            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                        }
+                    }
+                    //no more nemesis after first
+                    else
+                    {
+                        string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
+                        string itemText = "NEMESIS threat eases";
+                        string topText = "Nemesis M.I.A";
+                        string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
+                        string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
+                        GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
                     }
                 }
-                //no more nemesis after first
                 else
                 {
+                    //2nd Nemesis has done it's job -> no more nemesis
+                    nemesis = null;
+                    SetNemesisMode(NemesisMode.Inactive);
+                    //message
                     string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
                     string itemText = "NEMESIS threat eases";
                     string topText = "Nemesis M.I.A";
@@ -834,19 +851,8 @@ public class NemesisManager : MonoBehaviour
                     GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
                 }
             }
-            else
-            {
-                //2nd Nemesis has done it's job -> no more nemesis
-                nemesis = null;
-                SetNemesisMode(NemesisMode.Inactive);
-                //message
-                string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
-                string itemText = "NEMESIS threat eases";
-                string topText = "Nemesis M.I.A";
-                string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
-                string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
-                GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
-            }
+            else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: Player NOT Spotted at node {0}, {1}, id {2}, due to LYING LOW{3}", 
+                nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n"); }
         }
         else
         {
