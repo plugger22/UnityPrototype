@@ -400,6 +400,29 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Status of Lie Low timer in InfoApp 'Effects' tab
+    /// </summary>
+    /// <param name="timer"></param>
+    /// <returns></returns>
+    public string GetActorLieLowOngoingDetails(int timer)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (timer == 0)
+        {
+            //available
+            builder.AppendFormat("Arrangements have been made by <b>RebelHQ</b>{0}{1}", "\n", "\n");
+            builder.AppendFormat("<b>Lie Low</b> action is {0}<b>AVAILABLE</b>{1}", colourNeutral, colourEnd);
+        }
+        else
+        {
+            //unavailable
+            builder.AppendFormat("<b>RebelHQ</b> are working on it as fast as they can{0}{1}", "\n", "\n");
+            builder.AppendFormat("<b>Lie Low</b> action {0}<b>UNAVAILABLE</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("<b>Duration {0}{1} turn{2}{3}</b>", colourNeutral, timer, timer != 1 ? "s" : "", colourEnd);
+        }
+        return builder.ToString();
+    }
 
     /// <summary>
     /// Actor complains

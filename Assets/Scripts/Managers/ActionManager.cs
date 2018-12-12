@@ -16,6 +16,7 @@ public class ActionManager : MonoBehaviour
     
     //fast access -> target
     private int failedTargetChance;
+    private int lieLowPeriod;
     //gear
     private int gearGracePeriod = -1;
     private int gearSwapBaseAmount = -1;
@@ -43,6 +44,7 @@ public class ActionManager : MonoBehaviour
     {
         //fast access fields
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
+        lieLowPeriod = GameManager.instance.actorScript.lieLowCooldownPeriod;
         actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
         actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
         actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
@@ -52,6 +54,7 @@ public class ActionManager : MonoBehaviour
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
+        Debug.Assert(lieLowPeriod > 0, "Invalid lieLowCooldDownPeriod (Zero)");
         Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
         Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
         Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
@@ -1092,6 +1095,7 @@ public class ActionManager : MonoBehaviour
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         int numOfTurns = 0;
         string actorName = "Unknown";
+        string actorArc = "Unknown";
         //default data 
         outcomeDetails.side = details.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
@@ -1102,17 +1106,18 @@ public class ActionManager : MonoBehaviour
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
-                actorName = string.Format("{0}, {1}, ", actor.actorName, actor.arc.name);
+                actorName = actor.actorName;
+                actorArc = actor.arc.name;
                 actor.Status = ActorStatus.Inactive;
                 actor.inactiveStatus = ActorInactive.LieLow;
                 actor.tooltipStatus = ActorTooltip.LieLow;
                 actor.isLieLowFirstturn = true;
                 numOfTurns = 3 - actor.datapoint2;
-                outcomeDetails.textTop = string.Format(" {0} {1} has been ordered to Lie Low", actor.arc.name, actor.actorName);
+                outcomeDetails.textTop = string.Format("{0} has been ordered to Lie Low", actor.actorName);
                 outcomeDetails.sprite = actor.arc.sprite;
                 //message
                 string text = string.Format("{0} {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                string reason = string.Format("is currently Lying Low and {0}<b>cut off from all communications</b>{1}", colourBad, colourEnd);
+                string reason = string.Format("is currently Lying Low and {0}{1}{2}<b>cut off from all communications</b>{3}","\n", "\n", colourBad, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
@@ -1127,6 +1132,8 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
+            //set lie low timer
+            GameManager.instance.actorScript.SetLieLowTimer();
             //change alpha of actor to indicate inactive status
             GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaInactive);
         }
@@ -1135,7 +1142,7 @@ public class ActionManager : MonoBehaviour
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Actor Lie Low";
-            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, actorName);
+            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, actorName, actorArc);
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
@@ -1165,11 +1172,11 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
             GameManager.instance.playerScript.isLieLowFirstturn = true;
-            outcomeDetails.textTop = string.Format(" {0} will go to ground and Lie Low", playerName);
+            outcomeDetails.textTop = string.Format("{0} will go to ground and Lie Low", playerName);
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
-            string reason = string.Format("is currently Lying Low and {0}<b>cut off from all communications</b>{1}", colourBad, colourEnd);
+            string reason = string.Format("is currently Lying Low and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
             GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
@@ -1182,6 +1189,8 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
+            //set lie low timer
+            GameManager.instance.actorScript.SetLieLowTimer();
             //change alpha of player to indicate inactive status
             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
         }
@@ -1190,7 +1199,7 @@ public class ActionManager : MonoBehaviour
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Player Lie Low";
-            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName);
+            outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName, "PLAYER");
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");
@@ -1200,18 +1209,19 @@ public class ActionManager : MonoBehaviour
     /// formatted message string for both player and actor Lie Low action
     /// </summary>
     /// <returns></returns>
-    private string GetLieLowMessage(int numOfTurns, string actorName)
+    private string GetLieLowMessage(int numOfTurns, string actorName, string actorArc)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1} will be Inactive for {2}{3}{4} FULL{5}{6} turn{7} or until Activated{8}", colourNeutral, actorName,
-                colourEnd, colourAlert, numOfTurns, colourEnd, colourNeutral, numOfTurns != 1 ? "s" : "", colourEnd);
+        builder.AppendFormat("{0}, {1}{2}{3}, will be Inactive for {4}{5} turn{6}{7} or until Activated", actorName, colourAlert, actorArc, colourEnd, 
+            colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
         builder.AppendLine(); builder.AppendLine();
-        builder.AppendFormat("{0}Invisibility {1}{2}+1{3}{4} each turn Inactive{5}", colourGood, colourEnd, colourAlert, colourEnd, colourGood, colourEnd);
+        builder.AppendFormat("{0}Invisibility +1{1} each turn {2}Inactive{3}", colourNeutral, colourEnd, colourAlert, colourEnd);
         builder.AppendLine(); builder.AppendLine();
-        builder.AppendFormat("{0}Any {1}{2}Stress{3}{4} will be removed once Invisibility is fully recovered{5}", colourGood, colourEnd,
-            colourAlert, colourEnd, colourGood, colourEnd);
+        builder.AppendFormat("Any {0}Stress{1} will be removed once Invisibility is {2}fully recovered{3}", colourNeutral, colourEnd, colourAlert, colourEnd);
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat("{0}All contacts and abilities will be unavailable while Inactive{1}", colourBad, colourEnd);
+        builder.AppendLine(); builder.AppendLine();
+        builder.AppendFormat("{0}Rebel HQ{1} will need {2}{3} turn{4}{5} before anyone else can Lie Low", colourAlert, colourEnd, colourNeutral, lieLowPeriod, lieLowPeriod != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }
 

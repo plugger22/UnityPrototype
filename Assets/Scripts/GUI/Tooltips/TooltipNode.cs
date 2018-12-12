@@ -343,7 +343,7 @@ public class TooltipNode : MonoBehaviour
                 for (int i = 0; i < numRecordsCurrent; i++)
                 {
                     if (i > 0) { builderActor.AppendLine(); }
-                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
+                    builderActor.AppendFormat("{0}<b>{1}</b>{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
                 }
             }
             else
@@ -361,7 +361,7 @@ public class TooltipNode : MonoBehaviour
                 for (int i = 0; i < numRecordsCurrent; i++)
                 {
                     if (i > 0) { builderActor.AppendLine(); }
-                    builderActor.AppendFormat("{0}{1}{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
+                    builderActor.AppendFormat("{0}<b>{1}</b>{2}", colourNeutral, data.listOfContactsCurrent[i], colourEnd);
                 }
             }
             else
@@ -462,7 +462,7 @@ public class TooltipNode : MonoBehaviour
                 foreach (String teamText in data.listOfTeams)
                 {
                     if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
-                    teamBuilder.AppendFormat("{0}{1}{2}", colourTeam, teamText, colourEnd);
+                    teamBuilder.AppendFormat("{0}<b>{1}</b>{2}", colourTeam, teamText, colourEnd);
                 }
                 nodeTeams.text = teamBuilder.ToString();
             }

@@ -899,6 +899,48 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// current status of Lie Low global cooldown timer
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="timer"></param>
+    /// <returns></returns>
+    public Message ActorLieLowOngoing(string text, int timer)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_LieLow;
+            message.side = globalResistance;
+            message.data0 = timer;
+            //ItemData
+            ItemData data = new ItemData();
+            if (timer == 0)
+            {
+                data.itemText = "Lie Low action is AVAILABLE";
+                data.topText = "Lie Low Available";
+            }
+            else
+            {
+                data.itemText = "Lie Low action is UNAVAILABLE";
+                data.topText = "Lie Low Unavailable";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetActorLieLowOngoingDetails(timer);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.infoSprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Resistance Actor gains or loses a single contact (resistance side message). 'Reason' is self contained
     /// </summary>
     /// <param name="text"></param>

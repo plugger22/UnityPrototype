@@ -377,7 +377,9 @@ public class Node : MonoBehaviour
                 {
                     List<string> contactListCurrent = new List<string>();
                     List<string> contactListOther = new List<string>();
-                    //node contacts vary depending on whether viewing player side or debug viewing other side
+                    //
+                    // - - - CONTACTS vary depending on whether viewing player side or debug viewing other side
+                    //
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.turnScript.currentSide.level)
                     {
                         contactListCurrent = GetNodeContacts();
@@ -395,7 +397,9 @@ public class Node : MonoBehaviour
                         foreach (Team team in listOfTeams)
                         { teamList.Add(team.arc.name); }
                     }
-                    //target info (TargetManager method handles FOW, isTargetKnown and sides logic)
+                    //
+                    // - - - TARGET info (TargetManager method handles FOW, isTargetKnown and sides logic)
+                    //
                     List<string> targetList = new List<string>();
                     if (targetID > -1)
                     { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID, isTargetKnown); }
@@ -408,11 +412,15 @@ public class Node : MonoBehaviour
                         crisisList.Add(string.Format("City Loyalty -{0}", crisisCityLoyalty));
                         crisisList.Add("if crisis not Resolved");
                     }
-                    //activity info
+                    //
+                    // - - - ACTIVITY info
+                    //
                     List<string> activityList = null;
                     if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
                     { activityList = GetActivityInfo(); }
-                    //DEBUG Data
+                    //
+                    // - - - DEBUG Data
+                    //
                     string textType, textName;
                     if (GameManager.instance.optionScript.debugData == true)
                     {
@@ -429,7 +437,9 @@ public class Node : MonoBehaviour
                         textType = string.Format("{0}", Arc.name);
                         textName = nodeName;
                     }
-                    //spider
+                    //
+                    // - - - Spider
+                    //
                     bool showSpider = false;
                     if (isSpider == true)
                     {
@@ -444,7 +454,9 @@ public class Node : MonoBehaviour
                         }
                         else { showSpider = true; }
                     }
-                    //data package
+                    //
+                    // - - Data package
+                    //
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
                         nodeName = textName,

@@ -865,7 +865,7 @@ public class NemesisManager : MonoBehaviour
                         string text = string.Format("You feel the presence of a <b>DARK SHADOW</b> at {0}, {1} district", node.nodeName, node.Arc.name);
                         string itemText = "You feel the presence of a DARK SHADOW";
                         string topText = "Something is WRONG";
-                        string reason = "Could it be that your NEMESIS is nearby?";
+                        string reason = string.Format("{0}Could it be that your <b>NEMESIS</b> is nearby?", "\n");
                         string warning = "Your instincts urge you to move, NOW";
                         GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, true, true);
                     }

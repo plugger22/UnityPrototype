@@ -69,6 +69,12 @@ public class ActorManager : MonoBehaviour
     [Range(1, 99)] public int breakdownChance = 5;
     [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
     [Range(0, 10)] public int playerBadResignChance = 5;
+
+    [Header("Lie Low")]
+    [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
+    [Range(1, 10)] public int lieLowCooldownPeriod = 5;
+
+    [HideInInspector] public int lieLowTimer;                                  //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
  
 
     //cached recruit picker choices
@@ -299,6 +305,8 @@ public class ActorManager : MonoBehaviour
             //end game checks
             GameManager.instance.factionScript.CheckFactionFirePlayer();
             GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
+            //cooldown timer
+            if (lieLowTimer > 0) { lieLowTimer--; }
         }
         else
         {
@@ -1176,25 +1184,30 @@ public class ActorManager : MonoBehaviour
                             //can't lie low if a Surveillance Crackdown is in place
                             if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
                             {
-                                ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
-                                lielowActionDetails.side = playerSide;
-                                lielowActionDetails.actorDataID = actor.actorSlotID;
-                                if (actor.isLieLowFirstturn == true)
-                                { numOfTurns = 4 - actor.datapoint2; }
-                                else { numOfTurns = 3 - actor.datapoint2; }
-                                tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
-                                    colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
-                                EventButtonDetails lielowDetails = new EventButtonDetails()
+                                if (lieLowTimer == 0)
                                 {
-                                    buttonTitle = "Lie Low",
-                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                    buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
-                                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                    //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.LieLowActorAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
-                                };
-                                //add Lie Low button to list
-                                tempList.Add(lielowDetails);
+                                    ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                                    lielowActionDetails.side = playerSide;
+                                    lielowActionDetails.actorDataID = actor.actorSlotID;
+                                    if (actor.isLieLowFirstturn == true)
+                                    { numOfTurns = 4 - actor.datapoint2; }
+                                    else { numOfTurns = 3 - actor.datapoint2; }
+                                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
+                                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                                    EventButtonDetails lielowDetails = new EventButtonDetails()
+                                    {
+                                        buttonTitle = "Lie Low",
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                        buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
+                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                        //use a Lambda to pass arguments to the action
+                                        action = () => { EventManager.instance.PostNotification(EventType.LieLowActorAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                    };
+                                    //add Lie Low button to list
+                                    tempList.Add(lielowDetails);
+                                }
+                                else
+                                { infoBuilder.AppendFormat("Lie Low unavailable for {0} turn{1}", lieLowTimer, lieLowTimer != 1 ? "s" : ""); }
                             }
                             else
                             { infoBuilder.Append("Can't Lie Low while a Surveillance Crackdown is in force"); }
@@ -3822,6 +3835,9 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
+        //lie low timer message (InfoApp 'Effects' tab)
+        text = string.Format("Lie Low Timer {0}", lieLowTimer);
+        GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
     }
 
     /// <summary>
@@ -5116,6 +5132,15 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         return manageRenown;
     }
+
+    /// <summary>
+    /// resets cooldown timer everytime a lie low action is used
+    /// </summary>
+    public void SetLieLowTimer()
+    {
+        lieLowTimer = lieLowCooldownPeriod;
+    }
+
 
     //new methods above here
 }

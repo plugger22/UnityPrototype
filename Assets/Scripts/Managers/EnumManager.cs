@@ -179,6 +179,7 @@
         Ongoing_Nemesis,
         Ongoing_Decision,
         Ongoing_Node,
+        Ongoing_LieLow,
         //Active
         Active_Effect,
         //Node
