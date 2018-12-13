@@ -78,7 +78,6 @@ public class NemesisManager : MonoBehaviour
     private bool isImmediate;               //true if immediate flag set true by
 
     //colour palette 
-    
     private string colourNeutral;
     private string colourAlert;
     private string colourBad;
@@ -1088,25 +1087,41 @@ public class NemesisManager : MonoBehaviour
         Damage damage = nemesis.damage;
         if (damage != null)
         {
+            Condition condition;
             switch (damage.name)
             {
                 case "Capture":
 
                     break;
                 case "Discredit":
-
+                    condition = GameManager.instance.dataScript.GetCondition("DISCREDITED");
+                    if (condition != null)
+                    { GameManager.instance.playerScript.AddCondition(condition, "ScumBot Nemesis"); }
+                    else { Debug.LogWarningFormat("Invalid condition DISCREDITED (Null)"); }
                     break;
                 case "Image":
-
+                    condition = GameManager.instance.dataScript.GetCondition("IMAGED");
+                    if (condition != null)
+                    { GameManager.instance.playerScript.AddCondition(condition, "Paparrazi Nemesis"); }
+                    else { Debug.LogWarningFormat("Invalid condition IMAGED (Null)"); }
                     break;
                 case "Kill":
-
+                    condition = GameManager.instance.dataScript.GetCondition("INFECTED");
+                    if (condition != null)
+                    { GameManager.instance.playerScript.AddCondition(condition, "Assassin Droid"); }
+                    else { Debug.LogWarningFormat("Invalid condition INFECTED (Null)"); }
                     break;
                 case "Tag":
-
+                    condition = GameManager.instance.dataScript.GetCondition("TAGGED");
+                    if (condition != null)
+                    { GameManager.instance.playerScript.AddCondition(condition, "Cyber Hound"); }
+                    else { Debug.LogWarningFormat("Invalid condition TAGGED (Null)"); }
                     break;
                 case "Wound":
-
+                    condition = GameManager.instance.dataScript.GetCondition("WOUNDED");
+                    if (condition != null)
+                    { GameManager.instance.playerScript.AddCondition(condition, "Security Droid"); }
+                    else { Debug.LogWarningFormat("Invalid condition WOUNDED (Null)"); }
                     break;
                 default:
                     builder.AppendFormat("Damage is of an unknown kind");

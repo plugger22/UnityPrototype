@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31ab5f0b27ae0a409011604aeef74b5, type: 3}
+  m_Name: STAR 4
+  m_EditorClassIdentifier: 
+  descriptor: Actor is a Star!
+  resignTag: 
+  topText: is a proven top performer
+  bottomTextActor: Can be PROMOTED at no cost (Manage Menu)
+  bottomTextPlayer: 
+  type: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  bottomTextTypeActor: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3,
+    type: 2}
+  bottomTextTypePlayer: {fileID: 0}
+  isNowA: 1
