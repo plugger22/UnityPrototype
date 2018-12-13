@@ -711,7 +711,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a list of all bad conditions present, empty if none
+    /// Returns a list of all bad conditions (Corrupt/Incompetent/Questionable) present, empty if none
     /// </summary>
     /// <returns></returns>
     public List<Condition> GetNumOfBadConditionPresent()
@@ -720,6 +720,7 @@ public class PlayerManager : MonoBehaviour
         bool checkCorrupt = true;
         bool checkIncompetent = true;
         bool checkQuestionable = true;
+        bool checkDiscredited = true;
         //use correct list for the player side
         List<Condition> listOfConditions;
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }

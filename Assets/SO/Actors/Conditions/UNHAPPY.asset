@@ -14,8 +14,8 @@ MonoBehaviour:
   descriptor: Actor is unhappy with being in RESERVES
   resignTag: 
   topText: is unhappy at being left in the reserve pool
-  bottomTextActor: Motivation will drop to Zero and will then take Action (Reveal
-    Secret / Resign / Complain)
+  bottomTextActor: <b>Motivation</b> will drop to <b>ZERO</b> and will then take Action
+    (Reveal Secret / Resign / Complain)
   bottomTextPlayer: 
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   bottomTextTypeActor: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,

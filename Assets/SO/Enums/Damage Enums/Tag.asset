@@ -13,5 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Target is tagged with a tracking device
   tag: Tagged
-  effect: You have been microchipped subdermally with a powerful electronic tracker.You
-    are unable to personally do anything illegal.
+  effect: has been microchipped subdermally with a powerful electronic <b>TRACKER</b>

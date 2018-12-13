@@ -14,8 +14,8 @@ MonoBehaviour:
   descriptor: Actor can't do their job properly
   resignTag: Incompetence
   topText: is generally regarded as useless
-  bottomTextActor: Can be DISMISSED at no cost (Manage Menu)
-  bottomTextPlayer: Your Subordinates may RESIGN in disgust at your behaviour
+  bottomTextActor: Can be <b>DISMISSED</b> at no cost (Manage Menu)
+  bottomTextPlayer: Your Subordinates may <b>RESIGN</b> in disgust at your behaviour
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   bottomTextTypeActor: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f,
     type: 2}

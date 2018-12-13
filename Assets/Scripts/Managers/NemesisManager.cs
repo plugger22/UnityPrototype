@@ -987,20 +987,23 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void CheckNemesisContactSighting()
     {
-        //ignored if nemesis inactive
-        if (mode != NemesisMode.Inactive)
+        if (nemesis != null)
         {
-            if (hasMoved == false)
+            //ignored if nemesis inactive
+            if (mode != NemesisMode.Inactive)
             {
-                int nodeID = GameManager.instance.nodeScript.nodeNemesis;
-                if (nodeID > -1)
+                if (hasMoved == false)
                 {
-                    //check for Resistance contact at same node
-                    List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
-                    if (tempList != null)
-                    {ProcessContactInteraction(tempList); }
+                    int nodeID = GameManager.instance.nodeScript.nodeNemesis;
+                    if (nodeID > -1)
+                    {
+                        //check for Resistance contact at same node
+                        List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                        if (tempList != null)
+                        { ProcessContactInteraction(tempList); }
+                    }
+                    else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
                 }
-                else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
             }
         }
     }
@@ -1094,33 +1097,33 @@ public class NemesisManager : MonoBehaviour
 
                     break;
                 case "Discredit":
-                    condition = GameManager.instance.dataScript.GetCondition("DISCREDITED");
+                    condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "ScumBot Nemesis"); }
-                    else { Debug.LogWarningFormat("Invalid condition DISCREDITED (Null)"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, "due to ScumBot Nemesis"); }
+                    else { Debug.LogWarningFormat("Invalid condition CORRUPT (Null)"); }
                     break;
                 case "Image":
                     condition = GameManager.instance.dataScript.GetCondition("IMAGED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "Paparrazi Nemesis"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, "due to Paparrazi Nemesis"); }
                     else { Debug.LogWarningFormat("Invalid condition IMAGED (Null)"); }
                     break;
                 case "Kill":
                     condition = GameManager.instance.dataScript.GetCondition("INFECTED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "Assassin Droid"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, "due to Assassin Droid"); }
                     else { Debug.LogWarningFormat("Invalid condition INFECTED (Null)"); }
                     break;
                 case "Tag":
                     condition = GameManager.instance.dataScript.GetCondition("TAGGED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "Cyber Hound"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, "due to Cyber Hound"); }
                     else { Debug.LogWarningFormat("Invalid condition TAGGED (Null)"); }
                     break;
                 case "Wound":
                     condition = GameManager.instance.dataScript.GetCondition("WOUNDED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "Security Droid"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, "due to Security Droid"); }
                     else { Debug.LogWarningFormat("Invalid condition WOUNDED (Null)"); }
                     break;
                 default:
@@ -1427,20 +1430,25 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" goal: {0}{1}", goal, "\n");
         builder.AppendFormat(" durationMode: {0}{1}", durationMode, "\n");
         builder.AppendFormat(" durationGoal: {0}{1}", durationGoal, "\n");
-        builder.AppendFormat(" nemesis node: {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+        if (nemesis != null)
+        { builder.AppendFormat(" nemesis node: {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n"); }
         //flags
         builder.AppendFormat("{0} -Flags{1}", "\n", "\n");
         builder.AppendFormat(" hasMoved: {0}{1}", hasMoved, "\n");
         builder.AppendFormat(" hasActed: {0}{1}", hasActed, "\n");
         builder.AppendFormat(" hasWarning: {0}{1}", hasWarning, "\n");
         //nemesis stats
-        builder.AppendFormat("{0} -{1}{2}",  "\n", nemesis.name, "\n");
-        builder.AppendFormat(" movement: {0}{1}", nemesis.movement, "\n");
-        builder.AppendFormat(" search: {0}, adjusted: {1}{2}", nemesis.searchRating, GetSearchRatingAdjusted(), "\n");
-        builder.AppendFormat(" stealth: {0}, adjusted: {1}{2}", nemesis.stealthRating, GetStealthRatingAdjusted(), "\n");
-        builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
+        if (nemesis != null)
+        {
+            builder.AppendFormat("{0} -{1}{2}", "\n", nemesis.name, "\n");
+            builder.AppendFormat(" movement: {0}{1}", nemesis.movement, "\n");
+            builder.AppendFormat(" search: {0}, adjusted: {1}{2}", nemesis.searchRating, GetSearchRatingAdjusted(), "\n");
+            builder.AppendFormat(" stealth: {0}, adjusted: {1}{2}", nemesis.stealthRating, GetStealthRatingAdjusted(), "\n");
+            builder.AppendFormat(" damage: {0}{1}", nemesis.damage.name, "\n");
+        }
+        else { builder.AppendFormat("{0} -No Nemesis present{1}", "\n", "\n"); }
         //AITracker (passed from AIManager)
-        builder.AppendFormat("{0} - Tracker Data (AIManager.cs){1}", "\n", "\n");
+        builder.AppendFormat("{0} -Tracker Data (AIManager.cs){1}", "\n", "\n");
         if (trackerDebug != null)
         {
             builder.AppendFormat(" activity on Turn {0}{1}", trackerDebug.turn, "\n");

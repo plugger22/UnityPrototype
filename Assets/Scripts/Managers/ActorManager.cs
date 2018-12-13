@@ -341,7 +341,7 @@ public class ActorManager : MonoBehaviour
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);

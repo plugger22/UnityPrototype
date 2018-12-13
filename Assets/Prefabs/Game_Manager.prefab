@@ -816,11 +816,15 @@ MonoBehaviour:
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
+  - {fileID: 11400000, guid: c376ab92e7aa96643a05ed6f291a0c4a, type: 2}
   - {fileID: 11400000, guid: 8d211107db009064782ea763fea77830, type: 2}
+  - {fileID: 11400000, guid: d2b98e75e09328b4da5ffe7da355afe0, type: 2}
   - {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84, type: 2}
   - {fileID: 11400000, guid: 81509dbb901ce55408bf253da001f05e, type: 2}
   - {fileID: 11400000, guid: 4c71062f508e05e449b08113d897f565, type: 2}
+  - {fileID: 11400000, guid: 8a92e519a923a9640bf583dcb18ef65b, type: 2}
   - {fileID: 11400000, guid: f788716890cc6cb45ad92d15e7207a05, type: 2}
+  - {fileID: 11400000, guid: 95c716c635b9cc5438a8e737e366e310, type: 2}
   arrayOfTraitCategories:
   - {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   - {fileID: 11400000, guid: 7209ba9199947a849895426eb0249b54, type: 2}
@@ -1714,6 +1718,8 @@ MonoBehaviour:
   renownCostGear: 1
   breakdownChance: 20
   playerBadResignChance: 5
+  lieLowCooldownPeriod: 5
+  lieLowTimer: 0
 --- !u!114 &114677223304800786
 MonoBehaviour:
   m_ObjectHideFlags: 1

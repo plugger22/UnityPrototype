@@ -13,5 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Target is framed and discredited
   tag: Discredited
-  effect: You have been expertly framed as the guilty party in a dubious transaction.
-    You reputation has been shredded.
+  effect: You are expertly <b>FRAMED</b> as the guilty party in a dubious transaction

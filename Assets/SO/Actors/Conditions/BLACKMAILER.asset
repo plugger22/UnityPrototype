@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor is blackmailing Player (threatening to reveal secrets)
   resignTag: 
-  topText: is threatening to reveal one of your secrets
-  bottomTextActor: Will reveal your SECRET once timer runs out. Cannot be sent to
-    RESERVES
+  topText: is threatening to <b>REVEAL</b> one of your secrets
+  bottomTextActor: Will reveal your <b>SECRET</b> once timer runs out. Cannot be sent
+    to <b>RESERVES</b>
   bottomTextPlayer: 
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   bottomTextTypeActor: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,

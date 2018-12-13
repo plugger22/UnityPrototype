@@ -995,12 +995,14 @@ public class NodeManager : MonoBehaviour
                         }
                     }
                 }
-                //Nemesis current node (Resistance side only if FOW ON)
+                //Nemesis current node (Resistance side only if FOW ON & Nemesis present)
                 proceedFlag = true;
                 if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     //Nemesis has a separate FOW setting
                     if (GameManager.instance.nemesisScript.isShown == false)
+                    { proceedFlag = false; }
+                    else if (GameManager.instance.nemesisScript.nemesis == null)
                     { proceedFlag = false; }
                 }
                 if (proceedFlag == true)

@@ -9,15 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c31ab5f0b27ae0a409011604aeef74b5, type: 3}
-  m_Name: STAR 3
+  m_Name: INFECTED
   m_EditorClassIdentifier: 
-  descriptor: Actor is a Star!
+  descriptor: Player has been infected
   resignTag: 
-  topText: is a proven top performer
-  bottomTextActor: Can be PROMOTED at no cost (Manage Menu)
-  bottomTextPlayer: 
-  type: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
-  bottomTextTypeActor: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3,
+  topText: has been injected with a slow acting <b>LETHAL</b> gene tailored virus.
+    Your days are numbered.
+  bottomTextActor: 
+  bottomTextPlayer: You will <b>DIE</b> unless a cure is found <b>BEFORE</b> the virus
+    takes effect
+  type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  bottomTextTypeActor: {fileID: 0}
+  bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
-  bottomTextTypePlayer: {fileID: 0}
-  isNowA: 1
+  isNowA: 0
