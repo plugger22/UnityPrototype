@@ -44,6 +44,7 @@ public class EffectManager : MonoBehaviour
     private Condition conditionQuestionable;
     private Condition conditionBlackmailer;
     private Condition conditionStar;
+    private Condition conditionTagged;
     
 
     //colour palette for Modal Outcome
@@ -79,6 +80,7 @@ public class EffectManager : MonoBehaviour
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
+        conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
         Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
         Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
         Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
@@ -93,6 +95,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(conditionBlackmailer != null, "(Invalid conditionBlackmailer (Null)");
         Debug.Assert(conditionStar != null, "Invalid conditionStar (Null)");
+        Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
         //fast access -> teams
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
@@ -1176,6 +1179,7 @@ public class EffectManager : MonoBehaviour
                     if (node != null)
                     {
                         bool isGearUsed = false;
+                        string reason = dataInput.originText;
                         if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                         {
                             //
@@ -1213,34 +1217,50 @@ public class EffectManager : MonoBehaviour
                                     {
                                         //No gear present
                                         int invisibility = GameManager.instance.playerScript.Invisibility;
-                                        //double effect if spider is present
-                                        if (node.isSpider == true)
+                                        //condition TAGGED
+                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged) == true)
                                         {
-                                            invisibility -= 2;
-                                            if (invisibility >= 0)
-                                            { effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd); }
-                                            else
-                                            {
-                                                //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
-                                                effectReturn.bottomText =
-                                                    string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                                GameManager.instance.aiScript.immediateFlagResistance = true;
-                                            }
+                                            //invisibility auto Zero
+                                            invisibility = 0;
+                                            //Immediate notification. AI flag set. Auto applies when TAGGED
+                                            effectReturn.bottomText =
+                                                string.Format("{0}Player Invisibility 0 (TAGGED){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                                colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                            reason = "TAGGED condition";
+                                            GameManager.instance.aiScript.immediateFlagResistance = true;
                                         }
+                                        //NOT Tagged
                                         else
                                         {
-                                            invisibility -= 1;
-                                            if (invisibility >= 0)
-                                            { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd); }
+                                            //double effect if spider is present
+                                            if (node.isSpider == true)
+                                            {
+                                                invisibility -= 2;
+                                                if (invisibility >= 0)
+                                                { effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd); }
+                                                else
+                                                {
+                                                    //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
+                                                    effectReturn.bottomText =
+                                                        string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                                        colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                    GameManager.instance.aiScript.immediateFlagResistance = true;
+                                                }
+                                            }
                                             else
                                             {
-                                                //immediate notification. AI flag set. Applies if player invis was 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
-                                                    colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                                GameManager.instance.aiScript.immediateFlagResistance = true;
-                                            }
+                                                invisibility -= 1;
+                                                if (invisibility >= 0)
+                                                { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd); }
+                                                else
+                                                {
+                                                    //immediate notification. AI flag set. Applies if player invis was 0 before action taken
+                                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
+                                                        colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                    GameManager.instance.aiScript.immediateFlagResistance = true;
+                                                }
 
+                                            }
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
@@ -1258,7 +1278,7 @@ public class EffectManager : MonoBehaviour
                                         if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                         {
                                             GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                                dataInput.originText), dataInput.originText, node.nodeID, -1);
+                                                dataInput.originText), reason, node.nodeID, -1);
                                         }
                                     }
                                     break;

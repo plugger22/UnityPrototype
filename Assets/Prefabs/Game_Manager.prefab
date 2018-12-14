@@ -804,6 +804,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b, type: 2}
   - {fileID: 11400000, guid: 338cc5cc4c7726448bb8cc125e0b0633, type: 2}
   - {fileID: 11400000, guid: 750b7e706a7903f42a026227fed14058, type: 2}
+  - {fileID: 11400000, guid: f49eada5905cc6e4dbd50b2b5650dea1, type: 2}
   arrayOfNemesis:
   - {fileID: 11400000, guid: 42cdd5ebcf56c1940bf0d05178a658b0, type: 2}
   - {fileID: 11400000, guid: 0b7e5b572514c724daebe40bf7b1bf26, type: 2}
@@ -1956,7 +1957,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 57841
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0

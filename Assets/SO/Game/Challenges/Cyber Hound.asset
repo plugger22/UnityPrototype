@@ -8,9 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd13ce1c6d43cec45be4363250c12eeb, type: 3}
-  m_Name: Tag
+  m_Script: {fileID: 11500000, guid: 5965289cf99416943b7327e0e9f88d78, type: 3}
+  m_Name: Cyber Hound
   m_EditorClassIdentifier: 
-  descriptor: Target is tagged with a tracking device
-  tag: Tagged
-  effect: You have been microchipped subdermally with a powerful electronic <b>TRACKER</b>
+  nemesisFirst: {fileID: 11400000, guid: 83135a0a144c8484e9cd286353bb1239, type: 2}
+  gracePeriodFirst: 0
+  nemesisSecond: {fileID: 0}
+  gracePeriodSecond: 0

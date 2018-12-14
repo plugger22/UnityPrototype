@@ -783,6 +783,7 @@ public class NemesisManager : MonoBehaviour
         return isSpotted;
     }
 
+
     /// <summary>
     /// nemesis and player at same node. For end of turn checks set 'isPlayerMove' to false as this tweaks modal setting of outcome window to handle MainInfoApp, leave as default true otherwise
     /// returns true if player spotted by nemesis. Can't be spotted if lying low
@@ -1052,30 +1053,34 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void CheckNemesisAtPlayerNode(bool isPlayerMove = false)
     {
-        //ignored if nemesis inactive
-        if (mode != NemesisMode.Inactive)
+        //nemesis must be present OnMap
+        if (nemesis != null)
         {
-            if (GameManager.instance.playerScript.status == ActorStatus.Active)
+            //ignored if nemesis inactive
+            if (mode != NemesisMode.Inactive)
             {
-                bool isCheckNeeded = false;
-                if (isPlayerMove == false)
+                if (GameManager.instance.playerScript.status == ActorStatus.Active)
                 {
-                    //start of turn (player hasn't moved) and nemesis hasn't moved
-                    if (hasMoved == false)
+                    bool isCheckNeeded = false;
+                    if (isPlayerMove == false)
                     {
-                        //can only check if nemesis didn't damage the player during the AI turn (gives the player a chance to leave)
-                        if (hasActed == false)
-                        { isCheckNeeded = true; }
+                        //start of turn (player hasn't moved) and nemesis hasn't moved
+                        if (hasMoved == false)
+                        {
+                            //can only check if nemesis didn't damage the player during the AI turn (gives the player a chance to leave)
+                            if (hasActed == false)
+                            { isCheckNeeded = true; }
+                        }
                     }
-                }
-                //player moving to a new node, automatic check
-                else { isCheckNeeded = true; }
-                //proceed with a check
-                if (isCheckNeeded == true)
-                {
-                    //both at same node
-                    if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                    { ProcessPlayerInteraction(isPlayerMove); }
+                    //player moving to a new node, automatic check
+                    else { isCheckNeeded = true; }
+                    //proceed with a check
+                    if (isCheckNeeded == true)
+                    {
+                        //both at same node
+                        if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                        { ProcessPlayerInteraction(isPlayerMove); }
+                    }
                 }
             }
         }
@@ -1109,10 +1114,10 @@ public class NemesisManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid condition IMAGED (Null)"); }
                     break;
                 case "Kill":
-                    condition = GameManager.instance.dataScript.GetCondition("INFECTED");
+                    condition = GameManager.instance.dataScript.GetCondition("DOOMED");
                     if (condition != null)
                     { GameManager.instance.playerScript.AddCondition(condition, "due to Assassin Droid"); }
-                    else { Debug.LogWarningFormat("Invalid condition INFECTED (Null)"); }
+                    else { Debug.LogWarningFormat("Invalid condition DOOMED (Null)"); }
                     break;
                 case "Tag":
                     condition = GameManager.instance.dataScript.GetCondition("TAGGED");

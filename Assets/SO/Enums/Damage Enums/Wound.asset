@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Target is dealt a crippling wound
   tag: Wounded
-  effect: has suffered a <b>CRIPPLING</b> wound. You are severely restricted in what
-    you can do
+  effect: You have suffered a <b>CRIPPLING</b> wound. You are severely restricted
+    in what you can do

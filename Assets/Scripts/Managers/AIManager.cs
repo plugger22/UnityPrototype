@@ -3437,7 +3437,7 @@ public class AIManager : MonoBehaviour
         //each faction has a % chance of the request being approved (acts as a friction limiter on faction efficiency as resources drive everything)
         int rnd = Random.Range(0, 100);
         int adjustedChance = resourcesChance + numOfUnsuccessfulResourceRequests * resourcesBoost;
-        if (rnd < resourcesChance)
+        if (rnd < adjustedChance)
         {
             amount = factionAuthority.resourcesStarting + numOfSuccessfulResourceRequests;
             numOfSuccessfulResourceRequests++;

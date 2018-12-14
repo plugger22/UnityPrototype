@@ -15,8 +15,8 @@ MonoBehaviour:
   resignTag: 
   topText: has been microchipped subdermally with a powerful electronic <b>TRACKER</b>
   bottomTextActor: 
-  bottomTextPlayer: Everytime you do anything yourself, you will lose <b>ALL</b> your
-    <b>Invisibility</b>
+  bottomTextPlayer: Everytime you do anything <b>YOURSELF</b> you will lose <b>ALL</b>
+    your <b>Invisibility</b> and <b>ALERT</b> the Authority
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   bottomTextTypeActor: {fileID: 0}
   bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,

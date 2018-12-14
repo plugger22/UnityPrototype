@@ -1982,7 +1982,13 @@ public class NodeManager : MonoBehaviour
                         moveData.text = builder.ToString();
                         ProcessMoveOutcome(moveData);
                     }
-                    else { EventManager.instance.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove"); }
+                    else
+                    {
+                        //Unsecured connection, no invisibility loss involved
+                        EventManager.instance.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");
+                        //Nemesis, if at same node, can interact and damage player
+                        GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
+                    }
                 }
             }
             else
@@ -1994,7 +2000,7 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
-    /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure
+    /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure. Checks for presence of Erasure team and Nemesis in destination node
     /// </summary>
     private void ProcessMoveOutcome(MoveReturnData data)
     {
