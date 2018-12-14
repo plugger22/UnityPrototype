@@ -225,6 +225,29 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Player spotted (IMAGED, TAGGED)
+    /// </summary>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetPlayerSpottedDetails(string detailsTop, string detailsBottom, Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        //player
+        builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
+        if (node != null)
+        { builder.AppendFormat("<b>{0}, {1}{2}</b>{3}, district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");  }
+        //details
+        if (string.IsNullOrEmpty(detailsTop) == false)
+        { builder.Append(detailsTop); }
+        if (string.IsNullOrEmpty(detailsBottom) == false)
+        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", detailsBottom); }
+        return builder.ToString();
+    }
+
 
     //
     // - - - Actor - - -

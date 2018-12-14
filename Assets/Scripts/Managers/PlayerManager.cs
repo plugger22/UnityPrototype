@@ -720,7 +720,6 @@ public class PlayerManager : MonoBehaviour
         bool checkCorrupt = true;
         bool checkIncompetent = true;
         bool checkQuestionable = true;
-        bool checkDiscredited = true;
         //use correct list for the player side
         List<Condition> listOfConditions;
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }

@@ -65,11 +65,14 @@ public class ActorManager : MonoBehaviour
     [Header("Assorted")]
     [Tooltip("Renown cost for negating a bad gear use roll")]
     [Range(1, 3)] public int renownCostGear = 1;
+
+    [Header("Condition Related")]
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
     [Range(1, 99)] public int breakdownChance = 5;
     [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
     [Range(0, 10)] public int playerBadResignChance = 5;
-
+    [Tooltip("Chance per turn of the player, with the IMAGED condition, being picked up by a facial recognition scan and losing a level of invisibility")]
+    [Range(0, 50)] public int playerRecognisedChance = 20;
     [Header("Lie Low")]
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
@@ -98,6 +101,7 @@ public class ActorManager : MonoBehaviour
     private Condition conditionCorrupt;
     private Condition conditionIncompetent;
     private Condition conditionQuestionable;
+    private Condition conditionImaged;
     private TraitCategory actorCategory;
     private int secretBaseChance = -1;
     //cached TraitEffects
@@ -172,6 +176,7 @@ public class ActorManager : MonoBehaviour
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
         secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
         maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
@@ -186,6 +191,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+        Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
         Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
@@ -4379,6 +4385,7 @@ public class ActorManager : MonoBehaviour
     private void CheckPlayerStartLate()
     {
         int rnd;
+        int playerID = GameManager.instance.playerScript.actorID;
         string text, topText, bottomText;
         string playerName = GameManager.instance.playerScript.PlayerName;
         //check for Stress Nervous breakdown -> both sides
@@ -4395,7 +4402,7 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
                         GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown", 
-                            GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide);
+                            playerID, GameManager.instance.sideScript.PlayerSide);
                         //update AI side tab status
                         GameManager.instance.aiScript.UpdateSideTabData();
                         break;
@@ -4415,7 +4422,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             //message -> status change
                             text = string.Format("{0} has automatically reactivated", playerName);
-                            GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", GameManager.instance.playerScript.actorID, globalResistance);
+                            GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
                             {
@@ -4425,7 +4432,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //message -> condition change [EDIT] No need as PlayerManager handles this
                                     text = string.Format("{0} is no longer Stressed (Lie Low)", playerName);
-                                    GameManager.instance.messageScript.ActorCondition(text, GameManager.instance.playerScript.actorID, true, false, conditionStressed, "Lying Low removes Stress");
+                                    GameManager.instance.messageScript.ActorCondition(text, playerID, true, false, conditionStressed, "Lying Low removes Stress");
                                 }*/
                             }
                         }
@@ -4441,7 +4448,7 @@ public class ActorManager : MonoBehaviour
                     text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
                     topText = "You are deliberately keeping a <b>Low Profile</b>";
                     bottomText = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
-                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, playerID);
                 }
                 break;
             case ActorStatus.Active:
@@ -4467,7 +4474,7 @@ public class ActorManager : MonoBehaviour
                                 string itemText = "has suffered a BREAKDOWN";
                                 string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-                                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, GameManager.instance.playerScript.actorID, GameManager.instance.sideScript.PlayerSide, details);
+                                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, GameManager.instance.sideScript.PlayerSide, details);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                 GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
@@ -4482,6 +4489,46 @@ public class ActorManager : MonoBehaviour
                             }
                         }
                         else { GameManager.instance.playerScript.isBreakdown = false; }
+                    }
+                    else if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged) == true)
+                    {
+                        //Player has imaged condition. Random chance of them being picked up by facial recognition software
+                        rnd = Random.Range(0, 100);
+                        text = "Unknown";
+                        string detailsBottom = "Unknown";
+                        string detailsTop = "Unknown";
+                        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                        if (rnd < playerRecognisedChance)
+                        {
+                            text = "Player SPOTTED by Facial Recognition Scan";
+                            detailsTop = string.Format("<b>Due to being {0}IMAGED{1}, Facial Recognition Scans have identified you</b>", colourNeutral, colourEnd);
+                            //Player loses a level of invisibility
+                            int invis = GameManager.instance.playerScript.Invisibility;
+                            if (invis > 0)
+                            {
+                                invis--;
+                                GameManager.instance.playerScript.Invisibility = invis;
+                                detailsBottom = string.Format("{0}<b>Invisibility -1{1}", colourBad, colourEnd);
+                            }
+                            else
+                            {
+                                //player location known immediately
+                                detailsBottom = string.Format("{0}<b>Invisibility -1{1}{2}Authority knows IMMEDIATELY</b>{3}", colourBad, "\n", "\n", colourEnd);
+                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                if (node != null)
+                                {
+                                    GameManager.instance.messageScript.AINodeActivity("Resistance Activity \"IMAGED\" (Player)", node, playerID, 0);
+                                    //AI Immediate message
+                                   GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"IMAGED\" (Player)", "Facial Recognition Scan", node.nodeID, -1, playerID);
+                                }
+                                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+                            }
+                            //messages
+                            GameManager.instance.messageScript.PlayerSpotted(text, detailsTop, detailsBottom, node);
+                            GameManager.instance.messageScript.GeneralRandom("Player IMAGED Recognition check SUCCESS", "Facial Recognition Scan", playerRecognisedChance, rnd, true);
+                        }
+                        else { GameManager.instance.messageScript.GeneralRandom("Player IMAGED Recognition check FAILED", "Facial Recognition Scan", playerRecognisedChance, rnd, true); }
+                        
                     }
                 }
                 break;

@@ -437,6 +437,48 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Player spotted due to having the IMAGED / TAGGED condition
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="sprite"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message PlayerSpotted(string text, string detailsTop, string detailsBottom, Node node = null)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Recognised;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            if (node != null) { message.data0 = node.nodeID; }
+            message.data1 = 999;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = text;
+            data.topText = "";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerSpottedDetails(detailsTop, detailsBottom, node);
+            data.priority = ItemPriority.High;
+            data.sprite = playerSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            if (node != null)
+            { data.nodeID = node.nodeID; }
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //

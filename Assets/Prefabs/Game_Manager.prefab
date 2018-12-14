@@ -1718,6 +1718,7 @@ MonoBehaviour:
   renownCostGear: 1
   breakdownChance: 20
   playerBadResignChance: 5
+  playerRecognisedChance: 20
   lieLowCooldownPeriod: 5
   lieLowTimer: 0
 --- !u!114 &114677223304800786
