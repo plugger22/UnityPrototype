@@ -45,6 +45,7 @@ public class TurnManager : MonoBehaviour
 
     //fast access
     private int teamArcErasure = -1;
+    private Condition conditionWounded;
 
     /*private string colourRebel;
     private string colourAuthority;*/
@@ -75,7 +76,9 @@ public class TurnManager : MonoBehaviour
     {
         //fast access
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
+        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         //actions
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
@@ -437,11 +440,19 @@ public class TurnManager : MonoBehaviour
     private void UseAction(string text = "Unknown")
     {
         int remainder;
-        _actionsCurrent++;
-        Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, 
-            GameManager.instance.turnScript.Turn, "\n");
-        //exceed action limit? (total includes any temporary adjustments)
-        remainder = _actionsTotal - _actionsCurrent;
+        if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded) == true)
+        {
+            remainder = 0;
+            _actionsCurrent = _actionsTotal;
+            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of 1 actions (condition WOUNDED), turn {2}{3}", text, _actionsCurrent, GameManager.instance.turnScript.Turn, "\n");
+        }
+        else
+        {
+            _actionsCurrent++;
+            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, GameManager.instance.turnScript.Turn, "\n");
+            //exceed action limit? (total includes any temporary adjustments)
+            remainder = _actionsTotal - _actionsCurrent;
+        }
         /*//cached actions (so player can't keep regenerating new gear picks within an action)
         GameManager.instance.gearScript.ResetCachedGearPicks();*/
         if (remainder < 0)
@@ -487,6 +498,13 @@ public class TurnManager : MonoBehaviour
         { return true; }
         return false;
     }
+
+    /// <summary>
+    /// returns true if Player wounded (in TurnManager.cs because all set up with cached 'conditionWounded')
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckPlayerWounded()
+    { return GameManager.instance.playerScript.CheckConditionPresent(conditionWounded); }
 
     /// <summary>
     /// returns a colour formatted string detailing action adjustments (if any) for the action tooltips (details). Null if none.

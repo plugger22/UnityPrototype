@@ -227,6 +227,9 @@ public class ModalActionMenu : MonoBehaviour
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
             outcomeDetails.textTop = "You have used up all your Actions for this turn";
+            //extra text if player is wounded
+            if (GameManager.instance.turnScript.CheckPlayerWounded() == true)
+            { outcomeDetails.textBottom = "One Action maximum while WOUNDED"; }
             outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
             outcomeDetails.modalLevel = details.modalLevel;
             outcomeDetails.modalState = details.modalState;
