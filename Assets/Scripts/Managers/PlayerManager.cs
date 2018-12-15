@@ -44,6 +44,7 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionCorrupt;
     private Condition conditionIncompetent;
     private Condition conditionQuestionable;
+    private Condition conditionDoomed;
     
 
     
@@ -136,6 +137,7 @@ public class PlayerManager : MonoBehaviour
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
@@ -143,6 +145,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+        Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
         //Debug
         _playerNameAuthority = "Evil Eddy";
         _playerNameResistance = "Cameron";
@@ -671,6 +674,9 @@ public class PlayerManager : MonoBehaviour
                         //message
                         string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
                         GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
+                        //Special case -> Doomed condition
+                        if (condition.name.Equals(conditionDoomed.name) == true)
+                        { GameManager.instance.actorScript.StopDoomTimer(); }
                         return true;
                     }
                 }

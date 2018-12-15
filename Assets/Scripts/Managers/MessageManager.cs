@@ -437,6 +437,36 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+
+    public Message PlayerDoomTimer(string text, string topText, string bottomText, Node node)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Damage;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.data0 = nodeID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = "Nemesis Attacks";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerDamageDetails(damageInfo, damageEffect);
+            data.itemText = "You have been Damaged by your NEMESIS";
+            data.priority = ItemPriority.Low;
+            data.sprite = playerSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     /// <summary>
     /// Player spotted due to having the IMAGED / TAGGED condition
     /// </summary>
@@ -447,8 +477,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message PlayerSpotted(string text, string detailsTop, string detailsBottom, Node node = null)
+    public Message PlayerSpotted(string text, string detailsTop, string detailsBottom, Node node)
     {
+        Debug.Assert(node != null, "Invalid node (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -457,8 +488,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Plyr_Recognised;
             message.side = GameManager.instance.sideScript.PlayerSide;
             message.isPublic = true;
-            if (node != null) { message.data0 = node.nodeID; }
-            message.data1 = 999;
+            message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;

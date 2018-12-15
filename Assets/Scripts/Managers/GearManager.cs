@@ -324,7 +324,6 @@ public class GearManager : MonoBehaviour
                                     Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
                                     string msgText = string.Format("Gear {0} COMPROMISED", gear.name);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
-
                                     break;
                                 }
                                 else
@@ -371,6 +370,9 @@ public class GearManager : MonoBehaviour
                             builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
                         }
                         details.textBottom = builderBottom.ToString();
+                        //will overlay InfoAPP so needs to handle this
+                        details.modalLevel = 2;
+                        details.modalState = ModalState.InfoDisplay;
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> CheckForCompromisedGear");
                     }
                 }

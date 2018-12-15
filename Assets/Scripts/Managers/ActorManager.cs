@@ -73,12 +73,15 @@ public class ActorManager : MonoBehaviour
     [Range(0, 10)] public int playerBadResignChance = 5;
     [Tooltip("Chance per turn of the player, with the IMAGED condition, being picked up by a facial recognition scan and losing a level of invisibility")]
     [Range(0, 50)] public int playerRecognisedChance = 20;
+    [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
+    [Range(1, 10)] public int playerDoomTimerValue = 5;
+
     [Header("Lie Low")]
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
-    [HideInInspector] public int lieLowTimer;                                  //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
- 
+    [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
+    [HideInInspector] public int doomTimer;                                     //countdown doom timer set when player gains the DOOMED condition (infected with a slow acting lethal virus)
 
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection
@@ -4388,6 +4391,14 @@ public class ActorManager : MonoBehaviour
         int playerID = GameManager.instance.playerScript.actorID;
         string text, topText, bottomText;
         string playerName = GameManager.instance.playerScript.PlayerName;
+        //doom timer
+        if (doomTimer > 0)
+        {
+            doomTimer--;
+            //timer expired, Authority wins
+            if (doomTimer == 0)
+            { GameManager.instance.win = WinState.Authority; }
+        }
         //check for Stress Nervous breakdown -> both sides
         switch (GameManager.instance.playerScript.status)
         {
@@ -4492,7 +4503,7 @@ public class ActorManager : MonoBehaviour
                     }
                     else if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged) == true)
                     {
-                        //Player has imaged condition. Random chance of them being picked up by facial recognition software
+                        //Player has IMAGED condition. Random chance of them being picked up by facial recognition software
                         rnd = Random.Range(0, 100);
                         text = "Unknown";
                         string detailsBottom = "Unknown";
@@ -5185,10 +5196,14 @@ public class ActorManager : MonoBehaviour
     /// resets cooldown timer everytime a lie low action is used
     /// </summary>
     public void SetLieLowTimer()
-    {
-        lieLowTimer = lieLowCooldownPeriod;
-    }
+    { lieLowTimer = lieLowCooldownPeriod; }
 
+
+    public void SetDoomTimer()
+    { doomTimer = playerDoomTimerValue; }
+
+    public void StopDoomTimer()
+    { doomTimer = 0; }
 
     //new methods above here
 }
