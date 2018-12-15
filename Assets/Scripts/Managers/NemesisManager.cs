@@ -892,6 +892,7 @@ public class NemesisManager : MonoBehaviour
         //adjust for mode
         if (goal == NemesisGoal.SEARCH)
         { searchRating++; }
+        searchRating = Mathf.Clamp(searchRating, 1, 3);
         return searchRating;
     }
 
@@ -1113,7 +1114,7 @@ public class NemesisManager : MonoBehaviour
                     { GameManager.instance.playerScript.AddCondition(condition, "due to Paparrazi Nemesis"); }
                     else { Debug.LogWarningFormat("Invalid condition IMAGED (Null)"); }
                     break;
-                case "Kill":
+                case "Inject":
                     condition = GameManager.instance.dataScript.GetCondition("DOOMED");
                     if (condition != null)
                     {

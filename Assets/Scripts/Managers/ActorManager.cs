@@ -4394,6 +4394,14 @@ public class ActorManager : MonoBehaviour
         //doom timer
         if (doomTimer > 0)
         {
+            //warning message
+            text = string.Format("Player doomTimer now {0}. Death is imminent", doomTimer);
+            string itemText = string.Format("{0}'s DOOM TIMER is ticking down", playerName);
+            topText = "You are Dying";
+            string reason = string.Format("{0}The deadly <b>gene tailored virus</b> is spreading throughout your body{1}{2}You need to find a <b>CURE</b>", "\n", "\n", "\n");
+            string warning = string.Format("You have {0} day{1} left to live", doomTimer, doomTimer != 1 ? "s" : "");
+            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
+            //decrement timer
             doomTimer--;
             //timer expired, Authority wins
             if (doomTimer == 0)

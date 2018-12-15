@@ -1720,8 +1720,10 @@ MonoBehaviour:
   breakdownChance: 20
   playerBadResignChance: 5
   playerRecognisedChance: 20
+  playerDoomTimerValue: 5
   lieLowCooldownPeriod: 5
   lieLowTimer: 0
+  doomTimer: 0
 --- !u!114 &114677223304800786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1957,7 +1959,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 57841
+  seed: 65093
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
