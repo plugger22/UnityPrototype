@@ -537,6 +537,8 @@ MonoBehaviour:
   actionsAuthority: 2
   warningPeriod: 10
   showSplashTimeout: 2
+  winState: 0
+  winReason: 0
   resistanceState: 0
   authoritySecurityState: 0
   currentSide: {fileID: 0}
@@ -1960,13 +1962,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 65093
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
   autoRunTurns: 15
-  win: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

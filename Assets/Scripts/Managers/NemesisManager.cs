@@ -53,6 +53,15 @@ public class NemesisManager : MonoBehaviour
     [Tooltip("Chance of a nemesis with a ZERO adjusted stealth rating ('0'), being spotted in any node with Tracer coverage")]
     [Range(0, 100)] public int chanceTracerSpotZero = 100;
 
+    [Header("Authority Player Control")]
+    [Tooltip("How many turns the Player can gain control of the Nemesis for")]
+    [Range(1, 10)] public int durationControlPeriod = 5;
+    [Tooltip("How mnay turns cooldown does the Player have to wait before they can excercise control again")]
+    [Range(1, 10)] public int durationControlCoolDown = 3;
+    [Tooltip("How much Renown it costs for the player to exercise control (per instance)")]
+    [Range(0, 3)] public int controlRenownCost = 1;
+    
+
     [HideInInspector] public Nemesis nemesis;
     [HideInInspector] public bool isShown;        //Fog of War setting for Nemesis
 
@@ -76,6 +85,13 @@ public class NemesisManager : MonoBehaviour
     private int moveToNodeID;               //node that the nemesis is moving towards
     private int targetDistance;             //distance to target, -1 if no target
     private bool isImmediate;               //true if immediate flag set true by
+
+    //Authority player control
+    private bool isPlayerControlled;
+    private int controlledNodeID;           //player designated target node
+    private int controlledTimer;            //player control is for a finite time
+    private int controlCooldownTimer;       //player control has a cooldown interim period
+    private NemesisGoal controlGoal;        //what the player asks the Nemesis to do once it reaches the specified node (controlledNodeID)
 
     //colour palette 
     private string colourNeutral;
@@ -174,7 +190,11 @@ public class NemesisManager : MonoBehaviour
         if (nemesis != null)
         {
             CheckNemesisTracerSighting();
-            ProcessNemesisActivity(tracker, immediateFlagResistance);
+            //AI or player controlled?
+            if (isPlayerControlled == true)
+            { ProcessNemesisPlayerControlled(); }
+            else
+            { ProcessNemesisActivity(tracker, immediateFlagResistance); }
             ProcessNemesisAdminEnd();
         }
     }
@@ -401,6 +421,24 @@ public class NemesisManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid nemesisNode (Null) for nodeID {0}", nodeID); }
+    }
+
+    /// <summary>
+    /// Alternative to ProcessNemesisActivity when nemesis is under direct control of Authority player
+    /// </summary>
+    private void ProcessNemesisPlayerControlled()
+    {
+
+    }
+
+    /// <summary>
+    /// Player has opted to directly control nemesis
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <param name="goal"></param>
+    private void SetPlayerControl(int nodeID, NemesisGoal goal)
+    {
+
     }
 
     /// <summary>
