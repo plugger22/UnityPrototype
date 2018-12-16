@@ -16,14 +16,22 @@ using UnityEditor;
 /// </summary>
 public class TurnManager : MonoBehaviour
 {
+    [Header("Actions")]
     [Tooltip("Base number of actions that the Resistance side can carry out each turn")]
     [Range(1, 4)] public int actionsResistance = 2;
     [Tooltip("Base number of actions that the Authority side can carry out each turn")]
     [Range(1, 4)] public int actionsAuthority = 2;
 
+    [Header("Timing")]
+    [Tooltip("Number of turns before mission timer expires that warning messages are shown")]
+    [Range(0, 20)] public int warningPeriod = 10;
+
+    [Header("Assorted")]
+    [Tooltip("Number of seconds to show finish splash screen for")]
     public float showSplashTimeout = 2.0f;
 
-
+    [HideInInspector] public WinState winState = WinState.None;          //set if somebody has won
+    [HideInInspector] public WinReason winReason = WinReason.None;  //why a win (from POV of winner)
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
@@ -47,10 +55,13 @@ public class TurnManager : MonoBehaviour
     private string winTextTop;                                                  //data passed via SetWinState() so that ProcessNewTurn can output an appropriate win message
     private string winTextBottom;
     private Sprite winSprite;
+    private bool isLevelOver = false;                                           //set true when a win State has been achieved to prevent ProcessNewTurn continuing to chug away
 
     //fast access
     private int teamArcErasure = -1;
+    private int scenarioTimer = -1;
     private Condition conditionWounded;
+
 
     /*private string colourRebel;
     private string colourAuthority;*/
@@ -81,8 +92,10 @@ public class TurnManager : MonoBehaviour
     {
         //fast access
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        scenarioTimer = GameManager.instance.scenarioScript.scenario.timer;
         conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
+        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
+        Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         //actions
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
@@ -165,17 +178,24 @@ public class TurnManager : MonoBehaviour
             do
             {
                 ProcessNewTurn();
-                if (GameManager.instance.win == WinState.None)
+                if (winState == WinState.None)
                 {
                     GameManager.instance.dataScript.UpdateCurrentItemData();
                     numOfTurns--;
                 }
             }
-            while (numOfTurns > 0 && GameManager.instance.win == WinState.None);
+            while (numOfTurns > 0 && winState == WinState.None);
             isAutoRun = false;
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
     }
+
+    /// <summary>
+    /// autorun active or not
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsAutoRun()
+    { return isAutoRun; }
 
     /// <summary>
     /// master method that handles sequence for ending a turn and commencing a new one
@@ -185,56 +205,63 @@ public class TurnManager : MonoBehaviour
         bool finishedProcessing = false;
         int numOfAITurns = 0;
         int limitAITurns = GameManager.instance.startScript.aiTestRun;
-        //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
-        if (GameManager.instance.inputScript.GameState == GameState.Normal)
+        //only process new turn if a win State hasn't already been acheived
+        if (isLevelOver == false)
         {
-            //continue processing turns until game over if AI vs. AI or single turn process in Player is involved
-            do
+            //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
+            if (GameManager.instance.inputScript.GameState == GameState.Normal)
             {
-                //end the current turn
-                haltExecution = false;
-                EndTurnAI();
-                EndTurnEarly();
-                EndTurnLate();
-                //start the new turn
-                StartTurnEarly();
-                StartTurnLate();
-                if (StartTurnFinal() == false)
+                //continue processing turns until game over if AI vs. AI or single turn process in Player is involved
+                do
                 {
-                    //run game ai vs. ai for set number of turns
-                    numOfAITurns++;
-                    if (numOfAITurns > limitAITurns)
+                    //end the current turn
+                    haltExecution = false;
+                    EndTurnAI();
+                    EndTurnEarly();
+                    EndTurnLate();
+                    //start the new turn
+                    StartTurnEarly();
+                    StartTurnLate();
+                    if (StartTurnFinal() == false)
                     {
-                        finishedProcessing = true;
-                        Debug.Log("TurnManagers.cs -> ProcessNewTurn -> AI turns completed");
-                        Quit();
+                        //run game ai vs. ai for set number of turns
+                        numOfAITurns++;
+                        if (numOfAITurns > limitAITurns)
+                        {
+                            finishedProcessing = true;
+                            Debug.Log("TurnManagers.cs -> ProcessNewTurn -> AI turns completed");
+                            Quit();
+                        }
+                    }
+                    else
+                    { finishedProcessing = true; }
+                }
+                while (finishedProcessing == false);
+
+                //Nobody has yet won
+                if (winState == WinState.None)
+                {
+                    //only do for player
+                    GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+                    if (playerSide != null && currentSide.level == playerSide.level)
+                    {
+                        //turn on info App (only if not autorunning)
+                        if (isAutoRun == false)
+                        {
+                            //switch off any node Alerts
+                            GameManager.instance.alertScript.CloseAlertUI(true);
+                            //info App displayed AFTER any end of turn Player interactions
+                            myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
+                        }
                     }
                 }
                 else
-                { finishedProcessing = true; }
-            }
-            while (finishedProcessing == false);
-
-            //Nobody has yet won
-            if (GameManager.instance.win == WinState.None)
-            {
-                //only do for player
-                GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-                if (playerSide != null && currentSide.level == playerSide.level)
                 {
-                    //turn on info App (only if not autorunning)
-                    if (isAutoRun == false)
-                    {
-                        //switch off any node Alerts
-                        GameManager.instance.alertScript.CloseAlertUI(true);
-                        //info App displayed AFTER any end of turn Player interactions
-                        myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
-                    }
+                    //There is a winner
+                    isLevelOver = true;
+                    ProcessLevelOver();
                 }
             }
-            //There is a winner
-            else
-            { ProcessLevelOver(GameManager.instance.win); }
         }
     }
 
@@ -254,7 +281,7 @@ public class TurnManager : MonoBehaviour
     /// Level has been won or lost
     /// </summary>
     /// <param name="winState"></param>
-    private void ProcessLevelOver(WinState winState)
+    private void ProcessLevelOver()
     {
         switch (winState)
         {
@@ -264,6 +291,7 @@ public class TurnManager : MonoBehaviour
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 details.textTop = winTextTop;
                 details.textBottom = winTextBottom;
+                details.side = GameManager.instance.sideScript.PlayerSide;
                 details.sprite = winSprite;
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "TurnManager.cs -> ProcessLevelOver");
                 break;
@@ -290,6 +318,8 @@ public class TurnManager : MonoBehaviour
         { GameManager.instance.nodeScript.ResetAll(); }
         //update turn in top widget UI
         EventManager.instance.PostNotification(EventType.ChangeTurn, this, _turn, "TurnManager.cs -> StartTurnEarly");
+        //check Scenario timer (winstate if expires)
+        CheckScenarioTimer();
     }
 
     /// <summary>
@@ -806,26 +836,85 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// called by any method whenever a win state is triggered. Used by ProcessNewTurn to populate an appropriate outcome message
     /// </summary>
-    public void SetWinState(WinState winState, string topText, string bottomText, Sprite sprite)
+    public void SetWinState(WinState win, WinReason reason, string topText, string bottomText)
     {
         Debug.Assert(string.IsNullOrEmpty(topText) == false, "Invalid topText (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(bottomText) == false, "Invalid bottomText (Null or Empty)");
-        Debug.Assert(sprite != null, "Invalid sprite (Null)");
-        //assign winState
-        if (winState != WinState.None)
+        //set autorun to false (needed to allow ProcessWinState to generate an outcome message as isAutoRun true provides a global block on all ModalOutcome.cs -> SetModalOutcome)
+        isAutoRun = false;
+        //get approriate sprite
+        Sprite sprite = GameManager.instance.guiScript.firedSprite;
+        switch (reason)
         {
-            if (GameManager.instance.win == WinState.None)
+            case WinReason.CityLoyaltyMax:
+            case WinReason.CityLoyaltyMin:
+            case WinReason.DoomTimerMin:
+            case WinReason.FactionSupportMin:
+            case WinReason.MissionTimerMin:
+            case WinReason.ObjectivesCompleted:
+                sprite = GameManager.instance.guiScript.firedSprite;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);
+                break;
+        }
+        //assign winState
+        if (win != WinState.None)
+        {
+            if (winState == WinState.None)
             {
                 //generate new win state
-                GameManager.instance.win = winState;
+                winState = win;
+                winReason = reason;
                 winTextTop = topText;
                 winTextBottom = bottomText;
                 winSprite = sprite;
             }
-            else { Debug.LogErrorFormat("Can't assign winState as GameManager win already set to \"{0}\"", GameManager.instance.win); }
+            else { Debug.LogErrorFormat("Can't assign winState as GameManager win already set to \"{0}\"", win); }
         }
-        else { Debug.LogErrorFormat("Invalid winState \"{0}\"", winState); }
+        else { Debug.LogErrorFormat("Invalid winState \"{0}\"", win); }
     }
+
+    /// <summary>
+    /// Checks scenario timer every turn to see if it has expired
+    /// </summary>
+    private void CheckScenarioTimer()
+    {
+        string topText, bottomText;
+        if (_turn == scenarioTimer)
+        {
+            topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
+            //win state achieved
+            switch (GameManager.instance.scenarioScript.scenario.mission.side.level)
+            {
+                case 1:
+                    //Authority mission, timer expired so Resistance wins
+                    bottomText = string.Format("{0}The Resistance wins{1}", colourBad, colourEnd);
+                    SetWinState(WinState.Resistance, WinReason.MissionTimerMin, topText, bottomText);
+                    break;
+                case 2:
+                    //Resistance mission, timer expired so Authority wins
+                    bottomText = string.Format("{0}The Authority wins{1}", colourBad, colourEnd);
+                    SetWinState(WinState.Authority, WinReason.MissionTimerMin, topText, bottomText);
+                    break;
+                default:
+                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.scenarioScript.scenario.mission.side.name);
+                    break;
+            }
+        }
+        else if (_turn + warningPeriod > scenarioTimer)
+        {
+            int turnsRemaining = scenarioTimer - _turn;
+            //warning message
+            string text = string.Format("TurnManager.cs -> CheckScenarioTimer: There are {0} turn{1} remaining for the Mission{2}", turnsRemaining, turnsRemaining != 1 ? "s" : "", "\n");
+            string itemText = "Mission Timer EXPIRING soon";
+            topText = "Mission Timer WARNING";
+            string reason = string.Format("{0}You have {1}<b>{2} turn{3}</b>{4} remaining to carry out your <b>Objectives</b>", "\n", colourNeutral, turnsRemaining, turnsRemaining != 1 ? "s" : "", colourEnd);
+            string warning = "You will LOSE if you do not complete your Objectives in time";
+            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
+        }
+    }
+
 
     //new methods above here
 }

@@ -16,4 +16,4 @@ MonoBehaviour:
   city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
   mission: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
   challenge: {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869, type: 2}
-  timer: 100
+  timer: 70

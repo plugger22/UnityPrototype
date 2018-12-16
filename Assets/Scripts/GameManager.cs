@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Autoruns game for 'x' number of turns with current player/AI settings. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
 
-    [HideInInspector] public WinState win = WinState.None;          //set if somebody has won
+   
     
     private List<StartMethod> listOfStartMethods = new List<StartMethod>();
     #endregion

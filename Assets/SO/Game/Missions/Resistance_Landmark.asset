@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f34838f8a6e0c34389da63668a03d07, type: 3}
+  m_Name: Resistance_Landmark
+  m_EditorClassIdentifier: 
+  descriptor: Blow up a landmark city icon
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  briefing: 
+  devNotes: 
+  objectiveOne: {fileID: 0}
+  objectiveTwo: {fileID: 0}
+  objectiveThree: {fileID: 0}
+  targetsGenericLive: 0
+  targetsGenericActive: 0
+  targetBaseCityHall: {fileID: 0}
+  targetBaseIcon: {fileID: 0}
+  targetBaseAirport: {fileID: 0}
+  targetBaseHarbour: {fileID: 0}
+  targetBaseVIP: {fileID: 0}
+  targetBaseStory: {fileID: 0}
+  targetBaseGoal: {fileID: 0}
+  profileGenericLive: {fileID: 0}
+  profileGenericActive: {fileID: 0}
+  profileGenericFollowOn: {fileID: 0}
+  missionID: 4

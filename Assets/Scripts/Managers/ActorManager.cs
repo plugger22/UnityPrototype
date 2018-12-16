@@ -4408,7 +4408,7 @@ public class ActorManager : MonoBehaviour
             {
                 topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
                 bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
-                GameManager.instance.turnScript.SetWinState(WinState.Authority, topText, bottomText, GameManager.instance.guiScript.firedSprite);
+                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, topText, bottomText);
             }
         }
         //check for Stress Nervous breakdown -> both sides

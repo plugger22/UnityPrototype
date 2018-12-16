@@ -8,12 +8,13 @@
     // - - - Game Manager - - -
     //
     public enum WinState { None, Authority, Resistance }                                                                //none indicates nobody has yet won
+    public enum WinReason { None, CityLoyaltyMin, CityLoyaltyMax, FactionSupportMin, DoomTimerMin, MissionTimerMin, ObjectivesCompleted } //reason for Win State (from POV of winner)
     public enum GameState { Normal, ModalUI}                                                                            //main game states
     public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)
     public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurveillanceCrackdown }                            //specific Authority Security states (Player or AI)   
     public enum SideState { None, AI, Player }                                                                          //who's running the side
     public enum MetaLevel { None, City, State, Nation }
-    public enum AuthorityTitle { Superintendent, Minister, Secretary }                                          //different names for authority actors depending on MetaLevel
+    public enum AuthorityTitle { Superintendent, Minister, Secretary }                                                  //different names for authority actors depending on MetaLevel
 
     //
     //  - - - UI - - -

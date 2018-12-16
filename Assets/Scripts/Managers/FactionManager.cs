@@ -295,17 +295,9 @@ public class FactionManager : MonoBehaviour
                     warning = "You've been FIRED, game over";
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
                     //Player fired -> outcome
-
-                    /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                    outcomeDetails.side = side;
-                    outcomeDetails.textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
-                    outcomeDetails.textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
-                    outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "FactionManager.cs -> CheckFactionFirePlayer");*/
-
                     string textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
                     string textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
-                    GameManager.instance.turnScript.SetWinState(winState, textTop, textBottom, GameManager.instance.guiScript.firedSprite);
+                    GameManager.instance.turnScript.SetWinState(winState, WinReason.FactionSupportMin, textTop, textBottom);
 
                 }
                 else

@@ -11,6 +11,8 @@ public class Mission : ScriptableObject
     [Header("Main Mission parameters")]
     [Tooltip("Used as a tooltip")]
     public string descriptor;
+    [Tooltip("Which side is the mission for")]
+    public GlobalSide side;
     [Tooltip("Player briefing")]
     [TextArea] public string briefing;
     [TextArea] public string devNotes;
