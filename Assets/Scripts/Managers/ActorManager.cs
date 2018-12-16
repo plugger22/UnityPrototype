@@ -4405,7 +4405,11 @@ public class ActorManager : MonoBehaviour
             GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
             //timer expired, Authority wins
             if (doomTimer == 0)
-            { GameManager.instance.win = WinState.Authority; }
+            {
+                topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
+                bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
+                GameManager.instance.turnScript.SetWinState(WinState.Authority, topText, bottomText, GameManager.instance.guiScript.firedSprite);
+            }
         }
         //check for Stress Nervous breakdown -> both sides
         switch (GameManager.instance.playerScript.status)

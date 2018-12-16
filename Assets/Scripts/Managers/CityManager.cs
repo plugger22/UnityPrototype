@@ -377,12 +377,18 @@ public class CityManager : MonoBehaviour
                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
                         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Resistance Wins", reason, warning, true, isBad);
                         //Loyalty at Min -> Resistance wins
-                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+
+                        /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                         outcomeDetails.side = side;
                         outcomeDetails.textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.name, colourEnd);
                         outcomeDetails.textBottom = string.Format("{0}Resistance WINS{1}{2}{3}{4}Authority LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
                         outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CityManager.cs -> CheckCityLoyalty");
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CityManager.cs -> CheckCityLoyalty");*/
+
+                        string textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.name, colourEnd);
+                        string textBottom = string.Format("{0}Resistance WINS{1}{2}{3}{4}Authority LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
+                        GameManager.instance.turnScript.SetWinState(WinState.Resistance, textTop, textBottom, GameManager.instance.guiScript.firedSprite);
+
 
                     }
                     else
@@ -436,13 +442,17 @@ public class CityManager : MonoBehaviour
                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = false; }
                         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Authority Wins", reason, warning, true, isBad);
                         //Loyalty at Max -> Authority wins
-                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+
+                        /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                         outcomeDetails.side = side;
                         outcomeDetails.textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.name, colourEnd);
                         outcomeDetails.textBottom = string.Format("{0}Authority WINS{1}{2}{3}{4}Resistance LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
                         outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CityManager.cs -> CheckCityLoyalty");
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CityManager.cs -> CheckCityLoyalty");*/
 
+                        string textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.name, colourEnd);
+                        string textBottom = string.Format("{0}Authority WINS{1}{2}{3}{4}Resistance LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
+                        GameManager.instance.turnScript.SetWinState(WinState.Authority, textTop, textBottom, GameManager.instance.guiScript.firedSprite);
                     }
                     else
                     {

@@ -282,12 +282,12 @@ public class FactionManager : MonoBehaviour
                 //fire player at zero
                 if (approvalZeroTimer == 0)
                 {
+                    WinState winState = WinState.Authority;
                     //you lost, opposite side won
-                    GameManager.instance.win = WinState.Authority;
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {
                         //Resistance side wins
-                        GameManager.instance.win = WinState.Resistance;
+                        winState = WinState.Resistance;
                     }
                     msgText = string.Format("{0} faction approval Zero. Player Fired. Authority wins", playerFaction.name);
                     itemText = string.Format("{0} faction has LOST PATIENCE", playerFaction.name);
@@ -295,12 +295,17 @@ public class FactionManager : MonoBehaviour
                     warning = "You've been FIRED, game over";
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
                     //Player fired -> outcome
-                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+
+                    /*ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                     outcomeDetails.side = side;
                     outcomeDetails.textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
                     outcomeDetails.textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
                     outcomeDetails.sprite = GameManager.instance.guiScript.firedSprite;
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "FactionManager.cs -> CheckFactionFirePlayer");
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "FactionManager.cs -> CheckFactionFirePlayer");*/
+
+                    string textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
+                    string textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
+                    GameManager.instance.turnScript.SetWinState(winState, textTop, textBottom, GameManager.instance.guiScript.firedSprite);
 
                 }
                 else

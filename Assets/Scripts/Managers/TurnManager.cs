@@ -43,6 +43,11 @@ public class TurnManager : MonoBehaviour
     private int numOfTurns = 0;
     private bool isAutoRun;
 
+    //win State
+    private string winTextTop;                                                  //data passed via SetWinState() so that ProcessNewTurn can output an appropriate win message
+    private string winTextBottom;
+    private Sprite winSprite;
+
     //fast access
     private int teamArcErasure = -1;
     private Condition conditionWounded;
@@ -160,8 +165,11 @@ public class TurnManager : MonoBehaviour
             do
             {
                 ProcessNewTurn();
-                GameManager.instance.dataScript.UpdateCurrentItemData();
-                numOfTurns--;
+                if (GameManager.instance.win == WinState.None)
+                {
+                    GameManager.instance.dataScript.UpdateCurrentItemData();
+                    numOfTurns--;
+                }
             }
             while (numOfTurns > 0 && GameManager.instance.win == WinState.None);
             isAutoRun = false;
@@ -226,9 +234,7 @@ public class TurnManager : MonoBehaviour
             }
             //There is a winner
             else
-            {
-                //Game Over, somebody has won -> TO DO
-            }
+            { ProcessLevelOver(GameManager.instance.win); }
         }
     }
 
@@ -242,6 +248,29 @@ public class TurnManager : MonoBehaviour
         yield return new WaitUntil(() => haltExecution == false);
         InitialiseInfoApp(playerSide);
         yield return null;
+    }
+
+    /// <summary>
+    /// Level has been won or lost
+    /// </summary>
+    /// <param name="winState"></param>
+    private void ProcessLevelOver(WinState winState)
+    {
+        switch (winState)
+        {
+            case WinState.Authority:
+            case WinState.Resistance:
+                //outcome message
+                ModalOutcomeDetails details = new ModalOutcomeDetails();
+                details.textTop = winTextTop;
+                details.textBottom = winTextBottom;
+                details.sprite = winSprite;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "TurnManager.cs -> ProcessLevelOver");
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid winState \"{0}\"", winState);
+                break;
+        }
     }
 
 
@@ -772,6 +801,30 @@ public class TurnManager : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
             }
         }
+    }
+
+    /// <summary>
+    /// called by any method whenever a win state is triggered. Used by ProcessNewTurn to populate an appropriate outcome message
+    /// </summary>
+    public void SetWinState(WinState winState, string topText, string bottomText, Sprite sprite)
+    {
+        Debug.Assert(string.IsNullOrEmpty(topText) == false, "Invalid topText (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(bottomText) == false, "Invalid bottomText (Null or Empty)");
+        Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        //assign winState
+        if (winState != WinState.None)
+        {
+            if (GameManager.instance.win == WinState.None)
+            {
+                //generate new win state
+                GameManager.instance.win = winState;
+                winTextTop = topText;
+                winTextBottom = bottomText;
+                winSprite = sprite;
+            }
+            else { Debug.LogErrorFormat("Can't assign winState as GameManager win already set to \"{0}\"", GameManager.instance.win); }
+        }
+        else { Debug.LogErrorFormat("Invalid winState \"{0}\"", winState); }
     }
 
     //new methods above here
