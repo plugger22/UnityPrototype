@@ -428,7 +428,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     private void ProcessNemesisPlayerControlled()
     {
-
+        //decrement timer
     }
 
     /// <summary>
@@ -436,9 +436,28 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeID"></param>
     /// <param name="goal"></param>
-    private void SetPlayerControl(int nodeID, NemesisGoal goal)
+    private void SetPlayerControlStart(int nodeID, NemesisGoal goal)
     {
+        //cooldown period has ended
+        if (controlCooldownTimer == 0)
+        {
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            {
+                isPlayerControlled = true;
+                controlledNodeID = nodeID;
+                controlledTimer = durationControlPeriod;
+            }
+            else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        }
+        else { Debug.LogWarningFormat("Can't take control of Nemesis because cooldown Timer still active ({0} turns)", controlCooldownTimer); }
+    }
 
+    private void SetPlayerControlEnd()
+    {
+        //revert back to Normal / Loiter
+
+        //set cooldown timer
     }
 
     /// <summary>
