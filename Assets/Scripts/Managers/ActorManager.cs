@@ -159,8 +159,7 @@ public class ActorManager : MonoBehaviour
 
 
     public void Initialise()
-    {
-        numOfQualities = GameManager.instance.preloadScript.numOfQualities;
+    {      
         //recruit actors cached fields
         resistancePlayerTurn = -1;
         resistanceActorTurn = -1;
@@ -172,6 +171,7 @@ public class ActorManager : MonoBehaviour
         isNewActionResistanceActor = true;
         isNewActionAuthority = true;
         //fast acess fields
+        numOfQualities = GameManager.instance.preloadScript.numOfQualities;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");

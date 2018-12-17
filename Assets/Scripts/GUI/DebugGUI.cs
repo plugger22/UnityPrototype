@@ -11,7 +11,7 @@ using System;
 public class DebugGUI : MonoBehaviour
 {
     //for whenever interaction is needed
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl}
 
     public GUIStyle customBackground;
 
@@ -99,12 +99,12 @@ public class DebugGUI : MonoBehaviour
 
 
             customBackground.alignment = TextAnchor.UpperCenter;
-            //background box (Info)
-            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 100), "Info Menu", customBackground);
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 40), "Option Menu", customBackground);
+            //background box (Info)
+            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 150), "Info Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 100), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 150), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 40), "Level Menu", customBackground);
 
@@ -715,6 +715,15 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //seventeenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 20 + button_height * 20, button_width, button_height), "Control Nemesis"))
+            {
+                Debug.Log("[Dbg] Button -> Xontrol Nemesis");
+                if (debugDisplay != 41)
+                { debugDisplay = 41; }
+                else { debugDisplay = 0; }
+            }
+
 
             //
             // - - - Level Menu - - -
@@ -1140,6 +1149,43 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.nemesisScript.DebugShowNemesisStatus();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
+                    //Control Nemesis -> Input
+                    case 41:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Nemesis Target nodeID");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Goal (ambush/search)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        status = GUIStatus.NemesisControl;
+                        textOutput = null;
+                        break;
+                    //Control Nemesis -> Confirmation
+                    case 42:
+                        int nodeID = -1;
+                        try
+                        { nodeID = Convert.ToInt32(textInput_0); }
+                        catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
+                        NemesisGoal goal = NemesisGoal.SEARCH;
+                        switch (textInput_1)
+                        {
+                            case "Ambush":
+                            case "ambush":
+                            case "AMBUSH":
+                                goal = NemesisGoal.AMBUSH;
+                                break;
+                        }
+                        if (nodeID > -1)
+                        {
+                            GameManager.instance.nemesisScript.SetPlayerControlStart(nodeID, goal);
+                            if (textOutput == null)
+                            { textOutput = string.Format("Nemesis Player Control, nodeID {0}, goal {1}{2}Press ESC to Exit", textInput_0, textInput_1, "\n"); }
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        }
+                        status = GUIStatus.None;
+                        debugDisplay = 0; //prevent repeats
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1175,6 +1221,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.ShowPath:
                         debugDisplay = 38;
+                        break;
+                    case GUIStatus.NemesisControl:
+                        debugDisplay = 42;
                         break;
                 }
                 break;

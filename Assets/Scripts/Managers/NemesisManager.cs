@@ -87,11 +87,14 @@ public class NemesisManager : MonoBehaviour
     private bool isImmediate;               //true if immediate flag set true by
 
     //Authority player control
-    private bool isPlayerControlled;
-    private int controlledNodeID;           //player designated target node
-    private int controlledTimer;            //player control is for a finite time
+    private bool isPlayerControl;
+    private int controlNodeID;           //player designated target node
+    private int controlTimer;            //player control is for a finite time
     private int controlCooldownTimer;       //player control has a cooldown interim period
     private NemesisGoal controlGoal;        //what the player asks the Nemesis to do once it reaches the specified node (controlledNodeID)
+
+    //fast access
+    private GlobalSide globalAuthority;
 
     //colour palette 
     private string colourNeutral;
@@ -109,6 +112,9 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        //fast access
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         //Debug (FOW OFF)
         isShown = true;
         isFirstNemesis = true;
@@ -190,11 +196,28 @@ public class NemesisManager : MonoBehaviour
         if (nemesis != null)
         {
             CheckNemesisTracerSighting();
-            //AI or player controlled?
-            if (isPlayerControlled == true)
-            { ProcessNemesisPlayerControlled(); }
+
+            //Player controlled?
+            if (isPlayerControl == true)
+            { ProcessNemesisPlayerControlled(tracker, immediateFlagResistance); }
+            //AI controlled
             else
-            { ProcessNemesisActivity(tracker, immediateFlagResistance); }
+            {
+                //authority player control
+                if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                {
+                    //Authority controlled cooldown period
+                    if (controlCooldownTimer > 0)
+                    {
+                        controlCooldownTimer--;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesis: Nemesis cooldown period now {0}{1}", controlCooldownTimer, "\n");
+                    }
+                    else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesis: Nemesis AVAILABLE for Player Control{0}", "\n"); }
+                }
+                //standard AI control
+                ProcessNemesisActivity(tracker, immediateFlagResistance);
+            }
+            //tidy up admin
             ProcessNemesisAdminEnd();
         }
     }
@@ -424,11 +447,67 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Alternative to ProcessNemesisActivity when nemesis is under direct control of Authority player
+    /// Alternative to ProcessNemesisActivity when nemesis is under direct control of Authority player. Parameters are there solely to pass on if AI takes back control. No effect if Player controlled.
     /// </summary>
-    private void ProcessNemesisPlayerControlled()
+    private void ProcessNemesisPlayerControlled(AITracker tracker, bool immediateFlagResistance)
     {
         //decrement timer
+        if (controlTimer > 0)
+        { 
+            //Player control
+            controlTimer--;
+            //is Nemesis at required Node?
+            int nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
+            if (nemesisNodeID == controlNodeID)
+            {
+                //switch to goal
+                switch (controlGoal)
+                {
+                    case NemesisGoal.AMBUSH:
+                        //set manually as you don't want to trigger other actions with SetNemesisMode... etc.
+                        mode = NemesisMode.NORMAL;
+                        goal = NemesisGoal.AMBUSH;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: PLAYER Control, AMBUSH, controlTimer {0}{1}", controlTimer, "\n");
+                        break;
+                    case NemesisGoal.SEARCH:
+                        //set manually as you don't want to trigger other actions with SetNemesisMode... etc.
+                        mode = NemesisMode.HUNT;
+                        goal = NemesisGoal.SEARCH;
+                        Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: PLAYER Control, SEARCH, controlTimer {0}{1}", controlTimer, "\n");
+                        //search routine
+                        if (Random.Range(0, 100) < chanceSearchNeighbour)
+                        {
+                            //move to a random neighbouring node
+                            Node node = nemesisNode.GetRandomNeighbour();
+                            if (node != null)
+                            {
+                                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: SEARCH goal, move to NEIGHBOUR{0}", "\n");
+                                ProcessNemesisMove(node.nodeID);
+                            }
+                            else { Debug.LogWarning("Invalid neighbouring node (Null)"); }
+                        }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid controlGoal \"{0}\"", controlGoal);
+                        break;
+                }
+            }
+            else
+            {
+                //move to required Node
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisGoal: PLAYER Control, MoveTo, controlTimer {0}{1}", controlTimer, "\n");
+                moveToNodeID = controlNodeID;
+                ProcessNemesisMoveTo();
+            }
+        }
+        else
+        {
+            //timer expired
+            SetPlayerControlEnd();
+            //revert to AI control
+            ProcessNemesisActivity(tracker, immediateFlagResistance);
+        }
+
     }
 
     /// <summary>
@@ -436,7 +515,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeID"></param>
     /// <param name="goal"></param>
-    private void SetPlayerControlStart(int nodeID, NemesisGoal goal)
+    public void SetPlayerControlStart(int nodeID, NemesisGoal goal)
     {
         //cooldown period has ended
         if (controlCooldownTimer == 0)
@@ -444,20 +523,37 @@ public class NemesisManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                isPlayerControlled = true;
-                controlledNodeID = nodeID;
-                controlledTimer = durationControlPeriod;
+                isPlayerControl = true;
+                controlNodeID = nodeID;
+                controlTimer = durationControlPeriod;
+                //default search goal if not a viable goal format
+                if (goal != NemesisGoal.AMBUSH && goal != NemesisGoal.SEARCH)
+                { controlGoal = NemesisGoal.SEARCH; }
+                else { controlGoal = goal; }
+                //set normal target node to invalid number (otherwise hunt mode will automatically act)
+                targetNodeID = -1;
+                //log
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }
         else { Debug.LogWarningFormat("Can't take control of Nemesis because cooldown Timer still active ({0} turns)", controlCooldownTimer); }
     }
 
+    /// <summary>
+    /// Player control of Nemesis has ended. Nemesis reverts back to Normal / Loiter, cooldown period activated (interval before player can resume control again)
+    /// </summary>
     private void SetPlayerControlEnd()
     {
         //revert back to Normal / Loiter
-
+        SetNemesisMode(NemesisMode.NORMAL);
         //set cooldown timer
+        isPlayerControl = false;
+        controlNodeID = -1;
+        controlTimer = 0;
+        controlCooldownTimer = durationControlCoolDown;
+        //log
+        Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player NO LONGER has control of Nemesis, cooldown period {0}{1}", durationControlCoolDown, "\n");
     }
 
     /// <summary>
