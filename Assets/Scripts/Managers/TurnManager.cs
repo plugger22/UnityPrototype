@@ -382,6 +382,8 @@ public class TurnManager : MonoBehaviour
                 { GameManager.instance.aiScript.ProcessAISideAuthority(); }
                 if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
                 { GameManager.instance.aiScript.ProcessAISideResistance(); }
+                //Nemesis
+                GameManager.instance.aiScript.ProcessNemesis();
                 break;
             case "AI":
                 //Process both sides AI, resistance first

@@ -1597,6 +1597,9 @@ MonoBehaviour:
   chanceTracerSpotMed: 25
   chanceTracerSpotLow: 50
   chanceTracerSpotZero: 100
+  durationControlPeriod: 5
+  durationControlCoolDown: 3
+  controlRenownCost: 1
   nemesis: {fileID: 0}
   isShown: 0
 --- !u!114 &114621988062562700
@@ -1962,12 +1965,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 65093
-  isAuthority: 0
+  seed: 63308
+  isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 15
+  autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

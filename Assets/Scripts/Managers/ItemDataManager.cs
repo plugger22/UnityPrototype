@@ -640,7 +640,7 @@ public class ItemDataManager : MonoBehaviour
             default: Debug.LogWarningFormat("Invalid nemesis Search rating \"{0}\"", search); break;
         }
         builder.AppendFormat("<b>{0}</b> Nemesis is{1}", nemesis.name, "\n");
-        NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
+        NemesisMode mode = GameManager.instance.nemesisScript.GetMode();
         switch (mode)
         {
             case NemesisMode.Inactive:
@@ -683,7 +683,7 @@ public class ItemDataManager : MonoBehaviour
         string colourSearch = colourNeutral;
         if (search == 3) { colourSearch = colourBad; }
         builder.AppendFormat("<b>{0}</b> Nemesis changes{1}", nemesis.name, "\n");
-        NemesisMode mode = GameManager.instance.nemesisScript.GetNemesisMode();
+        NemesisMode mode = GameManager.instance.nemesisScript.GetMode();
         switch (mode)
         {
             case NemesisMode.NORMAL:
@@ -699,6 +699,45 @@ public class ItemDataManager : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Invalid Nemesis mode \"{0}\"", mode);
                 break;
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Status of Player control of Nemesis -> can be in charge, can be waiting for cooldown period, can be ready to go
+    /// </summary>
+    /// <param name="isPlayerControl"></param>
+    /// <param name="coolDownTimer"></param>
+    /// <param name="controlTimer"></param>
+    /// <returns></returns>
+    public string GetNemesisPlayerOngoingDetails(Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>{1}{2} nemesis</b>{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
+        if (GameManager.instance.nemesisScript.GetMode() != NemesisMode.Inactive)
+        {
+            if (isPlayerControl == true)
+            {
+                builder.AppendFormat("You have CONTROL for {0}<b>{1} more turn{2}</b>{3}", colourNeutral, controlTimer, controlTimer != 1 ? "s" : "", colourEnd);
+                if (node != null)
+                {
+                    builder.AppendFormat("{0}{1}Nemesis ordered to{2}<b>{3}, {4}</b>{5}{6}{7}{8}<b>{9}</b>{10} on arrival", "\n", "\n", "\n", node.nodeName, colourAlert, node.Arc.name, colourEnd,
+                        "\n", colourNeutral, GameManager.instance.nemesisScript.GetGoal(), colourEnd);
+                }
+                else { Debug.LogWarning("Invalid node (Null) for Player Controlled Nemesis"); }
+            }
+            else
+            {
+                if (coolDownTimer == 0)
+                { builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time"); }
+                else
+                { builder.AppendFormat("You can take control in {0}<b>{1} turn{2}</b>{3}", colourNeutral, coolDownTimer, coolDownTimer != 1 ? "s" : "", colourEnd); }
+            }
+        }
+        else
+        {
+            int duration = GameManager.instance.nemesisScript.GetDurationMode();
+            builder.AppendFormat("Will <b>POWER UP<b> in{0}{1}<b>{2} turn{3}</b>{4}", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd);
         }
         return builder.ToString();
     }
@@ -943,7 +982,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerSecretDetails(Secret secret, bool isGained)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2}", secret.descriptor, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourAlert, secret.descriptor, colourEnd, "\n", "\n");
         if (isGained == true)
         {
             //secret gained

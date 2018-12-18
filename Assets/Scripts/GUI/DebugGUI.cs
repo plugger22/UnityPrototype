@@ -1184,7 +1184,11 @@ public class DebugGUI : MonoBehaviour
                             GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         }
                         status = GUIStatus.None;
-                        debugDisplay = 0; //prevent repeats
+                        debugDisplay = 43;
+                        break;
+                    //option used to prevent repeats
+                    case 43:
+                        debugDisplay = 0;
                         break;
                 }
             }

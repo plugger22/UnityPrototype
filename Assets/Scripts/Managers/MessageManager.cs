@@ -1221,7 +1221,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Nemesis;
-            message.side = globalBoth;
+            message.side = globalResistance;
             message.data0 = nodeID;
             message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
             message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
@@ -1272,6 +1272,67 @@ public class MessageManager : MonoBehaviour
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Authority player nemesis control / cooldown status ('Effects' tab in InfoApp). Provide node only in case of Player in control
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="coolDownTimer"></param>
+    /// <param name="controlTimer"></param>
+    /// <returns></returns>
+    public Message NemesisPlayerOngoing(string text, Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node node = null)
+    {
+        Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Nemesis;
+            message.side = globalAuthority;
+            message.data0 = coolDownTimer;
+            message.data1 = controlTimer;
+            //ItemData
+            ItemData data = new ItemData();
+            if (GameManager.instance.nemesisScript.GetMode() != NemesisMode.Inactive)
+            {
+                if (isPlayerControl == true)
+                {
+                    data.itemText = "Nemesis under PLAYER CONTROL";
+                    data.topText = "Under Player Command";
+                }
+                else
+                {
+                    if (coolDownTimer == 0)
+                    {
+                        data.itemText = "Nemesis AVAILABLE for Player Control";
+                        data.topText = "Nemesis Available";
+                    }
+                    else
+                    {
+                        data.itemText = "Nemesis NOT YET available for Player Control";
+                        data.topText = "Nemesis Cooldown Period";
+                    }
+                }
+            }
+            else
+            {
+                data.itemText = "Nemesis currently INACTIVE";
+                data.topText = "Nemesis Inactive";
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetNemesisPlayerOngoingDetails(nemesis, isPlayerControl, coolDownTimer, controlTimer, node);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.Effects;
             data.side = message.side;
             data.help = 1;
             //add

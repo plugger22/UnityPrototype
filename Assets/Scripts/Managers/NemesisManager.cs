@@ -71,7 +71,6 @@ public class NemesisManager : MonoBehaviour
     private bool hasWarning;                //flag set true if Nemesis at same node, hasn't spotted player, and a warning issued ("You sense a dark shadow..."). Stops a double warning
     private bool isFirstNemesis;            //flag set true if first Nemesis, false for arrival of second Nemesis
 
-
     //Nemesis AI
     private NemesisMode mode;
     private NemesisGoal goal;
@@ -236,17 +235,36 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     private void ProcessNemesisAdminEnd()
     {
+        string text;
         hasWarning = false;
-        //Ongoing effect message
+        //Ongoing effect messages
         if (nemesis != null)
         {
             Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
             if (node != null)
             {
-                string text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, node.nodeName, node.Arc.name, mode);
+                //resistance player
+                text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, node.nodeName, node.Arc.name, mode);
                 GameManager.instance.messageScript.NemesisOngoingEffect(text, node.nodeID, nemesis);
             }
             else { Debug.LogError("Invalid node (Null) for Nemesis"); }
+            //authority player
+            if (globalAuthority.level == GameManager.instance.sideScript.PlayerSide.level)
+            {
+                if (mode != NemesisMode.Inactive)
+                {
+                    if (isPlayerControl)
+                    { text = string.Format("{0} nemesis under PLAYER CONTROL", nemesis.name); }
+                    else
+                    {
+                        if (controlCooldownTimer == 0) { text = string.Format("{0} nemesis AVAILABLE for Player Control", nemesis.name); }
+                        else { string.Format("{0} nemesis available for Player Control in {1} turn{2}", nemesis.name, controlCooldownTimer, controlCooldownTimer != 1 ? "s" : ""); }
+                    }
+                }
+                else
+                { text = string.Format("{0} nemesis will be ACTIVE in {0} turn{1}", nemesis.name, durationMode, durationMode != 1 ? "s" : ""); }
+                GameManager.instance.messageScript.NemesisPlayerOngoing("Unknown", nemesis, isPlayerControl, controlCooldownTimer, controlTimer, node);
+            }
         }
     }
 
@@ -1651,8 +1669,14 @@ public class NemesisManager : MonoBehaviour
         return false;
     }
 
-    public NemesisMode GetNemesisMode()
+    public NemesisMode GetMode()
     { return mode; }
+
+    public NemesisGoal GetGoal()
+    { return goal; }
+
+    public int GetDurationMode()
+    { return durationMode; }
 
     //new methods above here
 }

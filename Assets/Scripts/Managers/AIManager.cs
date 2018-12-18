@@ -668,14 +668,22 @@ public class AIManager : MonoBehaviour
         //choose tasks for the following turn
         ProcessFinalTasks(authorityMaxTasksPerTurn);
         //Nemesis
+        ProcessNemesis();
+        //reset flags
+        immediateFlagResistance = false;
+        isHacked = false;
+    }
+
+    /// <summary>
+    /// Nemesis control (AI or Authority Player)
+    /// </summary>
+    public void ProcessNemesis()
+    {
         if (GameManager.instance.nemesisScript.nemesis != null)
         {
             AITracker tracker = ProcessNemesisTarget();
             GameManager.instance.nemesisScript.ProcessNemesis(tracker, immediateFlagResistance);
         }
-        //reset flags
-        immediateFlagResistance = false;
-        isHacked = false;
     }
 
     /// <summary>
@@ -4896,7 +4904,8 @@ public class AIManager : MonoBehaviour
                 bottomText = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd, 
                     colourAlert, "\n", "\n", colourEnd, colourBad, colourEnd);
                 Sprite sprite = GameManager.instance.guiScript.capturedSprite;
-                GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, sprite, 999);
+                if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                { GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, sprite, 999); }
                 break;
             default:
                 Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
