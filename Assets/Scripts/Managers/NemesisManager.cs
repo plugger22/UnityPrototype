@@ -87,13 +87,14 @@ public class NemesisManager : MonoBehaviour
 
     //Authority player control
     private bool isPlayerControl;
-    private int controlNodeID;           //player designated target node
+    private int controlNodeID = -1;           //player designated target node
     private int controlTimer;            //player control is for a finite time
     private int controlCooldownTimer;       //player control has a cooldown interim period
     private NemesisGoal controlGoal;        //what the player asks the Nemesis to do once it reaches the specified node (controlledNodeID)
 
     //fast access
     private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
 
     //colour palette 
     private string colourNeutral;
@@ -113,7 +114,9 @@ public class NemesisManager : MonoBehaviour
     {
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         //Debug (FOW OFF)
         isShown = true;
         isFirstNemesis = true;
@@ -240,12 +243,12 @@ public class NemesisManager : MonoBehaviour
         //Ongoing effect messages
         if (nemesis != null)
         {
-            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
-            if (node != null)
+            Node currentNode = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
+            if (currentNode != null)
             {
                 //resistance player
-                text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, node.nodeName, node.Arc.name, mode);
-                GameManager.instance.messageScript.NemesisOngoingEffect(text, node.nodeID, nemesis);
+                text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, currentNode.nodeName, currentNode.Arc.name, mode);
+                GameManager.instance.messageScript.NemesisOngoingEffect(text, currentNode.nodeID, nemesis);
             }
             else { Debug.LogError("Invalid node (Null) for Nemesis"); }
             //authority player
@@ -263,7 +266,11 @@ public class NemesisManager : MonoBehaviour
                 }
                 else
                 { text = string.Format("{0} nemesis will be ACTIVE in {0} turn{1}", nemesis.name, durationMode, durationMode != 1 ? "s" : ""); }
-                GameManager.instance.messageScript.NemesisPlayerOngoing("Unknown", nemesis, isPlayerControl, controlCooldownTimer, controlTimer, node);
+                //destination node for Player control, if applicable (passed Null if not)
+                Node controlNode = null;
+                if (isPlayerControl == true)
+                { controlNode = GameManager.instance.dataScript.GetNode(controlNodeID); }
+                GameManager.instance.messageScript.NemesisPlayerOngoing("Unknown", nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode);
             }
         }
     }
@@ -339,19 +346,22 @@ public class NemesisManager : MonoBehaviour
                     if (durationMode == 1)
                     {
                         isPossibleNewGoal = false;
-                        //message - warning
-                        string text = string.Format("Reports of a {0} about to come online", nemesis.name);
-                        string itemText = "Reports of forthcoming NEMESIS Activity";
-                        string topText = "Nemesis Heads Up";
-                        string reason = string.Format("{0}<b>Rebel HQ indicate there are signs of your Nemesis stirring</b>", "\n");
-                        string warning = "Nemesis activity can be expected shortly";
-                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                        //message - warning, Resistance player only
+                        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                        {
+                            string text = string.Format("Reports of a {0} about to come online", nemesis.name);
+                            string itemText = "Reports of forthcoming NEMESIS Activity";
+                            string topText = "Nemesis Heads Up";
+                            string reason = string.Format("{0}<b>Rebel HQ indicate there are signs of your Nemesis stirring</b>", "\n");
+                            string warning = "Nemesis activity can be expected shortly";
+                            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                        }
                     }
                     else if (durationMode == 0)
                     {
                         //message
                         string text = string.Format("{0} Nemesis comes online", nemesis.name);
-                        string itemText = "Your NEMESIS comes Online";
+                        string itemText = "NEMESIS comes Online";
                         string topText = "Nemesis goes ACTIVE";
                         string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                         string warning = string.Format("{0}", nemesis.descriptor);
@@ -541,17 +551,27 @@ public class NemesisManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                isPlayerControl = true;
-                controlNodeID = nodeID;
-                controlTimer = durationControlPeriod;
-                //default search goal if not a viable goal format
-                if (goal != NemesisGoal.AMBUSH && goal != NemesisGoal.SEARCH)
-                { controlGoal = NemesisGoal.SEARCH; }
-                else { controlGoal = goal; }
-                //set normal target node to invalid number (otherwise hunt mode will automatically act)
-                targetNodeID = -1;
-                //log
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+                //deduct renown cost for control
+                int renown = GameManager.instance.playerScript.Renown;
+                renown -= controlRenownCost;
+                if (renown > -1)
+                {
+                    GameManager.instance.playerScript.Renown = renown;
+                    //change relevant fields
+                    isPlayerControl = true;
+                    controlNodeID = nodeID;
+                    controlTimer = durationControlPeriod;
+                    //default search goal if not a viable goal format
+                    if (goal != NemesisGoal.AMBUSH && goal != NemesisGoal.SEARCH)
+                    { controlGoal = NemesisGoal.SEARCH; }
+                    else { controlGoal = goal; }
+                    //set normal target node to invalid number (otherwise hunt mode will automatically act)
+                    targetNodeID = -1;
+                    //log
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}, cost {3} Renown{4}", node.nodeName, node.Arc.name, 
+                        node.nodeID, controlRenownCost, "\n");
+                }
+                else { Debug.LogWarning("Insufficient Renown available to take control of Nemesis"); }
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }
@@ -890,8 +910,10 @@ public class NemesisManager : MonoBehaviour
                             //check if at target node
                             if (nemesisNode.nodeID == moveToNodeID)
                             {
-                                //switch to search mode
-                                SetNemesisGoal(NemesisGoal.SEARCH);
+                                //switch to search mode (provided not player controlled)
+                                if (isPlayerControl == false)
+                                { SetNemesisGoal(NemesisGoal.SEARCH); }
+                                else { goal = controlGoal; }
                             }
                         }
                         else { Debug.LogWarning("Nemesis moveAllowance invalid (Zero)"); }
@@ -1636,6 +1658,15 @@ public class NemesisManager : MonoBehaviour
         }
         else
         { builder.AppendFormat(" Nothing to report{0}", "\n"); }
+        //Authority Player control
+        builder.AppendFormat("{0} -Player Control{1}", "\n", "\n");
+        builder.AppendFormat(" isPlayerControl: {0}{1}", isPlayerControl, "\n");
+        builder.AppendFormat(" controlNodeID: {0}{1}", controlNodeID, "\n");
+        Node nodeControl = GameManager.instance.dataScript.GetNode(controlNodeID);
+        if (nodeControl != null) { builder.AppendFormat(" controlNode: {0}, {1}, id {2}{3}", nodeControl.nodeName, nodeControl.Arc.name, nodeControl.nodeID, "\n"); }
+        builder.AppendFormat(" controlTimer: {0}{1}", controlTimer, "\n");
+        builder.AppendFormat(" coolDownTimer: {0}{1}", controlCooldownTimer, "\n");
+        builder.AppendFormat(" controlGoal: {0}{1}", controlGoal, "\n");
         return builder.ToString();
     }
 
@@ -1672,9 +1703,21 @@ public class NemesisManager : MonoBehaviour
     public NemesisMode GetMode()
     { return mode; }
 
-    public NemesisGoal GetGoal()
-    { return goal; }
+    /// <summary>
+    /// returns normal nemesis goal or Player controlled goal
+    /// </summary>
+    /// <param name="isControl"></param>
+    /// <returns></returns>
+    public NemesisGoal GetGoal(bool isControl = false)
+    {
+        if (isControl == false) { return goal; }
+        return controlGoal;
+    }
 
+    /// <summary>
+    /// returns duration, in turns, of nemesis being inactive or in hunt mode
+    /// </summary>
+    /// <returns></returns>
     public int GetDurationMode()
     { return durationMode; }
 

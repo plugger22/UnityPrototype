@@ -1283,13 +1283,13 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Authority player nemesis control / cooldown status ('Effects' tab in InfoApp). Provide node only in case of Player in control
+    /// Authority player nemesis control / cooldown status ('Effects' tab in InfoApp). Provide nodes only in case of Player in control
     /// </summary>
     /// <param name="text"></param>
     /// <param name="coolDownTimer"></param>
     /// <param name="controlTimer"></param>
     /// <returns></returns>
-    public Message NemesisPlayerOngoing(string text, Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node node = null)
+    public Message NemesisPlayerOngoing(string text, Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node nodeControl = null, Node nodeCurrent = null)
     {
         Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -1329,11 +1329,13 @@ public class MessageManager : MonoBehaviour
                 data.itemText = "Nemesis currently INACTIVE";
                 data.topText = "Nemesis Inactive";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetNemesisPlayerOngoingDetails(nemesis, isPlayerControl, coolDownTimer, controlTimer, node);
+            data.bottomText = GameManager.instance.itemDataScript.GetNemesisPlayerOngoingDetails(nemesis, isPlayerControl, coolDownTimer, controlTimer, nodeControl, nodeCurrent);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.Effects;
             data.side = message.side;
+            if (nodeControl != null)
+            { data.nodeID = nodeControl.nodeID; }
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);

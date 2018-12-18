@@ -710,7 +710,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="coolDownTimer"></param>
     /// <param name="controlTimer"></param>
     /// <returns></returns>
-    public string GetNemesisPlayerOngoingDetails(Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node node)
+    public string GetNemesisPlayerOngoingDetails(Nemesis nemesis, bool isPlayerControl, int coolDownTimer, int controlTimer, Node controlNode, Node currentNode)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}{2} nemesis</b>{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
@@ -718,20 +718,28 @@ public class ItemDataManager : MonoBehaviour
         {
             if (isPlayerControl == true)
             {
-                builder.AppendFormat("You have CONTROL for {0}<b>{1} more turn{2}</b>{3}", colourNeutral, controlTimer, controlTimer != 1 ? "s" : "", colourEnd);
-                if (node != null)
+                builder.AppendFormat("<b>CONTROL</b> remaining for {0}<b>{1} turn{2}</b>{3}", colourNeutral, controlTimer, controlTimer != 1 ? "s" : "", colourEnd);
+                if (controlNode != null)
                 {
-                    builder.AppendFormat("{0}{1}Nemesis ordered to{2}<b>{3}, {4}</b>{5}{6}{7}{8}<b>{9}</b>{10} on arrival", "\n", "\n", "\n", node.nodeName, colourAlert, node.Arc.name, colourEnd,
-                        "\n", colourNeutral, GameManager.instance.nemesisScript.GetGoal(), colourEnd);
+                    builder.AppendFormat("{0}{1}Nemesis ordered to{2}<b>{3}, {4}{5}</b>{6} district{7}{8}<b>{9}</b>{10} on arrival <b>(Show)</b>", "\n", "\n", "\n", controlNode.nodeName, colourAlert, controlNode.Arc.name, 
+                        colourEnd, "\n", colourNeutral, GameManager.instance.nemesisScript.GetGoal(true), colourEnd);
                 }
+                if (currentNode != null)
+                { builder.AppendFormat("{0}{1}Currently at{2}<b>{3}, {4}{5}</b>{6}, district", "\n", "\n", "\n", currentNode.nodeName, colourAlert, currentNode.Arc.name, colourEnd); }
                 else { Debug.LogWarning("Invalid node (Null) for Player Controlled Nemesis"); }
             }
             else
             {
                 if (coolDownTimer == 0)
-                { builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time"); }
+                {
+                    builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time (<b>cost {0}{1} Renown</b>{2})", colourBad, GameManager.instance.nemesisScript.controlRenownCost, colourEnd);
+                    builder.AppendFormat("{0}{1}The <b>AI</b> will {2}<b>automatically manage</b>{3} the nemesis otherwise", "\n", "\n", colourAlert, colourEnd);
+                }
                 else
-                { builder.AppendFormat("You can take control in {0}<b>{1} turn{2}</b>{3}", colourNeutral, coolDownTimer, coolDownTimer != 1 ? "s" : "", colourEnd); }
+                {
+                    builder.AppendFormat("<b>Nemesis under {0}AI control<b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
+                    builder.AppendFormat("You can take back control in {0}{1}<b>{2} turn{3}</b>{4}", "\n", colourNeutral, coolDownTimer, coolDownTimer != 1 ? "s" : "", colourEnd);
+                }
             }
         }
         else
@@ -1009,7 +1017,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorSecretDetails(Actor actor, Secret secret, bool isGained)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}{1}{2}", secret.descriptor, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourAlert, secret.descriptor, colourEnd, "\n", "\n");
         if (isGained == true)
         {
             //secret gained
