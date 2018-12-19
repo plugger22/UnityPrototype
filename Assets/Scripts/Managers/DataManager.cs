@@ -188,6 +188,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();   //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();    //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
+    private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
 
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
@@ -4710,6 +4711,13 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, Mission> GetDictOfMissions()
     { return dictOfMissions; }
+
+    //
+    // - - - Help  - - -
+    //
+
+    public Dictionary<string, HelpData> GetDictOfHelpData()
+    { return dictOfHelpData; }
    
 
     //new methods above here

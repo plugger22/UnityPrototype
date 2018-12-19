@@ -1,9 +1,9 @@
-﻿using gameAPI;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles loading of all design time SO's
@@ -96,197 +96,197 @@ public class LoadManager : MonoBehaviour
         //
         numArray = arrayOfGlobalMeta.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalMeta has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalMeta has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
         //
         // - - - GlobalChance (not stored in a collection)
         //
         numArray = arrayOfGlobalChance.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalChance has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalChance has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
         //
         // - - - GlobalType (not stored in a collection)
         //
         numArray = arrayOfGlobalType.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
         //
         // - - - GlobalSide (not stored in a collection)
         //
         numArray = arrayOfGlobalSide.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
         //
         // - - - GlobalWho (not stored in a collection)
         //
         numArray = arrayOfGlobalWho.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
         //
         // - - - EffectApply (not stored in a collection)
         //
         numArray = arrayOfEffectApply.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
         //
         // - - - EffectCriteria (not stored in a collection)
         //
         numArray = arrayOfEffectCriteria.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectCriteria has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectCriteria present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectCriteria has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectCriteria present"); }
         //
         // - - - EffectDuration (not stored in a collection)
         //
         numArray = arrayOfEffectDuration.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectDuration has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectDuration present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectDuration has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectDuration present"); }
         //
         // - - - EffectOperator (not stored in a collection)
         //
         numArray = arrayOfEffectOperator.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectOperator has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectOperator present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOperator has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOperator present"); }
         //
         // - - - EffectOutcome (not stored in a collection)
         //
         numArray = arrayOfEffectOutcome.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
         //
         // - - - ContactType (not stored in a collection)
         //
         numArray = arrayOfContactTypes.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfContactTypes has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfContactTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
         //
         // - - - TargetType (not stored in a collection)
         //
         numArray = arrayOfTargetTypes.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetTypes has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetTypes present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TargetTypes present"); }
         //
         // - - - TargetTriggers (not stored in a collection)
         //
         numArray = arrayOfTargetTriggers.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetTriggers has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetTriggers present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetTriggers has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TargetTriggers present"); }
         //
         // - - - TargetProfile (not stored in a collection)
         //
         numArray = arrayOfTargetProfiles.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfTargetProfiles has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TargetProfiles present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetProfiles has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TargetProfiles present"); }
         //
         // - - - Text Lists Contacts (not stored in a collection)
         //
         numArray = arrayOfContactTextLists.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfContactTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ContactTextLists present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfContactTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ContactTextLists present"); }
         //
         // - - - Text Lists Names (not stored in a collection)
         //
         numArray = arrayOfNameTextLists.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNameTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NameTextLists present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNameTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NameTextLists present"); }
         //
         // - - - Text Lists Districts (not stored in a collection)
         //
         numArray = arrayOfDistrictTextLists.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfDistrictTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No DistrictTextLists present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfDistrictTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No DistrictTextLists present"); }
         //
         // - - - Text Lists Shorts (not stored in a collection)
         //
         numArray = arrayOfShortTextLists.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfShortTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfShortTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
         //
         // - - - NameSets (not stored in a collection)
         //
         numArray = arrayOfNameSets.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NameSets present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NameSets present"); }
         //
         // - - - CitySize (not stored in a collection)
         //
         numArray = arrayOfCitySize.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySize has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySize present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCitySize has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CitySize present"); }
         //
         // - - - CitySpacing (not stored in a collection)
         //
         numArray = arrayOfCitySpacing.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySpacing has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySpacing present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCitySpacing has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CitySpacing present"); }
         //
         // - - - CityConnections (not stored in a collection)
         //
         numArray = arrayOfCityConnections.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCityConnections has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CityConnections present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityConnections has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityConnections present"); }
         //
         // - - - CitySecurity (not stored in a collection)
         //
         numArray = arrayOfCitySecurity.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfCitySecurity has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No CitySecurity present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCitySecurity has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CitySecurity present"); }
         //
         // - - - Damage (not stored in a collection)
         //
         numArray = arrayOfDamages.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfDamages has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Damages present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfDamages has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Damages present"); }
         //
         // - - - Challenge (not stored in a collection)
         //
         numArray = arrayOfChallenges.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfChallenges has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Challenges present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfChallenges has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Challenges present"); }
         //
         // - - - Nemesis (not stored in a collection)
         //
         numArray = arrayOfNemesis.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNemesis has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Nemesis present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNemesis has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Nemesis present"); }
         //
         // - - - Scenario (not stored in a collection)
         //
         numArray = arrayOfScenarios.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfScenarios has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Scenarios present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfScenarios has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Scenarios present"); }
         //
         // - - - Quality
         //
         numArray = arrayOfQualities.Length;
         if (numArray > 0)
         {
-            Debug.LogFormat("[Imp] InitialiseStart -> arrayOfQualities has {0} entries{1}", numArray, "\n");
+            Debug.LogFormat("[Loa] InitialiseStart -> arrayOfQualities has {0} entries{1}", numArray, "\n");
             //copy across to DataManager.cs arrays
             List<Quality> listResistance = new List<Quality>();
             List<Quality> listAuthority = new List<Quality>();
@@ -324,7 +324,7 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogWarning("Invalid listAuthority (size different to numOfQualities)"); }
         }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Qualities present"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Qualities present"); }
 
         //
         // - - - Conditions - - -
@@ -346,10 +346,10 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
             }
             numDict = dictOfConditions.Count;
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfConditions has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfConditions has {0} entries{1}", numDict, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Condition Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No Conditions present"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Conditions present"); }
         //
         // - - - TraitCategories - - -
         //
@@ -370,10 +370,10 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid trait category (duplicate) \"{0}\"", category.name)); }
             }
             numDict = dictOfTraitCategories.Count;
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", numDict, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on TraitCategory Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No TraitCategories present"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TraitCategories present"); }
         //
         // - - - TraitEffects - - -
         //
@@ -409,8 +409,8 @@ public class LoadManager : MonoBehaviour
                     }
                 }
                 numDict = dictOfTraitEffects.Count;
-                Debug.LogFormat("[Imp] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Imp] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
+                Debug.LogFormat("[Loa] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Loa] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
                 Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfTraitEffects.Count > 0, "No Trait Effects imported to dictionary");
@@ -442,7 +442,7 @@ public class LoadManager : MonoBehaviour
                 }
             }
             numDict = dictOfSecretTypes.Count;
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretTypes has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfSecretTypes has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict > 0, "No SecretTypes in dictOfSecretTypes");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on SecretType count, array {0}, dict {1}", numArray, numDict));
         }
@@ -469,7 +469,7 @@ public class LoadManager : MonoBehaviour
                 }
             }
             numDict = dictOfSecretStatus.Count;
-            Debug.LogFormat("[Imp] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict > 0, "No SecretStatus in dictOfSecretStatus");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on SecretStatus count, array {0}, dict {1}", numArray, numDict));
         }
@@ -479,8 +479,8 @@ public class LoadManager : MonoBehaviour
         //
         numArray = arrayOfNodeDatapoints.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfNodeDatapoints has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNodeDatapoints has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
     }
 
 
@@ -526,8 +526,8 @@ public class LoadManager : MonoBehaviour
                 }
             }
             numDict = dictOfNodeArcs.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeArcs has {0} entries{1}", numDict, "\n");
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfNodeArcs has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpNodeArcs has {0} entries{1}", dictOfLookUpNodeArcs.Count, "\n");
             Debug.Assert(dictOfNodeArcs.Count == counter, "Mismatch on dictOfNodeArcs Count");
             Debug.Assert(dictOfLookUpNodeArcs.Count == counter, "Mismatch on dictOfLookupNodeArcs Count");
             Debug.Assert(dictOfNodeArcs.Count > 0, "No Node Arcs have been imported");
@@ -560,7 +560,7 @@ public class LoadManager : MonoBehaviour
                 }
             }
             numDict = dictOfNodeCrisis.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfNodeCrisis has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfNodeCrisis has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No Node Crisis have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on NodeCrisis count, array {0}, dict {1}", numArray, numDict));
@@ -595,7 +595,7 @@ public class LoadManager : MonoBehaviour
                     { Debug.LogError(string.Format("Invalid Trait (duplicate) ID \"{0}\" for \"{1}\"", counter, trait.name)); counter--; }
                 }
                 numDict = dictOfTraits.Count;
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTraits has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTraits has {0} entries{1}", numDict, "\n");
                 Debug.Assert(numDict == counter, "Mismatch on count");
                 Debug.Assert(numDict > 0, "No Traits have been imported");
                 Debug.Assert(numArray == numDict, string.Format("Mismatch in Trait count, array {0}, dict {1}", numArray, numDict));
@@ -637,9 +637,9 @@ public class LoadManager : MonoBehaviour
                         { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
                     }
                     numDict = dictOfActorArcs.Count;
-                    Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", numDict, "\n");
-                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
-                    Debug.LogFormat("[Imp] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
+                    Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", numDict, "\n");
+                    Debug.LogFormat("[Loa] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
+                    Debug.LogFormat("[Loa] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
                     Debug.Assert(numDict == counter, "Mismatch on count");
                     Debug.Assert(numDict > 0, "No Actor Arcs have been imported");
                     Debug.Assert(numArray == numDict, string.Format("Mismatch on ActorArcs count, array {0}, dict {1}", numArray, numDict));
@@ -671,7 +671,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); counter--; }
             }
             numDict = dictOfEffects.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfEffects has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfEffects has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on count");
             Debug.Assert(numDict > 0, "No Effects have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Effects count, array {0}, dict {1}", numArray, numDict));
@@ -720,7 +720,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Target (duplicate) ID \"{0}\" for \"{1}\"", counter, target.targetName)); counter--; }
             }
             numDict = dictOfTargets.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTargets has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTargets has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on count");
             Debug.Assert(numDict > 0, "No Targets have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Targets count, array {0}, dict {1}", numArray, numDict));
@@ -792,8 +792,8 @@ public class LoadManager : MonoBehaviour
                     { Debug.LogError(string.Format("Invalid Lookup Actions (duplicate) ID \"{0}\" for \"{1}\"", counter, action.name)); }
                 }
                 numDict = dictOfActions.Count;
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActions has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActions has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
                 Debug.Assert(numDict == counter, "Mismatch on count");
                 Debug.Assert(dictOfLookUpActions.Count == counter, "Mismatch on count");
                 Debug.Assert(numDict > 0, "No Actions have been imported");
@@ -836,8 +836,8 @@ public class LoadManager : MonoBehaviour
                     { Debug.LogError(string.Format("Invalid Lookup TeamArc (duplicate) ID \"{0}\" for \"{1}\"", counter, teamArc.name)); }
                 }
                 numDict = dictOfTeamArcs.Count;
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfTeamArcs has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTeamArcs has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpTeamArcs has {0} entries{1}", dictOfLookUpTeamArcs.Count, "\n");
                 Debug.Assert(numDict == counter, "Mismatch on Count");
                 Debug.Assert(dictOfLookUpTeamArcs.Count == counter, "Mismatch on Count");
                 Debug.Assert(numDict > 0, "No Team Arcs have been imported");
@@ -872,7 +872,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
             }
             numDict = dictOfGear.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfGear has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfGear has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No Gear has been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Gear count, array {0}, dict {1}", numArray, numDict));
@@ -894,7 +894,7 @@ public class LoadManager : MonoBehaviour
                 else { Debug.LogError("Invalid gearRarity (Null)"); }
             }
             numDict = listOfGearRarity.Count;
-            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearRarity has {0} entries{1}", numDict, "\n"));
+            Debug.Log(string.Format("[Loa] InitialiseEarly -> listOfGearRarity has {0} entries{1}", numDict, "\n"));
             Debug.Assert(numArray == numDict, string.Format("Mismatch in GearRarity count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid listOfGearRarity (Null) -> Import failed"); }
@@ -914,7 +914,7 @@ public class LoadManager : MonoBehaviour
                 else { Debug.LogError("Invalid gearType (Null)"); }
             }
             numDict = listOfGearType.Count;
-            Debug.Log(string.Format("[Imp] InitialiseEarly -> listOfGearType has {0} entries{1}", numDict, "\n"));
+            Debug.Log(string.Format("[Loa] InitialiseEarly -> listOfGearType has {0} entries{1}", numDict, "\n"));
             Debug.Assert(numArray == numDict, string.Format("Mismatch in GearType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
@@ -923,8 +923,8 @@ public class LoadManager : MonoBehaviour
         //
         numArray = arrayOfManageActors.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Imp] InitialiseStart -> arrayOfManageActors has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Imp] LoadManager.cs -> InitialiseStart: No ManageActors present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfManageActors has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ManageActors present"); }
         //
         // - - - Manage Actions - - -
         //
@@ -968,7 +968,7 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentException)
                 { Debug.LogError(string.Format("Invalid ManageAction (duplicate name)  \"{0}\"", manageAction.name)); }
             }
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfManageActions has {0} entries{1}", dictOfManageActions.Count, "\n");
             //sort fast access lists by order -> ActorHandle
             if (listOfActorHandle.Count > 0)
             {
@@ -1082,7 +1082,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) ID \"{0}\" for \"{1}\"", counter, conflict.conflictID)); counter--; }
             }
             numDict = dictOfActorConflicts.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch in count");
             Debug.Assert(numDict > 0, "No ActorConflicts imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in ActorConflict count, array {0}, dict {1}", numArray, numDict));
@@ -1113,7 +1113,7 @@ public class LoadManager : MonoBehaviour
                 //add to list
             }
             numDict = dictOfSecrets.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfSecrets has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfSecrets has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch in count");
             Debug.Assert(numDict > 0, "No Secrets imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Secrets count, array {0}, dict {1}", numArray, numDict));
@@ -1142,7 +1142,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Faction (duplicate) ID \"{0}\" for \"{1}\"", counter, faction.name)); counter--; }
             }
             numDict = dictOfFactions.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfFactions has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfFactions has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on count");
             Debug.Assert(numDict > 0, "No Factions have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Faction count, array {0}, dict {1}", numArray, numDict));
@@ -1171,7 +1171,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid CityArc (duplicate) ID \"{0}\" for \"{1}\"", counter, cityArc.name)); counter--; }
             }
             numDict = dictOfCityArcs.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on count");
             Debug.Assert(numDict > 0, "No City Arcs have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in CityArc count, array {0}, dict {1}", numArray, numDict));
@@ -1200,7 +1200,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid City (duplicate) ID \"{0}\" for \"{1}\"", counter, city.name)); counter--; }
             }
             numDict = dictOfCities.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfCities has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfCities has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No cities have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in City count, array {0}, dict {1}", numArray, numDict));
@@ -1229,7 +1229,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Objective (duplicate) ID \"{0}\" for \"{1}\"", counter, objective.name)); counter--; }
             }
             numDict = dictOfObjectives.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfObjectives has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfObjectives has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No Objectives have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Objective count, array {0}, dict {1}", numArray, numDict));
@@ -1258,7 +1258,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Organisation (duplicate) ID \"{0}\" for \"{1}\"", counter, organisation.name)); counter--; }
             }
             numDict = dictOfOrganisations.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No Organisations have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Organisation count, array {0}, dict {1}", numArray, numDict));
@@ -1292,7 +1292,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.name)); counter--; }
             }
             numDict = dictOfMayors.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMayors has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfMayors has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch in count");
             Debug.Assert(numDict > 0, "No Mayors have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Mayor count, array {0}, dict {1}", numArray, numDict));
@@ -1331,8 +1331,8 @@ public class LoadManager : MonoBehaviour
                     { Debug.LogError(string.Format("Invalid decisionAI.name (duplicate) \"{0}\" for aiDecID \"{1}\"", decisionAI.name, counter)); counter--; }
                 }
                 numDict = dictOfAIDecisions.Count;
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Imp] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
                 Debug.Assert(numDict == counter, "Mismatch in count");
                 Debug.Assert(dictOfLookUpAIDecisions.Count == counter, "Mismatch in count");
                 Debug.Assert(numDict > 0, "No AI Decisions have been imported");
@@ -1365,7 +1365,7 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid Mission (duplicate) ID \"{0}\" for \"{1}\"", counter, mission.name)); counter--; }
             }
             numDict = dictOfMissions.Count;
-            Debug.LogFormat("[Imp] InitialiseEarly -> dictOfMissions has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfMissions has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No Missions have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Mission count, array {0}, dict {1}", numArray, numDict));
@@ -1380,6 +1380,7 @@ public class LoadManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
+        int counter;
         //
         // - - - Nodes - - -
         //
@@ -1387,7 +1388,7 @@ public class LoadManager : MonoBehaviour
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         if (dictOfNodes != null)
         {
-            int counter = 0;
+            counter = 0;
             List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
             if (tempNodeList != null)
             {
@@ -1401,7 +1402,7 @@ public class LoadManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogErrorFormat("Invalid Node (duplicate) ID \"{0}\" for  \"{1}\"", node.nodeID, node.name); }
                 }
-                Debug.LogFormat("[Imp] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
+                Debug.LogFormat("[Loa] InitialiseLate -> dictOfNodes has {0} entries{1}", dictOfNodes.Count, "\n");
                 Debug.Assert(dictOfNodes.Count == counter, "Mismatch in Count");
                 Debug.Assert(dictOfNodes.Count > 0, "No Nodes have been imported");
                 //create List Of Nodes for iteration purposes
@@ -1409,7 +1410,7 @@ public class LoadManager : MonoBehaviour
                 {
                     listOfNodes.Clear();
                     listOfNodes.AddRange(dictOfNodes.Values.ToList());
-                    Debug.LogFormat("[Imp] InitialiseLate -> listOfNodes has {0} entries{1}", listOfNodes.Count, "\n");
+                    Debug.LogFormat("[Loa] InitialiseLate -> listOfNodes has {0} entries{1}", listOfNodes.Count, "\n");
                     Debug.Assert(dictOfNodes.Count == listOfNodes.Count, "Mismatch on count between dictOfNodes and listOfNodes");
                 }
                 else { Debug.LogError("Invalid listOfNodes (Null)"); }
@@ -1417,6 +1418,28 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfNodes (Null) from LevelManager"); }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null) -> Import failed"); }
+        //
+        // - - - Help - - -
+        //
+        Dictionary<string, HelpData> dictOfHelp = GameManager.instance.dataScript.GetDictOfHelpData();
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetItemDataHelp();
+        int count = listOfHelp.Count;
+        if (count > 0)
+        {
+            counter = 0;
+            for (int index = 0; index < count; index++)
+            {
+                //add to dictionary
+                try { dictOfHelp.Add(listOfHelp[index].tag, listOfHelp[index]); counter++; }
+                catch (ArgumentNullException)
+                { Debug.LogErrorFormat("Invalid HelpData (Null) for listOfHelp[{0}]", index); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid HelpData (duplicate) tag \"{0}\" for listOfHelp[\"{1}\"]", listOfHelp[index].tag, index); }
+            }
+            Debug.Assert(dictOfHelp.Count == count, "Mismatch on count between dictOfHelp and listOfHelp");
+            Debug.LogFormat("[Loa] InitialiseLate -> listOfHelp has {0} entries{1}", counter, "\n");
+        }
+        else { Debug.LogError("Invalid listOfHelp (Empty)"); }
     }
 
 

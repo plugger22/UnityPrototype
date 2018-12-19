@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
-using gameAPI;
+using packageAPI;
 
+/// <summary>
+/// handles all Help related matters
+/// </summary>
 public class HelpManager : MonoBehaviour
 {
 
@@ -41,6 +44,24 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat(" MainInfoApp Back -> PageDn{0}", "\n");
         builder.AppendFormat(" MainInfoApp Forward -> PageUp{0}", "\n");
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// creates item Help data. Returns an empty list if none
+    /// </summary>
+    /// <returns></returns>
+    public List<HelpData> GetItemDataHelp()
+    {
+        List<HelpData> listOfHelp = new List<HelpData>();
+
+        //test
+        HelpData data = new HelpData();
+        data.tag = "Test";
+        data.header = "Test help";
+        data.text = "Text Text";
+        listOfHelp.Add(data);
+
+        return listOfHelp;
     }
 
 }

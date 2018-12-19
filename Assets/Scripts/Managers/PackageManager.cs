@@ -336,5 +336,15 @@ namespace packageAPI
         public int neighbourID = -1;             //neighbouring nodeID that forms the shortest route (unweighted) to the nearest loiter node, if same as host node then is a loiter node
     }
 
+    /// <summary>
+    /// help tooltip data package
+    /// </summary>
+    public class HelpData
+    {
+        public string tag;
+        public string header;
+        public string text;
+    }
+
     //new classes above here
 }
