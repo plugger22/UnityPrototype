@@ -382,6 +382,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.levelScript.Initialise;
         startMethod.className = "LevelManager";
         listOfStartMethods.Add(startMethod);
+        //Help Manager -> before LoadManager.cs InitialiseLate
+        startMethod.handler = GameManager.instance.helpScript.Initialise;
+        startMethod.className = "HelpManager";
+        listOfStartMethods.Add(startMethod);
         //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
         startMethod.handler = GameManager.instance.loadScript.InitialiseLate;
         startMethod.className = "LoadManager";

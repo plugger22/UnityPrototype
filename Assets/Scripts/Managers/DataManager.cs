@@ -4718,6 +4718,19 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, HelpData> GetDictOfHelpData()
     { return dictOfHelpData; }
+
+    /// <summary>
+    /// Get help data for a specific tag, returns Null if not found
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    public HelpData GetHelpData(string tag)
+    {
+        if (dictOfHelpData.ContainsKey(tag))
+        { return dictOfHelpData[tag]; }
+        else { Debug.LogWarningFormat("Not found, tag \"{0}\", in dictOfHelpData {1}", tag, "\n"); }
+        return null;
+    }
    
 
     //new methods above here
