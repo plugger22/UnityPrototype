@@ -14,8 +14,8 @@ public class HelpManager : MonoBehaviour
     /*private string colourRebel;*/
     private string colourNeutral;
     private string colourNormal;
-    private string colourGood;
-    private string colourBad;
+    /*private string colourGood;
+    private string colourBad;*/
     private string colourAlert;
     private string colourEnd;
 
@@ -55,8 +55,8 @@ public class HelpManager : MonoBehaviour
     {
         /*colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);*/
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);*/
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();

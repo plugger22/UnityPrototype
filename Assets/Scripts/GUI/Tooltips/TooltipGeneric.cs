@@ -35,9 +35,7 @@ public class TooltipGeneric : MonoBehaviour
         rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade / 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
-        //debug
         Debug.Assert(offset > 0, "Invalid vertical Offset (zero, or less)");
-        //offset = GameManager.instance.tooltipScript.tooltipOffset;
 
     }
 
@@ -58,7 +56,7 @@ public class TooltipGeneric : MonoBehaviour
 
 
     /// <summary>
-    /// Initialise node Tool tip. General Purpose. Can take one to three text segments and auto divides them as necessary.
+    /// Initialise Generic Tool tip. General Purpose. Can take one to three text segments and auto divides them as necessary.
     /// Unique to the Generic tool tip, colours are set by the calling method
     /// </summary>
     public void SetTooltip(GenericTooltipData data)

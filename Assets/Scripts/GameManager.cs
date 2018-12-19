@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipActor tooltipActorScript;         //actor tooltip static instance
     [HideInInspector] public TooltipPlayer tooltipPlayerScript;       //player tooltip static instance
     [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tooltip static instance
+    [HideInInspector] public TooltipHelp tooltipHelpScript;           //help tooltip static instance
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
     [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
@@ -181,6 +182,7 @@ public class GameManager : MonoBehaviour
         tooltipActorScript = TooltipActor.Instance();
         tooltipPlayerScript = TooltipPlayer.Instance();
         tooltipGenericScript = TooltipGeneric.Instance();
+        tooltipHelpScript = TooltipHelp.Instance();
         actionMenuScript = ModalActionMenu.Instance();
         outcomeScript = ModalOutcome.Instance();
         teamPickerScript = ModalTeamPicker.Instance();
