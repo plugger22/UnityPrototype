@@ -36,6 +36,12 @@ public class TooltipGeneric : MonoBehaviour
         fadeInTime = GameManager.instance.tooltipScript.tooltipFade / 2;
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid vertical Offset (zero, or less)");
+        Debug.Assert(genericHeader != null, "Invalid genericHeader (Null)");
+        Debug.Assert(genericText != null, "Invalid genericText (Null)");
+        Debug.Assert(genericDetail != null, "Invalid genericDetail (Null)");
+        Debug.Assert(dividerTop != null, "Invalid dividerTop (Null)");
+        Debug.Assert(dividerBottom != null, "Invalid dividerBottom (Null)");
+        Debug.Assert(tooltipGenericObject != null, "Invalid tooltipGenericOjbect (Null)");
 
     }
 

@@ -28,6 +28,11 @@ public class TooltipHelp : MonoBehaviour
     private static TooltipHelp tooltipHelp;
     private RectTransform rectTransform;
     private int offset;
+    private int numOfTopics = 4;
+
+    private GameObject[] arrayOfObjects;
+    private TextMeshProUGUI[] arrayOfHeaders;
+    private TextMeshProUGUI[] arrayOfTexts;
 
 
     /// <summary>
@@ -38,7 +43,36 @@ public class TooltipHelp : MonoBehaviour
         rectTransform = tooltipHelpObject.GetComponent<RectTransform>();
         offset = GameManager.instance.tooltipScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid offset (Zero)");
-
+        Debug.Assert(tooltipHelpObject != null, "Invalid tooltipHelpOjbect (Null)");
+        Debug.Assert(topicObject_0 != null, "Invalid topicOjbect_0 (Null)");
+        Debug.Assert(topicObject_1 != null, "Invalid topicOjbect_1 (Null)");
+        Debug.Assert(topicObject_2 != null, "Invalid topicOjbect_2 (Null)");
+        Debug.Assert(topicObject_3 != null, "Invalid topicOjbect_3 (Null)");
+        Debug.Assert(headerTopic_0 != null, "Invalid headerTopic_0 (Null)");
+        Debug.Assert(headerTopic_1 != null, "Invalid headerTopic_1 (Null)");
+        Debug.Assert(headerTopic_2 != null, "Invalid headerTopic_2 (Null)");
+        Debug.Assert(headerTopic_3 != null, "Invalid headerTopic_3 (Null)");
+        Debug.Assert(textTopic_0 != null, "Invalid textTopic_0 (Null)");
+        Debug.Assert(textTopic_1 != null, "Invalid textTopic_1 (Null)");
+        Debug.Assert(textTopic_2 != null, "Invalid textTopic_2 (Null)");
+        Debug.Assert(textTopic_3 != null, "Invalid textTopic_3 (Null)");
+        //arrrays
+        arrayOfObjects = new GameObject[numOfTopics];
+        arrayOfHeaders = new TextMeshProUGUI[numOfTopics];
+        arrayOfTexts = new TextMeshProUGUI[numOfTopics];
+        //populate arrays
+        arrayOfObjects[0] = topicObject_0;
+        arrayOfObjects[1] = topicObject_1;
+        arrayOfObjects[2] = topicObject_2;
+        arrayOfObjects[3] = topicObject_3;
+        arrayOfHeaders[0] = headerTopic_0;
+        arrayOfHeaders[1] = headerTopic_1;
+        arrayOfHeaders[2] = headerTopic_2;
+        arrayOfHeaders[3] = headerTopic_3;
+        arrayOfTexts[0] = textTopic_0;
+        arrayOfTexts[1] = textTopic_1;
+        arrayOfTexts[2] = textTopic_2;
+        arrayOfTexts[3] = textTopic_3;
     }
 
     /// <summary>
@@ -57,8 +91,8 @@ public class TooltipHelp : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise Help Tool tip. General Purpose. Can take one to three text segments and auto divides them as necessary.
-    /// Unique to the Generic tool tip, colours are set by the calling method
+    /// Initialise Help Tool tip. General Purpose. Can take one to four text topics and auto divides them as necessary. Topics are displayed in their list order
+    /// Colours are set by the calling method
     /// </summary>
     public void SetTooltip(List<HelpData> listOfHelpData, Vector3 screenPos)
     {
@@ -70,10 +104,21 @@ public class TooltipHelp : MonoBehaviour
             //open panel at start
             tooltipHelpObject.SetActive(true);
             //populate topics where required
-            for (int i = 0; i < count; i++)
+            for (int index = 0; index < numOfTopics; index++)
             {
-                //activate topic
-
+                if (index < count)
+                {
+                    //activate topic
+                    arrayOfObjects[index].SetActive(true);
+                    //populate header and text
+                    arrayOfHeaders[index].text = listOfHelpData[index].header;
+                    arrayOfTexts[index].text = listOfHelpData[index].text;
+                }
+                else
+                {
+                    //deactivate topic
+                    arrayOfObjects[index].SetActive(false);
+                }
             }
 
             //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
@@ -115,6 +160,14 @@ public class TooltipHelp : MonoBehaviour
         Debug.LogFormat("[UI] TooltipHelp -> CloseTooltip: called by {0}{1}", text, "\n");
         tooltipHelpObject.SetActive(false);
     }
+
+
+    /// <summary>
+    /// returns true if tooltip is active and visible
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTooltipActive()
+    { return tooltipHelpObject.activeSelf; }
 
     //new methods above here
 }
