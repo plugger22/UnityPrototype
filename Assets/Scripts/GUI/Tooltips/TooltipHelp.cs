@@ -96,6 +96,10 @@ public class TooltipHelp : MonoBehaviour
     /// </summary>
     public void SetTooltip(List<HelpData> listOfHelpData, Vector3 screenPos)
     {
+        //exit any node tooltip that might be open
+        GameManager.instance.tooltipNodeScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
+        GameManager.instance.tooltipGenericScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
+        //number of topics
         int count = listOfHelpData.Count;
         if (count > 0)
         {
