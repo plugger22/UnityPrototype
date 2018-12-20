@@ -274,8 +274,6 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(itemHelpCentre != null, "Invalid itemHelpCentre (Null)");
         Debug.Assert(itemHelpCombined != null, "Invalid itemHelpCombined (Null)");
         Debug.Assert(infoHelpTop != null, "Invalid infoHelpTop (Null)");
-        //initialise butotnHelpInfo data
-        infoHelpTop.listOfHelp = GetInfoHelpList();
         //tooltips
         itemButtonTooltip = buttonItem.GetComponent<GenericTooltipUI>();
         Debug.Assert(itemButtonTooltip != null, "Invalid itemButtonTooltip (Null)");
@@ -542,6 +540,8 @@ public class MainInfoUI : MonoBehaviour
         itemButtonTooltip.tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
         itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
         itemButtonTooltip.x_offset = 125;
+        //initialise butotnHelpInfo data
+        infoHelpTop.listOfHelp = GetInfoHelpList();
     }
 
     /// <summary>

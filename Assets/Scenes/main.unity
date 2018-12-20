@@ -37286,7 +37286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x_offset: -400
-  y_offset: 0
+  y_offset: 400
 --- !u!1 &1901957869
 GameObject:
   m_ObjectHideFlags: 0
