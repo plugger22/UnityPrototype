@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Handles explanatory help tooltips, text only. Attached to Panel Manager
+/// Handles explanatory help tooltips, text only. Attached to Panel Manager. Operates in Modal 1 state if required (due to position in Heirarchy).
 /// </summary>
 public class TooltipHelp : MonoBehaviour
 {
@@ -132,11 +132,11 @@ public class TooltipHelp : MonoBehaviour
             float width = rectTransform.rect.width;
             float height = rectTransform.rect.height;
             float halfWidth = width * 0.5f;
-            //place tooltip adjacent to the button
-            screenPos.y -= height / 4;
+            //place tooltip up & adjacent to the button
+            /*screenPos.y += height / 2;*/
             if (screenPos.y + height >= Screen.height)
             { screenPos.y -= (screenPos.y + height - Screen.height) + offset; }
-            //to the right
+            //x pos
             if (screenPos.x + width >= Screen.width)
             { screenPos.x -= (width * 2 + screenPos.x - Screen.width); }
 
@@ -163,6 +163,7 @@ public class TooltipHelp : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipHelp -> CloseTooltip: called by {0}{1}", text, "\n");
         tooltipHelpObject.SetActive(false);
+
     }
 
 

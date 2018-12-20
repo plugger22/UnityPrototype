@@ -18,7 +18,7 @@ public class MainInfoUI : MonoBehaviour
 
     [Header("Buttons")]
     public Button buttonClose;
-    public Button buttonInfo;                               //next to panel close button
+    public Button buttonHelpInfo;                               //next to panel close button
     public Button buttonHome;
     public Button buttonBack;
     public Button buttonForward;
@@ -129,6 +129,11 @@ public class MainInfoUI : MonoBehaviour
     /*private ButtonInteraction buttonInteractionHelp;*/
     private ButtonInteraction buttonInteractionItem;
 
+    //item help components
+    private MainInfoItemHelpUI itemHelpCentre;                      //item help button on RHS panel (where no 'Show me' button exists)
+    private MainInfoItemHelpUI itemHelpCombined;                    //item help button on RHS panel (adjacent to Show Me button
+    private MainInfoItemHelpUI infoHelpTop;                         //info help button at top right of InfoApp (next to close button)
+
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
@@ -237,7 +242,7 @@ public class MainInfoUI : MonoBehaviour
         mainInfoObject.SetActive(true);
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
-        Debug.Assert(buttonInfo != null, "Invalid buttonInfo (Null)");
+        Debug.Assert(buttonHelpInfo != null, "Invalid buttonInfo (Null)");
         Debug.Assert(buttonHome != null, "Invalid buttonHome (Null)");
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonForward != null, "Invalid buttonForward (Null)");
@@ -262,6 +267,15 @@ public class MainInfoUI : MonoBehaviour
         buttonInteractionHome.SetButton(EventType.MainInfoHome);
         buttonInteractionBack.SetButton(EventType.MainInfoBack);
         buttonInteractionForward.SetButton(EventType.MainInfoForward);
+        //item help button
+        itemHelpCentre = buttonHelpCentre.GetComponent<MainInfoItemHelpUI>();
+        itemHelpCombined = buttonHelpCombined.GetComponent<MainInfoItemHelpUI>();
+        infoHelpTop = buttonHelpInfo.GetComponent<MainInfoItemHelpUI>();
+        Debug.Assert(itemHelpCentre != null, "Invalid itemHelpCentre (Null)");
+        Debug.Assert(itemHelpCombined != null, "Invalid itemHelpCombined (Null)");
+        Debug.Assert(infoHelpTop != null, "Invalid infoHelpTop (Null)");
+        //initialise butotnHelpInfo data
+        infoHelpTop.listOfHelp = GetInfoHelpList();
         //tooltips
         itemButtonTooltip = buttonItem.GetComponent<GenericTooltipUI>();
         Debug.Assert(itemButtonTooltip != null, "Invalid itemButtonTooltip (Null)");
@@ -914,6 +928,7 @@ public class MainInfoUI : MonoBehaviour
     private void CloseMainInfo()
     {
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         mainInfoCanvas.gameObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //switch off coroutines
@@ -1004,7 +1019,11 @@ public class MainInfoUI : MonoBehaviour
                 buttonItemText.text = "Show Me";
                 buttonItem.gameObject.SetActive(true);
                 buttonHelpCentre.gameObject.SetActive(false);
-                buttonHelpCombined.gameObject.SetActive(true);
+                if (data.help > -1)
+                {
+                    buttonHelpCombined.gameObject.SetActive(true);
+                    itemHelpCombined.listOfHelp = GetItemHelpList(data);
+                }
             }
             else
             {
@@ -1016,7 +1035,10 @@ public class MainInfoUI : MonoBehaviour
                 buttonHelpCombined.gameObject.SetActive(false);
                 //display help only if available
                 if (data.help > -1)
-                { buttonHelpCentre.gameObject.SetActive(true); }
+                {
+                    buttonHelpCentre.gameObject.SetActive(true);
+                    itemHelpCentre.listOfHelp = GetItemHelpList(data);
+                }
                 else { buttonHelpCentre.gameObject.SetActive(false); }
             }
             //remove highlight
@@ -1038,6 +1060,77 @@ public class MainInfoUI : MonoBehaviour
             currentItemConnID = -1;
         }
     }
+
+    /// <summary>
+    /// Assembles a list of HelpData for the item to pass onto the help components. Returns empty if none.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private List<HelpData> GetItemHelpList(ItemData data)
+    {
+        //Debug
+        data.tag0 = "test0";
+        data.tag1 = "test1";
+        data.tag2 = "test2";
+        data.tag3 = "test3";
+        return GetHelpData(data.tag0, data.tag1, data.tag2, data.tag3);
+    }
+
+    /// <summary>
+    /// hard wired help for Main info app info
+    /// </summary>
+    /// <returns></returns>
+    private List<HelpData> GetInfoHelpList()
+        {
+        string tag0 = "test0";
+        string tag1 = "test1";
+        string tag2 = "test2";
+        string tag3 = "test3";
+        return GetHelpData(tag0, tag1, tag2, tag3);
+    }
+
+    /// <summary>
+    /// sub method to pull data from dict and put list together
+    /// </summary>
+    /// <returns></returns>
+    private List<HelpData> GetHelpData(string tag0, string tag1, string tag2, string tag3)
+    {
+        List<HelpData> listOfHelp = new List<HelpData>();
+        //first topic, skip if null
+        if (string.IsNullOrEmpty(tag0) == false)
+        {
+            HelpData help0 = GameManager.instance.dataScript.GetHelpData(tag0);
+            if (help0 != null)
+            { listOfHelp.Add(help0); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag0 \"{0}\"", tag0); }
+        }
+        //second topic, skip if null
+        if (string.IsNullOrEmpty(tag1) == false)
+        {
+            HelpData help1 = GameManager.instance.dataScript.GetHelpData(tag1);
+            if (help1 != null)
+            { listOfHelp.Add(help1); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag1 \"{0}\"", tag1); }
+        }
+        //thrid topic, skip if null
+        if (string.IsNullOrEmpty(tag2) == false)
+        {
+            HelpData help2 = GameManager.instance.dataScript.GetHelpData(tag2);
+            if (help2 != null)
+            { listOfHelp.Add(help2); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag2 \"{0}\"", tag2); }
+        }
+        //fourth topic, skip if null
+        if (string.IsNullOrEmpty(tag3) == false)
+        {
+            HelpData help3 = GameManager.instance.dataScript.GetHelpData(tag3);
+            if (help3 != null)
+            { listOfHelp.Add(help3); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag3 \"{0}\"", tag3); }
+        }
+        return listOfHelp;
+    }
+
 
     /*/// <summary>
     /// Special method for the last tab, Help (hard wired info, not dynamic)

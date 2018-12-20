@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using packageAPI;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Text;
-using packageAPI;
+using UnityEngine;
 
 /// <summary>
 /// handles all Help related matters
@@ -72,12 +71,30 @@ public class HelpManager : MonoBehaviour
     {
         List<HelpData> listOfHelp = new List<HelpData>();
 
-        //test
-        HelpData data = new HelpData();
-        data.tag = "Test";
-        data.header = "Test help";
-        data.text = string.Format("{0}Text Text{1}", colourNormal, colourEnd);
-        listOfHelp.Add(data);
+        //test0
+        HelpData data0 = new HelpData();
+        data0.tag = "test0";
+        data0.header = "Test help";
+        data0.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
+        listOfHelp.Add(data0);
+        //test1
+        HelpData data1 = new HelpData();
+        data1.tag = "test1";
+        data1.header = "Test help More";
+        data1.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
+        listOfHelp.Add(data1);
+        //test2
+        HelpData data2 = new HelpData();
+        data2.tag = "test2";
+        data2.header = "Test help Maybe";
+        data2.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
+        listOfHelp.Add(data2);
+        //test3
+        HelpData data3 = new HelpData();
+        data3.tag = "test3";
+        data3.header = "Test help Wednesday";
+        data3.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
+        listOfHelp.Add(data3);
 
         return listOfHelp;
     }

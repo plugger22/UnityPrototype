@@ -1974,7 +1974,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -3639,12 +3639,12 @@ GameObject:
   - component: {fileID: 161200622}
   - component: {fileID: 161200619}
   m_Layer: 5
-  m_Name: Tooltip_Help
+  m_Name: Tooltip_Modal_Help
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &161200618
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3660,7 +3660,7 @@ RectTransform:
   - {fileID: 306884172}
   - {fileID: 1687142325}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 6
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6701,6 +6701,7 @@ GameObject:
   - component: {fileID: 317918171}
   - component: {fileID: 317918170}
   - component: {fileID: 317918169}
+  - component: {fileID: 317918172}
   m_Layer: 5
   m_Name: help_button_centre
   m_TagString: Untagged
@@ -6801,6 +6802,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 317918167}
   m_CullTransparentMesh: 0
+--- !u!114 &317918172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 317918167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd0e5d4727193c4bad87b0e9a7464ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_offset: -400
+  y_offset: 0
 --- !u!1 &319789010
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,7 +7041,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -7238,7 +7252,7 @@ RectTransform:
   - {fileID: 453861555}
   - {fileID: 183712103}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -9210,7 +9224,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9920,7 +9934,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10216,7 +10230,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -14586,7 +14600,7 @@ MonoBehaviour:
   mainInfoCanvas: {fileID: 1337470810}
   mainInfoObject: {fileID: 1323247380}
   buttonClose: {fileID: 1833102002}
-  buttonInfo: {fileID: 1901418549}
+  buttonHelpInfo: {fileID: 1901418549}
   buttonHome: {fileID: 1916110549}
   buttonBack: {fileID: 1330312213}
   buttonForward: {fileID: 873691796}
@@ -15420,7 +15434,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -16428,7 +16442,7 @@ RectTransform:
   m_Children:
   - {fileID: 1572267885}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -17204,7 +17218,7 @@ RectTransform:
   - {fileID: 1576962931}
   - {fileID: 168979121}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -18987,6 +19001,7 @@ GameObject:
   - component: {fileID: 924282493}
   - component: {fileID: 924282492}
   - component: {fileID: 924282491}
+  - component: {fileID: 924282494}
   m_Layer: 5
   m_Name: help_button_combined
   m_TagString: Untagged
@@ -19087,6 +19102,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 924282489}
   m_CullTransparentMesh: 0
+--- !u!114 &924282494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 924282489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd0e5d4727193c4bad87b0e9a7464ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_offset: -400
+  y_offset: 0
 --- !u!1001 &939625836
 Prefab:
   m_ObjectHideFlags: 0
@@ -20124,7 +20152,7 @@ RectTransform:
   - {fileID: 205246894}
   - {fileID: 164509009}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -20879,7 +20907,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -24465,7 +24493,6 @@ RectTransform:
   - {fileID: 594550366}
   - {fileID: 1779536615}
   - {fileID: 1111140691}
-  - {fileID: 161200618}
   - {fileID: 1799744839}
   - {fileID: 1772949434}
   - {fileID: 1554496892}
@@ -24480,6 +24507,7 @@ RectTransform:
   - {fileID: 1581560925}
   - {fileID: 862342179}
   - {fileID: 1337470807}
+  - {fileID: 161200618}
   - {fileID: 564454100}
   - {fileID: 560967545}
   - {fileID: 457294003}
@@ -26512,7 +26540,7 @@ RectTransform:
   m_Children:
   - {fileID: 1372218435}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -26934,7 +26962,7 @@ RectTransform:
   m_Children:
   - {fileID: 1323247381}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -31116,7 +31144,7 @@ RectTransform:
   m_Children:
   - {fileID: 22877214}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -31866,7 +31894,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -32222,7 +32250,7 @@ RectTransform:
   m_Children:
   - {fileID: 1654571532}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -34968,7 +34996,7 @@ RectTransform:
   m_Children:
   - {fileID: 1043227660}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -35294,7 +35322,7 @@ RectTransform:
   m_Children:
   - {fileID: 527046052}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -37145,6 +37173,7 @@ GameObject:
   - component: {fileID: 1901418551}
   - component: {fileID: 1901418550}
   - component: {fileID: 1901418549}
+  - component: {fileID: 1901418552}
   m_Layer: 5
   m_Name: info_button
   m_TagString: Untagged
@@ -37245,6 +37274,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1901418547}
   m_CullTransparentMesh: 0
+--- !u!114 &1901418552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1901418547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bd0e5d4727193c4bad87b0e9a7464ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x_offset: -400
+  y_offset: 0
 --- !u!1 &1901957869
 GameObject:
   m_ObjectHideFlags: 0
@@ -40997,7 +41039,7 @@ RectTransform:
   m_Children:
   - {fileID: 1919787171}
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -41291,7 +41333,7 @@ RectTransform:
   m_LocalScale: {x: 1.0000026, y: 0.7200024, z: 1.0000026}
   m_Children: []
   m_Father: {fileID: 1177888969}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
