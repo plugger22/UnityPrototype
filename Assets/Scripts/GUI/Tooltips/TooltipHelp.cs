@@ -132,17 +132,12 @@ public class TooltipHelp : MonoBehaviour
             float width = rectTransform.rect.width;
             float height = rectTransform.rect.height;
             float halfWidth = width * 0.5f;
-            //place tooltip up & adjacent to the button
-            /*screenPos.y += height / 2;*/
+            //y pos
             if (screenPos.y + height >= Screen.height)
-            { screenPos.y -= (screenPos.y + height - Screen.height) + offset; }
+            { screenPos.y -= (screenPos.y + height - Screen.height) - offset; } //NOTE: change from '+' offset to '-' offset
             //x pos
             if (screenPos.x + width >= Screen.width)
             { screenPos.x -= (width * 2 + screenPos.x - Screen.width); }
-
-            /*else if (screenPos.x - width <= 0)
-            { screenPos.x += width - screenPos.x; }*/
-
             //minimum position of tooltip from Left Hand side is half width
             else if (screenPos.x <= halfWidth)
             { screenPos.x = halfWidth; }
