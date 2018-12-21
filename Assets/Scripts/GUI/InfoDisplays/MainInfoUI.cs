@@ -1068,12 +1068,23 @@ public class MainInfoUI : MonoBehaviour
     /// <returns></returns>
     private List<HelpData> GetItemHelpList(ItemData data)
     {
+        string tag0, tag1, tag2, tag3;
         //Debug
-        data.tag0 = "test0";
-        data.tag1 = "test1";
-        data.tag2 = "test2";
-        data.tag3 = "test3";
-        return GetHelpData(data.tag0, data.tag1, data.tag2, data.tag3);
+        if (string.IsNullOrEmpty(data.tag0) == true)
+        {
+            //default data
+            tag0 = "test0";
+            tag1 = ""; tag2 = ""; tag3 = "";
+        }
+        else
+        {
+            //item specified help
+            tag0 = data.tag0;
+            tag1 = data.tag1;
+            tag2 = data.tag2;
+            tag3 = data.tag3;
+        }
+        return GetHelpData(tag0, tag1, tag2, tag3);
     }
 
     /// <summary>
@@ -1081,19 +1092,13 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private List<HelpData> GetInfoHelpList()
-        {
-        string tag0 = "test0";
-        string tag1 = "test1";
-        string tag2 = "test2";
-        string tag3 = "test3";
-        return GetHelpData(tag0, tag1, tag2, tag3);
-    }
+    { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }
 
     /// <summary>
     /// sub method to pull data from dict and put list together
     /// </summary>
     /// <returns></returns>
-    private List<HelpData> GetHelpData(string tag0, string tag1, string tag2, string tag3)
+    public List<HelpData> GetHelpData(string tag0, string tag1, string tag2, string tag3)
     {
         List<HelpData> listOfHelp = new List<HelpData>();
         //first topic, skip if null

@@ -11,7 +11,7 @@ public enum ColourType
     cancelHighlight, cancelNormal,
     actionEffect,
     dataGood, dataNeutral, dataBad, dataTerrible,
-    normalText, defaultText, greyText, alertText,                          //normal is slight off yellow text, default is white, grey is greyed out, alert is Salmon
+    normalText, defaultText, greyText, alertText, goodText,                         //normal is slight off yellow text, default is white, grey is greyed out, alert is Salmon
     //outcome window effects
     goodEffect, neutralEffect, badEffect,                              
     nodeActive,
@@ -47,6 +47,7 @@ public class ColourManager : MonoBehaviour
     public Colour[] defaultText;                    //default White text if no colour provided
     public Colour[] greyText;                       //greyed out text
     public Colour[] alertText;                      //text you want highlighted (Salmon)
+    public Colour[] goodText;                       //green text
     //outcome Effects
     public Colour[] goodEffect;
     public Colour[] neutralEffect;
@@ -85,6 +86,7 @@ public class ColourManager : MonoBehaviour
             defaultText,
             greyText,
             alertText,
+            goodText,
             goodEffect,
             neutralEffect,
             badEffect,

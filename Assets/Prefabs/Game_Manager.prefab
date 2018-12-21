@@ -481,6 +481,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 842f2e8e1346f304ebbc26c7e792849b, type: 2}
   alertText:
   - {fileID: 11400000, guid: a001b68021fc9314fad7786c5b9fa288, type: 2}
+  goodText:
+  - {fileID: 11400000, guid: 4694d196bd9f0ef4a87bac06e97f4006, type: 2}
   goodEffect:
   - {fileID: 11400000, guid: f085c50c6111fe447a3a889665b63ace, type: 2}
   neutralEffect:
@@ -1968,9 +1970,9 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 63308
   isAuthority: 1
-  isPerformanceLog: 0
+  isPerformanceLog: 1
   isValidateData: 0
-  isValidateSO: 0
+  isValidateSO: 1
   autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

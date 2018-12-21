@@ -1422,7 +1422,7 @@ public class LoadManager : MonoBehaviour
         // - - - Help - - -
         //
         Dictionary<string, HelpData> dictOfHelp = GameManager.instance.dataScript.GetDictOfHelpData();
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetItemDataHelp();
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.CreateItemDataHelp();
         int count = listOfHelp.Count;
         if (count > 0)
         {

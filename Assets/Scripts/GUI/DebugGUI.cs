@@ -718,12 +718,21 @@ public class DebugGUI : MonoBehaviour
             //seventeenth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 20 + button_height * 20, button_width, button_height), "Control Nemesis"))
             {
-                Debug.Log("[Dbg] Button -> Xontrol Nemesis");
+                Debug.Log("[Dbg] Button -> Control Nemesis");
                 if (debugDisplay != 41)
                 { debugDisplay = 41; }
                 else { debugDisplay = 0; }
             }
 
+            //eightteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 21 + button_height * 21, button_width, button_height), "Help Debug"))
+            {
+                Debug.Log("[Dbg] Button -> Help Debug");
+                //toggle help on/off
+                if (GameManager.instance.tooltipHelpScript.CheckTooltipActive() == false)
+                { GameManager.instance.helpScript.DebugShowHelp(); }
+                else { GameManager.instance.tooltipHelpScript.CloseTooltip(); }
+            }
 
             //
             // - - - Level Menu - - -

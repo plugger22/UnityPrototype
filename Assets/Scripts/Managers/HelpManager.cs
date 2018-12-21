@@ -9,12 +9,17 @@ using UnityEngine;
 public class HelpManager : MonoBehaviour
 {
 
+    //
+    // - - - Colour Scheme - - -
+    //
+    // Headers are default colourNeutral (automatic)
+    // Tips are colourTip (do yourself)
+    // Text is default slightly off-yellow (automatic). Add colourAlert highlights yourself
+    // No other colours are used
+
     //colours
-    /*private string colourRebel;*/
+    private string colourTip;
     private string colourNeutral;
-    private string colourNormal;
-    /*private string colourGood;
-    private string colourBad;*/
     private string colourAlert;
     private string colourEnd;
 
@@ -52,12 +57,9 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        /*colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);*/
+        colourTip = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);*/
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -67,38 +69,120 @@ public class HelpManager : MonoBehaviour
     /// creates item Help data. Returns an empty list if none
     /// </summary>
     /// <returns></returns>
-    public List<HelpData> GetItemDataHelp()
+    public List<HelpData> CreateItemDataHelp()
     {
         List<HelpData> listOfHelp = new List<HelpData>();
-
+        HelpData data;
+        StringBuilder builder;
+        //
+        // - - - Debug - - -
+        //
         //test0
-        HelpData data0 = new HelpData();
-        data0.tag = "test0";
-        data0.header = "Test help";
-        data0.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
-        listOfHelp.Add(data0);
-        //test1
-        HelpData data1 = new HelpData();
-        data1.tag = "test1";
-        data1.header = "Test help More";
-        data1.text = string.Format("Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere");
-        listOfHelp.Add(data1);
-        //test2
-        HelpData data2 = new HelpData();
-        data2.tag = "test2";
-        data2.header = "Test help Maybe";
-        data2.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
-        listOfHelp.Add(data2);
-        //test3
-        HelpData data3 = new HelpData();
-        data3.tag = "test3";
-        data3.header = "Test help Wednesday";
-        data3.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
-        listOfHelp.Add(data3);
+        data = new HelpData();
+        data.tag = "test0";
+        data.header = "Missing help";
+        data.text = string.Format("No help has been provided here. You need to go into {0}HelpManager.cs{1} and create a series of topics for the this item", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //
+        // - - - Faction Support
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "fact_supp_0";
+        data.header = "Faction Support";
+        builder = new StringBuilder();
+        builder.AppendFormat("At the start of each turn your Faction decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
+        builder.AppendFormat("The chance of it doing so depends on your level of {0}Faction Support{1}. ", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //chance
+        data = new HelpData();
+        data.tag = "fact_supp_1";
+        data.header = "Chance of Support";
+        builder = new StringBuilder();
+        builder.AppendFormat("The better your {0}relationship{1} with your faction, the greater the chance of support. ", colourAlert, colourEnd);
+        builder.AppendFormat("Support is given if a ten sided die (1d10) is {0}less than{1} your level of Faction Approval (top centre)", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //tip
+        data = new HelpData();
+        data.tag = "fact_supp_2";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("Renown is the {0}currency{1} of the game. The more you have the more you can do. ", colourAlert, colourEnd);
+        builder.AppendFormat("Your main source of Renown is from the support of your Faction. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //
+        // - - - Main Info App 
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "info_app_0";
+        data.header = "Info App";
+        builder = new StringBuilder();
+        builder.AppendFormat("The Info App is your main source of information. It refreshes at the {0}beginning{1} of each day. ", colourAlert, colourEnd);
+        builder.AppendFormat("It is available while ever you aren't {0}indisposed{1} (Captured, Stressed, etc.)", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Flashing Tab
+        data = new HelpData();
+        data.tag = "info_app_1";
+        data.header = "Flashing Tabs";
+        data.text = string.Format("A flashing white circle over a tab indicates that there is something within the tab that {0}requires your attention{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ticker tap
+        data = new HelpData();
+        data.tag = "info_app_2";
+        data.header = "News Ticker";
+        builder = new StringBuilder(); 
+        builder.AppendFormat("The news ticker at the bottom of the App gives daily highlights of events in the city. ", colourAlert, colourEnd);
+        builder.AppendFormat("You can adjust the {0}text scroll speed{1} using the '+' and '-' keys", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Keys
+        data = new HelpData();
+        data.tag = "info_app_3";
+        data.header = "Key Shortcuts";
+        builder = new StringBuilder();
+        builder.AppendFormat("Use the arrow keys to navigate {0}within{1} the App{2}", colourAlert, colourEnd, "\n");
+        builder.AppendFormat("To {0}move between days{1} use 'PGUP' and 'PGDWN'{2}", colourAlert, colourEnd, "\n");
+        builder.AppendFormat("To {0}open{1} the App at any time press 'I'", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //
+        // - - - Secrets
+        //
+        /*//Overview
+        data = new HelpData();
+        data.tag = "secret_0";
+        data.header = "Secrets";
+        builder = new StringBuilder();
+        builder.AppendFormat("The news ticker at the bottom of the App gives daily highlights of events in the city. ", colourAlert, colourEnd);
+        builder.AppendFormat("You can adjust the {0}text scroll speed{1} using the '+' and '-' keys", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);*/
 
+
+        //return help
         return listOfHelp;
+
+    
     }
 
+    /// <summary>
+    /// allows a help window to pop-up showing the topics specified below. Used for debugging help topics
+    /// </summary>
+    public void DebugShowHelp()
+    {
+        string tag0 = "info_app_0";
+        string tag1 = "info_app_1";
+        string tag2 = "info_app_2";
+        string tag3 = "";
+        List<HelpData> listOfHelp = GameManager.instance.mainInfoScript.GetHelpData(tag0, tag1, tag2, tag3);
+        Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
+        GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
+    }
 
     /// <summary>
     /// debug method to display all keyboard commands

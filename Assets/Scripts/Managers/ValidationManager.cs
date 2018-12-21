@@ -137,7 +137,7 @@ public class ValidationManager : MonoBehaviour
         }
     }
 
-
+#if (UNITY_EDITOR)
     /// <summary>
     /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
     /// Designed to pick up SO's that might have been added in the editor but not added to the arrays (ignored by game if this is the case).
@@ -315,7 +315,7 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid arraySO for {0}", typeof(T).Name); }
     }
-
+#endif
 
     //new methods above here
 }

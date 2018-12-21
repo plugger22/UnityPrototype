@@ -3012,7 +3012,10 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.sprite = faction.sprite;
-            data.help = 1; //debug
+            data.help = 1;
+            data.tag0 = "fact_supp_0";
+            data.tag1 = "fact_supp_1";
+            data.tag2 = "fact_supp_2";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
