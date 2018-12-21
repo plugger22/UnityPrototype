@@ -311,6 +311,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
+#if (UNITY_EDITOR)
         //SO Checker (After LoadManager.cs / Optional)
         if (isValidateSO == true)
         {
@@ -318,6 +319,7 @@ public class GameManager : MonoBehaviour
             startMethod.className = "ValidationManager (SO)";
             listOfStartMethods.Add(startMethod);
         }
+#endif
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         startMethod.handler = GameManager.instance.globalScript.Initialise;
         startMethod.className = "GlobalManager";

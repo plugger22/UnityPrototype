@@ -81,7 +81,7 @@ public class HelpManager : MonoBehaviour
         HelpData data1 = new HelpData();
         data1.tag = "test1";
         data1.header = "Test help More";
-        data1.text = string.Format("{0}Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere.{1}", colourNormal, colourEnd);
+        data1.text = string.Format("Text Text. My name is Cameron and I'm not sure who I am but I'm pretty confident I am a knock them down, blow them up, gun, game designere");
         listOfHelp.Add(data1);
         //test2
         HelpData data2 = new HelpData();

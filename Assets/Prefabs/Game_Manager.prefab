@@ -1950,6 +1950,7 @@ MonoBehaviour:
   tooltipActorScript: {fileID: 0}
   tooltipPlayerScript: {fileID: 0}
   tooltipGenericScript: {fileID: 0}
+  tooltipHelpScript: {fileID: 0}
   actionMenuScript: {fileID: 0}
   outcomeScript: {fileID: 0}
   teamPickerScript: {fileID: 0}
@@ -1967,9 +1968,9 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 63308
   isAuthority: 1
-  isPerformanceLog: 1
+  isPerformanceLog: 0
   isValidateData: 0
-  isValidateSO: 1
+  isValidateSO: 0
   autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
