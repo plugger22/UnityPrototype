@@ -19,7 +19,6 @@ public class HelpManager : MonoBehaviour
 
     //colours
     private string colourTip;
-    private string colourNeutral;
     private string colourAlert;
     private string colourEnd;
 
@@ -58,7 +57,6 @@ public class HelpManager : MonoBehaviour
     public void SetColours()
     {
         colourTip = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -153,16 +151,54 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Secrets
         //
-        /*//Overview
+        //Overview
         data = new HelpData();
         data.tag = "secret_0";
         data.header = "Secrets";
         builder = new StringBuilder();
-        builder.AppendFormat("The news ticker at the bottom of the App gives daily highlights of events in the city. ", colourAlert, colourEnd);
-        builder.AppendFormat("You can adjust the {0}text scroll speed{1} using the '+' and '-' keys", colourAlert, colourEnd);
+        builder.AppendFormat("You start the game with a secret and can gain more due to your {0}actions{1}. ", colourAlert, colourEnd);
+        builder.AppendFormat("Only {0}you{1} have secrets but your subordinates can learn them", colourAlert, colourEnd);
         data.text = builder.ToString();
-        listOfHelp.Add(data);*/
+        listOfHelp.Add(data);
+        //Learning
+        data = new HelpData();
+        data.tag = "secret_1";
+        data.header = "Learning Secrets";
+        data.text = string.Format("Each turn there is a {0}small chance{1} that your subordinates may learn one of your secrets. The walls have ears", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //They Know Your Secrets
+        data = new HelpData();
+        data.tag = "secret_2";
+        data.header = "Revealing Secrets";
+        builder = new StringBuilder();
+        builder.AppendFormat("Secrets can have {0}serious consequences{1} if revealed. ", colourAlert, colourEnd);
+        builder.AppendFormat("Any time you have a {0}Conflict{1} with one of your Subordinates there is a chance they may blackmail you and threaten to reveal your secret", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //tip
+        data = new HelpData();
+        data.tag = "secret_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("Avoid {0}conflicts{1} with any of your subordinates that know of your secrets. It's too risky. ", colourAlert, colourEnd);
+        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it's a lot harder otherwise", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
 
+
+        //
+        // - - - Actor Conflict
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "conflict_0";
+        data.header = "Conflict";
+        builder = new StringBuilder();
+        builder.AppendFormat("Anytime one of your subordinates Motivation falls below Zero, for any reason, they instigate a relationship conflict with you. ", colourAlert, colourEnd);
+        builder.AppendFormat("Conflicts can have a {0}range of outcomes{1} such as your subordinate resigning, blackmailing you, becoming stressed, leaking against you or simply simmering away and doing nothing",
+            colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
 
         //return help
         return listOfHelp;
