@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GearManager gearScript;                  //Gear Manager
     [HideInInspector] public CaptureManager captureScript;            //Capture Manager
     [HideInInspector] public AIManager aiScript;                      //AI Manager
+    [HideInInspector] public AIRebelManager aiRebelScript;            //AI Resistance Manager
     [HideInInspector] public NemesisManager nemesisScript;            //Nemesis Manager
     [HideInInspector] public ResistanceManager rebelScript;           //Resistance Manager
     [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
@@ -173,6 +174,7 @@ public class GameManager : MonoBehaviour
         inputScript = GetComponent<InputManager>();
         captureScript = GetComponent<CaptureManager>();
         aiScript = GetComponent<AIManager>();
+        aiRebelScript = GetComponent<AIRebelManager>();
         nemesisScript = GetComponent<NemesisManager>();
         rebelScript = GetComponent<ResistanceManager>();
         authorityScript = GetComponent<AuthorityManager>();

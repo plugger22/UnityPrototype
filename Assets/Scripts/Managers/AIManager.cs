@@ -117,7 +117,7 @@ public class AISideTabData
 }
 
 /// <summary>
-/// Handles AI management of both sides
+/// Handles AI management of Authority side
 /// </summary>
 public class AIManager : MonoBehaviour
 {
@@ -635,6 +635,8 @@ public class AIManager : MonoBehaviour
         ExecuteTasks(resistanceMaxTasksPerTurn);
         ClearAICollections();
         UpdateResources(globalResistance);
+        //run AI
+        GameManager.instance.aiRebelScript.ProcessAI();
         //reset flags
         immediateFlagAuthority = false;
     }

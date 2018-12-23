@@ -119,7 +119,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "info_app_0";
         data.header = "Info App";
         builder = new StringBuilder();
-        builder.AppendFormat("The Info App is your main source of information. It refreshes at the {0}beginning{1} of each day. ", colourAlert, colourEnd);
+        builder.AppendFormat("The Info App is your main source of information. <sprite index=0> It refreshes at the {0}beginning{1} of each day. ", colourAlert, colourEnd);
         builder.AppendFormat("It is available while ever you aren't {0}indisposed{1} (Captured, Stressed, etc.)", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
@@ -181,7 +181,7 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         builder = new StringBuilder();
         builder.AppendFormat("Avoid {0}conflicts{1} with any of your subordinates that know of your secrets. It's too risky. ", colourAlert, colourEnd);
-        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it's a lot harder otherwise", colourAlert, colourEnd);
+        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
 
