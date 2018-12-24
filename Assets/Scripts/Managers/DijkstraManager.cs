@@ -504,14 +504,14 @@ public class DijkstraManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets distance of shortest path between two nodes. Weighted. Returns 0 if a problem
+    /// Gets distance of shortest path between two nodes. Weighted. Returns -1 if a problem
     /// </summary>
     /// <param name="nodeSourceID"></param>
     /// <param name="nodeDestinationID"></param>
     /// <returns></returns>
     public int GetDistanceWeighted(int nodeSourceID, int nodeDestinationID)
     {
-        int distance = 0;
+        int distance = -1;
         Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
         Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
         if (nodeSourceID != nodeDestinationID)
@@ -521,20 +521,24 @@ public class DijkstraManager : MonoBehaviour
             { distance = data.distanceArray[nodeDestinationID]; }
             else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
         }
-        else { Debug.LogWarningFormat("Invalid nodeID's (sourceID {0} must be Different from destinationID {1})", nodeSourceID, nodeDestinationID); }
+        else
+        {
+            distance = 0;
+            /*Debug.LogWarningFormat("Invalid nodeID's (sourceID {0} must be Different from destinationID {1})", nodeSourceID, nodeDestinationID);*/
+        }
         /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceWeighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
         return distance;
     }
 
     /// <summary>
-    /// Gets distance of shortest path between two nodes. Unweighted. Returns 0 if a problem
+    /// Gets distance of shortest path between two nodes. Unweighted. Returns -1 if a problem
     /// </summary>
     /// <param name="nodeSourceID"></param>
     /// <param name="nodeDestinationID"></param>
     /// <returns></returns>
     public int GetDistanceUnweighted(int nodeSourceID, int nodeDestinationID)
     {
-        int distance = 0;
+        int distance = -1;
         Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
         Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
         if (nodeSourceID != nodeDestinationID)
@@ -544,6 +548,7 @@ public class DijkstraManager : MonoBehaviour
             { distance = data.distanceArray[nodeDestinationID]; }
             else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
         }
+        else { distance = 0; }
         /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetDistanceUnweighted: Distance between nodeID {0} and nodeID {1} is {2}", sourceID, destinationID, distance);*/
         return distance;
     }

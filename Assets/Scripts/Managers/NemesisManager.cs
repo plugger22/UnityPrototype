@@ -704,6 +704,11 @@ public class NemesisManager : MonoBehaviour
             {
                 switch (targetDistance)
                 {
+                    case -1:
+                        //problem with Dijkstra distance -> default Search
+                        Debug.LogWarningFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to SEARCH{1}", targetDistance, "\n");
+                        SetNemesisGoal(NemesisGoal.SEARCH);
+                        break;
                     case 0:
                         //switch to search mode
                         if (goal != NemesisGoal.SEARCH)
@@ -1432,15 +1437,19 @@ public class NemesisManager : MonoBehaviour
                     if (centreNode != null)
                     {
                         distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(centreNode.nodeID, node.nodeID);
-                        if (distance <= loiterDistanceCheck)
+                        if (distance > -1)
                         {
-                            //too close, exclude node
+                            if (distance <= loiterDistanceCheck)
+                            {
+                                //too close, exclude node
 
-                            /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);*/
+                                /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to Centre nodeID {1}) distance {2}", node.nodeID, centreNode.nodeID, distance);*/
 
-                            listOfLoiterNodes.RemoveAt(index);
-                            continue;
+                                listOfLoiterNodes.RemoveAt(index);
+                                continue;
+                            }
                         }
+                        else { Debug.LogWarning("Invalid GetDistanceUnweighted (-1)"); }
                     }
                 }
                 //Check remaining that loiter nodes aren't too close to each other (reverse loop list) Least connected nodes are checked and deleted before most connected (at list[0])
@@ -1456,25 +1465,29 @@ public class NemesisManager : MonoBehaviour
                         {
                             //check distance
                             distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
-                            if (distance <= loiterDistanceCheck)
+                            if (distance > -1)
                             {
-                                //too close, remove current node from list (make sure at least one node is remaining)
-                                counter = listOfLoiterNodes.Count;
-                                if (centreNode != null)
-                                { counter++; }
-                                //only delete if more than one node remaining
-                                if (counter > 1)
+                                if (distance <= loiterDistanceCheck)
                                 {
-                                    /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);*/
-                                    listOfLoiterNodes.RemoveAt(index);
-                                    break;
-                                }
-                                else
-                                {
-                                    /*Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");*/
-                                    break;
+                                    //too close, remove current node from list (make sure at least one node is remaining)
+                                    counter = listOfLoiterNodes.Count;
+                                    if (centreNode != null)
+                                    { counter++; }
+                                    //only delete if more than one node remaining
+                                    if (counter > 1)
+                                    {
+                                        /*Debug.LogFormat("[Nem] NemesisManager.cs -> SetLoiterNodes: nodeID {0} removed (too close to nodeID {1}), distance {2}", node.nodeID, nodeTemp.nodeID, distance);*/
+                                        listOfLoiterNodes.RemoveAt(index);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        /*Debug.Log("[Nem] NemesisManager.cs -> SetLoiterNodes: Last Node NOT Removed");*/
+                                        break;
+                                    }
                                 }
                             }
+                            else { Debug.LogWarning("Invalid dijkstra GetDistanceUnweighted (-1)"); }
                         }
                     }
                 }
@@ -1532,11 +1545,15 @@ public class NemesisManager : MonoBehaviour
                                 {
                                     tempNodeID = listOfLoiterNodes[i].nodeID;
                                     tempDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, tempNodeID);
-                                    if (tempDistance < shortestDistance)
+                                    if (tempDistance > -1)
                                     {
-                                        shortestDistance = tempDistance;
-                                        shortestNodeID = tempNodeID;
+                                        if (tempDistance < shortestDistance)
+                                        {
+                                            shortestDistance = tempDistance;
+                                            shortestNodeID = tempNodeID;
+                                        }
                                     }
+                                    else { Debug.LogWarning("Invalid dijkstra GetDistanceUnweighted (-1)"); }
                                 }
                                 data.nodeID = shortestNodeID;
                                 data.distance = shortestDistance;
