@@ -33,7 +33,7 @@ public class AITask
     public string name0;                   //node arc name, decision name
     public string name1;                   //could be team arc name, eg. 'CIVIL'
     public Priority priority;
-    public AIType type;                     //what type of task
+    public AITaskType type;                     //what type of task
     public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 
     public AITask()
@@ -1760,7 +1760,7 @@ public class AIManager : MonoBehaviour
                         data1 = teamArcProbe,
                         name0 = data.arc.name,
                         name1 = "PROBE",
-                        type = AIType.Team,
+                        type = AITaskType.Team,
                         priority = Priority.Low
                     };
                     //add to list of potentials
@@ -1798,7 +1798,7 @@ public class AIManager : MonoBehaviour
                             data1 = teamArcSpider,
                             name0 = record.arc.name,
                             name1 = "SPIDER",
-                            type = AIType.Team,
+                            type = AITaskType.Team,
                         };
                         switch (counter)
                         {
@@ -1839,7 +1839,7 @@ public class AIManager : MonoBehaviour
                             data1 = teamArcSpider,
                             name0 = record.arc.name,
                             name1 = "SPIDER",
-                            type = AIType.Team,
+                            type = AITaskType.Team,
                             priority = Priority.High
                         };
                         //Preferred node type -> Priority Critical and one extra task added to pool
@@ -1893,7 +1893,7 @@ public class AIManager : MonoBehaviour
                             data1 = teamArcErasure,
                             name0 = record.arc.name,
                             name1 = "ERASURE",
-                            type = AIType.Team,
+                            type = AITaskType.Team,
                             priority = Priority.Critical
                         };
                         switch (counter)
@@ -1960,7 +1960,7 @@ public class AIManager : MonoBehaviour
                                         data1 = teamArcDamage,
                                         name0 = data.arc.name,
                                         name1 = "DAMAGE",
-                                        type = AIType.Team,
+                                        type = AITaskType.Team,
                                         priority = Priority.High
                                     };
                                     //preferred node type -> Critical
@@ -2005,7 +2005,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionAPB.cost,
                     data2 = decisionAPB.aiDecID,
                     name0 = decisionAPB.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = Priority.Critical
                 };
                 listOfDecisionTasksCritical.Add(taskAPB);
@@ -2018,7 +2018,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionSecAlert.cost,
                     data2 = decisionSecAlert.aiDecID,
                     name0 = decisionSecAlert.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = Priority.Critical
                 };
                 listOfDecisionTasksCritical.Add(taskSecAlert);
@@ -2031,7 +2031,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionCrackdown.cost,
                     data2 = decisionCrackdown.aiDecID,
                     name0 = decisionCrackdown.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = Priority.Critical
                 };
                 listOfDecisionTasksCritical.Add(taskCrackdown);
@@ -2049,7 +2049,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionConnSec.cost,
                     data2 = decisionConnSec.aiDecID,
                     name0 = decisionConnSec.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = Priority.Medium
                 };
                 for (int i = 0; i < priorityMediumWeight; i++)
@@ -2068,7 +2068,7 @@ public class AIManager : MonoBehaviour
                 data1 = decisionRequestTeam.cost,
                 data2 = decisionRequestTeam.aiDecID,
                 name0 = decisionRequestTeam.name,
-                type = AIType.Decision,
+                type = AITaskType.Decision,
                 priority = Priority.Medium
             };
             for (int i = 0; i < priorityMediumWeight; i++)
@@ -2082,7 +2082,7 @@ public class AIManager : MonoBehaviour
                 data1 = decisionResources.cost,
                 data2 = decisionResources.aiDecID,
                 name0 = decisionResources.name,
-                type = AIType.Decision,
+                type = AITaskType.Decision,
                 priority = Priority.Critical
             };
             listOfDecisionTasksCritical.Add(taskResources);
@@ -2111,7 +2111,7 @@ public class AIManager : MonoBehaviour
                                 data1 = decisionCensorship.cost,
                                 data2 = decisionCensorship.aiDecID,
                                 name0 = decisionCensorship.name,
-                                type = AIType.Decision,
+                                type = AITaskType.Decision,
                                 priority = Priority.Low
                             };
                             listOfDecisionTasksNonCritical.Add(taskPolicy);
@@ -2127,7 +2127,7 @@ public class AIManager : MonoBehaviour
                                 data1 = decisionBanProtests.cost,
                                 data2 = decisionBanProtests.aiDecID,
                                 name0 = decisionBanProtests.name,
-                                type = AIType.Decision,
+                                type = AITaskType.Decision,
                                 priority = Priority.Low
                             };
                             listOfDecisionTasksNonCritical.Add(taskPolicy);
@@ -2148,7 +2148,7 @@ public class AIManager : MonoBehaviour
                                 data1 = decisionCurfew.cost,
                                 data2 = decisionCurfew.aiDecID,
                                 name0 = decisionCurfew.name,
-                                type = AIType.Decision,
+                                type = AITaskType.Decision,
                                 priority = Priority.Medium
                             };
                             listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
@@ -2164,7 +2164,7 @@ public class AIManager : MonoBehaviour
                                 data1 = decisionRoboCop.cost,
                                 data2 = decisionRoboCop.aiDecID,
                                 name0 = decisionRoboCop.name,
-                                type = AIType.Decision,
+                                type = AITaskType.Decision,
                                 priority = Priority.Medium
                             };
                             listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
@@ -2185,7 +2185,7 @@ public class AIManager : MonoBehaviour
                                 data1 = decisionMartialLaw.cost,
                                 data2 = decisionMartialLaw.aiDecID,
                                 name0 = decisionMartialLaw.name,
-                                type = AIType.Decision,
+                                type = AITaskType.Decision,
                                 priority = Priority.High
                             };
                             listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
@@ -2201,7 +2201,7 @@ public class AIManager : MonoBehaviour
                                 data1 = decisionDrones.cost,
                                 data2 = decisionDrones.aiDecID,
                                 name0 = decisionDrones.name,
-                                type = AIType.Decision,
+                                type = AITaskType.Decision,
                                 priority = Priority.High
                             };
                             listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy); listOfDecisionTasksNonCritical.Add(taskPolicy);
@@ -2229,7 +2229,7 @@ public class AIManager : MonoBehaviour
                             data1 = decisionHamper.cost,
                             data2 = decisionHamper.aiDecID,
                             name0 = decisionHamper.name,
-                            type = AIType.Decision,
+                            type = AITaskType.Decision,
                             priority = Priority.Low
                         };
                         listOfDecisionTasksNonCritical.Add(taskHandout);
@@ -2245,7 +2245,7 @@ public class AIManager : MonoBehaviour
                             data1 = decisionBlindEye.cost,
                             data2 = decisionBlindEye.aiDecID,
                             name0 = decisionBlindEye.name,
-                            type = AIType.Decision,
+                            type = AITaskType.Decision,
                             priority = Priority.Low
                         };
                         listOfDecisionTasksNonCritical.Add(taskHandout);
@@ -2266,7 +2266,7 @@ public class AIManager : MonoBehaviour
                             data1 = decisionAusterity.cost,
                             data2 = decisionAusterity.aiDecID,
                             name0 = decisionAusterity.name,
-                            type = AIType.Decision,
+                            type = AITaskType.Decision,
                             priority = Priority.Medium
                         };
                         listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
@@ -2282,7 +2282,7 @@ public class AIManager : MonoBehaviour
                             data1 = decisionHoliday.cost,
                             data2 = decisionHoliday.aiDecID,
                             name0 = decisionHoliday.name,
-                            type = AIType.Decision,
+                            type = AITaskType.Decision,
                             priority = Priority.Medium
                         };
                         listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
@@ -2303,7 +2303,7 @@ public class AIManager : MonoBehaviour
                         data1 = decisionMedical.cost,
                         data2 = decisionMedical.aiDecID,
                         name0 = decisionMedical.name,
-                        type = AIType.Decision,
+                        type = AITaskType.Decision,
                         priority = Priority.High
                     };
                     listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout); listOfDecisionTasksNonCritical.Add(taskHandout);
@@ -2356,7 +2356,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionProtocol.cost,
                     data2 = decisionProtocol.aiDecID,
                     name0 = decisionProtocol.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = priorityDetect
                 };
                 if (priorityDetect == Priority.Critical)
@@ -2375,7 +2375,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionTraceBack.cost,
                     data2 = decisionTraceBack.aiDecID,
                     name0 = decisionTraceBack.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = priorityDetect
                 };
                 if (priorityDetect == Priority.Critical)
@@ -2394,7 +2394,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionScreamer.cost,
                     data2 = decisionScreamer.aiDecID,
                     name0 = decisionScreamer.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = priorityDetect
                 };
                 if (priorityDetect == Priority.Critical)
@@ -2413,7 +2413,7 @@ public class AIManager : MonoBehaviour
                     data1 = decisionOffline.cost,
                     data2 = decisionOffline.aiDecID,
                     name0 = decisionOffline.name,
-                    type = AIType.Decision,
+                    type = AITaskType.Decision,
                     priority = priorityDetect
                 };
                 if (priorityDetect == Priority.Critical)
@@ -2860,7 +2860,7 @@ public class AIManager : MonoBehaviour
             //tooltip Main
             switch(task.type)
             {
-                case AIType.Team:
+                case AITaskType.Team:
                     textUpper = string.Format("Deploy {0} Team", task.name1);
                     Node node = GameManager.instance.dataScript.GetNode(task.data0);
                     if (node != null)
@@ -2875,7 +2875,7 @@ public class AIManager : MonoBehaviour
                         textLower = "Details unknown";
                     }
                     break;
-                case AIType.Decision:
+                case AITaskType.Decision:
                     textUpper = string.Format("{0} DECISION", task.name0);
                     DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.data2);
                     if (decisionAI != null)
@@ -3021,7 +3021,7 @@ public class AIManager : MonoBehaviour
         //add final data
         if (task != null)
         {
-            task.type = AIType.Team;
+            task.type = AITaskType.Team;
             task.data1 = teamArcID;
         }
         return task;
@@ -3052,10 +3052,10 @@ public class AIManager : MonoBehaviour
                 {
                     switch (task.type)
                     {
-                        case AIType.Team:
+                        case AITaskType.Team:
                             ExecuteTeamTask(task);
                             break;
-                        case AIType.Decision:
+                        case AITaskType.Decision:
                             ExecuteDecisionTask(task);
                             break;
                         default:
@@ -3100,10 +3100,10 @@ public class AIManager : MonoBehaviour
                             {
                                 switch (task.type)
                                 {
-                                    case AIType.Team:
+                                    case AITaskType.Team:
                                         ExecuteTeamTask(task);
                                         break;
-                                    case AIType.Decision:
+                                    case AITaskType.Decision:
                                         ExecuteDecisionTask(task);
                                         break;
                                     default:
@@ -3148,10 +3148,10 @@ public class AIManager : MonoBehaviour
                                 {
                                     switch (task.type)
                                     {
-                                        case AIType.Team:
+                                        case AITaskType.Team:
                                             ExecuteTeamTask(task);
                                             break;
-                                        case AIType.Decision:
+                                        case AITaskType.Decision:
                                             ExecuteDecisionTask(task);
                                             break;
                                         default:
@@ -4774,14 +4774,14 @@ public class AIManager : MonoBehaviour
                 {
                     switch (task.type)
                     {
-                        case AIType.Team:
+                        case AITaskType.Team:
                             if (showChance == true)
                             { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority, Prob {4} %{5}", task.data0, task.name0, task.name1, task.priority, 
                                 task.chance, "\n"); }
                             else
                             { builderList.AppendFormat(" teamID {0} {1}, {2} team, {3} priority{4}", task.data0, task.name0, task.name1, task.priority, "\n"); }
                             break;
-                        case AIType.Decision:
+                        case AITaskType.Decision:
                             if (showChance == true)
                             { builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", Prob {3} %{4}", task.taskID, task.data0, task.name0, task.chance, "\n"); }
                             else

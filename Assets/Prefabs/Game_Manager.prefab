@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 114854342694066370}
   - component: {fileID: 114677223304800786}
   - component: {fileID: 114046698901108270}
+  - component: {fileID: 114049326683674478}
   - component: {fileID: 114264557644407700}
   - component: {fileID: 114653768297724556}
   - component: {fileID: 114556544146557144}
@@ -171,6 +172,17 @@ MonoBehaviour:
   isRebooting: 0
   rebootTimer: 0
   numOfCrisis: 0
+--- !u!114 &114049326683674478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f9aa18cd3d397f4bacb8d28698c5650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1937,6 +1949,7 @@ MonoBehaviour:
   gearScript: {fileID: 0}
   captureScript: {fileID: 0}
   aiScript: {fileID: 0}
+  aiRebelScript: {fileID: 0}
   nemesisScript: {fileID: 0}
   rebelScript: {fileID: 0}
   authorityScript: {fileID: 0}
@@ -1968,12 +1981,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 63308
+  seed: 0
   isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 5
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

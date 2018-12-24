@@ -90,7 +90,7 @@
     // - - - AI - - -
     //
     public enum Priority { Low, Medium, High, Critical }
-    public enum AIType { None, Team, Decision }
+    public enum AITaskType { None, Team, Decision, Move }
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                             //used for toggling debugGUI.cs  AI data
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
