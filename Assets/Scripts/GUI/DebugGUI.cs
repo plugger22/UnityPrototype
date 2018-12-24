@@ -195,10 +195,12 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Rebel AI"))
             {
-                /*Debug.Log("[Dbg] Button -> Force AI Reboot");
-                GameManager.instance.aiScript.RebootCommence();*/
+                Debug.Log("[Dbg] Button -> Rebel AI");
+                if (debugDisplay != 43)
+                { debugDisplay = 43; }
+                else { debugDisplay = 0; }
             }
 
             //eleventh button
@@ -236,7 +238,7 @@ public class DebugGUI : MonoBehaviour
         
 
             //thirteenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "AI Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Authority AI"))
             {
                 Debug.Log("[Dbg] Button -> AI Data");
                 switch(aiStatus)
@@ -1195,6 +1197,13 @@ public class DebugGUI : MonoBehaviour
                         status = GUIStatus.None;
                         debugDisplay = 0;
                         break;
+                        //Rebel AI data
+                    case 43:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.aiRebelScript.DebugShowRebelAIStatus();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+
                 }
             }
             else { status = GUIStatus.None; }
