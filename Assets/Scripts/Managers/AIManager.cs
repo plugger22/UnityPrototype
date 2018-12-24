@@ -3040,7 +3040,7 @@ public class AIManager : MonoBehaviour
         if (listOfTasksFinal.Count == 0)
         { Debug.Log("[Aim] -> ExecuteTasks: NO TASKS AVAILABLE"); }
         //
-        // - - - Execute all 100% tasks first & remove an 0 % tasks -> delete tasks as you go
+        // - - - Execute all 100% tasks first & remove any 0 % tasks -> delete tasks as you go
         //
         for (int i = listOfTasksFinal.Count -1; i >= 0; i--)
         {

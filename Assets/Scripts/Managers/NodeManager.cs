@@ -58,7 +58,6 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of human Resistance/Authority player
-    [HideInInspector] public int nodePlayerAI = -1;                 //nodeID of AI Resistance player
     [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
@@ -1860,121 +1859,6 @@ public class NodeManager : MonoBehaviour
                 nodePlayer = moveDetails.nodeID;
                 //update move list
                 node.SetPlayerMoveNodes();
-                //message
-                if (moveDetails.changeInvisibility != 0)
-                {
-                    Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}, SPOTTED, AI knows in {3} turn{4}{5}", node.nodeName, node.Arc.name, node.nodeID,
-                      moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", "\n");
-                }
-                else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
-                string destination = string.Format("\"{0}\", {1} district", node.nodeName, node.Arc.name);
-                StringBuilder builder = new StringBuilder();
-                builder.Append(string.Format("{0}{1}", destination, "\n"));
-                //message
-                string text = string.Format("Player has moved to {0}", destination);
-                GameManager.instance.messageScript.PlayerMove(text, node, moveDetails.changeInvisibility, moveDetails.ai_Delay);
-                //
-                // - - - Invisibility - - -
-                //
-                if (moveDetails.changeInvisibility != 0)
-                {
-                    Connection connection = GameManager.instance.dataScript.GetConnection(moveDetails.connectionID);
-                    if (connection != null)
-                    {
-                        //AI message
-                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, moveDetails.nodeID);
-                        //display
-                        builder.AppendLine();
-                        builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourBad, moveDetails.changeInvisibility > 0 ? "+" : "",
-                            moveDetails.changeInvisibility, colourEnd);
-                        //player invisibility
-                        int invisibility = GameManager.instance.playerScript.Invisibility;
-                        if (invisibility <= 0)
-                        {
-                            //moving while invisibility already 0 triggers immediate alert flag
-                            GameManager.instance.aiScript.immediateFlagResistance = true;
-                            builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourBad, colourEnd);
-                            //AI Immediate notification
-                            GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
-                                "Moving", moveDetails.nodeID, moveDetails.connectionID);
-                        }
-                        else
-                        {
-                            //normal adjusted security level delay, eg. low gives a 3 turn delay
-                            builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
-                                moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
-                            //AI delayed notification
-                            GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
-                        }
-                        //update invisibility
-                        invisibility += moveDetails.changeInvisibility;
-                        invisibility = Mathf.Max(0, invisibility);
-                        GameManager.instance.playerScript.Invisibility = invisibility;
-                    }
-                    else { Debug.LogErrorFormat("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID); }
-                }
-                else
-                {
-                    builder.AppendLine();
-                    builder.Append(string.Format("{0}Player not spotted{1}", colourGood, colourEnd));
-                }
-                //
-                // - - - Gear - - -
-                //
-                if (moveDetails.gearID > -1)
-                {
-                    Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
-                    if (gear != null)
-                    {
-                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.name, colourEnd, colourNormal, colourEnd);
-                        GameManager.instance.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
-                        MoveReturnData moveData = new MoveReturnData();
-                        moveData.node = node;
-                        moveData.text = builder.ToString();
-                        ProcessMoveOutcome(moveData);
-                    }
-                    else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
-                }
-                else
-                {
-                    //No gear involved, move straight to outcome, otherwise skip outcome if connection has no security as unnecessary
-                    if (moveDetails.changeInvisibility != 0)
-                    {
-                        MoveReturnData moveData = new MoveReturnData();
-                        moveData.node = node;
-                        moveData.text = builder.ToString();
-                        ProcessMoveOutcome(moveData);
-                    }
-                    else
-                    {
-                        //Unsecured connection, no invisibility loss involved
-                        EventManager.instance.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");
-                        //Nemesis, if at same node, can interact and damage player
-                        GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
-                    }
-                }
-            }
-            else
-            { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }
-        }
-        else
-        { Debug.LogError("Invalid ModalMoveDetails (Null)"); }
-    }
-
-
-    /// <summary>
-    /// Movement of AI Resistance Player
-    /// </summary>
-    /// <param name="moveDetails"></param>
-    private void ProcessAIMove(ModalMoveDetails moveDetails)
-    {
-        if (moveDetails != null)
-        {
-            Node node = GameManager.instance.dataScript.GetNode(moveDetails.nodeID);
-            if (node != null)
-            {
-                //update AI Player node
-                nodePlayerAI = moveDetails.nodeID;
                 //message
                 if (moveDetails.changeInvisibility != 0)
                 {
