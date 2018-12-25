@@ -40,6 +40,9 @@ public class AIRebelManager : MonoBehaviour
     {
         //set initial move node to start position (will trigger a new targetNodeID)
         targetNodeID = GameManager.instance.nodeScript.nodePlayer;
+        status = ActorStatus.Active;
+        aiPlayerInvisibility = 3;
+        aiPlayerRenown = 0;
     }
 
     /// <summary>
@@ -47,18 +50,27 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
-        ClearAICollections();
+        ClearAICollectionsEarly();
         //update node data
         UpdateNodeData();
-        UpdateActions();
+        UpdateAdmin();
         //Info gathering
         ProcessTargetData();
+        //task loop (once per available action)
+        int counter = 0;
         do
         {
+            ClearAICollectionsLate();
             //task creation
             ProcessMoveTask();
             //task Execution
             ExecuteTask();
+            counter++;
+            if (counter > 3)
+            {
+                Debug.LogWarning("Break triggered on counter value, shouldn't have happened");
+                break;
+            }
         }
         while (actionsUsed < actionAllowance);
     }
@@ -66,16 +78,36 @@ public class AIRebelManager : MonoBehaviour
     /// <summary>
     /// reset all data prior to AI turn processing
     /// </summary>
-    private void ClearAICollections()
+    private void ClearAICollectionsEarly()
     {
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
     }
 
-
-    private void UpdateActions()
+    /// <summary>
+    /// resets collections between actions (within a turn)
+    /// </summary>
+    private void ClearAICollectionsLate()
     {
+        listOfTasksPotential.Clear();
+    }
+
+    /// <summary>
+    /// start of AI Player turn admin
+    /// </summary>
+    private void UpdateAdmin()
+    {
+        //actions
         actionAllowance = actionsBase + actionsExtra;
+        actionsUsed = 0;
+        //renown
+        int approval = GameManager.instance.factionScript.ApprovalResistance;
+        int threshold = approval * 10;
+        if(Random.Range(0, 100) < threshold)
+        {
+            aiPlayerRenown++;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: AI Player gains +1 Renown from HQ (approval {0}), total now {1}{2}", approval, aiPlayerRenown, "\n");
+        }
     }
 
 
@@ -141,6 +173,7 @@ public class AIRebelManager : MonoBehaviour
                     { dictOfSortedTargets.Add(target.Key, target.Value); }
                 }
             }
+            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: dictOfSortedTargets has {0} records{1}", dictOfSortedTargets.Count, "\n");*/
         }
         else { Debug.LogError("Invalid listOfTargets (Null)"); }
     }
@@ -156,11 +189,12 @@ public class AIRebelManager : MonoBehaviour
     {
         Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
         Node nodeMoveTo = null;
+        Connection connection = null;
         if (nodePlayer != null)
         {
             //Debug -> Player moves around map to a target then selects a new target to move to
 
-            //at target node?
+            //AT TARGET NODE
             if (nodePlayer.nodeID == targetNodeID)
             {
                 //select a new target goal
@@ -183,36 +217,41 @@ public class AIRebelManager : MonoBehaviour
                 {
                     //generate a random node as a new target
                     Node randomNode;
+                    int counter = 0;
                     do
-                    { randomNode = GameManager.instance.dataScript.GetRandomNode(); }
-                    while (randomNode.nodeID != nodePlayer.nodeID);
+                    {
+                        randomNode = GameManager.instance.dataScript.GetRandomNode();
+                        counter++;
+                        if (counter > 10)
+                        {
+                            Debug.LogError("Counter timed out");
+                            break;
+                        }
+                    }
+                    while (randomNode.nodeID == nodePlayer.nodeID);
                     //new target
                     targetNodeID = randomNode.nodeID;
                     nodeMoveTo = randomNode;
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, Random Node chosen{0}", "\n");
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, Random Node chosen, id {0}{1}", targetNodeID, "\n");
                 }
             }
-            //double check not at current node
-            Connection connection = null;
-            if (nodePlayer.nodeID != targetNodeID)
+            //NOT AT Target Node
+            else
+            { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player continues to move towards target{0}", "\n"); }
+            //path to target   
+            List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, targetNodeID, true);
+            //get next node in sequence
+            if (pathList != null)
             {
-                //Path to existing targetNodeID
-                List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, targetNodeID, true);
-                //get next node in sequence
-                if (pathList != null)
-                {
-                    connection = pathList[0];
-                    if (connection.node1.nodeID != nodePlayer.nodeID)
-                    { nodeMoveTo = connection.node1; }
-                    else { nodeMoveTo = connection.node2; }
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player continues to move towards target{0}","\n");
-                }
-                else { Debug.LogError("Invalid pathList (Null)"); }
+                connection = pathList[0];
+                if (connection.node1.nodeID != nodePlayer.nodeID)
+                { nodeMoveTo = connection.node1; }
+                else { nodeMoveTo = connection.node2; }
             }
-            else { Debug.LogError("Duplicate target and current player nodes"); }
+            else { Debug.LogError("Invalid pathList (Null)"); }
+            //GENERATE TASK
             if (nodeMoveTo != null)
             {
-                //create a task
                 AITask task = new AITask();
                 task.data0 = nodeMoveTo.nodeID;
                 task.data1 = connection.connID;
@@ -220,6 +259,7 @@ public class AIRebelManager : MonoBehaviour
                 task.priority = Priority.Medium;
                 //add task to list of potential tasks
                 listOfTasksPotential.Add(task);
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: targetNodeID {0}{1}", targetNodeID, "\n");
             }
             else { Debug.LogError("Invalid nodeMoveTo (Null)"); }
         }
@@ -279,8 +319,35 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); }
 
         //invisibility
-
+        Connection connection = GameManager.instance.dataScript.GetConnection(task.data1);
+        if (connection != null)
+        { UpdateInvisibility(connection.SecurityLevel); }
+        else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
         //gear
+    }
+
+    /// <summary>
+    /// submethod that handles invisibility loss for ExecuteMoveTask
+    /// </summary>
+    /// <param name="security"></param>
+    private void UpdateInvisibility(ConnectionType security)
+    {
+        switch (security)
+        {
+            case ConnectionType.HIGH:
+                aiPlayerInvisibility--;
+                break;
+            case ConnectionType.MEDIUM:
+                aiPlayerInvisibility--;
+                break;
+            case ConnectionType.LOW:
+                aiPlayerInvisibility--;
+                break;
+        }
+        //min cap 0
+        aiPlayerInvisibility = Mathf.Max(0, aiPlayerInvisibility);
+        if (security != ConnectionType.None)
+        { Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibility: Invisibility -1, now {0}{1}", aiPlayerInvisibility, "\n"); }
     }
 
     //
@@ -295,12 +362,22 @@ public class AIRebelManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat(" Resistance AI Status{0}{1}", "\n", "\n");
-        builder.AppendFormat(" -ProcessTargetData (weighted distances){0}", "\n");
+        //player stats
+        builder.AppendFormat("-AI Player{0}", "\n");
+        builder.AppendFormat(" status: {0}{1}", status, "\n");
+        builder.AppendFormat(" Invisbility: {0}{1}", aiPlayerInvisibility, "\n");
+        builder.AppendFormat(" Renown: {0}{1}", aiPlayerRenown, "\n");
+        //sorted target list
+        builder.AppendFormat("{0}-ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
         int count = dictOfSortedTargets.Count;
         if (count > 0)
         {
             foreach(var target in dictOfSortedTargets)
-            { builder.AppendFormat("Target: {0}, at node id {1}, distance {2}{3}", target.Key.name, target.Key.nodeID, target.Value, "\n"); }
+            {
+                if (target.Key != null)
+                { builder.AppendFormat("Target: {0}, at node id {1}, distance {2}{3}", target.Key.name, target.Key.nodeID, target.Value, "\n"); }
+                else { builder.AppendFormat("Invalid target (Null){0}", "\n"); }
+            }
         }
         else { builder.Append(" No records present"); }
         return builder.ToString();

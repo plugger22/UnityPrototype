@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9aa18cd3d397f4bacb8d28698c5650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionsBase: 1
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1981,12 +1982,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 13967
   isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 5
+  autoRunTurns: 15
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1
