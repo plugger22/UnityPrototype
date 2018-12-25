@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using modalAPI;
 using Random = UnityEngine.Random;
+using packageAPI;
 
 /// <summary>
 /// handles all Resistance AI
@@ -28,6 +29,7 @@ public class AIRebelManager : MonoBehaviour
     
 
     private int targetNodeID;                           //goal to move towards
+    private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -40,6 +42,7 @@ public class AIRebelManager : MonoBehaviour
     {
         //set initial move node to start position (will trigger a new targetNodeID)
         targetNodeID = GameManager.instance.nodeScript.nodePlayer;
+        aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
         status = ActorStatus.Active;
         aiPlayerInvisibility = 3;
         aiPlayerRenown = 0;
@@ -323,7 +326,16 @@ public class AIRebelManager : MonoBehaviour
         if (connection != null)
         { UpdateInvisibility(connection.SecurityLevel); }
         else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
+
         //gear
+
+        //Tracker data
+        TrackerRebelMove tracker = new TrackerRebelMove();
+        tracker.turn = GameManager.instance.turnScript.Turn;
+        tracker.playerNodeID = task.data0;
+        tracker.invisibility = aiPlayerInvisibility;
+        tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
+        GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
     }
 
     /// <summary>
@@ -354,6 +366,9 @@ public class AIRebelManager : MonoBehaviour
     // - - -  Debug - - -
     //
 
+    public int GetStartPlayerNode()
+    { return aiPlayerStartNodeID; }
+
     /// <summary>
     /// Show Resistance AI status
     /// </summary>
@@ -361,7 +376,7 @@ public class AIRebelManager : MonoBehaviour
     public string DebugShowRebelAIStatus()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat(" Resistance AI Status{0}{1}", "\n", "\n");
+        builder.AppendFormat(" Resistance AI Status {0}{1}", "\n", "\n");
         //player stats
         builder.AppendFormat("-AI Player{0}", "\n");
         builder.AppendFormat(" status: {0}{1}", status, "\n");

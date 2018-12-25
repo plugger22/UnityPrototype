@@ -315,6 +315,15 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //twentieth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 19 + button_height * 19, button_width, button_height), "Rebel Tracker"))
+            {
+                Debug.Log("[Dbg] Button -> Rebel Tracker");
+                if (debugDisplay != 44)
+                { debugDisplay = 44; }
+                else { debugDisplay = 0; }
+            }
+
             //
             // - - - Options (second box)
             //
@@ -882,7 +891,7 @@ public class DebugGUI : MonoBehaviour
                     case 9:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = "Unknown";
-                        switch(msgStatus)
+                        switch (msgStatus)
                         {
                             case MessageCategory.Pending:
                                 analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
@@ -903,7 +912,7 @@ public class DebugGUI : MonoBehaviour
                     case 10:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = "Unknown";
-                        switch(aiStatus)
+                        switch (aiStatus)
                         {
                             case AIDebugData.Task:
                                 analysis = GameManager.instance.aiScript.DisplayTaskData();
@@ -1197,13 +1206,18 @@ public class DebugGUI : MonoBehaviour
                         status = GUIStatus.None;
                         debugDisplay = 0;
                         break;
-                        //Rebel AI data
+                    //Rebel AI data
                     case 43:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.aiRebelScript.DebugShowRebelAIStatus();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
-
+                    //Rebel Tracler data
+                    case 44:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugShowRebelMoves();
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 600), analysis, customBackground);
+                        break;
                 }
             }
             else { status = GUIStatus.None; }

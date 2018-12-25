@@ -350,5 +350,16 @@ namespace packageAPI
         public string text;
     }
 
+    /// <summary>
+    /// tracks Resistance player or AI. One entry made every time player moves (eg. per action expended)
+    /// </summary>
+    public class TrackerRebelMove
+    {
+        public int turn;
+        public int playerNodeID;                    //location at end of move
+        public int invisibility;                    //Invisibility at end of move
+        public int nemesisNodeID;                   
+    }
+
     //new classes above here
 }

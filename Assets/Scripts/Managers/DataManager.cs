@@ -139,6 +139,9 @@ public class DataManager : MonoBehaviour
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
 
+    //Tracker data
+    private List<TrackerRebelMove> listOfTrackerRebelMove = new List<TrackerRebelMove>();
+
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
@@ -4730,6 +4733,37 @@ public class DataManager : MonoBehaviour
         { return dictOfHelpData[tag]; }
         else { Debug.LogWarningFormat("Not found, tag \"{0}\", in dictOfHelpData {1}", tag, "\n"); }
         return null;
+    }
+
+    //
+    // - - - Tracker Data - - -
+    //
+
+    public void AddTrackerRebelMove(TrackerRebelMove data)
+    {
+        if (data != null)
+        { listOfTrackerRebelMove.Add(data); }
+        else { Debug.LogError("Invalid data (Null)"); }
+    }
+
+
+    public string DebugShowRebelMoves()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-Resistance Move History (start  nodeID {0}){1}{2}", GameManager.instance.aiRebelScript.GetStartPlayerNode(), "\n", "\n");
+        int count = listOfTrackerRebelMove.Count;
+        if (count > 0)
+        {
+            for (int index = 0; index < count; index++)
+            {
+                TrackerRebelMove tracker = listOfTrackerRebelMove[index];
+                if (tracker != null)
+                { builder.AppendFormat(" t{0}: nodeID {1},  Invis {2},  nemesisID {3}{4}", tracker.turn, tracker.playerNodeID, tracker.invisibility, tracker.nemesisNodeID, "\n"); }
+                else { Debug.LogErrorFormat("Invalid tracker (Null) in listOfTrackerRebelMoves[{0}]", index); }
+            }
+        }
+        else { builder.Append(" No records present"); }
+        return builder.ToString();
     }
    
 
