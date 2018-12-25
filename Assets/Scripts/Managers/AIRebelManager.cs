@@ -13,26 +13,34 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class AIRebelManager : MonoBehaviour
 {
+    [Header("Actions")]
+    [Tooltip("Base amount of actions per turn for the AI Resistance Player")]
+    [Range(1, 3)] public int actionsBase = 1;
 
     //AI Player
     private ActorStatus status;
     private int aiPlayerInvisibility;                   //invisibility of AI player
     private int aiPlayerRenown;                         //current renown tally
-    private int actionAllowance;                        //number of actions per turn
+
+    private int actionAllowance;                        //number of actions per turn (normal allowance + extras)
     private int actionsExtra;                           //bonus actions for this turn
     private int actionsUsed;                            //tally of actions used this turn
+    
 
     private int targetNodeID;                           //goal to move towards
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
-    List<AITask> listOfTasksFinal = new List<AITask>();
 
     //targets
     private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();
 
 
-
+    public void Initialise()
+    {
+        //set initial move node to start position (will trigger a new targetNodeID)
+        targetNodeID = GameManager.instance.nodeScript.nodePlayer;
+    }
 
     /// <summary>
     /// main controlling method to run Resistance AI each turn, called from AIManager.cs -> ProcessAISideResistance
@@ -42,14 +50,17 @@ public class AIRebelManager : MonoBehaviour
         ClearAICollections();
         //update node data
         UpdateNodeData();
+        UpdateActions();
         //Info gathering
         ProcessTargetData();
-        //task creation
-        ProcessMoveTask();
-        //task selection
-        ProcessTasksFinal();
-        //task Execution
-        ExecuteTasks();
+        do
+        {
+            //task creation
+            ProcessMoveTask();
+            //task Execution
+            ExecuteTask();
+        }
+        while (actionsUsed < actionAllowance);
     }
 
     /// <summary>
@@ -59,10 +70,13 @@ public class AIRebelManager : MonoBehaviour
     {
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
-        listOfTasksFinal.Clear();
     }
 
 
+    private void UpdateActions()
+    {
+        actionAllowance = actionsBase + actionsExtra;
+    }
 
 
 
@@ -78,6 +92,8 @@ public class AIRebelManager : MonoBehaviour
     {
 
     }
+
+
 
 
     /// <summary>
@@ -158,6 +174,8 @@ public class AIRebelManager : MonoBehaviour
                     {
                         //assign new target
                         targetNodeID = newTarget.nodeID;
+                        nodeMoveTo = GameManager.instance.dataScript.GetNode(targetNodeID);
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, new target chosen{0}", "\n");
                     }
                     else { Debug.LogError("Invalid newTarget (Null)"); }
                 }
@@ -170,6 +188,8 @@ public class AIRebelManager : MonoBehaviour
                     while (randomNode.nodeID != nodePlayer.nodeID);
                     //new target
                     targetNodeID = randomNode.nodeID;
+                    nodeMoveTo = randomNode;
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, Random Node chosen{0}", "\n");
                 }
             }
             //double check not at current node
@@ -185,6 +205,7 @@ public class AIRebelManager : MonoBehaviour
                     if (connection.node1.nodeID != nodePlayer.nodeID)
                     { nodeMoveTo = connection.node1; }
                     else { nodeMoveTo = connection.node2; }
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player continues to move towards target{0}","\n");
                 }
                 else { Debug.LogError("Invalid pathList (Null)"); }
             }
@@ -205,34 +226,61 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
     }
 
-    //
-    // - - - Select Task - - -
-    //
-
-    private void ProcessTasksFinal()
-    {
-
-    }
 
     //
     // - - - Execute Tasks - - -
     //
 
     /// <summary>
-    /// carry out all tasks in listOfTasksFinal. 
+    /// carry out task in listOfTasksFinal (should only be one)
     /// </summary>
-    private void ExecuteTasks()
+    private void ExecuteTask()
     {
-
+        int count = listOfTasksPotential.Count;
+        
+        if (count > 0)
+        {
+            //select a task from listOfPotential Tasks
+            AITask task = listOfTasksPotential[Random.Range(0, count)];
+            if (task != null)
+            {
+                //update actions
+                actionsUsed++;
+                //execute taks
+                switch(task.type)
+                {
+                    case AITaskType.Move:
+                        ExecuteMoveTask(task);
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
+                        break;
+                }
+            }
+            else { Debug.LogWarning("Invalid task (Null)"); }
+        }
+        else { Debug.LogWarning("There are no tasks to execute in listOfTaskPotential"); }
     }
 
     /// <summary>
     /// AI Player moves
+    /// NOTE: Task checked for Null by parent method
     /// </summary>
-    private void ExecuteMoveTask()
+    private void ExecuteMoveTask(AITask task)
     {
-        int nodeID = 0;
-        GameManager.instance.nodeScript.nodePlayer = nodeID;
+        //data0 is nodeID, data1 is connectionID
+        Node node = GameManager.instance.dataScript.GetNode(task.data0);
+        if (node != null)
+        {
+            //update player node
+            GameManager.instance.nodeScript.nodePlayer = node.nodeID;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: AI Player moves to {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); }
+
+        //invisibility
+
+        //gear
     }
 
     //

@@ -463,6 +463,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.nodeScript.Initialise;
         startMethod.className = "NodeManager";
         listOfStartMethods.Add(startMethod);
+        //Rebel AI Manager -> after nodeManager
+        startMethod.handler = GameManager.instance.aiRebelScript.Initialise;
+        startMethod.className = "AIRebelManager";
+        listOfStartMethods.Add(startMethod);
         //Effect Manager -> after nodeScript
         startMethod.handler = GameManager.instance.effectScript.Initialise;
         startMethod.className = "EffectManager";
