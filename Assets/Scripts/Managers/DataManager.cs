@@ -141,6 +141,7 @@ public class DataManager : MonoBehaviour
 
     //Tracker data
     private List<TrackerRebelMove> listOfTrackerRebelMove = new List<TrackerRebelMove>();
+    private List<TrackerNemesisMove> listOfTrackerNemesisMove = new List<TrackerNemesisMove>();
 
 
     //dictionaries
@@ -4739,14 +4740,32 @@ public class DataManager : MonoBehaviour
     // - - - Tracker Data - - -
     //
 
+    /// <summary>
+    /// Resistance AI or Player moves
+    /// </summary>
+    /// <param name="data"></param>
     public void AddTrackerRebelMove(TrackerRebelMove data)
     {
         if (data != null)
         { listOfTrackerRebelMove.Add(data); }
-        else { Debug.LogError("Invalid data (Null)"); }
+        else { Debug.LogError("Invalid Resistance Tracker data (Null)"); }
     }
 
+    /// <summary>
+    /// Nemesis AI or Player controlled moves
+    /// </summary>
+    /// <param name="data"></param>
+    public void AddTrackerNemesisMove(TrackerNemesisMove data)
+    {
+        if (data != null)
+        { listOfTrackerNemesisMove.Add(data); }
+        else { Debug.LogError("Invalid Nemesis Tracker data (Null)"); }
+    }
 
+    /// <summary>
+    /// Debug display of Resistance player moves
+    /// </summary>
+    /// <returns></returns>
     public string DebugShowRebelMoves()
     {
         StringBuilder builder = new StringBuilder();
@@ -4758,14 +4777,36 @@ public class DataManager : MonoBehaviour
             {
                 TrackerRebelMove tracker = listOfTrackerRebelMove[index];
                 if (tracker != null)
-                { builder.AppendFormat(" t{0}: nodeID {1},  Invis {2},  nemesisID {3}{4}", tracker.turn, tracker.playerNodeID, tracker.invisibility, tracker.nemesisNodeID, "\n"); }
+                { builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}", tracker.turn, tracker.playerNodeID, tracker.invisibility, tracker.nemesisNodeID, "\n"); }
                 else { Debug.LogErrorFormat("Invalid tracker (Null) in listOfTrackerRebelMoves[{0}]", index); }
             }
         }
         else { builder.Append(" No records present"); }
         return builder.ToString();
     }
-   
+
+    /// <summary>
+    /// debug display of Nemesis moves
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowNemesisMoves()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-Nemesis Move History (start  nodeID {0}){1}{2}", GameManager.instance.cityScript.cityHallDistrictID, "\n", "\n");
+        int count = listOfTrackerNemesisMove.Count;
+        if (count > 0)
+        {
+            for (int index = 0; index < count; index++)
+            {
+                TrackerNemesisMove tracker = listOfTrackerNemesisMove[index];
+                if (tracker != null)
+                { builder.AppendFormat(" t{0}: nodeID {1},  mode {2}, search {3}, rebelID {4}{5}", tracker.turn, tracker.nemesisNodeID, tracker.mode, tracker.searchRating, tracker.playerNodeID, "\n"); }
+                else { Debug.LogErrorFormat("Invalid tracker (Null) in listOfTrackerNemesisMoves[{0}]", index); }
+            }
+        }
+        else { builder.Append(" No records present"); }
+        return builder.ToString();
+    }
 
     //new methods above here
 }

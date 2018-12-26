@@ -958,8 +958,17 @@ public class NemesisManager : MonoBehaviour
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 hasMoved = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis MOVES to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+                int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+                //tracker
+                TrackerNemesisMove tracker = new TrackerNemesisMove();
+                tracker.turn = GameManager.instance.turnScript.Turn;
+                tracker.nemesisNodeID = nodeID;
+                tracker.mode = mode;
+                tracker.searchRating = GetSearchRatingAdjusted();
+                tracker.playerNodeID = playerNodeID;
+                GameManager.instance.dataScript.AddTrackerNemesisMove(tracker);
                 //check for player at same node
-                if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                if (nemesisNode.nodeID == playerNodeID)
                 { isSpotted = ProcessPlayerInteraction(false); }
                 //Player interaction can result in nemesis damaging player and leaving with no follow-on nemesis
                 if (nemesis != null)

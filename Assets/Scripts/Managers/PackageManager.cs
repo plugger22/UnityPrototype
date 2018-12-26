@@ -361,5 +361,17 @@ namespace packageAPI
         public int nemesisNodeID;                   
     }
 
+    /// <summary>
+    /// tracks Nemesis. One entry whenever nemesis moves
+    /// </summary>
+    public class TrackerNemesisMove
+    {
+        public int turn;
+        public int nemesisNodeID;
+        public NemesisMode mode;
+        public int searchRating;
+        public int playerNodeID;
+    }
+
     //new classes above here
 }
