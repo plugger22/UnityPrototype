@@ -964,6 +964,8 @@ public class NemesisManager : MonoBehaviour
                 tracker.turn = GameManager.instance.turnScript.Turn;
                 tracker.nemesisNodeID = nodeID;
                 tracker.mode = mode;
+                tracker.goal = goal;
+                tracker.targetNodeID = targetNodeID;
                 tracker.searchRating = GetSearchRatingAdjusted();
                 tracker.playerNodeID = playerNodeID;
                 GameManager.instance.dataScript.AddTrackerNemesisMove(tracker);

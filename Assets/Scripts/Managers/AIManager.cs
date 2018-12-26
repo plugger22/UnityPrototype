@@ -632,7 +632,7 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideResistance()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        ExecuteTasks(resistanceMaxTasksPerTurn);
+        /*ExecuteTasks(resistanceMaxTasksPerTurn);*/
         ClearAICollections();
         UpdateResources(globalResistance);
         //run AI
@@ -1069,7 +1069,9 @@ public class AIManager : MonoBehaviour
         else if (side.level == 2)
         { resources += resourcesGainResistance; }
         GameManager.instance.dataScript.SetAIResources(side, resources);
-        Debug.LogFormat("[Aim]  -> UpdateResources: {0} resources {1}{2}", side.name, resources, "\n");
+        if (side.level == 1)
+        { Debug.LogFormat("[Aim] AIManager.cs -> UpdateResources: {0} resources now {1}{2}", side.name, resources, "\n"); }
+        else { Debug.LogFormat("[Rim] AIManager.cs -> UpdateResources: {0} resources now {1}{2}", side.name, resources, "\n"); }
     }
 
     /// <summary>

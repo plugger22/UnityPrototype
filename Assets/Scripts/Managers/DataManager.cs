@@ -4800,7 +4800,8 @@ public class DataManager : MonoBehaviour
             {
                 TrackerNemesisMove tracker = listOfTrackerNemesisMove[index];
                 if (tracker != null)
-                { builder.AppendFormat(" t{0}: nodeID {1},  mode {2}, search {3}, rebelID {4}{5}", tracker.turn, tracker.nemesisNodeID, tracker.mode, tracker.searchRating, tracker.playerNodeID, "\n"); }
+                { builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}", tracker.turn, tracker.nemesisNodeID, tracker.mode, tracker.goal, tracker.targetNodeID, 
+                    tracker.searchRating, tracker.playerNodeID, "\n"); }
                 else { Debug.LogErrorFormat("Invalid tracker (Null) in listOfTrackerNemesisMoves[{0}]", index); }
             }
         }

@@ -31,6 +31,9 @@ public class AIRebelManager : MonoBehaviour
     private int targetNodeID;                           //goal to move towards
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
 
+    //fast access
+    private GlobalSide globalResistance;
+
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
 
@@ -45,7 +48,9 @@ public class AIRebelManager : MonoBehaviour
         aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
         status = ActorStatus.Active;
         aiPlayerInvisibility = 3;
-        aiPlayerRenown = 0;
+        //fast access
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
     }
 
     /// <summary>
@@ -103,14 +108,15 @@ public class AIRebelManager : MonoBehaviour
         //actions
         actionAllowance = actionsBase + actionsExtra;
         actionsUsed = 0;
-        //renown
+
+        /*//renown EDIT duplicate system, not needed
         int approval = GameManager.instance.factionScript.ApprovalResistance;
         int threshold = approval * 10;
         if(Random.Range(0, 100) < threshold)
         {
             aiPlayerRenown++;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: AI Player gains +1 Renown from HQ (approval {0}), total now {1}{2}", approval, aiPlayerRenown, "\n");
-        }
+        }*/
     }
 
 
@@ -318,48 +324,82 @@ public class AIRebelManager : MonoBehaviour
             //update player node
             GameManager.instance.nodeScript.nodePlayer = node.nodeID;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: AI Player moves to {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+
+            //gear
+
+            //invisibility
+            Connection connection = GameManager.instance.dataScript.GetConnection(task.data1);
+            if (connection != null)
+            {
+                if (connection.SecurityLevel != ConnectionType.None)
+                { UpdateInvisibility(connection, node); }
+            }
+            else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
+
+            //Tracker data
+            TrackerRebelMove tracker = new TrackerRebelMove();
+            tracker.turn = GameManager.instance.turnScript.Turn;
+            tracker.playerNodeID = task.data0;
+            tracker.invisibility = aiPlayerInvisibility;
+            tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
+            GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); }
-
-        //invisibility
-        Connection connection = GameManager.instance.dataScript.GetConnection(task.data1);
-        if (connection != null)
-        { UpdateInvisibility(connection.SecurityLevel); }
-        else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
-
-        //gear
-
-        //Tracker data
-        TrackerRebelMove tracker = new TrackerRebelMove();
-        tracker.turn = GameManager.instance.turnScript.Turn;
-        tracker.playerNodeID = task.data0;
-        tracker.invisibility = aiPlayerInvisibility;
-        tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
-        GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
     }
 
     /// <summary>
     /// submethod that handles invisibility loss for ExecuteMoveTask
+    /// NOTE: connection and node checked for null by parent method. Also it's assumed that security is > 'None'
     /// </summary>
-    /// <param name="security"></param>
-    private void UpdateInvisibility(ConnectionType security)
+    /// <param name="secLevel"></param>
+    private void UpdateInvisibility(Connection connection, Node node)
     {
-        switch (security)
+        int changeInvisibility = 0;
+        int aiDelay = 0;
+        switch (connection.SecurityLevel)
         {
             case ConnectionType.HIGH:
-                aiPlayerInvisibility--;
+                changeInvisibility = 1;
+                aiDelay = 1;
                 break;
             case ConnectionType.MEDIUM:
-                aiPlayerInvisibility--;
+                changeInvisibility = 1;
+                aiDelay = 2;
                 break;
             case ConnectionType.LOW:
-                aiPlayerInvisibility--;
+                changeInvisibility = 1;
+                aiDelay = 3;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid secLevel (Unrecognised) \"{0}\"", connection.SecurityLevel);
                 break;
         }
-        //min cap 0
-        aiPlayerInvisibility = Mathf.Max(0, aiPlayerInvisibility);
-        if (security != ConnectionType.None)
-        { Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibility: Invisibility -1, now {0}{1}", aiPlayerInvisibility, "\n"); }
+        //update invisibility
+        aiPlayerInvisibility -= changeInvisibility;
+        //calculate AI delay
+        if (changeInvisibility != 0)
+        {
+            //min cap 0
+            aiPlayerInvisibility = Mathf.Max(0, aiPlayerInvisibility);
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibility: Invisibility -1, now {0}{1}", aiPlayerInvisibility, "\n"); 
+            //message
+            string text = string.Format("AI Resistance Player has moved to {0}, {1}, id {2}, Invisibility now {3}", node.nodeName, node.Arc.name, node.nodeID, aiPlayerInvisibility);
+            GameManager.instance.messageScript.PlayerMove(text, node, changeInvisibility, aiDelay);
+            //AI message
+            string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
+            if (aiDelay == 0)
+            {
+                //moving while invisibility already 0 triggers immediate alert flag
+                GameManager.instance.aiScript.immediateFlagResistance = true;
+                //AI Immediate notification
+                GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (AI Player)", "Moving", node.nodeID, connection.connID);
+            }
+            else
+            {
+                //AI delayed notification
+                GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, aiDelay);
+            }
+        }
     }
 
     //
@@ -381,7 +421,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat("-AI Player{0}", "\n");
         builder.AppendFormat(" status: {0}{1}", status, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", aiPlayerInvisibility, "\n");
-        builder.AppendFormat(" Renown: {0}{1}", aiPlayerRenown, "\n");
+        builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
         //sorted target list
         builder.AppendFormat("{0}-ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
         int count = dictOfSortedTargets.Count;

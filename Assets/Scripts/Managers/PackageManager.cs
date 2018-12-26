@@ -369,6 +369,8 @@ namespace packageAPI
         public int turn;
         public int nemesisNodeID;
         public NemesisMode mode;
+        public NemesisGoal goal;
+        public int targetNodeID;
         public int searchRating;
         public int playerNodeID;
     }

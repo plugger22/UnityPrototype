@@ -1231,7 +1231,7 @@ public class DebugGUI : MonoBehaviour
                     case 45:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugShowNemesisMoves();
-                        GUI.Box(new Rect(Screen.width - 355, 10, 350, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }

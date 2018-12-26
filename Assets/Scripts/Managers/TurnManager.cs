@@ -365,18 +365,18 @@ public class TurnManager : MonoBehaviour
     private void EndTurnAI()
     {
         Debug.LogFormat("TurnManager: - - - EndTurnAI - - - turn {0}{1}", _turn, "\n");
-        switch (GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            case "Resistance":
-                //process Authority AI
+            case 2:
+                //RESISTANCE Player -> process Authority AI
                 currentSide = GameManager.instance.globalScript.sideAuthority;
                 if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
                 { GameManager.instance.aiScript.ProcessAISideAuthority(); }
                 if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
                 { GameManager.instance.aiScript.ProcessAISideResistance(); }
                 break;
-            case "Authority":
-                //process Resistance AI
+            case 1:
+                //AUTHORITY Player -> process Resistance AI
                 currentSide = GameManager.instance.globalScript.sideResistance;
                 if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
                 { GameManager.instance.aiScript.ProcessAISideAuthority(); }
@@ -385,8 +385,8 @@ public class TurnManager : MonoBehaviour
                 //Nemesis
                 GameManager.instance.aiScript.ProcessNemesis();
                 break;
-            case "AI":
-                //Process both sides AI, resistance first
+            case 0:
+                //AI BOTH Players -> Process both sides AI, resistance first
                 currentSide = GameManager.instance.globalScript.sideResistance;
                 GameManager.instance.aiScript.ProcessAISideResistance();
                 currentSide = GameManager.instance.globalScript.sideAuthority;
