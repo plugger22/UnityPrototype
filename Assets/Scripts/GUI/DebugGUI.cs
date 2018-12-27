@@ -213,7 +213,7 @@ public class DebugGUI : MonoBehaviour
                     case TeamDebug.None: debugDisplay = 2; teamStatus = TeamDebug.Pools; break;
                     case TeamDebug.Pools: debugDisplay = 2; teamStatus = TeamDebug.Roster; break;
                     case TeamDebug.Roster:
-                        if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
                         { debugDisplay = 2; teamStatus = TeamDebug.Actors; }
                         else { debugDisplay = 0; teamStatus = TeamDebug.None; }
                         break;
@@ -434,21 +434,21 @@ public class DebugGUI : MonoBehaviour
                                 {
                                     optionNoAI = "NO AI OFF";
                                     GameManager.instance.optionScript.noAI = true;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.Player;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.Human;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Human;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.Human;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.Human;
                                     //notification
                                     GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
                                 }
                                 //reverts back to Authority Player, Resistance AI
-                                else if (GameManager.instance.sideScript.resistanceOverall == SideState.Player)
+                                else if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
                                 {
                                     optionNoAI = "NO AI ON";
                                     GameManager.instance.optionScript.noAI = false;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.instance.sideScript.resistanceCurrent = SideState.AI;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.Player;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.Human;
                                     GameManager.instance.sideScript.resistanceOverall = SideState.AI;
                                     //notification
                                     GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
@@ -461,22 +461,22 @@ public class DebugGUI : MonoBehaviour
                                 {
                                     optionNoAI = "NO AI OFF";
                                     GameManager.instance.optionScript.noAI = true;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.Player;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.Player;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                                    GameManager.instance.sideScript.authorityCurrent = SideState.Human;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Human;
+                                    GameManager.instance.sideScript.authorityOverall = SideState.Human;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.Human;
                                     //notification
                                     GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
                                 }
                                 //reverts back to Resistance Player, Authority AI
-                                else if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                                else if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
                                 {
                                     optionNoAI = "NO AI ON";
                                     GameManager.instance.optionScript.noAI = false;
                                     GameManager.instance.sideScript.authorityCurrent = SideState.AI;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Human;
                                     GameManager.instance.sideScript.authorityOverall = SideState.AI;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.Player;
+                                    GameManager.instance.sideScript.resistanceOverall = SideState.Human;
                                     //notification
                                     GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
                                 }

@@ -51,7 +51,7 @@ public class SideManager : MonoBehaviour
             switch (value.level)
             {
                 case 0:
-                    //AI
+                    //AI both
                     resistanceCurrent = SideState.AI;
                     authorityCurrent = SideState.AI;
                     break;
@@ -60,27 +60,27 @@ public class SideManager : MonoBehaviour
                     if (GameManager.instance.optionScript.noAI == false)
                     {
                         resistanceCurrent = SideState.AI;
-                        authorityCurrent = SideState.Player;
+                        authorityCurrent = SideState.Human;
                     }
                     else
                     {
                         //no AI debug mode
-                        resistanceCurrent = SideState.Player;
-                        authorityCurrent = SideState.Player;
+                        resistanceCurrent = SideState.Human;
+                        authorityCurrent = SideState.Human;
                     }
                     break;
                 case 2:
                     //Resistance
                     if (GameManager.instance.optionScript.noAI == false)
                     {
-                        resistanceCurrent = SideState.Player;
+                        resistanceCurrent = SideState.Human;
                         authorityCurrent = SideState.AI;
                     }
                     else
                     {
                         //no AI debug mode
-                        resistanceCurrent = SideState.Player;
-                        authorityCurrent = SideState.Player;
+                        resistanceCurrent = SideState.Human;
+                        authorityCurrent = SideState.Human;
                     }
                     break;
                 default:
@@ -102,7 +102,7 @@ public class SideManager : MonoBehaviour
             //Resistance player
             PlayerSide = GameManager.instance.globalScript.sideResistance;
             Debug.Log("[Start] Player set to RESISTANCE side");
-            resistanceOverall = SideState.Player;
+            resistanceOverall = SideState.Human;
             authorityOverall = SideState.AI;
         }
         else
@@ -111,7 +111,7 @@ public class SideManager : MonoBehaviour
             PlayerSide = GameManager.instance.globalScript.sideAuthority;
             Debug.Log("[Start] Player set to AUTHORITY side");
             resistanceOverall = SideState.AI;
-            authorityOverall = SideState.Player;
+            authorityOverall = SideState.Human;
         }
 
     }
@@ -129,7 +129,7 @@ public class SideManager : MonoBehaviour
             switch(_playerSide.level)
             {
                 case 0:
-                    //AI
+                    //AI both
                     isPossible = false;
                     break;
                 case 1:

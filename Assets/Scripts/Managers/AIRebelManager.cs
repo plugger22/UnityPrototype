@@ -19,9 +19,8 @@ public class AIRebelManager : MonoBehaviour
     [Range(1, 3)] public int actionsBase = 1;
 
     //AI Player
-    private ActorStatus status;
-    private int aiPlayerInvisibility;                   //invisibility of AI player
-    private int aiPlayerRenown;                         //current renown tally
+    [HideInInspector] public ActorStatus status;
+    [HideInInspector] public ActorInactive inactiveStatus;
 
     private int actionAllowance;                        //number of actions per turn (normal allowance + extras)
     private int actionsExtra;                           //bonus actions for this turn
@@ -47,8 +46,10 @@ public class AIRebelManager : MonoBehaviour
         targetNodeID = GameManager.instance.nodeScript.nodePlayer;
         aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
         status = ActorStatus.Active;
-        aiPlayerInvisibility = 3;
+        inactiveStatus = ActorInactive.None;
+        GameManager.instance.playerScript.Invisibility = 3;
         //fast access
+        
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
     }
@@ -340,7 +341,7 @@ public class AIRebelManager : MonoBehaviour
             TrackerRebelMove tracker = new TrackerRebelMove();
             tracker.turn = GameManager.instance.turnScript.Turn;
             tracker.playerNodeID = task.data0;
-            tracker.invisibility = aiPlayerInvisibility;
+            tracker.invisibility = GameManager.instance.playerScript.Invisibility;
             tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
             GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
 
@@ -369,6 +370,7 @@ public class AIRebelManager : MonoBehaviour
     private void UpdateInvisibility(Connection connection, Node node)
     {
         int changeInvisibility = 0;
+        int aiPlayerInvisibility = GameManager.instance.playerScript.Invisibility;
         int aiDelay = 0;
         switch (connection.SecurityLevel)
         {
@@ -395,7 +397,9 @@ public class AIRebelManager : MonoBehaviour
         {
             //min cap 0
             aiPlayerInvisibility = Mathf.Max(0, aiPlayerInvisibility);
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibility: Invisibility -1, now {0}{1}", aiPlayerInvisibility, "\n"); 
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibility: Invisibility -1, now {0}{1}", aiPlayerInvisibility, "\n");
+            //update player invisibility
+            GameManager.instance.playerScript.Invisibility = aiPlayerInvisibility;
             //message
             string text = string.Format("AI Resistance Player has moved to {0}, {1}, id {2}, Invisibility now {3}", node.nodeName, node.Arc.name, node.nodeID, aiPlayerInvisibility);
             GameManager.instance.messageScript.PlayerMove(text, node, changeInvisibility, aiDelay);
@@ -433,8 +437,8 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" Resistance AI Status {0}{1}", "\n", "\n");
         //player stats
         builder.AppendFormat("-AI Player{0}", "\n");
-        builder.AppendFormat(" status: {0}{1}", status, "\n");
-        builder.AppendFormat(" Invisbility: {0}{1}", aiPlayerInvisibility, "\n");
+        builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
+        builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
         //sorted target list
         builder.AppendFormat("{0}-ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");

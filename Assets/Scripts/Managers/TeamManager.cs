@@ -186,7 +186,7 @@ public class TeamManager : MonoBehaviour
                 if (team != null)
                 {
                     //Automatically move any teams to reserve (they spend in turn in transit and are unavailable for deployment)
-                    if (GameManager.instance.sideScript.resistanceCurrent == SideState.Player)
+                    if (GameManager.instance.sideScript.resistanceCurrent == SideState.Human)
                     { MoveTeam(TeamPool.Reserve, team.teamID, team.actorSlotID); }
                     else { MoveTeamAI(TeamPool.Reserve, team.teamID); }
                 }
@@ -213,7 +213,7 @@ public class TeamManager : MonoBehaviour
                         {
                             //Timer expired, team automatically recalled to InTransit pool
 
-                            if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                            if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
                             {
                                 //Human Authority Player
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
@@ -385,7 +385,7 @@ public class TeamManager : MonoBehaviour
         //add teams depending on who is in charge of the authority side
         switch (GameManager.instance.sideScript.authorityOverall)
         {
-            case SideState.Player:
+            case SideState.Human:
                 //Add extra teams ([edit] No, see below [/edit] 
                 Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors.Length > 0)

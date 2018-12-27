@@ -71,6 +71,9 @@ public class NemesisManager : MonoBehaviour
     private bool hasWarning;                //flag set true if Nemesis at same node, hasn't spotted player, and a warning issued ("You sense a dark shadow..."). Stops a double warning
     private bool isFirstNemesis;            //flag set true if first Nemesis, false for arrival of second Nemesis
 
+    //Resistance Player
+    private SideState resistancePlayer;     //who is resistance player, AI or human?
+
     //Nemesis AI
     private NemesisMode mode;
     private NemesisGoal goal;
@@ -112,6 +115,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        resistancePlayer = GameManager.instance.sideScript.resistanceOverall;
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -1005,7 +1009,24 @@ public class NemesisManager : MonoBehaviour
         if (searchRating >= GameManager.instance.playerScript.Invisibility)
         {
             //can't be spotted if Lying Low
-            if (GameManager.instance.playerScript.inactiveStatus != ActorInactive.LieLow)
+            bool isValidPlayer = true;
+            switch (resistancePlayer)
+            {
+                case SideState.AI:
+                    if (GameManager.instance.aiRebelScript.inactiveStatus == ActorInactive.LieLow) { isValidPlayer = false; }
+                    break;
+                case SideState.Human:
+                    if (GameManager.instance.playerScript.inactiveStatus == ActorInactive.LieLow) { isValidPlayer = false; }
+                    break;
+                default:
+                    Debug.LogErrorFormat("Unrecognised resistancePlayer \"{0}\"", resistancePlayer);
+                    break;
+            }
+
+            /*if (GameManager.instance.playerScript.inactiveStatus != ActorInactive.LieLow)*/
+
+            //proceed
+            if (isValidPlayer == true)
             {
                 //player SPOTTED
                 isSpotted = true;
@@ -1269,7 +1290,22 @@ public class NemesisManager : MonoBehaviour
             //ignored if nemesis inactive
             if (mode != NemesisMode.Inactive)
             {
-                if (GameManager.instance.playerScript.status == ActorStatus.Active)
+                //Resistance player must be active in order to be found
+                bool isValidPlayer = true;
+                switch(resistancePlayer)
+                {
+                    case SideState.AI:
+                        if (GameManager.instance.aiRebelScript.status != ActorStatus.Active) { isValidPlayer = false; }
+                        break;
+                    case SideState.Human:
+                        if (GameManager.instance.playerScript.status != ActorStatus.Active) { isValidPlayer = false; }
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Unrecognised resistancePlayer \"{0}\"", resistancePlayer);
+                        break;
+                }
+                //proceed?
+                if (isValidPlayer == true)
                 {
                     bool isCheckNeeded = false;
                     if (isPlayerMove == false)

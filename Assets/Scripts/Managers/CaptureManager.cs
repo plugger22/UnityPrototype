@@ -137,7 +137,7 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.playerScript.status = ActorStatus.Captured;
         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
         //add renown to authority actor who owns the team (only if they are still OnMap
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
         {
             if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
             {

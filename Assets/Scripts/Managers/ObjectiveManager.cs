@@ -108,7 +108,7 @@ public class ObjectiveManager : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
-                if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+                if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
                 {
                     description = string.Format("{0}{1}{2}{3} of <b>{4}{5}</b> {6}Objectives have been completed{7}", colourNeutral, GetCompletedObjectives(),
                         colourEnd, colourNormal, colourEnd, objectivesTotal, colourNormal, colourEnd);
@@ -116,7 +116,7 @@ public class ObjectiveManager : MonoBehaviour
                 else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
                 break;
             case 2:
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.Player)
+                if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
                 {
                     description = string.Format("{0}{1}{2}{3} of <b>{4}{5}</b> {6}Objectives have been completed{7}", colourNeutral, GetCompletedObjectives(),
                         colourEnd, colourNormal, colourEnd, objectivesTotal, colourNormal, colourEnd);

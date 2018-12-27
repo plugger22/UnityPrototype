@@ -2090,7 +2090,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid teamID {Null}");
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
             if (string.IsNullOrEmpty(text) == false)
             {
                 Message message = new Message();
@@ -2137,7 +2137,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Player)
+        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
             if (string.IsNullOrEmpty(text) == false)
             {
                 Message message = new Message();
