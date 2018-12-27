@@ -731,7 +731,7 @@ public class ContactManager : MonoBehaviour
         //log
         if (isCorrect == false)
         {
-            Debug.LogFormat("[Con] ContactManager.cs -> CheckContactIsReliable: Contact {0}, {1}, id {2}, Effect {3}, FAILED reliability test{4}", contact.nameFirst, contact.job, contact.contactID, 
+            Debug.LogFormat("[Cont] ContactManager.cs -> CheckContactIsReliable: Contact {0}, {1}, id {2}, Effect {3}, FAILED reliability test{4}", contact.nameFirst, contact.job, contact.contactID, 
                 contact.effectiveness, "\n");
         }
         return isCorrect;

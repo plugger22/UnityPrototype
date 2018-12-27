@@ -1350,6 +1350,7 @@ public class NemesisManager : MonoBehaviour
                     break;
             }
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
+            Debug.LogFormat("[Ply] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
             string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
             builder.AppendFormat("at {0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
             builder.AppendFormat("{0}<b>Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);

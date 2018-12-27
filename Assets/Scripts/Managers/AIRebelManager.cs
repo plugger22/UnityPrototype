@@ -343,6 +343,20 @@ public class AIRebelManager : MonoBehaviour
             tracker.invisibility = aiPlayerInvisibility;
             tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
             GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
+
+            //Erasure team picks up player immediately if invisibility 0
+            CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, GameManager.instance.playerScript.actorID);
+            if (captureDetails != null)
+            {
+                //Player captured!
+                captureDetails.effects = "The move went bad{1}";
+                EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
+            }
+            else
+            {
+                //Nemesis, if at same node, can interact and damage player
+                GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
+            }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); }
     }
