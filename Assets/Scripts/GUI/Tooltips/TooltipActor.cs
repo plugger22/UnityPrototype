@@ -347,9 +347,10 @@ public class TooltipActor : MonoBehaviour
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = tooltipActorObject.GetComponent<Image>();
         //assign side specific sprites
-        switch (side.name)
+        switch (side.level)
         {
-            case "Authority":
+            case 1:
+                //Authority
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
@@ -358,7 +359,8 @@ public class TooltipActor : MonoBehaviour
                 dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerSecrets.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
-            case "Resistance":
+            case 2:
+                //Resistance
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;

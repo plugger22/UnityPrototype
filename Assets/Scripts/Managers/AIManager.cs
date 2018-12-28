@@ -632,8 +632,8 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideResistance()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        /*ExecuteTasks(resistanceMaxTasksPerTurn);*/
-        ClearAICollections();
+        /*ExecuteTasks(resistanceMaxTasksPerTurn);
+        ClearAICollections();*/
         UpdateResources(globalResistance);
         //run AI
         GameManager.instance.aiRebelScript.ProcessAI();

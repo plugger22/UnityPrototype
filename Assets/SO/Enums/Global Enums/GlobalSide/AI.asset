@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe3c9c35416fb44889126ec4c98b5c8, type: 3}
   m_Name: AI
   m_EditorClassIdentifier: 
-  descriptor: AI Side
+  descriptor: AI Side -> Should never be used
   level: 0

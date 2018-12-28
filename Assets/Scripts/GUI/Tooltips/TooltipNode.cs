@@ -131,15 +131,17 @@ public class TooltipNode : MonoBehaviour
     public void SetColours()
     {
         //output colours for good and bad depend on player side
-        switch (GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            case "Resistance":
-                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-                break;
-            case "Authority":
+            case 1:
+                //Authority
                 colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
                 colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                break;
+            case 2:
+                //Resistance
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -615,9 +617,20 @@ public class TooltipNode : MonoBehaviour
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = tooltipNodeObject.GetComponent<Image>();
         //assign side specific sprites
-        switch (side.name)
+        switch (side.level)
         {
-            case "Authority":
+            case 0:
+                //AI both
+                background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
+                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerCrisis.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerStats.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerUpperMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                break;
+            case 1:
+                //Authority
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerCrisis.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
@@ -626,7 +639,8 @@ public class TooltipNode : MonoBehaviour
                 dividerLowerMiddle.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
-            case "Resistance":
+            case 2:
+                //Resistance
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerCrisis.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;

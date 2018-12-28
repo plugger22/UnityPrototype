@@ -96,24 +96,42 @@ public class SideManager : MonoBehaviour
 
     public void Initialise()
     {
-        //set default player 
-        if (GameManager.instance.isAuthority == false)
+        //both sides AI
+        if (GameManager.instance.isBothAI == true)
         {
-            //Resistance player
-            PlayerSide = GameManager.instance.globalScript.sideResistance;
-            Debug.Log("[Start] Player set to RESISTANCE side");
-            resistanceOverall = SideState.Human;
-            authorityOverall = SideState.AI;
+            if (GameManager.instance.autoRunTurns > 0)
+            {
+                //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
+                if (GameManager.instance.isAuthority == true)
+                { PlayerSide = GameManager.instance.globalScript.sideAuthority; }
+                else { PlayerSide = GameManager.instance.globalScript.sideResistance; }
+                Debug.Log("[Start] Player set to AI for both sides");
+                resistanceOverall = SideState.AI;
+                authorityOverall = SideState.AI;
+            }
+            else
+            { Debug.LogError("AutoRunTurns must be > Zero for isBothAI to be true"); }
         }
         else
         {
-            //Authority player
-            PlayerSide = GameManager.instance.globalScript.sideAuthority;
-            Debug.Log("[Start] Player set to AUTHORITY side");
-            resistanceOverall = SideState.AI;
-            authorityOverall = SideState.Human;
+            //One side is a HUMAN Player
+            if (GameManager.instance.isAuthority == false)
+            {
+                //Resistance player
+                PlayerSide = GameManager.instance.globalScript.sideResistance;
+                Debug.Log("[Start] Player set to RESISTANCE side");
+                resistanceOverall = SideState.Human;
+                authorityOverall = SideState.AI;
+            }
+            else
+            {
+                //Authority player
+                PlayerSide = GameManager.instance.globalScript.sideAuthority;
+                Debug.Log("[Start] Player set to AUTHORITY side");
+                resistanceOverall = SideState.AI;
+                authorityOverall = SideState.Human;
+            }
         }
-
     }
 
     /// <summary>
@@ -175,6 +193,29 @@ public class SideManager : MonoBehaviour
                 break;
         }
         return aiSide;
+    }
+
+    /// <summary>
+    /// At the completion of an AI vs AI autorun the specified Player side reverts back to Human Control
+    /// </summary>
+    public void RevertToHumanPlayer()
+    {
+        switch (_playerSide.level)
+        {
+            case 1:
+                //Authority
+                authorityOverall = SideState.Human;
+                Debug.LogFormat("[Ply] SideManager.cs -> ReverToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
+                break;
+            case 2:
+                //Resistance
+                resistanceOverall = SideState.Human;
+                Debug.LogFormat("[Ply] SideManager.cs -> ReverToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid _playerSide.level \"{0}\"", _playerSide.level));
+                break;
+        }
     }
 
 }

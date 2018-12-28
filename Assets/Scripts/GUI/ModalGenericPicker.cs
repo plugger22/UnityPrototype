@@ -736,7 +736,7 @@ public class ModalGenericPicker : MonoBehaviour
                 buttonBack.spriteState = spriteStateRebel;
                 break;
             default:
-                Debug.LogWarningFormat("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                Debug.LogErrorFormat("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
     }

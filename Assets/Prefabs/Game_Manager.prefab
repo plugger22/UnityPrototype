@@ -184,6 +184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionsBase: 1
+  status: 0
+  inactiveStatus: 0
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1984,6 +1986,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 0
   isAuthority: 1
+  isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

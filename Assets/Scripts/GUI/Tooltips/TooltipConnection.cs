@@ -263,14 +263,16 @@ public class TooltipConnection : MonoBehaviour
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
         background = tooltipConnectionObject.GetComponent<Image>();
         //assign side specific sprites
-        switch (side.name)
+        switch (side.level)
         {
-            case "Authority":
+            case 1:
+                //Authority
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
                 break;
-            case "Resistance":
+            case 2:
+                //Resistance
                 background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
                 dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
                 dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
