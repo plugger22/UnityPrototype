@@ -1204,7 +1204,7 @@ public class ActionManager : MonoBehaviour
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false)
         {
-            bool isStressed = GameManager.instance.playerScript.CheckConditionPresent(conditionStressed);
+            bool isStressed = GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, GameManager.instance.globalScript.sideResistance);
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Player Lie Low";
             outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName, "PLAYER", isStressed);
@@ -2085,7 +2085,7 @@ public class ActionManager : MonoBehaviour
                     Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                     if (condition != null)
                     {
-                        if (GameManager.instance.playerScript.RemoveCondition(condition, string.Format("{0} is no longer Unhappy", actor.actorName)) == true)
+                        if (GameManager.instance.playerScript.RemoveCondition(condition, details.side, string.Format("{0} is no longer Unhappy", actor.actorName)) == true)
                         {
                             builder.AppendLine(); builder.AppendLine();
                             builder.AppendFormat("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd);

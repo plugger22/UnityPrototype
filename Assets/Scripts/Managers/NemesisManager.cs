@@ -1350,20 +1350,20 @@ public class NemesisManager : MonoBehaviour
                 case "Discredit":
                     condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "due to ScumBot Nemesis"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to ScumBot Nemesis"); }
                     else { Debug.LogWarningFormat("Invalid condition CORRUPT (Null)"); }
                     break;
                 case "Image":
                     condition = GameManager.instance.dataScript.GetCondition("IMAGED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "due to Paparrazi Nemesis"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Paparrazi Nemesis"); }
                     else { Debug.LogWarningFormat("Invalid condition IMAGED (Null)"); }
                     break;
                 case "Inject":
                     condition = GameManager.instance.dataScript.GetCondition("DOOMED");
                     if (condition != null)
                     {
-                        GameManager.instance.playerScript.AddCondition(condition, "due to Assassin Droid");
+                        GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Assassin Droid");
                         GameManager.instance.actorScript.SetDoomTimer();
                     }
                     else { Debug.LogWarningFormat("Invalid condition DOOMED (Null)"); }
@@ -1371,13 +1371,13 @@ public class NemesisManager : MonoBehaviour
                 case "Tag":
                     condition = GameManager.instance.dataScript.GetCondition("TAGGED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "due to Cyber Hound"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Cyber Hound"); }
                     else { Debug.LogWarningFormat("Invalid condition TAGGED (Null)"); }
                     break;
                 case "Wound":
                     condition = GameManager.instance.dataScript.GetCondition("WOUNDED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, "due to Security Droid"); }
+                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Security Droid"); }
                     else { Debug.LogWarningFormat("Invalid condition WOUNDED (Null)"); }
                     break;
                 default:

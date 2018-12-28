@@ -167,7 +167,7 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks whether effect criteria is valid. Returns "Null" if O.K and a tooltip explanation string if not. 
+    /// checks whether effect criteria is valid. Returns "Null" if O.K and a tooltip explanation string if not. Player side only.
     /// Can be used independently of Effects provided you have a listOfCriteria
     /// </summary>
     /// <param name="effect"></param>
@@ -181,6 +181,7 @@ public class EffectManager : MonoBehaviour
         bool errorFlag = false;
         Actor actor = null;
         TeamArc teamArc = null;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data.listOfCriteria != null && data.listOfCriteria.Count > 0)
         {
             //
@@ -197,7 +198,7 @@ public class EffectManager : MonoBehaviour
             if (data.actorSlotID != -1)
             {
                 //get actor
-                actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
+                actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                 if (actor == null)
                 {
                     Debug.LogError("Invalid actorSlotID -> Criteria Check cancelled");
@@ -444,7 +445,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == false)
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}STRESSED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -463,7 +464,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player is {0}STRESSED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -481,7 +482,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt) == false)
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}CORRUPT{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -499,7 +500,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent) == false)
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -516,7 +517,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable) == false)
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -533,7 +534,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar) == false)
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't a {0}STAR{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -1218,7 +1219,7 @@ public class EffectManager : MonoBehaviour
                                         //No gear present
                                         int invisibility = GameManager.instance.playerScript.Invisibility;
                                         //condition TAGGED
-                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged) == true)
+                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
                                         {
                                             //invisibility auto Zero
                                             invisibility = 0;
@@ -2414,17 +2415,17 @@ public class EffectManager : MonoBehaviour
                         {
                             case "Add":
                                 //only add condition if NOT already present
-                                if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
+                                if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
                                 {
-                                    GameManager.instance.playerScript.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                                    GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.name, colourEnd);
                                 }
                                 break;
                             case "Subtract":
                                 //only remove  condition if present
-                                if (GameManager.instance.playerScript.CheckConditionPresent(condition) == true)
+                                if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                                 {
-                                    GameManager.instance.playerScript.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                                    GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.name, colourEnd);
                                 }
                                 break;
@@ -2496,9 +2497,9 @@ public class EffectManager : MonoBehaviour
                 //Player
                 if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
-                    if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
+                    if (GameManager.instance.playerScript.CheckNumOfConditions(dataInput.side) > 0)
                     {
-                        listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
+                        listOfConditions = GameManager.instance.playerScript.GetListOfConditions(dataInput.side);
                         switch (effect.apply.name)
                         {
                             case "ConditionRandom":
@@ -2509,7 +2510,7 @@ public class EffectManager : MonoBehaviour
                                         conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
                                         if (conditionRandom != null)
                                         {
-                                            GameManager.instance.playerScript.AddCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
+                                            GameManager.instance.playerScript.AddCondition(conditionRandom, dataInput.side, string.Format("Due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -2521,7 +2522,7 @@ public class EffectManager : MonoBehaviour
                                         if (conditionRandom != null)
                                         {
                                             //remove condition
-                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
+                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom, dataInput.side, string.Format("Due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
                                         }
                                         else

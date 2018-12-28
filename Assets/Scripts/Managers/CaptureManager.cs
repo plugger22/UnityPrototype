@@ -261,7 +261,7 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.playerScript.status = ActorStatus.Active;
         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
         //actor gains condition questionable
-        GameManager.instance.playerScript.AddCondition(conditionQuestionable, "has been interrogated by Authority");
+        GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "has been interrogated by Authority");
         //decrease city loyalty
         int cause = GameManager.instance.cityScript.CityLoyalty;
         cause -= actorReleased;

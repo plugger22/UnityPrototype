@@ -451,7 +451,7 @@ public class TurnManager : MonoBehaviour
                     switch(GameManager.instance.playerScript.inactiveStatus)
                     {
                         case ActorInactive.Breakdown:
-                            text = string.Format("You are undergoing a {0}BREAKDOWN{1}", colourBad, colourEnd);
+                            text = string.Format("You are undergoing a {0}STRESS BREAKDOWN{1}", colourBad, colourEnd);
                             sprite = GameManager.instance.guiScript.infoSprite;
                             break;
                         case ActorInactive.LieLow:
@@ -501,7 +501,7 @@ public class TurnManager : MonoBehaviour
     private void UseAction(string text = "Unknown")
     {
         int remainder;
-        if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded) == true)
+        if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, GameManager.instance.sideScript.PlayerSide) == true)
         {
             remainder = 0;
             _actionsCurrent = _actionsTotal;
@@ -565,7 +565,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool CheckPlayerWounded()
-    { return GameManager.instance.playerScript.CheckConditionPresent(conditionWounded); }
+    { return GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, GameManager.instance.sideScript.PlayerSide); }
 
     /// <summary>
     /// returns a colour formatted string detailing action adjustments (if any) for the action tooltips (details). Null if none.

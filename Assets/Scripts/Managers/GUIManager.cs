@@ -327,7 +327,7 @@ public class GUIManager : MonoBehaviour
                         switch (GameManager.instance.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
-                                details.textTop = string.Format("This action can't be taken because you are undergoing a {0}Breakdown{1} (Stress)",
+                                details.textTop = string.Format("This action can't be taken because you are undergoing a {0}STRESS BREAKDOWN{1}",
                                     colourBad, colourEnd);
                                 break;
                             case ActorInactive.LieLow:

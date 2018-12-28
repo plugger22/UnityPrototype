@@ -110,14 +110,8 @@ public class AIRebelManager : MonoBehaviour
         actionAllowance = actionsBase + actionsExtra;
         actionsUsed = 0;
 
-        /*//renown EDIT duplicate system, not needed
-        int approval = GameManager.instance.factionScript.ApprovalResistance;
-        int threshold = approval * 10;
-        if(Random.Range(0, 100) < threshold)
-        {
-            aiPlayerRenown++;
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: AI Player gains +1 Renown from HQ (approval {0}), total now {1}{2}", approval, aiPlayerRenown, "\n");
-        }*/
+        //conditions
+        ProcessConditions();
     }
 
 
@@ -186,6 +180,67 @@ public class AIRebelManager : MonoBehaviour
             /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: dictOfSortedTargets has {0} records{1}", dictOfSortedTargets.Count, "\n");*/
         }
         else { Debug.LogError("Invalid listOfTargets (Null)"); }
+    }
+
+    /// <summary>
+    /// deals with any conditions that AI player may have
+    /// </summary>
+    private void ProcessConditions()
+    {
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        if (listOfConditions != null)
+        {
+            int count = listOfConditions.Count;
+            if (count > 0)
+            {
+                foreach(Condition condition in listOfConditions)
+                {
+                    if (condition != null)
+                    {
+                        switch (condition.name)
+                        {
+                            case "BLACKMAILER":
+
+                                break;
+                            case "CORRUPT":
+
+                                break;
+                            case "DOOMED":
+
+                                break;
+                            case "IMAGED":
+
+                                break;
+                            case "INCOMPETENT":
+
+                                break;
+                                case "QUESTIONABLE":
+
+                                break;
+                            case "STAR":
+
+                                break;
+                            case "STRESSED":
+
+                                break;
+                            case "TAGGED":
+
+                                break;
+                            case "UNHAPPY":
+
+                                break;
+                            case "WOUNDED":
+
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.name);
+                                break;
+                        }
+                    }
+                    else { Debug.LogError("Invalid condition (Null) in listOfConditions"); }
+                }
+            }
+        }
     }
 
     //
@@ -436,12 +491,26 @@ public class AIRebelManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat(" Resistance AI Status {0}{1}", "\n", "\n");
         //player stats
-        builder.AppendFormat("-AI Player{0}", "\n");
+        builder.AppendFormat("- AI Player{0}", "\n");
         builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
+
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        if (listOfConditions != null)
+        {
+            builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
+            if (listOfConditions.Count > 0)
+            {
+                for (int i = 0; i < listOfConditions.Count; i++)
+                { builder.Append(string.Format(" {0}{1}", listOfConditions[i].name, "\n")); }
+            }
+            else { builder.AppendFormat(" None{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
+
         //sorted target list
-        builder.AppendFormat("{0}-ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
+        builder.AppendFormat("{0}- ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
         int count = dictOfSortedTargets.Count;
         if (count > 0)
         {

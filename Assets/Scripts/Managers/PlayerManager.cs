@@ -582,18 +582,6 @@ public class PlayerManager : MonoBehaviour
                 reason = "Unknown";
                 Debug.LogWarning("Invalid reason (Null or Empty)");
             }
-
-            /*
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-            else
-            {
-                //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-                else { listOfConditions = listOfConditionsAuthority; }
-            }*/
-
-
             if (listOfConditions != null)
             {
                 //check that condition isn't already present
@@ -622,16 +610,6 @@ public class PlayerManager : MonoBehaviour
         {
             //use correct list for the player side
             List<Condition> listOfConditions = GetListOfConditionForSide(side);
-
-            /*if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-            else
-            {
-                //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-                else { listOfConditions = listOfConditionsAuthority; }
-            }*/
-
             if (listOfConditions != null)
             {
                 if (listOfConditions.Count > 0)
@@ -666,16 +644,6 @@ public class PlayerManager : MonoBehaviour
             }
             //use correct list for the player side
             List<Condition> listOfConditions = GetListOfConditionForSide(side);
-
-            /*if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-            else
-            {
-                //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-                else { listOfConditions = listOfConditionsAuthority; }
-            }*/
-
             if (listOfConditions != null)
             {
                 if (listOfConditions.Count > 0)
@@ -704,41 +672,16 @@ public class PlayerManager : MonoBehaviour
         return false;
     }
 
+
     /// <summary>
-    /// returns Condition list for the specified side, null if a problem
+    /// Number of conditions present
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public List<Condition> GetListOfConditions(GlobalSide side)
-    {
-        List<Condition> listOfConditions = GetListOfConditionForSide(side);
-
-        /*if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-        else
-        {
-            //AI control of both side
-            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else { listOfConditions = listOfConditionsAuthority; }
-        }*/
-
-        return listOfConditions;
-    }
-
     public int CheckNumOfConditions(GlobalSide side)
     {
         //use correct list for the player side
         List<Condition> listOfConditions = GetListOfConditionForSide(side);
-
-        /*if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-        else
-        {
-            //AI control of both side
-            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else { listOfConditions = listOfConditionsAuthority; }
-        }*/
-
         return listOfConditions.Count;
     }
 
@@ -754,15 +697,6 @@ public class PlayerManager : MonoBehaviour
         bool checkQuestionable = true;
         //use correct list for the player side
         List<Condition> listOfConditions = GetListOfConditionForSide(side);
-
-        /*if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-        else
-        {
-            //AI control of both side
-            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else { listOfConditions = listOfConditionsAuthority; }
-        }*/
         if (listOfConditions != null)
         {
             if (listOfConditions.Count > 0)
@@ -783,7 +717,17 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sub method to get correct list of Conditions, returns null if a problem
+    /// returns Condition list for the specified side, Null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<Condition> GetListOfConditions(GlobalSide side)
+    {
+        return GetListOfConditionForSide(side);
+    }
+
+    /// <summary>
+    /// Sub method to get correct list of Conditions, returns null if a problem. Use 'GetListOfConditions' for public access
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
@@ -946,41 +890,39 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public string DisplayPlayerStats()
     {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //use correct list for the player side
-        List<Condition> listOfConditions;
-        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-        else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { listOfConditions = listOfConditionsAuthority; }
-        else
-        {
-            //AI control of both side
-            if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { listOfConditions = listOfConditionsResistance; }
-            else { listOfConditions = listOfConditionsAuthority; }
-        }
+        List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
         StringBuilder builder = new StringBuilder();
-        builder.Append(string.Format(" Player Stats{0}{1}", "\n", "\n"));
+        builder.Append(string.Format("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n"));
         builder.Append(string.Format("- Stats{0}", "\n"));
-        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        if (playerSide.level == globalResistance.level)
         { builder.Append(string.Format(" Invisibility {0}{1}", Invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
-        builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
-        if (listOfConditions.Count > 0)
+        if (listOfConditions != null)
         {
-            for (int i = 0; i < listOfConditions.Count; i++)
-            { builder.Append(string.Format(" {0}{1}", listOfConditions[i].name, "\n")); }
+            builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
+            if (listOfConditions.Count > 0)
+            {
+                for (int i = 0; i < listOfConditions.Count; i++)
+                { builder.Append(string.Format(" {0}{1}", listOfConditions[i].name, "\n")); }
+            }
+            else { builder.AppendFormat(" None{0}", "\n"); }
         }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
         builder.Append(string.Format("{0}- States{1}", "\n", "\n"));
         builder.Append(string.Format(" Status {0}{1}", status, "\n"));
         builder.Append(string.Format(" InactiveStatus {0}{1}", inactiveStatus, "\n"));
         builder.Append(string.Format(" TooltipStatus {0}{1}", tooltipStatus, "\n"));
         builder.Append(string.Format(" isBreakdown {0}{1}", isBreakdown, "\n"));
-        builder.Append(string.Format("{0}- Global{1}", "\n", "\n"));
+        builder.Append(string.Format("{0} -Global{1}", "\n", "\n"));
         /*builder.Append(string.Format(" Resistance Cause  {0} of {1}{2}", GameManager.instance.rebelScript.resistanceCause,
             GameManager.instance.rebelScript.resistanceCauseMax, "\n"));*/
         builder.Append(string.Format(" resistanceState {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
         builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n"));
-        builder.Append(string.Format("{0}- Reserve Pool{1}", "\n", "\n"));
+        builder.Append(string.Format("{0} -Reserve Pool{1}", "\n", "\n"));
         builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
-        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        if (playerSide.level == globalResistance.level)
         {
             builder.Append(string.Format("{0}- Gear{1}", "\n", "\n"));
             if (listOfGear.Count > 0)

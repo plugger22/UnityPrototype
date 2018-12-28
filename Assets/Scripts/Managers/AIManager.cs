@@ -4012,7 +4012,7 @@ public class AIManager : MonoBehaviour
                         //gear can negate Screamer
                         if (CheckAIGearEffectPresent(screamerEffectText) == false)
                         {
-                            GameManager.instance.playerScript.AddCondition(conditionStressed, "Acquired due to Screamer countermeasures");
+                            GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "Acquired due to Screamer countermeasures");
                         }
                         else
                         {
@@ -4450,7 +4450,7 @@ public class AIManager : MonoBehaviour
             //Player Stressed
             string textStressed = "";
             stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
-            if (GameManager.instance.playerScript.CheckConditionPresent(stressedCondition) == true)
+            if (GameManager.instance.playerScript.CheckConditionPresent(stressedCondition, globalResistance) == true)
             {
                 chance += hackingStressedDetectionEffect;
                 textStressed = string.Format("{0}<size=95%>{1}STRESSED +{2}{3}</size>", "\n", colourBad, hackingStressedDetectionEffect, colourEnd);

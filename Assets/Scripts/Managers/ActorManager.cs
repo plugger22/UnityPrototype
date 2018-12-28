@@ -3550,10 +3550,10 @@ public class ActorManager : MonoBehaviour
         string text = "Unknown";
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         //does actor already have the condition?
-        if (GameManager.instance.playerScript.CheckConditionPresent(condition) == false)
+        if (GameManager.instance.playerScript.CheckConditionPresent(condition, side) == false)
         {
             //add condition
-            GameManager.instance.playerScript.AddCondition(condition, "Debug action");
+            GameManager.instance.playerScript.AddCondition(condition, side, "Debug action");
             text = string.Format("Condition {0} added to Player", condition.name);
         }
         else { text = string.Format("Player already has Condition {0}", condition.name); }
@@ -3741,7 +3741,7 @@ public class ActorManager : MonoBehaviour
                 int chanceSecret = secretBaseChance;
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
                 //compatibility (actors with player)
-                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent();
+                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
                 if (listOfBadConditions.Count > 0)
                 {
                     StringBuilder builder = new StringBuilder();
@@ -3871,7 +3871,7 @@ public class ActorManager : MonoBehaviour
                 bool isSecrets = false;
                 if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
                 //compatibility (actors with player)
-                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent();
+                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalAuthority);
                 if (listOfBadConditions.Count > 0)
                 {
                     StringBuilder builder = new StringBuilder();
@@ -4391,6 +4391,7 @@ public class ActorManager : MonoBehaviour
         int playerID = GameManager.instance.playerScript.actorID;
         string text, topText, bottomText;
         string playerName = GameManager.instance.playerScript.PlayerName;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //doom timer
         if (doomTimer > 0)
         {
@@ -4425,7 +4426,7 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
                         GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown", 
-                            playerID, GameManager.instance.sideScript.PlayerSide);
+                            playerID, playerSide);
                         //update AI side tab status
                         GameManager.instance.aiScript.UpdateSideTabData();
                         break;
@@ -4447,9 +4448,9 @@ public class ActorManager : MonoBehaviour
                             text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
                             //check if Player has stressed condition
-                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
+                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                             {
-                                GameManager.instance.playerScript.RemoveCondition(conditionStressed, "Lying Low removes Stress");
+                                GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress");
                                 /*
                                 if (GameManager.instance.playerScript.RemoveCondition(conditionStressed) == true)
                                 {
@@ -4477,7 +4478,7 @@ public class ActorManager : MonoBehaviour
             case ActorStatus.Active:
                 {
                     //check any actors with the stressed condition for a breakdown
-                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed) == true)
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                     {
                         //enforces a minimum one turn gap between successive breakdowns
                         if (GameManager.instance.playerScript.isBreakdown == false)
@@ -4497,7 +4498,7 @@ public class ActorManager : MonoBehaviour
                                 string itemText = "has suffered a BREAKDOWN";
                                 string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-                                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, GameManager.instance.sideScript.PlayerSide, details);
+                                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                 GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
@@ -4513,7 +4514,7 @@ public class ActorManager : MonoBehaviour
                         }
                         else { GameManager.instance.playerScript.isBreakdown = false; }
                     }
-                    else if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged) == true)
+                    else if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged, playerSide) == true)
                     {
                         //Player has IMAGED condition. Random chance of them being picked up by facial recognition software
                         rnd = Random.Range(0, 100);
@@ -4560,9 +4561,9 @@ public class ActorManager : MonoBehaviour
         //
         // - - - Info App conditions (any)
         //
-        if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
+        if (GameManager.instance.playerScript.CheckNumOfConditions(playerSide) > 0)
         {
-            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
+            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(playerSide);
             foreach (Condition condition in listOfConditions)
             {
                 if (condition != null)
