@@ -113,6 +113,7 @@ public class TooltipPlayer : MonoBehaviour
         bool isConditions = false;
         //open panel at start
         tooltipPlayerObject.SetActive(true);
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //set opacity to zero (invisible)
         SetOpacity(0f);
         //set state of all items in tooltip window (Status and Conditions are switched on later only if present)
@@ -166,9 +167,9 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - Conditions - - -
         //
-        if (GameManager.instance.playerScript.CheckNumOfConditions() > 0)
+        if (GameManager.instance.playerScript.CheckNumOfConditions(playerSide) > 0)
         {
-            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions();
+            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(playerSide);
             if (listOfConditions != null)
             {
                 playerConditions.gameObject.SetActive(true);
@@ -205,7 +206,7 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - Stats - - -
         //
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (playerSide.level)
         {
             case 1:
                 //Authority
@@ -225,7 +226,7 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - MultiPurpose 1 - - - 
         //
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (playerSide.level)
         {
             case 1:
                 //Authority

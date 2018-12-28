@@ -103,7 +103,7 @@ namespace packageAPI
     /// </summary>
     public class EffectDataInput
     {
-        public GlobalSide side;                                              //used to determine colouring of good/bad effects
+        public GlobalSide side;                                              //used to determine colouring of good/bad effects & condition parameter
         public int ongoingID;                                                //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string originText;                                            //name of thing that caused the effect, eg. gear name
@@ -353,7 +353,7 @@ namespace packageAPI
     /// <summary>
     /// tracks Resistance player or AI. One entry made every time player moves (eg. per action expended)
     /// </summary>
-    public class TrackerRebelMove
+    public class HistoryRebelMove
     {
         public int turn;
         public int playerNodeID;                    //location at end of move
@@ -364,7 +364,7 @@ namespace packageAPI
     /// <summary>
     /// tracks Nemesis. One entry whenever nemesis moves
     /// </summary>
-    public class TrackerNemesisMove
+    public class HistoryNemesisMove
     {
         public int turn;
         public int nemesisNodeID;

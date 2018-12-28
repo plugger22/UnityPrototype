@@ -140,8 +140,8 @@ public class DataManager : MonoBehaviour
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
 
     //Tracker data
-    private List<TrackerRebelMove> listOfTrackerRebelMove = new List<TrackerRebelMove>();
-    private List<TrackerNemesisMove> listOfTrackerNemesisMove = new List<TrackerNemesisMove>();
+    private List<HistoryRebelMove> listOfHistoryRebelMove = new List<HistoryRebelMove>();
+    private List<HistoryNemesisMove> listOfHistoryNemesisMove = new List<HistoryNemesisMove>();
 
 
     //dictionaries
@@ -4744,10 +4744,10 @@ public class DataManager : MonoBehaviour
     /// Resistance AI or Player moves
     /// </summary>
     /// <param name="data"></param>
-    public void AddTrackerRebelMove(TrackerRebelMove data)
+    public void AddHistoryRebelMove(HistoryRebelMove data)
     {
         if (data != null)
-        { listOfTrackerRebelMove.Add(data); }
+        { listOfHistoryRebelMove.Add(data); }
         else { Debug.LogError("Invalid Resistance Tracker data (Null)"); }
     }
 
@@ -4755,10 +4755,10 @@ public class DataManager : MonoBehaviour
     /// Nemesis AI or Player controlled moves
     /// </summary>
     /// <param name="data"></param>
-    public void AddTrackerNemesisMove(TrackerNemesisMove data)
+    public void AddHistoryNemesisMove(HistoryNemesisMove data)
     {
         if (data != null)
-        { listOfTrackerNemesisMove.Add(data); }
+        { listOfHistoryNemesisMove.Add(data); }
         else { Debug.LogError("Invalid Nemesis Tracker data (Null)"); }
     }
 
@@ -4770,15 +4770,15 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Resistance Move History (start  nodeID {0}){1}{2}", GameManager.instance.aiRebelScript.GetStartPlayerNode(), "\n", "\n");
-        int count = listOfTrackerRebelMove.Count;
+        int count = listOfHistoryRebelMove.Count;
         if (count > 0)
         {
             for (int index = 0; index < count; index++)
             {
-                TrackerRebelMove tracker = listOfTrackerRebelMove[index];
-                if (tracker != null)
-                { builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}", tracker.turn, tracker.playerNodeID, tracker.invisibility, tracker.nemesisNodeID, "\n"); }
-                else { Debug.LogErrorFormat("Invalid tracker (Null) in listOfTrackerRebelMoves[{0}]", index); }
+                HistoryRebelMove history = listOfHistoryRebelMove[index];
+                if (history != null)
+                { builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}", history.turn, history.playerNodeID, history.invisibility, history.nemesisNodeID, "\n"); }
+                else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryRebelMoves[{0}]", index); }
             }
         }
         else { builder.Append(" No records present"); }
@@ -4793,16 +4793,16 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Nemesis Move History (start  nodeID {0}){1}{2}", GameManager.instance.cityScript.cityHallDistrictID, "\n", "\n");
-        int count = listOfTrackerNemesisMove.Count;
+        int count = listOfHistoryNemesisMove.Count;
         if (count > 0)
         {
             for (int index = 0; index < count; index++)
             {
-                TrackerNemesisMove tracker = listOfTrackerNemesisMove[index];
-                if (tracker != null)
-                { builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}", tracker.turn, tracker.nemesisNodeID, tracker.mode, tracker.goal, tracker.targetNodeID, 
-                    tracker.searchRating, tracker.playerNodeID, "\n"); }
-                else { Debug.LogErrorFormat("Invalid tracker (Null) in listOfTrackerNemesisMoves[{0}]", index); }
+                HistoryNemesisMove history = listOfHistoryNemesisMove[index];
+                if (history != null)
+                { builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}", history.turn, history.nemesisNodeID, history.mode, history.goal, history.targetNodeID, 
+                    history.searchRating, history.playerNodeID, "\n"); }
+                else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNemesisMoves[{0}]", index); }
             }
         }
         else { builder.Append(" No records present"); }

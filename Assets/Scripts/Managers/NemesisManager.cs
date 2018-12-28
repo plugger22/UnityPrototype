@@ -242,7 +242,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     private void ProcessNemesisAdminEnd()
     {
-        string text;
+        string text = "Unknown";
         hasWarning = false;
         //Ongoing effect messages
         if (nemesis != null)
@@ -274,7 +274,7 @@ public class NemesisManager : MonoBehaviour
                 Node controlNode = null;
                 if (isPlayerControl == true)
                 { controlNode = GameManager.instance.dataScript.GetNode(controlNodeID); }
-                GameManager.instance.messageScript.NemesisPlayerOngoing("Unknown", nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode);
+                GameManager.instance.messageScript.NemesisPlayerOngoing(text, nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode); 
             }
         }
     }
@@ -964,15 +964,15 @@ public class NemesisManager : MonoBehaviour
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis MOVES to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
                 int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
                 //tracker
-                TrackerNemesisMove tracker = new TrackerNemesisMove();
-                tracker.turn = GameManager.instance.turnScript.Turn;
-                tracker.nemesisNodeID = nodeID;
-                tracker.mode = mode;
-                tracker.goal = goal;
-                tracker.targetNodeID = targetNodeID;
-                tracker.searchRating = GetSearchRatingAdjusted();
-                tracker.playerNodeID = playerNodeID;
-                GameManager.instance.dataScript.AddTrackerNemesisMove(tracker);
+                HistoryNemesisMove history = new HistoryNemesisMove();
+                history.turn = GameManager.instance.turnScript.Turn;
+                history.nemesisNodeID = nodeID;
+                history.mode = mode;
+                history.goal = goal;
+                history.targetNodeID = targetNodeID;
+                history.searchRating = GetSearchRatingAdjusted();
+                history.playerNodeID = playerNodeID;
+                GameManager.instance.dataScript.AddHistoryNemesisMove(history);
                 //check for player at same node
                 if (nemesisNode.nodeID == playerNodeID)
                 { isSpotted = ProcessPlayerInteraction(false); }

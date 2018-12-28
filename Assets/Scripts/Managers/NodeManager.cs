@@ -1953,12 +1953,12 @@ public class NodeManager : MonoBehaviour
                     }
                 }
                 //Tracker Data
-                TrackerRebelMove tracker = new TrackerRebelMove();
-                tracker.turn = GameManager.instance.turnScript.Turn;
-                tracker.playerNodeID = moveDetails.nodeID;
-                tracker.invisibility = GameManager.instance.playerScript.Invisibility;
-                tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
-                GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
+                HistoryRebelMove history = new HistoryRebelMove();
+                history.turn = GameManager.instance.turnScript.Turn;
+                history.playerNodeID = moveDetails.nodeID;
+                history.invisibility = GameManager.instance.playerScript.Invisibility;
+                history.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
+                GameManager.instance.dataScript.AddHistoryRebelMove(history);
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }

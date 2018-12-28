@@ -338,12 +338,12 @@ public class AIRebelManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
 
             //Tracker data
-            TrackerRebelMove tracker = new TrackerRebelMove();
-            tracker.turn = GameManager.instance.turnScript.Turn;
-            tracker.playerNodeID = task.data0;
-            tracker.invisibility = GameManager.instance.playerScript.Invisibility;
-            tracker.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
-            GameManager.instance.dataScript.AddTrackerRebelMove(tracker);
+            HistoryRebelMove history = new HistoryRebelMove();
+            history.turn = GameManager.instance.turnScript.Turn;
+            history.playerNodeID = task.data0;
+            history.invisibility = GameManager.instance.playerScript.Invisibility;
+            history.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
+            GameManager.instance.dataScript.AddHistoryRebelMove(history);
 
             //Erasure team picks up player immediately if invisibility 0
             CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, GameManager.instance.playerScript.actorID);
