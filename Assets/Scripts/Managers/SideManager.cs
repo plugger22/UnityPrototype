@@ -205,12 +205,12 @@ public class SideManager : MonoBehaviour
             case 1:
                 //Authority
                 authorityOverall = SideState.Human;
-                Debug.LogFormat("[Ply] SideManager.cs -> ReverToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
+                Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
                 break;
             case 2:
                 //Resistance
                 resistanceOverall = SideState.Human;
-                Debug.LogFormat("[Ply] SideManager.cs -> ReverToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
+                Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
                 break;
             default:
                 Debug.LogError(string.Format("Invalid _playerSide.level \"{0}\"", _playerSide.level));

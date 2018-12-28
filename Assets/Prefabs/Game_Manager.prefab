@@ -1984,7 +1984,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 994
   isAuthority: 1
   isBothAI: 1
   isPerformanceLog: 1

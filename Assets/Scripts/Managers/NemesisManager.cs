@@ -454,8 +454,11 @@ public class NemesisManager : MonoBehaviour
                         //Chance nemesis could catch player in ProcessNemesisHunt -> MoveTo and revert to Null if no follow-on nemesis
                         if (nemesis != null)
                         {
-                            string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
-                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                            if (mode != NemesisMode.Inactive)
+                            {
+                                string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
+                                GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                            }
                         }
                         
                     }

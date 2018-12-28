@@ -205,17 +205,16 @@ public class TurnManager : MonoBehaviour
     private void ProcessNewTurn()
     {
         bool finishedProcessing = false;
-        int numOfAutoTurns = 0;
-        int limitAutoTurns = GameManager.instance.startScript.aiTestRun;
-        //only process new turn if a win State hasn't already been acheived
+        /*int numOfAutoTurns = 0;
+        int limitAutoTurns = GameManager.instance.autoRunTurns;
+        //only process new turn if a win State hasn't already been acheived*/
         if (isLevelOver == false)
         {
             //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
             if (GameManager.instance.inputScript.GameState == GameState.Normal)
             {
-                //continue processing turns until game over if AI vs. AI or single turn process in Player is involved
-                do
-                {
+                /*do
+                {*/
                     //end the current turn
                     haltExecution = false;
                     EndTurnAI();
@@ -224,7 +223,8 @@ public class TurnManager : MonoBehaviour
                     //start the new turn
                     StartTurnEarly();
                     StartTurnLate();
-                    if (StartTurnFinal() == false)
+
+                    /*if (StartTurnFinal() == false)
                     {
                         //run game automatically for set number of turns
                         numOfAutoTurns++;
@@ -237,8 +237,9 @@ public class TurnManager : MonoBehaviour
                     }
                     else
                     { finishedProcessing = true; }
+                    finishedProcessing = true;
                 }
-                while (finishedProcessing == false);
+                while (finishedProcessing == false);*/
 
                 //Nobody has yet won
                 if (winState == WinState.None)
@@ -334,31 +335,31 @@ public class TurnManager : MonoBehaviour
         UpdateStates();
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Special event for admin control (doesn't generate an event for other methods). Returns true if a player interaction phase to come, otherwise false (AI vs AI)
     /// </summary>
     private bool StartTurnFinal()
     {
         bool playerInteraction = true;
         Debug.LogFormat("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", _turn, "\n");
-        switch (GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            case "Resistance":
+            case 2:
+                //Resistance
                 currentSide = GameManager.instance.globalScript.sideResistance;
+                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI) { playerInteraction = false; }
                 break;
-            case "Authority":
+            case 1:
+                //Authority
                 currentSide = GameManager.instance.globalScript.sideAuthority;
-                break;
-            case "AI":
-                //It's an AI vs. AI game so you need to go straight to EndTurnAI as there will be no player interaction
-                playerInteraction = false;
+                if (GameManager.instance.sideScript.authorityOverall == SideState.AI) { playerInteraction = false; }
                 break;
             default:
                 Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                 break;
         }
         return playerInteraction;
-    }
+    }*/
 
     /// <summary>
     /// all AI end of turn matters are handled here
@@ -375,9 +376,12 @@ public class TurnManager : MonoBehaviour
                 if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
                 { GameManager.instance.aiScript.ProcessAISideAuthority(); }
                 if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
-                { GameManager.instance.aiScript.ProcessAISideResistance(); }
-                //Nemesis
-                GameManager.instance.aiScript.ProcessNemesis();
+                {
+                    GameManager.instance.aiScript.ProcessAISideResistance();
+                    //have AI run nemesis even if Human Authority player
+                    if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                    { GameManager.instance.aiScript.ProcessNemesis(); }
+                }
                 break;
             case 2:
                 //RESISTANCE Player -> process Authority AI

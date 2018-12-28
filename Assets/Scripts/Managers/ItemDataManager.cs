@@ -696,6 +696,10 @@ public class ItemDataManager : MonoBehaviour
                 builder.AppendFormat("{0}Nemesis will find you if in the {1}{2}<b>SAME District</b>{3}{4}and your <b>Invisibility</b> is {5}{6}<b>{7}, or less<b>{8}{9}", "\n", "\n", colourAlert, colourEnd, "\n",
                      "\n", colourSearch, search, colourEnd, "\n");
                 break;
+            /*case NemesisMode.Inactive:
+                builder.AppendFormat("to {0}<b>INACTIVE</b>{1} mode{2}", colourNeutral, colourEnd, "\n");
+                builder.AppendFormat("{0}<b>Nemesis is currently not a threat</b>{1}", "\n", "\n");
+                break;*/
             default:
                 Debug.LogWarningFormat("Invalid Nemesis mode \"{0}\"", mode);
                 break;

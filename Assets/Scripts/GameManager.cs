@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     public int seed = 0;                                            //random seed
     [Tooltip("If true Player side set to Authority")]               //DEBUG
     public bool isAuthority;
-    [Tooltip("If true AI handles both sides. OVERRIDES all other settings")]
+    [Tooltip("If true AI handles both sides. OVERRIDES all other settings. Player side (at end of autoRun) is determined by 'isAuthority' setting")]
     public bool isBothAI;
     [Tooltip("Switch ON to get a performance log of initialisation ")]
     public bool isPerformanceLog;
