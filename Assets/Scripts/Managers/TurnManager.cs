@@ -34,7 +34,7 @@ public class TurnManager : MonoBehaviour
     [HideInInspector] public WinReason winReason = WinReason.None;  //why a win (from POV of winner)
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
-    [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI)
+    [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI). Change value ONLY here in TurnManager.cs
     [HideInInspector] public bool haltExecution;             //used to stop program execution at turn end until all interactions are done prior to opening InfoApp
 
     [SerializeField, HideInInspector]

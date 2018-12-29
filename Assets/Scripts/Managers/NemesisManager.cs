@@ -637,7 +637,7 @@ public class NemesisManager : MonoBehaviour
                 {
                     //target available
                     moveToNodeID = targetNodeID;
-                    SetNemesisGoal(NemesisGoal.MoveToNode);
+                    SetNemesisGoal(NemesisGoal.MOVE);
                 }
                 else { SetNemesisGoal(NemesisGoal.SEARCH); }
                 break;
@@ -658,8 +658,8 @@ public class NemesisManager : MonoBehaviour
         NemesisGoal previousGoal = goal;
         switch (requiredGoal)
         {
-            case NemesisGoal.MoveToNode:
-                goal = NemesisGoal.MoveToNode;
+            case NemesisGoal.MOVE:
+                goal = NemesisGoal.MOVE;
                 durationGoal = durationMode;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisGoal: Nemesis Goal set to MoveToNode (previously {0}) moveToNodeID {1}{2}", previousGoal, moveToNodeID, "\n");
                 break;
@@ -734,10 +734,10 @@ public class NemesisManager : MonoBehaviour
                         //move towards player at full speed
                         else
                         {
-                            if (goal != NemesisGoal.MoveToNode)
+                            if (goal != NemesisGoal.MOVE)
                             {
                                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to MoveTo{1}", targetDistance, "\n");
-                                SetNemesisGoal(NemesisGoal.MoveToNode);
+                                SetNemesisGoal(NemesisGoal.MOVE);
                             }
                             else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> CONTINUE MoveTo{1}", targetDistance, "\n"); }
                             ProcessNemesisMoveTo();
@@ -753,10 +753,10 @@ public class NemesisManager : MonoBehaviour
                         //move towards player at full speed
                         else
                         {
-                            if (goal != NemesisGoal.MoveToNode)
+                            if (goal != NemesisGoal.MOVE)
                             {
                                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> SWITCH to MoveTo{1}", targetDistance, "\n");
-                                SetNemesisGoal(NemesisGoal.MoveToNode);
+                                SetNemesisGoal(NemesisGoal.MOVE);
                             }
                             else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> CONTINUE MoveTo{1}", targetDistance, "\n"); }
                             ProcessNemesisMoveTo();
@@ -765,10 +765,10 @@ public class NemesisManager : MonoBehaviour
                     default:
                         //more than 2 away
                         //move towards player at full speed
-                        if (goal != NemesisGoal.MoveToNode)
+                        if (goal != NemesisGoal.MOVE)
                         {
                             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisHunt: targetDistance {0} -> CONTINUE MoveTo{1}", targetDistance, "\n");
-                            SetNemesisGoal(NemesisGoal.MoveToNode);
+                            SetNemesisGoal(NemesisGoal.MOVE);
                         }
                         ProcessNemesisMoveTo();
                         break;
@@ -818,7 +818,7 @@ public class NemesisManager : MonoBehaviour
                         else { Debug.LogWarning("Invalid neighbouring node (Null)"); }
                     }
                     break;
-                case NemesisGoal.MoveToNode:
+                case NemesisGoal.MOVE:
                     //HUNT mode only
                     ProcessNemesisMoveTo();
                     break;

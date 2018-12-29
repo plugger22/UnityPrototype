@@ -94,7 +94,7 @@
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                             //used for toggling debugGUI.cs  AI data
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
-    public enum NemesisGoal { IDLE, MoveToNode, LOITER, AMBUSH, SEARCH}
+    public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}
 
     //
     // - - - Dice - - -

@@ -108,6 +108,8 @@ public class SideManager : MonoBehaviour
                 Debug.Log("[Start] Player set to AI for both sides");
                 resistanceOverall = SideState.AI;
                 authorityOverall = SideState.AI;
+                resistanceCurrent = SideState.AI;
+                authorityCurrent = SideState.AI;
             }
             else
             { Debug.LogError("AutoRunTurns must be > Zero for isBothAI to be true"); }
@@ -122,6 +124,8 @@ public class SideManager : MonoBehaviour
                 Debug.Log("[Start] Player set to RESISTANCE side");
                 resistanceOverall = SideState.Human;
                 authorityOverall = SideState.AI;
+                resistanceCurrent = SideState.Human;
+                authorityCurrent = SideState.AI;
             }
             else
             {
@@ -130,6 +134,8 @@ public class SideManager : MonoBehaviour
                 Debug.Log("[Start] Player set to AUTHORITY side");
                 resistanceOverall = SideState.AI;
                 authorityOverall = SideState.Human;
+                resistanceCurrent = SideState.AI;
+                authorityCurrent = SideState.Human;
             }
         }
     }
@@ -205,6 +211,9 @@ public class SideManager : MonoBehaviour
             case 1:
                 //Authority
                 authorityOverall = SideState.Human;
+                authorityCurrent = SideState.Human;
+                resistanceOverall = SideState.AI;
+                resistanceCurrent = SideState.AI;
                 //teams need actors assigned
                 GameManager.instance.teamScript.DebugAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
@@ -212,6 +221,9 @@ public class SideManager : MonoBehaviour
             case 2:
                 //Resistance
                 resistanceOverall = SideState.Human;
+                resistanceCurrent = SideState.Human;
+                authorityOverall = SideState.AI;
+                authorityCurrent = SideState.AI;
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
                 break;
             default:

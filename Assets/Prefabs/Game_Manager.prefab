@@ -1985,7 +1985,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 994
-  isAuthority: 1
+  isAuthority: 0
   isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0

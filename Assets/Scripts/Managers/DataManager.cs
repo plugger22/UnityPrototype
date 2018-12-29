@@ -4777,7 +4777,8 @@ public class DataManager : MonoBehaviour
             {
                 HistoryRebelMove history = listOfHistoryRebelMove[index];
                 if (history != null)
-                { builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}", history.turn, history.playerNodeID, history.invisibility, history.nemesisNodeID, "\n"); }
+                { builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}{5}", history.turn, history.playerNodeID, history.invisibility, history.nemesisNodeID, 
+                    history.playerNodeID == history.nemesisNodeID ? " *" : "", "\n"); }
                 else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryRebelMoves[{0}]", index); }
             }
         }
@@ -4800,8 +4801,8 @@ public class DataManager : MonoBehaviour
             {
                 HistoryNemesisMove history = listOfHistoryNemesisMove[index];
                 if (history != null)
-                { builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}", history.turn, history.nemesisNodeID, history.mode, history.goal, history.targetNodeID, 
-                    history.searchRating, history.playerNodeID, "\n"); }
+                { builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}{8}", history.turn, history.nemesisNodeID, history.mode, history.goal, history.targetNodeID, 
+                    history.searchRating, history.playerNodeID, history.playerNodeID == history.nemesisNodeID ? " *" : "", "\n"); }
                 else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNemesisMoves[{0}]", index); }
             }
         }
