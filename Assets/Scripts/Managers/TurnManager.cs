@@ -188,6 +188,7 @@ public class TurnManager : MonoBehaviour
             isAutoRun = false;
             //in case of AI vs AI revert the player side to human control
             GameManager.instance.sideScript.RevertToHumanPlayer();
+            currentSide = GameManager.instance.sideScript.PlayerSide;
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
     }
@@ -204,48 +205,26 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
-        bool finishedProcessing = false;
-        /*int numOfAutoTurns = 0;
-        int limitAutoTurns = GameManager.instance.autoRunTurns;
-        //only process new turn if a win State hasn't already been acheived*/
+        //only process new turn if a win State hasn't already been acheived
         if (isLevelOver == false)
         {
+            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
             //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
             if (GameManager.instance.inputScript.GameState == GameState.Normal)
             {
-                /*do
-                {*/
-                    //end the current turn
-                    haltExecution = false;
-                    EndTurnAI();
-                    EndTurnEarly();
-                    EndTurnLate();
-                    //start the new turn
-                    StartTurnEarly();
-                    StartTurnLate();
-
-                    /*if (StartTurnFinal() == false)
-                    {
-                        //run game automatically for set number of turns
-                        numOfAutoTurns++;
-                        if (numOfAutoTurns > limitAutoTurns)
-                        {
-                            finishedProcessing = true;
-                            Debug.Log("TurnManagers.cs -> ProcessNewTurn -> AI turns completed");
-                            Quit();
-                        }
-                    }
-                    else
-                    { finishedProcessing = true; }
-                    finishedProcessing = true;
-                }
-                while (finishedProcessing == false);*/
-
+                
+                //end the current turn
+                haltExecution = false;
+                EndTurnAI();
+                EndTurnEarly();
+                EndTurnLate();
+                //start the new turn
+                StartTurnEarly();
+                StartTurnLate();
                 //Nobody has yet won
                 if (winState == WinState.None)
                 {
                     //only do for player
-                    GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
                     if (playerSide != null && currentSide.level == playerSide.level)
                     {
                         //turn on info App (only if not autorunning)
@@ -310,6 +289,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
+        currentSide = GameManager.instance.sideScript.PlayerSide;
         //increment turn counter
         _turn++;
         Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
@@ -331,35 +311,11 @@ public class TurnManager : MonoBehaviour
     private void StartTurnLate()
     {
         Debug.LogFormat("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n");
+        currentSide = GameManager.instance.sideScript.PlayerSide;
         EventManager.instance.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
         UpdateStates();
     }
 
-    /*/// <summary>
-    /// Special event for admin control (doesn't generate an event for other methods). Returns true if a player interaction phase to come, otherwise false (AI vs AI)
-    /// </summary>
-    private bool StartTurnFinal()
-    {
-        bool playerInteraction = true;
-        Debug.LogFormat("TurnManager: - - - StartTurnFinal - - - turn {0}{1}", _turn, "\n");
-        switch (GameManager.instance.sideScript.PlayerSide.level)
-        {
-            case 2:
-                //Resistance
-                currentSide = GameManager.instance.globalScript.sideResistance;
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI) { playerInteraction = false; }
-                break;
-            case 1:
-                //Authority
-                currentSide = GameManager.instance.globalScript.sideAuthority;
-                if (GameManager.instance.sideScript.authorityOverall == SideState.AI) { playerInteraction = false; }
-                break;
-            default:
-                Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
-                break;
-        }
-        return playerInteraction;
-    }*/
 
     /// <summary>
     /// all AI end of turn matters are handled here
@@ -372,24 +328,32 @@ public class TurnManager : MonoBehaviour
         {
             case 1:
                 //AUTHORITY Player -> process Resistance AI
-                currentSide = GameManager.instance.globalScript.sideResistance;
-                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
-                { GameManager.instance.aiScript.ProcessAISideAuthority(); }
                 if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
                 {
+                    currentSide = GameManager.instance.globalScript.sideResistance;
                     GameManager.instance.aiScript.ProcessAISideResistance();
                     //have AI run nemesis even if Human Authority player
                     if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
                     { GameManager.instance.aiScript.ProcessNemesis(); }
                 }
+                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                {
+                    currentSide = GameManager.instance.globalScript.sideAuthority;
+                    GameManager.instance.aiScript.ProcessAISideAuthority();
+                }
                 break;
             case 2:
                 //RESISTANCE Player -> process Authority AI
-                currentSide = GameManager.instance.globalScript.sideAuthority;
-                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
-                { GameManager.instance.aiScript.ProcessAISideAuthority(); }
                 if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
-                { GameManager.instance.aiScript.ProcessAISideResistance(); }
+                {
+                    currentSide = GameManager.instance.globalScript.sideResistance;
+                    GameManager.instance.aiScript.ProcessAISideResistance();
+                }
+                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                {
+                    currentSide = GameManager.instance.globalScript.sideAuthority;
+                    GameManager.instance.aiScript.ProcessAISideAuthority();
+                }
                 break;
             default:
                 Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
@@ -405,6 +369,7 @@ public class TurnManager : MonoBehaviour
     private void EndTurnEarly()
     {
         Debug.LogFormat("TurnManager: - - - EndTurnEarly - - - turn {0}{1}", _turn, "\n");
+        currentSide = GameManager.instance.sideScript.PlayerSide;
         EventManager.instance.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
     }
 
@@ -414,6 +379,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     private void EndTurnLate()
     {
+        currentSide = GameManager.instance.sideScript.PlayerSide;
         //decrement any action adjustments
         GameManager.instance.dataScript.UpdateActionAdjustments();
         //actions

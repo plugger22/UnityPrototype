@@ -1478,6 +1478,48 @@ public class TeamManager : MonoBehaviour
         return counter;
     }
 
+    /// <summary>
+    /// Debug method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
+    /// errors will occur otherwise.
+    /// </summary>
+    public void DebugAssignActors()
+    {
+        List<int> listOfTeams = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+        if (listOfTeams != null)
+        { listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit)); }
+        else
+        {
+            Debug.LogWarning("Invalid listOfTeams (Null)");
+            listOfTeams = GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit);
+        }
+        if (listOfTeams != null)
+        {
+            int slotCounter = 0;
+            int numUpdated = 0;
+            int count = listOfTeams.Count;
+            if (count > 0)
+            {
+                //assign teams randomly to actors in sequential order
+                for (int i = 0; i < count; i++)
+                {
+                    Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
+                    if (team != null)
+                    {
+                        team.actorSlotID = slotCounter;
+                        numUpdated++;
+                        slotCounter++;
+                        //roll over slot counter to keep within bounds
+                        if (slotCounter > 3) { slotCounter = 0; }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Team (null) for teamID {0}", listOfTeams[i]); }
+                }
+            }
+            Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActors: {0} teams of {1} have had Actors assigned{2}", numUpdated, count, "\n");
+        }
+        else { Debug.LogError("Invalid listOfTeams (Null)"); }
+    }
+
+
     public List<TeamArc> GetListOfTeamPrioritiesHigh()
     { return listOfTeamPrioritiesHigh; }
 

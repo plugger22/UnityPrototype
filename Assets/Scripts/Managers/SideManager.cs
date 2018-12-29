@@ -205,6 +205,8 @@ public class SideManager : MonoBehaviour
             case 1:
                 //Authority
                 authorityOverall = SideState.Human;
+                //teams need actors assigned
+                GameManager.instance.teamScript.DebugAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
                 break;
             case 2:
