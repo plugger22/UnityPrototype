@@ -4,6 +4,7 @@ using UnityEngine;
 using gameAPI;
 using modalAPI;
 using System.Text;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all player related data and methods

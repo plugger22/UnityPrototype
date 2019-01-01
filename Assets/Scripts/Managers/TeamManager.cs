@@ -5,6 +5,7 @@ using gameAPI;
 using modalAPI;
 using packageAPI;
 using System.Text;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all team related matters

@@ -5,6 +5,7 @@ using System.Text;
 using modalAPI;
 using gameAPI;
 using packageAPI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all gear related matters (Only the Resistance has gear)

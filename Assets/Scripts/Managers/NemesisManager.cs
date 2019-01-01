@@ -4,6 +4,7 @@ using packageAPI;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles all nemesis related matters

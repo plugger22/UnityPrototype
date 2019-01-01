@@ -280,7 +280,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sevenTeenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts Data"))
             {
                 //resistance only
                 if (GameManager.instance.turnScript.currentSide.level == GameManager.instance.globalScript.sideResistance.level)
