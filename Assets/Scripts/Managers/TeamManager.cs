@@ -1474,7 +1474,7 @@ public class TeamManager : MonoBehaviour
         return counter;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Debug method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
     /// errors will occur otherwise.
     /// </summary>
@@ -1506,6 +1506,91 @@ public class TeamManager : MonoBehaviour
                         slotCounter++;
                         //roll over slot counter to keep within bounds
                         if (slotCounter > 3) { slotCounter = 0; }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Team (null) for teamID {0}", listOfTeams[i]); }
+                }
+            }
+            Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActors: {0} teams of {1} have had Actors assigned{2}", numUpdated, count, "\n");
+        }
+        else { Debug.LogError("Invalid listOfTeams (Null)"); }
+    }*/
+
+
+    /// <summary>
+    /// Debug method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
+    /// errors will occur otherwise.
+    /// </summary>
+    public void DebugAssignActors()
+    {
+        List<int> listOfTeams = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+        if (listOfTeams != null)
+        { listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit)); }
+        else
+        {
+            Debug.LogWarning("Invalid listOfTeams (Null)");
+            listOfTeams = GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit);
+        }
+        if (listOfTeams != null)
+        {
+            int numUpdated = 0;
+            int availableTeamSlots;
+            int count = listOfTeams.Count;
+            if (count > 0)
+            {
+                //make a list of actors (slotID) with spare slots for teams (each actor can only have one team per ability level)
+                List<int> listOfActorSlots = new List<int>();
+                //loop actors
+                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+                if (arrayOfActors != null)
+                {
+                    for (int i = 0; i < arrayOfActors.Length; i++)
+                    {
+                        //check actor is present in slot (not vacant)
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                        {
+                            Actor actor = arrayOfActors[i];
+                            if (actor != null)
+                            {
+                                //one entry per actor for each spare team slot they have available
+                                availableTeamSlots = actor.datapoint2 - actor.CheckNumOfTeams();
+                                for(int j = 0; j < availableTeamSlots; j++)
+                                { listOfActorSlots.Add(actor.actorSlotID); }
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+                //assign teams to a random actor slot chosen from list of available ones or to a random actor slot if the list is empty
+                int index, rndNum;
+                int listCount;
+                for (int i = 0; i < count; i++)
+                {
+                    Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
+                    if (team != null)
+                    {
+                        //team hasn't already got an actorSlotID
+                        if (team.actorSlotID < 0)
+                        {
+                            listCount = listOfActorSlots.Count;
+                            if (listCount > 0)
+                            {
+                                //available actors
+                                index = Random.Range(0, listCount);
+                                team.actorSlotID = listOfActorSlots[index];
+                                Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
+                                //delete list entry to prevent dupes
+                                listOfActorSlots.RemoveAt(index);
+                            }
+                            else
+                            {
+                                //out of actors, assign to a random actor slot (0 to 3)
+                                rndNum = Random.Range(0, 3);
+                                team.actorSlotID = rndNum;
+                                Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", rndNum);
+                            }
+                            numUpdated++;
+                        }
+                        else { Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} ALREADY HAS actorSlotID {2}{3}", team.arc.name, team.teamID, team.actorSlotID, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid Team (null) for teamID {0}", listOfTeams[i]); }
                 }
