@@ -4407,8 +4407,16 @@ public class ActorManager : MonoBehaviour
             //timer expired, Authority wins
             if (doomTimer == 0)
             {
-                topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
-                bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
+                if (playerSide.level == globalResistance.level)
+                {
+                    topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
+                    bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
+                }
+                else
+                {
+                    topText = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
+                    bottomText = string.Format("{0}You win{1}", colourBad, colourEnd);
+                }
                 GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, topText, bottomText);
             }
         }

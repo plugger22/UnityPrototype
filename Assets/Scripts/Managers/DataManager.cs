@@ -2433,27 +2433,29 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Remove a team from a designated pool
+    /// Remove a team from a designated pool. Returns true if successful, false otherwise
     /// </summary>
     /// <param name="pool"></param>
     /// <param name="teamID"></param>
-    public void RemoveTeamFromPool(TeamPool pool, int teamID)
+    public bool RemoveTeamFromPool(TeamPool pool, int teamID)
     {
+        bool isSuccess = false;
         switch (pool)
         {
             case TeamPool.Reserve:
-                teamPoolReserve.Remove(teamID);
+                isSuccess = teamPoolReserve.Remove(teamID);
                 break;
             case TeamPool.OnMap:
-                teamPoolOnMap.Remove(teamID);
+                isSuccess = teamPoolOnMap.Remove(teamID);
                 break;
             case TeamPool.InTransit:
-                teamPoolInTransit.Remove(teamID);
+                isSuccess = teamPoolInTransit.Remove(teamID);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
                 break;
         }
+        return isSuccess;
     }
 
     /// <summary>

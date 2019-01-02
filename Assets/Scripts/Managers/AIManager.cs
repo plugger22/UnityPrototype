@@ -3190,19 +3190,19 @@ public class AIManager : MonoBehaviour
     private void ExecuteTeamTask(AITask task)
     {
         bool isSuccess = false;
-        int dataID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
-        if (dataID > -1)
+        int teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
+        if (teamID > -1)
         {
             Node node = GameManager.instance.dataScript.GetNode(task.data0);
             if (node != null)
-            { isSuccess = GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, dataID, node); }
+            { isSuccess = GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, teamID, node); }
             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
         }
         else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
         //debug log
         if (isSuccess == true)
-        { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision implemented{1}", task.name1, "\n"); }
-        else { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision NOT implemented{1}", task.name1, "\n"); }
+        { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision implemented, teamID {1}{2}", task.name1, teamID, "\n"); }
+        else { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision NOT implemented, teamID {1}{2}", task.name1, teamID, "\n"); }
     }
 
     /// <summary>
