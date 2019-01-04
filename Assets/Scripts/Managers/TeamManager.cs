@@ -1571,7 +1571,7 @@ public class TeamManager : MonoBehaviour
                                 //available actors
                                 index = Random.Range(0, listCount);
                                 team.actorSlotID = listOfActorSlots[index];
-                                Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
+                                /*Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");*/
                                 //delete list entry to prevent dupes
                                 listOfActorSlots.RemoveAt(index);
                             }

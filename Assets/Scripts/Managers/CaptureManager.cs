@@ -256,7 +256,7 @@ public class CaptureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Release player from captitivity
+    /// Release Human Resitance player from captitivity
     /// </summary>
     public void ReleasePlayer()
     {
@@ -383,8 +383,13 @@ public class CaptureManager : MonoBehaviour
         Team team = null;
         if (node != null)
         {
+            //get correct player status depending on who is in charge of Resistance
+            ActorStatus status = ActorStatus.Active;
+            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+            { status = GameManager.instance.playerScript.status; }
+            else { status = GameManager.instance.aiRebelScript.status; }
             //correct state
-            if (GameManager.instance.playerScript.status == ActorStatus.Active)
+            if (status == ActorStatus.Active)
             {
                 //Player
                 if (actorID == GameManager.instance.playerScript.actorID)
@@ -513,8 +518,13 @@ public class CaptureManager : MonoBehaviour
     /// </summary>
     private void CheckStartTurnCapture()
     {
+        //get correct player status depending on who is in charge of Resistance
+        ActorStatus status = ActorStatus.Active;
+        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+        { status = GameManager.instance.playerScript.status; }
+        else { status = GameManager.instance.aiRebelScript.status; }
         //only check if player active
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        if ( status == ActorStatus.Active)
         {
             CaptureDetails details = CheckCaptured(GameManager.instance.nodeScript.nodePlayer);
             if (details != null)

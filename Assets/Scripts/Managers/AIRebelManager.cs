@@ -59,7 +59,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
-        //only if AI player active
+        //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
             ClearAICollectionsEarly();
@@ -88,11 +88,24 @@ public class AIRebelManager : MonoBehaviour
         }
         else
         {
+            //AI Player NOT Active
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: Rebel AI Suspended as AI Player not active{0}", "\n");
-            //Player AI could be lying low
-            if (inactiveStatus == ActorInactive.LieLow)
+            switch (status)
             {
-
+                case ActorStatus.Inactive:
+                    switch (inactiveStatus)
+                    {
+                        case ActorInactive.LieLow:
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: AI Player Lying Low{0}", "\n");
+                            break;
+                        case ActorInactive.Breakdown:
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: AI Player suffering a stress related Breakdown{0}", "\n");
+                            break;
+                    }
+                    break;
+                case ActorStatus.Captured:
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: AI Player Captured{0}", "\n");
+                    break;
             }
         }
     }
