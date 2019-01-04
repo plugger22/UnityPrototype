@@ -59,29 +59,42 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
-        ClearAICollectionsEarly();
-        //update node data
-        UpdateNodeData();
-        UpdateAdmin();
-        //Info gathering
-        ProcessTargetData();
-        //task loop (once per available action)
-        int counter = 0;
-        do
+        //only if AI player active
+        if (status == ActorStatus.Active)
         {
-            ClearAICollectionsLate();
-            //task creation
-            ProcessMoveTask();
-            //task Execution
-            ExecuteTask();
-            counter++;
-            if (counter > 3)
+            ClearAICollectionsEarly();
+            //update node data
+            UpdateNodeData();
+            UpdateAdmin();
+            //Info gathering
+            ProcessTargetData();
+            //task loop (once per available action)
+            int counter = 0;
+            do
             {
-                Debug.LogWarning("Break triggered on counter value, shouldn't have happened");
-                break;
+                ClearAICollectionsLate();
+                //task creation
+                ProcessMoveTask();
+                //task Execution
+                ExecuteTask();
+                counter++;
+                if (counter > 3)
+                {
+                    Debug.LogWarning("Break triggered on counter value, shouldn't have happened");
+                    break;
+                }
+            }
+            while (actionsUsed < actionAllowance);
+        }
+        else
+        {
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: Rebel AI Suspended as AI Player not active{0}", "\n");
+            //Player AI could be lying low
+            if (inactiveStatus == ActorInactive.LieLow)
+            {
+
             }
         }
-        while (actionsUsed < actionAllowance);
     }
 
     /// <summary>
@@ -177,7 +190,7 @@ public class AIRebelManager : MonoBehaviour
                     { dictOfSortedTargets.Add(target.Key, target.Value); }
                 }
             }
-            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: dictOfSortedTargets has {0} records{1}", dictOfSortedTargets.Count, "\n");*/
+            Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: dictOfSortedTargets has {0} records{1}", dictOfSortedTargets.Count, "\n");
         }
         else { Debug.LogError("Invalid listOfTargets (Null)"); }
     }
@@ -342,7 +355,7 @@ public class AIRebelManager : MonoBehaviour
     private void ExecuteTask()
     {
         int count = listOfTasksPotential.Count;
-        
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: {0} potential Task{1} available{2}", count, count != 1 ? "s" : "", "\n");
         if (count > 0)
         {
             //select a task from listOfPotential Tasks
@@ -395,7 +408,7 @@ public class AIRebelManager : MonoBehaviour
             //Tracker data
             HistoryRebelMove history = new HistoryRebelMove();
             history.turn = GameManager.instance.turnScript.Turn;
-            history.playerNodeID = task.data0;
+            history.playerNodeID = node.nodeID;
             history.invisibility = GameManager.instance.playerScript.Invisibility;
             history.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
             GameManager.instance.dataScript.AddHistoryRebelMove(history);

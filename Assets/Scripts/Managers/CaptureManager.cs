@@ -121,6 +121,7 @@ public class CaptureManager : MonoBehaviour
     {
         //PLAYER CAPTURED
         string text = string.Format("Player Captured at \"{0}\", {1} district by {2}{3}{4} {5}", details.node.nodeName, details.node.Arc.name, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
+        Debug.LogFormat("[Ply] CaptureManager.cs -> CapturePlayer: {0}{1}", text, "\n");
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?
@@ -133,19 +134,27 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.nodePlayer = -1;
         GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
         //change player state
-        /*GameManager.instance.turnScript.resistanceState = ResistanceState.Captured;*/
-        GameManager.instance.playerScript.status = ActorStatus.Captured;
-        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
-        //add renown to authority actor who owns the team (only if they are still OnMap
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
         {
-            if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
+            //Human resistance player
+            GameManager.instance.playerScript.status = ActorStatus.Captured;
+            GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
+            //add renown to authority actor who owns the team (only if they are still OnMap
+            if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority);
-                if (actor != null)
-                { actor.Renown++; }
-                else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority) == true)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.team.actorSlotID, GameManager.instance.globalScript.sideAuthority);
+                    if (actor != null)
+                    { actor.Renown++; }
+                    else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
+                }
             }
+        }
+        else
+        {
+            //AI Resistance Player
+            GameManager.instance.aiRebelScript.status = ActorStatus.Captured;
         }
         //Raise city loyalty
         int cause = GameManager.instance.cityScript.CityLoyalty;
