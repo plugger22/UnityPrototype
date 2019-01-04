@@ -46,10 +46,11 @@ public class AITask
 public class AITracker
 {
     public int data0;                       //node or connectionID
+    public int data1;                       //optional, can ignore (contact effectiveness for nemesis sightings)
     public int turn;                        //turn occurred
 
-    public AITracker(int data, int turn)
-    { data0 = data; this.turn = turn; }
+    public AITracker(int data, int turn)    //NOTE: Constructor doesn't include data1 (default -1), add manually if required
+    { data0 = data; data1 = -1;  this.turn = turn; }
 }
 
 /// <summary>
@@ -1149,6 +1150,7 @@ public class AIManager : MonoBehaviour
                     case MessageSubType.AI_Alert:
                     case MessageSubType.AI_Hacked:
                     case MessageSubType.AI_Countermeasure:
+                    case MessageSubType.AI_Nemesis:
                         //not applicable
                         break;
                     default:
@@ -4840,7 +4842,7 @@ public class AIManager : MonoBehaviour
         if (isScreamer == true)
         {
             aiDecID = decisionScreamer.aiDecID;
-            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}{3}", decisionScreamer.name.ToUpper(), timerScreamer, timerScreamer != 1 ? "s" : "", "\n");
+            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionScreamer.name.ToUpper(), timerScreamer, timerScreamer != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionScreamer.name.ToUpper());
             topText = decisionScreamer.descriptor;
             middleText = string.Format("{0}{1}{2}", colourAlert, decisionScreamer.tooltipDescriptor, colourEnd);
@@ -4851,7 +4853,7 @@ public class AIManager : MonoBehaviour
         if (isTraceBack == true)
         {
             aiDecID = decisionTraceBack.aiDecID;
-            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}{3}", decisionTraceBack.name.ToUpper(), timerTraceBack, timerTraceBack != 1 ? "s" : "", "\n");
+            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionTraceBack.name.ToUpper(), timerTraceBack, timerTraceBack != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionTraceBack.name.ToUpper());
             topText = decisionTraceBack.descriptor;
             middleText = string.Format("{0}{1}{2}", colourAlert, decisionTraceBack.tooltipDescriptor, colourEnd);
@@ -4862,7 +4864,7 @@ public class AIManager : MonoBehaviour
         if (isOffline == true)
         {
             aiDecID = decisionOffline.aiDecID;
-            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}{3}", decisionOffline.name.ToUpper(), timerOffline, timerOffline != 1 ? "s" : "", "\n");
+            text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionOffline.name.ToUpper(), timerOffline, timerOffline != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionOffline.name.ToUpper());
             topText = decisionOffline.descriptor;
             middleText = string.Format("{0}{1}{2}", colourAlert, decisionOffline.tooltipDescriptor, colourEnd);
@@ -4876,7 +4878,7 @@ public class AIManager : MonoBehaviour
         {
             case AuthoritySecurityState.APB:
                 aiDecID = decisionAPB.aiDecID;
-                text = string.Format("AI Security countermeasure {0} in place{1}", decisionAPB.name.ToUpper(), "\n");
+                text = string.Format("AI Security countermeasure {0} in place", decisionAPB.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionAPB.name.ToUpper());
                 topText = decisionAPB.descriptor;
                 middleText = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
@@ -4885,7 +4887,7 @@ public class AIManager : MonoBehaviour
                 break;
             case AuthoritySecurityState.SecurityAlert:
                 aiDecID = decisionSecAlert.aiDecID;
-                text = string.Format("AI Security countermeasure {0} in place{1}", decisionSecAlert.name.ToUpper(), "\n");
+                text = string.Format("AI Security countermeasure {0} in place", decisionSecAlert.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionSecAlert.name.ToUpper());
                 topText = decisionSecAlert.descriptor;
                 middleText = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
@@ -4894,7 +4896,7 @@ public class AIManager : MonoBehaviour
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
                 aiDecID = decisionCrackdown.aiDecID;
-                text = string.Format("AI Security countermeasure {0} in place{1}", decisionCrackdown.name.ToUpper(), "\n");
+                text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionCrackdown.name.ToUpper());
                 topText = decisionCrackdown.descriptor;
                 middleText = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);

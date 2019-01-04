@@ -408,6 +408,8 @@ public class CaptureManager : MonoBehaviour
                                 {
                                     //Player Captured
                                     details = new CaptureDetails { node = node, team = team, actor = null };
+                                    Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: Resistance Player is captured by an Erasure team at {0}, {1}, id {2}{3}", 
+                                        node.nodeName, node.Arc.name, node.nodeID, "\n");
                                 }
                                 else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                             }

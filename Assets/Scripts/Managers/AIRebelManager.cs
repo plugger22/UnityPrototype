@@ -18,6 +18,10 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Base amount of actions per turn for the AI Resistance Player")]
     [Range(1, 3)] public int actionsBase = 1;
 
+    [Header("Sightings")]
+    [Tooltip("Delete sighting reports (Nemesis, Erasure teams, etc) older than ('>') this number of turns ago")]
+    [Range(1, 5)] public int deleteOlderThan = 3;
+
     //AI Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -32,6 +36,10 @@ public class AIRebelManager : MonoBehaviour
 
     //fast access
     private GlobalSide globalResistance;
+    private int numOfNodes = -1;
+
+    //Resistance activity
+    List<AITracker> listOfNemesisSightings = new List<AITracker>();
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -49,9 +57,10 @@ public class AIRebelManager : MonoBehaviour
         inactiveStatus = ActorInactive.None;
         GameManager.instance.playerScript.Invisibility = 3;
         //fast access
-        
+        numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
     }
 
     /// <summary>
@@ -117,6 +126,29 @@ public class AIRebelManager : MonoBehaviour
     {
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
+
+        //clear out list of nemesis sightings entries that are older than 'x' turns ago
+        int count = listOfNemesisSightings.Count;
+        if (count > 0)
+        {
+            int threshold = GameManager.instance.turnScript.Turn - deleteOlderThan;
+            //only bother if threshold has kicked in
+            if (threshold > 0)
+            {
+                //reverse loop as deleting
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    AITracker tracker = listOfNemesisSightings[i];
+                    if (tracker != null)
+                    {
+                        //delete older entries
+                        if (tracker.turn < threshold)
+                        { listOfNemesisSightings.RemoveAt(i); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisSightings[{0}]", i); }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -142,10 +174,50 @@ public class AIRebelManager : MonoBehaviour
 
 
 
+
     //
     // - - - Gather Data - - -
     //
 
+    /// <summary>
+    /// Extracts all relevant AI data from an AI related message
+    /// </summary>
+    /// <param name="message"></param>
+    public void GetNemesisMessageData(Message message)
+    {
+        if (message != null)
+        {
+            if (message.type == MessageType.CONTACT)
+            {
+                switch (message.subType)
+                {
+                    case MessageSubType.Contact_Nemesis_Spotted:
+                        //Nemesis detected by Resistance Contact, reliability of sighting dependant on contact effectiveness
+                        Debug.Assert(message.data0 > -1 && message.data0 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data0));
+                        //add to Nemesis list
+                        AITracker trackerContact = new AITracker(message.data1, message.turnCreated);
+                        Contact contact = GameManager.instance.dataScript.GetContact(message.data2);
+                        if (contact != null)
+                        { trackerContact.data1 = contact.effectiveness; }
+                        else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
+                        //get contact effectivenss
+                        listOfNemesisSightings.Add(trackerContact);
+                        break;
+                    case MessageSubType.Tracer_Nemesis_Spotted:
+                        //Nemesis detected by Tracer
+                        Debug.Assert(message.data0 > -1 && message.data0 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data0));
+                        //add to Nemesis list
+                        AITracker trackerTracer = new AITracker(message.data0, message.turnCreated);
+                        //tracer effectiveness automatically 100 %
+                        trackerTracer.data1 = 3;
+                        listOfNemesisSightings.Add(trackerTracer);
+                        break;
+                }
+            }
+            else { Debug.LogWarning(string.Format("Invalid (not Nemesis) message type \"{0}\" for \"{1}\"", message.type, message.text)); }
+        }
+        else { Debug.LogWarning("Invalid message (Null)"); }
+    }
 
     /// <summary>
     /// update node data for known erasure teams and nemesis locations prior to doing any Dijkstra pathing
@@ -203,7 +275,7 @@ public class AIRebelManager : MonoBehaviour
                     { dictOfSortedTargets.Add(target.Key, target.Value); }
                 }
             }
-            Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: dictOfSortedTargets has {0} records{1}", dictOfSortedTargets.Count, "\n");
+            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: dictOfSortedTargets has {0} records{1}", dictOfSortedTargets.Count, "\n");*/
         }
         else { Debug.LogError("Invalid listOfTargets (Null)"); }
     }
@@ -533,21 +605,37 @@ public class AIRebelManager : MonoBehaviour
             }
             else { builder.AppendFormat(" None{0}", "\n"); }
         }
-        else { Debug.LogError("Invalid listOfConditions (Null)"); }
+        else { Debug.LogError(" Invalid listOfConditions (Null)"); }
 
         //sorted target list
         builder.AppendFormat("{0}- ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
         int count = dictOfSortedTargets.Count;
         if (count > 0)
         {
-            foreach(var target in dictOfSortedTargets)
+            foreach (var target in dictOfSortedTargets)
             {
                 if (target.Key != null)
-                { builder.AppendFormat("Target: {0}, at node id {1}, distance {2}{3}", target.Key.name, target.Key.nodeID, target.Value, "\n"); }
-                else { builder.AppendFormat("Invalid target (Null){0}", "\n"); }
+                { builder.AppendFormat(" Target: {0}, at node id {1}, distance {2}{3}", target.Key.name, target.Key.nodeID, target.Value, "\n"); }
+                else { builder.AppendFormat(" Invalid target (Null){0}", "\n"); }
             }
         }
         else { builder.Append(" No records present"); }
+
+        //Nemesis Sightings
+        count = listOfNemesisSightings.Count;
+        builder.AppendFormat("{0}- Nemesis Sightings ({1} records){2}", "\n", count, "\n");
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                AITracker tracker = listOfNemesisSightings[i];
+                if (tracker != null)
+                { builder.AppendFormat(" node: id {0}, eff:{1}, turn:{2}{3}", tracker.data0, tracker.data1, tracker.turn, "\n"); }
+                else { builder.AppendFormat(" Invalid sighting (Null){0}", "\n"); }
+            }
+        }
+        else { builder.Append(" No records present"); }
+
         return builder.ToString();
     }
 

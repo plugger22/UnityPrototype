@@ -172,6 +172,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();             //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfNemesisMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();  //Key -> ongoingID, Value -> Ongoing effect details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
@@ -2429,7 +2430,6 @@ public class DataManager : MonoBehaviour
                 Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
                 break;
         }
-
     }
 
     /// <summary>
@@ -3773,17 +3773,29 @@ public class DataManager : MonoBehaviour
                     if (message.displayDelay > 0)
                     { AddMessageExisting(message, MessageCategory.Pending); }
                     else
-                    {
-                        AddMessageExisting(message, MessageCategory.Current);
-                        //AI message (Pending AI messages accessed in due course)
-                        if (message.type == MessageType.AI)
-                        { AIMessage(message); }
-                    }
+                    { AddMessageExisting(message, MessageCategory.Current); }
                     break;
                 case false:
                     //if isPublic False then store in Archive dictionary
                     AddMessageExisting(message, MessageCategory.Archive);
+                    //AI message (Pending AI messages accessed in due course)
+                    if (message.type == MessageType.AI)
+                    { AIMessage(message); }
                     break;
+            }
+            //Nemesis sighting message
+            if (message.type == MessageType.CONTACT)
+            {
+                switch(message.subType)
+                {
+                    case MessageSubType.Contact_Nemesis_Spotted:
+                    case MessageSubType.Tracer_Nemesis_Spotted:
+                        //Add a copy of the message to Nemesis Message dictionary 
+                        AddMessageExisting(message, MessageCategory.Nemesis);
+                        //Extract Nemesis sighting data
+                        GameManager.instance.aiRebelScript.GetNemesisMessageData(message);
+                        break;
+                }
             }
         }
         else { Debug.LogError("Invalid Pending Message (Null)"); }
@@ -3825,6 +3837,9 @@ public class DataManager : MonoBehaviour
                 break;
             case MessageCategory.AI:
                 dictOfMessages = dictOfAIMessages;
+                break;
+            case MessageCategory.Nemesis:
+                dictOfMessages = dictOfNemesisMessages;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -3872,6 +3887,9 @@ public class DataManager : MonoBehaviour
             case MessageCategory.AI:
                 dictOfMessages = dictOfAIMessages;
                 break;
+            case MessageCategory.Nemesis:
+                dictOfMessages = dictOfNemesisMessages;
+                break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
                 successFlag = false;
@@ -3911,6 +3929,9 @@ public class DataManager : MonoBehaviour
             case MessageCategory.AI:
                 dictOfMessages = new Dictionary<int, Message>(dictOfAIMessages);
                 break;
+            case MessageCategory.Nemesis:
+                dictOfMessages = new Dictionary<int, Message>(dictOfNemesisMessages);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
                 break;
@@ -3947,6 +3968,9 @@ public class DataManager : MonoBehaviour
                 break;
             case MessageCategory.AI:
                 dictOfMessages = dictOfAIMessages;
+                break;
+            case MessageCategory.Nemesis:
+                dictOfMessages = dictOfNemesisMessages;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -4011,6 +4035,10 @@ public class DataManager : MonoBehaviour
             case MessageCategory.AI:
                 tempDict = new Dictionary<int, Message>(dictOfAIMessages);
                 builderOverall.Append(string.Format(" AI Messages{0}{1}", "\n", "\n"));
+                break;
+            case MessageCategory.Nemesis:
+                tempDict = new Dictionary<int, Message>(dictOfNemesisMessages);
+                builderOverall.Append(string.Format(" Nemesis Messages{0}{1}", "\n", "\n"));
                 break;
             default:
                 builderOverall.Append(string.Format(" UNKNOWN Messages{0}{1}", "\n", "\n"));

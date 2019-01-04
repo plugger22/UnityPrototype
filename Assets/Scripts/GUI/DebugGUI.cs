@@ -195,9 +195,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Rebel AI"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Rebel AI Data"))
             {
-                Debug.Log("[Dbg] Button -> Rebel AI");
+                Debug.Log("[Dbg] Button -> Rebel AI Data");
                 if (debugDisplay != 43)
                 { debugDisplay = 43; }
                 else { debugDisplay = 0; }
@@ -232,7 +232,8 @@ public class DebugGUI : MonoBehaviour
                     case MessageCategory.Pending: debugDisplay = 9; msgStatus = MessageCategory.Current; break;
                     case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
                     case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
-                    case MessageCategory.AI: debugDisplay = 0; msgStatus = MessageCategory.None; break;
+                    case MessageCategory.AI: debugDisplay = 9; msgStatus = MessageCategory.Nemesis; break;
+                    case MessageCategory.Nemesis: debugDisplay = 0; msgStatus = MessageCategory.None; break;
                 }
             }
         
@@ -913,6 +914,9 @@ public class DebugGUI : MonoBehaviour
                                 break;
                             case MessageCategory.AI:
                                 analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.AI);
+                                break;
+                            case MessageCategory.Nemesis:
+                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Nemesis);
                                 break;
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
