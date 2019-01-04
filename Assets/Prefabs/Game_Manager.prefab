@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionsBase: 1
+  deleteOlderThan: 3
   status: 0
   inactiveStatus: 0
 --- !u!114 &114160796570192384
@@ -1984,7 +1985,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 52826
+  seed: 0
   isAuthority: 1
   isBothAI: 1
   isPerformanceLog: 1
