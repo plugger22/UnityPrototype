@@ -10,6 +10,16 @@ using Random = UnityEngine.Random;
 using packageAPI;
 
 /// <summary>
+/// All sighting reports are converted to Sighting data objects which have an adjusted priority base on their relevance (time of sighting / effectiveness of contact)
+/// </summary>
+public class SightingData
+{
+    public int nodeID;
+    public Priority priority;
+}
+
+
+/// <summary>
 /// handles all Resistance AI
 /// </summary>
 public class AIRebelManager : MonoBehaviour
@@ -39,7 +49,8 @@ public class AIRebelManager : MonoBehaviour
     private int numOfNodes = -1;
 
     //Resistance activity
-    List<AITracker> listOfNemesisSightings = new List<AITracker>();
+    List<AITracker> listOfNemesisReports = new List<AITracker>();
+    List<SightingData> listOfNemesisSightData = new List<SightingData>();
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -72,17 +83,19 @@ public class AIRebelManager : MonoBehaviour
         if (status == ActorStatus.Active)
         {
             ClearAICollectionsEarly();
-            //update node data
-            UpdateNodeData();
             UpdateAdmin();
             //Info gathering
+            ProcessSightingData();
             ProcessTargetData();
-            //task loop (once per available action)
+            //
+            // - - - task loop (once per available action)
+            //
             int counter = 0;
             do
             {
                 ClearAICollectionsLate();
                 //task creation
+                ProcessSurvivalTask();
                 ProcessMoveTask();
                 //task Execution
                 ExecuteTask();
@@ -126,9 +139,10 @@ public class AIRebelManager : MonoBehaviour
     {
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
+        listOfNemesisSightData.Clear();
 
-        //clear out list of nemesis sightings entries that are older than 'x' turns ago
-        int count = listOfNemesisSightings.Count;
+        //clear out list of nemesis reports entries that are older than 'x' turns ago
+        int count = listOfNemesisReports.Count;
         if (count > 0)
         {
             int threshold = GameManager.instance.turnScript.Turn - deleteOlderThan;
@@ -138,14 +152,14 @@ public class AIRebelManager : MonoBehaviour
                 //reverse loop as deleting
                 for (int i = count - 1; i >= 0; i--)
                 {
-                    AITracker tracker = listOfNemesisSightings[i];
+                    AITracker tracker = listOfNemesisReports[i];
                     if (tracker != null)
                     {
                         //delete older entries
                         if (tracker.turn < threshold)
-                        { listOfNemesisSightings.RemoveAt(i); }
+                        { listOfNemesisReports.RemoveAt(i); }
                     }
-                    else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisSightings[{0}]", i); }
+                    else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisReports[{0}]", i); }
                 }
             }
         }
@@ -201,7 +215,7 @@ public class AIRebelManager : MonoBehaviour
                         { trackerContact.data1 = contact.effectiveness; }
                         else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
                         //get contact effectivenss
-                        listOfNemesisSightings.Add(trackerContact);
+                        listOfNemesisReports.Add(trackerContact);
                         break;
                     case MessageSubType.Tracer_Nemesis_Spotted:
                         //Nemesis detected by Tracer
@@ -210,7 +224,7 @@ public class AIRebelManager : MonoBehaviour
                         AITracker trackerTracer = new AITracker(message.data0, message.turnCreated);
                         //tracer effectiveness automatically 100 %
                         trackerTracer.data1 = 3;
-                        listOfNemesisSightings.Add(trackerTracer);
+                        listOfNemesisReports.Add(trackerTracer);
                         break;
                 }
             }
@@ -219,15 +233,112 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogWarning("Invalid message (Null)"); }
     }
 
-    /// <summary>
-    /// update node data for known erasure teams and nemesis locations prior to doing any Dijkstra pathing
-    /// </summary>
-    private void UpdateNodeData()
-    {
 
+    /// <summary>
+    /// Take all sighting reports and convert to sorted, prioritised, Sighting Data ready for analysis
+    /// </summary>
+    private void ProcessSightingData()
+    {
+        int count;
+        //Nemesis Reports
+        count = listOfNemesisReports.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                AITracker tracker = listOfNemesisReports[i];
+                if (tracker != null)
+                {
+                    //convert tracker data to SightingData
+                    SightingData sighting = ConvertTrackerToSighting(tracker);
+                    //add to list
+                    if (sighting != null)
+                    { listOfNemesisSightData.Add(sighting); }
+                    else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
+                }
+                else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisReports[{0}]", i); }
+            }
+
+            //sort list
+
+        }
     }
 
-
+    /// <summary>
+    /// AITracker data is converted to priority based Sighting Data based on time of sighting and effectiveness of contact. Returns null if a problem
+    /// NOTE: calling methods have checked tracker for Null
+    /// </summary>
+    /// <param name="tracker"></param>
+    /// <returns></returns>
+    private SightingData ConvertTrackerToSighting(AITracker tracker)
+    {
+        //keep prioritylevel as an int (0 / 1 / 2 / 3 / 4 corresponds to None / Low / Medium / High / Critical)
+        int priorityLevel = 0;
+        SightingData sighting = null;
+        //set a base priority
+        int turn = GameManager.instance.turnScript.Turn;
+        int turnsAgo = turn - tracker.turn;
+        switch (turnsAgo)
+        {
+            case 0:
+            case 1:
+                //critical
+                priorityLevel = 4;
+                break;
+            case 2:
+                //high
+                priorityLevel = 3;
+                break;
+            case 3:
+                //medium
+                priorityLevel = 2;
+                break;
+            case 4:
+                //low
+                priorityLevel = 1;
+                break;
+        }
+        //adjust for contact effectiveness
+        switch (tracker.data1)
+        {
+            case 3:
+                //100 % reliable contact report
+                priorityLevel++;
+                break;
+            case 1:
+                //dubious contact report
+                priorityLevel--;
+                break;
+        }
+        //ignore if priority zero or less
+        if (priorityLevel > 0)
+        {
+            sighting = new SightingData();
+            sighting.nodeID = tracker.data0;
+            //assign priority
+            switch (priorityLevel)
+            {
+                case 5:
+                case 4:
+                    sighting.priority = Priority.Critical;
+                    break;
+                case 3:
+                    sighting.priority = Priority.High;
+                    break;
+                case 2:
+                    sighting.priority = Priority.Medium;
+                    break;
+                case 1:
+                    sighting.priority = Priority.Low;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid priorityLevel \"{0}\"", priorityLevel);
+                    sighting.priority = Priority.Low;
+                    break;
+            }
+        }
+        return sighting;
+    }
 
 
     /// <summary>
@@ -344,6 +455,16 @@ public class AIRebelManager : MonoBehaviour
     //
     // - - - Create Task - - -
     //
+
+    /// <summary>
+    /// checks for any critical, survival related, priority tasks
+    /// </summary>
+    private void ProcessSurvivalTask()
+    {
+        int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+        //Nemesis nearby
+
+    }
 
     /// <summary>
     /// Select a suitable node to move to (single node move)
@@ -621,16 +742,16 @@ public class AIRebelManager : MonoBehaviour
         }
         else { builder.Append(" No records present"); }
 
-        //Nemesis Sightings
-        count = listOfNemesisSightings.Count;
-        builder.AppendFormat("{0}- Nemesis Sightings ({1} records){2}", "\n", count, "\n");
+        //Nemesis Reports
+        count = listOfNemesisReports.Count;
+        builder.AppendFormat("{0}- Nemesis Reports ({1} records){2}", "\n", count, "\n");
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
             {
-                AITracker tracker = listOfNemesisSightings[i];
+                AITracker tracker = listOfNemesisReports[i];
                 if (tracker != null)
-                { builder.AppendFormat(" node: id {0}, eff:{1}, turn:{2}{3}", tracker.data0, tracker.data1, tracker.turn, "\n"); }
+                { builder.AppendFormat(" t: {0}, nodeID {1}, contact eff: {2}{3}", tracker.turn, tracker.data0, tracker.data1, "\n"); }
                 else { builder.AppendFormat(" Invalid sighting (Null){0}", "\n"); }
             }
         }
