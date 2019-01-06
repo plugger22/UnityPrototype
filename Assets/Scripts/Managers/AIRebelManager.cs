@@ -157,7 +157,11 @@ public class AIRebelManager : MonoBehaviour
                     {
                         //delete older entries
                         if (tracker.turn < threshold)
-                        { listOfNemesisReports.RemoveAt(i); }
+                        {
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: deleted tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", tracker.turn, threshold, tracker.data0,
+                                tracker.data1, "\n");
+                            listOfNemesisReports.RemoveAt(i);
+                        }
                     }
                     else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisReports[{0}]", i); }
                 }
@@ -253,12 +257,14 @@ public class AIRebelManager : MonoBehaviour
                     SightingData sighting = ConvertTrackerToSighting(tracker);
                     //add to list
                     if (sighting != null)
-                    { listOfNemesisSightData.Add(sighting); }
+                    {
+                        listOfNemesisSightData.Add(sighting);
+                        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfNemesisSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");
+                    }
                     else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
                 }
                 else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisReports[{0}]", i); }
             }
-
             //sort list
             var sortedList = listOfNemesisSightData.OrderByDescending(obj => obj.priority);
             listOfNemesisSightData = sortedList.ToList();
@@ -273,12 +279,14 @@ public class AIRebelManager : MonoBehaviour
     /// <returns></returns>
     private SightingData ConvertTrackerToSighting(AITracker tracker)
     {
+        
         //keep prioritylevel as an int ( 0 / 1 / 2 / 3  corresponds to Low / Medium / High / Critical )
         int priorityLevel = 0;
         SightingData sighting = null;
         //set a base priority
         int turn = GameManager.instance.turnScript.Turn;
         int turnsAgo = turn - tracker.turn;
+        Debug.LogFormat("[Tst] AIRebelManager.cs -> ConvertTrackerToSighting: t:{0}, turnsAgo: {1}, nodeID {2}, contact eff {3}{4}", tracker.turn, turnsAgo, tracker.data0, tracker.data1, "\n");
         switch (turnsAgo)
         {
             case 0:
@@ -758,7 +766,7 @@ public class AIRebelManager : MonoBehaviour
                 else { builder.AppendFormat(" Invalid sighting (Null){0}", "\n"); }
             }
         }
-        else { builder.Append(" No records present"); }
+        else { builder.AppendFormat(" No records present{0}", "\n"); }
         //
         // - - - Sighting Data
         //
@@ -774,7 +782,7 @@ public class AIRebelManager : MonoBehaviour
                 else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
             }
         }
-        else { builder.Append(" No records present"); }
+        else { builder.AppendFormat(" No records present{0}", "\n"); }
 
         //return
         return builder.ToString();
