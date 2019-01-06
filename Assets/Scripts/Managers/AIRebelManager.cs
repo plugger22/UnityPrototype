@@ -717,6 +717,7 @@ public class AIRebelManager : MonoBehaviour
     public string DebugShowRebelAIStatus()
     {
         StringBuilder builder = new StringBuilder();
+        int turn = GameManager.instance.turnScript.Turn;
         builder.AppendFormat(" Resistance AI Status {0}{1}", "\n", "\n");
         //player stats
         builder.AppendFormat("- AI Player{0}", "\n");
@@ -754,35 +755,39 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Nemesis Reports
         //
-        count = listOfNemesisReports.Count;
-        builder.AppendFormat("{0}- Nemesis Reports ({1} records){2}", "\n", count, "\n");
-        if (count > 0)
+        if (status != ActorStatus.Captured)
         {
-            for (int i = 0; i < count; i++)
+            count = listOfNemesisReports.Count;
+            builder.AppendFormat("{0}- Nemesis Reports (current turn {1}) {2}", "\n", turn, "\n");
+            if (count > 0)
             {
-                AITracker tracker = listOfNemesisReports[i];
-                if (tracker != null)
-                { builder.AppendFormat(" t: {0}, nodeID {1}, contact eff: {2}{3}", tracker.turn, tracker.data0, tracker.data1, "\n"); }
-                else { builder.AppendFormat(" Invalid sighting (Null){0}", "\n"); }
+                for (int i = 0; i < count; i++)
+                {
+                    AITracker tracker = listOfNemesisReports[i];
+                    if (tracker != null)
+                    { builder.AppendFormat(" t: {0}, nodeID {1}, contact eff: {2}{3}", tracker.turn, tracker.data0, tracker.data1, "\n"); }
+                    else { builder.AppendFormat(" Invalid sighting (Null){0}", "\n"); }
+                }
             }
-        }
-        else { builder.AppendFormat(" No records present{0}", "\n"); }
-        //
-        // - - - Sighting Data
-        //
-        count = listOfNemesisSightData.Count;
-        builder.AppendFormat("{0}- Nemesis Sight Data ({1} records){2}", "\n", count, "\n");
-        if (count > 0)
-        {
-            for (int i = 0; i < count; i++)
+            else { builder.AppendFormat(" No records present{0}", "\n"); }
+            //
+            // - - - Sighting Data
+            //
+            count = listOfNemesisSightData.Count;
+            builder.AppendFormat("{0}- Nemesis Sight Data (current turn {1}){2}", "\n", turn - 1, "\n");
+            if (count > 0)
             {
-                SightingData sight = listOfNemesisSightData[i];
-                if (sight != null)
-                { builder.AppendFormat(" nodeID {0}, priority {1}{2}", sight.nodeID, sight.priority, "\n"); }
-                else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
+                for (int i = 0; i < count; i++)
+                {
+                    SightingData sight = listOfNemesisSightData[i];
+                    if (sight != null)
+                    { builder.AppendFormat(" nodeID {0}, priority {1}{2}", sight.nodeID, sight.priority, "\n"); }
+                    else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
+                }
             }
+            else { builder.AppendFormat(" No records present{0}", "\n"); }
         }
-        else { builder.AppendFormat(" No records present{0}", "\n"); }
+        else { builder.AppendFormat("{0}{1} - CAPTURED (no report or sighting data)", "\n", "\n"); }
 
         //return
         return builder.ToString();
