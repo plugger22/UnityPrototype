@@ -224,6 +224,27 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.Human;
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
+                //update states
+                ActorStatus aiRebelStatus = GameManager.instance.aiRebelScript.status;
+                ActorInactive aiRebelInactive = GameManager.instance.aiRebelScript.inactiveStatus;
+                GameManager.instance.playerScript.status = aiRebelStatus;
+                switch(aiRebelStatus)
+                {
+                    case ActorStatus.Captured:
+                        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
+                        break;
+                    case ActorStatus.Inactive:
+                        switch (aiRebelInactive)
+                        {
+                            case ActorInactive.Breakdown:
+                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
+                                break;
+                            case ActorInactive.LieLow:
+                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
+                                break;
+                        }
+                        break;
+                }
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
                 break;
             default:

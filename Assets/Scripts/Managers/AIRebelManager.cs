@@ -260,7 +260,8 @@ public class AIRebelManager : MonoBehaviour
             }
 
             //sort list
-
+            var sortedList = listOfNemesisSightData.OrderByDescending(obj => obj.priority);
+            listOfNemesisSightData = sortedList.ToList();
         }
     }
 
@@ -272,7 +273,7 @@ public class AIRebelManager : MonoBehaviour
     /// <returns></returns>
     private SightingData ConvertTrackerToSighting(AITracker tracker)
     {
-        //keep prioritylevel as an int (0 / 1 / 2 / 3 / 4 corresponds to None / Low / Medium / High / Critical)
+        //keep prioritylevel as an int ( 0 / 1 / 2 / 3  corresponds to Low / Medium / High / Critical )
         int priorityLevel = 0;
         SightingData sighting = null;
         //set a base priority
@@ -283,19 +284,19 @@ public class AIRebelManager : MonoBehaviour
             case 0:
             case 1:
                 //critical
-                priorityLevel = 4;
+                priorityLevel = 3;
                 break;
             case 2:
                 //high
-                priorityLevel = 3;
+                priorityLevel = 2;
                 break;
             case 3:
                 //medium
-                priorityLevel = 2;
+                priorityLevel = 1;
                 break;
             case 4:
                 //low
-                priorityLevel = 1;
+                priorityLevel = 0;
                 break;
         }
         //adjust for contact effectiveness
@@ -311,24 +312,24 @@ public class AIRebelManager : MonoBehaviour
                 break;
         }
         //ignore if priority zero or less
-        if (priorityLevel > 0)
+        if (priorityLevel > -1)
         {
             sighting = new SightingData();
             sighting.nodeID = tracker.data0;
             //assign priority
             switch (priorityLevel)
             {
-                case 5:
                 case 4:
+                case 3:
                     sighting.priority = Priority.Critical;
                     break;
-                case 3:
+                case 2:
                     sighting.priority = Priority.High;
                     break;
-                case 2:
+                case 1:
                     sighting.priority = Priority.Medium;
                     break;
-                case 1:
+                case 0:
                     sighting.priority = Priority.Low;
                     break;
                 default:
@@ -727,8 +728,9 @@ public class AIRebelManager : MonoBehaviour
             else { builder.AppendFormat(" None{0}", "\n"); }
         }
         else { Debug.LogError(" Invalid listOfConditions (Null)"); }
-
-        //sorted target list
+        //
+        // - - - Sorted target list
+        //
         builder.AppendFormat("{0}- ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
         int count = dictOfSortedTargets.Count;
         if (count > 0)
@@ -741,8 +743,9 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { builder.Append(" No records present"); }
-
-        //Nemesis Reports
+        //
+        // - - - Nemesis Reports
+        //
         count = listOfNemesisReports.Count;
         builder.AppendFormat("{0}- Nemesis Reports ({1} records){2}", "\n", count, "\n");
         if (count > 0)
@@ -756,7 +759,24 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { builder.Append(" No records present"); }
+        //
+        // - - - Sighting Data
+        //
+        count = listOfNemesisSightData.Count;
+        builder.AppendFormat("{0}- Nemesis Sight Data ({1} records){2}", "\n", count, "\n");
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                SightingData sight = listOfNemesisSightData[i];
+                if (sight != null)
+                { builder.AppendFormat(" nodeID {0}, priority {1}{2}", sight.nodeID, sight.priority, "\n"); }
+                else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
+            }
+        }
+        else { builder.Append(" No records present"); }
 
+        //return
         return builder.ToString();
     }
 
