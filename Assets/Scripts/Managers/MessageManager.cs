@@ -1092,7 +1092,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public Message ContactNemesisSpotted(string text, Actor actor, Node node, Contact contact, Nemesis nemesis)
+    public Message ContactNemesisSpotted(string text, Actor actor, Node node, Contact contact, Nemesis nemesis, int moveNumber)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(node != null, "Invalid node (Null)");
@@ -1112,7 +1112,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts spots your NEMESIS", actor.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis, moveNumber);
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.ALERTS;

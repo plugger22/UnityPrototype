@@ -575,16 +575,39 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="target"></param>
     /// <returns></returns>
-    public string GetContactNemesisSpottedDetails(Actor actor, Node node, Contact contact, Nemesis nemesis)
+    public string GetContactNemesisSpottedDetails(Actor actor, Node node, Contact contact, Nemesis nemesis, int moveNumber)
     {
         StringBuilder builder = new StringBuilder();
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
+        string contactTime = GetContactTime(moveNumber);
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district at <b>{4}</b> hrs{5}{6}", node.nodeName, colourAlert, node.Arc.name, colourEnd, contactTime, "\n", "\n");
         builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// subMethod to determine a time of day (in 24HR notation) of a contact sighting where moveNumber '0' is a.m and '1' is p.m (to aid player in parsing multiple sightings in a single day)
+    /// </summary>
+    /// <param name="moveNumber"></param>
+    /// <returns></returns>
+    private string GetContactTime(int moveNumber)
+    {
+        string contactTime = "Unknown";
+        switch (moveNumber)
+        {
+            case 0:
+                //a.m
+                contactTime = string.Format("0{0}00", 4 + Random.Range(0, 7));
+                break;
+            default:
+                //all others in p.m
+                contactTime = string.Format("{0}00", 13 + Random.Range(0, 10));
+                break;
+        }
+        return contactTime;
     }
 
     /// <summary>
