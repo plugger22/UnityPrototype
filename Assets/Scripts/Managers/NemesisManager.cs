@@ -913,7 +913,7 @@ public class NemesisManager : MonoBehaviour
                                     if (nextNodeID == nemesisNode.nodeID)
                                     { nextNodeID = connection.GetNode2(); }
                                     //move forward one link
-                                    isSpotted = ProcessNemesisMove(nextNodeID);
+                                    isSpotted = ProcessNemesisMove(nextNodeID, index);
                                 }
                                 else { Debug.LogWarningFormat("Invalid connection (Null) in listOfConnections[{0}]", index); }
                                 index++;
@@ -946,12 +946,12 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// method to move nemesis one link. Handles admin and player and contact interaction checks. 
+    /// method to move nemesis one link. Handles admin and player and contact interaction checks. moveNumber is number of move in sequential order for this turn. '0' is for first move.
     /// NOTE: Assumed to be a single link move.
     /// Returns true if player spotted at same node as Nemesis
     /// </summary>
     /// <param name="nodeID"></param>
-    private bool ProcessNemesisMove(int nodeID)
+    private bool ProcessNemesisMove(int nodeID, int moveNumber = 0)
     {
         bool isSpotted = false;
         //check if node is a neighbour of current nemesis node (assumed to be a single link move)
@@ -986,7 +986,7 @@ public class NemesisManager : MonoBehaviour
                     //check for Resistance contact at same node
                     List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
                     if (tempList != null)
-                    { ProcessContactInteraction(tempList); }
+                    { ProcessContactInteraction(tempList, moveNumber); }
                     //check for Tracer Sighting
                     CheckNemesisTracerSighting();
                 }
@@ -1147,10 +1147,10 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// nemesis at same node as one or more resistance contacts
+    /// nemesis at same node as one or more resistance contacts. moveNumber is the sequential move in the sequence of moves for this turn, '0' being the first
     /// </summary>
     /// <param name="listOfActorsWithContactsAtNode"></param>
-    private void ProcessContactInteraction(List<int> listOfActorsWithContactsAtNode)
+    private void ProcessContactInteraction(List<int> listOfActorsWithContactsAtNode, int moveNumber = 0)
     {
         Actor actor;
         Contact contact;
@@ -1188,7 +1188,7 @@ public class NemesisManager : MonoBehaviour
                                             contact.job, node.nodeName, node.nodeID);
                                         Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
                                             contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
-                                        GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis);
+                                        GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis, moveNumber);
                                         //contact stats
                                         contact.statsNemesis++;
                                         //no need to check anymore as one sighting is enough

@@ -158,7 +158,7 @@ public class AIRebelManager : MonoBehaviour
                         //delete older entries
                         if (tracker.turn < threshold)
                         {
-                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: deleted tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", tracker.turn, threshold, tracker.data0,
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", tracker.turn, threshold, tracker.data0,
                                 tracker.data1, "\n");
                             listOfNemesisReports.RemoveAt(i);
                         }
