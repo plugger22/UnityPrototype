@@ -359,9 +359,14 @@ public class AIRebelManager : MonoBehaviour
                     Connection connection = listOfConnections[i];
                     if (connection != null)
                     {
-
+                        if (connection.SecurityLevel == ConnectionType.None)
+                        {
+                            connection.ChangeSecurityLevel(sightLevel);
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
+                                sightLevel, "\n");
+                        }
                         //only upgrade connection security level if the sighting data indicates a higher level than is already there. NOTE '>' than 'cause enums for ConnectionType is reversed
-                        if (connection.SecurityLevel > sightLevel)
+                        else if (connection.SecurityLevel > sightLevel)
                         {
                             connection.ChangeSecurityLevel(sightLevel);
                             Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
@@ -878,7 +883,7 @@ public class AIRebelManager : MonoBehaviour
                 else { builder.AppendFormat(" Invalid target (Null){0}", "\n"); }
             }
         }
-        else { builder.Append(" No records present"); }
+        else { builder.AppendFormat(" No records present{0}", "\n"); }
         //
         // - - - Nemesis Reports
         //
