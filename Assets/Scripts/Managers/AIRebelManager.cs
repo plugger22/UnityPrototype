@@ -15,6 +15,7 @@ using packageAPI;
 public class SightingData
 {
     public int nodeID;
+    public int moveNumber;          //can be ignored, default 0, case of nemesis making multiple moves within a single turn
     public Priority priority;
 }
 
@@ -43,6 +44,8 @@ public class AIRebelManager : MonoBehaviour
 
     private int targetNodeID;                           //goal to move towards
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
+
+    private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
 
     //fast access
     private GlobalSide globalResistance;
@@ -79,6 +82,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
+        isConnectionsChanged = false;
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
@@ -130,6 +134,9 @@ public class AIRebelManager : MonoBehaviour
                     break;
             }
         }
+        //restore back to original state after any changes
+        if (isConnectionsChanged == true)
+        { RestoreConnections(); }
     }
 
     /// <summary>
@@ -191,8 +198,6 @@ public class AIRebelManager : MonoBehaviour
     }
 
 
-
-
     //
     // - - - Gather Data - - -
     //
@@ -218,6 +223,8 @@ public class AIRebelManager : MonoBehaviour
                         if (contact != null)
                         { trackerContact.data1 = contact.effectiveness; }
                         else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
+                        //moveNumber
+                        trackerContact.data2 = message.data3;
                         //get contact effectivenss
                         listOfNemesisReports.Add(trackerContact);
                         break;
@@ -239,12 +246,14 @@ public class AIRebelManager : MonoBehaviour
 
 
     /// <summary>
-    /// Take all sighting reports and convert to sorted, prioritised, Sighting Data ready for analysis
+    /// Take all sighting reports and convert to sorted, prioritised, Sighting Data ready for analysis. Update connections
     /// </summary>
     private void ProcessSightingData()
     {
         int count;
-        //Nemesis Reports
+        //
+        // - - - Nemesis Reports - - - 
+        //
         count = listOfNemesisReports.Count;
         if (count > 0)
         {
@@ -269,6 +278,104 @@ public class AIRebelManager : MonoBehaviour
             var sortedList = listOfNemesisSightData.OrderByDescending(obj => obj.priority);
             listOfNemesisSightData = sortedList.ToList();
         }
+        //
+        // - - - Recalculate Dijkstra weights
+        //
+        SightingData sightingNemesis = null;
+        //change connections to reflect sighting data (set 'isConnectionsChanged' to 'true')
+        count = listOfNemesisSightData.Count;
+        if (count > 0)
+        {
+            isConnectionsChanged = true;
+            //get nodeID of highest priority sighting (top of sorted list)
+            if (count > 1)
+            {
+                //check for situation where two equal priority sightings at top of list, take the highest moveNumber) - case where a nemesis has moved and been spotted twice in one turn
+                if (listOfNemesisSightData[0].priority == listOfNemesisSightData[1].priority)
+                {
+                    //take the highest move Number as the latest sighting report
+                    if (listOfNemesisSightData[0].moveNumber < listOfNemesisSightData[1].moveNumber)
+                    { sightingNemesis = listOfNemesisSightData[1]; }
+                    else { sightingNemesis = listOfNemesisSightData[0]; }
+                }
+                else { sightingNemesis = listOfNemesisSightData[0]; }
+            }
+            else { sightingNemesis = listOfNemesisSightData[0]; }
+        }
+        if (isConnectionsChanged == true)
+        {
+            //save connection state prior to changing
+            GameManager.instance.connScript.SaveConnections();
+            //change connections based on selected nemesis sighting report
+            if (sightingNemesis != null)
+            {
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSightingData: sightingNemesis nodeID {0}, priority {1}, moveNumber {2}{3}", sightingNemesis.nodeID, 
+                    sightingNemesis.priority, sightingNemesis.moveNumber, "\n");
+                UpdateNodeConnectionSecurity(sightingNemesis);
+            }
+            else { Debug.LogError("Invalid sightingNemesis (Null)"); }
+            //recalculate weighted data (dijkstraManager.cs -> RecalculateWeightedData)
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSightingData: Dijkstra weighted data recalculated{0}", "\n");
+            GameManager.instance.dijkstraScript.RecalculateWeightedData();
+        }
+
+        //restore connection state & recalculate (done at end of AI Rebel turn if isConnectionsChanged 'true')
+    }
+
+
+    /// <summary>
+    /// updates all of a node's connections to the specified security level (if lower, ignore otherwise)
+    /// </summary>
+    /// <param name="sight"></param>
+    private void UpdateNodeConnectionSecurity(SightingData sight)
+    {
+        ConnectionType sightLevel = ConnectionType.None;
+        Node node = GameManager.instance.dataScript.GetNode(sight.nodeID);
+        if (node != null)
+        {
+            List<Connection> listOfConnections = node.GetListOfConnections();
+            if (listOfConnections != null)
+            {
+                //convert priority to Connection Security level
+                switch (sight.priority)
+                {
+                    case Priority.Critical:
+                    case Priority.High:
+                        sightLevel = ConnectionType.HIGH;
+                        break;
+                    case Priority.Medium:
+                        sightLevel = ConnectionType.MEDIUM;
+                        break;
+                    case Priority.Low:
+                        sightLevel = ConnectionType.LOW;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised sight.priority \"{0}\"", sight.priority);
+                        break;
+                }
+                //loop all connections
+                for (int i = 0; i < listOfConnections.Count; i++)
+                {
+                    Connection connection = listOfConnections[i];
+                    if (connection != null)
+                    {
+
+                        //only upgrade connection security level if the sighting data indicates a higher level than is already there. NOTE '>' than 'cause enums for ConnectionType is reversed
+                        if (connection.SecurityLevel > sightLevel)
+                        {
+                            connection.ChangeSecurityLevel(sightLevel);
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
+                                sightLevel, "\n");
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid connection (Null) for listOFConnections[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfConnections (Null)"); }
+
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", sight.nodeID); }
+            
     }
 
     /// <summary>
@@ -346,6 +453,8 @@ public class AIRebelManager : MonoBehaviour
                     break;
             }
         }
+        //moveNumber
+        sighting.moveNumber = tracker.data2;
         return sighting;
     }
 
@@ -704,6 +813,24 @@ public class AIRebelManager : MonoBehaviour
     }
 
     //
+    // - - - Tidy up - - -
+    //
+
+
+    /// <summary>
+    /// restore connections back to original state and recalculate dijkstra data prior to leaving AIRebelManager.cs
+    /// </summary>
+    private void RestoreConnections()
+    {
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> RestoreConnections: Connections Restored to original state prior to AIRebelManager.cs calc's{0}", "\n");
+        isConnectionsChanged = false;
+        //restore connection state to what it was prior to any AIRebelManager.cs related changes
+        GameManager.instance.connScript.RestoreConnections();
+        //recalculate weighted data
+        GameManager.instance.dijkstraScript.RecalculateWeightedData();
+    }
+
+    //
     // - - -  Debug - - -
     //
 
@@ -781,7 +908,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     SightingData sight = listOfNemesisSightData[i];
                     if (sight != null)
-                    { builder.AppendFormat(" nodeID {0}, priority {1}{2}", sight.nodeID, sight.priority, "\n"); }
+                    { builder.AppendFormat(" nodeID {0}, priority {1}, moveNumber {2}{3}", sight.nodeID, sight.priority, sight.moveNumber, "\n"); }
                     else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
                 }
             }

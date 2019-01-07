@@ -221,6 +221,28 @@ public class ConnectionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Save all connections prior to changes in order to be able to restore back to their original state later
+    /// </summary>
+    public void SaveConnections()
+    {
+        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        if (listOfConnections != null)
+        {
+            foreach (Connection conn in listOfConnections)
+            {
+                if (conn != null)
+                {
+                    //save existing security level
+                    conn.SaveSecurityLevel();
+                }
+                else { Debug.LogError("Invalid connection (Null) in listOfConnections"); }
+            }
+            resetConnections = true;
+        }
+        else { Debug.LogError("Invalid listOfConnections (Null)"); }
+    }
+
+    /// <summary>
     /// restores all connections back to their previously saved security levels (materials auto updated).
     /// </summary>
     public void RestoreConnections()
@@ -230,12 +252,19 @@ public class ConnectionManager : MonoBehaviour
         {
             foreach (Connection conn in listOfConnections)
             {
-                //save existing security level
-                conn.RestoreSecurityLevel();
+                if (conn != null)
+                {
+                    //save existing security level
+                    conn.RestoreSecurityLevel();
+                }
+                else { Debug.LogError("Invalid connection (Null) in listOfConnections"); }
             }
+            resetConnections = false;
         }
         else { Debug.LogError("Invalid listOfConnections (Null)"); }
     }
+
+
 
 
     /// <summary>

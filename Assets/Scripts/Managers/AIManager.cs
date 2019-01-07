@@ -46,11 +46,12 @@ public class AITask
 public class AITracker
 {
     public int data0;                       //node or connectionID
-    public int data1;                       //optional, can ignore (contact effectiveness for nemesis sightings)
+    public int data1;                       //optional, can ignore, contact effectiveness for nemesis sightings
+    public int data2;                       //optional, can ignore, moveNumber for nemesis making multiple moves within a single turn
     public int turn;                        //turn occurred
 
     public AITracker(int data, int turn)    //NOTE: Constructor doesn't include data1 (default -1), add manually if required
-    { data0 = data; data1 = -1;  this.turn = turn; }
+    { data0 = data; data1 = -1; data2 = 0; this.turn = turn; }
 }
 
 /// <summary>

@@ -1108,6 +1108,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
+            message.data3 = moveNumber;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts spots your NEMESIS", actor.arc.name);

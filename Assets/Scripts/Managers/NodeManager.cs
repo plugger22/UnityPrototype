@@ -433,7 +433,6 @@ public class NodeManager : MonoBehaviour
         {
             //return to previously saved state prior to any changes
             GameManager.instance.connScript.RestoreConnections();
-            GameManager.instance.connScript.resetConnections = false;
         }
         //set nodes depending on critera
         switch (nodeUI)
@@ -1223,7 +1222,6 @@ public class NodeManager : MonoBehaviour
             {
                 //return Connections to previously saved state prior to any changes
                 GameManager.instance.connScript.RestoreConnections();
-                GameManager.instance.connScript.resetConnections = false;
             }
             NodeShowFlag = 0;
             //reset state

@@ -600,7 +600,8 @@ public class ItemDataManager : MonoBehaviour
         {
             case 0:
                 //a.m
-                contactTime = string.Format("0{0}00", 4 + Random.Range(0, 7));
+                int rndNum = 4 + Random.Range(0, 7);
+                contactTime = string.Format("{0}{1}00", rndNum > 9 ? "" : "0", rndNum);
                 break;
             default:
                 //all others in p.m
