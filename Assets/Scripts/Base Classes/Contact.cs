@@ -26,6 +26,6 @@ public class Contact
     //stats
     [HideInInspector] public int statsRumours;     //number of target rumours learnt
     [HideInInspector] public int statsNemesis;     //number of times spotted Nemesis
-    [HideInInspector] public int statsTeams;       //number of times spotted Teams
+    [HideInInspector] public int statsTeams;       //number of times spotted Erasure Teams
 
 }

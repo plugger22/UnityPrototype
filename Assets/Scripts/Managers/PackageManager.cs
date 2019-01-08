@@ -22,10 +22,10 @@ namespace packageAPI
     public class NodeTooltipData
     {
         public string nodeName;
-        public string specialName;                              //eg. airport name, icon name, etc. Ignore if not relevant.
+        public string specialName;                                      //eg. airport name, icon name, etc. Ignore if not relevant.
         public string type;
         public bool isTargetKnown;
-        public bool isContact;                                   //specific for current side
+        public bool isContact;                                          //specific for current side
         public bool isContactKnown;                                     //resistance contact known to authority?
         public bool isTracer;
         /*public bool isTracerActive;*/

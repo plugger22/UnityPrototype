@@ -1129,7 +1129,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// One of Resistance Actor's network of contacts spots an Authority Team
+    /// One of Resistance Actor's network of contacts spots an Authority Team (Erasure)
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actor"></param>
@@ -1179,9 +1179,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message TracerNemesisSpotted(string text, Node node)
+    public Message TracerNemesisSpotted(string text, Node node, Nemesis nemesis, int moveNumber)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -1190,12 +1191,52 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Tracer_Nemesis_Spotted;
             message.side = globalResistance;
             message.data0 = node.nodeID;
+            message.data1 = moveNumber;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = "TRACER picks up an ANOMALOUS reading";
             data.topText = "Threat Detected";
-            data.bottomText = GameManager.instance.itemDataScript.GetTracerNemesisSpottedDetails(node);
+            data.bottomText = GameManager.instance.itemDataScript.GetTracerNemesisSpottedDetails(node, nemesis, moveNumber);
             data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Tracer spots an Erasure team
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public Message TracerTeamSpotted(string text, Node node, Team team)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(team != null, "Invalid team (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Tracer_Team_Spotted;
+            message.side = globalResistance;
+            message.data0 = node.nodeID;
+            message.data1 = team.teamID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "TRACER detects presence of an ERASURE Team";
+            data.topText = "Threat Detected";
+            data.bottomText = GameManager.instance.itemDataScript.GetTracerTeamSpottedDetails(node, team);
+            data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;

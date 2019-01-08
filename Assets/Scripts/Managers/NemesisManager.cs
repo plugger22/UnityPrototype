@@ -988,7 +988,7 @@ public class NemesisManager : MonoBehaviour
                     if (tempList != null)
                     { ProcessContactInteraction(tempList, moveNumber); }
                     //check for Tracer Sighting
-                    CheckNemesisTracerSighting();
+                    CheckNemesisTracerSighting(moveNumber);
                 }
             }
             else { Debug.LogWarningFormat("Invalid move node {Null) for nodeID {0}", nodeID); }
@@ -1245,7 +1245,7 @@ public class NemesisManager : MonoBehaviour
     /// <summary>
     /// check if nemesis automatically spotted by a Tracer that is inserted in the node they are currently in. Will run regardless of 'hasWarning' (additional info from a secondary source)
     /// </summary>
-    public void CheckNemesisTracerSighting()
+    public void CheckNemesisTracerSighting(int moveNumber)
     {
         if (nemesisNode.isTracer == true)
         {
@@ -1276,7 +1276,7 @@ public class NemesisManager : MonoBehaviour
 
                 //automatically SPOTTED -> node is always correct
                 string text = string.Format("Tracer picks up an Anomalous reading at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
-                GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode);
+                GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode, nemesis, moveNumber);
 
             /*}
             else { Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer FAILED to spot, need < {0} rolled {1}{2}", needNum, rndNum, "\n"); }*/

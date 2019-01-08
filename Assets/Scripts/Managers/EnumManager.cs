@@ -168,6 +168,7 @@
         Contact_Nemesis_Spotted,
         Contact_Team_Spotted,
         Tracer_Nemesis_Spotted,
+        Tracer_Team_Spotted,
         //Target
         Target_New,
         Target_Expired,

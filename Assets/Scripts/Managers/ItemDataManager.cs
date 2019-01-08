@@ -580,10 +580,12 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
-        string contactTime = GetContactTime(moveNumber);
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district at <b>{4}</b> hrs{5}{6}", node.nodeName, colourAlert, node.Arc.name, colourEnd, contactTime, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        //only add a time stamp if nemesis is capable of multiple moves within a single turn
+        if (nemesis.movement > 1)
+        { builder.AppendFormat(" at <b>{0}</b> hrs", GetContactTime(moveNumber) ); }
         /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));*/
         return builder.ToString();
     }
@@ -636,11 +638,30 @@ public class ItemDataManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    public string GetTracerNemesisSpottedDetails(Node node)
+    public string GetTracerNemesisSpottedDetails(Node node, Nemesis nemesis, int moveNumber)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>Hostile body</b> detected by {0}<b>Tracer</b>{1}{2}{3}", colourNeutral, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Rebel HQ</b> suspect a {0}<b>serious threat</b>{1} to your person{2}{3}", colourBad, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        //only add a time stamp if nemesis is capable of multiple moves within a single turn
+        if (nemesis.movement > 1)
+        { builder.AppendFormat(" at <b>{0}</b> hrs", GetContactTime(moveNumber)); }
+        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));*/
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// A resistance tracer detects the presence of a team (Erasure)
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public string GetTracerTeamSpottedDetails(Node node, Team team)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0} Team</b> detected by {1}<b>Tracer</b>{2}{3}{4}", team.arc.name, colourNeutral, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Rebel HQ</b> warn of {0}<b>danger to yourself</b>{1} and advise that you avoid the district{2}{3}", colourBad, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));*/
         return builder.ToString();
