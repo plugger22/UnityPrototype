@@ -232,8 +232,7 @@ public class DebugGUI : MonoBehaviour
                     case MessageCategory.Pending: debugDisplay = 9; msgStatus = MessageCategory.Current; break;
                     case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
                     case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
-                    case MessageCategory.AI: debugDisplay = 9; msgStatus = MessageCategory.Nemesis; break;
-                    case MessageCategory.Nemesis: debugDisplay = 0; msgStatus = MessageCategory.None; break;
+                    case MessageCategory.AI: debugDisplay = 9; msgStatus = MessageCategory.None; break;
                 }
             }
         

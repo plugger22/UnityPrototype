@@ -172,7 +172,6 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();             //Key -> msgID, Value -> Message
-    private Dictionary<int, Message> dictOfNemesisMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();  //Key -> ongoingID, Value -> Ongoing effect details
     private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
@@ -3786,14 +3785,22 @@ public class DataManager : MonoBehaviour
             //Nemesis sighting message
             if (message.type == MessageType.CONTACT)
             {
-                switch(message.subType)
+                switch (message.subType)
                 {
                     case MessageSubType.Contact_Nemesis_Spotted:
                     case MessageSubType.Tracer_Nemesis_Spotted:
-                        //Add a copy of the message to Nemesis Message dictionary 
-                        AddMessageExisting(message, MessageCategory.Nemesis);
                         //Extract Nemesis sighting data
-                        GameManager.instance.aiRebelScript.GetNemesisMessageData(message);
+                        GameManager.instance.aiRebelScript.GetAIRebelMessageData(message);
+                        break;
+                    case MessageSubType.Contact_Team_Spotted:
+                        Team team = GetTeam(message.data3);
+                        if (team != null)
+                        {
+                            //f an erasure team then extract sighting data
+                            if (team.arc.name.Equals("ERASURE") == true)
+                            { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid team (Null) for teamID {0}", message.data3); }
                         break;
                 }
             }
@@ -3837,9 +3844,6 @@ public class DataManager : MonoBehaviour
                 break;
             case MessageCategory.AI:
                 dictOfMessages = dictOfAIMessages;
-                break;
-            case MessageCategory.Nemesis:
-                dictOfMessages = dictOfNemesisMessages;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -3887,9 +3891,6 @@ public class DataManager : MonoBehaviour
             case MessageCategory.AI:
                 dictOfMessages = dictOfAIMessages;
                 break;
-            case MessageCategory.Nemesis:
-                dictOfMessages = dictOfNemesisMessages;
-                break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
                 successFlag = false;
@@ -3929,9 +3930,6 @@ public class DataManager : MonoBehaviour
             case MessageCategory.AI:
                 dictOfMessages = new Dictionary<int, Message>(dictOfAIMessages);
                 break;
-            case MessageCategory.Nemesis:
-                dictOfMessages = new Dictionary<int, Message>(dictOfNemesisMessages);
-                break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
                 break;
@@ -3968,9 +3966,6 @@ public class DataManager : MonoBehaviour
                 break;
             case MessageCategory.AI:
                 dictOfMessages = dictOfAIMessages;
-                break;
-            case MessageCategory.Nemesis:
-                dictOfMessages = dictOfNemesisMessages;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
@@ -4035,10 +4030,6 @@ public class DataManager : MonoBehaviour
             case MessageCategory.AI:
                 tempDict = new Dictionary<int, Message>(dictOfAIMessages);
                 builderOverall.Append(string.Format(" AI Messages{0}{1}", "\n", "\n"));
-                break;
-            case MessageCategory.Nemesis:
-                tempDict = new Dictionary<int, Message>(dictOfNemesisMessages);
-                builderOverall.Append(string.Format(" Nemesis Messages{0}{1}", "\n", "\n"));
                 break;
             default:
                 builderOverall.Append(string.Format(" UNKNOWN Messages{0}{1}", "\n", "\n"));

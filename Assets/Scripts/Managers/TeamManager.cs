@@ -316,17 +316,12 @@ public class TeamManager : MonoBehaviour
                                             {
                                                 //team spotted
                                                 isSpotted = true;
-                                                //check contact reliabiity -> if not use a random neighbouring node
-                                                Node nodeMsg;
-                                                if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
-                                                { nodeMsg = node.GetRandomNeighbour(); }
-                                                else { nodeMsg = node; }
                                                 //message
                                                 Debug.LogFormat("[Cont] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} spots {3} team at {4}, {5}, id {6}{7}", contact.nameFirst,
                                                     contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                                 string text = string.Format("{0} team, id {1}, has been spotted by Contact {2} {3}, {4}, at district {5}, id {6}", team.teamName, team.teamID, 
                                                     contact.nameFirst, contact.nameLast, contact.job, node.nodeName, node.nodeID);
-                                                GameManager.instance.messageScript.ContactTeamSpotted(text, actor, nodeMsg, contact, team);
+                                                GameManager.instance.messageScript.ContactTeamSpotted(text, actor, node, contact, team);
                                                 //update contact stats
                                                 contact.statsTeams++;
                                             }

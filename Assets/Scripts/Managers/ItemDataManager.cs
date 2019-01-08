@@ -563,7 +563,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} {6}{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, target.rumourText, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
+        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));*/
         return builder.ToString();
     }
 
@@ -584,7 +584,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district at <b>{4}</b> hrs{5}{6}", node.nodeName, colourAlert, node.Arc.name, colourEnd, contactTime, "\n", "\n");
-        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
+        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));*/
         return builder.ToString();
     }
 
@@ -627,7 +627,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2} team{3}{4}", colourNeutral, team.arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));
+        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));*/
         return builder.ToString();
     }
 
@@ -642,7 +642,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>Hostile body</b> detected by {0}<b>Tracer</b>{1}{2}{3}", colourNeutral, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Rebel HQ</b> suspect a {0}<b>serious threat</b>{1} to your person{2}{3}", colourBad, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));
+        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));*/
         return builder.ToString();
     }
 
@@ -778,7 +778,7 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /// <summary>
+    /*/// <summary>
     /// subMethod to return a colour formatted string based on contact's effectiveness
     /// </summary>
     /// <param name="level"></param>
@@ -793,7 +793,7 @@ public class ItemDataManager : MonoBehaviour
             case 1: confidenceLevel = string.Format("{0}Confidence Level Low{1}", colourBad, colourEnd); break;
         }
         return confidenceLevel;
-    }
+    }*/
 
     //
     // - - - Gear - - -
@@ -967,14 +967,14 @@ public class ItemDataManager : MonoBehaviour
             //support approved
             builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.name, "\n", "\n");
             builder.AppendFormat("{0}Renown +{1}{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval {4} out of {5}", colourNeutral, factionApproval * 10, colourEnd, "\n",
+            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4}</b> out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
                 factionApproval, GameManager.instance.factionScript.maxFactionApproval);
         }
         else
         {
             //support declined
             builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", faction.name, "\n", "\n", colourBad, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval {4} out of {5}", colourNeutral, factionApproval * 10, colourEnd, "\n",
+            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4} out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
                 factionApproval, GameManager.instance.factionScript.maxFactionApproval);
         }
         return builder.ToString();

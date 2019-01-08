@@ -21,13 +21,13 @@ public class ContactManager : MonoBehaviour
     [Tooltip("Number of contacts to top up the pool with once the threshold is reached")]
     [Range(10, 50)] public int numOfPoolTopUp = 20;
 
-    [Header("Confidence Levels")]
+    /*[Header("Confidence Levels")]
     [Tooltip("Confidence level of a High Effectiveness contact ('3'), eg. % chance of being correct")]
     [Range(1, 100)] public int confidenceHigh = 100;
     [Tooltip("Confidence level of a Medium Effectiveness contact ('2'), eg. % chance of being correct")]
     [Range(1, 100)] public int confidenceMed = 75;
     [Tooltip("Confidence level of a Low Effectiveness contact ('1'), eg. % chance of being correct")]
-    [Range(1, 100)] public int confidenceLow = 50;
+    [Range(1, 100)] public int confidenceLow = 50;*/
 
     [Header("Target Rumours")]
     [Tooltip("Chance of somebody learning about an Active target, per turn")]
@@ -658,23 +658,18 @@ public class ContactManager : MonoBehaviour
                                         //if valid node generate message
                                         if (node != null)
                                         {
-                                            Node nodeTemp = node;
-                                            //unreliable report, use a random neighbouring node
-                                            if (CheckContactIsReliable(contact) == false)
-                                            { nodeTemp = node.GetRandomNeighbour(); }
-                                            if (nodeTemp != null)
-                                            {
-                                                string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
-                                                GameManager.instance.messageScript.ContactTargetRumour(text, actor, nodeTemp, contact, target);
-                                            }
-                                            else { Debug.LogWarningFormat("Invalid nodeTemp (Null) neighbouring node to {0}, {1}, id {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                            string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
+                                            GameManager.instance.messageScript.ContactTargetRumour(text, actor, node, contact, target);
                                         }
                                         else { Debug.LogWarning("Invalid node (Null)"); }
                                     }
                                     else { Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: No random contact (Null) for Actor {0}, {1}, id {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n"); }
                                 }
-                                else { Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
-                                        actor.arc.name, actor.actorID, "\n"); }
+                                else
+                                {
+                                    Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                     actor.arc.name, actor.actorID, "\n");
+                                }
                             }
                             else { Debug.LogWarningFormat("Invalid actor (Null) for SlotID {0}", slotID); }
                         }
@@ -711,7 +706,7 @@ public class ContactManager : MonoBehaviour
         return slotID;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Contacts have a % chance of telling the correct information based on their effectiveness. Returns true if contact is correct, false otherwise.
     /// NOTE: Contact checked for Null by calling method
     /// </summary>
@@ -735,7 +730,7 @@ public class ContactManager : MonoBehaviour
                 contact.effectiveness, "\n");
         }
         return isCorrect;
-    }
+    }*/
 
 
 

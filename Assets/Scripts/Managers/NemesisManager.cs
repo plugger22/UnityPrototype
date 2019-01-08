@@ -1052,7 +1052,7 @@ public class NemesisManager : MonoBehaviour
                         string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationMode, "\n");
                         if (durationMode > 0)
                         {
-                            string text = string.Format("New Nemesis in {0} turns after player damaged{1}", durationMode, "\n");
+                            string text = string.Format("New Nemesis in {0} turns after player damaged", durationMode);
                             string itemText = "Rumours of a new NEMESIS";
                             string topText = "Nemesis OFFLINE";
                             string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
@@ -1063,7 +1063,7 @@ public class NemesisManager : MonoBehaviour
                     //no more nemesis after first
                     else
                     {
-                        string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
+                        string text = "NO new Nemesis after player damaged";
                         string itemText = "NEMESIS threat eases";
                         string topText = "Nemesis M.I.A";
                         string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
@@ -1077,7 +1077,7 @@ public class NemesisManager : MonoBehaviour
                     nemesis = null;
                     SetNemesisMode(NemesisMode.Inactive);
                     //message
-                    string text = string.Format("NO new Nemesis after player damaged{0}", "\n");
+                    string text = "NO new Nemesis after player damaged{0}";
                     string itemText = "NEMESIS threat eases";
                     string topText = "Nemesis M.I.A";
                     string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
@@ -1181,8 +1181,6 @@ public class NemesisManager : MonoBehaviour
                                     {
                                         //check contact reliabiity -> if not use a random neighbouring node
                                         Node node = nemesisNode;
-                                        if (GameManager.instance.contactScript.CheckContactIsReliable(contact) == false)
-                                        { node = nemesisNode.GetRandomNeighbour(); }
                                         //contact spots Nemesis
                                         string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
                                             contact.job, node.nodeName, node.nodeID);

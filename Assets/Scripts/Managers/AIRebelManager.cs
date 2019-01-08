@@ -54,7 +54,9 @@ public class AIRebelManager : MonoBehaviour
 
     //Resistance activity
     List<AITracker> listOfNemesisReports = new List<AITracker>();
+    List<AITracker> listOfErasureReports = new List<AITracker>();
     List<SightingData> listOfNemesisSightData = new List<SightingData>();
+    List<SightingData> listOfErasureSightData = new List<SightingData>();
     List<int> listOfBadNodes = new List<int>();                             //list of nodes to avoid for this turn, eg. nemesis or erasure team present (based on known info)
 
     //tasks
@@ -152,13 +154,17 @@ public class AIRebelManager : MonoBehaviour
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
         listOfNemesisSightData.Clear();
+        listOfErasureSightData.Clear();
         listOfBadNodes.Clear();
-
-        //clear out list of nemesis reports entries that are older than 'x' turns ago
+        //
+        // - - - Sighting Reports
+        //
+        int threshold = GameManager.instance.turnScript.Turn - deleteOlderThan;
+        //NEMESIS reports entries that are older than 'x' turns ago
         int count = listOfNemesisReports.Count;
         if (count > 0)
         {
-            int threshold = GameManager.instance.turnScript.Turn - deleteOlderThan;
+            
             //only bother if threshold has kicked in
             if (threshold > 0)
             {
@@ -171,12 +177,37 @@ public class AIRebelManager : MonoBehaviour
                         //delete older entries
                         if (tracker.turn < threshold)
                         {
-                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", tracker.turn, threshold, tracker.data0,
-                                tracker.data1, "\n");
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED Nemesis tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", 
+                                tracker.turn, threshold, tracker.data0, tracker.data1, "\n");
                             listOfNemesisReports.RemoveAt(i);
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisReports[{0}]", i); }
+                }
+            }
+        }
+        //ERASURE TEAM reports entries that are older than 'x' turns ago
+        count = listOfErasureReports.Count;
+        if (count > 0)
+        {
+            //only bother if threshold has kicked in
+            if (threshold > 0)
+            {
+                //reverse loop as deleting
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    AITracker tracker = listOfErasureReports[i];
+                    if (tracker != null)
+                    {
+                        //delete older entries
+                        if (tracker.turn < threshold)
+                        {
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED Erasure tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", 
+                                tracker.turn, threshold, tracker.data0, tracker.data1, "\n");
+                            listOfErasureReports.RemoveAt(i);
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfErasureReports[{0}]", i); }
                 }
             }
         }
@@ -209,45 +240,54 @@ public class AIRebelManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Extracts all relevant AI data from an AI related message
+    /// Extracts all relevant AI data from an Contact message
+    /// NOTE: message checked for Null by calling method
     /// </summary>
     /// <param name="message"></param>
-    public void GetNemesisMessageData(Message message)
+    public void GetAIRebelMessageData(Message message)
     {
-        if (message != null)
+        if (message.type == MessageType.CONTACT)
         {
-            if (message.type == MessageType.CONTACT)
+            switch (message.subType)
             {
-                switch (message.subType)
-                {
-                    case MessageSubType.Contact_Nemesis_Spotted:
-                        //Nemesis detected by Resistance Contact, reliability of sighting dependant on contact effectiveness
-                        Debug.Assert(message.data0 > -1 && message.data0 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data0));
-                        //add to Nemesis list
-                        AITracker trackerContact = new AITracker(message.data1, message.turnCreated);
-                        Contact contact = GameManager.instance.dataScript.GetContact(message.data2);
-                        if (contact != null)
-                        { trackerContact.data1 = contact.effectiveness; }
-                        else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
-                        //moveNumber
-                        trackerContact.data2 = message.data3;
-                        //get contact effectivenss
-                        listOfNemesisReports.Add(trackerContact);
-                        break;
-                    case MessageSubType.Tracer_Nemesis_Spotted:
-                        //Nemesis detected by Tracer
-                        Debug.Assert(message.data0 > -1 && message.data0 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data0));
-                        //add to Nemesis list
-                        AITracker trackerTracer = new AITracker(message.data0, message.turnCreated);
-                        //tracer effectiveness automatically 100 %
-                        trackerTracer.data1 = 3;
-                        listOfNemesisReports.Add(trackerTracer);
-                        break;
-                }
+                case MessageSubType.Contact_Nemesis_Spotted:
+                    //Nemesis detected by Resistance Contact, reliability of sighting dependant on contact effectiveness
+                    Debug.Assert(message.data1 > -1 && message.data1 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data1));
+                    //add to Nemesis list
+                    AITracker trackerContact = new AITracker(message.data1, message.turnCreated);
+                    Contact contact = GameManager.instance.dataScript.GetContact(message.data2);
+                    if (contact != null)
+                    { trackerContact.data1 = contact.effectiveness; }
+                    else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
+                    //moveNumber
+                    trackerContact.data2 = message.data3;
+                    //get contact effectivenss
+                    listOfNemesisReports.Add(trackerContact);
+                    break;
+                case MessageSubType.Tracer_Nemesis_Spotted:
+                    //Nemesis detected by Tracer
+                    Debug.Assert(message.data0 > -1 && message.data0 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data0));
+                    //add to Nemesis list
+                    AITracker trackerTracer = new AITracker(message.data0, message.turnCreated);
+                    //tracer effectiveness automatically 100 %
+                    trackerTracer.data1 = 3;
+                    listOfNemesisReports.Add(trackerTracer);
+                    break;
+                case MessageSubType.Contact_Team_Spotted:
+                    //Contact detects an Erasure team
+                    Debug.Assert(message.data1 > -1 && message.data1 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data1));
+                    //add to Erasure Team list
+                    AITracker trackerErasure = new AITracker(message.data1, message.turnCreated);
+                    Contact contactErasure = GameManager.instance.dataScript.GetContact(message.data2);
+                    if (contactErasure != null)
+                    { trackerErasure.data1 = contactErasure.effectiveness; }
+                    else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
+                    //get contact effectivenss
+                    listOfErasureReports.Add(trackerErasure);
+                    break;
             }
-            else { Debug.LogWarning(string.Format("Invalid (not Nemesis) message type \"{0}\" for \"{1}\"", message.type, message.text)); }
         }
-        else { Debug.LogWarning("Invalid message (Null)"); }
+        else { Debug.LogWarning(string.Format("Invalid (not Nemesis) message type \"{0}\" for \"{1}\"", message.type, message.text)); }
     }
 
 
@@ -285,7 +325,34 @@ public class AIRebelManager : MonoBehaviour
             listOfNemesisSightData = sortedList.ToList();
         }
         //
-        // - - - Recalculate Dijkstra weights
+        // - - - Erasure team Reports - - - 
+        //
+        count = listOfErasureReports.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                AITracker tracker = listOfErasureReports[i];
+                if (tracker != null)
+                {
+                    //convert tracker data to SightingData
+                    SightingData sighting = ConvertTrackerToSighting(tracker);
+                    //add to list
+                    if (sighting != null)
+                    {
+                        listOfErasureSightData.Add(sighting);
+                        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfErasureSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");
+                    }
+                    else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
+                }
+                else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfErasureReports[{0}]", i); }
+            }
+            //sort list
+            var sortedList = listOfErasureSightData.OrderByDescending(obj => obj.priority);
+            listOfErasureSightData = sortedList.ToList();
+        }
+        //
+        // - - - Update Connections based on highest priority Nemesis Sighting
         //
         SightingData sightingNemesis = null;
         //change connections to reflect sighting data (set 'isConnectionsChanged' to 'true')
@@ -315,11 +382,38 @@ public class AIRebelManager : MonoBehaviour
             }
             else { sightingNemesis = listOfNemesisSightData[0]; }
         }
+        //
+        // - - - Update Connections based on highest priority Erasure Team Sighting
+        //
+        SightingData sightingErasure = null;
+        //change connections to reflect sighting data (set 'isConnectionsChanged' to 'true')
+        count = listOfErasureSightData.Count;
+        if (count > 0)
+        {
+            isConnectionsChanged = true;
+            //get nodeID of highest priority sighting (top of sorted list)
+            if (count > 1)
+            {
+                //check for situation where two equal priority sightings at top of list, take the highest turn number first and also in case of a tie
+                if (listOfErasureSightData[0].priority == listOfErasureSightData[1].priority)
+                {
+                    if (listOfErasureSightData[0].turn >= listOfErasureSightData[1].turn)
+                    { sightingErasure = listOfErasureSightData[0]; }
+                    else 
+                    { sightingErasure = listOfErasureSightData[1]; }
+                }
+                else { sightingErasure = listOfErasureSightData[0]; }
+            }
+            else { sightingErasure = listOfErasureSightData[0]; }
+        }
+        //
+        // - - - Recalculate Dijkstra weights
+        //
         if (isConnectionsChanged == true)
         {
             //save connection state prior to changing
             GameManager.instance.connScript.SaveConnections();
-            //change connections based on selected nemesis sighting report
+            //change connections based on selected NEMESIS sighting report
             if (sightingNemesis != null)
             {
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSightingData: sightingNemesis nodeID {0}, priority {1}, moveNumber {2}{3}", sightingNemesis.nodeID, 
@@ -329,7 +423,17 @@ public class AIRebelManager : MonoBehaviour
                 listOfBadNodes.Add(sightingNemesis.nodeID);
             }
             else { Debug.LogError("Invalid sightingNemesis (Null)"); }
-            //recalculate weighted data (dijkstraManager.cs -> RecalculateWeightedData)
+            //change connections based on selected ERASURE TEAM sighting report
+            if (sightingErasure != null)
+            {
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSightingData: sightingErasure nodeID {0}, priority {1}, moveNumber {2}{3}", sightingErasure.nodeID,
+                    sightingErasure.priority, sightingErasure.moveNumber, "\n");
+                UpdateNodeConnectionSecurity(sightingErasure);
+                //add to listOfBadNodes
+                listOfBadNodes.Add(sightingErasure.nodeID);
+            }
+            else { Debug.LogError("Invalid sightingErasure (Null)"); }
+            //recalculate weighted data
             GameManager.instance.dijkstraScript.RecalculateWeightedData();
         }
 
@@ -398,7 +502,7 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// AITracker data is converted to priority based Sighting Data based on time of sighting and effectiveness of contact. Returns null if a problem
+    /// AITracker data is converted to priority based Sighting Data based on time of sighting. Returns null if a problem
     /// NOTE: calling methods have checked tracker for Null
     /// </summary>
     /// <param name="tracker"></param>
@@ -432,7 +536,8 @@ public class AIRebelManager : MonoBehaviour
                 priorityLevel = 0;
                 break;
         }
-        //adjust for contact effectiveness
+
+        /*//adjust for contact effectiveness -> EDIT: Ignore this as all contact reports are now 100% reliable when it comes to the nodeID
         switch (tracker.data1)
         {
             case 3:
@@ -443,7 +548,8 @@ public class AIRebelManager : MonoBehaviour
                 //dubious contact report
                 priorityLevel--;
                 break;
-        }
+        }*/
+
         //ignore if priority zero or less
         if (priorityLevel > -1)
         {
@@ -905,11 +1011,12 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { builder.AppendFormat(" No records present{0}", "\n"); }
-        //
-        // - - - Nemesis Reports
-        //
+        //actor not captured (if so don't display data as it's old data that hasn't been updated)
         if (status != ActorStatus.Captured)
         {
+            //
+            // - - - Nemesis Reports
+            //
             count = listOfNemesisReports.Count;
             builder.AppendFormat("{0}- Nemesis Reports (current turn {1}) {2}", "\n", turn, "\n");
             if (count > 0)
@@ -936,6 +1043,22 @@ public class AIRebelManager : MonoBehaviour
                     if (sight != null)
                     { builder.AppendFormat(" nodeID {0}, priority {1}, moveNumber {2}{3}", sight.nodeID, sight.priority, sight.moveNumber, "\n"); }
                     else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
+                }
+            }
+            else { builder.AppendFormat(" No records present{0}", "\n"); }
+            //
+            // - - - Erasure Reports
+            //
+            count = listOfErasureReports.Count;
+            builder.AppendFormat("{0}- Erasure Reports (current turn {1}) {2}", "\n", turn, "\n");
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    AITracker tracker = listOfErasureReports[i];
+                    if (tracker != null)
+                    { builder.AppendFormat(" t: {0}, nodeID {1}, contact eff: {2}{3}", tracker.turn, tracker.data0, tracker.data1, "\n"); }
+                    else { builder.AppendFormat(" Invalid sighting (Null){0}", "\n"); }
                 }
             }
             else { builder.AppendFormat(" No records present{0}", "\n"); }

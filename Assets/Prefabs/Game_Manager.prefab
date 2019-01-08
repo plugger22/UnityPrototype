@@ -1985,13 +1985,13 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 63879
-  isAuthority: 1
-  isBothAI: 1
+  seed: 0
+  isAuthority: 0
+  isBothAI: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 10
+  autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2098,10 +2098,7 @@ MonoBehaviour:
   numOfPoolContacts: 50
   numOfPoolThreshold: 10
   numOfPoolTopUp: 20
-  confidenceHigh: 100
-  confidenceMed: 50
-  confidenceLow: 25
-  rumourTarget: 10
+  rumourTarget: 5
   maxRumoursTarget: 2
   spotTeamChance: 10
   maxSpotTeam: 2
