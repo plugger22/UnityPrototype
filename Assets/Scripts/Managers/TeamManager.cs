@@ -287,7 +287,7 @@ public class TeamManager : MonoBehaviour
         if (node.isContactResistance == true)
         {
             //not within tracer coverage (Resistance player can already see teams, no need to duplicate)
-            if (node.isTracerActive == false)
+            if (node.isTracer == false)
             {
                 List<int> listOfActors = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
                 if (listOfActors != null)
@@ -1344,8 +1344,8 @@ public class TeamManager : MonoBehaviour
                     //add spider
                     node.isSpider = true;
                     node.spiderTimer = GameManager.instance.nodeScript.observerTimer;
-                    //check if within tracer coverage
-                    if(node.isTracerActive == true)
+                    //check if same node as a Tracer
+                    if(node.isTracer == true)
                     { node.isSpiderKnown = true; }
                     else { node.isSpiderKnown = false; }
                     //message

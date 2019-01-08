@@ -204,7 +204,7 @@ public class TooltipNode : MonoBehaviour
         }
         //show tracer if present and known
         proceedFlag = false;
-        if (data.isTracerActive == true)
+        if (data.isTracer == true)
         {
             switch(playerSide.level)
             {
@@ -450,7 +450,7 @@ public class TooltipNode : MonoBehaviour
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
-                if (data.isTracerActive == true || data.isContact == true || data.isTeamKnown == true)
+                if (data.isTracer == true || data.isContact == true || data.isTeamKnown == true)
                 { proceedFlag = true; }
             }
             else { proceedFlag = true; }

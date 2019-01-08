@@ -28,7 +28,7 @@ namespace packageAPI
         public bool isContact;                                   //specific for current side
         public bool isContactKnown;                                     //resistance contact known to authority?
         public bool isTracer;
-        public bool isTracerActive;
+        /*public bool isTracerActive;*/
         public bool isTracerKnown;
         public bool isTeamKnown;
         public bool isSpiderKnown;                                      //displays Spider images at tooltip top if spider present in node and known

@@ -588,7 +588,7 @@ public class NodeManager : MonoBehaviour
                     }
                     foreach (Node node in listOfTracerNodes)
                     {
-                        if (node.isTracerActive == true)
+                        if (node.isTracer == true)
                         {
                             //show all
                             if (proceedFlag == true)
@@ -655,7 +655,7 @@ public class NodeManager : MonoBehaviour
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
                                 else
                                 {
-                                    if (node.isTeamKnown || node.isTracerActive || node.isContactKnown)
+                                    if (node.isTeamKnown || node.isTracer || node.isContactKnown)
                                     {
                                         node.SetMaterial(materialActive);
                                         count++;

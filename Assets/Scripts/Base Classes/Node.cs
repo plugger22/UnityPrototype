@@ -19,7 +19,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
 
     [HideInInspector] public bool isTracer;             //has resistance tracer?
-    [HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes
+    /*[HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes*/
     [HideInInspector] public bool isSpider;             //has authority spider?
     [HideInInspector] public bool isContactResistance;  //true if any Resistance Actor has a connection at the node
     [HideInInspector] public bool isContactAuthority;   //true if any Authority Actor has a connection at the nodes
@@ -464,7 +464,7 @@ public class Node : MonoBehaviour
                         type = textType,
                         isTargetKnown = isTargetKnown,
                         isTracer = isTracer,
-                        isTracerActive = isTracerActive,
+                        /*isTracerActive = isTracerActive,*/
                         isTracerKnown = isTracerKnown,
                         isContactKnown = isContactKnown,
                         isTeamKnown = isTeamKnown,
@@ -688,13 +688,12 @@ public class Node : MonoBehaviour
     /// </summary>
     public void RemoveTracer()
     {
-        bool isNeighbourTracer, isAdjacentNeighbourTracer;
         if (isTracer == true)
         {
             isTracer = false;
-            isNeighbourTracer = false;
             Debug.Log(string.Format("Tracer removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n"));
-            //check neighbours
+            
+            /*//check neighbours
             foreach(Node node in listOfNeighbourNodes)
             {
                 if (node.isTracer)
@@ -720,7 +719,8 @@ public class Node : MonoBehaviour
             }
             //current node is still active if a neighbour has a tracer
             if (isNeighbourTracer == false)
-            { isTracerActive = false; }
+            { isTracerActive = false; }*/
+
         }
     }
 

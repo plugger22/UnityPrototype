@@ -1247,7 +1247,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void CheckNemesisTracerSighting()
     {
-        if (nemesisNode.isTracerActive == true)
+        if (nemesisNode.isTracer == true)
         {
             bool isSpotted = false;
             //nemesis stealthRating
