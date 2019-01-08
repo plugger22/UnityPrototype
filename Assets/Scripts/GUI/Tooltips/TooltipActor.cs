@@ -230,7 +230,7 @@ public class TooltipActor : MonoBehaviour
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         //action
         if (data.action != null)
-        { actorAction.text = string.Format("{0}{1}{2}", colourAction, data.action.name, colourEnd); }
+        { actorAction.text = string.Format("{0}<b>{1}</b>{2}", colourAction, data.action.name, colourEnd); }
         else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }
         //qualities
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;

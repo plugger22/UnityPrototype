@@ -1243,13 +1243,13 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// check if nemesis spotted by Tracers that are covering the node they are currently in. Will run regardless of 'hasWarning' (additional info from a secondary source)
+    /// check if nemesis automatically spotted by a Tracer that is inserted in the node they are currently in. Will run regardless of 'hasWarning' (additional info from a secondary source)
     /// </summary>
     public void CheckNemesisTracerSighting()
     {
         if (nemesisNode.isTracer == true)
         {
-            bool isSpotted = false;
+            /*bool isSpotted = false;
             //nemesis stealthRating
             int stealthRating = GetStealthRatingAdjusted();
             stealthRating = Mathf.Max(stealthRating, 0);
@@ -1265,18 +1265,21 @@ public class NemesisManager : MonoBehaviour
             }
             //random check
             if (rndNum <= needNum)
-            { isSpotted = true; }
-            //Spotted
+            { isSpotted = true; }*/
+
+            /*//Spotted
             if (isSpotted == true)
             {
                 Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer SUCCEEDS, need < {0} rolled {1}{2}", needNum, rndNum, "\n");
                 Debug.LogFormat("[Nem] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer spots Nemesis at {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-                GameManager.instance.messageScript.GeneralRandom("Tracer spots Nemesis", "Tracer Sighting", needNum, rndNum);
-                //SPOTTED -> node is always correct
+                GameManager.instance.messageScript.GeneralRandom("Tracer spots Nemesis", "Tracer Sighting", needNum, rndNum);*/
+
+                //automatically SPOTTED -> node is always correct
                 string text = string.Format("Tracer picks up an Anomalous reading at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
                 GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode);
-            }
-            else { Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer FAILED to spot, need < {0} rolled {1}{2}", needNum, rndNum, "\n"); }
+
+            /*}
+            else { Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer FAILED to spot, need < {0} rolled {1}{2}", needNum, rndNum, "\n"); }*/
         }
     }
 
