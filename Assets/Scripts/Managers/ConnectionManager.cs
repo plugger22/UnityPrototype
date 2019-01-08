@@ -282,6 +282,8 @@ public class ConnectionManager : MonoBehaviour
             string descriptor = string.Format("ConnID {0}, Security Level now LOW (btwn nodeID's {1} & {2})",
                 connection.connID, connection.node1.nodeID, connection.node2.nodeID);
             GameManager.instance.messageScript.DecisionConnection(descriptor, connection, ConnectionType.LOW);
+            //recalculate dijkstra weighting data
+            GameManager.instance.dijkstraScript.RecalculateWeightedData();
         }
         else
         { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }

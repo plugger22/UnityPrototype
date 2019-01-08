@@ -500,7 +500,7 @@ public class DijkstraManager : MonoBehaviour
         InitialiseDictDataWeighted();
         InitialiseNodeDataWeighted();
         //log
-        Debug.Log("DijkstraManager.cs -> RecalculateWeightedData: Data successfully recalculated");
+        Debug.Log("[Dij] DijkstraManager.cs -> RecalculateWeightedData: Weighted data recalculated");
     }
 
     /// <summary>

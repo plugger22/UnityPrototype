@@ -15,7 +15,8 @@ using packageAPI;
 public class SightingData
 {
     public int nodeID;
-    public int moveNumber;          //can be ignored, default 0, case of nemesis making multiple moves within a single turn
+    public int turn;                //used for tie breakers where priority is equal, most recent is taken
+    public int moveNumber;          //can be ignored, default 0, case of nemesis making multiple moves within a single turn, used for tiebreakers when both priority and turn are equal
     public Priority priority;
 }
 
@@ -54,6 +55,7 @@ public class AIRebelManager : MonoBehaviour
     //Resistance activity
     List<AITracker> listOfNemesisReports = new List<AITracker>();
     List<SightingData> listOfNemesisSightData = new List<SightingData>();
+    List<int> listOfBadNodes = new List<int>();                             //list of nodes to avoid for this turn, eg. nemesis or erasure team present (based on known info)
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -91,6 +93,9 @@ public class AIRebelManager : MonoBehaviour
             //Info gathering
             ProcessSightingData();
             ProcessTargetData();
+            //restore back to original state after any changes & prior to any moves, tasks, etc. Calcs will still use updated sighting data dijkstra (weighted)
+            if (isConnectionsChanged == true)
+            { RestoreConnections(); }
             //
             // - - - task loop (once per available action)
             //
@@ -134,9 +139,9 @@ public class AIRebelManager : MonoBehaviour
                     break;
             }
         }
-        //restore back to original state after any changes
+        //recalculate Dijkstra weighted data once done (set back to original state)
         if (isConnectionsChanged == true)
-        { RestoreConnections(); }
+        { RestoreDijkstraCalculations(); }
     }
 
     /// <summary>
@@ -147,6 +152,7 @@ public class AIRebelManager : MonoBehaviour
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
         listOfNemesisSightData.Clear();
+        listOfBadNodes.Clear();
 
         //clear out list of nemesis reports entries that are older than 'x' turns ago
         int count = listOfNemesisReports.Count;
@@ -290,13 +296,20 @@ public class AIRebelManager : MonoBehaviour
             //get nodeID of highest priority sighting (top of sorted list)
             if (count > 1)
             {
-                //check for situation where two equal priority sightings at top of list, take the highest moveNumber) - case where a nemesis has moved and been spotted twice in one turn
+                //check for situation where two equal priority sightings at top of list, take the highest turn number first then highest moveNumber (nemeis may have moved twice in the same turn)
                 if (listOfNemesisSightData[0].priority == listOfNemesisSightData[1].priority)
                 {
-                    //take the highest move Number as the latest sighting report
-                    if (listOfNemesisSightData[0].moveNumber < listOfNemesisSightData[1].moveNumber)
+                    if (listOfNemesisSightData[0].turn > listOfNemesisSightData[1].turn)
+                    { sightingNemesis = listOfNemesisSightData[0]; }
+                    else if (listOfNemesisSightData[0].turn < listOfNemesisSightData[1].turn)
                     { sightingNemesis = listOfNemesisSightData[1]; }
-                    else { sightingNemesis = listOfNemesisSightData[0]; }
+                    else
+                    {
+                        //Tiebreaker -> take the highest move Number as the latest sighting report
+                        if (listOfNemesisSightData[0].moveNumber < listOfNemesisSightData[1].moveNumber)
+                        { sightingNemesis = listOfNemesisSightData[1]; }
+                        else { sightingNemesis = listOfNemesisSightData[0]; }
+                    }
                 }
                 else { sightingNemesis = listOfNemesisSightData[0]; }
             }
@@ -312,10 +325,11 @@ public class AIRebelManager : MonoBehaviour
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSightingData: sightingNemesis nodeID {0}, priority {1}, moveNumber {2}{3}", sightingNemesis.nodeID, 
                     sightingNemesis.priority, sightingNemesis.moveNumber, "\n");
                 UpdateNodeConnectionSecurity(sightingNemesis);
+                //add to listOfBadNodes
+                listOfBadNodes.Add(sightingNemesis.nodeID);
             }
             else { Debug.LogError("Invalid sightingNemesis (Null)"); }
             //recalculate weighted data (dijkstraManager.cs -> RecalculateWeightedData)
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSightingData: Dijkstra weighted data recalculated{0}", "\n");
             GameManager.instance.dijkstraScript.RecalculateWeightedData();
         }
 
@@ -391,7 +405,6 @@ public class AIRebelManager : MonoBehaviour
     /// <returns></returns>
     private SightingData ConvertTrackerToSighting(AITracker tracker)
     {
-        
         //keep prioritylevel as an int ( 0 / 1 / 2 / 3  corresponds to Low / Medium / High / Critical )
         int priorityLevel = 0;
         SightingData sighting = null;
@@ -458,7 +471,8 @@ public class AIRebelManager : MonoBehaviour
                     break;
             }
         }
-        //moveNumber
+        //moveNumber & turn of sighting
+        sighting.turn = tracker.turn;
         sighting.moveNumber = tracker.data2;
         return sighting;
     }
@@ -486,6 +500,7 @@ public class AIRebelManager : MonoBehaviour
                     if (target != null)
                     {
                         distance = GameManager.instance.dijkstraScript.GetDistanceWeighted(playerNodeID, target.nodeID);
+                        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: playerNodeID {0}, targetNodeID {1} DISTANCE {2}{3}", playerNodeID, target.nodeID, distance, "\n");
                         if (distance > -1)
                         {
                             //add entry to dictionary
@@ -823,16 +838,22 @@ public class AIRebelManager : MonoBehaviour
 
 
     /// <summary>
-    /// restore connections back to original state and recalculate dijkstra data prior to leaving AIRebelManager.cs
+    /// restore connections back to original state (NOTE: recalculate dijkstra data done at end of all AIRebel processing) prior to leaving AIRebelManager.cs
     /// </summary>
     private void RestoreConnections()
     {
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> RestoreConnections: Connections Restored to original state prior to AIRebelManager.cs calc's{0}", "\n");
-        isConnectionsChanged = false;
-        //restore connection state to what it was prior to any AIRebelManager.cs related changes
         GameManager.instance.connScript.RestoreConnections();
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> RestoreConnections: Connections Restored to original state prior to AIRebelManager.cs calc's{0}", "\n");
+    }
+
+    /// <summary>
+    /// resets dijktra weighted calculations back to normal ready for AIManager.cs
+    /// </summary>
+    private void RestoreDijkstraCalculations()
+    {
         //recalculate weighted data
         GameManager.instance.dijkstraScript.RecalculateWeightedData();
+        isConnectionsChanged = false;
     }
 
     //
@@ -872,7 +893,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Sorted target list
         //
-        builder.AppendFormat("{0}- ProcessTargetData ({1} records){2}", "\n", dictOfSortedTargets.Count, "\n");
+        builder.AppendFormat("{0}- ProcessTargetData (current turn {1}){2}", "\n", turn - 1, "\n");
         int count = dictOfSortedTargets.Count;
         if (count > 0)
         {
@@ -916,6 +937,17 @@ public class AIRebelManager : MonoBehaviour
                     { builder.AppendFormat(" nodeID {0}, priority {1}, moveNumber {2}{3}", sight.nodeID, sight.priority, sight.moveNumber, "\n"); }
                     else { builder.AppendFormat(" Invalid Sight Data (Null){0}", "\n"); }
                 }
+            }
+            else { builder.AppendFormat(" No records present{0}", "\n"); }
+            //
+            // - - - Bad Nodes
+            //
+            count = listOfBadNodes.Count;
+            builder.AppendFormat("{0}- ListOfBadNodes (current turn {1}){2}", "\n", turn - 1, "\n");
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { builder.AppendFormat(" nodeID {0}{1}", listOfBadNodes[i], "\n"); }
             }
             else { builder.AppendFormat(" No records present{0}", "\n"); }
         }
