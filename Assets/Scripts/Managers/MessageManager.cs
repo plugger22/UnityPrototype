@@ -1156,7 +1156,7 @@ public class MessageManager : MonoBehaviour
             message.data3 = team.teamID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("One of {0}'s network of contacts spots an Authority TEAM", actor.arc.name);
+            data.itemText = string.Format("One of {0}'s contacts spots an {1} Team", actor.arc.name, team.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.instance.itemDataScript.GetContactTeamSpottedDetails(actor, node, contact, team);
             data.priority = ItemPriority.Medium;

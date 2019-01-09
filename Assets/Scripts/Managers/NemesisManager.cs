@@ -983,12 +983,15 @@ public class NemesisManager : MonoBehaviour
                 //Player interaction can result in nemesis damaging player and leaving with no follow-on nemesis
                 if (nemesis != null)
                 {
-                    //check for Resistance contact at same node
-                    List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
-                    if (tempList != null)
-                    { ProcessContactInteraction(tempList, moveNumber); }
-                    //check for Tracer Sighting
-                    CheckNemesisTracerSighting(moveNumber);
+                    if (mode != NemesisMode.Inactive)
+                    {
+                        //check for Resistance contact at same node
+                        List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                        if (tempList != null)
+                        { ProcessContactInteraction(tempList, moveNumber); }
+                        //check for Tracer Sighting
+                        CheckNemesisTracerSighting(moveNumber);
+                    }
                 }
             }
             else { Debug.LogWarningFormat("Invalid move node {Null) for nodeID {0}", nodeID); }
@@ -1245,7 +1248,7 @@ public class NemesisManager : MonoBehaviour
     /// <summary>
     /// check if nemesis automatically spotted by a Tracer that is inserted in the node they are currently in. Will run regardless of 'hasWarning' (additional info from a secondary source)
     /// </summary>
-    public void CheckNemesisTracerSighting(int moveNumber)
+    public void CheckNemesisTracerSighting(int moveNumber = 0)
     {
         if (nemesisNode.isTracer == true)
         {
