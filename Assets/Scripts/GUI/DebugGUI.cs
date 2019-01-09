@@ -1125,7 +1125,7 @@ public class DebugGUI : MonoBehaviour
                     //Contacts -> Resistance
                     case 33:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.contactScript.DisplayContacts();
+                        analysis = GameManager.instance.contactScript.DebugDisplayContacts();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Targets Generic

@@ -478,7 +478,7 @@ public class ContactManager : MonoBehaviour
     /// Debug Display resistance contacts by actor
     /// </summary>
     /// <returns></returns>
-    public string DisplayContacts()
+    public string DebugDisplayContacts()
     {
         StringBuilder builder = new StringBuilder();
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
@@ -555,6 +555,42 @@ public class ContactManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfReserveActors (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to display dictOfContactsByNodeResistance
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayContactsByNode()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<int, List<Contact>> dictOfContactsByNode = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+        if (dictOfContactsByNode != null)
+        {
+            List<Contact> listOfContacts = new List<Contact>();
+            builder.AppendFormat("- Contacts By Node{0}", "\n");
+            foreach(var record in dictOfContactsByNode)
+            {
+                if (record.Value != null)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(record.Key);
+                    if (node != null)
+                    {
+                        builder.AppendFormat(" Node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+                        listOfContacts = record.Value;
+                        if (listOfContacts != null)
+                        {
+                            for (int i = 0; i < listOfContacts.Count; i++)
+                            { builder.AppendFormat("   Contact {0} {1}, {2}, id {3}{4}", listOfContacts[i].nameFirst, listOfContacts[i].nameLast, listOfContacts[i].job, listOfContacts[i].contactID, "\n"); }
+                        }
+                        else { builder.AppendFormat(" Invalid listOfContacts (Null){0}", "\n"); }
+                    }
+                }
+                else { builder.AppendFormat(" Invalid record (Null){0}", "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
         return builder.ToString();
     }
 

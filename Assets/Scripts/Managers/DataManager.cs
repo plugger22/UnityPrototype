@@ -1449,6 +1449,10 @@ public class DataManager : MonoBehaviour
         return contactResult;
     }
 
+
+    public Dictionary<int, List<Contact>> GetDictOfContactsByNodeResistance()
+    { return dictOfContactsByNodeResistance; }
+
     /// <summary>
     /// loops dictOfContactsByNodeResistance and updates are data to be current. Called by other contact methods whenever there is a change in contact status.
     /// </summary>
