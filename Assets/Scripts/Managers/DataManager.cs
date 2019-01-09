@@ -1449,7 +1449,49 @@ public class DataManager : MonoBehaviour
         return contactResult;
     }
 
+    /// <summary>
+    /// loops dictOfContactsByNodeResistance and updates are data to be current. Called by other contact methods whenever there is a change in contact status.
+    /// </summary>
+    private void UpdateNodeContacts()
+    {
+        int nodeID, count;
+        bool isPresent;
+        List<int> listOfActors = new List<int>();
+        List<Contact> listOfContacts = new List<Contact>();
+        foreach(var record in dictOfNodeContactsResistance)
+        {
+            if (record.Value != null)
+            {
+                nodeID = record.Key;
+                listOfActors = record.Value;
+                isPresent = false;
+                //find record and check actor has existing contact there
+                if (dictOfContactsByNodeResistance.ContainsKey(nodeID))
+                {
+                    listOfContacts = dictOfContactsByNodeResistance[nodeID];
+                    //check contact present
+                    count = listOfContacts.Count;
+                    if (count > 0)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            if (listOfContacts[i].actorID == )
+                        }
+                    }
+                    if (isPresent == false)
+                    {
+                        //add contact to list
+                    }
+                }
+                else
+                {
+                    //create a new entry -> get contact first, new nodeId entry in dict, create list, add contact to list
 
+                }
+            }
+            else { Debug.LogError("Invalid record (Null) in dictOfNodeContactsResistance"); }
+        }
+    }
 
     /// <summary>
     /// Returns a list of ActorArc names (default Current side to enable both sides tooltips to work correctly while debugging) for all contacts at node. Returns empty string if none.
