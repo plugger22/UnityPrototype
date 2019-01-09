@@ -1454,40 +1454,76 @@ public class DataManager : MonoBehaviour
     /// </summary>
     private void UpdateNodeContacts()
     {
-        int nodeID, count;
+        int nodeID;
         bool isPresent;
+        Contact contact;
         List<int> listOfActors = new List<int>();
         List<Contact> listOfContacts = new List<Contact>();
-        foreach(var record in dictOfNodeContactsResistance)
+        foreach (var record in dictOfNodeContactsResistance)
         {
             if (record.Value != null)
             {
                 nodeID = record.Key;
                 listOfActors = record.Value;
-                isPresent = false;
-                //find record and check actor has existing contact there
-                if (dictOfContactsByNodeResistance.ContainsKey(nodeID))
+                if (listOfActors != null)
                 {
-                    listOfContacts = dictOfContactsByNodeResistance[nodeID];
-                    //check contact present
-                    count = listOfContacts.Count;
-                    if (count > 0)
+                    //loop actors at node
+                    for (int i = 0; i < listOfActors.Count; i++)
                     {
-                        for (int i = 0; i < count; i++)
+                        isPresent = false;
+                        Actor actor = GetActor(listOfActors[i]);
+                        if (actor != null)
                         {
-                            if (listOfContacts[i].actorID == )
+                            contact = actor.GetContact(nodeID);
+                            if (contact != null)
+                            {
+                                //check if contact already in dict
+                                if (dictOfContactsByNodeResistance.ContainsKey(nodeID) == true)
+                                {
+                                    listOfContacts = dictOfContactsByNodeResistance[nodeID];
+                                    //loop list and see if item in dictionary
+                                    if (listOfContacts != null)
+                                    {
+                                        for (int j = 0; j < listOfContacts.Count; j++)
+                                        {
+                                            if (listOfContacts[j].contactID == contact.contactID)
+                                            {
+                                                isPresent = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2} at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, nodeID); }
+                            if (isPresent == false)
+                            {
+                                //add a new Contact
+                                if (dictOfContactsByNodeResistance.ContainsKey(nodeID) == true)
+                                {
+                                    //record for node exists, add contact
+                                    listOfContacts = dictOfContactsByNodeResistance[nodeID];
+                                    listOfContacts.Add(contact);
+                                    Debug.LogFormat("[Tst] DataManager.cs -> UpdateNodeContact: Contact {0} {1}, {2}, id {3} ADDED to nodeID {4}{5}", contact.nameFirst, contact.nameLast, contact.job, 
+                                        contact.contactID, nodeID, "\n");
+                                }
+                                else
+                                {
+                                    //create a new record
+                                    List<Contact> listOfNewContacts = new List<Contact>();
+                                    listOfNewContacts.Add(contact);
+                                    try { dictOfContactsByNodeResistance.Add(nodeID, listOfNewContacts); }
+                                    catch ( ArgumentException)
+                                    { Debug.LogErrorFormat("Invalid new record (duplicate) for nodeId {0}", nodeID); }
+                                }
+                            }
                         }
-                    }
-                    if (isPresent == false)
-                    {
-                        //add contact to list
+                        else
+                        { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
                 }
-                else
-                {
-                    //create a new entry -> get contact first, new nodeId entry in dict, create list, add contact to list
 
-                }
+
             }
             else { Debug.LogError("Invalid record (Null) in dictOfNodeContactsResistance"); }
         }

@@ -1985,13 +1985,13 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 57854
   isAuthority: 0
-  isBothAI: 0
+  isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 5
+  autoRunTurns: 12
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1
