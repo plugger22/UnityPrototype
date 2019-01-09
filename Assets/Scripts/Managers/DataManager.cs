@@ -191,6 +191,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();       //Key -> ActorID, Value -> list of nodeID's where actor has contacts
     private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();   //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();    //Key -> NodeID, Value -> list of actorID's who have a contact at node
+    private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
 
@@ -760,7 +761,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns the appropraite dict based on, default, current side (unless 'false')
+    /// returns the appropriate dict based on, default, current side (unless 'false')
     /// </summary>
     /// <returns></returns>
     public Dictionary<int, List<int>> GetDictOfNodeContacts(bool isCurrentSide = true)
@@ -821,6 +822,18 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Get a list of all contacts at a particular node, null if none
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public List<Contact> GetListOfNodeContacts(int nodeID)
+    {
+        if (dictOfContactsByNodeResistance.ContainsKey(nodeID) == true)
+        { return dictOfContactsByNodeResistance[nodeID]; }
+        return null;
+    }
+
+    /// <summary>
     /// returns a list of actors who have a contact at node, Null if none. Resistance Only
     /// </summary>
     /// <param name="nodeID"></param>
@@ -835,6 +848,58 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid tempDict (Resistance or Authority) (Null)"); }
         return tempList;
+    }
+
+    /// <summary>
+    /// returns true if there is at least one active contact (with an active actor) at specified node, false otherwise
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public bool CheckForActiveContact(Node node)
+    {
+        bool isPresent = false;
+        if (node != null)
+        {
+            if (node.isContactResistance == true)
+            {
+                List<int> listOfActors = CheckContactResistanceAtNode(node.nodeID);
+                if (listOfActors != null)
+                {
+                    //loop actors and check all relevant contacts
+                    int count = listOfActors.Count;
+                    if (count > 0)
+                    {
+                        for (int index = 0; index < count; index++)
+                        {
+                            Actor actor = GetActor(listOfActors[index]);
+                            if (actor != null)
+                            {
+                                //actor must active
+                                if (actor.Status == ActorStatus.Active)
+                                {
+                                    Contact contact = actor.GetContact(node.nodeID);
+                                    if (contact != null)
+                                    {
+                                        if (contact.status == ContactStatus.Active)
+                                        {
+                                            //at least one active contact present at node
+                                            isPresent = true;
+                                            break;
+                                        }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors.actorID {0}", listOfActors[index]); }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfActors (Empty) for nodeID {0}", node.nodeID); }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfActors (Null) for nodeID {0}", node.nodeID); }
+            }
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        return isPresent;
     }
 
     /// <summary>
@@ -1391,7 +1456,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public List<string> GetListOfNodeContacts(int nodeID, bool isCurrentSide = true)
+    public List<string> GetListOfNodeContactActorArcs(int nodeID, bool isCurrentSide = true)
     {
         List<string> listOfNodeContacts = new List<string>();
         /*GlobalSide side = GameManager.instance.sideScript.PlayerSide;*/
@@ -3800,7 +3865,17 @@ public class DataManager : MonoBehaviour
                             if (team.arc.name.Equals("ERASURE") == true)
                             { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
                         }
-                        else { Debug.LogErrorFormat("Invalid team (Null) for teamID {0}", message.data3); }
+                        else { Debug.LogErrorFormat("Invalid Contact team (Null) for teamID {0}", message.data3); }
+                        break;
+                    case MessageSubType.Tracer_Team_Spotted:
+                        team = GetTeam(message.data1);
+                        if (team != null)
+                        {
+                            //f an erasure team then extract sighting data
+                            if (team.arc.name.Equals("ERASURE") == true)
+                            { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid Tracer team (Null) for teamID {0}", message.data3); }
                         break;
                 }
             }

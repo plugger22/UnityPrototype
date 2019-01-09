@@ -653,7 +653,7 @@ public class Node : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public List<string> GetNodeContacts(bool isCurrentSide = true)
-    { return GameManager.instance.dataScript.GetListOfNodeContacts(nodeID, isCurrentSide); }
+    { return GameManager.instance.dataScript.GetListOfNodeContactActorArcs(nodeID, isCurrentSide); }
 
     /// <summary>
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none

@@ -171,8 +171,10 @@ public class TooltipNode : MonoBehaviour
         GlobalSide currentSide = GameManager.instance.turnScript.currentSide;
         //open panel at start
         tooltipNodeObject.SetActive(true);
-        //set opacity to zero (invisible)
-        //SetOpacity(0f);
+        
+        /*//set opacity to zero (invisible)
+        //SetOpacity(0f);*/
+
         //set state of all items in tooltip window
         nodeName.gameObject.SetActive(true);
         nodeType.gameObject.SetActive(true);
@@ -451,11 +453,13 @@ public class TooltipNode : MonoBehaviour
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
                 if (data.isTracer == true || data.isContact == true || data.isTeamKnown == true)
-                { proceedFlag = true; }
+                {
+                    proceedFlag = true;
+                }
             }
             else { proceedFlag = true; }
         }
-        //show teams show only (Resistance) if node within tracer coverage or actor has a contact there or isTeamKnown true (if FOW option 'true')
+        //show teams show only (Resistance) if node has a tracer or actor has a contact there or isTeamKnown true (if FOW option 'true')
         if (proceedFlag == true)
         {
             if (data.listOfTeams.Count > 0)
