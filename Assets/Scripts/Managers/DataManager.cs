@@ -1021,8 +1021,9 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("No contacts in listOfContactNodes"); successFlag = false; }
         }
         else { Debug.LogError("Invalid listOfContactNodes (Null)"); successFlag = false; }
-        //update node contacts
-        GameManager.instance.contactScript.UpdateNodeContacts();
+        //update node contacts -> NOTE: CreateNodeContacts isn't added here but in the calling method, ContactManager.cs -> SetActorContacts
+        if (successFlag == true)
+        { GameManager.instance.contactScript.UpdateNodeContacts(); }
         return successFlag;
     }
 
@@ -1098,6 +1099,12 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+        //update node contacts
+        if (successFlag == true)
+        {
+            GameManager.instance.contactScript.UpdateNodeContacts();
+            CreateNodeContacts();
+        }
         return successFlag;
     }
 
@@ -1192,7 +1199,11 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodeContacts (Null)"); }
         //update node contacts
-        GameManager.instance.contactScript.UpdateNodeContacts();
+        if (numContacts > 0)
+        {
+            GameManager.instance.contactScript.UpdateNodeContacts();
+            CreateNodeContacts();
+        }
         return numContacts;
     }
 
@@ -1287,7 +1298,11 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
-        GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
+        if (isSuccess == true)
+        {
+            GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
+            CreateNodeContacts();
+        }
         return isSuccess;
     }
 
@@ -1389,7 +1404,11 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
-        GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
+        if (isSuccess == true)
+        {
+            GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
+            CreateNodeContacts();
+        }
         return isSuccess;
     }
 
@@ -1454,15 +1473,18 @@ public class DataManager : MonoBehaviour
     { return dictOfContactsByNodeResistance; }
 
     /// <summary>
-    /// loops dictOfContactsByNodeResistance and updates are data to be current. Called by other contact methods whenever there is a change in contact status.
+    /// loops dictOfContactsByNodeResistance and builds dict from scratch to ensure data is current. Called by other contact methods whenever there is a change in contact status.
     /// </summary>
-    private void UpdateNodeContacts()
+    public void CreateNodeContacts()
     {
         int nodeID;
         bool isPresent;
         Contact contact;
         List<int> listOfActors = new List<int>();
         List<Contact> listOfContacts = new List<Contact>();
+        //clear dictionary
+        dictOfContactsByNodeResistance.Clear();
+        //rebuild from scratch
         foreach (var record in dictOfNodeContactsResistance)
         {
             if (record.Value != null)
@@ -1508,8 +1530,8 @@ public class DataManager : MonoBehaviour
                                     //record for node exists, add contact
                                     listOfContacts = dictOfContactsByNodeResistance[nodeID];
                                     listOfContacts.Add(contact);
-                                    Debug.LogFormat("[Tst] DataManager.cs -> UpdateNodeContact: Contact {0} {1}, {2}, id {3} ADDED to nodeID {4}{5}", contact.nameFirst, contact.nameLast, contact.job, 
-                                        contact.contactID, nodeID, "\n");
+                                    /*Debug.LogFormat("[Tst] DataManager.cs -> CreateNodeContact: Contact {0} {1}, {2}, id {3} ADDED to nodeID {4}{5}", contact.nameFirst, contact.nameLast, contact.job, 
+                                        contact.contactID, nodeID, "\n");*/
                                 }
                                 else
                                 {
@@ -1531,6 +1553,9 @@ public class DataManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid record (Null) in dictOfNodeContactsResistance"); }
         }
+        //error check number of records
+        Debug.Assert(dictOfNodeContactsResistance.Count == dictOfContactsByNodeResistance.Count, string.Format("Mismatched count between dictOfNodeContactsResistance {0} and dictOfContactsByNodeResistance {1}",
+            dictOfNodeContactsResistance.Count, dictOfContactsByNodeResistance.Count));
     }
 
     /// <summary>

@@ -121,7 +121,7 @@ public class CaptureManager : MonoBehaviour
     {
         //PLAYER CAPTURED
         string text = string.Format("Player Captured at \"{0}\", {1} district by {2}{3}{4} {5}", details.node.nodeName, details.node.Arc.name, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
-        
+
         /*Debug.LogFormat("[Ply] CaptureManager.cs -> CapturePlayer: {0}{1}", text, "\n");*/
 
         //effects builder
@@ -135,6 +135,23 @@ public class CaptureManager : MonoBehaviour
         //update node trackers
         GameManager.instance.nodeScript.nodePlayer = -1;
         GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
+        //Raise city loyalty
+        int cause = GameManager.instance.cityScript.CityLoyalty;
+        cause += actorCaptured;
+        cause = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cause);
+        GameManager.instance.cityScript.CityLoyalty = cause;
+        //invisibility set to zero (most likely already is)
+        GameManager.instance.playerScript.Invisibility = 0;
+        //update map
+        GameManager.instance.nodeScript.NodeRedraw = true;
+        //set security state back to normal
+        GameManager.instance.authorityScript.SetAuthoritySecurityState("Security measures have been cancelled", string.Format("{0}, Player, has been CAPTURED", GameManager.instance.playerScript.PlayerName));
+        //switch off flashing red indicator on top widget UI
+        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
+        //reduce player alpha to show inactive (sprite and text)
+        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+        //AI side tab
+        GameManager.instance.aiScript.UpdateSideTabData();
         //change player state
         if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
         {
@@ -152,61 +169,43 @@ public class CaptureManager : MonoBehaviour
                     else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
                 }
             }
+            builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
+            //Gear confiscated
+            int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
+            if (numOfGear > 0)
+            {
+                List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                if (listOfGear != null)
+                {
+                    //reverse loop through list of gear and remove all
+                    for (int i = listOfGear.Count - 1; i >= 0; i--)
+                    { GameManager.instance.playerScript.RemoveGear(listOfGear[i], true); }
+                    builder.Append(string.Format("{0}Gear confiscated ({1} item{2}){3}", colourBad, numOfGear, numOfGear != 1 ? "s" : "", colourEnd));
+                }
+                else { Debug.LogError("Invalid listOfGear (Null)"); }
+            }
+            //player captured outcome window
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            {
+                textTop = text,
+                textBottom = builder.ToString(),
+                sprite = GameManager.instance.guiScript.capturedSprite,
+                isAction = false,
+                side = GameManager.instance.globalScript.sideResistance
+            };
+            //happened during turn processing (outcome window will overlay InfoApp)
+            if (isStartOfTurn == true)
+            {
+                outcomeDetails.modalLevel = 2;
+                outcomeDetails.modalState = ModalState.InfoDisplay;
+            }
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer");
         }
         else
         {
             //AI Resistance Player
             GameManager.instance.aiRebelScript.status = ActorStatus.Captured;
         }
-        //Raise city loyalty
-        int cause = GameManager.instance.cityScript.CityLoyalty;
-        cause += actorCaptured;
-        cause = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cause);
-        GameManager.instance.cityScript.CityLoyalty = cause;
-
-        builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
-        //Gear confiscated
-        int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
-        if (numOfGear > 0)
-        {
-            List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
-            if (listOfGear != null)
-            {
-                //reverse loop through list of gear and remove all
-                for (int i = listOfGear.Count - 1; i >= 0; i--)
-                { GameManager.instance.playerScript.RemoveGear(listOfGear[i], true); }
-                builder.Append(string.Format("{0}Gear confiscated ({1} item{2}){3}", colourBad, numOfGear, numOfGear != 1 ? "s" : "", colourEnd));
-            }
-            else { Debug.LogError("Invalid listOfGear (Null)"); }
-        }
-        //invisibility set to zero (most likely already is)
-        GameManager.instance.playerScript.Invisibility = 0;
-        //update map
-        GameManager.instance.nodeScript.NodeRedraw = true;
-        //set security state back to normal
-        GameManager.instance.authorityScript.SetAuthoritySecurityState("Security measures have been cancelled", string.Format("{0}, Player, has been CAPTURED", GameManager.instance.playerScript.PlayerName));
-        //switch off flashing red indicator on top widget UI
-        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
-        //reduce player alpha to show inactive (sprite and text)
-        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
-        //AI side tab
-        GameManager.instance.aiScript.UpdateSideTabData();
-        //player captured outcome window
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
-        {
-            textTop = text,
-            textBottom = builder.ToString(),
-            sprite = GameManager.instance.guiScript.capturedSprite,
-            isAction = false,
-            side = GameManager.instance.globalScript.sideResistance
-        };
-        //happened during turn processing (outcome window will overlay InfoApp)
-        if (isStartOfTurn == true)
-        {
-            outcomeDetails.modalLevel = 2;
-            outcomeDetails.modalState = ModalState.InfoDisplay;
-        }
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer");
     }
 
     /// <summary>

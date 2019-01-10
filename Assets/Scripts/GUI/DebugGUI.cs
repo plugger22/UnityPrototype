@@ -40,6 +40,7 @@ public class DebugGUI : MonoBehaviour
     private int box_level; 
     private int button_width;
     private int targetToggle = 0;
+    private int contactToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string textOutput;
@@ -282,13 +283,21 @@ public class DebugGUI : MonoBehaviour
             //sevenTeenth button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts Data"))
             {
-                //resistance only
+                /*//resistance only
                 if (GameManager.instance.turnScript.currentSide.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     Debug.Log("[Dbg] Button -> Toggle Contacts");
                     if (debugDisplay != 33)
                     { debugDisplay = 33; }
                     else { debugDisplay = 0; }
+                }*/
+
+                Debug.Log("[Dbg] Button -> Toggle Contacts");
+                switch (contactToggle)
+                {
+                    case 0: debugDisplay = 33; contactToggle = 1; break;
+                    case 1: debugDisplay = 46; contactToggle = 2; break;
+                    case 2: debugDisplay = 0; contactToggle = 0; break;
                 }
             }
 
@@ -1234,6 +1243,12 @@ public class DebugGUI : MonoBehaviour
                     case 45:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugShowNemesisMoves();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //Contacts by Node data
+                    case 46:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.contactScript.DebugDisplayContactsByNode();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }

@@ -272,7 +272,7 @@ public class ItemDataManager : MonoBehaviour
         {
             //Actor
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("{0}, {1}{2}{3}{4}{5}{6}{7}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", reason, "\n", "\n"); }
+            { builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}{6}{7}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", reason, "\n", "\n"); }
             builder.AppendFormat("{0}<b>{1}</b>{2} status now {3}<b>{4}</b>{5}", colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd);
         }
         if (string.IsNullOrEmpty(details) == false)

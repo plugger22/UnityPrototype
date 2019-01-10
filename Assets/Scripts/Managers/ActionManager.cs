@@ -2654,7 +2654,7 @@ public class ActionManager : MonoBehaviour
                                 numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //message
-                            GameManager.instance.messageScript.ActorStatus(msgTextMain, msgReason, string.Format("has been ", msgReason), actor.actorID, playerSide);
+                            GameManager.instance.messageScript.ActorStatus(msgTextMain, msgReason, string.Format("has been <b>{0}</b>", msgReason), actor.actorID, playerSide);
                             //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
                             ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
                             if (manageAction != null)

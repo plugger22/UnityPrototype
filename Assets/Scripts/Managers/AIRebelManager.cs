@@ -63,7 +63,7 @@ public class AIRebelManager : MonoBehaviour
     List<AITask> listOfTasksPotential = new List<AITask>();
 
     //targets
-    private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();
+    private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();   //key -> target, Value -> Distance (weighted and adjusted for threats)
 
 
     public void Initialise()
@@ -570,7 +570,7 @@ public class AIRebelManager : MonoBehaviour
 
 
     /// <summary>
-    /// Select a target nodeID as a goal to move towards
+    /// Populate a sorted dictionary of all available targets
     /// </summary>
     private void ProcessTargetData()
     {
@@ -604,7 +604,7 @@ public class AIRebelManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargets[{0}]", i); }
                 }
-                //sort dict if it has > 1 entry
+                //sort dict if it has > 1 entry, nearest target at top of list
                 if (dictOfTargets.Count > 1)
                 {
                     var sortedTargets = from pair in dictOfTargets
@@ -711,24 +711,24 @@ public class AIRebelManager : MonoBehaviour
             if (nodePlayer.nodeID == targetNodeID)
             {
                 //select a new target goal
-                if (dictOfSortedTargets.Count > 1)
+                if (dictOfSortedTargets.Count > 0)
                 {
-                    //randomly select a new target goal
-                    List<Target> tempList = dictOfSortedTargets.Keys.ToList();
-                    //ignore first record as it must be distance 0
-                    Target newTarget = tempList[Random.Range(1, tempList.Count)];
-                    if (newTarget != null)
+                    //select the nearest target goal that is > 0 distance
+                    foreach(var record in dictOfSortedTargets)
                     {
-                        //assign new target
-                        targetNodeID = newTarget.nodeID;
-                        nodeMoveTo = GameManager.instance.dataScript.GetNode(targetNodeID);
-                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, new target chosen{0}", "\n");
+                        if (record.Value > 0)
+                        {
+                            //assign new target
+                            targetNodeID = record.Key.nodeID;
+                            nodeMoveTo = GameManager.instance.dataScript.GetNode(targetNodeID);
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, new target chosen{0}", "\n");
+                            break;
+                        }
                     }
-                    else { Debug.LogError("Invalid newTarget (Null)"); }
                 }
-                else
+                //No suitable target available -> generate a random node as a new target
+                if (targetNodeID == nodePlayer.nodeID)
                 {
-                    //generate a random node as a new target
                     Node randomNode;
                     int counter = 0;
                     do
@@ -742,7 +742,7 @@ public class AIRebelManager : MonoBehaviour
                         }
                     }
                     while (randomNode.nodeID == nodePlayer.nodeID);
-                    //new target
+                    //assign new target
                     targetNodeID = randomNode.nodeID;
                     nodeMoveTo = randomNode;
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, Random Node chosen, id {0}{1}", targetNodeID, "\n");
