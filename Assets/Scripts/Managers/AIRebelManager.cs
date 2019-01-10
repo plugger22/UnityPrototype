@@ -605,7 +605,7 @@ public class AIRebelManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargets[{0}]", i); }
                 }
                 //sort dict if it has > 1 entry, nearest target at top of list
-                if (dictOfTargets.Count > 1)
+                if (dictOfTargets.Count > 0)
                 {
                     var sortedTargets = from pair in dictOfTargets
                                         orderby pair.Value ascending

@@ -1429,7 +1429,11 @@ public class DataManager : MonoBehaviour
         if (actor != null)
         {
             if (AddContactSingle(actor.actorID, nodeID) == true)
-            { contactResult = "Contacted ADDED successfully"; }
+            {
+                contactResult = "Contacted ADDED successfully";
+                //update node contact
+                CreateNodeContacts();
+            }
             else { contactResult = "FAILED to add Contact"; }
         }
         else
