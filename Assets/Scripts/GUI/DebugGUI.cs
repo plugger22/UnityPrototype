@@ -281,18 +281,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sevenTeenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contacts Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Contact Data"))
             {
-                /*//resistance only
-                if (GameManager.instance.turnScript.currentSide.level == GameManager.instance.globalScript.sideResistance.level)
-                {
-                    Debug.Log("[Dbg] Button -> Toggle Contacts");
-                    if (debugDisplay != 33)
-                    { debugDisplay = 33; }
-                    else { debugDisplay = 0; }
-                }*/
-
-                Debug.Log("[Dbg] Button -> Toggle Contacts");
+                Debug.Log("[Dbg] Button -> Contact Data");
                 switch (contactToggle)
                 {
                     case 0: debugDisplay = 33; contactToggle = 1; break;
@@ -1285,6 +1276,7 @@ public class DebugGUI : MonoBehaviour
                             GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         }
                         status = GUIStatus.None;
+                        debugDisplay = 0;
                         break;
                     //Contact dict
                     case 49:
