@@ -21,8 +21,8 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isTracer;             //has resistance tracer?
     /*[HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes*/
     [HideInInspector] public bool isSpider;             //has authority spider?
-    [HideInInspector] public bool isContactResistance;  //true if any Resistance Actor has a connection at the node
-    [HideInInspector] public bool isContactAuthority;   //true if any Authority Actor has a connection at the nodes
+    [HideInInspector] public bool isContactResistance;  //true if any Resistance Actor has a connection at the node (ignores contact status)
+    [HideInInspector] public bool isContactAuthority;   //true if any Authority Actor has a connection at the nodes (ignores contact status)
     [HideInInspector] public bool isPreferredAuthority;      //true if node is off the preferred authority faction node arc type
     [HideInInspector] public bool isPreferredResistance;     //true if node is off the preferred resistance faction node arc type 
     [HideInInspector] public bool isCentreNode;              //true if node is in the geographic centre region of the map (used by AI)

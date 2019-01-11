@@ -20,6 +20,7 @@ public class DebugGUI : MonoBehaviour
     private AIDebugData aiStatus;
     private TeamDebug teamStatus;
     private bool showGUI = false;
+    private bool doOnceFlag = false;                            //used to prevent continual repeats of input / output sequences
     private int debugDisplay = 0;
 
     public int button_height;
@@ -43,6 +44,7 @@ public class DebugGUI : MonoBehaviour
     private int contactToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
+    private string analysis = "Unknown";
     private string textOutput;
     private string optionAutoGear;
     private string optionFogOfWar;
@@ -86,7 +88,10 @@ public class DebugGUI : MonoBehaviour
             else { showGUI = false; }
         }
         else if (Input.GetKeyDown(KeyCode.Escape) == true && showGUI == true)
-        { showGUI = false; }
+        {
+            showGUI = false;
+            doOnceFlag = false;
+        }
 
     }
 
@@ -227,22 +232,22 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Message Data");
                 //toggles sequentially through message dictionaries and then switches off
-                switch(msgStatus)
+                switch (msgStatus)
                 {
-                    case MessageCategory.None: debugDisplay = 9; msgStatus = MessageCategory.Pending;  break;
+                    case MessageCategory.None: debugDisplay = 9; msgStatus = MessageCategory.Pending; break;
                     case MessageCategory.Pending: debugDisplay = 9; msgStatus = MessageCategory.Current; break;
                     case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
                     case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
                     case MessageCategory.AI: debugDisplay = 9; msgStatus = MessageCategory.None; break;
                 }
             }
-        
+
 
             //thirteenth button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Authority AI"))
             {
                 Debug.Log("[Dbg] Button -> AI Data");
-                switch(aiStatus)
+                switch (aiStatus)
                 {
                     case AIDebugData.None: debugDisplay = 10; aiStatus = AIDebugData.Task; break;
                     case AIDebugData.Task: debugDisplay = 10; aiStatus = AIDebugData.Node; break;
@@ -305,7 +310,7 @@ public class DebugGUI : MonoBehaviour
                     case 2: debugDisplay = 36; targetToggle = 3; break;
                     case 3: debugDisplay = 0; targetToggle = 0; break;
                 }
-               }
+            }
 
             //nineteenth button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 18 + button_height * 18, button_width, button_height), "Nemesis Data"))
@@ -832,7 +837,7 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Recaculate Weighted Dijkstra data");
                 GameManager.instance.dijkstraScript.RecalculateWeightedData();
             }
-            
+
             //ninth button
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Loiter Nodes"))
             {
@@ -840,14 +845,14 @@ public class DebugGUI : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.LoiterNodes, "DebugGUI.cs -> OnGUI");
             }
 
-            
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
 
             if (debugDisplay > 0)
             {
-                string analysis;
+
                 switch (debugDisplay)
                 {
                     //City / Level analysis
@@ -1205,29 +1210,30 @@ public class DebugGUI : MonoBehaviour
                         break;
                     //Control Nemesis -> Confirmation
                     case 42:
-                        int nodeID = -1;
-                        try
-                        { nodeID = Convert.ToInt32(textInput_0); }
-                        catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
-                        NemesisGoal goal = NemesisGoal.SEARCH;
-                        switch (textInput_1)
+                        if (doOnceFlag == false)
                         {
-                            case "Ambush":
-                            case "ambush":
-                            case "AMBUSH":
-                                goal = NemesisGoal.AMBUSH;
-                                break;
+                            doOnceFlag = true;
+                            int nodeID = -1;
+                            try
+                            { nodeID = Convert.ToInt32(textInput_0); }
+                            catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
+                            NemesisGoal goal = NemesisGoal.SEARCH;
+                            switch (textInput_1)
+                            {
+                                case "Ambush":
+                                case "ambush":
+                                case "AMBUSH":
+                                    goal = NemesisGoal.AMBUSH;
+                                    break;
+                            }
+                            if (nodeID > -1)
+                            {  GameManager.instance.nemesisScript.SetPlayerControlStart(nodeID, goal); }
+                            status = GUIStatus.None;
                         }
-                        if (nodeID > -1)
-                        {
-                            GameManager.instance.nemesisScript.SetPlayerControlStart(nodeID, goal);
-                            if (textOutput == null)
-                            { textOutput = string.Format("Nemesis Player Control, nodeID {0}, goal {1}{2}Press ESC to Exit", textInput_0, textInput_1, "\n"); }
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
-                        }
-                        status = GUIStatus.None;
-                        debugDisplay = 0;
+                        if (textOutput == null)
+                        { textOutput = string.Format("Nemesis Player Control, nodeID {0}, goal {1}{2}Press ESC to Exit", textInput_0, textInput_1, "\n"); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         break;
                     //Rebel AI data
                     case 43:
@@ -1263,20 +1269,21 @@ public class DebugGUI : MonoBehaviour
                         textOutput = null;
                         break;
                     case 48:
-                        int contactID = -1;
-                        try
-                        { contactID = Convert.ToInt32(textInput_0); }
-                        catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
-                        if (contactID > -1)
+                        if (doOnceFlag == false)
                         {
-                            analysis = GameManager.instance.dataScript.ContactToggleActive(contactID);
-                            if (textOutput == null)
-                            { textOutput = string.Format("Toggle Contact, ID {0}, status {1}{2}Press ESC to Exit", textInput_0, analysis, "\n"); }
-                            customBackground.alignment = TextAnchor.UpperLeft;
-                            GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                            doOnceFlag = true;
+                            int contactID = -1;
+                            try
+                            { contactID = Convert.ToInt32(textInput_0); }
+                            catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
+                            if (contactID > -1)
+                            { analysis = GameManager.instance.dataScript.ContactToggleActive(contactID); }
+                            status = GUIStatus.None;
                         }
-                        status = GUIStatus.None;
-                        debugDisplay = 0;
+                        if (textOutput == null)
+                        { textOutput = string.Format("Toggle Contact, ID {0}, status {1}{2}Press ESC to Exit", textInput_0, analysis, "\n"); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         break;
                     //Contact dict
                     case 49:
