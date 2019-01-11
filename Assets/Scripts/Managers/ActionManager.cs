@@ -1127,6 +1127,8 @@ public class ActionManager : MonoBehaviour
                 string text = string.Format("{0}, {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 string reason = string.Format("is currently <b>Lying Low</b> and {0}{1}{2}<b>cut off from all communications</b>{3}","\n", "\n", colourBad, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
+                //update contacts
+                GameManager.instance.contactScript.UpdateNodeContacts();
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1271,6 +1273,8 @@ public class ActionManager : MonoBehaviour
                 //message
                 string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 GameManager.instance.messageScript.ActorStatus(text, "Recalled", "has been Recalled", actor.actorID, details.side);
+                //update contacts
+                GameManager.instance.contactScript.UpdateNodeContacts();
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }

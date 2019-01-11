@@ -301,7 +301,7 @@ public class TooltipNode : MonoBehaviour
                     case 2:
                     case 3:
                         //info dump
-                        builderCrisis.AppendFormat("{0}<size=90%>{1}{2}{3}</size>", "\n", colourAlert, data.listOfCrisis[index], colourEnd);
+                        builderCrisis.AppendFormat("{0}<size=90%>{1}<b>{2}</b>{3}</size>", "\n", colourAlert, data.listOfCrisis[index], colourEnd);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid listOfCrisis[{0}] \"{1}\"", index, data.listOfCrisis[index]);
@@ -452,11 +452,9 @@ public class TooltipNode : MonoBehaviour
         {
             if (GameManager.instance.optionScript.fogOfWar == true)
             {
-                if (data.isTracer == true || data.isContact == true || data.isTeamKnown == true)
-                {
-                    proceedFlag = true;
-                }
-            }
+                if (data.isTracer == true  || data.isTeamKnown == true || data.isActiveContact == true)
+                { proceedFlag = true; }
+             }
             else { proceedFlag = true; }
         }
         //show teams show only (Resistance) if node has a tracer or actor has a contact there or isTeamKnown true (if FOW option 'true')
@@ -474,7 +472,7 @@ public class TooltipNode : MonoBehaviour
             }
             else { nodeTeams.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>No Teams present</size>", colourEnd); }
         }
-        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=90%>requires Tracer or Actor</size>{4}", colourBadSide, colourEnd, "\n", colourDefault, colourEnd); }
+        else { nodeTeams.text = string.Format("{0}Team Info unavailable{1}{2}{3}<size=90%>requires Tracer or Contact</size>{4}", colourBadSide, colourEnd, "\n", colourDefault, colourEnd); }
         //
         // - - Target (multipurpose, shows activity data if NodeManager.cs -> activityState > 'None') - - -
         //

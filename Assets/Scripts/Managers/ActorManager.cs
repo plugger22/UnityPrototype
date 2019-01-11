@@ -3676,15 +3676,9 @@ public class ActorManager : MonoBehaviour
                                         GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
                                         //check if actor has stressed condition
                                         if (actor.CheckConditionPresent(conditionStressed) == true)
-                                        {
-                                            actor.RemoveCondition(conditionStressed, "Lying Low removes Stress");
-                                            /*if (actor.RemoveCondition(conditionStressed) == true)
-                                            {
-                                                //message -> condition change [EDIT] not needed as Actor.cs handles this
-                                                text = string.Format("{0}, {1}, is no longer Stressed (Lie Low)", actor.arc.name, actor.actorName);
-                                                GameManager.instance.messageScript.ActorCondition(text, actor.actorID, false, conditionStressed, "Lying Low removes Stress");
-                                            }*/
-                                        }
+                                        { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
+                                        //update contacts
+                                        GameManager.instance.contactScript.UpdateNodeContacts();
                                     }
                                     else
                                     { actor.datapoint2 = invis; }

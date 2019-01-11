@@ -239,6 +239,8 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.NodeRedraw = true;
         //reduce actor alpha to show inactive (sprite and text)
         GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+        //update contacts
+        GameManager.instance.contactScript.UpdateNodeContacts();
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
         details.actor.Status = ActorStatus.Captured;
@@ -336,12 +338,13 @@ public class CaptureManager : MonoBehaviour
                 cause -= actorReleased;
                 cause = Mathf.Max(0, cause);
                 GameManager.instance.cityScript.CityLoyalty = cause;
-
                 builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
                 //invisibility
                 int invisibilityNew = releaseInvisibility;
                 details.actor.datapoint2 = invisibilityNew;
                 builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, details.actor.actorName, invisibilityNew, colourEnd);
+                //update contacts
+                GameManager.instance.contactScript.UpdateNodeContacts();
                 //update actor alpha
                 GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                 //admin

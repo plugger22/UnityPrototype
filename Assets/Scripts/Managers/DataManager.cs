@@ -1563,7 +1563,7 @@ public class DataManager : MonoBehaviour
             dictOfNodeContactsResistance.Count, dictOfContactsByNodeResistance.Count));
     }
 
-    /// <summary>
+    /*/// <summary> NOTE: made redundant byGetActiveContactsAtNodeAuthority/Resistance
     /// Returns a list of ActorArc names (default Current side to enable both sides tooltips to work correctly while debugging) for all contacts at node. Returns empty string if none.
     /// </summary>
     /// <param name="nodeID"></param>
@@ -1571,7 +1571,7 @@ public class DataManager : MonoBehaviour
     public List<string> GetListOfNodeContactActorArcs(int nodeID, bool isCurrentSide = true)
     {
         List<string> listOfNodeContacts = new List<string>();
-        /*GlobalSide side = GameManager.instance.sideScript.PlayerSide;*/
+        //GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         GlobalSide side = GameManager.instance.turnScript.currentSide;
         //If other side, flip sides to opposite side
         if (isCurrentSide == false)
@@ -1584,6 +1584,52 @@ public class DataManager : MonoBehaviour
         if (side.level == GameManager.instance.sideScript.PlayerSide.level)
         { dictOfNodeContacts = GetDictOfNodeContacts(); }
         else { dictOfNodeContacts = GetDictOfNodeContacts(false); }
+        if (dictOfNodeContacts.ContainsKey(nodeID) == true)
+        {
+            List<int> listOfActors = dictOfNodeContacts[nodeID];
+            if (listOfActors != null)
+            {
+                int numOfActors = listOfActors.Count;
+                int actorID;
+                if (numOfActors > 0)
+                {
+                    for (int i = 0; i < numOfActors; i++)
+                    {
+                        actorID = listOfActors[i];
+                        Actor actor = GetActor(actorID);
+                        if (actor != null)
+                        {
+                            //add to list if actor same side as Player
+                            if (actor.side.level == side.level)
+                            { listOfNodeContacts.Add(actor.arc.name); }
+
+                            //add to list if actor same side as Current side
+                            //if (actor.side.level == side.level)
+                            //{ listOfNodeContacts.Add(actor.arc.name); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}, nodeID {1}", actorID, nodeID); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfActors (Empty) for nodeID {0}", nodeID); }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", nodeID); }
+        }
+        return listOfNodeContacts;
+    }*/
+
+
+    /// <summary>
+    /// Returns a list of ActorArc names for all Authority contacts at node. Returns empty string if none.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public List<string> GetActiveContactsAtNodeAuthority(int nodeID)
+    {
+        List<string> listOfNodeContacts = new List<string>();
+        //find node in dict
+        GlobalSide side = GameManager.instance.globalScript.sideAuthority;
+        Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();
+        dictOfNodeContacts = GetDictOfNodeContacts(side);
         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
         {
             List<int> listOfActors = dictOfNodeContacts[nodeID];
@@ -1622,7 +1668,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public List<string> GetActiveContactsAtNode(int nodeID)
+    public List<string> GetActiveContactsAtNodeResistance(int nodeID)
     {
         List<string> listOfNodeContacts = new List<string>();
         //get list of contacts at node
@@ -1649,6 +1695,92 @@ public class DataManager : MonoBehaviour
             }
         }
         return listOfNodeContacts;
+    }
+
+    /// <summary>
+    /// returns true if the relevant side has at least one active contact with an associated active parent active present at the node
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public bool CheckActiveContactAtNode(int nodeID, GlobalSide side)
+    {
+        bool isActiveContact = false;
+        if (side != null)
+        {
+            switch (side.level)
+            {
+                case 1:
+                    //Authority -> check only if parent actor is active as contacts are automatically active
+                    if (dictOfNodeContactsAuthority.ContainsKey(nodeID) == true)
+                    {
+                        List<int> listOfActors = dictOfNodeContactsAuthority[nodeID];
+                        if (listOfActors != null)
+                        {
+                            for (int i = 0; i < listOfActors.Count; i++)
+                            {
+                                Actor actor = GetActor(listOfActors[i]);
+                                if (actor != null)
+                                {
+                                    if (actor.Status == ActorStatus.Active)
+                                    { isActiveContact = true; break; }
+                                }
+                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
+                            }
+                        }
+                        else { Debug.LogError("Invalid listOfActors (Null)"); }
+                    }
+                    break;
+                case 2:
+                    //Resistance -> both contact and parent actor must be Active
+                    List<Contact> listOfContacts = GetListOfNodeContacts(nodeID);
+                    if (listOfContacts != null)
+                    {
+                        for (int i = 0; i < listOfContacts.Count; i++)
+                        {
+                            Contact contact = listOfContacts[i];
+                            if (contact != null)
+                            {
+                                if (contact.status == ContactStatus.Active)
+                                {
+                                    //check parent actor is active
+                                    Actor actor = GetActor(contact.actorID);
+                                    if (actor != null)
+                                    {
+                                        if (actor.Status == ActorStatus.Active)
+                                        { isActiveContact = true; break; }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid actor (Null) for contact.actorID {0}", contact.actorID); }
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid contact (Null) for listOfContacts[{0}]", i); }
+                        }
+                    }
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised side \"{0}\"", side.name);
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid side (Null)"); }
+        return isActiveContact;
+    }
+
+    /// <summary>
+    /// Toggle a contact active or inactive
+    /// </summary>
+    /// <param name="contactID"></param>
+    public void ContactToggleActive(int contactID)
+    {
+        Contact contact = GetContact(contactID);
+        if (contact != null)
+        {
+            switch (contact.status)
+            {
+                case ContactStatus.Active: contact.status = ContactStatus.Inactive; break;
+                case ContactStatus.Inactive: contact.status = ContactStatus.Active; break;
+            }
+        }
     }
 
     //

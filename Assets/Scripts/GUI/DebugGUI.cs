@@ -105,7 +105,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 150), "Info Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 150), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 200), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 40), "Level Menu", customBackground);
 
@@ -763,6 +763,15 @@ public class DebugGUI : MonoBehaviour
                 else { GameManager.instance.tooltipHelpScript.CloseTooltip(); }
             }
 
+            //eighteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Toggle Contact"))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Contact Active/Inactive");
+                if (debugDisplay != 47)
+                { debugDisplay = 47; }
+                else { debugDisplay = 0; }
+            }
+
             //
             // - - - Level Menu - - -
             //
@@ -839,6 +848,7 @@ public class DebugGUI : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.LoiterNodes, "DebugGUI.cs -> OnGUI");
             }
 
+            
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //
@@ -1250,6 +1260,14 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.contactScript.DebugDisplayContactsByNode();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //Toggle Contact Active / Inactive
+                    case 47:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input contactID");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GameManager.instance.dataScript.ContactToggleActive(Convert.ToInt32(textInput_0));
                         break;
                 }
             }

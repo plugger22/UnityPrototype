@@ -380,7 +380,7 @@ public class Node : MonoBehaviour
                     //
                     // - - - CONTACTS vary depending on whether viewing player side or debug viewing other side
                     //
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.turnScript.currentSide.level)
+                    /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.turnScript.currentSide.level)
                     {
                         contactListCurrent = GetNodeContacts();
                         contactListOther = GetNodeContacts(false);
@@ -389,6 +389,19 @@ public class Node : MonoBehaviour
                     {
                         contactListCurrent = GetNodeContacts(false);
                         contactListOther = GetNodeContacts();
+                    }*/
+                    switch (GameManager.instance.turnScript.currentSide.level)
+                    {
+                        case 1:
+                            //authority
+                            contactListCurrent = GameManager.instance.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
+                            contactListOther = GameManager.instance.dataScript.GetActiveContactsAtNodeResistance(nodeID);
+                            break;
+                        case 2:
+                            //resistance
+                            contactListCurrent = GameManager.instance.dataScript.GetActiveContactsAtNodeResistance(nodeID);
+                            contactListOther = GameManager.instance.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
+                            break;
                     }
                     List<EffectDataTooltip> effectsList = GetOngoingEffects();
                     List<string> teamList = new List<string>();
@@ -482,9 +495,16 @@ public class Node : MonoBehaviour
                         tooltipPos = transform.position
                     };
                     //isContact side dependant
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                    { dataTooltip.isContact = isContactResistance; }
-                    else { dataTooltip.isContact = isContactAuthority; }
+                    GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+                    if (playerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                    {
+                        //broad check first for contacts then narrow check for active contact with an active parent actor
+                        dataTooltip.isActiveContact = isContactResistance;
+                        if (isContactResistance == true)
+                        { dataTooltip.isActiveContact = GameManager.instance.dataScript.CheckActiveContactAtNode(nodeID, playerSide); }
+                    }
+                    //if Authority contacts present then automatically active
+                    else { dataTooltip.isActiveContact = isContactAuthority; }
 
                     GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
@@ -648,13 +668,7 @@ public class Node : MonoBehaviour
         return connection;
     }
 
-    /// <summary>
-    /// returns a list of actors who have a contact at this node
-    /// </summary>
-    /// <returns></returns>
-    public List<string> GetNodeContacts(bool isCurrentSide = true)
-    { return GameManager.instance.dataScript.GetListOfNodeContactActorArcs(nodeID, isCurrentSide); }
-
+    
     /// <summary>
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none
     /// </summary>
