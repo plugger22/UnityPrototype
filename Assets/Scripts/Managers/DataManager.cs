@@ -1478,6 +1478,7 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// loops dictOfContactsByNodeResistance and builds dict from scratch to ensure data is current. Called by other contact methods whenever there is a change in contact status.
+    /// Automatically for resistance side as only resistance has contacts
     /// </summary>
     public void CreateNodeContacts()
     {
@@ -1612,6 +1613,40 @@ public class DataManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid listOfActors (Empty) for nodeID {0}", nodeID); }
             }
             else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", nodeID); }
+        }
+        return listOfNodeContacts;
+    }
+
+    /// <summary>
+    /// Returns a list of ActorArc names (default Current side to enable both sides tooltips to work correctly while debugging) for all contacts at node. Returns empty string if none. Resostamce side only.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    public List<string> GetActiveContactsAtNode(int nodeID)
+    {
+        List<string> listOfNodeContacts = new List<string>();
+        //get list of contacts at node
+        List<Contact> listOfContacts = GetListOfNodeContacts(nodeID);
+        if (listOfContacts != null && listOfContacts.Count > 0)
+        {
+            //check if contacts are active
+            foreach(Contact contact in listOfContacts)
+            {
+                if (contact.status == ContactStatus.Active)
+                {
+                    //get actor and check if active
+                    Actor actor = GetActor(contact.actorID);
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            //add actor arc to list
+                            listOfNodeContacts.Add(actor.arc.name);
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", contact.actorID); }
+                }
+            }
         }
         return listOfNodeContacts;
     }
