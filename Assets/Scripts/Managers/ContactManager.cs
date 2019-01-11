@@ -744,5 +744,24 @@ public class ContactManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Debug print dictOfContacts
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayContactsDict()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        
+        if (dictOfContacts != null)
+        {
+            builder.AppendFormat("- dictOfContacts ({0} records){1}{2}", dictOfContacts.Count, "\n", "\n");
+            foreach(var record in dictOfContacts)
+            { builder.AppendFormat(" id {0}, {1} {2}, {3}, {4}{5}", record.Value.contactID, record.Value.nameFirst, record.Value.nameLast, record.Value.job, record.Value.status, "\n"); }
+        }
+        else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+        return builder.ToString();
+    }
+
     //new methods above here
 }

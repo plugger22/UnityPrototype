@@ -11,7 +11,7 @@ using System;
 public class DebugGUI : MonoBehaviour
 {
     //for whenever interaction is needed
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl}
+    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle}
 
     public GUIStyle customBackground;
 
@@ -297,7 +297,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 33; contactToggle = 1; break;
                     case 1: debugDisplay = 46; contactToggle = 2; break;
-                    case 2: debugDisplay = 0; contactToggle = 0; break;
+                    case 2: debugDisplay = 49; contactToggle = 3; break;
+                    case 3: debugDisplay = 0; contactToggle = 0; break;
                 }
             }
 
@@ -1264,10 +1265,32 @@ public class DebugGUI : MonoBehaviour
                     //Toggle Contact Active / Inactive
                     case 47:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 100), "", customBackground);
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 250, 50), "", customBackground);
                         GUI.Label(new Rect(Screen.width / 2 - 395, 55, 240, 20), "Input contactID");
                         textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
-                        GameManager.instance.dataScript.ContactToggleActive(Convert.ToInt32(textInput_0));
+                        status = GUIStatus.ContactToggle;
+                        textOutput = null;
+                        break;
+                    case 48:
+                        int contactID = -1;
+                        try
+                        { contactID = Convert.ToInt32(textInput_0); }
+                        catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
+                        if (contactID > -1)
+                        {
+                            analysis = GameManager.instance.dataScript.ContactToggleActive(contactID);
+                            if (textOutput == null)
+                            { textOutput = string.Format("Toggle Contact, ID {0}, status {1}{2}Press ESC to Exit", textInput_0, analysis, "\n"); }
+                            customBackground.alignment = TextAnchor.UpperLeft;
+                            GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        }
+                        status = GUIStatus.None;
+                        break;
+                    //Contact dict
+                    case 49:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.contactScript.DebugDisplayContactsDict();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }
@@ -1307,6 +1330,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.NemesisControl:
                         debugDisplay = 42;
+                        break;
+                    case GUIStatus.ContactToggle:
+                        debugDisplay = 48;
                         break;
                 }
                 break;

@@ -1767,10 +1767,10 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggle a contact active or inactive
+    /// Toggle a contact active or inactive. Returns updated status as a string or 'unknown' if an issue
     /// </summary>
     /// <param name="contactID"></param>
-    public void ContactToggleActive(int contactID)
+    public string ContactToggleActive(int contactID)
     {
         Contact contact = GetContact(contactID);
         if (contact != null)
@@ -1780,7 +1780,10 @@ public class DataManager : MonoBehaviour
                 case ContactStatus.Active: contact.status = ContactStatus.Inactive; break;
                 case ContactStatus.Inactive: contact.status = ContactStatus.Active; break;
             }
+            Debug.LogFormat("[Cont] DataManager.cs -> ContactToggleActive: {0} {1}, {2}, id {3} STATUS now {4}{5}", contact.nameFirst, contact.nameLast, contact.job, contact.contactID, contact.status, "\n");
+            return Convert.ToString(contact.status);
         }
+        return "Unknown";
     }
 
     //
