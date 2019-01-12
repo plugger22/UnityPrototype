@@ -56,6 +56,7 @@ public class DebugGUI : MonoBehaviour
     private string optionAIScreamer;
     private string optionRenownUI;
     private string optionPath;
+    private string optionContacts;
 
     private void Awake()
     {
@@ -75,6 +76,7 @@ public class DebugGUI : MonoBehaviour
         optionAIScreamer = "AIScreamer ON";
         optionRenownUI = "Renown UI OFF";
         optionPath = "Input Path";
+        optionContacts = "Contacts ON";
     }
 
     // Update is called once per frame
@@ -495,7 +497,7 @@ public class DebugGUI : MonoBehaviour
             //tenth button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionRenownUI))
             {
-                Debug.Log("[Dbg] Button -> Toggle Renown Display");
+                Debug.Log("[Dbg] Button -> Toggle Renown UI Display");
                 if (GameManager.instance.actorPanelScript.CheckRenownUIStatus() == true)
                 {
                     GameManager.instance.actorPanelScript.SetActorRenownUI(false);
@@ -505,6 +507,22 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.actorPanelScript.SetActorRenownUI(true);
                     optionRenownUI = "Renown UI OFF";
+                }
+            }
+
+            //eleventh button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionContacts))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Show Contacts in Node tooltips");
+                if (GameManager.instance.optionScript.showContacts == true)
+                {
+                    GameManager.instance.optionScript.showContacts = false;
+                    optionContacts = "Contacts ON";
+                }
+                else
+                {
+                    GameManager.instance.optionScript.showContacts = true;
+                    optionContacts = "Contacts OFF";
                 }
             }
 

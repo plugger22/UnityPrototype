@@ -224,6 +224,8 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.Human;
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
+                //convert resources to renown
+                GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance);
                 //update states
                 ActorStatus aiRebelStatus = GameManager.instance.aiRebelScript.status;
                 ActorInactive aiRebelInactive = GameManager.instance.aiRebelScript.inactiveStatus;

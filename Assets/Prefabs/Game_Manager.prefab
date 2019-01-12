@@ -1517,9 +1517,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoGearResolution: 0
   fogOfWar: 0
-  connectorTooltips: 0
   debugData: 0
   noAI: 0
+  showContacts: 0
+  showRenown: 1
+  connectorTooltips: 0
 --- !u!114 &114556544146557144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1991,7 +1993,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 12
+  autoRunTurns: 15
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

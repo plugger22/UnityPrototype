@@ -273,6 +273,7 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="status"></param>
     public void SetActorRenownUI(bool status)
     {
+        GameManager.instance.optionScript.showRenown = status;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int index = 0; index < arrayOfRenownCircles.Length; index++)
         {

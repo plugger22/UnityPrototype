@@ -12,12 +12,17 @@ public class OptionManager : MonoBehaviour
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
-    [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
+    
+    //Debug options
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
     [HideInInspector] public bool noAI = false;                                   //if true AI is switched off for both sides (debug purposes)
 
+    //UI options
+    [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
+    [HideInInspector] public bool showRenown = true;                              //if true renown UI elements shown for actors and player
+    [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
+
     //Backing fields (use underscore)
-    
     private ColourScheme _colourOption;
 
     
@@ -31,13 +36,9 @@ public class OptionManager : MonoBehaviour
             _colourOption = value;
             //Post notification - colour scheme has been changed
             EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
-            Debug.Log("OptionManager -> Colour Scheme now " + _colourOption + "\n");
+            Debug.Log("OptionManager -> Colour Scheme: now " + _colourOption + "\n");
         }
     }  
-
-
-
-
 
 
     /// <summary>
@@ -63,9 +64,8 @@ public class OptionManager : MonoBehaviour
         builder.AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n");
         builder.AppendFormat(" Debug Data -> {0}{1}", debugData, "\n");
         builder.AppendFormat(" NO AI -> {0}{1}", noAI, "\n");
-        builder.AppendFormat(" AI Offline -> {0}{1}", GameManager.instance.aiScript.CheckAIOffLineStatus(), "\n");
-        builder.AppendFormat(" AI TraceBack -> {0}{1}", GameManager.instance.aiScript.CheckAITraceBackStatus(), "\n");
-        builder.AppendFormat(" AI Screamer -> {0}{1}", GameManager.instance.aiScript.CheckAIScreamerStatus(), "\n");
+        builder.AppendFormat(" Show Contacts -> {0}{1}", showContacts, "\n");
+        builder.AppendFormat(" Show Renown -> {0}{1}", showRenown, "\n");
         return builder.ToString();
     }
 

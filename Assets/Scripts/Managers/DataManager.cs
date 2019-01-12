@@ -1670,6 +1670,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<string> GetActiveContactsAtNodeResistance(int nodeID)
     {
+        bool isShowContacts = GameManager.instance.optionScript.showContacts;
         List<string> listOfNodeContacts = new List<string>();
         //get list of contacts at node
         List<Contact> listOfContacts = GetListOfNodeContacts(nodeID);
@@ -1688,6 +1689,12 @@ public class DataManager : MonoBehaviour
                         {
                             //add actor arc to list
                             listOfNodeContacts.Add(actor.arc.name);
+                            //add contact details if option is on
+                            if (isShowContacts == true)
+                            {
+                                //hard wired alert colour and size
+                                listOfNodeContacts.Add(string.Format("<size=90%><color=#FFA07A>{0} {1}, {2}</color></size>", contact.nameFirst, contact.nameLast, contact.job));
+                            }
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", contact.actorID); }

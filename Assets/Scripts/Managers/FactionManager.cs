@@ -172,64 +172,71 @@ public class FactionManager : MonoBehaviour
     /// </summary>
     private void CheckFactionRenownSupport()
     {
-        int side = GameManager.instance.sideScript.PlayerSide.level;
-        if (side > 0)
+        bool isProceed = true;
+        //ignore if autorun with both sides AI
+        if (GameManager.instance.turnScript.CheckIsAutoRun() == true && GameManager.instance.isBothAI == true)
+        { isProceed = false; }
+        if (isProceed == true)
         {
-            int rnd = Random.Range(0, 100);
-            int threshold;
-            switch (side)
+            int side = GameManager.instance.sideScript.PlayerSide.level;
+            if (side > 0)
             {
-                case 1:
-                    //Authority
-                    threshold = _approvalAuthority * 10;
-                    if (rnd < threshold)
-                    {
-                        //Support Provided
-                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                        string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
-                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
-                        //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
-                        //Support given
-                        GameManager.instance.playerScript.Renown += renownPerTurn;
-                    }
-                    else
-                    {
-                        //Support declined
-                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                        string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
-                        GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
-                        //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
-                    }
-                    break;
-                case 2:
-                    //Resistance
-                    threshold = _approvalResistance * 10;
-                    if (rnd < threshold)
-                    {
-                        //Support Provided
-                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                        string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
-                        GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
-                        //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
-                        //Support given
-                        GameManager.instance.playerScript.Renown += renownPerTurn;
-                    }
-                    else
-                    {
-                        //Support declined
-                        Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                        string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                        GameManager.instance.messageScript.FactionSupport(msgText,factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
-                        //random
-                        GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
-                    }
-                    break;
-                default:
-                    Debug.LogWarningFormat("Invalid side \"{0}\"", side);
-                    break;
+                int rnd = Random.Range(0, 100);
+                int threshold;
+                switch (side)
+                {
+                    case 1:
+                        //Authority
+                        threshold = _approvalAuthority * 10;
+                        if (rnd < threshold)
+                        {
+                            //Support Provided
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
+                            GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            //random
+                            GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                            //Support given
+                            GameManager.instance.playerScript.Renown += renownPerTurn;
+                        }
+                        else
+                        {
+                            //Support declined
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
+                            GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
+                            //random
+                            GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                        }
+                        break;
+                    case 2:
+                        //Resistance
+                        threshold = _approvalResistance * 10;
+                        if (rnd < threshold)
+                        {
+                            //Support Provided
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
+                            GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            //random
+                            GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                            //Support given
+                            GameManager.instance.playerScript.Renown += renownPerTurn;
+                        }
+                        else
+                        {
+                            //Support declined
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
+                            GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
+                            //random
+                            GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                        }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid side \"{0}\"", side);
+                        break;
+                }
             }
         }
     }
