@@ -16,7 +16,7 @@ MonoBehaviour:
   preferredArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   hostileArc: {fileID: 0}
   maxTaskPerTurn: 3
-  resourcesAllowance: 0
+  resourcesAllowance: 1
   resourcesStarting: 5
   sprite: {fileID: 21300000, guid: f331d84d98316d347adc56e5e9f0b7ca, type: 3}
   factionID: 2
