@@ -51,6 +51,7 @@ public class AIRebelManager : MonoBehaviour
     //fast access
     private GlobalSide globalResistance;
     private int numOfNodes = -1;
+    private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
 
     //Resistance activity
     List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -229,6 +230,8 @@ public class AIRebelManager : MonoBehaviour
         //actions
         actionAllowance = actionsBase + actionsExtra;
         actionsUsed = 0;
+        //security state
+        security = GameManager.instance.turnScript.authoritySecurityState;
         //renown (equivalent to resources for AI Rebel player)
         ProcessResources();
         //conditions
@@ -409,7 +412,7 @@ public class AIRebelManager : MonoBehaviour
                     sightingNemesis.priority, sightingNemesis.moveNumber, "\n");
                 UpdateNodeConnectionSecurity(sightingNemesis);
                 //add to listOfBadNodes
-                listOfBadNodes.Add(sightingNemesis.nodeID);
+                AddNodeToListOfBadNodes(sightingNemesis.nodeID);
             }
             //change connections based on selected ERASURE TEAM sighting report
             for (int i = 0; i < listOfErasureSightData.Count; i++)
@@ -421,12 +424,40 @@ public class AIRebelManager : MonoBehaviour
                         sightingErasure.priority, sightingErasure.moveNumber, "\n");
                     UpdateNodeConnectionSecurity(sightingErasure);
                     //add to listOfBadNodes
-                    listOfBadNodes.Add(sightingErasure.nodeID);
+                    AddNodeToListOfBadNodes(sightingErasure.nodeID);
+                    //if Security Alert add all neighbouring nodes
+                    if (security == AuthoritySecurityState.SecurityAlert)
+                    {
+                        //all neighbouring nodes of erasure team sighting are added to the listOfBadNodes
+                        Node node = GameManager.instance.dataScript.GetNode(sightingErasure.nodeID);
+                        if (node != null)
+                        {
+                            List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                            if (listOfNeighbours != null)
+                            {
+                                foreach(Node tempNode in listOfNeighbours)
+                                { AddNodeToListOfBadNodes(node.nodeID); }
+                            }
+                            else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid node (Null) for sightingErasure.nodeID {0}", sightingErasure.nodeID); }
+                    }
                 }
             }
             //recalculate weighted data
             GameManager.instance.dijkstraScript.RecalculateWeightedData();
         }
+    }
+
+    /// <summary>
+    /// adds node to list of bad nodes. Checks for duplicates before doing so.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void AddNodeToListOfBadNodes(int nodeID)
+    {
+        Debug.Assert(nodeID > -1, "Invalid nodeID {0} (less than Zero)");
+        if (listOfBadNodes.Exists(x => x == nodeID) == false)
+        { listOfBadNodes.Add(nodeID); }
     }
 
     /// <summary>
