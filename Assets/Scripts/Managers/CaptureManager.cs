@@ -146,10 +146,6 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.NodeRedraw = true;
         //set security state back to normal
         GameManager.instance.authorityScript.SetAuthoritySecurityState("Security measures have been cancelled", string.Format("{0}, Player, has been CAPTURED", GameManager.instance.playerScript.PlayerName));
-        //switch off flashing red indicator on top widget UI
-        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
-        //reduce player alpha to show inactive (sprite and text)
-        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
         //AI side tab
         GameManager.instance.aiScript.UpdateSideTabData();
         //change player state
@@ -184,6 +180,10 @@ public class CaptureManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid listOfGear (Null)"); }
             }
+            //switch off flashing red indicator on top widget UI
+            EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
+            //reduce player alpha to show inactive (sprite and text)
+            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
             //player captured outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {

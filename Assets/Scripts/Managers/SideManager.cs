@@ -243,6 +243,10 @@ public class SideManager : MonoBehaviour
                 {
                     case ActorStatus.Captured:
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
+                        ///switch off flashing red indicator on top widget UI
+                        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
+                        //reduce player alpha to show inactive (sprite and text)
+                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                         break;
                     case ActorStatus.Inactive:
                         switch (aiRebelInactive)

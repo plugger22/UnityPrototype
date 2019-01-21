@@ -1989,11 +1989,11 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 0
   isAuthority: 0
-  isBothAI: 1
+  isBothAI: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 15
+  autoRunTurns: 10
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

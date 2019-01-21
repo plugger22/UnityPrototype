@@ -117,7 +117,7 @@ public class DebugGUI : MonoBehaviour
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 40), "Level Menu", customBackground);
 
             //
-            // - - - Data (first box)
+            // - - - Info (first box)
             //
 
             //first button
@@ -148,16 +148,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Player Stats"))
-            {
-                Debug.Log("[Dbg] Button -> Toggle Player Stats");
-                if (debugDisplay != 8)
-                { debugDisplay = 8; }
-                else { debugDisplay = 0; }
-            }
-
-            //fifth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Game State"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Game State"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Game State");
                 if (debugDisplay != 5)
@@ -165,9 +156,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-
-            //sixth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "City Analysis"))
+            //fifth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "City Analysis"))
             {
                 Debug.Log("[Dbg] Button -> Toggle City Analysis");
                 if (debugDisplay != 1)
@@ -175,8 +165,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //seventh button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Actions Register"))
+            //sixth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actions Register"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Actions Register");
                 if (debugDisplay != 15)
@@ -184,8 +174,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //eigth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Ongoing Register"))
+            //seventh button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Ongoing Register"))
             {
                 Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
                 if (debugDisplay != 14)
@@ -193,12 +183,21 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //ninth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Factions"))
+            //eigth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Factions"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Factions");
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
+                else { debugDisplay = 0; }
+            }
+
+            //ninth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Player Stats"))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Player Stats");
+                if (debugDisplay != 8)
+                { debugDisplay = 8; }
                 else { debugDisplay = 0; }
             }
 
@@ -211,8 +210,23 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //eleventh button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Team Data"))
+            //eleventh
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Authority AI"))
+            {
+                Debug.Log("[Dbg] Button -> Authority AI Data");
+                switch (aiStatus)
+                {
+                    case AIDebugData.None: debugDisplay = 10; aiStatus = AIDebugData.Task; break;
+                    case AIDebugData.Task: debugDisplay = 10; aiStatus = AIDebugData.Node; break;
+                    case AIDebugData.Node: debugDisplay = 10; aiStatus = AIDebugData.Spider; break;
+                    case AIDebugData.Spider: debugDisplay = 10; aiStatus = AIDebugData.Erasure; break;
+                    case AIDebugData.Erasure: debugDisplay = 10; aiStatus = AIDebugData.Decision; break;
+                    case AIDebugData.Decision: debugDisplay = 0; aiStatus = AIDebugData.None; break;
+                }
+            }
+
+            //twelth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Team Data"))
             {
                 Debug.Log("[Dbg] Button -> Team Data");
                 //toggles sequentially through team data displays and then switches off
@@ -229,8 +243,8 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-            //twelth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Message Data"))
+            //thirteenth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Message Data"))
             {
                 Debug.Log("[Dbg] Button -> Message Data");
                 //toggles sequentially through message dictionaries and then switches off
@@ -241,22 +255,6 @@ public class DebugGUI : MonoBehaviour
                     case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
                     case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
                     case MessageCategory.AI: debugDisplay = 0; msgStatus = MessageCategory.None; break;
-                }
-            }
-
-
-            //thirteenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Authority AI"))
-            {
-                Debug.Log("[Dbg] Button -> AI Data");
-                switch (aiStatus)
-                {
-                    case AIDebugData.None: debugDisplay = 10; aiStatus = AIDebugData.Task; break;
-                    case AIDebugData.Task: debugDisplay = 10; aiStatus = AIDebugData.Node; break;
-                    case AIDebugData.Node: debugDisplay = 10; aiStatus = AIDebugData.Spider; break;
-                    case AIDebugData.Spider: debugDisplay = 10; aiStatus = AIDebugData.Erasure; break;
-                    case AIDebugData.Erasure: debugDisplay = 10; aiStatus = AIDebugData.Decision; break;
-                    case AIDebugData.Decision: debugDisplay = 0; aiStatus = AIDebugData.None; break;
                 }
             }
 
@@ -951,7 +949,7 @@ public class DebugGUI : MonoBehaviour
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
-                    //Toggle AI Data
+                    //Toggle Authority AI Data
                     case 10:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = "Unknown";

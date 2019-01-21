@@ -4586,6 +4586,7 @@ public class AIManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //Task lists
+        builder.AppendFormat("Authority AI Status (Tasks){0}{1}", "\n", "\n");
         builder.AppendFormat("- Task Allowances{0}", "\n");
         builder.AppendFormat(" {0} Authority tasks per turn ({1}){2}", factionAuthority.maxTaskPerTurn, factionAuthority.name, "\n");
         builder.AppendFormat(" {0} Resistance tasks per turn ({1}){2}{3}", factionResistance.maxTaskPerTurn, factionResistance.name, "\n", "\n");
@@ -4612,6 +4613,7 @@ public class AIManager : MonoBehaviour
     public string DisplayNodeData()
     {
         StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Authority AI Status (Nodes){0}{1}", "\n", "\n");
         //Master Node list
         builder.AppendFormat("- listNodeMaster{0}", "\n");
         builder.Append(DebugDisplayList(listNodeMaster));
@@ -4638,6 +4640,7 @@ public class AIManager : MonoBehaviour
     public string DisplaySpiderData()
     {
         StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Authority AI Status (Spider){0}{1}", "\n", "\n");
         //Task lists
         builder.AppendFormat("- listOfSpiderTask{0}", "\n");
         builder.Append(DebugTaskList(listOfSpiderTasks));
@@ -4674,6 +4677,7 @@ public class AIManager : MonoBehaviour
     public String DisplayErasureData()
     {
         StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Authority AI Status (Erasure){0}{1}", "\n", "\n");
         builder.AppendFormat("- listOfErasureTasks{0}", "\n");
         builder.Append(DebugTaskList(listOfErasureTasks));
         builder.AppendFormat("{0}- listOfErasureNodes{1}", "\n", "\n");
@@ -4722,6 +4726,7 @@ public class AIManager : MonoBehaviour
     public String DisplayDecisionData()
     {
         StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Authority AI Status (Decisions){0}{1}", "\n", "\n");
         builder.AppendFormat("- listOfDecisionTasksCritical{0}", "\n");
         builder.Append(DebugTaskList(listOfDecisionTasksCritical));
         builder.AppendFormat("{0}- listOfDecisionTasksNonCritical{1}", "\n", "\n");

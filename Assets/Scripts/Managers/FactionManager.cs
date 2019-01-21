@@ -88,7 +88,7 @@ public class FactionManager : MonoBehaviour
         Debug.Assert(trait != null, "Invalid authority trait (Null)");
         factionAuthority.AddTrait(trait);
         //set AI resource levels
-        GameManager.instance.aiScript.resourcesGainAuthority = factionAuthority.resourcesAllowance;
+        /*GameManager.instance.aiScript.resourcesGainAuthority = factionAuthority.resourcesAllowance;*/
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideAuthority, factionAuthority.resourcesStarting);
         //Resistance faction
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
@@ -97,7 +97,7 @@ public class FactionManager : MonoBehaviour
         Debug.Assert(trait != null, "Invalid resistance trait (Null)");
         factionResistance.AddTrait(trait);
         //set AI resource levels
-        GameManager.instance.aiScript.resourcesGainResistance = factionResistance.resourcesAllowance;
+        /*GameManager.instance.aiScript.resourcesGainResistance = factionResistance.resourcesAllowance;*/
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);
         //approval levels
         ApprovalAuthority = Random.Range(1, 10);

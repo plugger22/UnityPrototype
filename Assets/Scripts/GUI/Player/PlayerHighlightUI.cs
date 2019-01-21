@@ -39,7 +39,17 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData)
     {
         //Flasher
-        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        Node node = null;
+        //get correct node (captured node if captured)
+        switch (GameManager.instance.playerScript.status)
+        {
+            case ActorStatus.Active:
+                node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                break;
+            case ActorStatus.Captured:
+                node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                break;
+        }
         if (node != null)
         {
             isFlashOn = false;
@@ -63,13 +73,29 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             StopCoroutine(myFlashCoroutine);
             GameManager.instance.nodeScript.SetShowPlayerNode(true);
             //set player node back to correct material
-            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-            if (node != null)
+            Node node = null;
+            //get correct node (captured node if captured)
+            switch (GameManager.instance.playerScript.status)
             {
-                node.SetMaterial(materialPlayer);
-                GameManager.instance.nodeScript.NodeRedraw = true;
+                case ActorStatus.Active:
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    if (node != null)
+                    {
+                        node.SetMaterial(materialPlayer);
+                        GameManager.instance.nodeScript.NodeRedraw = true;
+                    }
+                    break;
+                case ActorStatus.Captured:
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                    if (node != null)
+                    {
+                        node.SetMaterial(materialNormal);
+                        GameManager.instance.nodeScript.NodeRedraw = true;
+                    }
+                    break;
             }
-            else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }
+
+            /*else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }*/
             GameManager.instance.tooltipGenericScript.CloseTooltip("PlayerSpriteTooltipUI.cs -> OnPointerExit");
         }
     }
