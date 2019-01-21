@@ -635,8 +635,8 @@ public class AIManager : MonoBehaviour
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         /*ExecuteTasks(resistanceMaxTasksPerTurn);
-        ClearAICollections();*/
-        UpdateResources(globalResistance);
+        ClearAICollections();
+        UpdateResources(globalResistance);*/
         //run AI
         GameManager.instance.aiRebelScript.ProcessAI();
         //reset flags
@@ -652,7 +652,7 @@ public class AIManager : MonoBehaviour
         Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
-        UpdateResources(globalAuthority);
+        /*UpdateResources(globalAuthority);*/
         //AI Status checks
         UpdateRebootStatus();
         UpdateCounterMeasureTimers();
@@ -1059,7 +1059,7 @@ public class AIManager : MonoBehaviour
     // - - - Miscellaneous - - -
     //
 
-    /// <summary>
+    /*/// <summary>
     /// add the resource allowance each turn to the relevant pool
     /// </summary>
     /// <param name="side"></param>
@@ -1074,7 +1074,7 @@ public class AIManager : MonoBehaviour
         if (side.level == 1)
         { Debug.LogFormat("[Aim] AIManager.cs -> UpdateResources: {0} resources now {1}{2}", side.name, resources, "\n"); }
         else { Debug.LogFormat("[Rim] AIManager.cs -> UpdateResources: {0} resources now {1}{2}", side.name, resources, "\n"); }
-    }
+    }*/
 
     /// <summary>
     /// Extracts all relevant AI data from an AI related message

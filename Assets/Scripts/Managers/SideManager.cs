@@ -37,6 +37,9 @@ public class SideManager : MonoBehaviour
     [HideInInspector] public SideState resistanceOverall;                 //who's in charge overall (flows through throughout, constant)
     [HideInInspector] public SideState authorityOverall;
 
+    //fast access
+    GlobalSide globalAuthority;
+    GlobalSide globalResistance;
 
     //backing field
     private GlobalSide _playerSide;
@@ -96,6 +99,10 @@ public class SideManager : MonoBehaviour
 
     public void Initialise()
     {
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
         //both sides AI
         if (GameManager.instance.isBothAI == true)
         {
@@ -103,8 +110,8 @@ public class SideManager : MonoBehaviour
             {
                 //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
                 if (GameManager.instance.isAuthority == true)
-                { PlayerSide = GameManager.instance.globalScript.sideAuthority; }
-                else { PlayerSide = GameManager.instance.globalScript.sideResistance; }
+                { PlayerSide = globalAuthority; }
+                else { PlayerSide = globalResistance; }
                 Debug.Log("[Start] Player set to AI for both sides");
                 resistanceOverall = SideState.AI;
                 authorityOverall = SideState.AI;
@@ -130,7 +137,7 @@ public class SideManager : MonoBehaviour
             else
             {
                 //Authority player
-                PlayerSide = GameManager.instance.globalScript.sideAuthority;
+                PlayerSide = globalAuthority;
                 Debug.Log("[Start] Player set to AUTHORITY side");
                 resistanceOverall = SideState.AI;
                 authorityOverall = SideState.Human;
@@ -188,11 +195,11 @@ public class SideManager : MonoBehaviour
                 break;
             case 1:
                 //Authority
-                aiSide = GameManager.instance.globalScript.sideResistance;
+                aiSide = globalResistance;
                 break;
             case 2:
                 //Resistance
-                aiSide = GameManager.instance.globalScript.sideAuthority;
+                aiSide = globalAuthority;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid _playerSide.level \"{0}\"", _playerSide.level));
@@ -214,6 +221,8 @@ public class SideManager : MonoBehaviour
                 authorityCurrent = SideState.Human;
                 resistanceOverall = SideState.AI;
                 resistanceCurrent = SideState.AI;
+                //convert resources to renown
+                GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
                 //teams need actors assigned
                 GameManager.instance.teamScript.DebugAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
@@ -225,7 +234,7 @@ public class SideManager : MonoBehaviour
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
                 //convert resources to renown
-                GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance);
+                GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
                 //update states
                 ActorStatus aiRebelStatus = GameManager.instance.aiRebelScript.status;
                 ActorInactive aiRebelInactive = GameManager.instance.aiRebelScript.inactiveStatus;

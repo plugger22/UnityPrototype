@@ -433,7 +433,7 @@ public class ItemDataManager : MonoBehaviour
         if (timer == 0)
         {
             //available
-            builder.AppendFormat("Arrangements have been made by <b>RebelHQ</b>{0}{1}", "\n", "\n");
+            builder.AppendFormat("Arrangements have been made by {0}<b>RebelHQ</b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
             builder.AppendFormat("<b>Lie Low</b> action is {0}<b>AVAILABLE</b>{1}", colourNeutral, colourEnd);
         }
         else

@@ -240,7 +240,7 @@ public class DebugGUI : MonoBehaviour
                     case MessageCategory.Pending: debugDisplay = 9; msgStatus = MessageCategory.Current; break;
                     case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
                     case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
-                    case MessageCategory.AI: debugDisplay = 9; msgStatus = MessageCategory.None; break;
+                    case MessageCategory.AI: debugDisplay = 0; msgStatus = MessageCategory.None; break;
                 }
             }
 
@@ -947,9 +947,6 @@ public class DebugGUI : MonoBehaviour
                                 break;
                             case MessageCategory.AI:
                                 analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.AI);
-                                break;
-                            case MessageCategory.Nemesis:
-                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Nemesis);
                                 break;
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);

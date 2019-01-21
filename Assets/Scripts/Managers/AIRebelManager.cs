@@ -176,8 +176,8 @@ public class AIRebelManager : MonoBehaviour
                         //delete older entries
                         if (tracker.turn < threshold)
                         {
-                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED Nemesis tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", 
-                                tracker.turn, threshold, tracker.data0, tracker.data1, "\n");
+                            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED Nemesis tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}", 
+                                tracker.turn, threshold, tracker.data0, tracker.data1, "\n");*/
                             listOfNemesisReports.RemoveAt(i);
                         }
                     }
@@ -202,8 +202,8 @@ public class AIRebelManager : MonoBehaviour
                         //delete older entries
                         if (tracker.turn < threshold)
                         {
-                            Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED Erasure tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}",
-                                tracker.turn, threshold, tracker.data0, tracker.data1, "\n");
+                            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ClearAICollectionsEarly: DELETED Erasure tracker t: {0} < threshold {1}, nodeID {2}, effect {3}{4}",
+                                tracker.turn, threshold, tracker.data0, tracker.data1, "\n");*/
                             listOfErasureReports.RemoveAt(i);
                         }
                     }
@@ -229,7 +229,8 @@ public class AIRebelManager : MonoBehaviour
         //actions
         actionAllowance = actionsBase + actionsExtra;
         actionsUsed = 0;
-
+        //renown (equivalent to resources for AI Rebel player)
+        ProcessResources();
         //conditions
         ProcessConditions();
     }
@@ -322,7 +323,7 @@ public class AIRebelManager : MonoBehaviour
                     if (sighting != null)
                     {
                         listOfNemesisSightData.Add(sighting);
-                        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfNemesisSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");
+                        /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfNemesisSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");*/
                     }
                     else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
                 }
@@ -350,7 +351,7 @@ public class AIRebelManager : MonoBehaviour
                     if (sighting != null)
                     {
                         listOfErasureSightData.Add(sighting);
-                        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfErasureSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");
+                        /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfErasureSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");*/
                     }
                     else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
                 }
@@ -467,15 +468,15 @@ public class AIRebelManager : MonoBehaviour
                         if (connection.SecurityLevel == ConnectionType.None)
                         {
                             connection.ChangeSecurityLevel(sightLevel);
-                            Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
-                                sightLevel, "\n");
+                            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
+                                sightLevel, "\n");*/
                         }
                         //only upgrade connection security level if the sighting data indicates a higher level than is already there. NOTE '>' than 'cause enums for ConnectionType is reversed
                         else if (connection.SecurityLevel > sightLevel)
                         {
                             connection.ChangeSecurityLevel(sightLevel);
-                            Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
-                                sightLevel, "\n");
+                            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
+                                sightLevel, "\n");*/
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid connection (Null) for listOFConnections[{0}]", i); }
@@ -502,7 +503,7 @@ public class AIRebelManager : MonoBehaviour
         //set a base priority
         int turn = GameManager.instance.turnScript.Turn;
         int turnsAgo = turn - tracker.turn;
-        Debug.LogFormat("[Tst] AIRebelManager.cs -> ConvertTrackerToSighting: t:{0}, turnsAgo: {1}, nodeID {2}, contact eff {3}{4}", tracker.turn, turnsAgo, tracker.data0, tracker.data1, "\n");
+        /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ConvertTrackerToSighting: t:{0}, turnsAgo: {1}, nodeID {2}, contact eff {3}{4}", tracker.turn, turnsAgo, tracker.data0, tracker.data1, "\n");*/
         switch (turnsAgo)
         {
             case 0:
@@ -591,7 +592,7 @@ public class AIRebelManager : MonoBehaviour
                     if (target != null)
                     {
                         distance = GameManager.instance.dijkstraScript.GetDistanceWeighted(playerNodeID, target.nodeID);
-                        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: playerNodeID {0}, targetNodeID {1} DISTANCE {2}{3}", playerNodeID, target.nodeID, distance, "\n");
+                        /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: playerNodeID {0}, targetNodeID {1} DISTANCE {2}{3}", playerNodeID, target.nodeID, distance, "\n");*/
                         if (distance > -1)
                         {
                             //add entry to dictionary
@@ -679,6 +680,42 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// provides resources (equivalent to renown for resistance AI side) depending on level of faction support (as per normal)
+    /// </summary>
+    private void ProcessResources()
+    {
+        int rnd = Random.Range(0, 100);
+        int approvalResistance = GameManager.instance.factionScript.ApprovalResistance;
+        int renownPerTurn = GameManager.instance.factionScript.renownPerTurn;
+        int threshold = approvalResistance * 10;
+        Faction factionResistance = GameManager.instance.factionScript.factionResistance;
+        if (factionResistance != null)
+        {
+            if (rnd < threshold)
+            {
+                //Support Provided
+                Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
+                GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                //random
+                GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                //Support given
+                GameManager.instance.playerScript.Renown += renownPerTurn;
+            }
+            else
+            {
+                //Support declined
+                Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
+                GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown);
+                //random
+                GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+            }
+        }
+        else { Debug.LogError("Invalid faction (Null) for Resistance"); }
     }
 
     //

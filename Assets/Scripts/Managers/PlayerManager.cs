@@ -95,7 +95,9 @@ public class PlayerManager : MonoBehaviour
             }
             else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
             {
-                value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+
+                /*value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);*/
+
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Renown changed from {0} to {1}{2}", _renownAuthority, value, "\n");
                 _renownAuthority = value;
                 //update renown UI (regardless of whether on or off

@@ -19,8 +19,8 @@ public class Faction : ScriptableObject
     [Tooltip("How many actions the AI faction can carry out per turn")]
     [Range(1,3)] public int maxTaskPerTurn = 3;
     [Header("AI Resources")]
-    [Tooltip("The number of AI Resources granted per turn")]
-    [Range(0, 3)] public int resourcesAllowance = 0;
+    /*[Tooltip("The number of AI Resources granted per turn")]
+    [Range(0, 3)] public int resourcesAllowance = 0;*/
     [Tooltip("The starting pool of AI Resources used for Decisions")]
     [Range(1, 10)] public int resourcesStarting = 5;
     [Tooltip("Pictorial representation of faction (152 x 160 png)")]
