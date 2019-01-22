@@ -1988,12 +1988,12 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
-  isAuthority: 1
+  isAuthority: 0
   isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 15
+  autoRunTurns: 20
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -309,22 +309,60 @@ public class ActorManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         {
             //run for Resistance Player
-            CheckInactiveResistanceActors();
-            CheckActiveResistanceActors();    //needs to be AFTER CheckInactiveActors
-            //end game checks
-            GameManager.instance.factionScript.CheckFactionFirePlayer();
-            GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
-            //cooldown timer
-            if (lieLowTimer > 0) { lieLowTimer--; }
+            switch (GameManager.instance.sideScript.resistanceOverall)
+            {
+                case SideState.Human:
+                    CheckInactiveResistanceActors();
+                    //needs to be AFTER CheckInactiveActors
+                    CheckActiveResistanceActors();
+                    //end game checks
+                    GameManager.instance.factionScript.CheckFactionFirePlayer();
+                    GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
+                    //cooldown timer
+                    if (lieLowTimer > 0) { lieLowTimer--; }
+                    break;
+                case SideState.AI:
+                    if (GameManager.instance.isBothAI == true)
+                    {
+                        //Both sides AI (autorun)
+                    }
+                    else
+                    {
+                        //Resistance AI only
+                    }
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid sideState (Unrecognised) for authorityOverall \"{0}\"", GameManager.instance.sideScript.authorityOverall);
+                    break;
+            }
         }
         else
         {
             //run for Authority Player
-            CheckInactiveAuthorityActors();
-            CheckActiveAuthorityActors();    //needs to be AFTER CheckInactiveActors
-            //end game checks
-            GameManager.instance.factionScript.CheckFactionFirePlayer();
-            GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
+            switch (GameManager.instance.sideScript.authorityOverall)
+            {
+                case SideState.Human:
+                    CheckInactiveAuthorityActors();
+                    //needs to be AFTER CheckInactiveActors
+                    CheckActiveAuthorityActors();
+                    //end game checks
+                    GameManager.instance.factionScript.CheckFactionFirePlayer();
+                    GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
+                    break;
+                case SideState.AI:
+                    if (GameManager.instance.isBothAI == true)
+                    {
+                        //Both sides AI (autorun)
+                    }
+                    else
+                    {
+                        //Authority AI only
+                    }
+                    break;
+                default:
+                    Debug.LogWarningFormat("Invalid sideState (Unrecognised) for authorityOverall \"{0}\"", GameManager.instance.sideScript.authorityOverall);
+                    break;
+            }
         }
         UpdateReserveActors();
     }

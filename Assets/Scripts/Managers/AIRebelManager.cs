@@ -769,6 +769,8 @@ public class AIRebelManager : MonoBehaviour
     private void ProcessSurvivalTask()
     {
         int rnd;
+        int invisibility = GameManager.instance.playerScript.Invisibility;
+        int lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
         int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
         bool isSuccess = false;
         //
@@ -788,7 +790,7 @@ public class AIRebelManager : MonoBehaviour
                     {
                         //random chance of moving (not a given as threat could be nearby and staying still, or lying low, might be a better option)
                         rnd = Random.Range(0, 100);
-                        if (rnd < 50)
+                        if (rnd < 75)
                         {
                             isSuccess = true;
                             //generate task
@@ -810,26 +812,58 @@ public class AIRebelManager : MonoBehaviour
             if (isSuccess == false)
             {
                 //Lie Low
-                if (GameManager.instance.playerScript.Invisibility < 3)
+                if (invisibility < 3)
                 {
                     //not a Surveillance crackdown
                     if (security != AuthoritySecurityState.SurveillanceCrackdown)
                     {
-                        //random chance of lying low
-                        rnd = Random.Range(0, 100);
-                        if (rnd < 75)
+                        if (lieLowTimer == 0)
                         {
-                            isSuccess = true;
-                            //generate task
-                            AITask task = new AITask();
-                            task.data0 = playerNodeID;
-                            task.data1 = GameManager.instance.playerScript.actorID;
-                            task.type = AITaskType.LieLow;
-                            task.priority = Priority.Critical;
-                            //add task to list of potential tasks
-                            listOfTasksPotential.Add(task);
-                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Lie Low at node ID {0}{1}", playerNodeID, "\n");
+                            //random chance of lying low
+                            rnd = Random.Range(0, 100);
+                            if (rnd < 75)
+                            {
+                                isSuccess = true;
+                                //generate task
+                                AITask task = new AITask();
+                                task.data0 = playerNodeID;
+                                task.data1 = GameManager.instance.playerScript.actorID;
+                                task.type = AITaskType.LieLow;
+                                task.priority = Priority.Critical;
+                                //add task to list of potential tasks
+                                listOfTasksPotential.Add(task);
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Evade by Lying Low at node ID {0}{1}", playerNodeID, "\n");
+                            }
                         }
+                    }
+                }
+            }
+        }
+        //
+        // - - - Low Player invisibility (not at a Bad node) - - - 
+        //
+        else if (invisibility < 2)
+        {
+            //not a Surveillance crackdown
+            if (security != AuthoritySecurityState.SurveillanceCrackdown)
+            {
+                if (lieLowTimer == 0)
+                {
+                    rnd = Random.Range(0, 100);
+                    int threshold = 20;
+                    if (invisibility == 0) { threshold = 40; }
+                    if (rnd < threshold)
+                    {
+                        isSuccess = true;
+                        //generate task
+                        AITask task = new AITask();
+                        task.data0 = playerNodeID;
+                        task.data1 = GameManager.instance.playerScript.actorID;
+                        task.type = AITaskType.LieLow;
+                        task.priority = Priority.Critical;
+                        //add task to list of potential tasks
+                        listOfTasksPotential.Add(task);
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Generic Lie Low at node ID {0}{1}", playerNodeID, "\n");
                     }
                 }
             }
