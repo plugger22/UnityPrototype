@@ -768,9 +768,72 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessSurvivalTask()
     {
+        int rnd;
         int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
-        //Nemesis nearby
-
+        bool isSuccess = false;
+        //
+        // - - - Nemesis or Erasure team in current node (sighting report)
+        //
+        if (CheckIfNodeBad(playerNodeID) == true)
+        {
+            //first response -> Move away
+            Node nodePlayer = GameManager.instance.dataScript.GetNode(playerNodeID);
+            if (nodePlayer != null)
+            {
+                Node nodeMoveTo = GetRandomGoodNode(nodePlayer);
+                if (nodeMoveTo != null)
+                {
+                    Connection connection = nodePlayer.GetConnection(nodeMoveTo.nodeID);
+                    if (connection != null)
+                    {
+                        //random chance of moving (not a given as threat could be nearby and staying still, or lying low, might be a better option)
+                        rnd = Random.Range(0, 100);
+                        if (rnd < 50)
+                        {
+                            isSuccess = true;
+                            //generate task
+                            AITask task = new AITask();
+                            task.data0 = nodeMoveTo.nodeID;
+                            task.data1 = connection.connID;
+                            task.type = AITaskType.Move;
+                            task.priority = Priority.Critical;
+                            //add task to list of potential tasks
+                            listOfTasksPotential.Add(task);
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Move Away to node ID {0}{1}", nodeMoveTo.nodeID, "\n");
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid connection (Null) for nodeID {0}", nodeMoveTo.nodeID); }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", playerNodeID); }
+            //nothing decided so far
+            if (isSuccess == false)
+            {
+                //Lie Low
+                if (GameManager.instance.playerScript.Invisibility < 3)
+                {
+                    //not a Surveillance crackdown
+                    if (security != AuthoritySecurityState.SurveillanceCrackdown)
+                    {
+                        //random chance of lying low
+                        rnd = Random.Range(0, 100);
+                        if (rnd < 75)
+                        {
+                            isSuccess = true;
+                            //generate task
+                            AITask task = new AITask();
+                            task.data0 = playerNodeID;
+                            task.data1 = GameManager.instance.playerScript.actorID;
+                            task.type = AITaskType.LieLow;
+                            task.priority = Priority.Critical;
+                            //add task to list of potential tasks
+                            listOfTasksPotential.Add(task);
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Lie Low at node ID {0}{1}", playerNodeID, "\n");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -784,7 +847,7 @@ public class AIRebelManager : MonoBehaviour
         bool isProceed = true;
         if (nodePlayer != null)
         {
-            //Debug -> Player moves around map to a target then selects a new target to move to
+            //Debug -> Player moves around map to nearest target then selects a new target to move to
 
             //AT TARGET NODE
             if (nodePlayer.nodeID == targetNodeID)
@@ -844,64 +907,88 @@ public class AIRebelManager : MonoBehaviour
             //GENERATE TASK
             if (nodeMoveTo != null)
             {
-                //moveTo node on listOfBadNodes
+                //check if moveTo node on listOfBadNodes
                 if (CheckIfNodeBad(nodeMoveTo.nodeID) == true)
                 {
-                    int selectedNodeID = nodeMoveTo.nodeID;
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node id {0} is on listOfBadNodes{1}", selectedNodeID, "\n");
-                    //get list of current node neighbours
-                    List <Node> listOfNeighbours = nodePlayer.GetNeighbouringNodes();
-                    if (listOfNeighbours != null)
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node id {0} is on listOfBadNodes{1}", nodeMoveTo.nodeID, "\n");
+                    //get a random neighbouring node which is good
+                    nodeMoveTo = GetRandomGoodNode(nodePlayer);
+                    if (nodeMoveTo == null)
                     {
-                        //remove any bad nodes, reverse loop
-                        if (listOfNeighbours.Count > 0)
-                        {
-                            for (int i = listOfNeighbours.Count - 1; i >= 0; i--)
-                            {
-                                Node tempNode = listOfNeighbours[i];
-                                if (tempNode != null)
-                                {
-                                    if (CheckIfNodeBad(tempNode.nodeID) == true)
-                                    {
-                                        //remove bad node
-                                        listOfNeighbours.RemoveAt(i);
-                                    }
-                                }
-                                else { Debug.LogErrorFormat("Invalid node (Null) for listOfNeighbours[{0}]", i); }
-                            }
-                            //any remaining nodes
-                            if (listOfNeighbours.Count > 0)
-                            {
-                                //randomly choose one as a moveTo node
-                                nodeMoveTo = listOfNeighbours[Random.Range(0, listOfNeighbours.Count)];
-                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node id {0} is BAD, randomly choose node id {1} instead{2}", selectedNodeID, nodeMoveTo.nodeID, "\n");
-                            }
-                            else
-                            {
-                                //no viable node that isn't bad amongst neighbours. Cancel move task
-                                isProceed = false;
-                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node id {0} is BAD, no viable alternative. Move task CANCELLED{1}", selectedNodeID, "\n");
-                            }
-                        }
+                        //no viable node that isn't bad amongst neighbours. Cancel move task
+                        isProceed = false;
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node is BAD, no viable alternative. Move task CANCELLED{0}", "\n");
                     }
-                    else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
                 }
                 if (isProceed == true)
                 {
-                    //generate task
-                    AITask task = new AITask();
-                    task.data0 = nodeMoveTo.nodeID;
-                    task.data1 = connection.connID;
-                    task.type = AITaskType.Move;
-                    task.priority = Priority.Medium;
-                    //add task to list of potential tasks
-                    listOfTasksPotential.Add(task);
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: targetNodeID {0}{1}", targetNodeID, "\n");
+                    //get connectionID (may have changed)
+                    Connection conn = nodePlayer.GetConnection(nodeMoveTo.nodeID);
+                    if (conn != null)
+                    {
+                        //generate task
+                        AITask task = new AITask();
+                        task.data0 = nodeMoveTo.nodeID;
+                        task.data1 = conn.connID;
+                        task.type = AITaskType.Move;
+                        task.priority = Priority.Medium;
+                        //add task to list of potential tasks
+                        listOfTasksPotential.Add(task);
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: targetNodeID {0}, move to {1}{2}", targetNodeID, nodeMoveTo.nodeID, "\n");
+                    }
+                    else { Debug.LogErrorFormat("Invalid connection (Null) for nodeID {0}", nodeMoveTo.nodeID); }
                 }
             }
             else { Debug.LogError("Invalid nodeMoveTo (Null)"); }
         }
         else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+    }
+
+
+    /// <summary>
+    /// randomly selects a good node (not on listOfBadNodes) from the specified node's immediate neighbours. Returns Null if none found.
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <returns></returns>
+    private Node GetRandomGoodNode(Node node)
+    {
+        Node goodNode = null;
+        if (node != null)
+        {
+            int currentNodeID = node.nodeID;
+            //get list of current node neighbours (by value, not reference otherwise you'll delete from the nodes list of Neighbours)
+            List<Node> listOfNeighbours = new List<Node>(node.GetNeighbouringNodes());
+            if (listOfNeighbours != null)
+            {
+                //remove any bad nodes, reverse loop
+                if (listOfNeighbours.Count > 0)
+                {
+                    for (int i = listOfNeighbours.Count - 1; i >= 0; i--)
+                    {
+                        Node tempNode = listOfNeighbours[i];
+                        if (tempNode != null)
+                        {
+                            if (CheckIfNodeBad(tempNode.nodeID) == true)
+                            {
+                                //remove bad node
+                                listOfNeighbours.RemoveAt(i);
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid node (Null) for listOfNeighbours[{0}]", i); }
+                    }
+                    //any remaining nodes
+                    if (listOfNeighbours.Count > 0)
+                    {
+                        //randomly choose one as a moveTo node
+                        goodNode = listOfNeighbours[Random.Range(0, listOfNeighbours.Count)];
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> GetRandomGoodNode: Randomly choose GOOD node id {0}{1}", goodNode.nodeID, "\n");
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        return goodNode;
     }
 
 
@@ -930,6 +1017,9 @@ public class AIRebelManager : MonoBehaviour
                     case AITaskType.Move:
                         ExecuteMoveTask(task);
                         break;
+                    case AITaskType.LieLow:
+                        ExecuteLieLowTask(task);
+                        break;
                     default:
                         Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
                         break;
@@ -941,12 +1031,11 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// AI Player moves
+    /// AI Player moves, task.data0 is nodeID, task.data1 is connectionID
     /// NOTE: Task checked for Null by parent method
     /// </summary>
     private void ExecuteMoveTask(AITask task)
     {
-        //data0 is nodeID, data1 is connectionID
         Node node = GameManager.instance.dataScript.GetNode(task.data0);
         if (node != null)
         {
@@ -978,7 +1067,7 @@ public class AIRebelManager : MonoBehaviour
             if (captureDetails != null)
             {
                 //Player captured!
-                captureDetails.effects = "The move went bad{1}";
+                captureDetails.effects = "The move went bad";
                 EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
             }
             else
@@ -988,6 +1077,17 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); }
+    }
+
+
+    /// <summary>
+    /// Player or Actor commences Lying Low. task.data0 -> nodeID, task.data1 -> actorID (999 if player)
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteLieLowTask(AITask task)
+    {
+        Debug.LogFormat("[Tst] AIRebelManager.cs -> ExecuteLieLowTask: actor id {0} is LYING LOW at node ID {1}{2}", task.data1, task.data0, "\n");
+        GameManager.instance.playerScript.Invisibility = 3;
     }
 
     /// <summary>
