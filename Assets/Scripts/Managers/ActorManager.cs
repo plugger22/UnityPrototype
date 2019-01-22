@@ -305,30 +305,31 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        CheckPlayerStartLate();
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         {
             //run for Resistance Player
             switch (GameManager.instance.sideScript.resistanceOverall)
             {
                 case SideState.Human:
+                    CheckPlayerHuman();
                     CheckInactiveResistanceActors();
                     //needs to be AFTER CheckInactiveActors
                     CheckActiveResistanceActors();
                     //end game checks
                     GameManager.instance.factionScript.CheckFactionFirePlayer();
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
-                    //cooldown timer
-                    if (lieLowTimer > 0) { lieLowTimer--; }
                     break;
                 case SideState.AI:
                     if (GameManager.instance.isBothAI == true)
                     {
-                        //Both sides AI (autorun)
+                        //Both sides AI (autorun) -> Resistance first
+                        CheckPlayerAIResistance();
+                        CheckPlayerAIAuthority();
                     }
                     else
                     {
                         //Resistance AI only
+                        CheckPlayerAIResistance();
                     }
                     break;
                 default:
@@ -342,6 +343,7 @@ public class ActorManager : MonoBehaviour
             switch (GameManager.instance.sideScript.authorityOverall)
             {
                 case SideState.Human:
+                    CheckPlayerHuman();
                     CheckInactiveAuthorityActors();
                     //needs to be AFTER CheckInactiveActors
                     CheckActiveAuthorityActors();
@@ -352,11 +354,14 @@ public class ActorManager : MonoBehaviour
                 case SideState.AI:
                     if (GameManager.instance.isBothAI == true)
                     {
-                        //Both sides AI (autorun)
+                        //Both sides AI (autorun) -> Resistance first
+                        CheckPlayerAIResistance();
+                        CheckPlayerAIAuthority();
                     }
                     else
                     {
                         //Authority AI only
+                        CheckPlayerAIAuthority();
                     }
                     break;
                 default:
@@ -365,6 +370,8 @@ public class ActorManager : MonoBehaviour
             }
         }
         UpdateReserveActors();
+        //Lie Low cooldown timer
+        if (lieLowTimer > 0) { lieLowTimer--; }
     }
 
 
@@ -4415,9 +4422,9 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// runs all start late turn player checks
+    /// runs all start late turn Human player checks
     /// </summary>
-    private void CheckPlayerStartLate()
+    private void CheckPlayerHuman()
     {
         int rnd;
         int playerID = GameManager.instance.playerScript.actorID;
@@ -4452,7 +4459,7 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, topText, bottomText);
             }
         }
-        //check for Stress Nervous breakdown -> both sides
+        //check for Conditions -> both sides
         switch (GameManager.instance.playerScript.status)
         {
             case ActorStatus.Inactive:
@@ -4541,6 +4548,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: Stress BREAKDOWN occurs{0}", "\n");
                                 GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
                                 //update AI side tab status
                                 GameManager.instance.aiScript.UpdateSideTabData();
@@ -4629,6 +4637,74 @@ public class ActorManager : MonoBehaviour
             }
         }
     }
+
+
+    /// <summary>
+    /// run all late start turn AI Resistance player checks
+    /// </summary>
+    private void CheckPlayerAIResistance()
+    {
+        int rnd;
+        string text, topText, bottomText;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        //isPlayer true if player side is Resistance, false otherwise
+        bool isPlayer = true;
+        if (playerSide.level != globalResistance.level) { isPlayer = false; }
+        //doom timer
+        if (doomTimer > 0)
+        {
+            //decrement timer
+            doomTimer--;
+            if (isPlayer == true)
+            {
+                //warning message
+                text = string.Format("Player doomTimer now {0}. Death is imminent", doomTimer);
+                string itemText = string.Format("{0}'s DOOM TIMER is ticking down", playerName);
+                topText = "You are Dying";
+                string reason = string.Format("{0}The deadly <b>gene tailored virus</b> is spreading throughout your body{1}{2}You need to find a <b>CURE</b>", "\n", "\n", "\n");
+                string warning = string.Format("You have {0} day{1} left to live", doomTimer, doomTimer != 1 ? "s" : "");
+                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
+            }
+            //timer expired, Authority wins
+            if (doomTimer == 0)
+            {
+                if (isPlayer == true)
+                {
+                    topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
+                    bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
+                }
+                else
+                {
+                    topText = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
+                    bottomText = string.Format("{0}You win{1}", colourBad, colourEnd);
+                }
+                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, topText, bottomText);
+            }
+        }
+        //check for Conditions -> both sides
+        switch (GameManager.instance.aiRebelScript.status)
+        {
+
+        }
+    }
+
+
+    /// <summary>
+    /// run all late start turn AI Authority player checks
+    /// </summary>
+    private void CheckPlayerAIAuthority()
+    {
+        int rnd;
+        string text, topText, bottomText;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //check for Conditions -> both sides
+        switch (GameManager.instance.aiScript.status)
+        {
+
+        }
+    }
+
 
     /// <summary>
     /// Checks all reserve pool actors (both sides), decrements unhappy timers and takes appropriate action if any have reached zero

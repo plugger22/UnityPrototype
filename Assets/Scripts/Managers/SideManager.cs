@@ -213,6 +213,8 @@ public class SideManager : MonoBehaviour
     /// </summary>
     public void RevertToHumanPlayer()
     {
+        ActorStatus status;
+        ActorInactive inactiveStatus;
         switch (_playerSide.level)
         {
             case 1:
@@ -223,6 +225,24 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.AI;
                 //convert resources to renown
                 GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+                //update states
+                status = GameManager.instance.aiScript.status;
+                inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
+                GameManager.instance.playerScript.status = status;
+                GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
+                switch (status)
+                {
+                    case ActorStatus.Inactive:
+                        switch (inactiveStatus)
+                        {
+                            case ActorInactive.Breakdown:
+                                //reduce player alpha to show inactive (sprite and text)
+                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
+                                break;
+                        }
+                        break;
+                }
                 //teams need actors assigned
                 GameManager.instance.teamScript.DebugAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
@@ -236,10 +256,11 @@ public class SideManager : MonoBehaviour
                 //convert resources to renown
                 GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
                 //update states
-                ActorStatus aiRebelStatus = GameManager.instance.aiRebelScript.status;
-                ActorInactive aiRebelInactive = GameManager.instance.aiRebelScript.inactiveStatus;
-                GameManager.instance.playerScript.status = aiRebelStatus;
-                switch(aiRebelStatus)
+                status = GameManager.instance.aiRebelScript.status;
+                inactiveStatus = GameManager.instance.aiRebelScript.inactiveStatus;
+                GameManager.instance.playerScript.status = status;
+                GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
+                switch(status)
                 {
                     case ActorStatus.Captured:
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
@@ -249,7 +270,9 @@ public class SideManager : MonoBehaviour
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                         break;
                     case ActorStatus.Inactive:
-                        switch (aiRebelInactive)
+                        //reduce player alpha to show inactive (sprite and text)
+                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                        switch (inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;

@@ -270,7 +270,7 @@ public class AIManager : MonoBehaviour
     [Range(1, 10)] public int aiPolicyTimer= 5;
 
 
-
+    //assorted
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
     [HideInInspector] public int resourcesGainAuthority;                //resources added to pool (DataManager.cs -> arrayOfAIResources every turn
@@ -287,7 +287,10 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public bool isRebooting;                          //true if AI Security System is rebooting and hacking not possible (external access cut)
     [HideInInspector] public int rebootTimer;                           //how many times does it take to reboot, (rebooted when timer reaches zero)
     [HideInInspector] public int numOfCrisis;                           //tally of number of node crisis that have occured so far
-    
+    //status                                                            //AI Resistance Player
+    [HideInInspector] public ActorStatus status;
+    [HideInInspector] public ActorInactive inactiveStatus;
+
     //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility

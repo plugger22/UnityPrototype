@@ -34,7 +34,7 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Delete sighting reports (Nemesis, Erasure teams, etc) older than ('>') this number of turns ago")]
     [Range(1, 5)] public int deleteOlderThan = 3;
 
-    //AI Player
+    //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
 
