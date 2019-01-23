@@ -28,7 +28,7 @@ public class AIRebelManager : MonoBehaviour
 {
     [Header("Actions")]
     [Tooltip("Base amount of actions per turn for the AI Resistance Player")]
-    [Range(1, 3)] public int actionsBase = 1;
+    [Range(1, 3)] public int actionsBase = 2;
 
     [Header("Sightings")]
     [Tooltip("Delete sighting reports (Nemesis, Erasure teams, etc) older than ('>') this number of turns ago")]
@@ -128,9 +128,11 @@ public class AIRebelManager : MonoBehaviour
             int counter = 0;
             do
             {
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: commence action {0} of {1}{2}", actionsUsed + 1, actionAllowance, "\n");
                 ClearAICollectionsLate();
                 //task creation
-                ProcessSurvivalTask();
+                if (actionsUsed == 0)
+                { ProcessSurvivalTask(); }
                 ProcessMoveTask();
                 //task Execution
                 ExecuteTask();
@@ -1078,10 +1080,12 @@ public class AIRebelManager : MonoBehaviour
                 switch(task.type)
                 {
                     case AITaskType.Move:
-                        ExecuteMoveTask(task);
+                        if (ExecuteMoveTask(task) == true)
+                        { UseAction("Move"); }
                         break;
                     case AITaskType.LieLow:
                         ExecuteLieLowTask(task);
+                        UseAction("Lie Low (Player)");
                         break;
                     default:
                         Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
@@ -1097,8 +1101,9 @@ public class AIRebelManager : MonoBehaviour
     /// AI Player moves, task.data0 is nodeID, task.data1 is connectionID
     /// NOTE: Task checked for Null by parent method
     /// </summary>
-    private void ExecuteMoveTask(AITask task)
+    private bool ExecuteMoveTask(AITask task)
     {
+        bool isSuccess = true;
         Node node = GameManager.instance.dataScript.GetNode(task.data0);
         if (node != null)
         {
@@ -1139,7 +1144,8 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
             }
         }
-        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0); isSuccess = false; }
+        return isSuccess;
     }
 
 
@@ -1228,6 +1234,18 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, aiDelay);
             }
         }
+    }
+
+    /// <summary>
+    /// Action used, message to that effect. Reason in format 'Action used to ... [reason]'
+    /// </summary>
+    /// <param name="reason"></param>
+    private void UseAction(string reason)
+    {
+        actionsUsed++;
+        if (string.IsNullOrEmpty(reason) == false)
+        { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION used to {0}{1}", reason, "\n"); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION for Unknown reason{0}", "\n"); }
     }
 
     //
