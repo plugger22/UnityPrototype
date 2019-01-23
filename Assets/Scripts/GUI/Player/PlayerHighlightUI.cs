@@ -43,11 +43,11 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         //get correct node (captured node if captured)
         switch (GameManager.instance.playerScript.status)
         {
-            case ActorStatus.Active:
-                node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                break;
             case ActorStatus.Captured:
                 node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                break;
+            default:
+                node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 break;
         }
         if (node != null)
@@ -58,7 +58,6 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             myFlashCoroutine = StartCoroutine("FlashingPlayerNode", node);
         }
         else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }
-
     }
 
     /// <summary>

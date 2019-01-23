@@ -143,7 +143,7 @@ public class AIRebelManager : MonoBehaviour
                     break;
                 }
             }
-            while (actionsUsed < actionAllowance);
+            while (actionsUsed < actionAllowance && status == ActorStatus.Active);
         }
         else
         {
@@ -1074,8 +1074,6 @@ public class AIRebelManager : MonoBehaviour
             AITask task = listOfTasksPotential[Random.Range(0, count)];
             if (task != null)
             {
-                //update actions
-                actionsUsed++;
                 //execute taks
                 switch(task.type)
                 {

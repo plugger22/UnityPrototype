@@ -186,8 +186,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9aa18cd3d397f4bacb8d28698c5650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionsBase: 1
+  actionsBase: 2
   deleteOlderThan: 3
+  survivalMove: 75
+  lieLowThreshold: 2
+  lieLowEmergency: 75
+  lieLowTwo: 10
+  lieLowOne: 20
+  lieLowZero: 40
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
