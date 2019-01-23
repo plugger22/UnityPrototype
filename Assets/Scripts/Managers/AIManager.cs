@@ -745,21 +745,21 @@ public class AIManager : MonoBehaviour
     // - - - Global Flags - - -
     //
 
-    public void SetAIOffline(bool status)
+    public void SetAIOffline(bool statusOffline)
     {
-        isOffline = status;
+        isOffline = statusOffline;
         Debug.LogFormat("[Aim] -> SetAIOffline: isOffLine {0}{1}", isOffline, "\n");
     }
 
-    public void SetAITraceBack(bool status)
+    public void SetAITraceBack(bool statusTraceBack)
     {
-        isTraceBack = status;
+        isTraceBack = statusTraceBack;
         Debug.LogFormat("[Aim] -> SetAITraceBack: isTraceBack {0}{1}", isTraceBack, "\n");
     }
 
-    public void SetAIScreamer(bool status)
+    public void SetAIScreamer(bool statusScreamer)
     {
-        isScreamer = status;
+        isScreamer = statusScreamer;
         Debug.LogFormat("[Aim] -> SetAIScreamer: isScreamer {0}{1}", isScreamer, "\n");
     }
 
@@ -4596,6 +4596,8 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("- Resource Pools{0}", "\n");
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
+        builder.AppendFormat("- AI Player{0}", "\n");
+        builder.AppendFormat(" status: {0} | {1}{2}{3}", status, inactiveStatus, "\n", "\n");
         builder.AppendFormat("- Options{0}", "\n");
         builder.AppendFormat(" AI Security Protocol level {0}{1}", aiSecurityProtocolLevel, "\n");
         builder.AppendFormat(" isPolicy -> {0}{1}", isPolicy, "\n");
