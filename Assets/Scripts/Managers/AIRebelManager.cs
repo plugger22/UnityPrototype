@@ -34,6 +34,22 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Delete sighting reports (Nemesis, Erasure teams, etc) older than ('>') this number of turns ago")]
     [Range(1, 5)] public int deleteOlderThan = 3;
 
+    [Header("Survival Situation")]
+    [Tooltip("The % chance of AI player moving away when they are at a Bad Node")]
+    [Range(0, 100)] public int survivalMove = 75;
+
+    [Header("Lying Low")]
+    [Tooltip("The threshold of invisibility below which (less than) there is a chance of the AI player selecting a Lie Low task")]
+    [Range(1,3)] public int lieLowThreshold = 2;
+    [Tooltip("The % chance of AI player selecting a Lie Low task in an Emergency situation")]
+    [Range(0, 100)] public int lieLowEmergency = 75;
+    [Tooltip("The % chance of AI player selecting a Lie Low task when their invisibility is at 2")]
+    [Range(0, 100)] public int lieLowTwo = 10;
+    [Tooltip("The % chance of AI player selecting a Lie Low task when their invisibility is at 1")]
+    [Range(0, 100)] public int lieLowOne = 20;
+    [Tooltip("The % chance of AI player selecting a Lie Low task when their invisibility is at 0")]
+    [Range(0, 100)] public int lieLowZero = 40;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -797,7 +813,7 @@ public class AIRebelManager : MonoBehaviour
                     {
                         //random chance of moving (not a given as threat could be nearby and staying still, or lying low, might be a better option)
                         rnd = Random.Range(0, 100);
-                        if (rnd < 75)
+                        if (rnd < survivalMove)
                         {
                             isSuccess = true;
                             //generate task
@@ -818,7 +834,7 @@ public class AIRebelManager : MonoBehaviour
             //nothing decided so far
             if (isSuccess == false)
             {
-                //Lie Low
+                // Emergency Lie Low 
                 if (invisibility < 3)
                 {
                     //not a Surveillance crackdown
@@ -828,7 +844,7 @@ public class AIRebelManager : MonoBehaviour
                         {
                             //random chance of lying low
                             rnd = Random.Range(0, 100);
-                            if (rnd < 75)
+                            if (rnd < lieLowEmergency)
                             {
                                 isSuccess = true;
                                 //generate task
@@ -839,7 +855,7 @@ public class AIRebelManager : MonoBehaviour
                                 task.priority = Priority.Critical;
                                 //add task to list of potential tasks
                                 listOfTasksPotential.Add(task);
-                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Evade by Lying Low at node ID {0}{1}", playerNodeID, "\n");
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Emergency Lie Low at node ID {0}{1}", playerNodeID, "\n");
                             }
                         }
                     }
@@ -849,7 +865,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Low Player invisibility (not at a Bad node) - - - 
         //
-        else if (invisibility < 2)
+        else if (invisibility < lieLowThreshold)
         {
             //not a Surveillance crackdown
             if (security != AuthoritySecurityState.SurveillanceCrackdown)
@@ -857,8 +873,14 @@ public class AIRebelManager : MonoBehaviour
                 if (lieLowTimer == 0)
                 {
                     rnd = Random.Range(0, 100);
-                    int threshold = 20;
-                    if (invisibility == 0) { threshold = 40; }
+                    int threshold = 0;
+                    switch (invisibility)
+                    {
+                        case 2: threshold = lieLowTwo; break;
+                        case 1: threshold = lieLowOne; break;
+                        case 0: threshold = lieLowZero; break;
+                        default: Debug.LogErrorFormat("Invalid invisibility \"[0}\"", invisibility); break;
+                    }
                     if (rnd < threshold)
                     {
                         isSuccess = true;
