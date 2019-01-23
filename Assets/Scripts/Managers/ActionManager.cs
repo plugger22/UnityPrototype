@@ -1090,12 +1090,12 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process Lie Low actor action (Resistance only)
+    /// Process Lie Low actor action (Resistance only). Can't do during a Surveillance crackdown
     /// </summary>
     /// <param name="details"></param>
     public void ProcessLieLowActorAction(ModalActionDetails details)
     {
-        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.Normal, string.Format("Invalid authoritySecurityState {0}",
+        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
             GameManager.instance.turnScript.authoritySecurityState));
         bool errorFlag = false;
         bool isStressed = false;
@@ -1159,12 +1159,12 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process Lie Low Player action (Resistance only)
+    /// Process Lie Low Player action (Resistance only). Can't do during a Surveillance crackdown
     /// </summary>
     /// <param name="details"></param>
     public void ProcessLieLowPlayerAction(ModalActionDetails details)
     {
-        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.Normal, string.Format("Invalid authoritySecurityState {0}",
+        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
             GameManager.instance.turnScript.authoritySecurityState));
         string playerName = GameManager.instance.playerScript.PlayerName;
         int invis = GameManager.instance.playerScript.Invisibility;

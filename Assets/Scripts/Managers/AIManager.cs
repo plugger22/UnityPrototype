@@ -290,6 +290,7 @@ public class AIManager : MonoBehaviour
     //status                                                            //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
+    [HideInInspector] public bool isBreakdown;                          //true if suffering from nervous, stress induced, breakdown
 
     //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
@@ -4597,7 +4598,8 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
         builder.AppendFormat("- AI Player{0}", "\n");
-        builder.AppendFormat(" status: {0} | {1}{2}{3}", status, inactiveStatus, "\n", "\n");
+        builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
+        builder.AppendFormat(" isBreakdown: {0}{1}{2}", isBreakdown, "\n", "\n");
         builder.AppendFormat("- Options{0}", "\n");
         builder.AppendFormat(" AI Security Protocol level {0}{1}", aiSecurityProtocolLevel, "\n");
         builder.AppendFormat(" isPolicy -> {0}{1}", isPolicy, "\n");

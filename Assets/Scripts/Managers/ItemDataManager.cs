@@ -263,10 +263,18 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (actor == null)
         {
-            //Player
+            //
+            // - - - Player
+            //
+            //get correct player status depending on who is in charge of Resistance
+            ActorStatus status = ActorStatus.Active;
+            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+            { status = GameManager.instance.playerScript.status; }
+            else { status = GameManager.instance.aiRebelScript.status; }
+            //message
             if (string.IsNullOrEmpty(reason) == false)
             { builder.AppendFormat("<b>{0}{1}, PLAYER</b>{2}{3}<b>{4}</b>{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
-            builder.AppendFormat("{0}PLAYER{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, GameManager.instance.playerScript.status, colourEnd);
+            builder.AppendFormat("{0}PLAYER{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, status, colourEnd);
         }
         else
         {

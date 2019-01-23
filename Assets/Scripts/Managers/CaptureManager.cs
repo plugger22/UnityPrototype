@@ -374,7 +374,7 @@ public class CaptureManager : MonoBehaviour
 
 
     /// <summary>
-    /// Checks if Resistance player/actor captured by an Erasure team at the node (must have invisibility '0'). Returns null if not.
+    /// Checks if AI/Human Resistance player/actor captured by an Erasure team at the node (must have invisibility '0'). Returns null if not.
     /// parameters vary if an 'APB' or a 'SecurityAlert' in play
     /// ActorID is default '999' for player
     /// </summary>

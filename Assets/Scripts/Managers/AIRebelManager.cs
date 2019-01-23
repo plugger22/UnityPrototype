@@ -37,6 +37,8 @@ public class AIRebelManager : MonoBehaviour
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
+    [HideInInspector] public bool isBreakdown;          //true if suffering from nervous, stress induced, breakdown
+    [HideInInspector] public string playerName;         //name of Rebel leader if a non-player (eg. human controls authority side)
 
     private int actionAllowance;                        //number of actions per turn (normal allowance + extras)
     private int actionsExtra;                           //bonus actions for this turn
@@ -47,6 +49,7 @@ public class AIRebelManager : MonoBehaviour
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
 
     private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
+    private bool isPlayer;                              //if true the Resistance side is also the human player side (it's AI due to an autorun)
 
     //fast access
     private GlobalSide globalResistance;
@@ -80,6 +83,10 @@ public class AIRebelManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
+        //player (human / AI)
+        playerName = "The Phantom";
+        if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
+        else { isPlayer = true; }
     }
 
     /// <summary>
@@ -1120,8 +1127,27 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteLieLowTask(AITask task)
     {
-        Debug.LogFormat("[Tst] AIRebelManager.cs -> ExecuteLieLowTask: actor id {0} is LYING LOW at node ID {1}{2}", task.data1, task.data0, "\n");
-        GameManager.instance.playerScript.Invisibility = 3;
+        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
+            GameManager.instance.turnScript.authoritySecurityState));
+        string aiPlayerName = playerName;
+        if (isPlayer == true) { aiPlayerName = GameManager.instance.playerScript.PlayerName; }
+        int invis = GameManager.instance.playerScript.Invisibility;
+        int numOfTurns = 3 - invis;
+        //default data 
+        status = ActorStatus.Inactive;
+        inactiveStatus = ActorInactive.LieLow;
+        GameManager.instance.playerScript.isLieLowFirstturn = true;
+        //set lie low timer
+        GameManager.instance.actorScript.SetLieLowTimer();
+        if (isPlayer == true)
+        {
+            Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
+            //message
+            string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);
+            string reason = string.Format("is currently Lying Low and is{0}{1}<b>cut off from all communications</b>", "\n", "\n");
+            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, globalResistance);
+        }
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteLieLowTask: \"{0}\", id {1} is LYING LOW at node ID {2}{3}", aiPlayerName, task.data1, task.data0, "\n");
     }
 
     /// <summary>
@@ -1225,6 +1251,7 @@ public class AIRebelManager : MonoBehaviour
         //player stats
         builder.AppendFormat("- AI Player{0}", "\n");
         builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
+        builder.AppendFormat(" isBreakdown: {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
 

@@ -4720,7 +4720,8 @@ public class ActorManager : MonoBehaviour
                                 //message -> status change
                                 text = string.Format("{0} has automatically reactivated", playerName);
                                 GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
-                            }
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckAIPlayerResistance: Player no longer Lying Low at node id {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n");
+                            } 
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
                             { GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalResistance, "Lying Low removes Stress"); }
@@ -4745,11 +4746,11 @@ public class ActorManager : MonoBehaviour
                 break;
             case ActorStatus.Active:
                 {
-                    //check any actors with the stressed condition for a breakdown
-                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
+                    //check the stressed condition for a breakdown
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
                     {
                         //enforces a minimum one turn gap between successive breakdowns
-                        if (GameManager.instance.playerScript.isBreakdown == false)
+                        if (GameManager.instance.aiRebelScript.isBreakdown == false)
                         {
                             rnd = Random.Range(0, 100);
                             if (rnd < breakdownChance)
@@ -4757,7 +4758,7 @@ public class ActorManager : MonoBehaviour
                                 //player Breakdown
                                 GameManager.instance.aiRebelScript.status = ActorStatus.Inactive;
                                 GameManager.instance.aiRebelScript.inactiveStatus = ActorInactive.Breakdown;
-                                GameManager.instance.playerScript.isBreakdown = true;
+                                GameManager.instance.aiRebelScript.isBreakdown = true;
                                 if (isPlayer == true)
                                 {
                                     //message (public)
@@ -4782,7 +4783,7 @@ public class ActorManager : MonoBehaviour
                                 }
                             }
                         }
-                        else { GameManager.instance.playerScript.isBreakdown = false; }
+                        else { GameManager.instance.aiRebelScript.isBreakdown = false; }
                     }
                     else if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged, globalResistance) == true)
                     {

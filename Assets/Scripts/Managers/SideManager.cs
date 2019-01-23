@@ -230,6 +230,7 @@ public class SideManager : MonoBehaviour
                 inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
                 GameManager.instance.playerScript.status = status;
                 GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
+                GameManager.instance.playerScript.isBreakdown = GameManager.instance.aiScript.isBreakdown;
                 switch (status)
                 {
                     case ActorStatus.Inactive:
@@ -260,7 +261,8 @@ public class SideManager : MonoBehaviour
                 inactiveStatus = GameManager.instance.aiRebelScript.inactiveStatus;
                 GameManager.instance.playerScript.status = status;
                 GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
-                switch(status)
+                GameManager.instance.playerScript.isBreakdown = GameManager.instance.aiScript.isBreakdown;
+                switch (status)
                 {
                     case ActorStatus.Captured:
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;

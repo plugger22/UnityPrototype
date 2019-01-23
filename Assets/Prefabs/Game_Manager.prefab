@@ -172,6 +172,9 @@ MonoBehaviour:
   isRebooting: 0
   rebootTimer: 0
   numOfCrisis: 0
+  status: 0
+  inactiveStatus: 0
+  isBreakdown: 0
 --- !u!114 &114049326683674478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,6 +190,8 @@ MonoBehaviour:
   deleteOlderThan: 3
   status: 0
   inactiveStatus: 0
+  isBreakdown: 0
+  playerName: 
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1987,7 +1992,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 56870
   isAuthority: 0
   isBothAI: 1
   isPerformanceLog: 1
