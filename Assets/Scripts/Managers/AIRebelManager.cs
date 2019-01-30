@@ -40,14 +40,16 @@ public class AIRebelManager : MonoBehaviour
 
     [Header("Lying Low")]
     [Tooltip("The threshold of invisibility below which (less than) there is a chance of the AI player selecting a Lie Low task")]
-    [Range(1,3)] public int lieLowThreshold = 2;
-    [Tooltip("The % chance of AI player selecting a Lie Low task in an Emergency situation")]
+    [Range(1,3)] public int lieLowThresholdPlayer = 2;
+    [Tooltip("The threshold of invisibility below which (less than) there is a chance of the AI actor (minion) selecting a Lie Low task. Note that it's for an EMERGENCY Lie Low task")]
+    [Range(1, 3)] public int lieLowThresholdActor = 1;
+    [Tooltip("The % chance of AI player/actor selecting a Lie Low task in an Emergency situation")]
     [Range(0, 100)] public int lieLowEmergency = 75;
-    [Tooltip("The % chance of AI player selecting a Lie Low task when their invisibility is at 2")]
+    [Tooltip("The % chance of AI player/actor selecting a Lie Low task when their invisibility is at 2")]
     [Range(0, 100)] public int lieLowTwo = 10;
-    [Tooltip("The % chance of AI player selecting a Lie Low task when their invisibility is at 1")]
+    [Tooltip("The % chance of AI player/actor selecting a Lie Low task when their invisibility is at 1")]
     [Range(0, 100)] public int lieLowOne = 20;
-    [Tooltip("The % chance of AI player selecting a Lie Low task when their invisibility is at 0")]
+    [Tooltip("The % chance of AI player/actor selecting a Lie Low task when their invisibility is at 0")]
     [Range(0, 100)] public int lieLowZero = 40;
 
     //AI Resistance Player
@@ -70,7 +72,9 @@ public class AIRebelManager : MonoBehaviour
     //fast access
     private GlobalSide globalResistance;
     private int numOfNodes = -1;
+    private int playerID = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
+    private Condition conditionStressed;
 
     //Resistance activity
     List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -96,13 +100,22 @@ public class AIRebelManager : MonoBehaviour
         GameManager.instance.playerScript.Invisibility = 3;
         //fast access
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
+        playerID = GameManager.instance.playerScript.actorID;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
+        Debug.Assert(playerID > -1, "Invalid playerId (-1)");
+
+        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         //player (human / AI)
         playerName = "The Phantom";
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
-        else { isPlayer = true; }
+        else
+        {
+            isPlayer = true;
+            playerName = GameManager.instance.playerScript.PlayerName;
+        }
     }
 
     /// <summary>
@@ -793,7 +806,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessSurvivalTask()
     {
-        int rnd;
+        int rnd, threshold, count;
         int invisibility = GameManager.instance.playerScript.Invisibility;
         int lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
         int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
@@ -833,7 +846,7 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", playerNodeID); }
-            //nothing decided so far
+            //nothing decided so far -> player lie low
             if (isSuccess == false)
             {
                 // Emergency Lie Low 
@@ -852,22 +865,23 @@ public class AIRebelManager : MonoBehaviour
                                 //generate task
                                 AITask task = new AITask();
                                 task.data0 = playerNodeID;
-                                task.data1 = GameManager.instance.playerScript.actorID;
+                                task.data1 = playerID;
                                 task.type = AITaskType.LieLow;
                                 task.priority = Priority.Critical;
                                 //add task to list of potential tasks
                                 listOfTasksPotential.Add(task);
-                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Emergency Lie Low at node ID {0}{1}", playerNodeID, "\n");
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: PLAYER Emergency Lie Low at node ID {0}{1}", playerNodeID, "\n");
                             }
                         }
                     }
                 }
             }
+
         }
         //
         // - - - Low Player invisibility (not at a Bad node) - - - 
         //
-        else if (invisibility < lieLowThreshold)
+        else if (invisibility < lieLowThresholdPlayer)
         {
             //not a Surveillance crackdown
             if (security != AuthoritySecurityState.SurveillanceCrackdown)
@@ -875,7 +889,7 @@ public class AIRebelManager : MonoBehaviour
                 if (lieLowTimer == 0)
                 {
                     rnd = Random.Range(0, 100);
-                    int threshold = 0;
+                    threshold = 0;
                     switch (invisibility)
                     {
                         case 2: threshold = lieLowTwo; break;
@@ -889,13 +903,79 @@ public class AIRebelManager : MonoBehaviour
                         //generate task
                         AITask task = new AITask();
                         task.data0 = playerNodeID;
-                        task.data1 = GameManager.instance.playerScript.actorID;
+                        task.data1 = playerID;
                         task.type = AITaskType.LieLow;
                         task.priority = Priority.Critical;
                         //add task to list of potential tasks
                         listOfTasksPotential.Add(task);
-                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Generic Lie Low at node ID {0}{1}", playerNodeID, "\n");
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: PLAYER Generic Lie Low at node ID {0}{1}", playerNodeID, "\n");
                     }
+                }
+            }
+        }
+        //actor lie low
+        else
+        {
+            //criteria -> actor invis <= 1, lie low timer = 0, player invis > 1, actor stressed (increased chanced of lying low)
+            //not a Surveillance crackdown
+            if (security != AuthoritySecurityState.SurveillanceCrackdown)
+            {
+                if (lieLowTimer == 0)
+                {
+                    List<Actor> listOfActors = new List<Actor>();
+                    //loop actors and check for any < lieLowThreshold
+                    Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                    if (arrayOfActors != null)
+                    {
+                        for (int i = 0; i < arrayOfActors.Length; i++)
+                        {
+                            //check actor is present in slot (not vacant)
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                            {
+                                Actor actor = arrayOfActors[i];
+                                if (actor != null)
+                                {
+                                    //below threshold
+                                    if (actor.datapoint2 < lieLowThresholdActor)
+                                    {
+                                        if (actor.CheckConditionPresent(conditionStressed) == true)
+                                        {
+                                            //add three entries (high priority)
+                                            listOfActors.Add(actor); listOfActors.Add(actor); listOfActors.Add(actor);
+                                        }
+                                        else
+                                        {
+                                            //add one entry
+                                            listOfActors.Add(actor);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //any candidates for lying low
+                        count = listOfActors.Count();
+                        if (count > 0)
+                        {
+                            //randomly select from pool of actors 
+                            int index = Random.Range(0, count);
+                            Actor actorLieLow = listOfActors[index];
+                            if (Random.Range(0, 100) < lieLowEmergency)
+                            {
+
+                                isSuccess = true;
+                                //generate task
+                                AITask task = new AITask();
+                                task.data0 = playerNodeID;
+                                task.data1 = listOfActors[index].actorID;
+                                task.type = AITaskType.LieLow;
+                                task.priority = Priority.Critical;
+                                //add task to list of potential tasks
+                                listOfTasksPotential.Add(task);
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: ACTOR {0}, id {1}, Emergency Lie Low{2}", actorLieLow.arc.name, actorLieLow.actorID, "\n");
+                            }
+                        }
+                    }
+                    else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 }
             }
         }
@@ -1129,7 +1209,7 @@ public class AIRebelManager : MonoBehaviour
             GameManager.instance.dataScript.AddHistoryRebelMove(history);
 
             //Erasure team picks up player immediately if invisibility 0
-            CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, GameManager.instance.playerScript.actorID);
+            CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
             if (captureDetails != null)
             {
                 //Player captured!
@@ -1155,25 +1235,58 @@ public class AIRebelManager : MonoBehaviour
     {
         Debug.Assert(GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
             GameManager.instance.turnScript.authoritySecurityState));
-        string aiPlayerName = playerName;
-        if (isPlayer == true) { aiPlayerName = GameManager.instance.playerScript.PlayerName; }
-        int invis = GameManager.instance.playerScript.Invisibility;
-        int numOfTurns = 3 - invis;
-        //default data 
-        status = ActorStatus.Inactive;
-        inactiveStatus = ActorInactive.LieLow;
-        GameManager.instance.playerScript.isLieLowFirstturn = true;
-        //set lie low timer
-        GameManager.instance.actorScript.SetLieLowTimer();
-        if (isPlayer == true)
+        string aiName = "Unknown";
+        if (task.data1 == playerID)
         {
-            Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
-            //message
-            string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);
-            string reason = string.Format("is currently Lying Low and is{0}{1}<b>cut off from all communications</b>", "\n", "\n");
-            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, globalResistance);
+            //Player Lie low
+            aiName = playerName;
+
+            /*int invis = GameManager.instance.playerScript.Invisibility;
+            int numOfTurns = 3 - invis;*/
+
+            //default data 
+            status = ActorStatus.Inactive;
+            inactiveStatus = ActorInactive.LieLow;
+            GameManager.instance.playerScript.isLieLowFirstturn = true;
+            //set lie low timer
+            GameManager.instance.actorScript.SetLieLowTimer();
+            //message (only if human player after an autorun)
+            if (isPlayer == true)
+            {
+                Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
+                //message
+                string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);
+                string reason = string.Format("is currently Lying Low and is{0}{1}<b>cut off from all communications</b>", "\n", "\n");
+                GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, playerID, globalResistance);
+            }
         }
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteLieLowTask: \"{0}\", id {1} is LYING LOW at node ID {2}{3}", aiPlayerName, task.data1, task.data0, "\n");
+        else
+        {
+            //Actor Lie Low
+            Actor actor = GameManager.instance.dataScript.GetActor(task.data1);
+            if (actor != null)
+            {
+                aiName = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
+                actor.Status = ActorStatus.Inactive;
+                actor.inactiveStatus = ActorInactive.LieLow;
+                //set lie low timer
+                GameManager.instance.actorScript.SetLieLowTimer();
+                //message (only if human player after an autorun)
+                if (isPlayer == true)
+                {
+                    Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Actor {0}, commences LYING LOW{1}", aiName, "\n");
+                    //message
+                    string text = string.Format("{0} is lying Low. Status: {1}", aiName, status);
+                    string reason = string.Format("is currently Lying Low and is{0}{1}<b>out of communication</b>", "\n", "\n");
+                    GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, globalResistance);
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data1); }
+
+            
+        }
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteLieLowTask: \"{0}\", id {1} is LYING LOW at node ID {2}{3}", aiName, task.data1, task.data0, "\n");
+
     }
 
     /// <summary>
