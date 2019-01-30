@@ -189,11 +189,13 @@ MonoBehaviour:
   actionsBase: 2
   deleteOlderThan: 3
   survivalMove: 75
-  lieLowThreshold: 2
+  lieLowThresholdPlayer: 2
+  lieLowThresholdActor: 1
   lieLowEmergency: 75
   lieLowTwo: 10
   lieLowOne: 20
   lieLowZero: 40
+  lieLowChanceActor: 75
   status: 0
   inactiveStatus: 0
   isBreakdown: 0

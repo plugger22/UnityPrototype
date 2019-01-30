@@ -215,10 +215,13 @@ public class SideManager : MonoBehaviour
     {
         ActorStatus status;
         ActorInactive inactiveStatus;
+        float inactiveAlpha = GameManager.instance.guiScript.alphaInactive;
         switch (_playerSide.level)
         {
             case 1:
-                //Authority
+                //
+                // - - - Authority - - -
+                //
                 authorityOverall = SideState.Human;
                 authorityCurrent = SideState.Human;
                 resistanceOverall = SideState.AI;
@@ -231,6 +234,7 @@ public class SideManager : MonoBehaviour
                 GameManager.instance.playerScript.status = status;
                 GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
                 GameManager.instance.playerScript.isBreakdown = GameManager.instance.aiScript.isBreakdown;
+                //player
                 switch (status)
                 {
                     case ActorStatus.Inactive:
@@ -238,18 +242,45 @@ public class SideManager : MonoBehaviour
                         {
                             case ActorInactive.Breakdown:
                                 //reduce player alpha to show inactive (sprite and text)
-                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 break;
                         }
                         break;
                 }
+                //loop actors and check for status
+                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                if (arrayOfActors != null)
+                {
+                    for (int i = 0; i < arrayOfActors.Length; i++)
+                    {
+                        //check actor is present in slot (not vacant)
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                        {
+                            Actor actor = arrayOfActors[i];
+                            if (actor != null)
+                            {
+                                switch (actor.inactiveStatus)
+                                {
+                                    case ActorInactive.Breakdown:
+                                        //change actor alpha to show inactive (sprite and text)
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                        actor.tooltipStatus = ActorTooltip.LieLow;
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 //teams need actors assigned
                 GameManager.instance.teamScript.DebugAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
                 break;
             case 2:
-                //Resistance
+                //
+                // - - - Resistance - - -
+                //
                 resistanceOverall = SideState.Human;
                 resistanceCurrent = SideState.Human;
                 authorityOverall = SideState.AI;
@@ -269,11 +300,11 @@ public class SideManager : MonoBehaviour
                         ///switch off flashing red indicator on top widget UI
                         EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
                         //reduce player alpha to show inactive (sprite and text)
-                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                         break;
                     case ActorStatus.Inactive:
                         //reduce player alpha to show inactive (sprite and text)
-                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                         switch (inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
@@ -285,6 +316,46 @@ public class SideManager : MonoBehaviour
                         }
                         break;
                 }
+                //loop actors and check for status
+                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                if (arrayOfActors != null)
+                {
+                    for (int i = 0; i < arrayOfActors.Length; i++)
+                    {
+                        //check actor is present in slot (not vacant)
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                        {
+                            Actor actor = arrayOfActors[i];
+                            if (actor != null)
+                            {
+                                //update
+                                switch (actor.Status)
+                                {
+                                    case ActorStatus.Captured:
+                                        //change actor alpha to show inactive (sprite and text)
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                        actor.tooltipStatus = ActorTooltip.Captured;
+                                        break;
+                                    case ActorStatus.Inactive:
+                                        switch (actor.inactiveStatus)
+                                        {
+                                            case ActorInactive.Breakdown:
+                                                //change actor alpha to show inactive (sprite and text)
+                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                                actor.tooltipStatus = ActorTooltip.Breakdown;
+                                                break;
+                                            case ActorInactive.LieLow:
+                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                                actor.tooltipStatus = ActorTooltip.LieLow;
+                                                break;
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
                 break;
             default:
