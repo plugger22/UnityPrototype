@@ -352,7 +352,7 @@ public class ActorManager : MonoBehaviour
                     CheckPlayerHuman();
                     CheckInactiveAuthorityActors();
                     //needs to be AFTER CheckInactiveActors
-                    CheckActiveAuthorityActors();
+                    CheckActiveAuthorityActorsHuman();
                     //end game checks
                     GameManager.instance.factionScript.CheckFactionFirePlayer();
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
@@ -3846,8 +3846,6 @@ public class ActorManager : MonoBehaviour
                                 string bottomText = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
                                 GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
                             }
-                            Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} is Lying Low{3}", actor.actorName,
-                                 actor.arc.name, actor.actorID, "\n");
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -3917,7 +3915,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Learn Secrets - - -
                                 //
                                 if (isSecrets == true)
-                                { ProcessSecrets(actor, listOfSecrets, chanceSecret); }
+                                { ProcessSecrets(actor, listOfSecrets, chanceSecret, true); }
                                 //
                                 // - - - Blackmailing - - -
                                 //
@@ -4051,29 +4049,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Learn Secrets - - -
                                 //
                                 if (isSecrets == true)
-                                { ProcessSecrets(actor, listOfSecrets, chanceSecret); }
-                                /*//
-                                // - - - Blackmailing - - -
-                                //
-                                if (actor.blackmailTimer > 0)
-                                {
-                                    ProcessBlackmail(actor);
-                                }
-                                //
-                                // - - - Compatibility - - -
-                                //
-                                if (listOfBadConditions.Count > 0)
-                                { ProcessCompatibility(actor, listOfBadConditions); }
-                                //
-                                // - - - Invisibility Zero warning - - -
-                                //
-                                if (actor.datapoint2 == 0)
-                                { ProcessInvisibilityWarning(actor); }
-                                //
-                                // - - - Motivation Warning - - -
-                                //
-                                if (actor.datapoint1 == 0)
-                                { ProcessMotivationWarning(actor); }*/
+                                { ProcessSecrets(actor, listOfSecrets, chanceSecret, isPlayer); }
                                 //
                                 // - - - Info App conditions (any)
                                 //
@@ -4121,9 +4097,9 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks all active authority actors (run AFTER checkInactiveAuthorityActors). No checks are made if the player is not Active
+    /// Checks all active human player authority actors (run AFTER checkInactiveAuthorityActors). No checks are made if the player is not Active
     /// </summary>
-    private void CheckActiveAuthorityActors()
+    private void CheckActiveAuthorityActorsHuman()
     {
         string msgText, itemText, reason, warning, text, topText, bottomText;
         //no checks are made if player is not Active
@@ -4178,7 +4154,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Learn Secrets - - -
                                 //
                                 if (isSecrets == true)
-                                { ProcessSecrets(actor, listOfSecrets, chanceSecret); }
+                                { ProcessSecrets(actor, listOfSecrets, chanceSecret, true); }
                                 //
                                 // - - - Blackmailing - - -
                                 //
@@ -4389,7 +4365,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>  
-    private void ProcessSecrets(Actor actor, List<Secret> listOfSecrets, int chance)
+    private void ProcessSecrets(Actor actor, List<Secret> listOfSecrets, int chance, bool isPlayer)
     {
         if (actor != null)
         {
@@ -4405,7 +4381,10 @@ public class ActorManager : MonoBehaviour
                 chance *= 3;
                 //only do trait message if there is a secret to learn to avoid message spam (can't learn secret on first turn as player doesn't gain it until after in sequence)
                 if (GameManager.instance.turnScript.Turn > 1 && actorSecrets < listOfSecrets.Count)
-                { TraitLogMessage(actor, "for a Learn Secret check", "to TRIPLE chance of learning a Secret"); }
+                {
+                    if (isPlayer == true)
+                    { TraitLogMessage(actor, "for a Learn Secret check", "to TRIPLE chance of learning a Secret"); }
+                }
             }
             //trait Bedazzled
             if (actor.CheckTraitEffect(actorSecretChanceNone) == false)
@@ -4437,20 +4416,27 @@ public class ActorManager : MonoBehaviour
                                     secret.AddActor(actor.actorID);
                                     //Admin
                                     Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                    string text = string.Format("{0}, {1}, learn SECRET", actor.actorName, actor.arc.name);
-                                    GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
+                                    if (isPlayer == true)
+                                    {
+                                        string text = string.Format("{0}, {1}, learn SECRET", actor.actorName, actor.arc.name);
+                                        GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
+                                    }
                                     //trait Blabbermouth
                                     if (actor.CheckTraitEffect(actorSecretTellAll) == true)
                                     {
                                         //actor passes secret onto all other actors
                                         ProcessSecretTellAll(secret, actor);
-                                        TraitLogMessage(actor, "for passing on secrets", "to TELL ALL about secret");
+                                        if (isPlayer == true)
+                                        { TraitLogMessage(actor, "for passing on secrets", "to TELL ALL about secret"); }
                                     }
                                 }
                                 else
                                 {
-                                    string text = string.Format("{0}, {1}, didn't learn Secret", actor.actorName, actor.arc.name);
-                                    GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
+                                    if (isPlayer == true)
+                                    {
+                                        string text = string.Format("{0}, {1}, didn't learn Secret", actor.actorName, actor.arc.name);
+                                        GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
+                                    }
                                 }
                             }
                             /*else { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessSecrets: Can't learn secret, gained turn {0}, current turn {1}", secret.gainedWhen, GameManager.instance.turnScript.Turn); }*/
@@ -4459,7 +4445,11 @@ public class ActorManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
                 }
             }
-            else { TraitLogMessage(actor, "for a Learn Secret check", "to AVOID learning any secrets"); }
+            else
+            {
+                if (isPlayer == true)
+                { TraitLogMessage(actor, "for a Learn Secret check", "to AVOID learning any secrets"); }
+            }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
     }
@@ -4507,7 +4497,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="numOfBadConditions"></param>
-    private void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions)
+    public void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions)
     {
         int chance, rnd;
         string itemText, reason, warning;
@@ -4582,7 +4572,7 @@ public class ActorManager : MonoBehaviour
     /// Warning if actor Invisibility Zero
     /// </summary>
     /// <param name="actor"></param>
-    private void ProcessInvisibilityWarning(Actor actor)
+    public void ProcessInvisibilityWarning(Actor actor)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         string itemText = string.Format("{0} at risk of Capture", actor.arc.name);
@@ -4596,7 +4586,7 @@ public class ActorManager : MonoBehaviour
     /// Warning if actor Motivation Zero
     /// </summary>
     /// <param name="actor"></param>
-    private void ProcessMotivationWarning(Actor actor)
+    public void ProcessMotivationWarning(Actor actor)
     {
         string msgText = string.Format("{0} Motivation Zero. Risk of a Relationship Conflict.", actor.arc.name);
         string itemText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
@@ -4992,8 +4982,6 @@ public class ActorManager : MonoBehaviour
                         bottomText = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
                         GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, playerID);
                     }
-                    Debug.LogFormat("[Rim] ActorManager.cs -> CheckPlayerResistanceAI: Player is currently LYING LOW{0}", "\n");
-
                 }
                 break;
             case ActorStatus.Active:

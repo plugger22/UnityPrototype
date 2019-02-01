@@ -331,6 +331,24 @@ public class SideManager : MonoBehaviour
                                 //update
                                 switch (actor.Status)
                                 {
+                                    case ActorStatus.Active:
+                                        //
+                                        // - - - Compatibility - - -
+                                        //
+                                        List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
+                                        if (listOfBadConditions.Count > 0)
+                                        { GameManager.instance.actorScript.ProcessCompatibility(actor, listOfBadConditions); }
+                                        //
+                                        // - - - Invisibility Zero warning - - -
+                                        //
+                                        if (actor.datapoint2 == 0)
+                                        { GameManager.instance.actorScript.ProcessInvisibilityWarning(actor); }
+                                        //
+                                        // - - - Motivation Warning - - -
+                                        //
+                                        if (actor.datapoint1 == 0)
+                                        { GameManager.instance.actorScript.ProcessMotivationWarning(actor); }
+                                        break;
                                     case ActorStatus.Captured:
                                         //change actor alpha to show inactive (sprite and text)
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);

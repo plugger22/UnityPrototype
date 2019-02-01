@@ -1189,6 +1189,8 @@ public class AIRebelManager : MonoBehaviour
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: AI Player moves to {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
             //action
             UseAction("Move");
+            //move list (for when autorun ends)
+            node.SetPlayerMoveNodes();
             //gear
 
             //invisibility
