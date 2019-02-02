@@ -45,6 +45,8 @@ public class AIRebelManager : MonoBehaviour
     [Range(1, 3)] public int lieLowThresholdActor = 1;
     [Tooltip("The % chance of AI player/actor selecting a Lie Low task in an Emergency situation")]
     [Range(0, 100)] public int lieLowEmergency = 75;
+    [Tooltip("The modifier (increases) to chance of Player lying low if already stressed")]
+    [Range(0, 100)] public int lieLowStressed = 25;
     [Tooltip("The % chance of AI player/actor selecting a Lie Low task when their invisibility is at 2")]
     [Range(0, 100)] public int lieLowTwo = 10;
     [Tooltip("The % chance of AI player/actor selecting a Lie Low task when their invisibility is at 1")]
@@ -70,6 +72,8 @@ public class AIRebelManager : MonoBehaviour
 
     private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
     private bool isPlayer;                              //if true the Resistance side is also the human player side (it's AI due to an autorun)
+    private bool isWounded;
+    private bool isStressed;
 
     //fast access
     private GlobalSide globalResistance;
@@ -80,6 +84,7 @@ public class AIRebelManager : MonoBehaviour
     private int priorityLow = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     private Condition conditionStressed;
+    private Condition conditionWounded;
 
     //Resistance activity
     List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -109,6 +114,7 @@ public class AIRebelManager : MonoBehaviour
         playerID = GameManager.instance.playerScript.actorID;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
         priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
         priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
         priorityLow = GameManager.instance.aiScript.priorityLowWeight;
@@ -119,6 +125,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(priorityMedium > -1, "Invalid priorityMedium (-1)");
         Debug.Assert(priorityLow > -1, "Invalid priorityLow (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         //player (human / AI)
         playerName = "The Phantom";
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
@@ -135,6 +142,8 @@ public class AIRebelManager : MonoBehaviour
     public void ProcessAI()
     {
         isConnectionsChanged = false;
+        //debugging
+        DebugTest();
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
@@ -160,7 +169,7 @@ public class AIRebelManager : MonoBehaviour
                 ProcessMoveTask();
                 ProcessIdleTask();
                 //task Execution
-                ExecuteTask();
+                ProcessTaskFinal();
                 counter++;
                 if (counter > 3)
                 {
@@ -717,50 +726,48 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessConditions()
     {
+        //reset all condition flags
+        isStressed = false;
+        isWounded = false;
+        //check for conditions
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)
         {
             int count = listOfConditions.Count;
             if (count > 0)
             {
-                foreach(Condition condition in listOfConditions)
+                foreach (Condition condition in listOfConditions)
                 {
                     if (condition != null)
                     {
                         switch (condition.name)
                         {
                             case "BLACKMAILER":
-
-                                break;
                             case "CORRUPT":
-
+                            case "INCOMPETENT":
+                            case "QUESTIONABLE":
+                            case "STAR":
+                            case "UNHAPPY":
+                            case "TAGGED":
+                            case "IMAGED":
                                 break;
                             case "DOOMED":
 
                                 break;
-                            case "IMAGED":
-
-                                break;
-                            case "INCOMPETENT":
-
-                                break;
-                                case "QUESTIONABLE":
-
-                                break;
-                            case "STAR":
-
-                                break;
                             case "STRESSED":
-
-                                break;
-                            case "TAGGED":
-
-                                break;
-                            case "UNHAPPY":
-
+                                isStressed = true;
                                 break;
                             case "WOUNDED":
-
+                                isWounded = true;
+                                if (actionAllowance > 1)
+                                {
+                                    //Restricts actions
+                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, globalResistance) == true)
+                                    {
+                                        actionAllowance = 1;
+                                        Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: Rebel AI Player WOUNDED. Maximum one action{0}", "\n");
+                                    }
+                                }
                                 break;
                             default:
                                 Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.name);
@@ -873,7 +880,10 @@ public class AIRebelManager : MonoBehaviour
                         {
                             //random chance of lying low
                             rnd = Random.Range(0, 100);
-                            if (rnd < lieLowEmergency)
+                            int lieLowChance = lieLowEmergency;
+                            if (isStressed == true)
+                            { lieLowChance += lieLowStressed; }
+                            if (rnd < lieLowChance)
                             {
                                 isSuccess = true;
                                 //generate task
@@ -890,7 +900,6 @@ public class AIRebelManager : MonoBehaviour
                     }
                 }
             }
-
         }
         //
         // - - - Low Player invisibility (not at a Bad node) - - - 
@@ -911,6 +920,8 @@ public class AIRebelManager : MonoBehaviour
                         case 0: threshold = lieLowZero; break;
                         default: Debug.LogErrorFormat("Invalid invisibility \"[0}\"", invisibility); break;
                     }
+                    if (isStressed == true)
+                    { threshold += lieLowStressed; }
                     if (rnd < threshold)
                     {
                         isSuccess = true;
@@ -1202,38 +1213,64 @@ public class AIRebelManager : MonoBehaviour
     //
 
     /// <summary>
-    /// carry out task in listOfTasksFinal (should only be one)
+    /// Chose task to implement. If any critical tasks are present one is randomly chosen, if not one is randomly chosen from listofTasksPotential.
     /// </summary>
-    private void ExecuteTask()
+    private void ProcessTaskFinal()
     {
-        int count = listOfTasksPotential.Count;
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: {0} potential Task{1} available{2}", count, count != 1 ? "s" : "", "\n");
+        AITask task = null;
+        //check for Critical tasks for
+        int count = listOfTasksCritical.Count;
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTaskFinal: {0} Critical Task{1} available{2}", count, count != 1 ? "s" : "", "\n");
         if (count > 0)
         {
-            //select a task from listOfPotential Tasks
-            AITask task = listOfTasksPotential[Random.Range(0, count)];
-            if (task != null)
-            {
-                //execute taks
-                switch(task.type)
-                {
-                    case AITaskType.Move:
-                        ExecuteMoveTask(task);
-                        break;
-                    case AITaskType.LieLow:
-                        ExecuteLieLowTask(task);
-                        break;
-                    case AITaskType.Idle:
-                        ExecuteIdleTask(task);
-                        break;
-                    default:
-                        Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
-                        break;
-                }
-            }
-            else { Debug.LogWarning("Invalid task (Null)"); }
+            if (count > 1)
+            { task = listOfTasksCritical[Random.Range(0, count)]; }
+            else { task = listOfTasksCritical[0]; }
         }
-        else { Debug.LogWarning("There are no tasks to execute in listOfTaskPotential"); }
+        else
+        {
+            //no critical, check for lower priority tasks
+            count = listOfTasksPotential.Count;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTaskFinal: {0} Potential Task{1} available{2}", count, count != 1 ? "s" : "", "\n");
+            if (count > 0)
+            {
+                //select a task from listOfPotential Tasks
+                if (count > 1)
+                { task = listOfTasksPotential[Random.Range(0, count)]; }
+                else { task = listOfTasksPotential[0]; }
+            }
+            else { Debug.LogError("There are no tasks to execute in listOfTaskPotential or listOfTasksCritical"); }
+        }
+        //Execute task
+        if (task != null)
+        { ExecuteTask(task); }
+        else { Debug.LogWarning("Invalid task (Null)"); }
+    }
+
+    /// <summary>
+    /// Implement task. One task is implemented. Called by ProcessTaskFinal
+    /// NOTE: Task Checked for Null by calling method
+    /// </summary>
+    private void ExecuteTask(AITask task)
+    {
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: task {0}, {1} priority, data0 {2}, data1 {3}{4}", task.type, task.priority, task.data0, task.data1, "\n");
+        //execute taks
+        switch (task.type)
+        {
+            case AITaskType.Move:
+                ExecuteMoveTask(task);
+                break;
+            case AITaskType.LieLow:
+                ExecuteLieLowTask(task);
+                break;
+            case AITaskType.Idle:
+                ExecuteIdleTask(task);
+                break;
+            default:
+                Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
+                break;
+        }
+
     }
 
     /// <summary>
@@ -1459,6 +1496,22 @@ public class AIRebelManager : MonoBehaviour
     //
     // - - -  Debug - - -
     //
+
+    /// <summary>
+    /// Runs specific turn based test conditions for debugging purposes
+    /// </summary>
+    private void DebugTest()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        switch (turn)
+        {
+            case 4:
+                if (status == ActorStatus.Active)
+                { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
+                break;
+        }
+    }
+
 
     public int GetStartPlayerNode()
     { return aiPlayerStartNodeID; }
