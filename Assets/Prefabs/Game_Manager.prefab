@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionsBase: 2
   deleteOlderThan: 3
-  survivalMove: 75
+  survivalMove: 50
   lieLowThresholdPlayer: 2
   lieLowThresholdActor: 1
   lieLowEmergency: 75

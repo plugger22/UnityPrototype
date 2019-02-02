@@ -36,7 +36,7 @@ public class AIRebelManager : MonoBehaviour
 
     [Header("Survival Situation")]
     [Tooltip("The % chance of AI player moving away when they are at a Bad Node")]
-    [Range(0, 100)] public int survivalMove = 75;
+    [Range(0, 100)] public int survivalMove = 50;
 
     [Header("Lying Low")]
     [Tooltip("The threshold of invisibility below which (less than) there is a chance of the AI player selecting a Lie Low task")]
@@ -75,6 +75,9 @@ public class AIRebelManager : MonoBehaviour
     private GlobalSide globalResistance;
     private int numOfNodes = -1;
     private int playerID = -1;
+    private int priorityHigh = -1;
+    private int priorityMedium = -1;
+    private int priorityLow = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     private Condition conditionStressed;
 
@@ -87,6 +90,7 @@ public class AIRebelManager : MonoBehaviour
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
+    List<AITask> listOfTasksCritical = new List<AITask>();
 
     //targets
     private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();   //key -> target, Value -> Distance (weighted and adjusted for threats)
@@ -105,10 +109,15 @@ public class AIRebelManager : MonoBehaviour
         playerID = GameManager.instance.playerScript.actorID;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
+        priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
+        priorityLow = GameManager.instance.aiScript.priorityLowWeight;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
-
+        Debug.Assert(priorityHigh > -1, "Invalid priorityHigh (-1)");
+        Debug.Assert(priorityMedium > -1, "Invalid priorityMedium (-1)");
+        Debug.Assert(priorityLow > -1, "Invalid priorityLow (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         //player (human / AI)
         playerName = "The Phantom";
@@ -149,6 +158,7 @@ public class AIRebelManager : MonoBehaviour
                 if (actionsUsed == 0)
                 { ProcessSurvivalTask(); }
                 ProcessMoveTask();
+                ProcessIdleTask();
                 //task Execution
                 ExecuteTask();
                 counter++;
@@ -194,6 +204,7 @@ public class AIRebelManager : MonoBehaviour
     {
         dictOfSortedTargets.Clear();
         listOfTasksPotential.Clear();
+        listOfTasksCritical.Clear();
         listOfNemesisSightData.Clear();
         listOfErasureSightData.Clear();
         listOfBadNodes.Clear();
@@ -260,6 +271,7 @@ public class AIRebelManager : MonoBehaviour
     private void ClearAICollectionsLate()
     {
         listOfTasksPotential.Clear();
+        listOfTasksCritical.Clear();
     }
 
     /// <summary>
@@ -840,7 +852,7 @@ public class AIRebelManager : MonoBehaviour
                             task.type = AITaskType.Move;
                             task.priority = Priority.Critical;
                             //add task to list of potential tasks
-                            listOfTasksPotential.Add(task);
+                            AddWeightedTask(task);
                             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Move Away to node ID {0}{1}", nodeMoveTo.nodeID, "\n");
                         }
                     }
@@ -871,7 +883,7 @@ public class AIRebelManager : MonoBehaviour
                                 task.type = AITaskType.LieLow;
                                 task.priority = Priority.Critical;
                                 //add task to list of potential tasks
-                                listOfTasksPotential.Add(task);
+                                AddWeightedTask(task);
                                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: PLAYER Emergency Lie Low at node ID {0}{1}", playerNodeID, "\n");
                             }
                         }
@@ -909,7 +921,7 @@ public class AIRebelManager : MonoBehaviour
                         task.type = AITaskType.LieLow;
                         task.priority = Priority.Critical;
                         //add task to list of potential tasks
-                        listOfTasksPotential.Add(task);
+                        AddWeightedTask(task);
                         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: PLAYER Generic Lie Low at node ID {0}{1}", playerNodeID, "\n");
                     }
                 }
@@ -972,7 +984,7 @@ public class AIRebelManager : MonoBehaviour
                                 task.type = AITaskType.LieLow;
                                 task.priority = Priority.Critical;
                                 //add task to list of potential tasks
-                                listOfTasksPotential.Add(task);
+                                AddWeightedTask(task);
                                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: ACTOR {0}, id {1}, Emergency Lie Low{2}", actorLieLow.arc.name, actorLieLow.actorID, "\n");
                             }
                         }
@@ -1080,7 +1092,7 @@ public class AIRebelManager : MonoBehaviour
                         task.type = AITaskType.Move;
                         task.priority = Priority.Medium;
                         //add task to list of potential tasks
-                        listOfTasksPotential.Add(task);
+                        AddWeightedTask(task);
                         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: targetNodeID {0}, move to {1}{2}", targetNodeID, nodeMoveTo.nodeID, "\n");
                     }
                     else { Debug.LogErrorFormat("Invalid connection (Null) for nodeID {0}", nodeMoveTo.nodeID); }
@@ -1091,6 +1103,20 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
     }
 
+    /// <summary>
+    /// Do nothing default task
+    /// </summary>
+    private void ProcessIdleTask()
+    {
+        //generate task
+        AITask task = new AITask();
+        task.type = AITaskType.Idle;
+        task.data0 = GameManager.instance.nodeScript.nodePlayer;
+        task.data1 = playerID;
+        task.priority = Priority.Low;
+        //add task to list of potential tasks
+        AddWeightedTask(task);
+    }
 
     /// <summary>
     /// randomly selects a good node (not on listOfBadNodes) from the specified node's immediate neighbours. Returns Null if none found.
@@ -1138,6 +1164,38 @@ public class AIRebelManager : MonoBehaviour
         return goodNode;
     }
 
+    /// <summary>
+    /// sub method to add a task to listOfTasksPotential/Critical in a weighted manner
+    /// </summary>
+    /// <param name="task"></param>
+    private void AddWeightedTask(AITask task)
+    {
+        if (task != null)
+        {
+            switch (task.priority)
+            {
+                case Priority.Critical:
+                    listOfTasksCritical.Add(task);
+                    break;
+                case Priority.High:
+                    for (int i = 0; i < priorityHigh; i++)
+                    { listOfTasksPotential.Add(task); }
+                    break;
+                case Priority.Medium:
+                    for (int i = 0; i < priorityMedium; i++)
+                    { listOfTasksPotential.Add(task); }
+                    break;
+                case Priority.Low:
+                    for (int i = 0; i < priorityLow; i++)
+                    { listOfTasksPotential.Add(task); }
+                    break;
+                default:
+                    Debug.LogErrorFormat("Unrecognised task priority \"{0}\"", task.priority);
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid task (Null)"); }
+    }
 
     //
     // - - - Execute Tasks - - -
@@ -1164,6 +1222,9 @@ public class AIRebelManager : MonoBehaviour
                         break;
                     case AITaskType.LieLow:
                         ExecuteLieLowTask(task);
+                        break;
+                    case AITaskType.Idle:
+                        ExecuteIdleTask(task);
                         break;
                     default:
                         Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
@@ -1288,6 +1349,17 @@ public class AIRebelManager : MonoBehaviour
             GameManager.instance.actorScript.SetLieLowTimer();
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteLieLowTask: \"{0}\", id {1} is LYING LOW at node ID {2}{3}", aiName, task.data1, task.data0, "\n");
         }
+    }
+
+    /// <summary>
+    /// do nothing task
+    /// </summary>
+    private void ExecuteIdleTask(AITask task)
+    {
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessIdleTask: \"{0}\", id {1} is IDLING at node ID {2}{3}", playerName, task.data1, task.data0, "\n");
+        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessIdleTask: IDLING{0}", "\n");
+        //action
+        UseAction("Lie Low (Player)");
     }
 
     /// <summary>
