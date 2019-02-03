@@ -83,8 +83,11 @@ public class AIRebelManager : MonoBehaviour
     private int priorityMedium = -1;
     private int priorityLow = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
+    //conditions
     private Condition conditionStressed;
     private Condition conditionWounded;
+    //tests
+    private int turnForStress;
 
     //Resistance activity
     List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -118,6 +121,7 @@ public class AIRebelManager : MonoBehaviour
         priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
         priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
         priorityLow = GameManager.instance.aiScript.priorityLowWeight;
+        turnForStress = GameManager.instance.testScript.stressTurnResistance;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -142,10 +146,8 @@ public class AIRebelManager : MonoBehaviour
     public void ProcessAI()
     {
         isConnectionsChanged = false;
-
-        /*//debugging
-        DebugTest();*/
-
+        //debugging
+        DebugTest();
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
@@ -1638,13 +1640,9 @@ public class AIRebelManager : MonoBehaviour
     private void DebugTest()
     {
         int turn = GameManager.instance.turnScript.Turn;
-        switch (turn)
-        {
-            case 4:
-                if (status == ActorStatus.Active)
-                { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
-                break;
-        }
+        //Add STRESSED condition
+        if (turn == turnForStress)
+        { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
     }
 
     //new methods above here

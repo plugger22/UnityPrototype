@@ -192,6 +192,7 @@ MonoBehaviour:
   lieLowThresholdPlayer: 2
   lieLowThresholdActor: 1
   lieLowEmergency: 75
+  lieLowStressed: 25
   lieLowTwo: 10
   lieLowOne: 20
   lieLowZero: 40
@@ -2000,8 +2001,8 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
-  isAuthority: 0
+  seed: 60680
+  isAuthority: 1
   isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0

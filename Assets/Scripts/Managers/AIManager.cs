@@ -390,6 +390,9 @@ public class AIManager : MonoBehaviour
     private string freeHackingEffectText;
     private string invisibileHackingEffectText;
     private string lowerDetectionEffectText;
+    //testing
+    private int turnForStress;
+
     //colour palette 
     private string colourGood;
     private string colourNeutral;
@@ -547,6 +550,7 @@ public class AIManager : MonoBehaviour
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
+        turnForStress = GameManager.instance.testScript.stressTurnAuthority;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
@@ -555,6 +559,7 @@ public class AIManager : MonoBehaviour
         Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
         Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
+        
         //text strings (uncoloured)
         traceBackFormattedText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>TRACEBACK</size></cspace></font>";
         screamerFormattedText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>SCREAMER</size></cspace></font>";
@@ -651,10 +656,8 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideAuthority()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-
         //debugging
         DebugTest();
-
         ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
         /*UpdateResources(globalAuthority);*/
@@ -2467,7 +2470,8 @@ public class AIManager : MonoBehaviour
         bool isDone = false;
         int connID = -1;
         int index;
-        List<Node> listOfDecisionNodes = GameManager.instance.dataScript.GetListOfDecisionNodes();
+        //add by value as will be deleting from list and don't want to affect master list of decision nodes
+        List<Node> listOfDecisionNodes = new List<Node>(GameManager.instance.dataScript.GetListOfDecisionNodes());
         List<Node> tempList = new List<Node>();
         if (listOfDecisionNodes != null)
         {
@@ -2504,11 +2508,14 @@ public class AIManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
+
                 /*Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);*/
+
                 //keep looking if not yet successful. List should have all preferred nodes stripped out.
                 if (connID == -1)
                 {
                     /*Debug.Log("ListOfDecisionNodes -> Look for a Random Node");*/
+
                     //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
                     if (listOfDecisionNodes.Count > 0)
                     {
@@ -4827,13 +4834,9 @@ public class AIManager : MonoBehaviour
     private void DebugTest()
     {
         int turn = GameManager.instance.turnScript.Turn;
-        switch (turn)
-        {
-            case 4:
-                if (status == ActorStatus.Active)
-                { GameManager.instance.playerScript.AddCondition(conditionStressed, globalAuthority, "for Debugging"); }
-                break;
-        }
+        //Add STRESSED condition
+        if (turn == turnForStress)
+        { GameManager.instance.playerScript.AddCondition(conditionStressed, globalAuthority, "for Debugging"); }
     }
 
     /// <summary>

@@ -5011,7 +5011,7 @@ public class ActorManager : MonoBehaviour
                                     breakdownChance, rnd, "\n");
                                     GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
                                 }
-                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: Stress BREAKDOWN occurs{0}", "\n");
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Stress BREAKDOWN occurs{0}", "\n");
                             }
                             else
                             {
@@ -5138,13 +5138,13 @@ public class ActorManager : MonoBehaviour
                                     breakdownChance, rnd, "\n");
                                     GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
                                 }
-                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: Stress BREAKDOWN occurs{0}", "\n");
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerAuthorityAI: Stress BREAKDOWN occurs{0}", "\n");
                             }
                             else
                             {
                                 if (isPlayer == true)
                                 {
-                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerAuthorityAI: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                         breakdownChance, rnd, "\n");
                                     GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
                                 }
