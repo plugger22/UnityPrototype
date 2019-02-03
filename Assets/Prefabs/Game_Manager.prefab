@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4565720453740776}
   - component: {fileID: 114736970613289560}
+  - component: {fileID: 114558055555623972}
   - component: {fileID: 114339811107641630}
   - component: {fileID: 114379107075524332}
   - component: {fileID: 114256465635010494}
@@ -56,7 +57,6 @@ GameObject:
   - component: {fileID: 114333061750755962}
   - component: {fileID: 114255827819229090}
   - component: {fileID: 114184360560951246}
-  - component: {fileID: 114558055555623972}
   - component: {fileID: 114762690547149900}
   - component: {fileID: 114656342642216484}
   - component: {fileID: 114639168605164212}
@@ -1561,6 +1561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stressTurnAuthority: -1
+  stressTurnResistance: -1
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2001,7 +2003,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 60680
+  seed: 0
   isAuthority: 1
   isBothAI: 1
   isPerformanceLog: 1

@@ -320,7 +320,7 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
-                    //isPlayer true if player side is Resistance, false otherwise
+                    //isPlayer true if resistance player side reverts to human control after autoRun, false otherwise
                     bool isPlayer = true;
                     if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
                     if (GameManager.instance.isBothAI == true)
@@ -328,14 +328,20 @@ public class ActorManager : MonoBehaviour
 
                         //Both sides AI (autorun) -> Resistance first
                         CheckPlayerResistanceAI(isPlayer);
-                        CheckPlayerAuthorityAI(isPlayer);
                         CheckInactiveResistanceActorsAI(isPlayer);
                         CheckActiveResistanceActorsAI(isPlayer);
+                        //Authority -> sequence is Player / Inactive / Active
+                        CheckPlayerAuthorityAI(isPlayer);
+                        CheckInactiveAuthorityActorsAI(isPlayer);
+                        CheckActiveAuthorityActorsAI(isPlayer);
+                        
                     }
                     else
                     {
                         //Resistance AI only
                         CheckPlayerResistanceAI(isPlayer);
+                        CheckActiveResistanceActorsAI(isPlayer);
+                        CheckInactiveResistanceActorsAI(isPlayer);
                     }
                     break;
                 default:
@@ -350,7 +356,7 @@ public class ActorManager : MonoBehaviour
             {
                 case SideState.Human:
                     CheckPlayerHuman();
-                    CheckInactiveAuthorityActors();
+                    CheckInactiveAuthorityActorsHuman();
                     //needs to be AFTER CheckInactiveActors
                     CheckActiveAuthorityActorsHuman();
                     //end game checks
@@ -365,12 +371,20 @@ public class ActorManager : MonoBehaviour
                     {
                         //Both sides AI (autorun) -> Resistance first
                         CheckPlayerResistanceAI(isPlayer);
+                        CheckInactiveResistanceActorsAI(isPlayer);
+                        CheckActiveResistanceActorsAI(isPlayer);
+                        //Authority-> sequence is Player / Inactive / Active
                         CheckPlayerAuthorityAI(isPlayer);
+                        CheckInactiveAuthorityActorsAI(isPlayer);
+                        CheckActiveAuthorityActorsAI(isPlayer);
                     }
                     else
                     {
-                        //Authority AI only
+                        //Authority AI only -> sequence is Player / Inactive / Active
                         CheckPlayerAuthorityAI(isPlayer);
+                        CheckInactiveAuthorityActorsAI(isPlayer);
+                        CheckActiveAuthorityActorsAI(isPlayer);
+                        
                     }
                     break;
                 default:
@@ -3992,14 +4006,30 @@ public class ActorManager : MonoBehaviour
     private void CheckActiveResistanceActorsAI(bool isPlayer)
     {
         string text, topText, bottomText;
+        bool isProceed = true;
+        bool isSecrets = false;
+        //Player active?
+        if (isPlayer == true)
+        {
+            //human resistance player (after autorun)
+            if (GameManager.instance.playerScript.status != ActorStatus.Active)
+            { isProceed = false; }
+        }
+        else
+        {
+            //ai resistance player
+            if (GameManager.instance.aiRebelScript.status != ActorStatus.Active)
+            { isProceed = false; }
+        }
         //no checks are made if player is not Active
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        if (isProceed == true)
         {
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
             if (arrayOfActors != null)
             {
-                bool isSecrets = false;
-                if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; }
+                //secrets only if reverts to human player
+                if (isPlayer == true)
+                { if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; } }
                 int chanceBreakdown = breakdownChance;
                 //base chance of nervous breakdown doubled during a surveillance crackdown
                 if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
@@ -4048,8 +4078,11 @@ public class ActorManager : MonoBehaviour
                                 //
                                 // - - - Learn Secrets - - -
                                 //
-                                if (isSecrets == true)
-                                { ProcessSecrets(actor, listOfSecrets, chanceSecret, isPlayer); }
+                                if (isPlayer == true)
+                                {
+                                    if (isSecrets == true)
+                                    { ProcessSecrets(actor, listOfSecrets, chanceSecret, isPlayer); }
+                                }
                                 //
                                 // - - - Info App conditions (any)
                                 //
@@ -4091,9 +4124,12 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
-        //lie low timer message (InfoApp 'Effects' tab)
-        text = string.Format("Lie Low Timer {0}", lieLowTimer);
-        GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+        if (isPlayer == true)
+        {
+            //lie low timer message (InfoApp 'Effects' tab)
+            text = string.Format("Lie Low Timer {0}", lieLowTimer);
+            GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+        }
     }
 
     /// <summary>
@@ -4214,6 +4250,183 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
         }
+    }
+
+    /// <summary>
+    /// Checks all active Authority AI actors (run AFTER checkInactiveAuthorityActors). No checks are made if Player is not Active
+    /// </summary>
+    private void CheckActiveAuthorityActorsAI(bool isPlayer)
+    {
+        string text, topText, bottomText;
+        bool isSecrets = false;
+        bool isProceed = true;
+        //Player active?
+        if (isPlayer == true)
+        {
+            //human authority player (after autorun)
+            if (GameManager.instance.playerScript.status != ActorStatus.Active)
+            { isProceed = false; }
+        }
+        else
+        {
+            //ai authority player
+            if (GameManager.instance.aiScript.status != ActorStatus.Active)
+            { isProceed = false; }
+        }
+        //no checks are made if player is not Active
+        if (isProceed == true)
+        {
+            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+            if (arrayOfActors != null)
+            {
+                //secrets only if reverts to human control
+                if (isPlayer == true)
+                { if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; } }
+                int chanceBreakdown = breakdownChance;
+                //base chance of nervous breakdown doubled during a surveillance crackdown
+                if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
+                { chanceBreakdown *= 2; }
+                //secrets
+                int chanceSecret = secretBaseChance;
+                List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+                //compatibility (actors with player)
+                List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalAuthority);
+                if (listOfBadConditions.Count > 0)
+                {
+                    StringBuilder builder = new StringBuilder();
+                    foreach (Condition condition in listOfBadConditions)
+                    {
+                        if (builder.Length > 0) { builder.Append(", "); }
+                        builder.Append(condition.name);
+                    }
+                    if (isPlayer == true)
+                    {
+                        //warning message
+                        string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
+                        string itemText = "Your Reputation is poor. Subordinates may resign";
+                        string reason = string.Format("You are {0}<b>{1}</b>{2}{3}", colourBad, builder.ToString(), colourEnd, "\n");
+                        string warning = string.Format("Your Subordinates may resign unless you {0}{1}<b>Improve your Reputation</b>{2}", "\n", colourNeutral, colourEnd);
+                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
+                    }
+                }
+                //
+                // - - - loop Active actors - - -
+                //
+                for (int i = 0; i < arrayOfActors.Length; i++)
+                {
+                    //check actor is present in slot (not vacant)
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                    {
+                        Actor actor = arrayOfActors[i];
+                        if (actor != null)
+                        {
+                            if (actor.Status == ActorStatus.Active)
+                            {
+                                //
+                                // - - - Stress Condition - - -
+                                //
+                                if (actor.CheckConditionPresent(conditionStressed) == true)
+                                { ProcessStress(actor, chanceBreakdown, isPlayer); }
+                                //
+                                // - - - Learn Secrets - - -
+                                //
+                                if (isPlayer == true)
+                                {
+                                    if (isSecrets == true)
+                                    { ProcessSecrets(actor, listOfSecrets, chanceSecret, isPlayer); }
+                                }
+                                //
+                                // - - - Info App conditions (any)
+                                //
+                                if (actor.CheckNumOfConditions() > 0)
+                                {
+                                    if (isPlayer == true)
+                                    {
+                                        List<Condition> listOfConditions = actor.GetListOfConditions();
+                                        foreach (Condition condition in listOfConditions)
+                                        {
+                                            if (condition != null)
+                                            {
+                                                text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                                switch (condition.type.level)
+                                                {
+                                                    case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
+                                                    case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                    case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                    default: topText = "Unknown"; break;
+                                                }
+                                                switch (condition.bottomTextTypeActor.level)
+                                                {
+                                                    case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                    case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                    case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
+                                                    default: bottomText = "Unknown"; break;
+                                                }
+                                                GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
+        }
+        if (isPlayer == true)
+        {
+            //lie low timer message (InfoApp 'Effects' tab)
+            text = string.Format("Lie Low Timer {0}", lieLowTimer);
+            GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+        }
+    }
+
+
+    /// <summary>
+    /// Checks all OnMap Inactive AI Authority actors
+    /// </summary>
+    private void CheckInactiveAuthorityActorsAI(bool isPlayer)
+    {
+        //Authority actors only
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Inactive)
+                        {
+                            switch (actor.inactiveStatus)
+                            {
+                                case ActorInactive.Breakdown:
+                                    //restore actor (one stress turn only)
+                                    actor.Status = ActorStatus.Active;
+                                    actor.inactiveStatus = ActorInactive.None;
+                                    actor.tooltipStatus = ActorTooltip.None;
+                                    if (isPlayer == true)
+                                    {
+                                        string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
+                                    }
+                                    Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveAuthorityActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
+                                        actor.arc.name, actor.actorID, "\n");
+                                    break;
+                            }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
     }
 
 
@@ -4596,9 +4809,9 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks all OnMap Inactive Authority actors, increments invisibility and returns any at max value back to Active status
+    /// Checks all OnMap Inactive Authority actors, and returns any at max value back to Active status
     /// </summary>
-    private void CheckInactiveAuthorityActors()
+    private void CheckInactiveAuthorityActorsHuman()
     {
         // Authority actors only
         Actor[] arrayOfActorsAuthority = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
@@ -5085,7 +5298,7 @@ public class ActorManager : MonoBehaviour
     private void CheckPlayerAuthorityAI(bool isPlayer)
     {
         int rnd;
-        string text, topText, bottomText;
+        string text;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         int playerID = GameManager.instance.playerScript.actorID;
         string playerName = GameManager.instance.playerScript.PlayerName;

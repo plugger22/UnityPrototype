@@ -131,7 +131,7 @@ public class PlayerManager : MonoBehaviour
         set
         {
             value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
-            Debug.LogFormat("[Sta] -> PlayerManager.cs:  Player Invisibility changed from {0} to {1}{2}", _invisibility, value, "\n");
+            Debug.LogFormat("[Sta] -> PlayerManager.cs:  Player (Resistance) Invisibility changed from {0} to {1}{2}", _invisibility, value, "\n");
             _invisibility = value;
         }
     }
