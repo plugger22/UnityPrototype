@@ -4960,7 +4960,7 @@ public class ActorManager : MonoBehaviour
                                 //message -> status change
                                 text = string.Format("{0} has automatically reactivated", playerName);
                                 GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
-                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckAIPlayerResistance: Player no longer Lying Low at node id {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n");
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Player no longer Lying Low at node id {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n");
                             }
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
@@ -5007,7 +5007,7 @@ public class ActorManager : MonoBehaviour
                                     string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                     string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                                     GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
-                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerResistanceAI: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                     GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
                                 }
@@ -5017,7 +5017,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 if (isPlayer == true)
                                 {
-                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerResistanceAI: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                         breakdownChance, rnd, "\n");
                                     GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
                                 }
@@ -5084,18 +5084,77 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckPlayerAuthorityAI(bool isPlayer)
     {
-        /*int rnd;
-        string text, topText, bottomText;*/
-
-        int playerID = GameManager.instance.playerScript.actorID;
+        int rnd;
+        string text, topText, bottomText;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        int playerID = GameManager.instance.playerScript.actorID;
+        string playerName = GameManager.instance.playerScript.PlayerName;
         //
         // - - - Conditions 
         //
         switch (GameManager.instance.aiScript.status)
         {
-            default:
+            case ActorStatus.Inactive:
+                switch (GameManager.instance.aiScript.inactiveStatus)
+                {
+                    case ActorInactive.Breakdown:
+                        //restore player (one stress turn only)
+                        GameManager.instance.aiScript.status = ActorStatus.Active;
+                        GameManager.instance.aiScript.inactiveStatus = ActorInactive.None;
+                        if (isPlayer == true)
+                        {
+                            text = string.Format("{0} has recovered from their Breakdown", playerName);
+                            GameManager.instance.messageScript.ActorStatus(text, "has Recovered", "has recovered from their breakdown",
+                              playerID, playerSide);
+                        }
+                        Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerAuthorityAI: Player has RECOVERED from their Breakdown{0}", "\n");
+                        break;
+                }
                 break;
+            case ActorStatus.Active:
+                {
+                    //check the stressed condition for a breakdown
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
+                    {
+                        //enforces a minimum one turn gap between successive breakdowns
+                        if (GameManager.instance.aiScript.isBreakdown == false)
+                        {
+                            rnd = Random.Range(0, 100);
+                            if (rnd < breakdownChance)
+                            {
+                                //player Breakdown
+                                GameManager.instance.aiScript.status = ActorStatus.Inactive;
+                                GameManager.instance.aiScript.inactiveStatus = ActorInactive.Breakdown;
+                                GameManager.instance.aiScript.isBreakdown = true;
+                                if (isPlayer == true)
+                                {
+                                    //message (public)
+                                    text = "Player has suffered a Breakdown (Stressed)";
+                                    string itemText = "has suffered a BREAKDOWN";
+                                    string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
+                                    string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
+                                    GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerAuthorityAI: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
+                                    breakdownChance, rnd, "\n");
+                                    GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
+                                }
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: Stress BREAKDOWN occurs{0}", "\n");
+                            }
+                            else
+                            {
+                                if (isPlayer == true)
+                                {
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
+                                        breakdownChance, rnd, "\n");
+                                    GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
+                                }
+                            }
+                        }
+                        else { GameManager.instance.aiScript.isBreakdown = false; }
+                    }
+                }
+                break;
+                //NO Default case here, only check for what you are interested in
         }
     }
 

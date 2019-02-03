@@ -60,9 +60,21 @@ public class PlayerManager : MonoBehaviour
             else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return _playerNameAuthority; }
             else
             {
-                //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _playerNameResistance; }
-                else { return _playerNameAuthority; }
+                //AI control of both side -> depends if human or AI overall control as to which name to use
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level)
+                {
+                    if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+                    { return _playerNameResistance; }
+                    //AI resistance player
+                    else { return GameManager.instance.aiRebelScript.playerName; }
+                }
+                else
+                {
+                    if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                    { return _playerNameAuthority; }
+                    //AI Mayor player
+                    else { return GameManager.instance.cityScript.GetMayorName(); }
+                }
             }
         }
     }
@@ -76,7 +88,8 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { return _renownResistance; }
+                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level)
+                { return _renownResistance; }
                 else { return _renownAuthority; }
             }
         }
@@ -591,7 +604,7 @@ public class PlayerManager : MonoBehaviour
                 if (CheckConditionPresent(condition, side) == false)
                 {
                     listOfConditions.Add(condition);
-                    Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0}, Player, gains {1} condition{2}", PlayerName, condition.name, "\n");
+                    Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
                     //message
                     string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
                     GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
@@ -657,7 +670,7 @@ public class PlayerManager : MonoBehaviour
                         if (listOfConditions[i].name.Equals(condition.name) == true)
                         {
                             listOfConditions.RemoveAt(i);
-                            Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0}, Player, lost {1} condition{2}", PlayerName, condition.name, "\n");
+                            Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.name, "\n");
                             //message
                             string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
                             GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);

@@ -142,8 +142,10 @@ public class AIRebelManager : MonoBehaviour
     public void ProcessAI()
     {
         isConnectionsChanged = false;
-        //debugging
-        DebugTest();
+
+        /*//debugging
+        DebugTest();*/
+
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
@@ -1497,21 +1499,6 @@ public class AIRebelManager : MonoBehaviour
     // - - -  Debug - - -
     //
 
-    /// <summary>
-    /// Runs specific turn based test conditions for debugging purposes
-    /// </summary>
-    private void DebugTest()
-    {
-        int turn = GameManager.instance.turnScript.Turn;
-        switch (turn)
-        {
-            case 4:
-                if (status == ActorStatus.Active)
-                { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
-                break;
-        }
-    }
-
 
     public int GetStartPlayerNode()
     { return aiPlayerStartNodeID; }
@@ -1642,6 +1629,22 @@ public class AIRebelManager : MonoBehaviour
 
         //return
         return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// Runs specific turn based test conditions for debugging purposes
+    /// </summary>
+    private void DebugTest()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        switch (turn)
+        {
+            case 4:
+                if (status == ActorStatus.Active)
+                { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
+                break;
+        }
     }
 
     //new methods above here

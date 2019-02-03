@@ -638,9 +638,6 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideResistance()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
-        /*ExecuteTasks(resistanceMaxTasksPerTurn);
-        ClearAICollections();
-        UpdateResources(globalResistance);*/
         //run AI
         GameManager.instance.aiRebelScript.ProcessAI();
         //reset flags
@@ -654,27 +651,34 @@ public class AIManager : MonoBehaviour
     public void ProcessAISideAuthority()
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
+
+        //debugging
+        DebugTest();
+
         ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
         /*UpdateResources(globalAuthority);*/
         //AI Status checks
         UpdateRebootStatus();
         UpdateCounterMeasureTimers();
-        //Info Gathering      
-        GetAINodeData();
-        ProcessNodeData();
-        ProcessSpiderData();
-        ProcessErasureData();
-        ProcessDecisionData();
-        //AI Rulesets
-        ProcessNodeTasks();
-        ProcessProbeTask();
-        ProcessSpiderTask();
-        ProcessDamageTask();
-        ProcessErasureTask();
-        ProcessDecisionTask();
-        //choose tasks for the following turn
-        ProcessFinalTasks(authorityMaxTasksPerTurn);
+        if (status == ActorStatus.Active)
+        {
+            //Info Gathering      
+            GetAINodeData();
+            ProcessNodeData();
+            ProcessSpiderData();
+            ProcessErasureData();
+            ProcessDecisionData();
+            //AI Rulesets
+            ProcessNodeTasks();
+            ProcessProbeTask();
+            ProcessSpiderTask();
+            ProcessDamageTask();
+            ProcessErasureTask();
+            ProcessDecisionTask();
+            //choose tasks for the following turn
+            ProcessFinalTasks(authorityMaxTasksPerTurn);
+        }
         //Nemesis
         ProcessNemesis();
         //reset flags
@@ -4816,29 +4820,21 @@ public class AIManager : MonoBehaviour
         return builderList.ToString();
     }
 
-    /*/// <summary>
-    /// Show list of player Activity (used for Nemesis AI)
-    /// </summary>
-    /// <returns></returns>
-    public string DebugShowPlayerActivity()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0} -listOfPlayerActivity{1}", "\n", "\n");
-        int numOfRecords = listOfPlayerActivity.Count;
-        if (numOfRecords > 0)
-        {
-            for (int i = 0; i < numOfRecords; i++)
-            {
-                AITracker data = listOfPlayerActivity[i];
-                if (data != null)
-                { builder.AppendFormat(" turn {0}, nodeID {1}{2}", data.turn, data.data0, "\n"); }
-                else { Debug.LogWarning("Invalid AITracker data (Null)"); }
-            }
-        }
-        else { builder.Append(" No records present"); }
 
-        return builder.ToString();
-    }*/
+    /// <summary>
+    /// Runs specific turn based test conditions for debugging purposes
+    /// </summary>
+    private void DebugTest()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        switch (turn)
+        {
+            case 4:
+                if (status == ActorStatus.Active)
+                { GameManager.instance.playerScript.AddCondition(conditionStressed, globalAuthority, "for Debugging"); }
+                break;
+        }
+    }
 
     /// <summary>
     /// provide Ongoing effect msg's in the infoApp for any relevant active decisions
