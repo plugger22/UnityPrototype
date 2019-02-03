@@ -305,6 +305,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
+        bool isPlayer;
         if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
         {
             //run for Resistance Player
@@ -320,25 +321,25 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
-                    //isPlayer true if resistance player side reverts to human control after autoRun, false otherwise
-                    bool isPlayer = true;
-                    if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
                     if (GameManager.instance.isBothAI == true)
                     {
-
                         //Both sides AI (autorun) -> Resistance first
+                        isPlayer = true;
+                        if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
                         CheckPlayerResistanceAI(isPlayer);
                         CheckInactiveResistanceActorsAI(isPlayer);
                         CheckActiveResistanceActorsAI(isPlayer);
                         //Authority -> sequence is Player / Inactive / Active
+                        isPlayer = true;
+                        if (GameManager.instance.sideScript.PlayerSide.level != globalAuthority.level) { isPlayer = false; }
                         CheckPlayerAuthorityAI(isPlayer);
                         CheckInactiveAuthorityActorsAI(isPlayer);
                         CheckActiveAuthorityActorsAI(isPlayer);
-                        
                     }
                     else
                     {
                         //Resistance AI only
+                        isPlayer = false;
                         CheckPlayerResistanceAI(isPlayer);
                         CheckActiveResistanceActorsAI(isPlayer);
                         CheckInactiveResistanceActorsAI(isPlayer);
@@ -364,16 +365,17 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
-                    //isPlayer true if player side is Resistance, false otherwise
-                    bool isPlayer = true;
-                    if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
                     if (GameManager.instance.isBothAI == true)
                     {
                         //Both sides AI (autorun) -> Resistance first
+                        isPlayer = true;
+                        if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
                         CheckPlayerResistanceAI(isPlayer);
                         CheckInactiveResistanceActorsAI(isPlayer);
                         CheckActiveResistanceActorsAI(isPlayer);
                         //Authority-> sequence is Player / Inactive / Active
+                        isPlayer = true;
+                        if (GameManager.instance.sideScript.PlayerSide.level != globalAuthority.level) { isPlayer = false; }
                         CheckPlayerAuthorityAI(isPlayer);
                         CheckInactiveAuthorityActorsAI(isPlayer);
                         CheckActiveAuthorityActorsAI(isPlayer);
@@ -381,6 +383,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         //Authority AI only -> sequence is Player / Inactive / Active
+                        isPlayer = false;
                         CheckPlayerAuthorityAI(isPlayer);
                         CheckInactiveAuthorityActorsAI(isPlayer);
                         CheckActiveAuthorityActorsAI(isPlayer);

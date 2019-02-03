@@ -60,8 +60,8 @@ public class AIRebelManager : MonoBehaviour
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
     [HideInInspector] public bool isBreakdown;          //true if suffering from nervous, stress induced, breakdown
-    [HideInInspector] public string playerName;         //name of Rebel leader if a non-player (eg. human controls authority side)
 
+   
     private int actionAllowance;                        //number of actions per turn (normal allowance + extras)
     private int actionsExtra;                           //bonus actions for this turn
     private int actionsUsed;                            //tally of actions used this turn
@@ -76,6 +76,7 @@ public class AIRebelManager : MonoBehaviour
     private bool isStressed;
 
     //fast access
+    private string playerName;                          
     private GlobalSide globalResistance;
     private int numOfNodes = -1;
     private int playerID = -1;
@@ -131,13 +132,10 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         //player (human / AI)
-        playerName = "The Phantom";
+        playerName = GameManager.instance.playerScript.PlayerName;
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
-        {
-            isPlayer = true;
-            playerName = GameManager.instance.playerScript.PlayerName;
-        }
+        { isPlayer = true; }
     }
 
     /// <summary>

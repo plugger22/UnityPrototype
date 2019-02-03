@@ -1,9 +1,7 @@
-﻿using System.Collections;
+﻿using gameAPI;
 using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
-using modalAPI;
 using System.Text;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -52,29 +50,21 @@ public class PlayerManager : MonoBehaviour
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
+    //Returns name of human controlled player side (even if temporarily AI controlled during an autoRun)
+    //Use GetPlayerNameResistance/Authority for a specific side name
+    //NOTE: _playerNameResistance/Authority are set by SideManager.cs -> Initialise
     public string PlayerName
     {
         get
         {
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { return _playerNameResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return _playerNameAuthority; }
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+            { return _playerNameResistance; }
+            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+            { return _playerNameAuthority; }
             else
             {
-                //AI control of both side -> depends if human or AI overall control as to which name to use
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level)
-                {
-                    if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
-                    { return _playerNameResistance; }
-                    //AI resistance player
-                    else { return GameManager.instance.aiRebelScript.playerName; }
-                }
-                else
-                {
-                    if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
-                    { return _playerNameAuthority; }
-                    //AI Mayor player
-                    else { return GameManager.instance.cityScript.GetMayorName(); }
-                }
+                Debug.LogError("Invalid PlayerSide.level");
+                return "Unknown Name";
             }
         }
     }
@@ -162,9 +152,6 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
-        //Debug
-        _playerNameAuthority = "Evil Eddy";
-        _playerNameResistance = "Cameron";
         //place Player in a random start location (Sprawl node)
         InitialisePlayerStartNode();
         //set stats
@@ -177,6 +164,8 @@ public class PlayerManager : MonoBehaviour
         //register event listeners
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
     }
+
+
 
     /// <summary>
     /// starts player at a random SPRAWL node, error if not or if City Hall district (player can't start here as nemesis always starts from there)
@@ -606,7 +595,7 @@ public class PlayerManager : MonoBehaviour
                     listOfConditions.Add(condition);
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
                     //message
-                    string msgText = string.Format("Player gains condition \"{0}\"", condition.name);
+                    string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.name);
                     GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
                 }
             }
@@ -672,7 +661,7 @@ public class PlayerManager : MonoBehaviour
                             listOfConditions.RemoveAt(i);
                             Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.name, "\n");
                             //message
-                            string msgText = string.Format("Player condition \"{0}\" removed", condition.name);
+                            string msgText = string.Format("{0} Player, {1}, condition \"{2}\" removed", side.name, GetPlayerName(side), condition.name);
                             GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
                             //Special case -> Doomed condition
                             if (condition.name.Equals(conditionDoomed.name) == true)
@@ -1068,6 +1057,53 @@ public class PlayerManager : MonoBehaviour
             else { Debug.LogWarning("No entries in tempList of Secrets"); }
         }
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
+    }
+
+
+    //
+    // - - - Names - - -
+    //
+
+
+    public void SetPlayerNameAuthority(string playerName)
+    {
+        if (string.IsNullOrEmpty(playerName) == false)
+        { _playerNameAuthority = playerName; }
+        else { Debug.LogError("Invalid Authority playerName (Null or Empty)"); }
+    }
+
+    public void SetPlayerNameResistance(string playerName)
+    {
+        if (string.IsNullOrEmpty(playerName) == false)
+        { _playerNameResistance = playerName; }
+        else { Debug.LogError("Invalid Resistance playerName (Null or Empty)"); }
+    }
+
+
+    public string GetPlayerNameAuthority()
+    { return _playerNameAuthority; }
+
+    public string GetPlayerNameResistance()
+    { return _playerNameResistance; }
+
+    public string GetPlayerName(GlobalSide side)
+    {
+        if (side != null)
+        {
+            if (side.level == 1)
+            {
+                //Authority
+                return _playerNameAuthority;
+            }
+            else if (side.level == 2)
+            {
+                //Resistance
+                return _playerNameResistance;
+            }
+            else { Debug.LogErrorFormat("Invalid side \"{0}\"", side.name); }
+        }
+        else { Debug.LogError("Invalid side (Null)"); }
+        return "Unknown Name";
     }
 
     //place new methods above here

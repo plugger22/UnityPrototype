@@ -406,7 +406,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player Spotted and Damaged by Nemesis
+    /// Resistance Player Spotted and Damaged by Nemesis
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
@@ -421,7 +421,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Damage;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.side = globalResistance;
             message.data0 = nodeID;
             //ItemData
             ItemData data = new ItemData();

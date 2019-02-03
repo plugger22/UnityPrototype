@@ -54,7 +54,7 @@ public class SideManager : MonoBehaviour
             switch (value.level)
             {
                 case 0:
-                    //AI both
+                    //AI both (EDIT: DON't use this)
                     resistanceCurrent = SideState.AI;
                     authorityCurrent = SideState.AI;
                     break;
@@ -110,8 +110,16 @@ public class SideManager : MonoBehaviour
             {
                 //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
                 if (GameManager.instance.isAuthority == true)
-                { PlayerSide = globalAuthority; }
-                else { PlayerSide = globalResistance; }
+                {
+                    PlayerSide = globalAuthority;
+                    GameManager.instance.playerScript.SetPlayerNameAuthority("Evil Eddy");
+                }
+                else
+                {
+                    PlayerSide = globalResistance;
+                    //name is that of Mayor
+                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
+                }
                 Debug.Log("[Start] Player set to AI for both sides");
                 resistanceOverall = SideState.AI;
                 authorityOverall = SideState.AI;
@@ -133,6 +141,9 @@ public class SideManager : MonoBehaviour
                 authorityOverall = SideState.AI;
                 resistanceCurrent = SideState.Human;
                 authorityCurrent = SideState.AI;
+                //names
+                GameManager.instance.playerScript.SetPlayerNameResistance("Cameron");
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
             }
             else
             {
@@ -143,6 +154,9 @@ public class SideManager : MonoBehaviour
                 authorityOverall = SideState.Human;
                 resistanceCurrent = SideState.AI;
                 authorityCurrent = SideState.Human;
+                //names
+                GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost");
+                GameManager.instance.playerScript.SetPlayerNameAuthority("Evil Eddy");
             }
         }
     }
