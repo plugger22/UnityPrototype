@@ -266,15 +266,15 @@ public class CityInfoUI : MonoBehaviour
             else { cityImage.sprite = GameManager.instance.guiScript.cityArcDefaultSprite; }
             Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
             //Organisation tooltip
-            mayorTooltip.tooltipHeader = GameManager.instance.cityScript.GetMayorName();
-            mayorTooltip.tooltipMain = GameManager.instance.cityScript.GetMayorTrait();
-            mayorTooltip.tooltipDetails = GameManager.instance.cityScript.GetMayorFaction();
+            mayorTooltip.tooltipHeader = GameManager.instance.cityScript.GetMayorNameFormatted();
+            mayorTooltip.tooltipMain = GameManager.instance.cityScript.GetMayorTraitFormatted();
+            mayorTooltip.tooltipDetails = GameManager.instance.cityScript.GetMayorFactionFormatted();
             mayorTooltip.x_offset = 25;
             factionTooltip.tooltipHeader = GameManager.instance.cityScript.GetFactionName();
-            factionTooltip.tooltipMain = GameManager.instance.cityScript.GetFactionTrait();
+            factionTooltip.tooltipMain = GameManager.instance.cityScript.GetFactionTraitFormatted();
             factionTooltip.tooltipDetails = GameManager.instance.cityScript.GetFactionDetails();
             factionTooltip.x_offset = 25;
-            organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityName();
+            organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityNameFormatted();
             organisationTooltip.tooltipDetails = GameManager.instance.cityScript.GetOrganisationsTooltip();
             organisationTooltip.x_offset = 25;
             //activate main panel

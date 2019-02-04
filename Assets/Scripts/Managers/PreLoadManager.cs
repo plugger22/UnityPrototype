@@ -9,6 +9,13 @@ using UnityEngine;
 /// </summary>
 public class PreLoadManager : MonoBehaviour
 {
+
+    [Header("Player Input")]
+    [Tooltip("Name of Human controlled Authority Player")]
+    public string nameAuthority;
+    [Tooltip("Name of Human controlled Resistance Player")]
+    public string nameResistance;
+    
     //place fields here that need to be initialised at game start, actual fields in the correct manager can access them later
     [Header("ActorManager.cs")]
     [Tooltip("The maximum number of stats (Qualities) that an actor can have")]

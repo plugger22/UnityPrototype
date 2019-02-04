@@ -181,14 +181,14 @@ public class CityManager : MonoBehaviour
     /// returns city name in a Player side colour formatted string   
     /// </summary>
     /// <returns></returns>
-    public string GetCityName()
+    public string GetCityNameFormatted()
     { return string.Format("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.name, colourEnd); }
 
     /// <summary>
     /// returns current city Arc name in 90% size, default white text format
     /// </summary>
     /// <returns></returns>
-    public string GetCityArc()
+    public string GetCityArcFormatted()
     { return string.Format("{0}<size=90%>{1}</size>", "\n", city.Arc.name); }
 
 
@@ -196,16 +196,18 @@ public class CityManager : MonoBehaviour
     /// returns current city loyalty level for player side in colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetCityLoyalty()
+    public string GetCityLoyaltyFormatted()
     { return string.Format("{0}{1}{2} out of {3}", colourNeutral, _cityLoyalty, colourEnd, maxCityLoyalty); }
 
 
-    public string GetCityDescription()
+    public string GetCityDescriptionFormatted()
     {
         if (city.descriptor != null)
         { return string.Format("{0}{1}{2}", colourNormal, city.descriptor, colourEnd); }
         else { return "Unknown"; }
     }
+
+
 
     /// <summary>
     /// returns colour formatted string detailed # of organisations active in city
@@ -281,7 +283,7 @@ public class CityManager : MonoBehaviour
     /// returns a colour formatted string of current cities Mayor. Used by cityInfoUI mayor tooltip
     /// </summary>
     /// <returns></returns>
-    public string GetMayorName()
+    public string GetMayorNameFormatted()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<size=115%><b>{1}</size></b>{2}", colourSide, city.mayor.name, colourEnd);
@@ -291,17 +293,24 @@ public class CityManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Name of mayor (unformatted)
+    /// </summary>
+    /// <returns></returns>
+    public string GetMayorName()
+    { return city.mayor.name; }
+
+    /// <summary>
     /// returns a colour formatted string of Mayor's faction alignment. Used by cityInfoUI mayor tooltip
     /// </summary>
     /// <returns></returns>
-    public string GetMayorFaction()
+    public string GetMayorFactionFormatted()
     { return string.Format("{0}Faction Alignment{1}{2}<b>{3}</b>", colourNeutral, colourEnd, "\n", city.faction.name); }
 
     /// <summary>
     /// returns a colour formatted string of the Mayor's trait. Used by cityInfoUI mayor tooltip
     /// </summary>
     /// <returns></returns>
-    public string GetMayorTrait()
+    public string GetMayorTraitFormatted()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.mayor.GetTrait().tagFormatted);
@@ -313,7 +322,7 @@ public class CityManager : MonoBehaviour
     /// returns a colour formatted string of the Faction's trait. Used by cityInfoUI faction tooltip
     /// </summary>
     /// <returns></returns>
-    public string GetFactionTrait()
+    public string GetFactionTraitFormatted()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.GetTrait().tagFormatted);

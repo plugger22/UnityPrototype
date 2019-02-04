@@ -33,9 +33,9 @@ GameObject:
   - component: {fileID: 114785469297181100}
   - component: {fileID: 114701128435362846}
   - component: {fileID: 114371659991772562}
+  - component: {fileID: 114525357966728784}
   - component: {fileID: 114653740805270716}
   - component: {fileID: 114297685510842036}
-  - component: {fileID: 114525357966728784}
   - component: {fileID: 114414509910123350}
   - component: {fileID: 114266263166893778}
   - component: {fileID: 114230505564311274}
@@ -200,7 +200,6 @@ MonoBehaviour:
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
-  playerName: 
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -553,6 +552,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5260972e0298b8b4996b2b8212375d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameAuthority: Mr EVIL
+  nameResistance: The Phantom
   numOfQualities: 3
 --- !u!114 &114364785414329898
 MonoBehaviour:

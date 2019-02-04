@@ -4671,7 +4671,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod for ProcessSecrets to handle trait Blabbermouth where an actor tells all other actors about the secret they have learned. Actor is the actor who learned of secret
+    /// subMethod for ProcessSecrets to handle trait Blabbermouth where an actor tells all other actors about the secret they have learned. Actor is the actor who learned of secret. Default current side.
     /// NOTE: actorTrait & secret checked for null by calling method. Actors are told of secret regardless whether they are active or inactive or have 'Bedazzled' trait
     /// </summary>
     /// <param name="secret"></param>
@@ -4679,12 +4679,13 @@ public class ActorManager : MonoBehaviour
     private int ProcessSecretTellAll(Secret secret, Actor actorTrait)
     {
         int numTold = 0;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        GlobalSide sideCurrent = GameManager.instance.turnScript.currentSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(sideCurrent);
         //loop all actors on Map
         for (int i = 0; i < arrayOfActors.Length; i++)
         {
             //check actor is present in slot (not vacant)
-            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, sideCurrent) == true)
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
@@ -4950,16 +4951,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
-                            {
-                                GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress");
-                                /*
-                                if (GameManager.instance.playerScript.RemoveCondition(conditionStressed) == true)
-                                {
-                                    //message -> condition change [EDIT] No need as PlayerManager handles this
-                                    text = string.Format("{0} is no longer Stressed (Lie Low)", playerName);
-                                    GameManager.instance.messageScript.ActorCondition(text, playerID, true, false, conditionStressed, "Lying Low removes Stress");
-                                }*/
-                            }
+                            { GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
                         }
                         else
                         {  GameManager.instance.playerScript.Invisibility = invis; }

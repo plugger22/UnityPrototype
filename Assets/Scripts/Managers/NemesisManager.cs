@@ -79,7 +79,7 @@ public class NemesisManager : MonoBehaviour
     private NemesisMode mode;
     private NemesisGoal goal;
     private int durationGoal;               //if goal is fixed for a set time then no new goal can be assigned until the duration countdown has expired
-    private int durationMode;               //used in Hunt & Inactive modes as a countdown timer, which drops nemesis back into Normal mode once zero
+    private int durationDelay;               //used in Hunt & Inactive modes as a countdown timer, which drops nemesis back into Normal mode once zero
     private Node nemesisNode;               //current node where nemesis is, updated by ProcessNemesisActivity
     private AITracker trackerDebug;         //tracker data passed to NemesisActivity, stored here each turn for Debugging purposes only
 
@@ -139,8 +139,8 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid node (Null)"); }
         //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationMode = GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
-        if (durationMode > 0)
+        durationDelay = GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
+        if (durationDelay > 0)
         {
             //grace period, start inactive
             SetNemesisMode(NemesisMode.Inactive);
@@ -270,7 +270,7 @@ public class NemesisManager : MonoBehaviour
                     }
                 }
                 else
-                { text = string.Format("{0} nemesis will be ACTIVE in {0} turn{1}", nemesis.name, durationMode, durationMode != 1 ? "s" : ""); }
+                { text = string.Format("{0} nemesis will be ACTIVE in {0} turn{1}", nemesis.name, durationDelay, durationDelay != 1 ? "s" : ""); }
                 //destination node for Player control, if applicable (passed Null if not)
                 Node controlNode = null;
                 if (isPlayerControl == true)
@@ -329,8 +329,8 @@ public class NemesisManager : MonoBehaviour
         if (targetNodeID > -1)
         { isPossibleNewGoal = true; }
         //mode counter
-        if (durationMode > 0)
-        { durationMode--; }
+        if (durationDelay > 0)
+        { durationDelay--; }
         //big picture logic
         if (nemesisNode != null)
         {
@@ -348,7 +348,7 @@ public class NemesisManager : MonoBehaviour
             {
                 case NemesisMode.Inactive:
                     //message kicks in one turn early
-                    if (durationMode == 1)
+                    if (durationDelay == 1)
                     {
                         isPossibleNewGoal = false;
                         //message - warning, Resistance player only
@@ -362,7 +362,7 @@ public class NemesisManager : MonoBehaviour
                             GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                         }
                     }
-                    else if (durationMode == 0)
+                    else if (durationDelay == 0)
                     {
                         //message
                         string text = string.Format("{0} Nemesis comes online", nemesis.name);
@@ -384,7 +384,7 @@ public class NemesisManager : MonoBehaviour
                     { isPossibleNewGoal = false; }
                     break;
                 case NemesisMode.HUNT:
-                    if (durationMode == 0)
+                    if (durationDelay == 0)
                     {
                         //timer run out and no viable target present
                         if (targetNodeID == -1)
@@ -409,7 +409,7 @@ public class NemesisManager : MonoBehaviour
             if (mode != NemesisMode.Inactive)
             {
                 Debug.LogFormat("[Nem] Status Start: playerTargetNodeID {0}, targetNodeID {1}, Immediate {2}, duration Mode {3} Goal {4}, isNewGoal {5}, ({6} {7}), {8}",
-                    playerTargetNodeID, targetNodeID, immediateFlag, durationMode, durationGoal, isPossibleNewGoal, mode, goal, "\n");
+                    playerTargetNodeID, targetNodeID, immediateFlag, durationDelay, durationGoal, isPossibleNewGoal, mode, goal, "\n");
                 Debug.LogFormat("[Nem] Status Start: Nemesis at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             }
             //
@@ -442,7 +442,7 @@ public class NemesisManager : MonoBehaviour
                         {
                             //continue with existing hunt mode but bump up the timers a little
                             Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Continue with Exisitng (timers +2){0}", "\n");
-                            durationMode += 2;
+                            durationDelay += 2;
                             durationGoal += 2;
                         }
                     }
@@ -618,22 +618,22 @@ public class NemesisManager : MonoBehaviour
                 targetNodeID = -1;
                 moveToNodeID = -1;
                 targetDistance = -1;
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE (previously {0}), duration {1}{2}", previousMode, durationMode, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to INACTIVE (previously {0}), duration {1}{2}", previousMode, durationDelay, "\n");
                 break;
             case NemesisMode.NORMAL:
                 mode = NemesisMode.NORMAL;
                 SetNemesisGoal(NemesisGoal.LOITER);
-                durationMode = 0;
+                durationDelay = 0;
                 targetNodeID = -1;
                 moveToNodeID = -1;
                 targetDistance = -1;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to NORMAL (previously {0}){1}", previousMode, "\n");
                 break;
             case NemesisMode.HUNT:
-                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}), duration {1}{2}", previousMode, durationMode, "\n");
+                Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisMode: Nemesis Mode set to HUNT (previously {0}), duration {1}{2}", previousMode, durationDelay, "\n");
                 mode = NemesisMode.HUNT;
-                durationMode = durationHuntMode + Random.Range(1, 10) - modifier;
-                durationMode = Mathf.Max(2, durationMode);
+                durationDelay = durationHuntMode + Random.Range(1, 10) - modifier;
+                durationDelay = Mathf.Max(2, durationDelay);
                 if (targetNodeID > -1)
                 {
                     //target available
@@ -661,7 +661,7 @@ public class NemesisManager : MonoBehaviour
         {
             case NemesisGoal.MOVE:
                 goal = NemesisGoal.MOVE;
-                durationGoal = durationMode;
+                durationGoal = durationDelay;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisGoal: Nemesis Goal set to MoveToNode (previously {0}) moveToNodeID {1}{2}", previousGoal, moveToNodeID, "\n");
                 break;
             case NemesisGoal.IDLE:
@@ -681,7 +681,7 @@ public class NemesisManager : MonoBehaviour
                 targetNodeID = -1;
                 moveToNodeID = -1;
                 //searches for remainder of Hunt mode timer
-                durationGoal = durationMode;
+                durationGoal = durationDelay;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> SetNemesisGoal: Nemesis Goal set to SEARCH (previously {0}){1}", previousGoal, "\n");
                 break;
             case NemesisGoal.AMBUSH:
@@ -1011,6 +1011,8 @@ public class NemesisManager : MonoBehaviour
     private bool ProcessPlayerInteraction(bool isPlayerMove = true)
     {
         bool isSpotted = false;
+        bool isResistancePlayer = true;
+        if (GameManager.instance.sideScript.PlayerSide.level == 1) { isResistancePlayer = false; }
         //player spotted if nemesis search rating >= player invisibility
         int searchRating = GetSearchRatingAdjusted();
         if (searchRating >= GameManager.instance.playerScript.Invisibility)
@@ -1051,27 +1053,53 @@ public class NemesisManager : MonoBehaviour
                     {
                         //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
                         SetNemesisMode(NemesisMode.Inactive);
-                        durationMode = durationDamageOffLine + GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
-                        string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationMode, "\n");
-                        if (durationMode > 0)
+                        durationDelay = durationDamageOffLine + GameManager.instance.scenarioScript.scenario.challenge.gracePeriodSecond;
+                        string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationDelay, "\n");
+                        if (durationDelay > 0)
                         {
-                            string text = string.Format("New Nemesis in {0} turns after player damaged", durationMode);
-                            string itemText = "Rumours of a new NEMESIS";
-                            string topText = "Nemesis OFFLINE";
-                            string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
-                            string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
-                            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                            if (isResistancePlayer == true)
+                            {
+                                string text = string.Format("New Nemesis in {0} turns after player damaged", durationDelay);
+                                string itemText = "Rumours of a new NEMESIS";
+                                string topText = "Nemesis OFFLINE";
+                                string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
+                                string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
+                                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                            }
+                            else
+                            {
+                                //authority player
+                                string text = string.Format("New Nemesis online in {0} turns", durationDelay);
+                                string itemText = "New NEMESIS on their way";
+                                string topText = "Nemesis OFFLINE";
+                                string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
+                                string warning = string.Format("It's a new Nemesis!{0}There will be a short delay ({1} turns) before the Nemesis arrives", durationDelay, "\n");
+                                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                            }
                         }
                     }
                     //no more nemesis after first
                     else
                     {
-                        string text = "NO new Nemesis after player damaged";
-                        string itemText = "NEMESIS threat eases";
-                        string topText = "Nemesis M.I.A";
-                        string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
-                        string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
-                        GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                        if (isResistancePlayer == true)
+                        {
+                            string text = "NO new Nemesis after player damaged";
+                            string itemText = "NEMESIS threat eases";
+                            string topText = "Nemesis M.I.A";
+                            string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
+                            string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
+                            GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                        }
+                        else
+                        {
+                            //authority player
+                            string text = "First Nemesis has done their job and will depart the city";
+                            string itemText = "First NEMESIS gone";
+                            string topText = "Nemesis Recalled";
+                            string reason = string.Format("{0}<b>HQ have decided to recall the Nemesis from the City as it has done it's job</b>", "\n");
+                            string explanation = "<b>There will be no further Nemesis</b>";
+                            GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                        }
                     }
                 }
                 else
@@ -1080,12 +1108,25 @@ public class NemesisManager : MonoBehaviour
                     nemesis = null;
                     SetNemesisMode(NemesisMode.Inactive);
                     //message
-                    string text = "NO new Nemesis after player damaged{0}";
-                    string itemText = "NEMESIS threat eases";
-                    string topText = "Nemesis M.I.A";
-                    string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
-                    string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
-                    GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                    if (isResistancePlayer == true)
+                    {
+                        string text = "NO new Nemesis after player damaged{0}";
+                        string itemText = "NEMESIS threat eases";
+                        string topText = "Nemesis M.I.A";
+                        string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
+                        string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
+                        GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                    }
+                    else
+                    {
+                        //authority player
+                        string text = "Second Nemesis has done their job and will depart the city";
+                        string itemText = "Second NEMESIS gone";
+                        string topText = "Nemesis Recalled";
+                        string reason = string.Format("{0}<b>HQ have decided to recall the second Nemesis from the City as it has done it's job</b>", "\n");
+                        string explanation = "<b>This decision is final and cannot be appealed</b>";
+                        GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                    }
                 }
             }
             else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: Player NOT Spotted at node {0}, {1}, id {2}, due to LYING LOW{3}", 
@@ -1096,7 +1137,7 @@ public class NemesisManager : MonoBehaviour
             //player NOT spotted
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: Player NOT Spotted at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
             //warn player (only if resistance side)
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+            if (isResistancePlayer == true)
             {
                 //prevent a double warning if player moves into a node with nemesis and nemesis is stationary
                 if (hasWarning == false)
@@ -1703,7 +1744,7 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat("{0} -Status{1}", "\n", "\n");
         builder.AppendFormat(" mode: {0}{1}", mode, "\n");
         builder.AppendFormat(" goal: {0}{1}", goal, "\n");
-        builder.AppendFormat(" durationMode: {0}{1}", durationMode, "\n");
+        builder.AppendFormat(" durationMode: {0}{1}", durationDelay, "\n");
         builder.AppendFormat(" durationGoal: {0}{1}", durationGoal, "\n");
         if (nemesis != null)
         { builder.AppendFormat(" nemesis node: {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n"); }
@@ -1792,7 +1833,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public int GetDurationMode()
-    { return durationMode; }
+    { return durationDelay; }
 
     //new methods above here
 }

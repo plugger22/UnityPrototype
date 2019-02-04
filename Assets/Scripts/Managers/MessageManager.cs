@@ -622,13 +622,14 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// Player / Actor condition gained or removed, eg. 'Stressed'. Creates ItemData ->  provide a 'reason' in a self-contained format, plus isGained / Lost and condition
+    /// isResistancePlayerAffected (default true) determines which side's player is affected (ignore if not player). The message will go the default human player side (which may be different)
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorCondition(string text, int actorID, bool isGained = true, Condition condition = null, string reason = null)
+    public Message ActorCondition(string text, int actorID, bool isGained = true, Condition condition = null, string reason = null, bool isResistancePlayerAffected = true)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
         if (string.IsNullOrEmpty(text) == false)
@@ -646,8 +647,9 @@ public class MessageManager : MonoBehaviour
             string genericActorArc = "Unknown";
             if (actorID == 999)
             {
-                //player
-                genericActorName = GameManager.instance.playerScript.PlayerName;
+                //player -> player who is affected which can be different from playerSide (who gets the message)
+                if (isResistancePlayerAffected == true) { genericActorName = GameManager.instance.playerScript.GetPlayerNameResistance(); }
+                else { genericActorName = GameManager.instance.playerScript.GetPlayerNameAuthority(); }
                 genericActorArc = "Player";
             }
             else

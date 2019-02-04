@@ -108,15 +108,15 @@ public class SideManager : MonoBehaviour
                 {
                     PlayerSide = globalAuthority;
                     //reverts to Human authority player
-                    GameManager.instance.playerScript.SetPlayerNameAuthority("Evil Eddy");
-                    GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost");
+                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
+                    GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost"); //NOTE: should be SO name of AI rebel player
                 }
                 else
                 {
                     PlayerSide = globalResistance;
                     //reverts to Human resistance player
-                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetCity().mayor.name);
-                    GameManager.instance.playerScript.SetPlayerNameResistance("Cameron");
+                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
+                    GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
                 }
                 Debug.Log("[Start] Player set to AI for both sides");
                 resistanceOverall = SideState.AI;
@@ -140,8 +140,8 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.Human;
                 authorityCurrent = SideState.AI;
                 //names
-                GameManager.instance.playerScript.SetPlayerNameResistance("Cameron");
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetCity().mayor.name);
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
             }
             else
             {
@@ -153,8 +153,8 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.AI;
                 authorityCurrent = SideState.Human;
                 //names
-                GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost");
-                GameManager.instance.playerScript.SetPlayerNameAuthority("Evil Eddy");
+                GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost"); //NOTE: should be SO name of AI rebel player
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
             }
         }
     }

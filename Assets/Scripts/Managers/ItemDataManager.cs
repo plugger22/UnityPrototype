@@ -1443,14 +1443,14 @@ public class ItemDataManager : MonoBehaviour
         if (changeInLoyalty > 0)
         {
             //loyalty increases
-            builder.AppendFormat("{0}{1}<b>Loyalty now {2}{3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}<b>Loyalty now {2}{3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityNameFormatted(), "\n", colourSideGood, newCityLoyalty, colourEnd, "\n", "\n");
             //change
             builder.AppendFormat("<b>Loyalty increased by {0}+{1}</b>{2}", colourSideGood, changeInLoyalty, colourEnd);
         }
         else
         {
             //loyalty decresed
-            builder.AppendFormat("{0}{1}<b>Loyalty now {2}{3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityName(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}{1}<b>Loyalty now {2}{3}</b>{4}{5}{6}", GameManager.instance.cityScript.GetCityNameFormatted(), "\n", colourSideBad, newCityLoyalty, colourEnd, "\n", "\n");
             //change
             builder.AppendFormat("<b>Loyalty decreased by {0}{1}</b>{2}", colourSideBad, changeInLoyalty, colourEnd);
         }

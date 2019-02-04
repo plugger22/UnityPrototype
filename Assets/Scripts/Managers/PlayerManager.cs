@@ -578,6 +578,8 @@ public class PlayerManager : MonoBehaviour
     /// <param name="condition"></param>
     public void AddCondition(Condition condition, GlobalSide side, string reason)
     {
+        bool isResistance = true;
+        if (side.level == 1) { isResistance = false; }
         if (condition != null)
         {
             List<Condition> listOfConditions = GetListOfConditionForSide(side);
@@ -595,8 +597,9 @@ public class PlayerManager : MonoBehaviour
                     listOfConditions.Add(condition);
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
                     //message
+                    
                     string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.name);
-                    GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
+                    GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
                 }
             }
             else { Debug.LogError("Invalid listOfConditions (Null)"); }
@@ -639,6 +642,8 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public bool RemoveCondition(Condition condition, GlobalSide side, string reason)
     {
+        bool isResistance = true;
+        if (side.level == 1) { isResistance = false; }
         if (condition != null)
         {
             //keep going if reason not provided
@@ -662,7 +667,7 @@ public class PlayerManager : MonoBehaviour
                             Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.name, "\n");
                             //message
                             string msgText = string.Format("{0} Player, {1}, condition \"{2}\" removed", side.name, GetPlayerName(side), condition.name);
-                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
+                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason, isResistance);
                             //Special case -> Doomed condition
                             if (condition.name.Equals(conditionDoomed.name) == true)
                             { GameManager.instance.actorScript.StopDoomTimer(); }
