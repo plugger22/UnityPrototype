@@ -1308,7 +1308,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Nemesis;
-            message.side = globalBoth;
+            message.side = globalResistance;
             message.data0 = nodeID;
             message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
             message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
@@ -1978,7 +1978,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="amount"></param>
     /// <returns></returns>
-    public Message DecisionRequestResources(string text, GlobalSide side, int amount)
+    public Message DecisionRequestResources(string text, string description, GlobalSide side, int amount)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(amount >= 0, string.Format("Invalid amount {0}", amount));
@@ -1995,7 +1995,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Request Resources";
-            data.bottomText = text;
+            data.bottomText = description;
             data.priority = ItemPriority.Low;
             data.sprite = mayor.sprite;
             data.tab = ItemTab.ALERTS;

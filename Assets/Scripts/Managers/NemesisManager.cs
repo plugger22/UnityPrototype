@@ -1031,9 +1031,6 @@ public class NemesisManager : MonoBehaviour
                     Debug.LogErrorFormat("Unrecognised resistancePlayer \"{0}\"", resistancePlayer);
                     break;
             }
-
-            /*if (GameManager.instance.playerScript.inactiveStatus != ActorInactive.LieLow)*/
-
             //proceed
             if (isValidPlayer == true)
             {
@@ -1073,7 +1070,7 @@ public class NemesisManager : MonoBehaviour
                                 string itemText = "New NEMESIS on their way";
                                 string topText = "Nemesis OFFLINE";
                                 string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
-                                string warning = string.Format("It's a new Nemesis!{0}There will be a short delay ({1} turns) before the Nemesis arrives", durationDelay, "\n");
+                                string warning = string.Format("There will be a delay ({0} turn{1}) before the Nemesis arrives", durationDelay, durationDelay != 1 ? "s" : "");
                                 GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                             }
                         }

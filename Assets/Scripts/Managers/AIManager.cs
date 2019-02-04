@@ -3478,23 +3478,25 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: APPROVED need < {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
         }
         //message & request counter
-        string text = "";
+        string text, description = "";
         if (isSuccess == true)
         {
             Debug.Assert(amount > 0, "Invalid amount (zero)");
-            text = string.Format("Request for Resources APPROVED ({0} added to pool)", amount);
+            text = "Request for Resources APPROVED";
+            description = string.Format("<b>{0} resources added to the pool</b>", amount);
             //reset counter back to zero
             numOfUnsuccessfulResourceRequests = 0;
         }
         else
         {
-            text = string.Format("Request for Resources DENIED ({0} % chance of being Approved)", adjustedChance);
+            text = "Request for Resources DENIED";
+            description = string.Format("<b>{0} % chance of being Approved</b>", adjustedChance);
             Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: DENIED need < {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
             //increment counter
             numOfUnsuccessfulResourceRequests++;
             amount = 0;
         }
-        GameManager.instance.messageScript.DecisionRequestResources(text, globalAuthority, amount);
+        GameManager.instance.messageScript.DecisionRequestResources(text, description, globalAuthority, amount);
         return isSuccess;
     }
 
