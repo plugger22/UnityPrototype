@@ -343,11 +343,8 @@ public class GameManager : MonoBehaviour
         //Tooltip Node
         startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
-        listOfStartMethods.Add(startMethod);
-        //Side Manager
-        startMethod.handler = GameManager.instance.sideScript.Initialise;
-        startMethod.className = "SideManager";
-        listOfStartMethods.Add(startMethod);
+        listOfStartMethods.Add(startMethod);        
+
         //Actor Manager -> PreInitialise
         startMethod.handler = GameManager.instance.actorScript.PreInitialiseActors;
         startMethod.className = "ActorManager";
@@ -370,6 +367,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
         listOfStartMethods.Add(startMethod);
+
+        //Side Manager -> after scenarioManager
+        startMethod.handler = GameManager.instance.sideScript.Initialise;
+        startMethod.className = "SideManager";
+        listOfStartMethods.Add(startMethod);
+
         //Objective Manager
         startMethod.handler = GameManager.instance.objectiveScript.Initialise;
         startMethod.className = "ObjectiveManager";

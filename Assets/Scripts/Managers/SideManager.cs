@@ -44,7 +44,7 @@ public class SideManager : MonoBehaviour
     //backing field
     private GlobalSide _playerSide;
 
-    //what side is the player
+    //what side is the player (Human, even if temporarily under AI control for an autorun)
     public GlobalSide PlayerSide
     {
         get { return _playerSide; }
@@ -53,11 +53,6 @@ public class SideManager : MonoBehaviour
             _playerSide = value;
             switch (value.level)
             {
-                case 0:
-                    //AI both (EDIT: DON't use this)
-                    resistanceCurrent = SideState.AI;
-                    authorityCurrent = SideState.AI;
-                    break;
                 case 1:
                     //Authority
                     if (GameManager.instance.optionScript.noAI == false)
@@ -112,13 +107,16 @@ public class SideManager : MonoBehaviour
                 if (GameManager.instance.isAuthority == true)
                 {
                     PlayerSide = globalAuthority;
+                    //reverts to Human authority player
                     GameManager.instance.playerScript.SetPlayerNameAuthority("Evil Eddy");
+                    GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost");
                 }
                 else
                 {
                     PlayerSide = globalResistance;
-                    //name is that of Mayor
-                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
+                    //reverts to Human resistance player
+                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetCity().mayor.name);
+                    GameManager.instance.playerScript.SetPlayerNameResistance("Cameron");
                 }
                 Debug.Log("[Start] Player set to AI for both sides");
                 resistanceOverall = SideState.AI;
@@ -131,7 +129,7 @@ public class SideManager : MonoBehaviour
         }
         else
         {
-            //One side is a HUMAN Player
+            // HUMAN Player
             if (GameManager.instance.isAuthority == false)
             {
                 //Resistance player
@@ -143,7 +141,7 @@ public class SideManager : MonoBehaviour
                 authorityCurrent = SideState.AI;
                 //names
                 GameManager.instance.playerScript.SetPlayerNameResistance("Cameron");
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetCity().mayor.name);
             }
             else
             {

@@ -62,7 +62,7 @@ public class CityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// need to do BEFORE levelManager.cs -> Initialise
+    /// need to do BEFORE levelManager.cs -> Initialise. Run from ScenarioManager.InitialiseEarly
     /// </summary>
     public void InitialiseEarly()
     {
@@ -94,7 +94,7 @@ public class CityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// need to do AFTER levelManager.cs -> Initialise
+    /// need to do AFTER levelManager.cs -> Initialise. Run from ScenarioManager.InitialiseLate
     /// </summary>
     public void InitialiseLate()
     {

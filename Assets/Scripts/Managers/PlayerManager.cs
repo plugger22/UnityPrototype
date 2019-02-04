@@ -1079,13 +1079,25 @@ public class PlayerManager : MonoBehaviour
         else { Debug.LogError("Invalid Resistance playerName (Null or Empty)"); }
     }
 
-
+    /// <summary>
+    /// returns name of Authority Player regardless of whether it is AI or Human controlled
+    /// </summary>
+    /// <returns></returns>
     public string GetPlayerNameAuthority()
     { return _playerNameAuthority; }
 
+    /// <summary>
+    /// returns name of Resistance Player regardless of whether it is AI or Human controlled
+    /// </summary>
+    /// <returns></returns>
     public string GetPlayerNameResistance()
     { return _playerNameResistance; }
 
+    /// <summary>
+    /// returns name of specific side player regardless of whether it is AI or Human controlled
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
     public string GetPlayerName(GlobalSide side)
     {
         if (side != null)
