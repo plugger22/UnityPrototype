@@ -423,6 +423,10 @@ public class TurnManager : MonoBehaviour
                             text = string.Format("You are {0}LYING LOW{1}", colourNeutral, colourEnd);
                             sprite = GameManager.instance.guiScript.infoSprite;
                             break;
+                        case ActorInactive.Leave:
+                            text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
+                            sprite = GameManager.instance.guiScript.infoSprite;
+                            break;
                     }
                     break;
             }
