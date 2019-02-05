@@ -224,7 +224,7 @@ public class ActionManager : MonoBehaviour
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.error);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
@@ -1409,6 +1409,14 @@ public class ActionManager : MonoBehaviour
                 string reason = "has taken a break in order to recover from their <b>STRESS</b>";
                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details);
+                //action (if valid) expended -> must be BEFORE outcome window event
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.isAction = true;
+                outcomeDetails.reason = "Actor Stress Leave";
+                outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd,
+                    colourGood, colourEnd);
+                //generate a create modal window event
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
             }
             else { Debug.LogError("Invalid actor (Null)"); }
         }
