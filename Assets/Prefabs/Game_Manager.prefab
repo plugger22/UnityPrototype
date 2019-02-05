@@ -1764,6 +1764,7 @@ MonoBehaviour:
   playerBadResignChance: 5
   playerRecognisedChance: 20
   playerDoomTimerValue: 5
+  stressLeaveRenownCost: 2
   lieLowCooldownPeriod: 5
   lieLowTimer: 0
   doomTimer: 0
@@ -1798,6 +1799,8 @@ MonoBehaviour:
   isBreakdown: 0
   isEndOfTurnGearCheck: 0
   isLieLowFirstturn: 0
+  statTimesBreakdown: 0
+  statTimesLieLow: 0
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1

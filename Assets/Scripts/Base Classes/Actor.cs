@@ -31,6 +31,7 @@ namespace gameAPI
         [HideInInspector] public bool isComplaining;            //Action taken by actor in reserve pool. Can only complain once.
         [HideInInspector] public bool isBreakdown;              //set true when breakdown so that there is at least a one turn gap between successive breakdowns
         [HideInInspector] public bool isLieLowFirstturn;        //set true when lie low action, prevents invis incrementing on first turn
+        [HideInInspector] public bool isStressLeave;            //set true to ensure actor spends one turn inactive on stress leave
         [HideInInspector] public string actorName;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)

@@ -92,6 +92,8 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.InventoryFire, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LeavePlayerAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LeaveActorAction, OnEvent, "ActionManager");
     }
 
     /// <summary>
@@ -131,6 +133,14 @@ public class ActionManager : MonoBehaviour
             case EventType.LieLowPlayerAction:
                 ModalActionDetails detailsLieLowPlayer = Param as ModalActionDetails;
                 ProcessLieLowPlayerAction(detailsLieLowPlayer);
+                break;
+            case EventType.LeavePlayerAction:
+                ModalActionDetails detailsLeavePlayer = Param as ModalActionDetails;
+                ProcessLeavePlayerAction(detailsLeavePlayer);
+                break;
+            case EventType.LeaveActorAction:
+                ModalActionDetails detailsLeaveActor = Param as ModalActionDetails;
+                ProcessLeaveActorAction(detailsLeaveActor);
                 break;
             case EventType.ActivateActorAction:
                 ModalActionDetails detailsActivateActor = Param as ModalActionDetails;
@@ -1356,6 +1366,53 @@ public class ActionManager : MonoBehaviour
         }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivatePlayerAction");
+    }
+
+    /// <summary>
+    /// Process Stress Leave for Human Authority Player
+    /// </summary>
+    /// <param name="details"></param>
+    private void ProcessLeavePlayerAction(ModalActionDetails details)
+    {
+
+    }
+
+    /// <summary>
+    /// Process Stress Leave for Human Authority Actor
+    /// </summary>
+    /// <param name="modalDetails"></param>
+    private void ProcessLeaveActorAction(ModalActionDetails modalDetails)
+    {
+        if (modalDetails != null)
+        {
+            Actor actor = GameManager.instance.dataScript.GetActor(modalDetails.actorDataID);
+            if (actor != null)
+            {
+                actor.Status = ActorStatus.Inactive;
+                actor.inactiveStatus = ActorInactive.Leave;
+                actor.tooltipStatus = ActorTooltip.Leave;
+                actor.isStressLeave = true;
+                //deduct renown cost
+                int renown = GameManager.instance.playerScript.Renown;
+                renown -= modalDetails.renownCost;
+                if (renown < 0)
+                {
+                    renown = 0;
+                    Debug.LogWarningFormat("Renown dropped below Zero");
+                }
+                GameManager.instance.playerScript.Renown = renown;
+                //change alpha of actor to indicate inactive status
+                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+                //message (public)
+                string text = string.Format("{0}, {1}, has gone on Stress Leave", actor.actorName, actor.arc.name);
+                string itemText = "has gone on Stress LEAVE";
+                string reason = "has taken a break in order to recover from their <b>STRESS</b>";
+                string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details);
+            }
+            else { Debug.LogError("Invalid actor (Null)"); }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
     }
 
     /// <summary>

@@ -52,6 +52,8 @@ public enum EventType
     RecruitAction,
     MoveAction,
     ManageActorAction,
+    LeaveActorAction,
+    LeavePlayerAction,
     LieLowActorAction,
     LieLowPlayerAction,
     ActivateActorAction,

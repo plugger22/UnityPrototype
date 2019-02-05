@@ -1508,7 +1508,41 @@ public class ActorManager : MonoBehaviour
                                 { infoBuilder.AppendFormat("Can't Take Gear{0}{1}(No space){2}", "\n", colourBad, colourEnd); }
                             }
                         }
-
+                    }
+                    //
+                    // - - - Authority - - -
+                    //
+                    else
+                    {
+                        if (actor.CheckConditionPresent(conditionStressed) == true)
+                        {
+                            if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCost)
+                            {
+                                //
+                                // - - - Stress Leave - - -
+                                //
+                                ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
+                                leaveActionDetails.side = playerSide;
+                                leaveActionDetails.actorDataID = actor.actorID;
+                                leaveActionDetails.renownCost = stressLeaveRenownCost;
+                                tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
+                                EventButtonDetails leaveDetails = new EventButtonDetails()
+                                {
+                                    buttonTitle = "Stress Leave",
+                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                    buttonTooltipMain = string.Format("{0}, {1}, will recover from their Stress", actor.actorName, actor.arc.name),
+                                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                    //use a Lambda to pass arguments to the action
+                                    action = () => { EventManager.instance.PostNotification(EventType.LeaveActorAction, this, leaveActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                };
+                                //add Activate button to list
+                                tempList.Add(leaveDetails);
+                            }
+                            else
+                            { infoBuilder.AppendFormat("Stress Leave requires {0}{1}{2} Renown", colourNeutral, stressLeaveRenownCost, colourEnd); }
+                        }
+                        else
+                        { infoBuilder.AppendFormat("Need to be {0}Stressed{1} in order to take Leave", colourNeutral, colourEnd);  }
                     }
                     break;
                 //
@@ -1865,19 +1899,19 @@ public class ActorManager : MonoBehaviour
                     ModalActionDetails leaveActionDetails = new ModalActionDetails();
                     leaveActionDetails.side = playerSide;
                     leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                    leaveActionDetails.level = 2;
+                    leaveActionDetails.renownCost = stressLeaveRenownCost;
                     tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
-                    EventButtonDetails activateDetails = new EventButtonDetails()
+                    EventButtonDetails leaveDetails = new EventButtonDetails()
                     {
                         buttonTitle = "Stress Leave",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
                         buttonTooltipMain = "Recover from your Stress",
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                        action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
                     };
                     //add Activate button to list
-                    tempList.Add(activateDetails);
+                    tempList.Add(leaveDetails);
                 }
                 else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Renown{2}", colourAlert, stressLeaveRenownCost, colourEnd); }
             }
@@ -4877,6 +4911,7 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.Status == ActorStatus.Inactive)
                         {
+                            string text;
                             switch (actor.inactiveStatus)
                             {
                                 case ActorInactive.Breakdown:
@@ -4885,8 +4920,22 @@ public class ActorManager : MonoBehaviour
                                     actor.inactiveStatus = ActorInactive.None;
                                     actor.tooltipStatus = ActorTooltip.None;
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                                    string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
+                                    text = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                    GameManager.instance.messageScript.ActorStatus(text, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
+                                    break;
+                                case ActorInactive.Leave:
+                                    if (actor.isStressLeave == false)
+                                    {
+                                        //restore actor (one Stress Leave turn only)
+                                        actor.Status = ActorStatus.Active;
+                                        actor.inactiveStatus = ActorInactive.None;
+                                        actor.tooltipStatus = ActorTooltip.None;
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
+                                        GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalAuthority);
+                                        actor.RemoveCondition(conditionStressed, "Stress Leave");
+                                    }
+                                    else { actor.isStressLeave = false; }
                                     break;
                             }
                         }
@@ -5895,6 +5944,12 @@ public class ActorManager : MonoBehaviour
                     data.main = string.Format("{0}<size=120%>Currently{1} {2}CAPTURED{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                         colourBad, colourEnd, colourNormal, colourEnd);
                     data.details = string.Format("{0}{1}'s future is in the hands of the Authority{2}", colourBad, actor.actorName, colourEnd);
+                    break;
+                case ActorTooltip.Leave:
+                    data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
+                    data.main = string.Format("{0}<size=120%>On{1} {2}STRESS LEAVE{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                        colourNeutral, colourEnd, colourNormal, colourEnd);
+                    data.details = string.Format("{0}{1} is expected to return, free of Stress, shortly{2}", colourAlert, actor.actorName, colourEnd);
                     break;
                 default:
                     data.main = "Unknown"; data.header = "Unknown"; data.details = "Unknown";
