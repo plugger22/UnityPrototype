@@ -1172,8 +1172,8 @@ public class ActionManager : MonoBehaviour
     /// <summary>
     /// Process Lie Low Player action (Resistance only). Can't do during a Surveillance crackdown
     /// </summary>
-    /// <param name="details"></param>
-    public void ProcessLieLowPlayerAction(ModalActionDetails details)
+    /// <param name="modalDetails"></param>
+    public void ProcessLieLowPlayerAction(ModalActionDetails modalDetails)
     {
         Debug.Assert(GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
             GameManager.instance.turnScript.authoritySecurityState));
@@ -1183,11 +1183,11 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
         //default data 
-        outcomeDetails.side = details.side;
+        outcomeDetails.side = modalDetails.side;
         outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
         outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
         outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        if (details != null)
+        if (modalDetails != null)
         {
             GameManager.instance.playerScript.status = ActorStatus.Inactive;
             GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
@@ -1197,9 +1197,10 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = string.Format("{0}{1}{2} will go to ground and {3}Lie Low{4}", colourAlert, playerName, colourEnd, colourNeutral, colourEnd);
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message
+            Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLieLowPlayerAction: {0}, {1} Player, commences LYING LOW", GameManager.instance.playerScript.GetPlayerName(modalDetails.side), modalDetails.side.name);
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
             string reason = string.Format("is currently Lying Low and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
-            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, details.side);
+            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, modalDetails.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
 
@@ -1372,9 +1373,45 @@ public class ActionManager : MonoBehaviour
     /// Process Stress Leave for Human Authority Player
     /// </summary>
     /// <param name="details"></param>
-    private void ProcessLeavePlayerAction(ModalActionDetails details)
+    private void ProcessLeavePlayerAction(ModalActionDetails modalDetails)
     {
+        if (modalDetails != null)
+        {
 
+            GameManager.instance.playerScript.status = ActorStatus.Inactive;
+            GameManager.instance.playerScript.inactiveStatus = ActorInactive.Leave;
+            GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Leave;
+            GameManager.instance.playerScript.isStressLeave = true;
+            //deduct renown cost
+            int renown = GameManager.instance.playerScript.Renown;
+            renown -= modalDetails.renownCost;
+            if (renown < 0)
+            {
+                renown = 0;
+                Debug.LogWarningFormat("Renown dropped below Zero");
+            }
+            GameManager.instance.playerScript.Renown = renown;
+            //change alpha of actor to indicate inactive status
+            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+            //message (public)
+            string playerName = GameManager.instance.playerScript.GetPlayerName(modalDetails.side);
+            string text = string.Format("{0}, Player, has gone on Stress Leave", playerName);
+            string itemText = "has gone on Stress LEAVE";
+            string reason = "has taken a break in order to recover from their <b>STRESS</b>";
+            string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
+            GameManager.instance.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details);
+            Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLeavePlayerAction: {0}, {1} Player, commences STRESS LEAVE", GameManager.instance.playerScript.GetPlayerName(modalDetails.side), 
+                modalDetails.side.name);
+            //action (if valid) expended -> must be BEFORE outcome window event
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Player Stress Leave";
+            outcomeDetails.textBottom = string.Format("{0}, {1}Player{2}, has taken Stress Leave and will return a better person, {3}free of Stress{4}", playerName, colourAlert, colourEnd,
+                colourGood, colourEnd);
+            //generate a create modal window event
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeavePlayerAction");
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
     }
 
     /// <summary>
@@ -1416,7 +1453,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd,
                     colourGood, colourEnd);
                 //generate a create modal window event
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeaveActorAction");
             }
             else { Debug.LogError("Invalid actor (Null)"); }
         }

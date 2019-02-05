@@ -5051,6 +5051,20 @@ public class ActorManager : MonoBehaviour
                         else
                         {  GameManager.instance.playerScript.Invisibility = invis; }
                         break;
+                    case ActorInactive.Leave:
+                        if (GameManager.instance.playerScript.isStressLeave == false)
+                        {
+                            //restore actor (one Stress Leave turn only)
+                            GameManager.instance.playerScript.status = ActorStatus.Active;
+                            GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+                            GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                            text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.instance.playerScript.GetPlayerName(globalAuthority));
+                            GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority);
+                            GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide,"Stress Leave");
+                        }
+                        else { GameManager.instance.playerScript.isStressLeave = false; }
+                        break;
                 }
                 //
                 // - - - Lie Low Info App - - -
@@ -6038,6 +6052,12 @@ public class ActorManager : MonoBehaviour
                 data.main = string.Format("{0}<size=120%>Currently{1} {2}CAPTURED{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                     colourBad, colourEnd, colourNormal, colourEnd);
                 data.details = string.Format("{0}{1}'s future is in the hands of the Authority{2}", colourBad, GameManager.instance.playerScript.PlayerName, colourEnd);
+                break;
+            case ActorTooltip.Leave:
+                data.header = string.Format("{0}Player{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
+                data.main = string.Format("{0}<size=120%>On{1} {2}STRESS LEAVE{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                    colourNeutral, colourEnd, colourNormal, colourEnd);
+                data.details = string.Format("{0}{1} is expected to return, free of Stress, shortly{2}", colourAlert, playerName, colourEnd);
                 break;
             default:
                 data.main = "Unknown"; data.header = "Unknown"; data.details = "Unknown";
