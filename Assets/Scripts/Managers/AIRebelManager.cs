@@ -1355,6 +1355,7 @@ public class AIRebelManager : MonoBehaviour
             //message (only if human player after an autorun)
             if (isPlayer == true)
             {
+                GameManager.instance.playerScript.statTimesLieLow++;
                 Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
                 //message
                 string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);

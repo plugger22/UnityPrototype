@@ -1183,6 +1183,7 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
             GameManager.instance.playerScript.isLieLowFirstturn = true;
+            GameManager.instance.playerScript.statTimesLieLow++;
             outcomeDetails.textTop = string.Format("{0}{1}{2} will go to ground and {3}Lie Low{4}", colourAlert, playerName, colourEnd, colourNeutral, colourEnd);
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message

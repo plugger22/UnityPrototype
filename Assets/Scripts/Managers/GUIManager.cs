@@ -334,6 +334,9 @@ public class GUIManager : MonoBehaviour
                             case ActorInactive.LieLow:
                                 details.textTop = string.Format("This action can't be taken because you are {0}{1}{2}Lying Low{3}", "\n", "\n", colourNeutral, colourEnd);
                                 break;
+                            case ActorInactive.Leave:
+                                details.textTop = string.Format("This action can't be taken because you are on{0}{1}{2}Stress Leave{3}", "\n", "\n", colourNeutral, colourEnd);
+                                break;
                         }
                         break;
                     default:
@@ -360,6 +363,10 @@ public class GUIManager : MonoBehaviour
                                     break;
                                 case ActorInactive.LieLow:
                                     details.textTop = string.Format("This action can't be taken because {0}, {1}, is {2}{3}{4}Lying Low{5}", actor.actorName, actor.arc.name, 
+                                        "\n", "\n", colourNeutral, colourEnd);
+                                    break;
+                                case ActorInactive.Leave:
+                                    details.textTop = string.Format("This action can't be taken because {0}, {1}, is on{2}{3}{4}Stress Leave{5}", actor.actorName, actor.arc.name,
                                         "\n", "\n", colourNeutral, colourEnd);
                                     break;
                             }

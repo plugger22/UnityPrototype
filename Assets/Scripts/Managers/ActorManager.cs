@@ -75,6 +75,8 @@ public class ActorManager : MonoBehaviour
     [Range(0, 50)] public int playerRecognisedChance = 20;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
     [Range(1, 10)] public int playerDoomTimerValue = 5;
+    [Tooltip("Renown cost for Authority player or actor to take stress leave")]
+    [Range(0, 5)] public int stressLeaveRenownCost = 2;
 
     [Header("Lie Low")]
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
@@ -1851,6 +1853,36 @@ public class ActorManager : MonoBehaviour
             }
             else
             { infoBuilder.AppendFormat("{0}Can't Recruit as Maxxed out{1}", colourAlert, colourEnd); }
+            //
+            // - - - Stress Leave - - -
+            //
+            //Player is stressed
+            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, GameManager.instance.sideScript.PlayerSide) == true)
+            {
+                //Player has enough renown
+                if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCost)
+                {
+                    ModalActionDetails leaveActionDetails = new ModalActionDetails();
+                    leaveActionDetails.side = playerSide;
+                    leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                    leaveActionDetails.level = 2;
+                    tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
+                    EventButtonDetails activateDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Stress Leave",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
+                        buttonTooltipMain = "Recover from your Stress",
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                    };
+                    //add Activate button to list
+                    tempList.Add(activateDetails);
+                }
+                else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Renown{2}", colourAlert, stressLeaveRenownCost, colourEnd); }
+            }
+            else
+            { infoBuilder.AppendFormat("{0}No Leave possible as not Stressed{1}", colourAlert, colourEnd); }
 
         }
         //
@@ -4998,6 +5030,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.playerScript.inactiveStatus = ActorInactive.Breakdown;
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 GameManager.instance.playerScript.isBreakdown = true;
+                                GameManager.instance.playerScript.statTimesBreakdown++;
                                 //change alpha of actor to indicate inactive status
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
@@ -5223,6 +5256,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.aiRebelScript.isBreakdown = true;
                                 if (isPlayer == true)
                                 {
+                                    GameManager.instance.playerScript.statTimesBreakdown++;
                                     //message (public)
                                     text = "Player has suffered a Breakdown (Stressed)";
                                     string itemText = "has suffered a BREAKDOWN";
@@ -5350,6 +5384,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.aiScript.isBreakdown = true;
                                 if (isPlayer == true)
                                 {
+                                    GameManager.instance.playerScript.statTimesBreakdown++;
                                     //message (public)
                                     text = "Player has suffered a Breakdown (Stressed)";
                                     string itemText = "has suffered a BREAKDOWN";

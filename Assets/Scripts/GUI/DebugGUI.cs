@@ -193,9 +193,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Player Stats"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Player Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Player Stats");
+                Debug.Log("[Dbg] Button -> Toggle Player Data");
                 if (debugDisplay != 8)
                 { debugDisplay = 8; }
                 else { debugDisplay = 0; }
@@ -926,7 +926,7 @@ public class DebugGUI : MonoBehaviour
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.playerScript.DisplayPlayerStats();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 400), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 500), analysis, customBackground);
                         break;
                     //Toggle Messages
                     case 9:

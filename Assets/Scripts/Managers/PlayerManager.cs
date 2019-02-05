@@ -21,6 +21,10 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
 
+    //stats
+    [HideInInspector] public int statTimesBreakdown;
+    [HideInInspector] public int statTimesLieLow;
+
 
     private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
@@ -33,6 +37,7 @@ public class PlayerManager : MonoBehaviour
     private string _playerNameResistance;
     private string _playerNameAuthority;
     private int _invisibility;
+
 
     //for fast access
     private GlobalSide globalAuthority;
@@ -595,9 +600,11 @@ public class PlayerManager : MonoBehaviour
                 if (CheckConditionPresent(condition, side) == false)
                 {
                     listOfConditions.Add(condition);
+                    //special conditions
+                    if (condition.name.Equals(conditionDoomed.name) == true)
+                    { GameManager.instance.actorScript.SetDoomTimer(); }
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
                     //message
-                    
                     string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.name);
                     GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
                 }
@@ -909,6 +916,7 @@ public class PlayerManager : MonoBehaviour
         if (playerSide.level == globalResistance.level)
         { builder.Append(string.Format(" Invisibility {0}{1}", Invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
+        if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
         if (listOfConditions != null)
         {
             builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
@@ -934,6 +942,7 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
         if (playerSide.level == globalResistance.level)
         {
+            //gear
             builder.Append(string.Format("{0}- Gear{1}", "\n", "\n"));
             if (listOfGear.Count > 0)
             {
@@ -946,6 +955,10 @@ public class PlayerManager : MonoBehaviour
             }
             else { builder.Append(" No gear in inventory"); }
         }
+        //stats
+        builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
+        builder.AppendFormat(" breakdowns: {0}{1}", statTimesBreakdown, "\n");
+        builder.AppendFormat(" lie low: {0}{1}", statTimesLieLow, "\n");
         return builder.ToString();
     }
 

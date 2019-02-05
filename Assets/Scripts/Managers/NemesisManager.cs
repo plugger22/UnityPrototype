@@ -1408,10 +1408,7 @@ public class NemesisManager : MonoBehaviour
                 case "Inject":
                     condition = GameManager.instance.dataScript.GetCondition("DOOMED");
                     if (condition != null)
-                    {
-                        GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Assassin Droid");
-                        GameManager.instance.actorScript.SetDoomTimer();
-                    }
+                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Assassin Droid"); }
                     else { Debug.LogWarningFormat("Invalid condition DOOMED (Null)"); }
                     break;
                 case "Tag":
