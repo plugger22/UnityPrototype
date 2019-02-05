@@ -146,14 +146,14 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.nodeScript.NodeRedraw = true;
         //set security state back to normal
         GameManager.instance.authorityScript.SetAuthoritySecurityState("Security measures have been cancelled", string.Format("{0}, Player, has been CAPTURED", GameManager.instance.playerScript.PlayerName));
-        //AI side tab
-        GameManager.instance.aiScript.UpdateSideTabData();
         //change player state
         if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
         {
             //Human resistance player
             GameManager.instance.playerScript.status = ActorStatus.Captured;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
+            //AI side tab
+            GameManager.instance.aiScript.UpdateSideTabData();
             //add renown to authority actor who owns the team (only if they are still OnMap
             if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
             {
@@ -279,16 +279,19 @@ public class CaptureManager : MonoBehaviour
         cause -= actorReleased;
         cause = Mathf.Max(0, cause);
         GameManager.instance.cityScript.CityLoyalty = cause;
-
         builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
         //invisibility
         int invisibilityNew = releaseInvisibility;
         GameManager.instance.playerScript.Invisibility = invisibilityNew;
         builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
-        //update Player alpha
-        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
-        //AI side tab (otherwise 'player indisposed' message when accessing tab)
-        GameManager.instance.aiScript.UpdateSideTabData();
+        //Human resistance player
+        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+        {
+            //AI side tab (otherwise 'player indisposed' message when accessing tab)
+            GameManager.instance.aiScript.UpdateSideTabData();
+            //update Player alpha
+            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+        }
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //message

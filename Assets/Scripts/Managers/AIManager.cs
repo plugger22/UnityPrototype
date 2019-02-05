@@ -675,6 +675,7 @@ public class AIManager : MonoBehaviour
             //AI Rulesets
             ProcessNodeTasks();
             ProcessProbeTask();
+            ProcessStressLeaveTask();
             ProcessSpiderTask();
             ProcessDamageTask();
             ProcessErasureTask();
@@ -740,12 +741,16 @@ public class AIManager : MonoBehaviour
     {
         if (GameManager.instance.turnScript.Turn > 0)
         {
-            //update lists for gear hacking effects
-            UpdatePlayerHackingLists();
-            //send data to AI Display UI elements
-            UpdateTaskDisplayData();
-            UpdateSideTabData();
-            UpdateBottomTabData();
+            //only if resistance player is human
+            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+            {
+                //update lists for gear hacking effects
+                UpdatePlayerHackingLists();
+                //send data to AI Display UI elements
+                UpdateTaskDisplayData();
+                UpdateSideTabData();
+                UpdateBottomTabData();
+            }
         }
     }
     
@@ -1754,6 +1759,26 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No Media teams available in reserves{0}", "\n")); }
 
+    }
+
+    /// <summary>
+    /// selects a stress leave task if player stressed
+    /// </summary>
+    private void ProcessStressLeaveTask()
+    {
+        //authority ai player stressed?
+        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
+        {
+            //create a task
+            AITask taskProbe = new AITask()
+            {
+                name1 = "Stress Leave",
+                type = AITaskType.StressLeave,
+                priority = Priority.Medium
+            };
+            //add to list of potentials
+            listOfTasksPotential.Add(taskProbe);
+        }
     }
 
     /// <summary>
@@ -3078,6 +3103,9 @@ public class AIManager : MonoBehaviour
                         case AITaskType.Decision:
                             ExecuteDecisionTask(task);
                             break;
+                        case AITaskType.StressLeave:
+                            ExecuteAdminTask(task);
+                            break;
                         default:
                             Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                             break;
@@ -3125,6 +3153,9 @@ public class AIManager : MonoBehaviour
                                         break;
                                     case AITaskType.Decision:
                                         ExecuteDecisionTask(task);
+                                        break;
+                                    case AITaskType.StressLeave:
+                                        ExecuteAdminTask(task);
                                         break;
                                     default:
                                         Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
@@ -3174,6 +3205,9 @@ public class AIManager : MonoBehaviour
                                         case AITaskType.Decision:
                                             ExecuteDecisionTask(task);
                                             break;
+                                        case AITaskType.StressLeave:
+                                            ExecuteAdminTask(task);
+                                            break;
                                         default:
                                             Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                                             break;
@@ -3221,6 +3255,15 @@ public class AIManager : MonoBehaviour
         if (isSuccess == true)
         { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision implemented, teamID {1}{2}", task.name1, teamID, "\n"); }
         else { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision NOT implemented, teamID {1}{2}", task.name1, teamID, "\n"); }
+    }
+
+    /// <summary>
+    /// carry out admin based task, eg. Stress Leave
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteAdminTask(AITask task)
+    {
+
     }
 
     /// <summary>
@@ -3667,121 +3710,125 @@ public class AIManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sends a colour formatted data package to AISideTabUI indicating cost and status to hack AI. Ignore renown parameter (it's used by PlayerManager.cs -> Renown Set property)
+    /// Sends a colour formatted data package to AISideTabUI indicating cost and status for Resistance Human player to hack AI. Ignore renown parameter (it's used by PlayerManager.cs -> Renown Set property).
     /// NOTE: data is dynamic
     /// </summary>
     public void UpdateSideTabData(int renown = 0)
     {
-        AISideTabData data = new AISideTabData();
-        //ai gear effects?
-        Tuple<int, string> results = GetHackingCost();
-        hackingModifiedCost = results.Item1;
-        string gearEffect = results.Item2;
-        switch (GameManager.instance.playerScript.status)
+        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
         {
-            case ActorStatus.Active:
-                int playerRenown = renown;
-                if (playerRenown == 0)
-                { playerRenown = GameManager.instance.playerScript.Renown; }
-                if (isRebooting == true)
-                {
-                    //AI Security System rebooting, Hacking is unavailable
-                    data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
-                    data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
-                    data.status = HackingStatus.Rebooting;
-                    data.tooltipMain = string.Format("The AI is {0}REBOOTING{1} it's Security systems and {2}cannot be hacked{3}",
-                        colourBad, colourEnd, colourNeutral, colourEnd);
-                }
-                else
-                { 
-                    //AI online and available to be hacked
-                    if (isOffline == false)
+            AISideTabData data = new AISideTabData();
+            //ai gear effects?
+            Tuple<int, string> results = GetHackingCost();
+            hackingModifiedCost = results.Item1;
+            string gearEffect = results.Item2;
+            switch (GameManager.instance.playerScript.status)
+            {
+                case ActorStatus.Active:
+                    int playerRenown = renown;
+                    if (playerRenown == 0)
+                    { playerRenown = GameManager.instance.playerScript.Renown; }
+                    if (isRebooting == true)
                     {
-                        data.topText = "A.I";
-                        data.status = HackingStatus.Possible;
-                        StringBuilder builder = new StringBuilder();
-                        //renown to spare -> Green
-                        if (playerRenown > hackingModifiedCost)
-                        {
-                            data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingModifiedCost, colourEnd);
-                            builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
-                        }
-                        //just enough renown -> Yellow
-                        else if (playerRenown == hackingModifiedCost)
-                        {
-                            data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingModifiedCost, colourEnd);
-                            builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
-                        }
-                        else
-                        {
-                            //insufficient renown -> Greyed out
-                            data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                            data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
-                            data.status = HackingStatus.InsufficientRenown;
-                            builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
-                        }
-                        //AI countermeasures
-                        if (isTraceBack == true || isScreamer == true)
-                        {
-                            builder.AppendFormat("{0}o o o{1}{2}{3}AI Countermeasures{4}", colourGrey, colourEnd, "\n", colourAlert, colourEnd);
-                            if (isTraceBack == true)
-                            {
-                                if (CheckAIGearEffectPresent(traceBackEffectText) == true)
-                                {
-                                    //show as grey if masked and indicate why
-                                    builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, traceBackFormattedText, colourEnd);
-                                    Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
-                                    if (gear != null)
-                                    { builder.AppendFormat("{0}{1}{2}{3}{4} defeats TraceBack{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
-                                    else { Debug.LogWarning("Invalid gear (Null) for TraceBack"); }
-                                }
-                                else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, traceBackFormattedText, colourEnd); }
-                                builder.AppendFormat("{0}duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerTraceBack, colourEnd, timerTraceBack != 1 ? "s" : "");
-                            }
-                            if (isScreamer == true)
-                            {
-                                if (CheckAIGearEffectPresent(screamerEffectText) == true)
-                                {
-                                    //show as grey if masked and indicate why
-                                    builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, screamerFormattedText, colourEnd);
-                                    Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
-                                    if (gear != null)
-                                    { builder.AppendFormat("{0}{1}{2}{3}{4} defeats Screamer{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
-                                    else { Debug.LogWarning("Invalid gear (Null) for Screamer"); }
-                                }
-                                else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, screamerFormattedText, colourEnd); }
-                                builder.AppendFormat("{0}duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerScreamer, colourEnd, timerScreamer != 1 ? "s" : "");
-                            }
-                        }
-                        //finalise main tooltip text
-                        data.tooltipMain = builder.ToString();
+                        //AI Security System rebooting, Hacking is unavailable
+                        data.topText = string.Format("{0}A.I{1}", colourBad, colourEnd);
+                        data.bottomText = string.Format("{0}X{1}", colourBad, colourEnd);
+                        data.status = HackingStatus.Rebooting;
+                        data.tooltipMain = string.Format("The AI is {0}REBOOTING{1} it's Security systems and {2}cannot be hacked{3}",
+                            colourBad, colourEnd, colourNeutral, colourEnd);
                     }
                     else
                     {
-                        //AI Offline and can't be hacked
-                        data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                        data.bottomText = string.Format("{0}X{1}", colourGrey, colourEnd);
-                        data.status = HackingStatus.Offline;
-                        StringBuilder builder = new StringBuilder();
-                        builder.AppendFormat("The AI is {0}ISOLATED{1} from external access{2}{3}Cannot be hacked{4}",
-                            colourBad, colourEnd, "\n", colourNeutral, colourEnd);
-                        builder.AppendFormat("{0}Duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerOffline, colourEnd, timerOffline != 1 ? "s" : "");
-                        data.tooltipMain = builder.ToString();
+                        //AI online and available to be hacked
+                        if (isOffline == false)
+                        {
+                            data.topText = "A.I";
+                            data.status = HackingStatus.Possible;
+                            StringBuilder builder = new StringBuilder();
+                            //renown to spare -> Green
+                            if (playerRenown > hackingModifiedCost)
+                            {
+                                data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingModifiedCost, colourEnd);
+                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                            }
+                            //just enough renown -> Yellow
+                            else if (playerRenown == hackingModifiedCost)
+                            {
+                                data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingModifiedCost, colourEnd);
+                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                            }
+                            else
+                            {
+                                //insufficient renown -> Greyed out
+                                data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
+                                data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
+                                data.status = HackingStatus.InsufficientRenown;
+                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                            }
+                            //AI countermeasures
+                            if (isTraceBack == true || isScreamer == true)
+                            {
+                                builder.AppendFormat("{0}o o o{1}{2}{3}AI Countermeasures{4}", colourGrey, colourEnd, "\n", colourAlert, colourEnd);
+                                if (isTraceBack == true)
+                                {
+                                    if (CheckAIGearEffectPresent(traceBackEffectText) == true)
+                                    {
+                                        //show as grey if masked and indicate why
+                                        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, traceBackFormattedText, colourEnd);
+                                        Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
+                                        if (gear != null)
+                                        { builder.AppendFormat("{0}{1}{2}{3}{4} defeats TraceBack{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
+                                        else { Debug.LogWarning("Invalid gear (Null) for TraceBack"); }
+                                    }
+                                    else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, traceBackFormattedText, colourEnd); }
+                                    builder.AppendFormat("{0}duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerTraceBack, colourEnd, timerTraceBack != 1 ? "s" : "");
+                                }
+                                if (isScreamer == true)
+                                {
+                                    if (CheckAIGearEffectPresent(screamerEffectText) == true)
+                                    {
+                                        //show as grey if masked and indicate why
+                                        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, screamerFormattedText, colourEnd);
+                                        Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
+                                        if (gear != null)
+                                        { builder.AppendFormat("{0}{1}{2}{3}{4} defeats Screamer{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
+                                        else { Debug.LogWarning("Invalid gear (Null) for Screamer"); }
+                                    }
+                                    else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, screamerFormattedText, colourEnd); }
+                                    builder.AppendFormat("{0}duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerScreamer, colourEnd, timerScreamer != 1 ? "s" : "");
+                                }
+                            }
+                            //finalise main tooltip text
+                            data.tooltipMain = builder.ToString();
+                        }
+                        else
+                        {
+                            //AI Offline and can't be hacked
+                            data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
+                            data.bottomText = string.Format("{0}X{1}", colourGrey, colourEnd);
+                            data.status = HackingStatus.Offline;
+                            StringBuilder builder = new StringBuilder();
+                            builder.AppendFormat("The AI is {0}ISOLATED{1} from external access{2}{3}Cannot be hacked{4}",
+                                colourBad, colourEnd, "\n", colourNeutral, colourEnd);
+                            builder.AppendFormat("{0}Duration {1}{2}{3} turn{4}", "\n", colourNeutral, timerOffline, colourEnd, timerOffline != 1 ? "s" : "");
+                            data.tooltipMain = builder.ToString();
+                        }
                     }
-                }
-                break;
-            default:
-                //player indisposed -> Greyed out
-                data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
-                data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
-                data.status = HackingStatus.Indisposed;
-                data.tooltipMain = string.Format("You are {0}not in a position to Hack the AI{1} at present due to your {2}current circumstances{3}", colourBad, colourEnd,
-                    colourNeutral, colourEnd);
-                break;
+                    break;
+                default:
+                    //player indisposed -> Greyed out
+                    data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
+                    data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
+                    data.status = HackingStatus.Indisposed;
+                    data.tooltipMain = string.Format("You are {0}not in a position to Hack the AI{1} at present due to your {2}current circumstances{3}", colourBad, colourEnd,
+                        colourNeutral, colourEnd);
+                    break;
+            }
+            data.tooltipDetails = string.Format("Hacking the AI does{0}{1}NOT{2}{3}cost an Action", "\n", colourNeutral, colourEnd, "\n");
+            //send data package
+            EventManager.instance.PostNotification(EventType.AISendSideData, this, data, "AIManager.cs -> UpdateSideTabData");
         }
-        data.tooltipDetails = string.Format("Hacking the AI does{0}{1}NOT{2}{3}cost an Action", "\n", colourNeutral, colourEnd, "\n");
-        //send data package
-        EventManager.instance.PostNotification(EventType.AISendSideData, this, data, "AIManager.cs -> UpdateSideTabData");
+        else { Debug.LogWarning("Invalid side (can only be for Resistance Human player)"); }
     }
 
     /// <summary>

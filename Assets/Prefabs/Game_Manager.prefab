@@ -1799,6 +1799,7 @@ MonoBehaviour:
   isBreakdown: 0
   isEndOfTurnGearCheck: 0
   isLieLowFirstturn: 0
+  isStressLeave: 0
   statTimesBreakdown: 0
   statTimesLieLow: 0
 --- !u!114 &114704934405690708
@@ -2007,8 +2008,8 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
-  isAuthority: 1
+  seed: 20083
+  isAuthority: 0
   isBothAI: 0
   isPerformanceLog: 1
   isValidateData: 0

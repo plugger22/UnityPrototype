@@ -5024,8 +5024,13 @@ public class ActorManager : MonoBehaviour
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
                         GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown", 
                             playerID, playerSide);
-                        //update AI side tab status
-                        GameManager.instance.aiScript.UpdateSideTabData();
+                        Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, has recovered from their stress induced Breakdown{1}", 
+                            GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
+                        if (playerSide.level == globalResistance.level)
+                        {
+                            //update AI side tab status
+                            GameManager.instance.aiScript.UpdateSideTabData();
+                        }
                         break;
                     case ActorInactive.LieLow:
                         int invis = GameManager.instance.playerScript.Invisibility;
@@ -5047,6 +5052,7 @@ public class ActorManager : MonoBehaviour
                             //check if Player has stressed condition
                             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                             { GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
+                            Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else
                         {  GameManager.instance.playerScript.Invisibility = invis; }
@@ -5062,6 +5068,7 @@ public class ActorManager : MonoBehaviour
                             text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.instance.playerScript.GetPlayerName(globalAuthority));
                             GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority);
                             GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide,"Stress Leave");
+                            Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, returns from Stress Leave{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else { GameManager.instance.playerScript.isStressLeave = false; }
                         break;
@@ -5104,10 +5111,13 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
-                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: Stress BREAKDOWN occurs{0}", "\n");
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a Stress BREAKDOWN{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                                 GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
-                                //update AI side tab status
-                                GameManager.instance.aiScript.UpdateSideTabData();
+                                if (playerSide.level == globalResistance.level)
+                                {
+                                    //update AI side tab status
+                                    GameManager.instance.aiScript.UpdateSideTabData();
+                                }
                             }
                             else
                             {
@@ -5258,8 +5268,8 @@ public class ActorManager : MonoBehaviour
                               playerID, playerSide);
                         }
                         Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Player has RECOVERED from their Breakdown{0}", "\n");
-                        //update AI side tab status
-                        GameManager.instance.aiScript.UpdateSideTabData();
+                        /*//update AI side tab status
+                        GameManager.instance.aiScript.UpdateSideTabData();*/
                         break;
                     case ActorInactive.LieLow:
                         int invis = GameManager.instance.playerScript.Invisibility;
