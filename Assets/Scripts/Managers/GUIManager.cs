@@ -302,10 +302,11 @@ public class GUIManager : MonoBehaviour
 
 
     /// <summary>
-    /// generates an Alert messsage (generic UI) of a particular type (extend by adding to enum and providing relevant code to handle below)
+    /// generates an Alert messsage (generic UI) of a particular type (extend by adding to enum and providing relevant code to handle below).
+    /// Multipurpose data point, eg. actorID, ignore otherwise.
     /// </summary>
     /// <param name="type"></param>
-    public void SetAlertMessage(AlertType type)
+    public void SetAlertMessage(AlertType type, int data = -1)
     {
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.sprite = infoSprite;
@@ -327,11 +328,11 @@ public class GUIManager : MonoBehaviour
                         switch (GameManager.instance.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
-                                details.textTop = string.Format("This action can't be taken because you are undergoing a {0}STRESS BREAKDOWN{1}",
+                                details.textTop = string.Format("This action can't be taken because you{0}are undergoing a{1}{2}{3}STRESS BREAKDOWN{4}", "\n", "\n", "\n",
                                     colourBad, colourEnd);
                                 break;
                             case ActorInactive.LieLow:
-                                details.textTop = string.Format("This action can't be taken because you are {0}Lying Low{1}", colourNeutral, colourEnd);
+                                details.textTop = string.Format("This action can't be taken because you are {0}{1}{2}Lying Low{3}", "\n", "\n", colourNeutral, colourEnd);
                                 break;
                         }
                         break;
@@ -339,6 +340,36 @@ public class GUIManager : MonoBehaviour
                         details.textTop = "This action can't be taken because the Player is indisposed";
                         break;
                 }
+                break;
+            case AlertType.ActorStatus:
+                //data is actorID
+                Actor actor = GameManager.instance.dataScript.GetActor(data);
+                if (actor != null)
+                {
+                    switch (actor.Status)
+                    {
+                        case ActorStatus.Captured:
+                            details.textTop = string.Format("This action can't be taken because {0}, {1}, has been {2}Captured{3}", actor.actorName, actor.arc.name, colourBad, colourEnd);
+                            break;
+                        case ActorStatus.Inactive:
+                            switch (actor.inactiveStatus)
+                            {
+                                case ActorInactive.Breakdown:
+                                    details.textTop = string.Format("This action can't be taken because {0}, {1},{2}is undergoing a{3}{4}{5}STRESS BREAKDOWN{6}", actor.actorName, actor.arc.name, "\n",
+                                        "\n", "\n", colourBad, colourEnd);
+                                    break;
+                                case ActorInactive.LieLow:
+                                    details.textTop = string.Format("This action can't be taken because {0}, {1}, is {2}{3}{4}Lying Low{5}", actor.actorName, actor.arc.name, 
+                                        "\n", "\n", colourNeutral, colourEnd);
+                                    break;
+                            }
+                            break;
+                        default:
+                            details.textTop = string.Format("This action can't be taken because {0}, {1}, is indisposed", actor.actorName, actor.arc.name);
+                            break;
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", data); }
                 break;
             case AlertType.SideStatus:
                 details.textTop = string.Format("{0}This action is unavailable as the AI controls this side{1}", colourAlert, colourEnd);

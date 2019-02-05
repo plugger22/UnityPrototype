@@ -802,19 +802,25 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
                 //Support Provided
                 Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                string msgText = string.Format("{0} faction provides SUPPORT (+{1} Resource{2})", factionResistance.name, resources, resources != 1 ? "s" : "");
-                GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
-                //random
-                GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                if (isPlayer == true)
+                {
+                    string msgText = string.Format("{0} faction provides SUPPORT (+{1} Resource{2})", factionResistance.name, resources, resources != 1 ? "s" : "");
+                    GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                    //random
+                    GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                }
             }
             else
             {
                 //Support declined
                 Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown);
-                //random
-                GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                if (isPlayer == true)
+                {
+                    string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
+                    GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown);
+                    //random
+                    GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                }
             }
         }
         else { Debug.LogError("Invalid faction (Null) for Resistance"); }

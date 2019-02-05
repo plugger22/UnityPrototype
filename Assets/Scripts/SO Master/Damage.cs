@@ -14,6 +14,8 @@ public class Damage : ScriptableObject
     [Tooltip("Used in Messages, format '[You have been] ...")]
     public string tag;
 
-    [Tooltip("Used in Messages, keep short, self contained explanation of damage effects")]
-    [TextArea] public string effect;
+    [Tooltip("Used in Messages, keep short, self contained explanation of damage effects from Resistance Player POV")]
+    [TextArea] public string effectResistance;
+    [Tooltip("Used in Messages, keep short, self contained explanation of damage effects from Authority Player POV")]
+    [TextArea] public string effectAuthority;
 }

@@ -3034,7 +3034,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.FACTION;
             message.subType = MessageSubType.Faction_Support;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.side = faction.side;
             message.isPublic = true;
             message.data0 = factionApprovalLevel;
             message.data1 = playerRenownBefore;
@@ -3092,7 +3092,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.FACTION;
             message.subType = MessageSubType.Faction_Approval;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.side = faction.side;
             message.isPublic = true;
             message.data0 = oldLevel;
             message.data1 = change;

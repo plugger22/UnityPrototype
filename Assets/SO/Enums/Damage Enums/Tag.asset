@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Target is tagged with a tracking device
   tag: Tagged
-  effect: You have been microchipped subdermally with a powerful electronic <b>TRACKER</b>
+  effectResistance: You have been microchipped subdermally with a powerful electronic
+    <b>TRACKER</b>
+  effectAuthority: They have been microchipped subdermally with a powerful electronic
+    <b>TRACKER</b>

@@ -25,6 +25,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
     {
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         bool proceedFlag = true;
+        int data = -1;
         AlertType alertType = AlertType.None;
         //is there an actor in this slot?
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
@@ -42,11 +43,13 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                         //Action Menu -> not valid if  Player inactive
                         else if (GameManager.instance.playerScript.status != ActorStatus.Active)
                         { proceedFlag = false; alertType = AlertType.PlayerStatus; }
-                        //proceed
-                        if (proceedFlag == true)
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                        if (actor != null)
                         {
-                            Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
-                            if (actor != null)
+                            if (actor.Status != ActorStatus.Active)
+                            { proceedFlag = false; alertType = AlertType.ActorStatus; data = actor.actorID; }
+                            //proceed
+                            if (proceedFlag == true)
                             {
                                 //adjust position prior to sending
                                 Vector3 position = transform.position;
@@ -66,14 +69,14 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                 //activate menu
                                 GameManager.instance.actionMenuScript.SetActionMenu(details);
                             }
-                            else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
+                            else
+                            {
+                                //explanatory message
+                                if (alertType != AlertType.None)
+                                { GameManager.instance.guiScript.SetAlertMessage(alertType, data); }
+                            }
                         }
-                        else
-                        {
-                            //explanatory message
-                            if (alertType != AlertType.None)
-                            { GameManager.instance.guiScript.SetAlertMessage(alertType); }
-                        }
+                        else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
                     }
                     break;
             }

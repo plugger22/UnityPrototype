@@ -1433,13 +1433,31 @@ public class NemesisManager : MonoBehaviour
             }
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
             Debug.LogFormat("[Ply] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
-            string text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
-            builder.AppendFormat("at {0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
-            builder.AppendFormat("{0}<b>Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);
-            builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effect, colourEnd);
+            string text;
+            GlobalSide sideWho;
             //Message
-            string msgText = string.Format("Player has been {0} by their {1} Nemesis", nemesis.damage.tag, nemesis.name);
-            GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effect, nemesisNode.nodeID);
+            string msgText = string.Format("{0} has been {1} by their {2} Nemesis", GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, nemesis.name);
+            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+            {
+                //resistance human player
+                text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
+                builder.AppendFormat("{0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
+                builder.AppendFormat("{0}<b>Resistance Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);
+                builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectResistance, colourEnd);
+                GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectResistance, nemesisNode.nodeID);
+                sideWho = GameManager.instance.globalScript.sideResistance;
+            }
+            else
+            {
+                //authority human player
+                text = string.Format("Resistance Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
+                builder.AppendFormat("{0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
+                builder.AppendFormat("{0}<b>{1} {2}</b>{3}", colourBad, GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, colourEnd);
+                builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectAuthority, colourEnd);
+                GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectAuthority, nemesisNode.nodeID);
+                sideWho = GameManager.instance.globalScript.sideAuthority;
+            }
+
             //player damaged outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
@@ -1447,7 +1465,7 @@ public class NemesisManager : MonoBehaviour
                 textBottom = builder.ToString(),
                 sprite = GameManager.instance.guiScript.aiAlertSprite,
                 isAction = false,
-                side = GameManager.instance.globalScript.sideResistance
+                side = sideWho
             };
             //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
             if (isOutcomeModalNormal == false)

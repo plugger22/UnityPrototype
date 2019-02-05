@@ -934,7 +934,15 @@ public class ActorManager : MonoBehaviour
                                 switch (actor.Status)
                                 {
                                     case ActorStatus.Inactive:
-                                        infoBuilder.AppendFormat("{0} is lying low and unavailable", actor.arc.name);
+                                        switch (actor.inactiveStatus)
+                                        {
+                                            case ActorInactive.LieLow:
+                                                infoBuilder.AppendFormat("{0} is lying low and unavailable", actor.arc.name);
+                                                break;
+                                            case ActorInactive.Breakdown:
+                                                infoBuilder.AppendFormat("{0} is having a Stress Breakdown", actor.arc.name);
+                                                break;
+                                        }
                                         break;
                                     case ActorStatus.Captured:
                                         infoBuilder.AppendFormat("{0} has been captured", actor.arc.name);
@@ -1148,9 +1156,14 @@ public class ActorManager : MonoBehaviour
                         }
                         else
                         {
-                            //actor gone silent
-                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.AppendFormat("{0} is lying low and unavailale", actor.arc.name);
+                            //Inactive actor
+                            switch (actor.inactiveStatus)
+                            {
+                                case ActorInactive.Breakdown:
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("{0} is having a Stress Breakdown", actor.arc.name);
+                                    break;
+                            }
                         }
                         //add to list
                         if (details != null)
@@ -4147,10 +4160,6 @@ public class ActorManager : MonoBehaviour
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
             if (arrayOfActors != null)
             {
-                int chanceBreakdown = breakdownChance;
-                //base chance of nervous breakdown doubled during a surveillance crackdown
-                if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
-                { chanceBreakdown *= 2; }
                 //secrets
                 int chanceSecret = secretBaseChance;
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
@@ -4188,7 +4197,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Stress Condition - - -
                                 //
                                 if (actor.CheckConditionPresent(conditionStressed) == true)
-                                { ProcessStress(actor, chanceBreakdown, true); }
+                                { ProcessStress(actor, breakdownChance, true); }
                                 //
                                 // - - - Learn Secrets - - -
                                 //
@@ -4285,10 +4294,6 @@ public class ActorManager : MonoBehaviour
                 //secrets only if reverts to human control
                 if (isPlayer == true)
                 { if (GameManager.instance.playerScript.CheckNumOfSecrets() > 0) { isSecrets = true; } }
-                int chanceBreakdown = breakdownChance;
-                //base chance of nervous breakdown doubled during a surveillance crackdown
-                if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown)
-                { chanceBreakdown *= 2; }
                 //secrets
                 int chanceSecret = secretBaseChance;
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
@@ -4329,7 +4334,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Stress Condition - - -
                                 //
                                 if (actor.CheckConditionPresent(conditionStressed) == true)
-                                { ProcessStress(actor, chanceBreakdown, isPlayer); }
+                                { ProcessStress(actor, breakdownChance, isPlayer); }
                                 //
                                 // - - - Learn Secrets - - -
                                 //
@@ -4467,16 +4472,25 @@ public class ActorManager : MonoBehaviour
             int rnd = Random.Range(0, 100);
             if (rnd < chance)
             {
-                //actor suffers a breakdown
-                ActorBreakdown(actor, globalResistance);
-                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveResistanceActors: Stress check FAILED -> need < {0}, rolled {1}{2}",
+                //breakdown
+                ActorBreakdown(actor, actor.side);
+                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveActors: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                     chance, rnd, "\n");
+                if (isPlayer == true)
+                {
+                    string text = string.Format("{0}, {1}, Stress check SUCCESS", actor.actorName, actor.arc.name);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
+                }
+                Debug.LogFormat("[Rim] ActorManager.cs -> ProcessStress: {0}, {1}, id {2} suffers STRESS BREAKDOWN{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+            }
+            else
+            {
+                //passed test
                 if (isPlayer == true)
                 {
                     string text = string.Format("{0}, {1}, Stress check FAILED", actor.actorName, actor.arc.name);
                     GameManager.instance.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
                 }
-                Debug.LogFormat("[Rim] ActorManager.cs -> ProcessStress: {0}, {1}, id {2} suffers STRESS BREAKDOWN{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
             }
         }
         else { actor.isBreakdown = false; }
@@ -4877,7 +4891,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// runs all start late turn Human player checks
+    /// runs all start late turn Human player checks, both sides
     /// </summary>
     private void CheckPlayerHuman()
     {

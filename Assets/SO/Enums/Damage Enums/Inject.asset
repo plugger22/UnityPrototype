@@ -13,5 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Target is terminated with extreme prejudice
   tag: Injected
-  effect: You have been injected with a slow acting <b>LETHAL</b> gene tailored virus.
-    Your days are numbered.
+  effectResistance: You have been injected with a slow acting <b>LETHAL</b> gene tailored
+    virus. Your days are numbered.
+  effectAuthority: They have been injected with a slow acting <b>LETHAL</b> gene tailored
+    virus. Their days are numbered.

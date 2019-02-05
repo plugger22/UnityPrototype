@@ -39,13 +39,14 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                     //Action Menu -> not valid if AI is active for side
                     if (GameManager.instance.sideScript.CheckInteraction() == false)
                     { proceedFlag = false; alertType = AlertType.SideStatus; }
+                    if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                    { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                     /*//Action Menu -> not valid if  Player inactive
                     else if (GameManager.instance.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }*/
                     //proceed
                     if (proceedFlag == true)
                     {
-
                             //adjust position prior to sending
                             Vector3 position = transform.position;
                             position.x += 25;

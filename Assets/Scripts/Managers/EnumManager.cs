@@ -29,7 +29,7 @@
     public enum AlertType {
         None,
         SomethingWrong,
-        PlayerStatus, SideStatus,
+        PlayerStatus, SideStatus, ActorStatus,
         DebugAI, DebugPlayer,
         HackingRebootInProgress, HackingInsufficientRenown, HackingInitialising, HackingIndisposed, HackingOffline
     }
