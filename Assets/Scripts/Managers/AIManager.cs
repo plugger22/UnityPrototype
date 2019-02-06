@@ -292,6 +292,10 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public ActorInactive inactiveStatus;
     [HideInInspector] public bool isBreakdown;                          //true if suffering from nervous, stress induced, breakdown
 
+    //admin
+    private bool isStressed;
+    private bool isLowHQApproval;
+
     //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
@@ -379,6 +383,8 @@ public class AIManager : MonoBehaviour
     private DecisionAI decisionMedical;
     private DecisionAI decisionBlindEye;
     private DecisionAI decisionHoliday;
+    private DecisionAI decisionStressLeave;
+    private DecisionAI decisionLobbyHQ;
     //text strings
     private string traceBackFormattedText;                                   //specially formatted string (uncoloured) for tooltips
     private string screamerFormattedText;
@@ -487,6 +493,10 @@ public class AIManager : MonoBehaviour
         decisionBlindEye = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Holiday");
         decisionHoliday = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Stress Leave");
+        decisionStressLeave = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Lobby HQ");
+        decisionLobbyHQ = GameManager.instance.dataScript.GetAIDecision(aiDecID);
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -508,6 +518,8 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionMedical != null, "Invalid decisionMedical (Null)");
         Debug.Assert(decisionBlindEye != null, "Invalid decisionBlindEye (Null)");
         Debug.Assert(decisionHoliday != null, "Invalid decisionHoliday (Null)");
+        Debug.Assert(decisionStressLeave != null, "Invalid decisionStressLeave (Null)");
+        Debug.Assert(decisionLobbyHQ != null, "Invalid decisionLobbyHQ (Null)");
         //conditions
         stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
@@ -675,7 +687,6 @@ public class AIManager : MonoBehaviour
             //AI Rulesets
             ProcessNodeTasks();
             ProcessProbeTask();
-            ProcessStressLeaveTask();
             ProcessSpiderTask();
             ProcessDamageTask();
             ProcessErasureTask();
@@ -1678,6 +1689,7 @@ public class AIManager : MonoBehaviour
         else { Debug.LogFormat("[Aim]  -> ProcessSpiderData: No Erasure teams available in reserves{0}", "\n"); }
     }
 
+
     /// <summary>
     /// Processes all data relevant for deciding on Decision tasks
     /// </summary>
@@ -1688,6 +1700,15 @@ public class AIManager : MonoBehaviour
         connSecRatio = 0;
         teamRatio = 0;
         erasureTeamsOnMap = 0;
+        //clear status indicators
+        isStressed = false;
+        isLowHQApproval = false;
+        //authority ai player stressed?
+        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
+        { isStressed = true; }
+        //authority faction approval level low
+        if (GameManager.instance.factionScript.ApprovalAuthority <= 1)
+        { isLowHQApproval = true; }
         //work out connection security ratio (cumulate tally of connection security levels / number of connections)
         List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
         if (listOfConnections != null)
@@ -1761,25 +1782,7 @@ public class AIManager : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// selects a stress leave task if player stressed
-    /// </summary>
-    private void ProcessStressLeaveTask()
-    {
-        //authority ai player stressed?
-        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
-        {
-            //create a task
-            AITask taskProbe = new AITask()
-            {
-                name1 = "Stress Leave",
-                type = AITaskType.StressLeave,
-                priority = Priority.Medium
-            };
-            //add to list of potentials
-            listOfTasksPotential.Add(taskProbe);
-        }
-    }
+
 
     /// <summary>
     /// selects a probe team task if one is available
@@ -2129,6 +2132,39 @@ public class AIManager : MonoBehaviour
             listOfDecisionTasksCritical.Add(taskResources);
         }
         isInsufficientResources = false;
+        //
+        // - - - Administration - - -
+        //
+        //authority ai player stressed
+        if (isStressed == true)
+        {
+            //create a task
+            AITask taskLeave = new AITask()
+            {
+                data1 = decisionResources.cost,
+                data2 = decisionResources.aiDecID,
+                name0 = decisionResources.name,
+                type = AITaskType.Decision,
+                priority = Priority.High
+            };
+            //add to list of potentials
+            listOfTasksPotential.Add(taskLeave);
+        }
+        //low HQ approval
+        if (isLowHQApproval == true)
+        {
+            //create a task
+            AITask taskSupport = new AITask()
+            {
+                data1 = decisionResources.cost,
+                data2 = decisionResources.aiDecID,
+                name0 = decisionResources.name,
+                type = AITaskType.Decision,
+                priority = Priority.High
+            };
+            //add to list of potentials
+            listOfTasksPotential.Add(taskSupport);
+        }
         //
         // - - - Policy - - -
         //
@@ -3103,9 +3139,6 @@ public class AIManager : MonoBehaviour
                         case AITaskType.Decision:
                             ExecuteDecisionTask(task);
                             break;
-                        case AITaskType.StressLeave:
-                            ExecuteAdminTask(task);
-                            break;
                         default:
                             Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                             break;
@@ -3154,9 +3187,6 @@ public class AIManager : MonoBehaviour
                                     case AITaskType.Decision:
                                         ExecuteDecisionTask(task);
                                         break;
-                                    case AITaskType.StressLeave:
-                                        ExecuteAdminTask(task);
-                                        break;
                                     default:
                                         Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
                                         break;
@@ -3204,9 +3234,6 @@ public class AIManager : MonoBehaviour
                                             break;
                                         case AITaskType.Decision:
                                             ExecuteDecisionTask(task);
-                                            break;
-                                        case AITaskType.StressLeave:
-                                            ExecuteAdminTask(task);
                                             break;
                                         default:
                                             Debug.LogError(string.Format("Invalid task.type \"{0}\"", task.type));
@@ -3257,14 +3284,6 @@ public class AIManager : MonoBehaviour
         else { Debug.LogFormat("[Aim] -> ExecuteTeamTask: \"{0}\" Decision NOT implemented, teamID {1}{2}", task.name1, teamID, "\n"); }
     }
 
-    /// <summary>
-    /// carry out admin based task, eg. Stress Leave
-    /// </summary>
-    /// <param name="task"></param>
-    private void ExecuteAdminTask(AITask task)
-    {
-
-    }
 
     /// <summary>
     /// carry out a decision task. There is a cost to do so
@@ -3338,6 +3357,11 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAIHandout(task); }
             else if (task.name0.Equals(decisionMedical.name) == true)
             { isSuccess = ProcessAIHandout(task); }
+            //administrative
+            else if (task.name0.Equals(decisionStressLeave.name) == true)
+            { isSuccess = ProcessStressLeave(); }
+            else if (task.name0.Equals(decisionLobbyHQ.name) == true)
+            { isSuccess = ProcessLobbyHQ(); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
             //debug logs
@@ -3698,6 +3722,28 @@ public class AIManager : MonoBehaviour
         string itemText = "AI increases SECURITY PROTOCOL";
         string warning = "Increased chance of hacking being detected";
         GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, -1, aiSecurityProtocolLevel);
+        return true;
+    }
+
+    /// <summary>
+    /// Implements Stress leave (automatic, no downtime, cost in resources, stress condition removed -> penalty is the cost and the fact that it takes up the decision slot for the turn)
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessStressLeave()
+    {
+        bool isSuccess;
+        //remove condition
+        isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
+        return true;
+    }
+
+    /// <summary>
+    /// implements Lobby HQ (automatic increase in approval level, cost in resources -> penalty is the cost and the fact that it takes up the decision slot for the turn)
+    /// </summary>
+    /// <returns></returns>
+    private bool ProcessLobbyHQ()
+    {
+        GameManager.instance.factionScript.ApprovalAuthority += 2;
         return true;
     }
 
