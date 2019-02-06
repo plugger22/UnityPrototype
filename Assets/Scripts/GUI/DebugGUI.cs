@@ -908,7 +908,7 @@ public class DebugGUI : MonoBehaviour
                     case 5:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.inputScript.DisplayGameState();
-                        GUI.Box(new Rect(Screen.width - 255, 10, 250, 400), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 255, 10, 250, 450), analysis, customBackground);
                         break;
                     //actor Pools
                     case 6:
@@ -971,7 +971,7 @@ public class DebugGUI : MonoBehaviour
                                 analysis = GameManager.instance.aiScript.DisplayDecisionData();
                                 break;
                         }
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
                         break;
                     //Factions
                     case 11:

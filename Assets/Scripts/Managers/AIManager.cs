@@ -257,6 +257,12 @@ public class AIManager : MonoBehaviour
     [Range(0, 50)] public int hackingSecurityProtocolFactor = 10;
     [Tooltip("Mayoral Traits that increase / decrease the chance of detecting an AI hacking attempt are adjusted by this amount")]
     [Range(0, 50)] public int hackingTraitDetectionFactor = 20;
+
+    [Header("Administration")]
+    [Tooltip("HQ Approval level at or below which a Lobby HQ decision is generated")]
+    [Range(0, 10)] public int thresholdLowHQApproval = 2;
+    [Tooltip("Amount that HQ Approval increases by as a result of a successful lobbying attempt")]
+    [Range(1, 5)] public int increaseHQApproval = 2;
     
 
     [Header("AI Countermeasures")]
@@ -1707,7 +1713,7 @@ public class AIManager : MonoBehaviour
         if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
         { isStressed = true; }
         //authority faction approval level low
-        if (GameManager.instance.factionScript.ApprovalAuthority <= 1)
+        if (GameManager.instance.factionScript.ApprovalAuthority <= thresholdLowHQApproval)
         { isLowHQApproval = true; }
         //work out connection security ratio (cumulate tally of connection security levels / number of connections)
         List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
@@ -2141,11 +2147,11 @@ public class AIManager : MonoBehaviour
             //create a task
             AITask taskLeave = new AITask()
             {
-                data1 = decisionResources.cost,
-                data2 = decisionResources.aiDecID,
-                name0 = decisionResources.name,
+                data1 = decisionStressLeave.cost,
+                data2 = decisionStressLeave.aiDecID,
+                name0 = decisionStressLeave.name,
                 type = AITaskType.Decision,
-                priority = Priority.High
+                priority = Priority.Medium
             };
             //add to list of potentials
             listOfTasksPotential.Add(taskLeave);
@@ -2156,11 +2162,11 @@ public class AIManager : MonoBehaviour
             //create a task
             AITask taskSupport = new AITask()
             {
-                data1 = decisionResources.cost,
-                data2 = decisionResources.aiDecID,
-                name0 = decisionResources.name,
+                data1 = decisionLobbyHQ.cost,
+                data2 = decisionLobbyHQ.aiDecID,
+                name0 = decisionLobbyHQ.name,
                 type = AITaskType.Decision,
-                priority = Priority.High
+                priority = Priority.Medium
             };
             //add to list of potentials
             listOfTasksPotential.Add(taskSupport);
@@ -3734,7 +3740,14 @@ public class AIManager : MonoBehaviour
         bool isSuccess;
         //remove condition
         isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
-        return true;
+        /*if (isSuccess == true)
+        {
+            if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+            {
+
+            }
+        }*/
+        return isSuccess;
     }
 
     /// <summary>
@@ -3743,7 +3756,14 @@ public class AIManager : MonoBehaviour
     /// <returns></returns>
     private bool ProcessLobbyHQ()
     {
-        GameManager.instance.factionScript.ApprovalAuthority += 2;
+        GameManager.instance.factionScript.ChangeFactionApproval(increaseHQApproval, globalAuthority, "Mayor lobbies HQ");
+        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+        {
+            int approval = GameManager.instance.factionScript.ApprovalAuthority;
+            string text = string.Format("Mayor lobbies HQ for more support, Approval increases to {0}{1}", approval, "\n");
+            string reason = string.Format("Mayor {0} lobbies HQ for greater support", city.mayor.name);
+            GameManager.instance.messageScript.FactionApproval(text, reason, factionAuthority, approval - increaseHQApproval, increaseHQApproval, approval);
+        }
         return true;
     }
 
@@ -4711,7 +4731,9 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat(" isPolicy -> {0}{1}", isPolicy, "\n");
         builder.AppendFormat(" isOffline -> {0}{1}", isOffline, "\n");
         builder.AppendFormat(" isScreamer -> {0}{1}", isScreamer, "\n");
-        builder.AppendFormat(" isTraceBack -> {0}{1}{2}", isTraceBack, "\n", "\n");
+        builder.AppendFormat(" isTraceBack -> {0}{1}", isTraceBack, "\n");
+        builder.AppendFormat(" isStressed -> {0}{1}", isStressed, "\n");
+        builder.AppendFormat(" isLowHQApproval -> {0}{1}{2}", isLowHQApproval, "\n", "\n");
         builder.AppendFormat("- listOfTasksFinal{0}", "\n");
         builder.Append(DebugTaskList(listOfTasksFinal));
         builder.AppendFormat("{0}{1}- listOfTasksPotential{2}", "\n", "\n", "\n");

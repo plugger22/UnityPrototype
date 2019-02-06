@@ -154,6 +154,8 @@ MonoBehaviour:
   hackingStressedDetectionEffect: 25
   hackingSecurityProtocolFactor: 10
   hackingTraitDetectionFactor: 20
+  thresholdLowHQApproval: 2
+  increaseHQApproval: 2
   aiSecurityProtocolMaxLevel: 4
   aiCounterMeasureTimer: 5
   aiPolicyTimer: 5
@@ -1490,6 +1492,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82b5a992085ea894ba4c4be491ea1450, type: 2}
   - {fileID: 11400000, guid: 9096eb90bfabf11428378f1b81d90809, type: 2}
   - {fileID: 11400000, guid: 88801f08ee15aaa49bb8a7ec2dfaacab, type: 2}
+  - {fileID: 11400000, guid: f0c1e464c1e238641b54e5c2713406de, type: 2}
+  - {fileID: 11400000, guid: 31f7b157831796f41aa1435380726588, type: 2}
   arrayOfMissions:
   - {fileID: 11400000, guid: c402ec51357f6c24d891c455f2d7acea, type: 2}
   - {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
@@ -1562,7 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stressTurnAuthority: -1
+  stressTurnAuthority: 0
   stressTurnResistance: -1
 --- !u!114 &114584680957149894
 MonoBehaviour:
@@ -2008,13 +2012,13 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 20083
+  seed: 0
   isAuthority: 0
-  isBothAI: 0
+  isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 10
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

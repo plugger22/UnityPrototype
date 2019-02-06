@@ -3081,7 +3081,7 @@ public class DataManager : MonoBehaviour
             case ActorStatus.Resigned:
                 //if actor resigned, loose -1 faction support
                 int approvalChange = GameManager.instance.factionScript.factionApprovalActorResigns * -1;
-                GameManager.instance.factionScript.ChangeFactionApproval(approvalChange, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
+                GameManager.instance.factionScript.ChangeFactionApproval(approvalChange, side, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
                 //lose secrets
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
