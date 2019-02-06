@@ -3740,13 +3740,18 @@ public class AIManager : MonoBehaviour
         bool isSuccess;
         //remove condition
         isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
-        /*if (isSuccess == true)
+        if (isSuccess == true)
         {
             if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
             {
-
+                string text = string.Format("Mayor {0} has taken Stress Leave{1}", city.mayor.name, "\n");
+                string itemText = string.Format("Mayor {0} has taken Stress Leave", city.mayor.name);
+                string topText = "Stress Leave";
+                string reason = "Mayor takes a sudden leave of absence";
+                string explanation = "Doing so removes any STRESS";
+                GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation, false);
             }
-        }*/
+        }
         return isSuccess;
     }
 
@@ -3756,14 +3761,7 @@ public class AIManager : MonoBehaviour
     /// <returns></returns>
     private bool ProcessLobbyHQ()
     {
-        GameManager.instance.factionScript.ChangeFactionApproval(increaseHQApproval, globalAuthority, "Mayor lobbies HQ");
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
-        {
-            int approval = GameManager.instance.factionScript.ApprovalAuthority;
-            string text = string.Format("Mayor lobbies HQ for more support, Approval increases to {0}{1}", approval, "\n");
-            string reason = string.Format("Mayor {0} lobbies HQ for greater support", city.mayor.name);
-            GameManager.instance.messageScript.FactionApproval(text, reason, factionAuthority, approval - increaseHQApproval, increaseHQApproval, approval);
-        }
+        GameManager.instance.factionScript.ChangeFactionApproval(increaseHQApproval, globalAuthority, "<b>Mayor lobbies HQ</b>");
         return true;
     }
 
