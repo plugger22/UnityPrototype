@@ -301,6 +301,7 @@ public class AIManager : MonoBehaviour
     //admin
     private bool isStressed;
     private bool isLowHQApproval;
+    private int stressedActorID;                       //actorID (player/actor) -> ProcessDecisionData prioritises player over actors if multiple cases of stress
 
     //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
@@ -1709,9 +1710,41 @@ public class AIManager : MonoBehaviour
         //clear status indicators
         isStressed = false;
         isLowHQApproval = false;
+        stressedActorID = -1;
         //authority ai player stressed?
         if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
-        { isStressed = true; }
+        {
+            isStressed = true;
+            stressedActorID = GameManager.instance.playerScript.actorID;
+        }
+        else
+        {
+            //check for Authority actors being stressed
+            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+            if (arrayOfActors != null)
+            {
+                for (int i = 0; i < arrayOfActors.Length; i++)
+                {
+                    //check actor is present in slot (not vacant)
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                    {
+                        Actor actor = arrayOfActors[i];
+                        if (actor != null)
+                        {
+                            //stressed
+                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                //take first instance found
+                                isStressed = true;
+                                stressedActorID = actor.actorID;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        }
         //authority faction approval level low
         if (GameManager.instance.factionScript.ApprovalAuthority <= thresholdLowHQApproval)
         { isLowHQApproval = true; }
@@ -2144,17 +2177,23 @@ public class AIManager : MonoBehaviour
         //authority ai player stressed
         if (isStressed == true)
         {
-            //create a task
-            AITask taskLeave = new AITask()
+            Debug.Assert(stressedActorID > -1, "Invalid stressedActorID");
+            if (stressedActorID > -1)
             {
-                data1 = decisionStressLeave.cost,
-                data2 = decisionStressLeave.aiDecID,
-                name0 = decisionStressLeave.name,
-                type = AITaskType.Decision,
-                priority = Priority.Medium
-            };
-            //add to list of potentials
-            listOfTasksPotential.Add(taskLeave);
+                //create a task
+                AITask taskLeave = new AITask()
+                {
+                    data0 = stressedActorID,
+                    data1 = decisionStressLeave.cost,
+                    data2 = decisionStressLeave.aiDecID,
+                    name0 = decisionStressLeave.name,
+                    type = AITaskType.Decision,
+                    priority = Priority.Medium
+                };
+                //add to list of potentials
+                listOfTasksPotential.Add(taskLeave);
+            }
+            else { Debug.LogWarning("Invalid stressActorID (-1)"); }
         }
         //low HQ approval
         if (isLowHQApproval == true)
@@ -3365,7 +3404,7 @@ public class AIManager : MonoBehaviour
             { isSuccess = ProcessAIHandout(task); }
             //administrative
             else if (task.name0.Equals(decisionStressLeave.name) == true)
-            { isSuccess = ProcessStressLeave(); }
+            { isSuccess = ProcessStressLeave(task.data0); }
             else if (task.name0.Equals(decisionLobbyHQ.name) == true)
             { isSuccess = ProcessLobbyHQ(); }
             else
@@ -3735,23 +3774,29 @@ public class AIManager : MonoBehaviour
     /// Implements Stress leave (automatic, no downtime, cost in resources, stress condition removed -> penalty is the cost and the fact that it takes up the decision slot for the turn)
     /// </summary>
     /// <returns></returns>
-    private bool ProcessStressLeave()
+    private bool ProcessStressLeave(int actorID)
     {
-        bool isSuccess;
+        Debug.Assert(actorID > -1, "Invalid actorID (less than Zero)");
+        bool isSuccess = false;
+        string text = "Unknown";
         //remove condition
-        isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
-        if (isSuccess == true)
+        if (actorID == GameManager.instance.playerScript.actorID)
         {
-            if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
-            {
-                string text = string.Format("Mayor {0} has taken Stress Leave{1}", city.mayor.name, "\n");
-                string itemText = string.Format("Mayor {0} has taken Stress Leave", city.mayor.name);
-                string topText = "Stress Leave";
-                string reason = "Mayor takes a sudden leave of absence";
-                string explanation = "Doing so removes any STRESS";
-                GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation, false);
-            }
+            isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
+            text = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority());
         }
+        else
+        {
+            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+            if (actor != null)
+            {
+                isSuccess = actor.RemoveCondition(conditionStressed, "due to Stress Leave");
+                text = string.Format("{0}, {1}, takes Stress Leave", actor.actorName, actor.arc.name);
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+        }
+        if (isSuccess == true)
+        { GameManager.instance.messageScript.ActorStressLeave(text, actorID); }
         return isSuccess;
     }
 
@@ -4949,9 +4994,25 @@ public class AIManager : MonoBehaviour
     private void DebugTest()
     {
         int turn = GameManager.instance.turnScript.Turn;
+        int slotID = GameManager.instance.testScript.stressWho;
         //Add STRESSED condition
         if (turn == turnForStress)
-        { GameManager.instance.playerScript.AddCondition(conditionStressed, globalAuthority, "for Debugging"); }
+        {
+            //authority player stressed
+            if (slotID == 999)
+            { GameManager.instance.playerScript.AddCondition(conditionStressed, globalAuthority, "for Debugging"); }
+            else if (slotID > -1 && slotID < 4)
+            {
+                //authority actor stressed -> check present
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalAuthority) == true)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
+                    if (actor != null)
+                    { actor.AddCondition(conditionStressed, "Debug"); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
+                }
+            }
+        }
     }
 
     /// <summary>

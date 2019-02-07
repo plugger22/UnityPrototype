@@ -289,6 +289,29 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Authority Actor / Player takes stress leave (actor Null for Player)
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public string GetActorStressLeaveDetails(Actor actor = null)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (actor == null)
+        {
+            //Player
+            builder.AppendFormat("The {0}<b>Mayor{1}, {2},</b> has left the office for a short while", colourAlert, colourEnd, GameManager.instance.playerScript.GetPlayerNameAuthority());
+            builder.AppendFormat("{0}{1}When they return they will be {2}<b>Stress Free</b>{3}", "\n", "\n", colourGood, colourEnd);
+        }
+        else
+        {
+            //Actor
+            builder.AppendFormat("<b>{0}, {1}{2}{3},</b> has taken a short break", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+            builder.AppendFormat("{0}{1}When they return they will be {2}<b>Stress Free</b>{3}", "\n", "\n", colourGood, colourEnd);
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Actor in Reserves has been spoken to
     /// </summary>
     /// <param name="actor"></param>

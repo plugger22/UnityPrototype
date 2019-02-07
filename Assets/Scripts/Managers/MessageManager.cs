@@ -504,7 +504,6 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Actor_Status;
             message.side = side;
             message.isPublic = true;
@@ -519,6 +518,7 @@ public class MessageManager : MonoBehaviour
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
+                message.type = MessageType.PLAYER;
                 data.itemText = string.Format("{0}, Player, {1}", GameManager.instance.playerScript.PlayerName, itemTextTag);
                 data.sprite = playerSprite;
                 data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, null);
@@ -529,9 +529,67 @@ public class MessageManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
+                    message.type = MessageType.ACTOR;
                     data.itemText = string.Format("{0}, {1}, {2}", actor.actorName, actor.arc.name, itemTextTag);
                     data.sprite = actor.arc.sprite;
                     data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, actor);
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Authority Actor/Player takes stress leave
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="itemTextTag"></param>
+    /// <param name="reason"></param>
+    /// <param name="actorID"></param>
+    /// <param name="side"></param>
+    /// <param name="details"></param>
+    /// <returns></returns>
+    public Message ActorStressLeave(string text, int actorID)
+    {
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID ({0})", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.subType = MessageSubType.Actor_StressLeave;
+            message.side = globalAuthority;
+            message.isPublic = true;
+            message.data0 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = "Stress Leave";
+            data.priority = ItemPriority.Low;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.help = 1;
+            //data depends on whether an actor or player
+            if (actorID == playerActorID)
+            {
+                message.type = MessageType.PLAYER;
+                data.itemText = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority());
+                data.sprite = playerSprite;
+                data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails();
+            }
+            else
+            {
+                //actor
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    message.type = MessageType.ACTOR;
+                    data.itemText = string.Format("{0}, {1}, has taken Stress Leave", actor.actorName, actor.arc.name);
+                    data.sprite = actor.arc.sprite;
+                    data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(actor);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }

@@ -13,6 +13,8 @@ public class TestManager : MonoBehaviour
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (within autorun) where the Stressed condition will be given to the Authority player")]
     public int stressTurnAuthority = -1;
+    [Tooltip("Who gets stressed? use 0/1/2/3  (slotID's) for authority actors and 999 for Player")]
+    public int stressWho = 999;
 
     [Header("Resistance Player AutoRun tests")]
     [Tooltip("Specify a turn (within autorun) where the Stressed condition will be given to the Resistance player")]

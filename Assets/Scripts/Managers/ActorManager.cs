@@ -4933,7 +4933,7 @@ public class ActorManager : MonoBehaviour
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                         text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
                                         GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalAuthority);
-                                        actor.RemoveCondition(conditionStressed, "Stress Leave");
+                                        actor.RemoveCondition(conditionStressed, "due to Stress Leave");
                                     }
                                     else { actor.isStressLeave = false; }
                                     break;

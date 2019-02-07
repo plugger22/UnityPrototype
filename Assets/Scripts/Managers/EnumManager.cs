@@ -155,6 +155,7 @@
         Actor_Recruited,
         Actor_Action,
         Actor_Status,
+        Actor_StressLeave,
         Actor_Condition,
         Actor_Complains,
         Actor_Blackmail,
