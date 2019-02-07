@@ -10,11 +10,13 @@ using UnityEngine;
 public class PreLoadManager : MonoBehaviour
 {
 
-    [Header("Player Input")]
+    [Header("PlayerManager.cs")]
     [Tooltip("Name of Human controlled Authority Player")]
     public string nameAuthority;
     [Tooltip("Name of Human controlled Resistance Player")]
     public string nameResistance;
+    [Tooltip("actorID of Player")]
+    public int playerActorID = 999;
     
     //place fields here that need to be initialised at game start, actual fields in the correct manager can access them later
     [Header("ActorManager.cs")]

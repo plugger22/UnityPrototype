@@ -3908,6 +3908,7 @@ public class ActorManager : MonoBehaviour
                                         //check if actor has stressed condition
                                         if (actor.CheckConditionPresent(conditionStressed) == true)
                                         { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
 
                                         /*//update contacts
                                         GameManager.instance.contactScript.UpdateNodeContacts();*/
@@ -3927,6 +3928,7 @@ public class ActorManager : MonoBehaviour
                                     }
                                     Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
                                         actor.arc.name, actor.actorID, "\n");
+                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     break;
                             }
                         }
@@ -4490,6 +4492,7 @@ public class ActorManager : MonoBehaviour
                                         string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                         GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
                                     }
+                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveAuthorityActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
                                         actor.arc.name, actor.actorID, "\n");
                                     break;

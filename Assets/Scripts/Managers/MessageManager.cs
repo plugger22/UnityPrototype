@@ -827,9 +827,9 @@ public class MessageManager : MonoBehaviour
             data.topText = secret.tag;
             data.bottomText = GameManager.instance.itemDataScript.GetActorSecretDetails(actor, secret, isLearnt);
             if (isLearnt == true)
-            { data.itemText = string.Format("{0} learns one of your Secrets", actor.arc.name);  }
+            { data.itemText = string.Format("{0}, {1}, learns one of your Secrets", actor.actorName, actor.arc.name);  }
             else
-            {  data.itemText = string.Format("{0} forgets one of your Secrets", actor.arc.name);  }
+            {  data.itemText = string.Format("{0}, {1}, forgets one of your Secrets", actor.actorName, actor.arc.name);  }
             data.priority = ItemPriority.Low;
             data.sprite = actor.arc.sprite;
             data.tab = ItemTab.ALERTS;

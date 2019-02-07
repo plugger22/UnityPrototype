@@ -367,6 +367,7 @@ public class AIManager : MonoBehaviour
     private City city;
     private int totalNodes;
     private int totalConnections;
+    private int playerID = -1;
     private Condition conditionStressed;
     //decisions Authority
     private DecisionAI decisionAPB;
@@ -448,8 +449,10 @@ public class AIManager : MonoBehaviour
         //factions
         factionAuthority = GameManager.instance.factionScript.factionAuthority;
         factionResistance = GameManager.instance.factionScript.factionResistance;
+        playerID = GameManager.instance.preloadScript.playerActorID;
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
+        Debug.Assert(playerID > -1, "Invalid playerID (-1)");
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
@@ -1715,7 +1718,7 @@ public class AIManager : MonoBehaviour
         if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
         {
             isStressed = true;
-            stressedActorID = GameManager.instance.playerScript.actorID;
+            stressedActorID = playerID;
         }
         else
         {
@@ -2190,6 +2193,9 @@ public class AIManager : MonoBehaviour
                     type = AITaskType.Decision,
                     priority = Priority.Medium
                 };
+                //if actor priority is Low
+                if (stressedActorID != playerID)
+                { taskLeave.priority = Priority.Low; }
                 //add to list of potentials
                 listOfTasksPotential.Add(taskLeave);
             }
@@ -3780,7 +3786,7 @@ public class AIManager : MonoBehaviour
         bool isSuccess = false;
         string text = "Unknown";
         //remove condition
-        if (actorID == GameManager.instance.playerScript.actorID)
+        if (actorID == playerID)
         {
             isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
             text = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority());
@@ -4994,7 +5000,7 @@ public class AIManager : MonoBehaviour
     private void DebugTest()
     {
         int turn = GameManager.instance.turnScript.Turn;
-        int slotID = GameManager.instance.testScript.stressWho;
+        int slotID = GameManager.instance.testScript.stressWhoAuthority;
         //Add STRESSED condition
         if (turn == turnForStress)
         {

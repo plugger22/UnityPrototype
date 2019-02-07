@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector] public int numOfRecruits;
     //[HideInInspector] public int Invisibility;
-    [HideInInspector] public int actorID = 999;
+    [HideInInspector] public int actorID;
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorTooltip tooltipStatus;                            //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
     [HideInInspector] public ActorInactive inactiveStatus;                          //reason actor is inactive
@@ -138,6 +138,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        actorID = GameManager.instance.preloadScript.playerActorID;
         //gear check
         isEndOfTurnGearCheck = false;
         //fast access fields (BEFORE set stats below)

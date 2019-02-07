@@ -1645,9 +1645,25 @@ public class AIRebelManager : MonoBehaviour
     private void DebugTest()
     {
         int turn = GameManager.instance.turnScript.Turn;
+        int slotID = GameManager.instance.testScript.stressWhoResistance;
         //Add STRESSED condition
         if (turn == turnForStress)
-        { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
+        {
+            //resistance player stressed
+            if (slotID == 999)
+            { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
+            else if (slotID > -1 && slotID < 4)
+            {
+                //Resistance actor stressed -> check present
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalResistance) == true)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
+                    if (actor != null)
+                    { actor.AddCondition(conditionStressed, "Debug"); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
+                }
+            }
+        }
     }
 
     //new methods above here

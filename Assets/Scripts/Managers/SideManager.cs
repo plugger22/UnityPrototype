@@ -228,6 +228,7 @@ public class SideManager : MonoBehaviour
         ActorStatus status;
         ActorInactive inactiveStatus;
         float inactiveAlpha = GameManager.instance.guiScript.alphaInactive;
+        float activeAlpha = GameManager.instance.guiScript.alphaActive;
         switch (_playerSide.level)
         {
             case 1:
@@ -257,17 +258,22 @@ public class SideManager : MonoBehaviour
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 break;
+                            case ActorInactive.None:
+                                //change actor alpha to show active (sprite and text)
+                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(activeAlpha);
+                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                                break;
                         }
                         break;
                 }
                 //loop actors and check for status
-                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
                     {
                         //check actor is present in slot (not vacant)
-                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
                         {
                             Actor actor = arrayOfActors[i];
                             if (actor != null)
@@ -277,7 +283,12 @@ public class SideManager : MonoBehaviour
                                     case ActorInactive.Breakdown:
                                         //change actor alpha to show inactive (sprite and text)
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
-                                        actor.tooltipStatus = ActorTooltip.LieLow;
+                                        actor.tooltipStatus = ActorTooltip.Breakdown;
+                                        break;
+                                    case ActorInactive.None:
+                                        //change actor alpha to show active (sprite and text)
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, activeAlpha);
+                                        actor.tooltipStatus = ActorTooltip.None;
                                         break;
                                 }
                             }
@@ -324,6 +335,11 @@ public class SideManager : MonoBehaviour
                                 break;
                             case ActorInactive.LieLow:
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
+                                break;
+                            case ActorInactive.None:
+                                //change actor alpha to show active (sprite and text)
+                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(activeAlpha);
+                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                                 break;
                         }
                         break;
@@ -377,6 +393,11 @@ public class SideManager : MonoBehaviour
                                             case ActorInactive.LieLow:
                                                 GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
                                                 actor.tooltipStatus = ActorTooltip.LieLow;
+                                                break;
+                                            case ActorInactive.None:
+                                                //change actor alpha to show active (sprite and text)
+                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, activeAlpha);
+                                                actor.tooltipStatus = ActorTooltip.None;
                                                 break;
                                         }
                                         break;

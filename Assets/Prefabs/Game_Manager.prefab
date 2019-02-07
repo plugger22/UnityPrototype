@@ -556,6 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameAuthority: Mr EVIL
   nameResistance: The Phantom
+  playerActorID: 999
   numOfQualities: 3
 --- !u!114 &114364785414329898
 MonoBehaviour:
@@ -1566,8 +1567,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stressTurnAuthority: 0
+  stressTurnAuthority: -1
+  stressWhoAuthority: 999
   stressTurnResistance: -1
+  stressWhoResistance: 999
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2012,8 +2015,8 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 52474
-  isAuthority: 1
+  seed: 29517
+  isAuthority: 0
   isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
