@@ -4981,7 +4981,7 @@ public class ActorManager : MonoBehaviour
                                     text = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                     GameManager.instance.messageScript.ActorStatus(text, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
                                     break;
-                                case ActorInactive.Leave:
+                                case ActorInactive.StressLeave:
                                     if (actor.isStressLeave == false)
                                     {
                                         //restore actor (one Stress Leave turn only)
@@ -5071,6 +5071,16 @@ public class ActorManager : MonoBehaviour
         switch (GameManager.instance.playerScript.status)
         {
             case ActorStatus.Inactive:
+                //
+                // - - - Inactive actor (Any) Info App (needs to be at the top for sequencing reasons) - - -
+                //
+                if (GameManager.instance.playerScript.inactiveStatus != ActorInactive.None)
+                {
+                    text = "HQ Support Unavailable";
+                    topText = string.Format("{0}<b>You are out of contact</b>{1}", colourAlert, colourEnd);
+                    bottomText = string.Format("<b>HQ will consider providing support once you are {0}back in contact</b>{1}", colourNeutral, colourEnd);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, playerID);
+                }
                 switch (GameManager.instance.playerScript.inactiveStatus)
                 {
                     case ActorInactive.Breakdown:
@@ -5115,7 +5125,7 @@ public class ActorManager : MonoBehaviour
                         else
                         {  GameManager.instance.playerScript.Invisibility = invis; }
                         break;
-                    case ActorInactive.Leave:
+                    case ActorInactive.StressLeave:
                         if (GameManager.instance.playerScript.isStressLeave == false)
                         {
                             //restore actor (one Stress Leave turn only)

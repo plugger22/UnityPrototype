@@ -1379,7 +1379,7 @@ public class ActionManager : MonoBehaviour
         {
 
             GameManager.instance.playerScript.status = ActorStatus.Inactive;
-            GameManager.instance.playerScript.inactiveStatus = ActorInactive.Leave;
+            GameManager.instance.playerScript.inactiveStatus = ActorInactive.StressLeave;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Leave;
             GameManager.instance.playerScript.isStressLeave = true;
             //deduct renown cost
@@ -1396,8 +1396,8 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(renown);
             //message (public)
             string playerName = GameManager.instance.playerScript.GetPlayerName(modalDetails.side);
-            string text = string.Format("{0}, Player, has gone on Stress Leave", playerName);
-            string itemText = "has gone on Stress LEAVE";
+            string text = string.Format("Player, {0}, has gone on Stress Leave", playerName);
+            string itemText = "You have gone on Stress LEAVE";
             string reason = "has taken a break in order to recover from their <b>STRESS</b>";
             string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
             GameManager.instance.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details);
@@ -1407,8 +1407,8 @@ public class ActionManager : MonoBehaviour
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Player Stress Leave";
-            outcomeDetails.textBottom = string.Format("{0}, {1}Player{2}, has taken Stress Leave and will return a better person, {3}free of Stress{4}", playerName, colourAlert, colourEnd,
-                colourGood, colourEnd);
+            outcomeDetails.textBottom = string.Format("You, {0}{1}{2}, have taken Stress Leave and will return a better person, {3}free of Stress{4}{5}{6}{7}You cannot be captured while on Leave{8}",
+                colourAlert, playerName,  colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, colourEnd);
             //generate a create modal window event
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeavePlayerAction");
         }
@@ -1427,7 +1427,7 @@ public class ActionManager : MonoBehaviour
             if (actor != null)
             {
                 actor.Status = ActorStatus.Inactive;
-                actor.inactiveStatus = ActorInactive.Leave;
+                actor.inactiveStatus = ActorInactive.StressLeave;
                 actor.tooltipStatus = ActorTooltip.Leave;
                 actor.isStressLeave = true;
                 //deduct renown cost

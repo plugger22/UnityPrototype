@@ -3028,7 +3028,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Special message used for InfoApp active 'Effects' tab. Usually either actor (actorID 999 for player) OR node based.
+    /// Special message used for InfoApp active 'Effects' tab. Usually either actor (actorID 999 for player) OR node based. Itemtext is text.
     /// </summary>
     /// <param name="itemData"></param>
     /// <param name="detailsTop"></param>
