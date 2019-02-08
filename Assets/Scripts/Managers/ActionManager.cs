@@ -1416,7 +1416,7 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process Stress Leave for Human Authority Actor
+    /// Process Stress Leave for Human Authority/Resistance Actor
     /// </summary>
     /// <param name="modalDetails"></param>
     private void ProcessLeaveActorAction(ModalActionDetails modalDetails)
@@ -1441,6 +1441,7 @@ public class ActionManager : MonoBehaviour
                 GameManager.instance.playerScript.Renown = renown;
                 //change alpha of actor to indicate inactive status
                 GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+                GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(renown);
                 //message (public)
                 string text = string.Format("{0}, {1}, has gone on Stress Leave", actor.actorName, actor.arc.name);
                 string itemText = "has gone on Stress LEAVE";
@@ -1451,8 +1452,8 @@ public class ActionManager : MonoBehaviour
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                 outcomeDetails.isAction = true;
                 outcomeDetails.reason = "Actor Stress Leave";
-                outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd,
-                    colourGood, colourEnd);
+                outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}{6}{7}{8}{9} cannot be Captured while on Leave{10}", 
+                    actor.actorName, colourAlert, actor.arc.name, colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, actor.actorName, colourEnd);
                 //generate a create modal window event
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeaveActorAction");
             }

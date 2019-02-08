@@ -5014,7 +5014,7 @@ public class AIManager : MonoBehaviour
                 {
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
                     if (actor != null)
-                    { actor.AddCondition(conditionStressed, "Debug"); }
+                    { actor.AddCondition(conditionStressed, "Debug Test Action"); }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
                 }
             }
@@ -5028,7 +5028,7 @@ public class AIManager : MonoBehaviour
     public void ProcessOngoingEffects()
     {
         int aiDecID;
-        string text, itemText, topText, middleText, bottomText/* ,colourEffect*/;
+        string text, itemText, topText, detailsTop, detailsMiddle, detailsBottom/* ,colourEffect*/;
         //
         // - - - Network decisions - - -
         //
@@ -5038,10 +5038,10 @@ public class AIManager : MonoBehaviour
             aiDecID = decisionScreamer.aiDecID;
             text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionScreamer.name.ToUpper(), timerScreamer, timerScreamer != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionScreamer.name.ToUpper());
-            topText = decisionScreamer.descriptor;
-            middleText = string.Format("{0}{1}{2}", colourAlert, decisionScreamer.tooltipDescriptor, colourEnd);
-            bottomText = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerScreamer, timerScreamer != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+            detailsTop = decisionScreamer.descriptor;
+            detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionScreamer.tooltipDescriptor, colourEnd);
+            detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerScreamer, timerScreamer != 1 ? "s" : "", colourEnd);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
         }
         //Traceback
         if (isTraceBack == true)
@@ -5049,10 +5049,10 @@ public class AIManager : MonoBehaviour
             aiDecID = decisionTraceBack.aiDecID;
             text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionTraceBack.name.ToUpper(), timerTraceBack, timerTraceBack != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionTraceBack.name.ToUpper());
-            topText = decisionTraceBack.descriptor;
-            middleText = string.Format("{0}{1}{2}", colourAlert, decisionTraceBack.tooltipDescriptor, colourEnd);
-            bottomText = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerTraceBack, timerTraceBack != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+            detailsTop = decisionTraceBack.descriptor;
+            detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionTraceBack.tooltipDescriptor, colourEnd);
+            detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerTraceBack, timerTraceBack != 1 ? "s" : "", colourEnd);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
         }
         //Offline
         if (isOffline == true)
@@ -5060,10 +5060,10 @@ public class AIManager : MonoBehaviour
             aiDecID = decisionOffline.aiDecID;
             text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionOffline.name.ToUpper(), timerOffline, timerOffline != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionOffline.name.ToUpper());
-            topText = decisionOffline.descriptor;
-            middleText = string.Format("{0}{1}{2}", colourAlert, decisionOffline.tooltipDescriptor, colourEnd);
-            bottomText = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerOffline, timerOffline != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+            detailsTop = decisionOffline.descriptor;
+            detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionOffline.tooltipDescriptor, colourEnd);
+            detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerOffline, timerOffline != 1 ? "s" : "", colourEnd);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
         }
         //
         // - - - Security decisions - - -
@@ -5074,38 +5074,39 @@ public class AIManager : MonoBehaviour
                 aiDecID = decisionAPB.aiDecID;
                 text = string.Format("AI Security countermeasure {0} in place", decisionAPB.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionAPB.name.ToUpper());
-                topText = decisionAPB.descriptor;
-                middleText = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
-                bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                detailsTop = decisionAPB.descriptor;
+                detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
+                detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
                 break;
             case AuthoritySecurityState.SecurityAlert:
                 aiDecID = decisionSecAlert.aiDecID;
                 text = string.Format("AI Security countermeasure {0} in place", decisionSecAlert.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionSecAlert.name.ToUpper());
-                topText = decisionSecAlert.descriptor;
-                middleText = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
-                bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                detailsTop = decisionSecAlert.descriptor;
+                detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
+                detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
                 aiDecID = decisionCrackdown.aiDecID;
                 text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionCrackdown.name.ToUpper());
-                topText = decisionCrackdown.descriptor;
-                middleText = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
-                bottomText = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, topText, middleText, bottomText, aiDecID);
+                detailsTop = decisionCrackdown.descriptor;
+                detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
+                detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
                 break;
             case AuthoritySecurityState.Normal:
                 //Nothing happens here but needed to avoid triggering default statement -> Erasure team message
                 text = "ERASURE team may be present";
-                topText = string.Format("You can be <b>{0}Captured{1}</b> provided", colourNeutral, colourEnd);
-                bottomText = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd, 
+                topText = "Sighting";
+                detailsTop = string.Format("You can be <b>{0}Captured{1}</b> provided", colourNeutral, colourEnd);
+                detailsBottom = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd, 
                     colourAlert, "\n", "\n", colourEnd, colourBad, colourEnd);
                 Sprite sprite = GameManager.instance.guiScript.capturedSprite;
                 if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
-                { GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, sprite, 999); }
+                { GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, sprite, 999); }
                 break;
             default:
                 Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);

@@ -1317,7 +1317,57 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor invisiblity at max
                             infoBuilder.AppendFormat("{0} Invisibility at Max and can't Lie Low", actor.arc.name);
+                            //
+                            // - - - Stress Leave - - -
+                            //
+                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                //must be stressed and have enough renown
+                                if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostResistance)
+                                {
+                                    //can't take Stress Leave if a Surveillance Crackdown is in place
+                                    if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
+                                    {
+                                        if (stressLeaveHQApproval == true)
+                                        {
+                                            ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
+                                            leaveActionDetails.side = playerSide;
+                                            leaveActionDetails.actorDataID = actor.actorID;
+                                            leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                            tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
+                                            EventButtonDetails leaveDetails = new EventButtonDetails()
+                                            {
+                                                buttonTitle = "Stress Leave",
+                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                                buttonTooltipMain = string.Format("{0}, {1}, will recover from their Stress", actor.actorName, actor.arc.name),
+                                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                                //use a Lambda to pass arguments to the action
+                                                action = () => { EventManager.instance.PostNotification(EventType.LeaveActorAction, this, leaveActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                            };
+                                            //add Activate button to list
+                                            tempList.Add(leaveDetails);
+                                        }
+                                        else
+                                        {
+                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                            infoBuilder.AppendFormat("{0}HQ has banned all Stress Leave{1}", colourAlert, colourEnd);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.AppendFormat("{0}Stress Leave not possible during a Surveillance Crackdown{1}", colourAlert, colourEnd);
+                                    }
+                                }
+                                else
+                                {
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, 
+                                        stressLeaveRenownCostResistance, colourEnd, colourAlert, colourEnd);
+                                }
+                            }
                         }
+
                         //
                         // - - - Give Gear - - -
                         //
@@ -1830,53 +1880,54 @@ public class ActorManager : MonoBehaviour
                     {
                         //actor invisiblity at max
                         infoBuilder.AppendFormat("{0}Can't Lie Low{1}{2}{3}(Invisibility at Max){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
-                    }
-                    //
-                    // - - - Stress Leave - - -
-                    //
-                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
-                    {
-                        //must be stressed and have enough renown
-                        if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostResistance )
+                        //
+                        // - - - Stress Leave - - -
+                        //
+                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                         {
-                            //can't take Stress Leave if a Surveillance Crackdown is in place
-                            if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
+                            //must be stressed and have enough renown
+                            if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostResistance)
                             {
-                                if (stressLeaveHQApproval == true)
+                                //can't take Stress Leave if a Surveillance Crackdown is in place
+                                if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
                                 {
-                                    ModalActionDetails leaveActionDetails = new ModalActionDetails();
-                                    leaveActionDetails.side = playerSide;
-                                    leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                                    leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
-                                    tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
-                                    EventButtonDetails leaveDetails = new EventButtonDetails()
+                                    if (stressLeaveHQApproval == true)
                                     {
-                                        buttonTitle = "Stress Leave",
-                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Player Action", colourEnd),
-                                        buttonTooltipMain = "Recover from your Stress",
-                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                        //use a Lambda to pass arguments to the action
-                                        action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
-                                    };
-                                    //add Activate button to list
-                                    tempList.Add(leaveDetails);
+                                        ModalActionDetails leaveActionDetails = new ModalActionDetails();
+                                        leaveActionDetails.side = playerSide;
+                                        leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                                        leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                        tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
+                                        EventButtonDetails leaveDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = "Stress Leave",
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Player Action", colourEnd),
+                                            buttonTooltipMain = "Recover from your Stress",
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                                        };
+                                        //add Activate button to list
+                                        tempList.Add(leaveDetails);
+                                    }
+                                    else
+                                    {
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.AppendFormat("{0}HQ has banned all Stress Leave{1}", colourAlert, colourEnd);
+                                    }
                                 }
                                 else
                                 {
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("{0}HQ has banned all Stress Leave{1}", colourAlert, colourEnd);
+                                    infoBuilder.AppendFormat("{0}Stress Leave not possible during a Surveillance Crackdown{1}", colourAlert, colourEnd);
                                 }
                             }
                             else
                             {
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.AppendFormat("{0}Stress Leave not possible during a Surveillance Crackdown{1}", colourAlert, colourEnd);
+                                infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance, 
+                                    colourEnd, colourAlert, colourEnd);
                             }
-                        }
-                        else
-                        {
-                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4})", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance, colourEnd);
                         }
                     }
                     break;
@@ -2464,7 +2515,7 @@ public class ActorManager : MonoBehaviour
                     {
                         //not enough renown
                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                        infoBuilder.AppendFormat("{0}Insufficient Renown to Bully (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
+                        infoBuilder.AppendFormat("{0}Insufficient Renown to Bully (need {1}, currently have {2}{3})", colourBad, renownCost, playerRenown, colourEnd);
                     }
                 }
                 else
@@ -2519,7 +2570,7 @@ public class ActorManager : MonoBehaviour
             {
                 //not enough renown
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}){3}", colourBad, renownCost, playerRenown, colourEnd);
+                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}{3})", colourBad, renownCost, playerRenown, colourEnd);
             }
         }
         else
@@ -3860,6 +3911,7 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.Status == ActorStatus.Inactive)
                         {
+                            string text = "Unknown";
                             switch (actor.inactiveStatus)
                             {
                                 case ActorInactive.LieLow:
@@ -3877,7 +3929,7 @@ public class ActorManager : MonoBehaviour
                                         actor.tooltipStatus = ActorTooltip.None;
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                         //message -> status change
-                                        string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
+                                        text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                         GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
                                         //check if actor has stressed condition
                                         if (actor.CheckConditionPresent(conditionStressed) == true)
@@ -3895,20 +3947,35 @@ public class ActorManager : MonoBehaviour
                                     actor.inactiveStatus = ActorInactive.None;
                                     actor.tooltipStatus = ActorTooltip.None;
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                                    string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                    GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalResistance);
+                                    text = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                    GameManager.instance.messageScript.ActorStatus(text, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalResistance);
+                                    break;
+                                case ActorInactive.StressLeave:
+                                    if (actor.isStressLeave == false)
+                                    {
+                                        //restore actor (one Stress Leave turn only)
+                                        actor.Status = ActorStatus.Active;
+                                        actor.inactiveStatus = ActorInactive.None;
+                                        actor.tooltipStatus = ActorTooltip.None;
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
+                                        GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalResistance);
+                                        actor.RemoveCondition(conditionStressed, "due to Stress Leave");
+                                    }
+                                    else { actor.isStressLeave = false; }
                                     break;
                             }
                         }
                         //
-                        // - - - Lie Low Info App - - -
+                        // - - - Inactive Info App - - -
                         //
-                        if (actor.inactiveStatus == ActorInactive.LieLow)
+                        if (actor.inactiveStatus != ActorInactive.None)
                         {
-                            string text = string.Format("{0}, {1}, is LYING LOW", actor.actorName, actor.arc.name);
-                            string topText = string.Format("{0}{1} is deliberately keeping a <b>Low Profile</b>{2}", colourAlert, actor.actorName, colourEnd);
-                            string bottomText = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
-                            GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                            string text = string.Format("{0}, {1}, contact network unavailable", actor.actorName, actor.arc.name);
+                            string topText = "Contact Network";
+                            string detailsTop = string.Format("{0}{1} is currently unavailable</b>{2}", colourAlert, actor.actorName, colourEnd);
+                            string detailsBottom = string.Format("<b>Their network of contacts will become available once they are {0}back in touch</b>{1}", colourNeutral, colourEnd);
+                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -3995,9 +4062,10 @@ public class ActorManager : MonoBehaviour
                             if (isPlayer == true)
                             {
                                 string text = string.Format("{0}, {1}, is LYING LOW", actor.actorName, actor.arc.name);
-                                string topText = string.Format("{0}{1} is deliberately keeping a <b>Low Profile</b>{2}", colourAlert, actor.actorName, colourEnd);
-                                string bottomText = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
-                                GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                string topText = "Out of Contact";
+                                string detailsTop = string.Format("{0}{1} is deliberately keeping a <b>Low Profile</b>{2}", colourAlert, actor.actorName, colourEnd);
+                                string detailsBottom = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
+                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                             }
                         }
                     }
@@ -4013,7 +4081,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActorsHuman()
     {
-        string text, topText, bottomText;
+        string text, topText, detailsTop, detailsBottom;
         //no checks are made if AI player is not Active
         if (GameManager.instance.aiRebelScript.status == ActorStatus.Active)
         {
@@ -4106,21 +4174,22 @@ public class ActorManager : MonoBehaviour
                                         if (condition != null)
                                         {
                                             text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            topText = "Condition present";
                                             switch (condition.type.level)
                                             {
-                                                case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
-                                                case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                default: topText = "Unknown"; break;
+                                                case 0: detailsTop = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
+                                                case 1: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                case 2: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                default: detailsTop = "Unknown"; break;
                                             }
                                             switch (condition.bottomTextTypeActor.level)
                                             {
-                                                case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
-                                                case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
-                                                case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
-                                                default: bottomText = "Unknown"; break;
+                                                case 0: detailsBottom = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                case 1: detailsBottom = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
+                                                default: detailsBottom = "Unknown"; break;
                                             }
-                                            GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                                         }
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
@@ -4144,7 +4213,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActorsAI(bool isPlayer)
     {
-        string text, topText, bottomText;
+        string text, topText, detailsTop, detailsBottom;
         bool isProceed = true;
         bool isSecrets = false;
         //Player active?
@@ -4235,21 +4304,22 @@ public class ActorManager : MonoBehaviour
                                             if (condition != null)
                                             {
                                                 text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                                topText = "Condition present";
                                                 switch (condition.type.level)
                                                 {
-                                                    case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
-                                                    case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                    case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                    default: topText = "Unknown"; break;
+                                                    case 0: detailsTop = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
+                                                    case 1: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                    case 2: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                    default: detailsTop = "Unknown"; break;
                                                 }
                                                 switch (condition.bottomTextTypeActor.level)
                                                 {
-                                                    case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
-                                                    case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
-                                                    case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
-                                                    default: bottomText = "Unknown"; break;
+                                                    case 0: detailsBottom = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                    case 1: detailsBottom = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                    case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
+                                                    default: detailsBottom = "Unknown"; break;
                                                 }
-                                                GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                                             }
                                             else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                         }
@@ -4276,7 +4346,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveAuthorityActorsHuman()
     {
-        string msgText, itemText, reason, warning, text, topText, bottomText;
+        string msgText, itemText, reason, warning, text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
@@ -4358,21 +4428,22 @@ public class ActorManager : MonoBehaviour
                                         if (condition != null)
                                         {
                                             text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            topText = "Condition present";
                                             switch (condition.type.level)
                                             {
-                                                case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
-                                                case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                default: topText = "Unknown"; break;
+                                                case 0: detailsTop = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
+                                                case 1: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                case 2: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                default: detailsTop = "Unknown"; break;
                                             }
                                             switch (condition.bottomTextTypeActor.level)
                                             {
-                                                case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
-                                                case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
-                                                case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
-                                                default: bottomText = "Unknown"; break;
+                                                case 0: detailsBottom = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                case 1: detailsBottom = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
+                                                default: detailsBottom = "Unknown"; break;
                                             }
-                                            GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                                         }
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
@@ -4392,7 +4463,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveAuthorityActorsAI(bool isPlayer)
     {
-        string text, topText, bottomText;
+        string text, topText, detailsTop, detailsBottom;
         bool isSecrets = false;
         bool isProceed = true;
         //Player active?
@@ -4479,21 +4550,22 @@ public class ActorManager : MonoBehaviour
                                             if (condition != null)
                                             {
                                                 text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                                topText = "Condition present";
                                                 switch (condition.type.level)
                                                 {
-                                                    case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
-                                                    case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                    case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
-                                                    default: topText = "Unknown"; break;
+                                                    case 0: detailsTop = string.Format("{0}{1} {2}{3}", colourAlert, actor.actorName, condition.topText, colourEnd); break;
+                                                    case 1: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                    case 2: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, condition.topText, colourEnd); break;
+                                                    default: detailsTop = "Unknown"; break;
                                                 }
                                                 switch (condition.bottomTextTypeActor.level)
                                                 {
-                                                    case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
-                                                    case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
-                                                    case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
-                                                    default: bottomText = "Unknown"; break;
+                                                    case 0: detailsBottom = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextActor, colourEnd); break;
+                                                    case 1: detailsBottom = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextActor, colourEnd); break;
+                                                    case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
+                                                    default: detailsBottom = "Unknown"; break;
                                                 }
-                                                GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, actor.arc.sprite, actor.actorID);
+                                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                                             }
                                             else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                         }
@@ -5036,7 +5108,7 @@ public class ActorManager : MonoBehaviour
     {
         int rnd;
         int playerID = GameManager.instance.playerScript.actorID;
-        string text, topText, bottomText;
+        string text, topText, detailsTop, detailsBottom;
         string playerName = GameManager.instance.playerScript.PlayerName;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //doom timer
@@ -5056,15 +5128,15 @@ public class ActorManager : MonoBehaviour
             {
                 if (playerSide.level == globalResistance.level)
                 {
-                    topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
-                    bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
+                    detailsTop = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
+                    detailsBottom = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
                 }
                 else
                 {
-                    topText = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
-                    bottomText = string.Format("{0}You win{1}", colourBad, colourEnd);
+                    detailsTop = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
+                    detailsBottom = string.Format("{0}You win{1}", colourBad, colourEnd);
                 }
-                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, topText, bottomText);
+                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
             }
         }
         //check for Conditions -> both sides
@@ -5077,9 +5149,10 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.instance.playerScript.inactiveStatus != ActorInactive.None)
                 {
                     text = "HQ Support Unavailable";
-                    topText = string.Format("{0}<b>You are out of contact</b>{1}", colourAlert, colourEnd);
-                    bottomText = string.Format("<b>HQ will consider providing support once you are {0}back in contact</b>{1}", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, playerID);
+                    topText = "Support Unavailable";
+                    detailsTop = string.Format("{0}<b>You are out of contact</b>{1}", colourAlert, colourEnd);
+                    detailsBottom = string.Format("<b>HQ will consider providing support once you are {0}back in contact</b>{1}", colourNeutral, colourEnd);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, playerID);
                 }
                 switch (GameManager.instance.playerScript.inactiveStatus)
                 {
@@ -5147,9 +5220,10 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.instance.playerScript.inactiveStatus == ActorInactive.LieLow)
                 {
                     text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
-                    topText = "You are deliberately keeping a <b>Low Profile</b>";
-                    bottomText = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
-                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, playerID);
+                    topText = "Lying Low";
+                    detailsTop = "You are deliberately keeping a <b>Low Profile</b>";
+                    detailsBottom = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, playerID);
                 }
                 break;
             case ActorStatus.Active:
@@ -5200,9 +5274,6 @@ public class ActorManager : MonoBehaviour
                     {
                         //Player has IMAGED condition. Random chance of them being picked up by facial recognition software
                         rnd = Random.Range(0, 100);
-                        text = "Unknown";
-                        string detailsBottom = "Unknown";
-                        string detailsTop = "Unknown";
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                         if (rnd < playerRecognisedChance)
                         {
@@ -5251,21 +5322,22 @@ public class ActorManager : MonoBehaviour
                 if (condition != null)
                 {
                     text = string.Format("{0}, PLAYER, has the {1} condition", playerName, condition.name);
+                    topText = "Condition present";
                     switch (condition.type.level)
                     {
-                        case 0: topText = string.Format("{0}{1} {2}{3}", colourAlert, playerName, condition.topText, colourEnd); break;
-                        case 1: topText = string.Format("{0}{1} {2}{3}", colourNeutral, playerName, condition.topText, colourEnd); break;
-                        case 2: topText = string.Format("{0}{1} {2}{3}", colourNeutral, playerName, condition.topText, colourEnd); break;
-                        default: topText = "Unknown"; break;
+                        case 0: detailsTop = string.Format("{0}{1} {2}{3}", colourAlert, playerName, condition.topText, colourEnd); break;
+                        case 1: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, playerName, condition.topText, colourEnd); break;
+                        case 2: detailsTop = string.Format("{0}{1} {2}{3}", colourNeutral, playerName, condition.topText, colourEnd); break;
+                        default: detailsTop = "Unknown"; break;
                     }
                     switch (condition.bottomTextTypePlayer.level)
                     {
-                        case 0: bottomText = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextPlayer, colourEnd); break;
-                        case 1: bottomText = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextPlayer, colourEnd); break;
-                        case 2: bottomText = string.Format("{0}{1}{2}", colourGood, condition.bottomTextPlayer, colourEnd); break;
-                        default: bottomText = "Unknown"; break;
+                        case 0: detailsBottom = string.Format("{0}<b>{1}</b>{2}", colourBad, condition.bottomTextPlayer, colourEnd); break;
+                        case 1: detailsBottom = string.Format("{0}{1}{2}", colourNeutral, condition.bottomTextPlayer, colourEnd); break;
+                        case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextPlayer, colourEnd); break;
+                        default: detailsBottom = "Unknown"; break;
                     }
-                    GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
                 }
                 else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName,  GameManager.instance.playerScript.actorID); }
             }
@@ -5279,7 +5351,7 @@ public class ActorManager : MonoBehaviour
     private void CheckPlayerResistanceAI(bool isPlayer)
     {
         int rnd;
-        string text, topText, bottomText;
+        string text, topText, detailsTop, detailsBottom;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         int playerID = GameManager.instance.playerScript.actorID;
         string playerName = GameManager.instance.playerScript.PlayerName;
@@ -5306,15 +5378,15 @@ public class ActorManager : MonoBehaviour
             {
                 if (isPlayer == true)
                 {
-                    topText = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
-                    bottomText = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
+                    detailsTop = string.Format("You have DIED from the {0}gene tailored virus{1} within your body", colourNeutral, colourEnd);
+                    detailsBottom = string.Format("{0}Authority wins{1}", colourBad, colourEnd);
                 }
                 else
                 {
-                    topText = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
-                    bottomText = string.Format("{0}You win{1}", colourBad, colourEnd);
+                    detailsTop = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
+                    detailsBottom = string.Format("{0}You win{1}", colourBad, colourEnd);
                 }
-                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, topText, bottomText);
+                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
             }
         }
         //
@@ -5374,9 +5446,10 @@ public class ActorManager : MonoBehaviour
                     if (isPlayer == true)
                     {
                         text = string.Format("{0}, PLAYER, is LYING LOW", playerName);
-                        topText = "You are deliberately keeping a <b>Low Profile</b>";
-                        bottomText = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
-                        GameManager.instance.messageScript.ActiveEffect(text, topText, bottomText, GameManager.instance.playerScript.sprite, playerID);
+                        topText = "Lying Low";
+                        detailsTop = "You are deliberately keeping a <b>Low Profile</b>";
+                        detailsBottom = string.Format("{0}<b>You can't take ANY actions while Lying Low</b>{1}", colourAlert, colourEnd);
+                        GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, playerID);
                     }
                 }
                 break;
@@ -5426,9 +5499,6 @@ public class ActorManager : MonoBehaviour
                     {
                         //Player has IMAGED condition. Random chance of them being picked up by facial recognition software
                         rnd = Random.Range(0, 100);
-                        text = "Unknown";
-                        string detailsBottom = "Unknown";
-                        string detailsTop = "Unknown";
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                         if (rnd < playerRecognisedChance)
                         {

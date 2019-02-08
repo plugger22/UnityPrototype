@@ -3036,7 +3036,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message ActiveEffect(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null)
+    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null)
     {
         Debug.Assert(sprite != null, "Invalid spirte (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -3052,7 +3052,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = "";
+            data.topText = topText;
             data.bottomText = GameManager.instance.itemDataScript.GetActiveEffectDetails(detailsTop, detailsBottom, actorID, node);
             data.priority = ItemPriority.Low;
             data.sprite = sprite;

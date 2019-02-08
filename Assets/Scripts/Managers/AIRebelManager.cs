@@ -1659,7 +1659,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
                     if (actor != null)
-                    { actor.AddCondition(conditionStressed, "Debug"); }
+                    { actor.AddCondition(conditionStressed, "Debug Test Action"); }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
                 }
             }
