@@ -176,7 +176,10 @@ public class FactionManager : MonoBehaviour
         { isProceed = false; }
         //ignore if player is inactive
         if (GameManager.instance.playerScript.status == ActorStatus.Inactive)
-        { isProceed = false; }
+        {
+            isProceed = false;
+            Debug.LogFormat("[Fac] FactionManager.cs -> CheckFactionRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
+        }
         if (isProceed == true)
         {
             int side = GameManager.instance.sideScript.PlayerSide.level;
