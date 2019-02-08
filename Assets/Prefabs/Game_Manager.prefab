@@ -1771,7 +1771,9 @@ MonoBehaviour:
   playerBadResignChance: 5
   playerRecognisedChance: 20
   playerDoomTimerValue: 5
-  stressLeaveRenownCost: 2
+  stressLeaveRenownCostAuthority: 2
+  stressLeaveRenownCostResistance: 2
+  stressLeaveHQApproval: 1
   lieLowCooldownPeriod: 5
   lieLowTimer: 0
   doomTimer: 0
@@ -2015,13 +2017,13 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 29517
+  seed: 0
   isAuthority: 0
-  isBothAI: 1
+  isBothAI: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 10
+  autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

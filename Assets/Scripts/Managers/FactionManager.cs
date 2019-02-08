@@ -98,7 +98,7 @@ public class FactionManager : MonoBehaviour
         //set AI resource levels
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);
         //approval levels
-        ApprovalAuthority = Random.Range(1, 5);
+        ApprovalAuthority = Random.Range(1, 10);
         ApprovalResistance = Random.Range(1, 10);
         Debug.LogFormat("FactionManager: currentResistanceFaction \"{0}\", currentAuthorityFaction \"{1}\"{2}",
             factionResistance, factionAuthority, "\n");
@@ -166,13 +166,16 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction approval
+    /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction approval. No support if player inactive.
     /// </summary>
     private void CheckFactionRenownSupport()
     {
         bool isProceed = true;
         //ignore if autorun with both sides AI
         if (GameManager.instance.turnScript.CheckIsAutoRun() == true && GameManager.instance.isBothAI == true)
+        { isProceed = false; }
+        //ignore if player is inactive
+        if (GameManager.instance.playerScript.status == ActorStatus.Inactive)
         { isProceed = false; }
         if (isProceed == true)
         {

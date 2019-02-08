@@ -75,8 +75,14 @@ public class ActorManager : MonoBehaviour
     [Range(0, 50)] public int playerRecognisedChance = 20;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
     [Range(1, 10)] public int playerDoomTimerValue = 5;
+
+    [Header("Stress Leave")]
     [Tooltip("Renown cost for Authority player or actor to take stress leave")]
-    [Range(0, 5)] public int stressLeaveRenownCost = 2;
+    [Range(0, 5)] public int stressLeaveRenownCostAuthority = 2;
+    [Tooltip("Renown cost for Resistance player or actor to take stress leave")]
+    [Range(0, 5)] public int stressLeaveRenownCostResistance = 2;
+    [Tooltip("Stress leave can only be taken with the approval of HQ (default true). Human player side only (AI ignores)")]
+    public bool stressLeaveHQApproval = true;
 
     [Header("Lie Low")]
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
@@ -1516,7 +1522,7 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.CheckConditionPresent(conditionStressed) == true)
                         {
-                            if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCost)
+                            if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostAuthority)
                             {
                                 //
                                 // - - - Stress Leave - - -
@@ -1524,7 +1530,7 @@ public class ActorManager : MonoBehaviour
                                 ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
                                 leaveActionDetails.side = playerSide;
                                 leaveActionDetails.actorDataID = actor.actorID;
-                                leaveActionDetails.renownCost = stressLeaveRenownCost;
+                                leaveActionDetails.renownCost = stressLeaveRenownCostAuthority;
                                 tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
                                 EventButtonDetails leaveDetails = new EventButtonDetails()
                                 {
@@ -1539,7 +1545,7 @@ public class ActorManager : MonoBehaviour
                                 tempList.Add(leaveDetails);
                             }
                             else
-                            { infoBuilder.AppendFormat("Stress Leave requires {0}{1}{2} Renown", colourNeutral, stressLeaveRenownCost, colourEnd); }
+                            { infoBuilder.AppendFormat("Stress Leave requires {0}{1}{2} Renown", colourNeutral, stressLeaveRenownCostAuthority, colourEnd); }
                         }
                         else
                         { infoBuilder.AppendFormat("Need to be {0}Stressed{1} in order to take Leave", colourNeutral, colourEnd);  }
@@ -1825,7 +1831,56 @@ public class ActorManager : MonoBehaviour
                         //actor invisiblity at max
                         infoBuilder.AppendFormat("{0}Can't Lie Low{1}{2}{3}(Invisibility at Max){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
                     }
+                    //
+                    // - - - Stress Leave - - -
+                    //
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
+                    {
+                        //must be stressed and have enough renown
+                        if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostResistance )
+                        {
+                            //can't take Stress Leave if a Surveillance Crackdown is in place
+                            if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
+                            {
+                                if (stressLeaveHQApproval == true)
+                                {
+                                    ModalActionDetails leaveActionDetails = new ModalActionDetails();
+                                    leaveActionDetails.side = playerSide;
+                                    leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                                    leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                    tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
+                                    EventButtonDetails leaveDetails = new EventButtonDetails()
+                                    {
+                                        buttonTitle = "Stress Leave",
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Player Action", colourEnd),
+                                        buttonTooltipMain = "Recover from your Stress",
+                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                        //use a Lambda to pass arguments to the action
+                                        action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                                    };
+                                    //add Activate button to list
+                                    tempList.Add(leaveDetails);
+                                }
+                                else
+                                {
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("{0}HQ has banned all Stress Leave{1}", colourAlert, colourEnd);
+                                }
+                            }
+                            else
+                            {
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                infoBuilder.AppendFormat("{0}Stress Leave not possible during a Surveillance Crackdown{1}", colourAlert, colourEnd);
+                            }
+                        }
+                        else
+                        {
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4})", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance, colourEnd);
+                        }
+                    }
                     break;
+
                 case ActorStatus.Inactive:
                     //
                     // - - - Activate - - -
@@ -1894,12 +1949,12 @@ public class ActorManager : MonoBehaviour
             if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, GameManager.instance.sideScript.PlayerSide) == true)
             {
                 //Player has enough renown
-                if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCost)
+                if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostAuthority)
                 {
                     ModalActionDetails leaveActionDetails = new ModalActionDetails();
                     leaveActionDetails.side = playerSide;
                     leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                    leaveActionDetails.renownCost = stressLeaveRenownCost;
+                    leaveActionDetails.renownCost = stressLeaveRenownCostAuthority;
                     tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
                     EventButtonDetails leaveDetails = new EventButtonDetails()
                     {
@@ -1913,7 +1968,7 @@ public class ActorManager : MonoBehaviour
                     //add Activate button to list
                     tempList.Add(leaveDetails);
                 }
-                else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Renown{2}", colourAlert, stressLeaveRenownCost, colourEnd); }
+                else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Renown{2}", colourAlert, stressLeaveRenownCostAuthority, colourEnd); }
             }
             else
             { infoBuilder.AppendFormat("{0}No Leave possible as not Stressed{1}", colourAlert, colourEnd); }

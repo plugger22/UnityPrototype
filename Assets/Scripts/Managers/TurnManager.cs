@@ -651,6 +651,7 @@ public class TurnManager : MonoBehaviour
                     case AuthoritySecurityState.SurveillanceCrackdown:
                         builder.AppendFormat("{0}Surveillance Crackdown in place{1}", colourBad, colourEnd);
                         builder.AppendFormat("{0}{1}Lying Low isn't possible{2}", "\n", colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}Stress Leave isn't possible{2}", "\n", colourNormal, colourEnd);
                         builder.AppendFormat("{0}{1}Chance of a Nervous Breakdown doubled{2}", "\n", colourAlert, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);

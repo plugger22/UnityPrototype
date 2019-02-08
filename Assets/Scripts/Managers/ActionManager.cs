@@ -1370,7 +1370,7 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process Stress Leave for Human Authority Player
+    /// Process Stress Leave for Human Player (both sides)
     /// </summary>
     /// <param name="details"></param>
     private void ProcessLeavePlayerAction(ModalActionDetails modalDetails)
@@ -1393,6 +1393,7 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.playerScript.Renown = renown;
             //change alpha of actor to indicate inactive status
             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(renown);
             //message (public)
             string playerName = GameManager.instance.playerScript.GetPlayerName(modalDetails.side);
             string text = string.Format("{0}, Player, has gone on Stress Leave", playerName);
