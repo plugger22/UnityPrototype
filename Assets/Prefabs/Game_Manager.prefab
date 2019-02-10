@@ -190,7 +190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionsBase: 2
   deleteOlderThan: 3
-  survivalMove: 50
   lieLowThresholdPlayer: 2
   lieLowThresholdActor: 1
   lieLowEmergency: 75
@@ -852,6 +851,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 10b7361672bfdbe41a3985a37d3e4587, type: 2}
   - {fileID: 11400000, guid: 99ec0c72c1b29a041b3d8a8dc0f4923b, type: 2}
   - {fileID: 11400000, guid: 83135a0a144c8484e9cd286353bb1239, type: 2}
+  arrayOfRebelLeaders:
+  - {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
   arrayOfScenarios:
   - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   arrayOfConditions:
@@ -1571,7 +1572,7 @@ MonoBehaviour:
   stressTurnAuthority: -1
   stressWhoAuthority: 999
   stressTurnResistance: 0
-  stressWhoResistance: 999
+  stressWhoResistance: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1

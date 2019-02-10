@@ -857,7 +857,7 @@ public class TurnManager : MonoBehaviour
         {
             topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
             //win state achieved
-            switch (GameManager.instance.scenarioScript.scenario.mission.side.level)
+            switch (GameManager.instance.scenarioScript.scenario.missionResistance.side.level)
             {
                 case 1:
                     //Authority mission, timer expired so Resistance wins
@@ -870,7 +870,7 @@ public class TurnManager : MonoBehaviour
                     SetWinState(WinState.Authority, WinReason.MissionTimerMin, topText, bottomText);
                     break;
                 default:
-                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.scenarioScript.scenario.mission.side.name);
+                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.scenarioScript.scenario.missionResistance.side.name);
                     break;
             }
         }

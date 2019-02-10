@@ -109,13 +109,13 @@ public class SideManager : MonoBehaviour
                     PlayerSide = globalAuthority;
                     //reverts to Human authority player
                     GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
-                    GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost"); //NOTE: should be SO name of AI rebel player
+                    GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.scenarioScript.scenario.leaderResistance.leaderName); 
                 }
                 else
                 {
                     PlayerSide = globalResistance;
                     //reverts to Human resistance player
-                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
+                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.scenarioScript.scenario.leaderAuthority.name);
                     GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
                 }
                 Debug.Log("[Start] Player set to AI for both sides");
@@ -141,7 +141,7 @@ public class SideManager : MonoBehaviour
                 authorityCurrent = SideState.AI;
                 //names
                 GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.cityScript.GetMayorName());
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.scenarioScript.scenario.leaderAuthority.name);
             }
             else
             {
@@ -153,7 +153,7 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.AI;
                 authorityCurrent = SideState.Human;
                 //names
-                GameManager.instance.playerScript.SetPlayerNameResistance("The Ghost"); //NOTE: should be SO name of AI rebel player
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.scenarioScript.scenario.leaderResistance.leaderName); 
                 GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
             }
         }

@@ -200,6 +200,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<Challenge>(GameManager.instance.loadScript.arrayOfChallenges);
         //Nemesis
         ValidateSOGeneric<Nemesis>(GameManager.instance.loadScript.arrayOfNemesis);
+        //Rebel Leaders
+        ValidateSOGeneric<RebelLeader>(GameManager.instance.loadScript.arrayOfRebelLeaders);
         //Scenario
         ValidateSOGeneric<Scenario>(GameManager.instance.loadScript.arrayOfScenarios);
         //NameSet

@@ -8,19 +8,34 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / Scenario")]
 public class Scenario : ScriptableObject
 {
-    [Tooltip("In-game descriptor")]
-    [TextArea] public string descriptor;
+    [Header("In-game descriptors")]
+    [TextArea] public string descriptorResistance;
+    [TextArea] public string descriptorAuthority;
 
-    [Tooltip("City where the scenario will be")]
+    [Header("Side")]
+    [Tooltip("Which side can it be played from? Curently indicative only (not used in-game). Authority / Resistance / Both")]
+    public GlobalSide side;
+
+    [Header("City")]
     public City city;
 
-    [Tooltip("Target and objectives for the scenario")]
-    public Mission mission;
+    [Header("AI Opponents")]
+    [Tooltip("RebelLeader SO")]
+    public RebelLeader leaderResistance;
+    [Tooltip("Mayor SO")]
+    public Mayor leaderAuthority;
 
+    [Header("Mission")]
+    [Tooltip("Resistance Target and objectives for the scenario")]
+    public Mission missionResistance;
+    public Mission missionAuthority;
+
+    [Header("Challenge")]
     [Tooltip("Challenge (difficulty) of the scenario")]
-    public Challenge challenge;
+    public Challenge challengeResistance;
+    public Challenge challengeAuthority;
 
-    [Tooltip("Scenerio Timer -> how many turns")]
+    [Header("Number of Turns")]
     [Range(20, 100)] public int timer = 100;
 
 
@@ -28,8 +43,11 @@ public class Scenario : ScriptableObject
     public void OnEnable()
     {
         Debug.Assert(city != null, "Invalid city (Null) for Scenario");
-        Debug.Assert(mission != null, "Invalid mission (Null) for Scenario");
-        Debug.Assert(challenge != null, "Invalid challenge (Null) for Scenario");
+        Debug.Assert(missionResistance != null, "Invalid mission (Null) for Scenario");
+        Debug.Assert(challengeResistance != null, "Invalid challenge (Null) for Scenario");
+        Debug.Assert(leaderResistance != null, "Invalid leaderResistance (Null) for Scenario");
+        Debug.Assert(leaderAuthority != null, "Invalid leaderAuthority (Null) for Scenario");
+        Debug.Assert(side != null, "Invalid side (Null) for Scenario");
     }
 
 

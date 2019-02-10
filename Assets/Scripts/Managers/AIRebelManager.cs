@@ -34,10 +34,6 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Delete sighting reports (Nemesis, Erasure teams, etc) older than ('>') this number of turns ago")]
     [Range(1, 5)] public int deleteOlderThan = 3;
 
-    [Header("Survival Situation")]
-    [Tooltip("The % chance of AI player moving away when they are at a Bad Node")]
-    [Range(0, 100)] public int survivalMove = 50;
-
     [Header("Lying Low")]
     [Tooltip("The threshold of invisibility below which (less than) there is a chance of the AI player selecting a Lie Low task")]
     [Range(1,3)] public int lieLowThresholdPlayer = 2;
@@ -80,8 +76,18 @@ public class AIRebelManager : MonoBehaviour
     private bool isPlayerStressed;                        //true only if player is stressed
     private int stressedActorID;                          //player or actorID that is chosen to have go on stress leave (player has priority)
 
+    //rebel Player profile
+    private int survivalMove;                           //The % chance of AI player moving away when they are at a Bad Node
+    private Priority priorityStressLeavePlayer;
+    private Priority priorityStressLeaveActor;
+    private Priority priorityMovePlayer;
+    private Priority priorityIdlePlayer;
+        
+
     //fast access
-    private string playerName;                          
+    private string playerName;
+    private string playerTag;                           //nickname
+    private string playerBackground;
     private GlobalSide globalResistance;
     private int numOfNodes = -1;
     private int playerID = -1;
@@ -139,11 +145,55 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
-        //player (human / AI)
-        playerName = GameManager.instance.playerScript.PlayerName;
+        //player (human / AI revert to human)
+        playerName = GameManager.instance.playerScript.GetPlayerNameResistance();
+        playerTag = GameManager.instance.scenarioScript.scenario.leaderResistance.tag;
+        playerBackground = GameManager.instance.scenarioScript.scenario.descriptorResistance;
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
         { isPlayer = true; }
+        //Rebel leader
+        survivalMove = GameManager.instance.scenarioScript.scenario.leaderResistance.moveChance;
+        priorityStressLeavePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
+        priorityStressLeaveActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeaveActor);
+        priorityMovePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.movePriority);
+        priorityIdlePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.idlePriority);
+        Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
+        Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
+        Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
+        Debug.Assert(priorityIdlePlayer != Priority.None, "Invalid priorityIdlePlayer (None)");
+    }
+
+    /// <summary>
+    /// returns a Priority enum from a GlobalChance SO enum. Returns priority.None if a problem
+    /// NOTE: both GlobalChance High and Critical return Priorty.High
+    /// </summary>
+    /// <param name="chance"></param>
+    /// <returns></returns>
+    private Priority GetPriority(GlobalChance chance)
+    {
+        Priority priority = Priority.None;
+        if (chance != null)
+        {
+            switch(chance.level)
+            {
+                case 3:
+                case 2:
+                    priority = Priority.High;
+                    break;
+                case 1:
+                    priority = Priority.Medium;
+                    break;
+                case 0:
+                    priority = Priority.Low;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised chance.level {0}", chance.level);
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid globalChance (Null)"); }
+        return priority;
     }
 
     /// <summary>

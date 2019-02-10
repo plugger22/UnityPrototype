@@ -34,6 +34,7 @@ public class LoadManager : MonoBehaviour
     public Damage[] arrayOfDamages;
     public Challenge[] arrayOfChallenges;
     public Nemesis[] arrayOfNemesis;
+    public RebelLeader[] arrayOfRebelLeaders;
     public Scenario[] arrayOfScenarios;
 
     [Header("InitialiseStart -> Second Half")]
@@ -273,6 +274,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNemesis has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Nemesis present"); }
+        //
+        // - - - Rebel Leaders (not stored in a collection)
+        //
+        numArray = arrayOfRebelLeaders.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
         //
         // - - - Scenario (not stored in a collection)
         //

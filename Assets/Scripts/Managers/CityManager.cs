@@ -64,7 +64,7 @@ public class CityManager : MonoBehaviour
     /// <summary>
     /// need to do BEFORE levelManager.cs -> Initialise. Run from ScenarioManager.InitialiseEarly
     /// </summary>
-    public void InitialiseEarly()
+    public void InitialiseEarly(Mayor mayor)
     {
         //get random current city -> Placeholder
         // need to do this once at very start of a new game (set up all cities, set up data in the city SO's)
@@ -78,7 +78,7 @@ public class CityManager : MonoBehaviour
         loyaltyMaxTimer = 0;
 
         //Placeholder -> do early so factionManager.cs can have data in start sequence
-        city.mayor = GameManager.instance.dataScript.GetRandomMayor();
+        city.mayor = mayor;
         if (city.mayor != null)
         {
             city.faction = city.mayor.faction;

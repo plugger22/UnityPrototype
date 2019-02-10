@@ -358,12 +358,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "GUIManager";
         listOfStartMethods.Add(startMethod);
 
-        /*//City Manager InitialiseEarly -> before levelScript
-        startMethod.handler = GameManager.instance.cityScript.InitialiseEarly;
-        startMethod.className = "CityManager";
-        listOfStartMethods.Add(startMethod);*/
-
-        //Scenario Manager InitialiseEarly -> before levelScript
+        //Scenario Manager InitialiseEarly -> before level & Side Managers
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
         listOfStartMethods.Add(startMethod);
@@ -405,11 +400,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfStartMethods.Add(startMethod);
-
-        /*//City Manager -> InitialiseLate -> after levelScript.Initialise
-        startMethod.handler = GameManager.instance.cityScript.InitialiseLate;
-        startMethod.className = "CityManager";
-        listOfStartMethods.Add(startMethod);*/
 
         //Dijkstra Manager -> Initialise -> after dataScript & LevelScript
         startMethod.handler = GameManager.instance.dijkstraScript.Initialise;
