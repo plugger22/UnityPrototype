@@ -1351,6 +1351,14 @@ public class AIRebelManager : MonoBehaviour
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTaskFinal: {0} Potential Task{1} available{2}", count, count != 1 ? "s" : "", "\n");
             if (count > 0)
             {
+
+                /*//debug
+                for (int i = 0; i < count; i++)
+                {
+                    AITask tempTask = listOfTasksPotential[i];
+                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, data0 {2}, data1 {3}{4}", tempTask.type, tempTask.priority, tempTask.data0, tempTask.data1, "\n");
+                }*/
+
                 //select a task from listOfPotential Tasks
                 if (count > 1)
                 { task = listOfTasksPotential[Random.Range(0, count)]; }
