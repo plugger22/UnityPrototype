@@ -63,7 +63,8 @@ public class TraitManager : MonoBehaviour
                     GlobalType traitType = trait.Value.typeOfTrait;
                     if ( traitType != null)
                     {
-                        //traitType is from POV of Resistance
+
+                        /*//traitType is from POV of Resistance
                         if (GameManager.instance.sideScript.PlayerSide.level == 2)
                         {
                             //Resistance Side
@@ -101,7 +102,25 @@ public class TraitManager : MonoBehaviour
                                     Debug.LogErrorFormat("Invalid trait.traitType \"{0}\" for trait \"{1}\"", traitType.name, trait.Value.name);
                                     break;
                             }
+                        }*/
+
+                        //traitType is as is, NOT from the POV of anybody. If it says bad, then it's bad regardless
+                        switch (traitType.name)
+                        {
+                            case "Good":
+                                trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourGood, trait.Value.tag, colourEnd);
+                                break;
+                            case "Neutral":
+                                trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourNeutral, trait.Value.tag, colourEnd);
+                                break;
+                            case "Bad":
+                                trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourBad, trait.Value.tag, colourEnd);
+                                break;
+                            default:
+                                Debug.LogErrorFormat("Invalid trait.traitType \"{0}\" for trait \"{1}\"", traitType.name, trait.Value.name);
+                                break;
                         }
+
                     }
                     else { Debug.LogErrorFormat("Invalid typeOfTrait for trait \"{0}\"", trait.Value.name); }
                 }

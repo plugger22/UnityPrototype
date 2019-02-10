@@ -1237,7 +1237,7 @@ public class AIRebelManager : MonoBehaviour
                         task.data0 = nodeMoveTo.nodeID;
                         task.data1 = conn.connID;
                         task.type = AITaskType.Move;
-                        task.priority = Priority.Medium;
+                        task.priority = priorityMovePlayer;
                         //add task to list of potential tasks
                         AddWeightedTask(task);
                         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: targetNodeID {0}, move to {1}{2}", targetNodeID, nodeMoveTo.nodeID, "\n");
@@ -1270,10 +1270,10 @@ public class AIRebelManager : MonoBehaviour
             AITask task = new AITask();
             task.data0 = stressedActorID;
             task.type = AITaskType.StressLeave;
-            task.priority = Priority.Medium;
+            task.priority = priorityStressLeavePlayer;
             //medium priority for player, low for actor
             if (stressedActorID != playerID)
-            { task.priority = Priority.Low; }
+            { task.priority = priorityStressLeaveActor; }
             //add task to list of potential tasks
             AddWeightedTask(task);
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPeopleTask: stressedActorID {0}, Stress Leave{1}", stressedActorID, "\n");
@@ -1291,7 +1291,7 @@ public class AIRebelManager : MonoBehaviour
         task.type = AITaskType.Idle;
         task.data0 = GameManager.instance.nodeScript.nodePlayer;
         task.data1 = playerID;
-        task.priority = Priority.Low;
+        task.priority = priorityIdlePlayer;
         //add task to list of potential tasks
         AddWeightedTask(task);
     }
@@ -1402,12 +1402,12 @@ public class AIRebelManager : MonoBehaviour
             if (count > 0)
             {
 
-                /*//debug
+                //debug
                 for (int i = 0; i < count; i++)
                 {
                     AITask tempTask = listOfTasksPotential[i];
                     Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, data0 {2}, data1 {3}{4}", tempTask.type, tempTask.priority, tempTask.data0, tempTask.data1, "\n");
-                }*/
+                }
 
                 //select a task from listOfPotential Tasks
                 if (count > 1)
@@ -1632,7 +1632,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessIdleTask: \"{0}\", id {1} is IDLING at node ID {2}{3}", playerName, task.data1, task.data0, "\n");
         Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessIdleTask: IDLING{0}", "\n");
         //action
-        UseAction("Lie Low (Player)");
+        UseAction("Idle (Player)");
     }
 
     /// <summary>
