@@ -289,17 +289,19 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Authority Actor / Player takes stress leave (actor Null for Player)
+    /// Actor / Player (both sides) takes stress leave (actor Null for Player)
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>
-    public string GetActorStressLeaveDetails(Actor actor = null)
+    public string GetActorStressLeaveDetails(GlobalSide side, Actor actor = null)
     {
         StringBuilder builder = new StringBuilder();
         if (actor == null)
         {
             //Player
-            builder.AppendFormat("The {0}<b>Mayor{1}, {2},</b> has left the office for a short while", colourAlert, colourEnd, GameManager.instance.playerScript.GetPlayerNameAuthority());
+            if (side.level == globalAuthority.level)
+            { builder.AppendFormat("The {0}<b>Mayor{1}, {2},</b> has left the office for a short while", colourAlert, colourEnd, GameManager.instance.playerScript.GetPlayerNameAuthority()); }
+            else { builder.AppendFormat("The {0}<b>Player{1}, {2},</b> has left for a short while", colourAlert, colourEnd, GameManager.instance.playerScript.GetPlayerNameResistance()); }
             builder.AppendFormat("{0}{1}When they return they will be {2}<b>Stress Free</b>{3}", "\n", "\n", colourGood, colourEnd);
         }
         else

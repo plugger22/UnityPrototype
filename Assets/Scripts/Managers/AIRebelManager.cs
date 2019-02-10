@@ -56,6 +56,10 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("All purpose % chance of an AI actor lying low provided it meets the criteria. Checked in ProcessSurvivalTask and only if nothing applies to the AI Player, eg. actors checked last")]
     [Range(0, 100)] public int lieLowChanceActor = 60;
 
+    [Header("Stress Leave")]
+    [Tooltip("Cost in resources/renown for the player or actor to take Stress Leave")]
+    [Range(0, 10)] public int stressLeaveCost = 2;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -73,7 +77,8 @@ public class AIRebelManager : MonoBehaviour
     private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
     private bool isPlayer;                              //if true the Resistance side is also the human player side (it's AI due to an autorun)
     private bool isWounded;
-    private bool isStressed;
+    private bool isPlayerStressed;                        //true only if player is stressed
+    private int stressedActorID;                          //player or actorID that is chosen to have go on stress leave (player has priority)
 
     //fast access
     private string playerName;                          
@@ -83,6 +88,7 @@ public class AIRebelManager : MonoBehaviour
     private int priorityHigh = -1;
     private int priorityMedium = -1;
     private int priorityLow = -1;
+    private int maxStatValue = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     //conditions
     private Condition conditionStressed;
@@ -123,6 +129,7 @@ public class AIRebelManager : MonoBehaviour
         priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
         priorityLow = GameManager.instance.aiScript.priorityLowWeight;
         turnForStress = GameManager.instance.testScript.stressTurnResistance;
+        maxStatValue = GameManager.instance.actorScript.maxStatValue;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -131,6 +138,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(priorityLow > -1, "Invalid priorityLow (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+        Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         //player (human / AI)
         playerName = GameManager.instance.playerScript.PlayerName;
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
@@ -154,6 +162,7 @@ public class AIRebelManager : MonoBehaviour
             //Info gathering
             ProcessSightingData();
             ProcessTargetData();
+            ProcessPeopleData();
             //restore back to original state after any changes & prior to any moves, tasks, etc. Calcs will still use updated sighting data dijkstra (weighted)
             if (isConnectionsChanged == true)
             { RestoreConnections(); }
@@ -168,8 +177,14 @@ public class AIRebelManager : MonoBehaviour
                 //task creation
                 if (actionsUsed == 0)
                 { ProcessSurvivalTask(); }
-                ProcessMoveTask();
-                ProcessIdleTask();
+                //only one task possible and if survival task has been generated no point in going further
+                if (listOfTasksCritical.Count == 0)
+                {
+                    ProcessAdminTask();
+                    ProcessMoveTask();
+                    ProcessPeopleTask();
+                    ProcessIdleTask();
+                }
                 //task Execution
                 ProcessTaskFinal();
                 counter++;
@@ -207,6 +222,7 @@ public class AIRebelManager : MonoBehaviour
         if (isConnectionsChanged == true)
         { RestoreDijkstraCalculations(); }
     }
+
 
     /// <summary>
     /// reset all data prior to AI turn processing
@@ -365,6 +381,68 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogWarning(string.Format("Invalid (not Nemesis) message type \"{0}\" for \"{1}\"", message.type, message.text)); }
     }
 
+
+    /// <summary>
+    /// deals with any conditions that AI player/actors may have -> done right at start prior to assessing and deciding on a course of action
+    /// </summary>
+    private void ProcessConditions()
+    {
+        //reset all condition flags
+        isPlayerStressed = false;
+        isWounded = false;
+        stressedActorID = -1;
+        //check for conditions
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        if (listOfConditions != null)
+        {
+            int count = listOfConditions.Count;
+            if (count > 0)
+            {
+                foreach (Condition condition in listOfConditions)
+                {
+                    if (condition != null)
+                    {
+                        switch (condition.name)
+                        {
+                            case "BLACKMAILER":
+                            case "CORRUPT":
+                            case "INCOMPETENT":
+                            case "QUESTIONABLE":
+                            case "STAR":
+                            case "UNHAPPY":
+                            case "TAGGED":
+                            case "IMAGED":
+                                break;
+                            case "DOOMED":
+
+                                break;
+                            case "STRESSED":
+                                //Player has priority for stress leave
+                                isPlayerStressed = true;
+                                break;
+                            case "WOUNDED":
+                                isWounded = true;
+                                if (actionAllowance > 1)
+                                {
+                                    //Restricts actions
+                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, globalResistance) == true)
+                                    {
+                                        actionAllowance = 1;
+                                        Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: Rebel AI Player WOUNDED. Maximum one action{0}", "\n");
+                                    }
+                                }
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.name);
+                                break;
+                        }
+                    }
+                    else { Debug.LogError("Invalid condition (Null) in listOfConditions"); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid list of Conditions (Null)"); }
+    }
 
     /// <summary>
     /// Take all sighting reports and convert to sorted, prioritised, Sighting Data ready for analysis. Update connections
@@ -724,63 +802,63 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// deals with any conditions that AI player may have
+    /// Assesses player and actors for any relevant personal situations, eg. need to take stress leave
     /// </summary>
-    private void ProcessConditions()
+    private void ProcessPeopleData()
     {
-        //reset all condition flags
-        isStressed = false;
-        isWounded = false;
-        //check for conditions
-        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
-        if (listOfConditions != null)
-        {
-            int count = listOfConditions.Count;
-            if (count > 0)
-            {
-                foreach (Condition condition in listOfConditions)
-                {
-                    if (condition != null)
-                    {
-                        switch (condition.name)
-                        {
-                            case "BLACKMAILER":
-                            case "CORRUPT":
-                            case "INCOMPETENT":
-                            case "QUESTIONABLE":
-                            case "STAR":
-                            case "UNHAPPY":
-                            case "TAGGED":
-                            case "IMAGED":
-                                break;
-                            case "DOOMED":
+        int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
 
-                                break;
-                            case "STRESSED":
-                                isStressed = true;
-                                break;
-                            case "WOUNDED":
-                                isWounded = true;
-                                if (actionAllowance > 1)
+        //Stress Leave
+        if (resources >= stressLeaveCost)
+        {
+            if (isPlayerStressed)
+            {
+                //must have max invis
+                if (GameManager.instance.playerScript.Invisibility == maxStatValue)
+                { stressedActorID = playerID; }
+            }
+        }
+        //check  Resistance actors
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //
+                        // - - - Stress (only if player not already earmarked for stress leave)
+                        //
+                        if (stressedActorID != playerID)
+                        {
+                            //stressed (only if player not already stressed)
+                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                if (resources >= stressLeaveCost)
                                 {
-                                    //Restricts actions
-                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, globalResistance) == true)
+                                    //must have max invis for stress leave
+                                    if (actor.datapoint2 == maxStatValue)
                                     {
-                                        actionAllowance = 1;
-                                        Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: Rebel AI Player WOUNDED. Maximum one action{0}", "\n");
+                                        //take first instance found
+                                        stressedActorID = actor.actorID;
+                                        break;
                                     }
                                 }
-                                break;
-                            default:
-                                Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.name);
-                                break;
+                            }
                         }
                     }
-                    else { Debug.LogError("Invalid condition (Null) in listOfConditions"); }
                 }
             }
         }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+
     }
+
+
 
     /// <summary>
     /// provides resources (equivalent to renown for resistance AI side) depending on level of faction support (as per normal)
@@ -889,7 +967,7 @@ public class AIRebelManager : MonoBehaviour
                             //random chance of lying low
                             rnd = Random.Range(0, 100);
                             int lieLowChance = lieLowEmergency;
-                            if (isStressed == true)
+                            if (isPlayerStressed == true)
                             { lieLowChance += lieLowStressed; }
                             if (rnd < lieLowChance)
                             {
@@ -928,7 +1006,7 @@ public class AIRebelManager : MonoBehaviour
                         case 0: threshold = lieLowZero; break;
                         default: Debug.LogErrorFormat("Invalid invisibility \"[0}\"", invisibility); break;
                     }
-                    if (isStressed == true)
+                    if (isPlayerStressed == true)
                     { threshold += lieLowStressed; }
                     if (rnd < threshold)
                     {
@@ -1123,6 +1201,37 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// assorted administrative tasks
+    /// </summary>
+    private void ProcessAdminTask()
+    {
+
+    }
+
+
+    private void ProcessPeopleTask()
+    {
+        //
+        // - - - Stress Leave - - -
+        //
+        if (stressedActorID > -1)
+        {
+            //generate task -> player or actor
+            AITask task = new AITask();
+            task.data0 = stressedActorID;
+            task.type = AITaskType.StressLeave;
+            task.priority = Priority.Medium;
+            //medium priority for player, low for actor
+            if (stressedActorID != playerID)
+            { task.priority = Priority.Low; }
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPeopleTask: stressedActorID {0}, Stress Leave{1}", stressedActorID, "\n");
+        }
+    }
+
+
+    /// <summary>
     /// Do nothing default task
     /// </summary>
     private void ProcessIdleTask()
@@ -1255,6 +1364,7 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogWarning("Invalid task (Null)"); }
     }
 
+
     /// <summary>
     /// Implement task. One task is implemented. Called by ProcessTaskFinal
     /// NOTE: Task Checked for Null by calling method
@@ -1270,6 +1380,9 @@ public class AIRebelManager : MonoBehaviour
                 break;
             case AITaskType.LieLow:
                 ExecuteLieLowTask(task);
+                break;
+            case AITaskType.StressLeave:
+                ExecuteStressLeaveTask(task);
                 break;
             case AITaskType.Idle:
                 ExecuteIdleTask(task);
@@ -1293,7 +1406,7 @@ public class AIRebelManager : MonoBehaviour
             //update player node
             GameManager.instance.nodeScript.nodePlayer = node.nodeID;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: AI Player moves to {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
-            //action
+            //expend action
             UseAction("Move");
             //move list (for when autorun ends)
             node.SetPlayerMoveNodes();
@@ -1362,7 +1475,7 @@ public class AIRebelManager : MonoBehaviour
                 string reason = string.Format("is currently Lying Low and is{0}{1}<b>cut off from all communications</b>", "\n", "\n");
                 GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, playerID, globalResistance);
             }
-            //action
+            //expend action
             UseAction("Lie Low (Player)");
         }
         else
@@ -1384,7 +1497,7 @@ public class AIRebelManager : MonoBehaviour
                     string reason = string.Format("is currently Lying Low and is{0}{1}<b>out of communication</b>", "\n", "\n");
                     GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, globalResistance);
                 }
-                //action
+                //expend action
                 UseAction("Lie Low (Actor)");
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data1); isSuccess = false; }
@@ -1395,6 +1508,62 @@ public class AIRebelManager : MonoBehaviour
             GameManager.instance.actorScript.SetLieLowTimer();
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteLieLowTask: \"{0}\", id {1} is LYING LOW at node ID {2}{3}", aiName, task.data1, task.data0, "\n");
         }
+    }
+
+    /// <summary>
+    /// actor / player takes stress leave where invis max and stressed (NOT a survival task). Renown cost & Opportunity cost
+    /// </summary>
+    private void ExecuteStressLeaveTask(AITask task)
+    {
+        if (task != null)
+        {
+            bool isSuccess = false;
+            string text = "Unknown";
+            string actorName = "Unknown";
+            string actorType = "Unknown";
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+            if (resources >= stressLeaveCost)
+            {
+                //remove condition
+                if (task.data0 == playerID)
+                {
+                    actorName = GameManager.instance.playerScript.GetPlayerNameResistance();
+                    actorType = "Player";
+                    isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalResistance, "Stress Leave");
+                    text = string.Format("{0}, Player, takes Stress Leave", actorName);
+                }
+                else
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(task.data0);
+                    if (actor != null)
+                    {
+                        actorName = actor.actorName;
+                        actorType = actor.arc.name;
+                        isSuccess = actor.RemoveCondition(conditionStressed, "due to Stress Leave");
+                        text = string.Format("{0}, {1}, takes Stress Leave", actorName, actor.arc.name);
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+                }
+                if (isSuccess == true)
+                {
+                    stressedActorID = -1;
+                    GameManager.instance.messageScript.ActorStressLeave(text, task.data0, globalResistance);
+                    //expend resources
+                    resources -= stressLeaveCost;
+                    if (resources < 0)
+                    {
+                        Debug.LogWarning("Not enough resources for Stress Leave");
+                        resources = 0;
+                    }
+                    GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                    //expend action
+                    UseAction(string.Format("give {0} Stress Leave", actorName));
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteStressLeaveTask: {0}, {1}, takes STRESS LEAVE, cost {2} resources{3}", actorName, actorType, stressLeaveCost, "\n");
+                }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteStressLeaveTask: WARNING Insufficient resources {0} (need {1}) for Stress Leave{2}", resources, stressLeaveCost, "\n"); }
+        }
+        else { Debug.LogError("Invalid Task (null)"); }
     }
 
     /// <summary>

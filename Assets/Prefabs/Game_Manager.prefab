@@ -199,6 +199,7 @@ MonoBehaviour:
   lieLowOne: 20
   lieLowZero: 40
   lieLowChanceActor: 75
+  stressLeaveCost: 2
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
@@ -1569,7 +1570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stressTurnAuthority: -1
   stressWhoAuthority: 999
-  stressTurnResistance: -1
+  stressTurnResistance: 0
   stressWhoResistance: 999
 --- !u!114 &114584680957149894
 MonoBehaviour:
@@ -2019,11 +2020,11 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 0
   isAuthority: 0
-  isBothAI: 0
+  isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 10
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

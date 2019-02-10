@@ -554,15 +554,16 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="details"></param>
     /// <returns></returns>
-    public Message ActorStressLeave(string text, int actorID)
+    public Message ActorStressLeave(string text, int actorID, GlobalSide side)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID ({0})", actorID));
+        Debug.Assert(side != null, "Invalid side (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
             message.text = text;
             message.subType = MessageSubType.Actor_StressLeave;
-            message.side = globalAuthority;
+            message.side = side;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
@@ -576,9 +577,11 @@ public class MessageManager : MonoBehaviour
             if (actorID == playerActorID)
             {
                 message.type = MessageType.PLAYER;
-                data.itemText = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority());
+                if (side.level == globalAuthority.level)
+                { data.itemText = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority()); }
+                else { data.itemText = string.Format("{0}, Player, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameResistance()); }
                 data.sprite = playerSprite;
-                data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails();
+                data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(side);
             }
             else
             {
@@ -589,7 +592,7 @@ public class MessageManager : MonoBehaviour
                     message.type = MessageType.ACTOR;
                     data.itemText = string.Format("{0}, {1}, has taken Stress Leave", actor.actorName, actor.arc.name);
                     data.sprite = actor.arc.sprite;
-                    data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(actor);
+                    data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(side, actor);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
