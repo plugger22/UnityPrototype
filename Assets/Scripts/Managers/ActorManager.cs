@@ -5242,7 +5242,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.playerScript.inactiveStatus = ActorInactive.Breakdown;
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 GameManager.instance.playerScript.isBreakdown = true;
-                                GameManager.instance.playerScript.statTimesBreakdown++;
+                                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerBreakdown);
                                 //change alpha of actor to indicate inactive status
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
@@ -5470,7 +5470,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.aiRebelScript.isBreakdown = true;
                                 if (isPlayer == true)
                                 {
-                                    GameManager.instance.playerScript.statTimesBreakdown++;
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerBreakdown);
                                     //message (public)
                                     text = "Player has suffered a Breakdown (Stressed)";
                                     string itemText = "has suffered a BREAKDOWN";
@@ -5595,7 +5595,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.aiScript.isBreakdown = true;
                                 if (isPlayer == true)
                                 {
-                                    GameManager.instance.playerScript.statTimesBreakdown++;
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerBreakdown);
                                     //message (public)
                                     text = "Player has suffered a Breakdown (Stressed)";
                                     string itemText = "has suffered a BREAKDOWN";

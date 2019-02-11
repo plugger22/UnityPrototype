@@ -22,11 +22,6 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
 
-    //stats
-    [HideInInspector] public int statTimesBreakdown;
-    [HideInInspector] public int statTimesLieLow;
-
-
     private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
@@ -965,8 +960,8 @@ public class PlayerManager : MonoBehaviour
         }
         //stats
         builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" breakdowns: {0}{1}", statTimesBreakdown, "\n");
-        builder.AppendFormat(" lie low: {0}{1}", statTimesLieLow, "\n");
+        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerBreakdown), "\n");
+        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerLieLow), "\n");
         return builder.ToString();
     }
 

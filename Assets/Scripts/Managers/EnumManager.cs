@@ -216,7 +216,8 @@
     public enum StatType
     {
         None,
-        StressLeaveResistance, StressLeaveAuthority
+        StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
+        PlayerBreakdown, PlayerLieLow
     }
 
 

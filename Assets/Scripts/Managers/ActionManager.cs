@@ -136,11 +136,11 @@ public class ActionManager : MonoBehaviour
                 break;
             case EventType.LeavePlayerAction:
                 ModalActionDetails detailsLeavePlayer = Param as ModalActionDetails;
-                ProcessLeavePlayerAction(detailsLeavePlayer);
+                ProcessStressLeavePlayerAction(detailsLeavePlayer);
                 break;
             case EventType.LeaveActorAction:
                 ModalActionDetails detailsLeaveActor = Param as ModalActionDetails;
-                ProcessLeaveActorAction(detailsLeaveActor);
+                ProcessStressLeaveActorAction(detailsLeaveActor);
                 break;
             case EventType.ActivateActorAction:
                 ModalActionDetails detailsActivateActor = Param as ModalActionDetails;
@@ -1193,7 +1193,7 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
             GameManager.instance.playerScript.isLieLowFirstturn = true;
-            GameManager.instance.playerScript.statTimesLieLow++;
+            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLow);
             outcomeDetails.textTop = string.Format("{0}{1}{2} will go to ground and {3}Lie Low{4}", colourAlert, playerName, colourEnd, colourNeutral, colourEnd);
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message
@@ -1373,7 +1373,7 @@ public class ActionManager : MonoBehaviour
     /// Process Stress Leave for Human Player (both sides)
     /// </summary>
     /// <param name="details"></param>
-    private void ProcessLeavePlayerAction(ModalActionDetails modalDetails)
+    private void ProcessStressLeavePlayerAction(ModalActionDetails modalDetails)
     {
         if (modalDetails != null)
         {
@@ -1403,6 +1403,8 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details);
             Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLeavePlayerAction: {0}, {1} Player, commences STRESS LEAVE", GameManager.instance.playerScript.GetPlayerName(modalDetails.side), 
                 modalDetails.side.name);
+            //statistics
+            StressLeaveStatistics(modalDetails.side);
             //action (if valid) expended -> must be BEFORE outcome window event
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.isAction = true;
@@ -1419,7 +1421,7 @@ public class ActionManager : MonoBehaviour
     /// Process Stress Leave for Human Authority/Resistance Actor
     /// </summary>
     /// <param name="modalDetails"></param>
-    private void ProcessLeaveActorAction(ModalActionDetails modalDetails)
+    private void ProcessStressLeaveActorAction(ModalActionDetails modalDetails)
     {
         if (modalDetails != null)
         {
@@ -1448,6 +1450,8 @@ public class ActionManager : MonoBehaviour
                 string reason = "has taken a break in order to recover from their <b>STRESS</b>";
                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details);
+                //statistics
+                StressLeaveStatistics(modalDetails.side);
                 //action (if valid) expended -> must be BEFORE outcome window event
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                 outcomeDetails.isAction = true;
@@ -1460,6 +1464,26 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogError("Invalid actor (Null)"); }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
+    }
+
+    /// <summary>
+    /// submethod for ProcessStressLeavePlayer/Actor to take care of statistics
+    /// </summary>
+    /// <param name="side"></param>
+    private void StressLeaveStatistics(GlobalSide side)
+    {
+        switch (side.level)
+        {
+            case 1:
+                GameManager.instance.dataScript.StatisticIncrement(StatType.StressLeaveAuthority);
+                break;
+            case 2:
+                GameManager.instance.dataScript.StatisticIncrement(StatType.StressLeaveResistance);
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised side \"{0}\"", side.name);
+                break;
+        }
     }
 
     /// <summary>

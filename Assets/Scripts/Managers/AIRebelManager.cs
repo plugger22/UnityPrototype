@@ -1526,7 +1526,7 @@ public class AIRebelManager : MonoBehaviour
             //message (only if human player after an autorun)
             if (isPlayer == true)
             {
-                GameManager.instance.playerScript.statTimesLieLow++;
+                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLow);
                 Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
                 //message
                 string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);
@@ -1614,6 +1614,8 @@ public class AIRebelManager : MonoBehaviour
                         resources = 0;
                     }
                     GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                    //statistic
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.StressLeaveResistance);
                     //expend action
                     UseAction(string.Format("give {0} Stress Leave", actorName));
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteStressLeaveTask: {0}, {1}, takes STRESS LEAVE, cost {2} resources{3}", actorName, actorType, stressLeaveCost, "\n");

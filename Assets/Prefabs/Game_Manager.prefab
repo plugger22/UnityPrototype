@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 114584680957149894}
   - component: {fileID: 114609542619572500}
   - component: {fileID: 114837532667670244}
+  - component: {fileID: 114843761391076242}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -1572,7 +1573,7 @@ MonoBehaviour:
   stressTurnAuthority: -1
   stressWhoAuthority: 999
   stressTurnResistance: 0
-  stressWhoResistance: 0
+  stressWhoResistance: 999
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1811,8 +1812,6 @@ MonoBehaviour:
   isEndOfTurnGearCheck: 0
   isLieLowFirstturn: 0
   isStressLeave: 0
-  statTimesBreakdown: 0
-  statTimesLieLow: 0
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1959,6 +1958,7 @@ MonoBehaviour:
   loadScript: {fileID: 0}
   metaScript: {fileID: 0}
   dataScript: {fileID: 0}
+  statScript: {fileID: 0}
   guiScript: {fileID: 0}
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
@@ -2025,7 +2025,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 10
+  autoRunTurns: 20
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2117,6 +2117,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenario: {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
+--- !u!114 &114843761391076242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 977c5eec213cef54da61cd90ffbe0e61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114851938744220614
 MonoBehaviour:
   m_ObjectHideFlags: 1

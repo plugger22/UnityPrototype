@@ -3802,7 +3802,12 @@ public class AIManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         }
         if (isSuccess == true)
-        { GameManager.instance.messageScript.ActorStressLeave(text, actorID, globalAuthority); }
+        {
+            //statistic
+            GameManager.instance.dataScript.StatisticIncrement(StatType.StressLeaveAuthority);
+            //message
+            GameManager.instance.messageScript.ActorStressLeave(text, actorID, globalAuthority);
+        }
         return isSuccess;
     }
 

@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public LoadManager loadScript;                  //Load Manager
     [HideInInspector] public MetaManager metaScript;                  //Meta Manager
     [HideInInspector] public DataManager dataScript;                  //Data Manager
+    [HideInInspector] public StatisticManager statScript;             //Statistics Manager
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
     [HideInInspector] public GlobalManager globalScript;              //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         levelScript = GetComponent<LevelManager>();
         preloadScript = GetComponent<PreLoadManager>();
         loadScript = GetComponent<LoadManager>();
+        statScript = GetComponent<StatisticManager>();
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
@@ -212,6 +214,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
         Debug.Assert(preloadScript != null, "Invalid preloadScript (Null)");
         Debug.Assert(loadScript != null, "Invalid loadScript (Null)");
+        Debug.Assert(statScript != null, "Invalid statScript (Null)");
         Debug.Assert(metaScript != null, "Invalid metaScript (Null)");
         Debug.Assert(dataScript != null, "Invalid dataScript (Null)");
         Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
@@ -400,7 +403,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfStartMethods.Add(startMethod);
-
+        //Statistic Manager -> Initialise -> after DataManager
+        startMethod.handler = GameManager.instance.statScript.Initialise;
+        startMethod.className = "StatisticManager";
+        listOfStartMethods.Add(startMethod);
         //Dijkstra Manager -> Initialise -> after dataScript & LevelScript
         startMethod.handler = GameManager.instance.dijkstraScript.Initialise;
         startMethod.className = "DijkstraManager";
