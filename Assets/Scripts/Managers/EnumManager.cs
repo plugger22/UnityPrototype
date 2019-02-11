@@ -210,6 +210,14 @@
         Count
     }
 
+    //
+    // - - - Statistics - - - 
+    //
+    public enum StatType
+    {
+        None,
+        StressLeaveResistance, StressLeaveAuthority
+    }
 
 
 }

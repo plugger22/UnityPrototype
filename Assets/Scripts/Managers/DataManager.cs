@@ -194,6 +194,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
+    private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();                      //Key -> (int)StatType, Value -> statistic
 
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
@@ -5192,6 +5193,59 @@ public class DataManager : MonoBehaviour
         }
         else { builder.Append(" No records present"); }
         return builder.ToString();
+    }
+
+    //
+    // - - - Statistics - - -
+    //
+
+    /// <summary>
+    /// adds a new stat to the dictionary with an initial value of statValue (default 0)
+    /// </summary>
+    /// <param name="statType"></param>
+    /// <param name="statValue"></param>
+    public void StatisticAddNew(StatType statType, int statValue = 0)
+    {
+        if (statType != StatType.None)
+        {
+            try
+            { dictOfStatistics.Add(statType, statValue); }
+            catch (ArgumentException)
+            { Debug.LogErrorFormat("Invalid statType \"{0}\" (duplicate exists)", statType); }
+        }
+        else { Debug.LogError("Invalid StatType (None)"); }
+    }
+
+    /// <summary>
+    /// increases stat value by an amount (default +1) for the specific Statistic Type
+    /// </summary>
+    /// <param name="statType"></param>
+    public void StatisticIncrement(StatType statType, int amount = 1)
+    {
+        if (statType != StatType.None)
+        {
+            if (dictOfStatistics.ContainsKey(statType) == true)
+            { dictOfStatistics[statType] += amount; }
+            else { Debug.LogWarningFormat("StatType \"{0}\" not found in dictOfStatistics", statType); }
+        }
+        else { Debug.LogError("Invalid StatType (None)"); }
+    }
+
+    /// <summary>
+    /// returns value of specified Statistic type, returns -1 if a problem
+    /// </summary>
+    /// <param name="statType"></param>
+    /// <returns></returns>
+    public int StatisticGet(StatType statType)
+    {
+        int statValue = -1;
+        if (statType != StatType.None)
+        {
+            if (dictOfStatistics.ContainsKey(statType) == true)
+            { statValue = dictOfStatistics[statType]; }
+        }
+        else { Debug.LogError("Invalid StatType (None)"); }
+        return statValue;
     }
 
     //new methods above here
