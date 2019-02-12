@@ -172,7 +172,7 @@ public class FactionManager : MonoBehaviour
     {
         bool isProceed = true;
         //ignore if autorun with both sides AI
-        if (GameManager.instance.turnScript.CheckIsAutoRun() == true && GameManager.instance.isBothAI == true)
+        if (GameManager.instance.turnScript.CheckIsAutoRun() == true && GameManager.instance.autoRunTurns > 0)
         { isProceed = false; }
         //ignore if player is inactive
         if (GameManager.instance.playerScript.status == ActorStatus.Inactive)

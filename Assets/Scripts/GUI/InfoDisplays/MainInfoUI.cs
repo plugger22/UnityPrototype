@@ -14,6 +14,10 @@ using UnityEngine.UI;
 public class MainInfoUI : MonoBehaviour
 {
     public Canvas mainInfoCanvas;
+    public Canvas canvasTicker;
+    public Canvas canvasFlasher;
+    public Canvas canvasScroll;
+
     public GameObject mainInfoObject;
 
     [Header("Buttons")]
@@ -238,6 +242,9 @@ public class MainInfoUI : MonoBehaviour
         maxTabIndex = numOfTabs - 1;
         //main
         Debug.Assert(mainInfoCanvas != null, "Invalid mainInfoCanvas (Null)");
+        Debug.Assert(canvasFlasher != null, "Invalid canvasFlasher (Null)");
+        Debug.Assert(canvasTicker != null, "Invalid canvasTicker (Null)");
+        Debug.Assert(canvasScroll != null, "Invalid canvasScroll (Null)");
         Debug.Assert(mainInfoObject != null, "Invalid mainInfoObject (Null)");
         mainInfoObject.SetActive(true);
         //buttons
@@ -514,8 +521,8 @@ public class MainInfoUI : MonoBehaviour
         flashTimer = GameManager.instance.guiScript.flashInfoTabTime;
         Debug.Assert(flashTimer > -1.0f, "Invalid flashTimer (-1f)");
         //Set starting Initialisation states
+        InitialiseCanvases();
         InitialiseItems();
-        //Tooltips
         InitialiseTooltips();
     }
 
@@ -531,6 +538,16 @@ public class MainInfoUI : MonoBehaviour
             arrayItemBorder[index].gameObject.SetActive(true);
             arrayItemBackground[index].gameObject.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// set subsidiary canvases to active at start as they may have been accidentally left off
+    /// </summary>
+    private void InitialiseCanvases()
+    {
+        canvasTicker.gameObject.SetActive(true);
+        canvasFlasher.gameObject.SetActive(true);
+        canvasScroll.gameObject.SetActive(true);
     }
 
     private void InitialiseTooltips()

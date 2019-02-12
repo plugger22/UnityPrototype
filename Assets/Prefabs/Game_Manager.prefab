@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stressTurnAuthority: -1
   stressWhoAuthority: 999
-  stressTurnResistance: 0
+  stressTurnResistance: 10
   stressWhoResistance: 999
 --- !u!114 &114584680957149894
 MonoBehaviour:
@@ -2021,11 +2021,10 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seed: 0
   isAuthority: 0
-  isBothAI: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 20
+  autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

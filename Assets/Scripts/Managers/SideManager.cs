@@ -98,34 +98,33 @@ public class SideManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
+
+        /*//if autoRun then bothSidesAI automatically true
+        if (GameManager.instance.autoRunTurns > 0) { GameManager.instance.isBothAI = true; } else { GameManager.instance.isBothAI = false; }*/
+
         //both sides AI
-        if (GameManager.instance.isBothAI == true)
+        if (GameManager.instance.autoRunTurns > 0)
         {
-            if (GameManager.instance.autoRunTurns > 0)
+            //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
+            if (GameManager.instance.isAuthority == true)
             {
-                //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
-                if (GameManager.instance.isAuthority == true)
-                {
-                    PlayerSide = globalAuthority;
-                    //reverts to Human authority player
-                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
-                    GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.scenarioScript.scenario.leaderResistance.leaderName); 
-                }
-                else
-                {
-                    PlayerSide = globalResistance;
-                    //reverts to Human resistance player
-                    GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.scenarioScript.scenario.leaderAuthority.name);
-                    GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-                }
-                Debug.Log("[Start] Player set to AI for both sides");
-                resistanceOverall = SideState.AI;
-                authorityOverall = SideState.AI;
-                resistanceCurrent = SideState.AI;
-                authorityCurrent = SideState.AI;
+                PlayerSide = globalAuthority;
+                //reverts to Human authority player
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.scenarioScript.scenario.leaderResistance.leaderName);
             }
             else
-            { Debug.LogError("AutoRunTurns must be > Zero for isBothAI to be true"); }
+            {
+                PlayerSide = globalResistance;
+                //reverts to Human resistance player
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.scenarioScript.scenario.leaderAuthority.name);
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
+            }
+            Debug.Log("[Start] Player set to AI for both sides");
+            resistanceOverall = SideState.AI;
+            authorityOverall = SideState.AI;
+            resistanceCurrent = SideState.AI;
+            authorityCurrent = SideState.AI;
         }
         else
         {
@@ -153,7 +152,7 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.AI;
                 authorityCurrent = SideState.Human;
                 //names
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.scenarioScript.scenario.leaderResistance.leaderName); 
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.scenarioScript.scenario.leaderResistance.leaderName);
                 GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
             }
         }

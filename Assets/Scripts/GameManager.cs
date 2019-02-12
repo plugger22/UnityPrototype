@@ -100,14 +100,14 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true Player side set to Authority")]               //DEBUG
     public bool isAuthority;
     [Tooltip("If true AI handles both sides. OVERRIDES all other settings. Player side (at end of autoRun) is determined by 'isAuthority' setting. Switch OFF if playing normally")]
-    public bool isBothAI;
-    [Tooltip("Switch ON to get a performance log of initialisation ")]
+    /*public bool isBothAI;
+    [Tooltip("Switch ON to get a performance log of initialisation ")]*/
     public bool isPerformanceLog;
     [Tooltip("Runs ValidationManager.cs to check data at game start")]
     public bool isValidateData;
     [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isValidateSO;
-    [Tooltip("Autoruns game for 'x' number of turns with current player/AI settings. Leave at Zero for normal operation")]
+    [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
 
    

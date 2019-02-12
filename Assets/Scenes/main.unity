@@ -14623,6 +14623,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainInfoCanvas: {fileID: 1337470810}
+  canvasTicker: {fileID: 2144363811}
+  canvasFlasher: {fileID: 1225134365}
+  canvasScroll: {fileID: 1387948069}
   mainInfoObject: {fileID: 1323247380}
   buttonClose: {fileID: 1833102002}
   buttonHelpInfo: {fileID: 1901418549}

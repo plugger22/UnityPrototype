@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -18,4 +19,25 @@ public class StatisticManager : MonoBehaviour
         GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveAuthority);
         GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveResistance);
     }
+
+
+    /// <summary>
+    /// Display statistics
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowStatistics()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-Statistics{0}{1}", "\n", "\n");
+        builder.AppendFormat("-Player{0}", "\n");
+        builder.AppendFormat(" Player Breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerBreakdown), "\n");
+        builder.AppendFormat(" Player Lie Low: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerLieLow), "\n");
+        builder.AppendFormat("{0}-Stress Leave{1}", "\n", "\n");
+        builder.AppendFormat(" Stress Leave Authority (all): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveAuthority), "\n");
+        builder.AppendFormat(" Stress Leave Resistance (all): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveResistance), "\n");
+        return builder.ToString();
+    }
+
+
+    //new methods above here
 }

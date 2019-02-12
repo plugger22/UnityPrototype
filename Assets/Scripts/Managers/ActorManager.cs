@@ -329,7 +329,7 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
-                    if (GameManager.instance.isBothAI == true)
+                    if (GameManager.instance.autoRunTurns > 0)
                     {
                         //Both sides AI (autorun) -> Resistance first
                         isPlayer = true;
@@ -373,7 +373,7 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
-                    if (GameManager.instance.isBothAI == true)
+                    if (GameManager.instance.autoRunTurns > 0)
                     {
                         //Both sides AI (autorun) -> Resistance first
                         isPlayer = true;
@@ -1309,9 +1309,16 @@ public class ActorManager : MonoBehaviour
                                 }
                                 else
                                 { infoBuilder.AppendFormat("Lie Low unavailable for {0} turn{1}", lieLowTimer, lieLowTimer != 1 ? "s" : ""); }
+
                             }
                             else
                             { infoBuilder.Append("Can't Lie Low while a Surveillance Crackdown is in force"); }
+                            //stress leave
+                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                            {
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                infoBuilder.AppendFormat("{0}Stress Leave only possible if MAX Invisibility{1}", colourAlert, colourEnd);
+                            }
                         }
                         else
                         {
@@ -1362,7 +1369,7 @@ public class ActorManager : MonoBehaviour
                                 else
                                 {
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, 
+                                    infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral,
                                         stressLeaveRenownCostResistance, colourEnd, colourAlert, colourEnd);
                                 }
                             }
@@ -1552,7 +1559,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 //actor has no gear to give
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                { infoBuilder.AppendFormat("{0} has no gear to Take", actor.arc.name); }
+                                { infoBuilder.AppendFormat("{0}{1} has no gear to Take{2}", colourAlert, actor.arc.name, colourEnd); }
                             }
                         }
                         else
@@ -3923,7 +3930,7 @@ public class ActorManager : MonoBehaviour
                                     if (invis >= maxStatValue)
                                     {
                                         //actor has recovered from lying low, needs to be activated
-                                        actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                                        actor.datapoint2 = Mathf.Min(maxStatValue, invis);
                                         actor.Status = ActorStatus.Active;
                                         actor.inactiveStatus = ActorInactive.None;
                                         actor.tooltipStatus = ActorTooltip.None;
