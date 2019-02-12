@@ -206,7 +206,7 @@ MonoBehaviour:
   gearAvailableThree: 40
   gearAvailableTwo: 30
   gearAvailableOne: 20
-  gearPoolMaxSize: 4
+  gearPoolMaxSize: 6
   status: 0
   inactiveStatus: 0
   isBreakdown: 0

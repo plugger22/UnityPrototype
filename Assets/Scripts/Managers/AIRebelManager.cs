@@ -83,6 +83,7 @@ public class AIRebelManager : MonoBehaviour
     private int actionsUsed;                            //tally of actions used this turn
 
     private int gearPool;                               //number of gear points in pool
+    private int gearPointsUsed;                         //number of gear points expended by AI
     
 
     private int targetNodeID;                           //goal to move towards
@@ -1765,12 +1766,19 @@ public class AIRebelManager : MonoBehaviour
             isAvailable = true;
             //deduct one gear point from gear pool (automatically used, no option to recover or retain gear)
             gearPool--;
+            gearPointsUsed++;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n");
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is NOT Available, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n"); }
         return isAvailable;
     }
 
+    /// <summary>
+    /// returns the number of gear items to delete from the pools upon reverting to a human resistance player. Calculated at half gear points used, rounded down
+    /// </summary>
+    /// <returns></returns>
+    public int GetGearUsed()
+    { return gearPointsUsed / 2; }
 
     //
     // - - - Tidy up - - -

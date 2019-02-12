@@ -4056,6 +4056,55 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Deletes gear from the common and rare pools to accomodate gear that has been already used by the Rebel AI. Called by SideManager.RevertToHumanPlayer
+    /// </summary>
+    /// <param name="gearUsed"></param>
+    public void UpdateGearOnRevert(int gearUsed)
+    {
+        int count, index, gearID;
+        Gear gear;
+        bool isSuccess;
+        int chanceOfRareGear = GameManager.instance.gearScript.chanceOfRareGear;
+        for (int i = 0; i < gearUsed; i++)
+        {
+            isSuccess = false;
+            //chance of rare gear
+            if (Random.Range(0, 100) < chanceOfRareGear)
+            {
+                //get random rare gear
+                count = listOfRareGear.Count;
+                if (count > 0)
+                {
+                    
+                    index = Random.Range(0, count);
+                    gearID = listOfRareGear[index];
+                    if (gearID > -1)
+                    {
+                        //delete from rare gear pool
+                        listOfRareGear.RemoveAt(index);
+                        //add to Lost gear pool
+                        listOfLostGear.Add(gearID);
+                        //message
+                        gear = GetGear(gearID);
+                        if (gear != null)
+                        {
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearOnRevert: {0}, {1}, id {2} Gear Lost (used by Rebel AI){3}", gear.name, gear.type, gear.gearID, "\n");
+                        }
+                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                        isSuccess = true;
+                    }
+                    else { Debug.LogWarning("Invalid gearID (Less than Zero)"); }
+                }
+                //if not rare gear or rare gear didn't work
+                if (isSuccess == false)
+                {
+
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Debug display method for all gear lists
     /// </summary>
     /// <returns></returns>

@@ -406,6 +406,14 @@ public class SideManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+                //Gear
+                int gearUsed = GameManager.instance.aiRebelScript.GetGearUsed();
+                if (gearUsed > 0)
+                {
+                    //delete gear from common and rare pools to reflect gear that's been used
+                    GameManager.instance.dataScript.UpdateGearOnRevert(gearUsed);
+
+                }
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
                 break;
             default:
