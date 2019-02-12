@@ -56,6 +56,18 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Cost in resources/renown for the player or actor to take Stress Leave")]
     [Range(0, 10)] public int stressLeaveCost = 2;
 
+    [Header("Gear Use")]
+    [Tooltip("Chance of a suitable piece of gear being available for a task when there are FOUR gear points in the gear pool")]
+    [Range(0, 100)] public int gearAvailableFour = 50;
+    [Tooltip("Chance of a suitable piece of gear being available for a task when there are THREE gear points in the gear pool")]
+    [Range(0, 100)] public int gearAvailableThree = 40;
+    [Tooltip("Chance of a suitable piece of gear being available for a task when there are TWO gear points in the gear pool")]
+    [Range(0, 100)] public int gearAvailableTwo = 30;
+    [Tooltip("Chance of a suitable piece of gear being available for a task when there is ONE gear points in the gear pool")]
+    [Range(0, 100)] public int gearAvailableOne = 20;
+    [Tooltip("Maxium number of gear points that can be in the gear pool. Change this and you need to refactor the code")]
+    [Range(4, 4)] public int gearPoolMaxSize = 4;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -65,6 +77,8 @@ public class AIRebelManager : MonoBehaviour
     private int actionAllowance;                        //number of actions per turn (normal allowance + extras)
     private int actionsExtra;                           //bonus actions for this turn
     private int actionsUsed;                            //tally of actions used this turn
+
+    private int gearPool;                               //number of gear points in pool
     
 
     private int targetNodeID;                           //goal to move towards
@@ -154,6 +168,8 @@ public class AIRebelManager : MonoBehaviour
         { isPlayer = true; }
         //Rebel leader
         survivalMove = GameManager.instance.scenarioScript.scenario.leaderResistance.moveChance;
+        gearPool = GameManager.instance.scenarioScript.scenario.leaderResistance.gearPoints;
+        gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         priorityStressLeavePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
         priorityStressLeaveActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeaveActor);
         priorityMovePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.movePriority);
@@ -1475,7 +1491,10 @@ public class AIRebelManager : MonoBehaviour
             if (connection != null)
             {
                 if (connection.SecurityLevel != ConnectionType.None)
-                { UpdateInvisibility(connection, node); }
+                {
+
+                    UpdateInvisibility(connection, node);
+                }
             }
             else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
 
@@ -1708,6 +1727,42 @@ public class AIRebelManager : MonoBehaviour
     }
 
     //
+    // - - - Gear - - -
+    //
+
+    /// <summary>
+    /// returns true if a suitable piece of gear is available for the specified task. Chance is proportional to the number of gear points in the pool, more the points, greater the chance
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckGearAvailable()
+    {
+        bool isAvailable = false;
+        int rnd = Random.Range(0, 100);
+        int threshold = -1;
+        switch (gearPool)
+        {
+            case 6:
+            case 5:
+            case 4: threshold = gearAvailableFour; break;
+            case 3: threshold = gearAvailableThree; break;
+            case 2: threshold = gearAvailableTwo; break;
+            case 1: threshold = gearAvailableOne; break;
+            case 0: threshold = -1; break;
+            default:
+                Debug.LogErrorFormat("Inrecognised gearPool \"{0}\"", gearPool);
+                break;
+        }
+        if (rnd < threshold)
+        {
+            isAvailable = true;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n");
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is NOT Available, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n"); }
+        return isAvailable;
+    }
+
+
+    //
     // - - - Tidy up - - -
     //
 
@@ -1754,6 +1809,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" isBreakdown: {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
+        builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
 
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)

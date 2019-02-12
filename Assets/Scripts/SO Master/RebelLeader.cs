@@ -22,6 +22,10 @@ public class RebelLeader : ScriptableObject
     [Tooltip("Chance of moving in a survival situation. A high number (75%) gets the leader moving around a lot and more likely to be captured, a middle number (50%) has them lying low more often")]
     public int moveChance = 50;
 
+    [Header("Gear")]
+    [Tooltip("Amount of starting gear points in the gear pool (NOTE: will automatically be adjusted downwards if greater than the maximum allowable amount)")]
+    public int gearPoints = 2;
+
     [Header("Priorities (can only be Low / med / high)")]
     [Tooltip("Player going on stress leave. Default Medium")]
     public GlobalChance stressLeavePlayer;

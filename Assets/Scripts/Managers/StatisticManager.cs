@@ -29,12 +29,10 @@ public class StatisticManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Statistics{0}{1}", "\n", "\n");
-        builder.AppendFormat("-Player{0}", "\n");
         builder.AppendFormat(" Player Breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerBreakdown), "\n");
-        builder.AppendFormat(" Player Lie Low: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerLieLow), "\n");
-        builder.AppendFormat("{0}-Stress Leave{1}", "\n", "\n");
+        builder.AppendFormat(" Player Lie Low: {0}{1}{2}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerLieLow), "\n", "\n");
         builder.AppendFormat(" Stress Leave Authority (all): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveAuthority), "\n");
-        builder.AppendFormat(" Stress Leave Resistance (all): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveResistance), "\n");
+        builder.AppendFormat(" Stress Leave Resistance (all): {0}{1}{2}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveResistance), "\n", "\n");
         return builder.ToString();
     }
 

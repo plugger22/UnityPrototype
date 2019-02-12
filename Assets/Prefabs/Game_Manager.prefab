@@ -200,6 +200,11 @@ MonoBehaviour:
   lieLowZero: 40
   lieLowChanceActor: 75
   stressLeaveCost: 2
+  gearAvailableFour: 50
+  gearAvailableThree: 40
+  gearAvailableTwo: 30
+  gearAvailableOne: 20
+  gearPoolMaxSize: 4
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
@@ -2020,7 +2025,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
-  isAuthority: 0
+  isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
