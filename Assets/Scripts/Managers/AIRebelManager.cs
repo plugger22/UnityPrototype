@@ -1780,6 +1780,13 @@ public class AIRebelManager : MonoBehaviour
     public int GetGearUsed()
     { return gearPointsUsed / 2; }
 
+    /// <summary>
+    /// returns the number of gear points within the gear Pool
+    /// </summary>
+    /// <returns></returns>
+    public int GetGearPoints()
+    { return gearPointsUsed; }
+
     //
     // - - - Tidy up - - -
     //

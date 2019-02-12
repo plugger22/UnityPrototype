@@ -1545,7 +1545,7 @@ public class DataManager : MonoBehaviour
                                     List<Contact> listOfNewContacts = new List<Contact>();
                                     listOfNewContacts.Add(contact);
                                     try { dictOfContactsByNodeResistance.Add(nodeID, listOfNewContacts); }
-                                    catch ( ArgumentException)
+                                    catch (ArgumentException)
                                     { Debug.LogErrorFormat("Invalid new record (duplicate) for nodeId {0}", nodeID); }
                                 }
                             }
@@ -1678,7 +1678,7 @@ public class DataManager : MonoBehaviour
         if (listOfContacts != null && listOfContacts.Count > 0)
         {
             //check if contacts are active
-            foreach(Contact contact in listOfContacts)
+            foreach (Contact contact in listOfContacts)
             {
                 if (contact.status == ContactStatus.Active)
                 {
@@ -2610,7 +2610,7 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat(" TargetDictionary{0}{1}", "\n", "\n");
-        foreach(var target in dictOfTargets)
+        foreach (var target in dictOfTargets)
         {
             if (target.Value.followOnTarget != null)
             {
@@ -2846,7 +2846,7 @@ public class DataManager : MonoBehaviour
     public int GetTeamInPool(TeamPool pool, int teamArcID)
     {
         List<int> tempList = new List<int>();
-        switch(pool)
+        switch (pool)
         {
             case TeamPool.Reserve:
                 tempList.AddRange(teamPoolReserve);
@@ -2904,7 +2904,7 @@ public class DataManager : MonoBehaviour
     public int CheckTeamPoolCount(TeamPool pool)
     {
         int num = -1;
-        switch(pool)
+        switch (pool)
         {
             case TeamPool.Reserve: num = teamPoolReserve.Count; break;
             case TeamPool.OnMap: num = teamPoolOnMap.Count; break;
@@ -2945,7 +2945,7 @@ public class DataManager : MonoBehaviour
         if (tempList.Count == 0)
         {
             //loop reserve pool
-            for(int i = 0; i < teamPoolReserve.Count; i++)
+            for (int i = 0; i < teamPoolReserve.Count; i++)
             {
                 Team team = GetTeam(teamPoolReserve[i]);
                 //check team not present at node
@@ -3010,10 +3010,10 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         if (actor != null)
-        {                        
+        {
 
             //admin depends on where actor is going
-            switch(status)
+            switch (status)
             {
                 case ActorStatus.Reserve:
                     if (AddActorToReserve(actor.actorID, side) == true)
@@ -3112,12 +3112,12 @@ public class DataManager : MonoBehaviour
         if (reservePoolList != null)
         {
             if (reservePoolList.Remove(actor.actorID) == false)
-            { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID);  isSuccess = false; }
+            { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); isSuccess = false; }
         }
         else { Debug.LogWarningFormat("Invalid reservePoolList (Null) for GlobalSide {0}", side); isSuccess = false; }
         return isSuccess;
     }
-    
+
     /// <summary>
     /// Adds any actor (whether current or reserve) to dictOfActors, returns true if successful
     /// </summary>
@@ -3624,19 +3624,19 @@ public class DataManager : MonoBehaviour
         return slotID;
     }
 
-    
-                    
+
+
     /// <summary>
     /// called from ImportManager.cs
     /// </summary>
     public void InitialiseArrayOfActors()
-    {arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors]; }
+    { arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors]; }
 
     /// <summary>
     /// called from ImportManager.cs
     /// </summary>
     public void InitialiseArrayOfActorsPresent()
-    { arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];}
+    { arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors]; }
 
     public Actor[,] GetArrayOfActors()
     { return arrayOfActors; }
@@ -3922,7 +3922,7 @@ public class DataManager : MonoBehaviour
         {
             if (listOfGearID.Count > 0)
             {
-                switch(rarity.level)
+                switch (rarity.level)
                 {
                     case 0:
                         //common
@@ -3946,7 +3946,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfGearID (Null)"); }
     }
-    
+
     /// <summary>
     /// returns a list of gear according to rarity that is appropriate for the current rarity
     /// </summary>
@@ -4059,7 +4059,7 @@ public class DataManager : MonoBehaviour
     /// Deletes gear from the common and rare pools to accomodate gear that has been already used by the Rebel AI. Called by SideManager.RevertToHumanPlayer
     /// </summary>
     /// <param name="gearUsed"></param>
-    public void UpdateGearOnRevert(int gearUsed)
+    public void UpdateGearLostOnRevert(int gearUsed)
     {
         int count, index, gearID;
         Gear gear;
@@ -4075,7 +4075,7 @@ public class DataManager : MonoBehaviour
                 count = listOfRareGear.Count;
                 if (count > 0)
                 {
-                    
+
                     index = Random.Range(0, count);
                     gearID = listOfRareGear[index];
                     if (gearID > -1)
@@ -4087,19 +4087,121 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        {
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearOnRevert: {0}, {1}, id {2} Gear Lost (used by Rebel AI){3}", gear.name, gear.type, gear.gearID, "\n");
-                        }
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
                     else { Debug.LogWarning("Invalid gearID (Less than Zero)"); }
                 }
-                //if not rare gear or rare gear didn't work
-                if (isSuccess == false)
+            }
+            //if not rare gear or rare gear didn't work
+            if (isSuccess == false)
+            {
+                //common gear
+                count = listOfCommonGear.Count;
+                if (count > 0)
                 {
-
+                    index = Random.Range(0, count);
+                    gearID = listOfCommonGear[index];
+                    if (gearID > -1)
+                    {
+                        //delete from common gear pool
+                        listOfCommonGear.RemoveAt(index);
+                        //add to Lost gear pool
+                        listOfLostGear.Add(gearID);
+                        //message
+                        gear = GetGear(gearID);
+                        if (gear != null)
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                        isSuccess = true;
+                    }
+                    else { Debug.LogWarning("Invalid gearID (Less than Zero)"); }
                 }
+            }
+            //break out of loop if neither rare or common gear have worked
+            if (isSuccess == false)
+            {
+                Debug.LogWarning("Breaking out of loop due to inability to delete Rare or Common gear");
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Selects gear randomly from common and rare gear pools to add as current gear to reflect what the AI Rebel Leader is using when it reverts to human control
+    /// </summary>
+    /// <param name="gearPoints"></param>
+    public void UpdateGearCurrentOnRevert(int gearPoints)
+    {
+        int count, index, gearID;
+        Gear gear;
+        bool isSuccess;
+        int chanceOfRareGear = GameManager.instance.gearScript.chanceOfRareGear;
+        //put an upper limit on gear points (max. amount of gear)
+        gearPoints = Mathf.Min(GameManager.instance.gearScript.maxNumOfGear, gearPoints);
+        for (int i = 0; i < gearPoints; i++)
+        {
+            isSuccess = false;
+            //chance of rare gear
+            if (Random.Range(0, 100) < chanceOfRareGear)
+            {
+                //get random rare gear
+                count = listOfRareGear.Count;
+                if (count > 0)
+                {
+                    index = Random.Range(0, count);
+                    gearID = listOfRareGear[index];
+                    if (gearID > -1)
+                    {
+                        //delete from rare gear pool
+                        listOfRareGear.RemoveAt(index);
+                        //add to Current gear pool
+                        listOfCurrentGear.Add(gearID);
+                        //add to player's inventory
+                        GameManager.instance.playerScript.AddGear(gearID);
+                        //message
+                        gear = GetGear(gearID);
+                        if (gear != null)
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                        isSuccess = true;
+                    }
+                    else { Debug.LogWarning("Invalid gearID (Less than Zero)"); }
+                }
+            }
+            //if not rare gear or rare gear didn't work
+            if (isSuccess == false)
+            {
+                //common gear
+                count = listOfCommonGear.Count;
+                if (count > 0)
+                {
+                    index = Random.Range(0, count);
+                    gearID = listOfCommonGear[index];
+                    if (gearID > -1)
+                    {
+                        //delete from common gear pool
+                        listOfCommonGear.RemoveAt(index);
+                        //add to Current gear pool
+                        listOfCurrentGear.Add(gearID);
+                        //add to player's inventory
+                        GameManager.instance.playerScript.AddGear(gearID);
+                        //message
+                        gear = GetGear(gearID);
+                        if (gear != null)
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                        isSuccess = true;
+                    }
+                    else { Debug.LogWarning("Invalid gearID (Less than Zero)"); }
+                }
+            }
+            //break out of loop if neither rare or common gear have worked
+            if (isSuccess == false)
+            {
+                Debug.LogWarning("Breaking out of loop due to inability to delete Rare or Common gear");
+                break;
             }
         }
     }
