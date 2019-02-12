@@ -130,7 +130,8 @@ public class TooltipActor : MonoBehaviour
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
     public void SetTooltip(ActorTooltipData data)
     {
-
+        bool isResistance = true;
+        if (GameManager.instance.sideScript.PlayerSide.level == 1) { isResistance = false; }
         //open panel at start
         tooltipActorObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -148,7 +149,9 @@ public class TooltipActor : MonoBehaviour
         dividerMiddleUpper.gameObject.SetActive(false);
         dividerMiddleLower.gameObject.SetActive(false);
         dividerBottom.gameObject.SetActive(true);
-        dividerGear.gameObject.SetActive(true);
+        if (isResistance == true)
+        { dividerGear.gameObject.SetActive(true); }
+        else { dividerGear.gameObject.SetActive(false); }
         dividerSecrets.gameObject.SetActive(true);
         if (data.actor != null)
         {
@@ -260,15 +263,18 @@ public class TooltipActor : MonoBehaviour
             actorStats.text = builder.ToString();
         }
         //Gear
-        if (data.gear != null)
+        if (isResistance == true)
         {
-            //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
-            if (data.actor.GetGearTimer() <= gracePeriod)
-            { actorGear.text = string.Format("{0}Gear{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
-            else
-            { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
+            if (data.gear != null)
+            {
+                //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
+                if (data.actor.GetGearTimer() <= gracePeriod)
+                { actorGear.text = string.Format("{0}Gear{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
+                else
+                { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
+            }
+            else { actorGear.text = string.Format("{0}<size=95%>No Gear</size>{1}", colourGrey, colourEnd); }
         }
-        else { actorGear.text = string.Format("{0}<size=95%>No Gear</size>{1}", colourGrey, colourEnd); }
         //Secrets
         if (data.listOfSecrets != null && data.listOfSecrets.Count > 0)
         {

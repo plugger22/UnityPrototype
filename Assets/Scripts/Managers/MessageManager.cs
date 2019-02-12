@@ -275,6 +275,9 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Random;
             data.side = message.side;
             data.help = 1;
+            data.tag0 = "roll_0";
+            data.tag1 = "roll_1";
+            data.tag2 = "roll_2";
             //add (message only if a meaningful outcome)
             if (isReversed == false)
             { if (numRolled >= numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }

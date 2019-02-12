@@ -184,8 +184,33 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
-
-
+        //
+        // - - - Random Rolls - - -
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "roll_0";
+        data.header = "Random Rolls";
+        builder = new StringBuilder();
+        builder.AppendFormat("Various events within the game require random rolls. Important ones are shown here in the {0}Random{1} tab. ", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //good rolls
+        data = new HelpData();
+        data.tag = "roll_1";
+        data.header = "Good Rolls";
+        builder = new StringBuilder();
+        builder.AppendFormat("If a successful roll indicates a {0}GOOD{1} outcome from the Player's point of view, the header is shown in {2}GREEN{3}.", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //bad rolls
+        data = new HelpData();
+        data.tag = "roll_2";
+        data.header = "Bad Rolls";
+        builder = new StringBuilder();
+        builder.AppendFormat("If a successful roll indicates a {0}BAD{1} outcome from the Player's point of view, the header is shown in {2}RED{3}.", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
         //
         // - - - Actor Conflict
         //

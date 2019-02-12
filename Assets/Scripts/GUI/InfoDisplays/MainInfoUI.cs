@@ -1201,17 +1201,17 @@ public class MainInfoUI : MonoBehaviour
                 break;
             case ItemTab.Effects:
                 textTop = "Ongoing Effects";
-                builder.AppendFormat("All effects currently impacting{0}the game", "\n");
+                builder.AppendFormat("<b>All effects currently impacting{0}the game</b>", "\n");
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("Sorted by type{0}{1}Mouseover {2}<b>Icons</b>{3} to see type", "\n", "\n", colourNeutral, colourEnd);
                 break;
             case ItemTab.Traits:
                 textTop = "Traits Used";
-                builder.AppendFormat("{0}All traits used by Subordinates{1}{2}at the start of this or the previous day", colourNeutral, colourEnd, "\n");
+                builder.AppendFormat("{0}<b>All traits used by Subordinates</b>{1}{2}{3}at the start of this or the previous day", colourNeutral, colourEnd, "\n", "\n");
                 break;
             case ItemTab.Random:
                 textTop = "Random Outcomes";
-                builder.AppendFormat("{0}All important events that required{1}{2}a random roll are shown here", colourNeutral, colourEnd, "\n");
+                builder.AppendFormat("{0}<b>All important events that required{1}{2}a random roll are shown here</b>", colourNeutral, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
                 builder.Append("Events are for the start of this or the Previous day");
                 builder.AppendLine(); builder.AppendLine();
