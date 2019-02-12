@@ -57,6 +57,10 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 10)] public int stressLeaveCost = 2;
 
     [Header("Gear Use")]
+    [Tooltip("Chance of a suitable piece of gear being available for a task when there are SIX gear points in the gear pool")]
+    [Range(0, 100)] public int gearAvailableSix = 70;
+    [Tooltip("Chance of a suitable piece of gear being available for a task when there are FIVE gear points in the gear pool")]
+    [Range(0, 100)] public int gearAvailableFive = 60;
     [Tooltip("Chance of a suitable piece of gear being available for a task when there are FOUR gear points in the gear pool")]
     [Range(0, 100)] public int gearAvailableFour = 50;
     [Tooltip("Chance of a suitable piece of gear being available for a task when there are THREE gear points in the gear pool")]
@@ -66,7 +70,7 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Chance of a suitable piece of gear being available for a task when there is ONE gear points in the gear pool")]
     [Range(0, 100)] public int gearAvailableOne = 20;
     [Tooltip("Maxium number of gear points that can be in the gear pool. Change this and you need to refactor the code")]
-    [Range(4, 4)] public int gearPoolMaxSize = 4;
+    [Range(6, 6)] public int gearPoolMaxSize = 6;
 
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
@@ -1492,8 +1496,11 @@ public class AIRebelManager : MonoBehaviour
             {
                 if (connection.SecurityLevel != ConnectionType.None)
                 {
-
-                    UpdateInvisibility(connection, node);
+                    //is their gear available?
+                    if (CheckGearAvailable() == true)
+                    { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: GEAR USED to remain unnoticed while moving{0}", "\n"); }
+                    else
+                    { UpdateInvisibility(connection, node); }
                 }
             }
             else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
@@ -1732,6 +1739,7 @@ public class AIRebelManager : MonoBehaviour
 
     /// <summary>
     /// returns true if a suitable piece of gear is available for the specified task. Chance is proportional to the number of gear points in the pool, more the points, greater the chance
+    /// If availabe will deduct a gear point from the gear pool as it's assumed that the gear will be used
     /// </summary>
     /// <returns></returns>
     private bool CheckGearAvailable()
@@ -1741,8 +1749,8 @@ public class AIRebelManager : MonoBehaviour
         int threshold = -1;
         switch (gearPool)
         {
-            case 6:
-            case 5:
+            case 6: threshold = gearAvailableSix; break;
+            case 5: threshold = gearAvailableFive; break;
             case 4: threshold = gearAvailableFour; break;
             case 3: threshold = gearAvailableThree; break;
             case 2: threshold = gearAvailableTwo; break;
@@ -1755,6 +1763,8 @@ public class AIRebelManager : MonoBehaviour
         if (rnd < threshold)
         {
             isAvailable = true;
+            //deduct one gear point from gear pool (automatically used, no option to recover or retain gear)
+            gearPool--;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n");
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is NOT Available, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n"); }

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c33c17f4b30f864e990a55fc57c64b2, type: 3}
-  m_Name: Default
+  m_Name: The Raddish (default)
   m_EditorClassIdentifier: 
   tag: The Raddish
   leaderName: Errol Wallace
@@ -17,6 +17,7 @@ MonoBehaviour:
     distinctive personal body aroma.
   designNotes: Standard, default, opponent
   moveChance: 50
+  gearPoints: 6
   stressLeavePlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   stressLeaveActor: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   movePriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}

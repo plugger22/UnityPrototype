@@ -200,6 +200,8 @@ MonoBehaviour:
   lieLowZero: 40
   lieLowChanceActor: 75
   stressLeaveCost: 2
+  gearAvailableSix: 70
+  gearAvailableFive: 60
   gearAvailableFour: 50
   gearAvailableThree: 40
   gearAvailableTwo: 30
@@ -2029,7 +2031,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 20
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1
