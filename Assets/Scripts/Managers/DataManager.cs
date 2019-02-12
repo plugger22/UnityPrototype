@@ -3645,6 +3645,22 @@ public class DataManager : MonoBehaviour
     { return arrayOfActorsPresent; }
 
     /// <summary>
+    /// returns the number of active OnMap actors for a side
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfActiveActors(GlobalSide side)
+    {
+        int numOfActors = 0;
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            if (arrayOfActorsPresent[side.level, i] == true)
+            { numOfActors++; }
+        }
+        return numOfActors;
+    }
+
+
+    /// <summary>
     /// debug method to show contents of both sides reserve lists
     /// </summary>
     /// <returns></returns>
@@ -4087,7 +4103,7 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4112,7 +4128,7 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4163,7 +4179,7 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4190,7 +4206,7 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{3}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }

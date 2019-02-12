@@ -400,14 +400,14 @@ public class PlayerManager : MonoBehaviour
                 {
                     ResetGearItem(gear);
                     listOfGear.Add(gearID);
-                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to inventory{2}", gear.name, gearID, "\n");
+                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to Player inventory{2}", gear.name, gearID, "\n");
                     CheckForAIUpdate(gear);
                     //add to listOfCurrentGear (if not already present)
                     GameManager.instance.dataScript.AddGearNew(gear);
                     return true;
                 }
                 else
-                { Debug.LogWarningFormat("Gear |'{0}\", gearID {1} is already present in inventory", gear.name, gearID);  }
+                { Debug.LogWarningFormat("Gear |'{0}\", gearID {1} is already present in Player inventory", gear.name, gearID);  }
             }
             else
             { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }

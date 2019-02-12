@@ -128,6 +128,9 @@ public class AIRebelManager : MonoBehaviour
     List<SightingData> listOfErasureSightData = new List<SightingData>();
     List<int> listOfBadNodes = new List<int>();                             //list of nodes to avoid for this turn, eg. nemesis or erasure team present (based on known info)
 
+    //Data gathering
+    List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
+
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
     List<AITask> listOfTasksCritical = new List<AITask>();
@@ -234,6 +237,7 @@ public class AIRebelManager : MonoBehaviour
             ProcessSightingData();
             ProcessTargetData();
             ProcessPeopleData();
+            ProcessActorData();
             //restore back to original state after any changes & prior to any moves, tasks, etc. Calcs will still use updated sighting data dijkstra (weighted)
             if (isConnectionsChanged == true)
             { RestoreConnections(); }
@@ -306,6 +310,7 @@ public class AIRebelManager : MonoBehaviour
         listOfNemesisSightData.Clear();
         listOfErasureSightData.Clear();
         listOfBadNodes.Clear();
+        listOfArcs.Clear();
         //
         // - - - Sighting Reports
         //
@@ -926,7 +931,32 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+    }
 
+    /// <summary>
+    /// determines which set of actor arcs are valid for use this turn. One actor arc is randomly chosen for each Active, onMap, actor present
+    /// </summary>
+    private void ProcessActorData()
+    {
+        int index;
+        //get by value as we'll be deleting
+        Dictionary<int, ActorArc> dictOfArcs = new Dictionary<int, ActorArc>(GameManager.instance.dataScript.GetDictOfActorArcs());
+        if (dictOfArcs != null)
+        {
+            List<ActorArc> tempList = dictOfArcs.Values.ToList();
+            if (tempList != null)
+            {
+                for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance); i++)
+                {
+                    index = Random.Range(0, tempList.Count);
+                    listOfArcs.Add(tempList[i]);
+                    //delete to prevent duplicates
+                    tempList.RemoveAt(i);
+                }
+            }
+            else { Debug.LogError("Invalid listOfArcs (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfArcs (Null)"); }
     }
 
 
@@ -1774,18 +1804,18 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns the number of gear items to delete from the pools upon reverting to a human resistance player. Calculated at half gear points used, rounded down
+    /// returns the number of gear items to delete from the pools upon reverting to a human resistance player. Calculated at half gear points used, rounded down, plus one
     /// </summary>
     /// <returns></returns>
-    public int GetGearUsed()
-    { return gearPointsUsed / 2; }
+    public int GetGearUsedAdjusted()
+    { return gearPointsUsed / 2 + 1; }
 
     /// <summary>
     /// returns the number of gear points within the gear Pool
     /// </summary>
     /// <returns></returns>
     public int GetGearPoints()
-    { return gearPointsUsed; }
+    { return gearPool; }
 
     //
     // - - - Tidy up - - -
@@ -1835,6 +1865,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
+        builder.AppendFormat(" Gear Used: {0}{1}", gearPointsUsed, "\n");
 
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)

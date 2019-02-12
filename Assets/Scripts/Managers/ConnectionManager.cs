@@ -141,6 +141,10 @@ public class ConnectionManager : MonoBehaviour
         List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
         if (listOfConnections != null)
         {
+            //reset back to normal prior to any changes
+            if (resetConnections == true)
+            { RestoreConnections(); }
+            //set flag as changes will be made
             resetConnections = true;
             //loop all connections regardless
             foreach (Connection conn in listOfConnections)
