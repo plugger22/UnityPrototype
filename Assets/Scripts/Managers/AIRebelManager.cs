@@ -114,6 +114,7 @@ public class AIRebelManager : MonoBehaviour
     private int priorityMedium = -1;
     private int priorityLow = -1;
     private int maxStatValue = -1;
+    private int maxNumOfOnMapActors = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     //conditions
     private Condition conditionStressed;
@@ -121,15 +122,20 @@ public class AIRebelManager : MonoBehaviour
     //tests
     private int turnForStress;
 
-    //Resistance activity
-    List<AITracker> listOfNemesisReports = new List<AITracker>();
-    List<AITracker> listOfErasureReports = new List<AITracker>();
-    List<SightingData> listOfNemesisSightData = new List<SightingData>();
-    List<SightingData> listOfErasureSightData = new List<SightingData>();
-    List<int> listOfBadNodes = new List<int>();                             //list of nodes to avoid for this turn, eg. nemesis or erasure team present (based on known info)
+    //Authority activity
+    private List<AITracker> listOfNemesisReports = new List<AITracker>();
+    private List<AITracker> listOfErasureReports = new List<AITracker>();
+    private List<SightingData> listOfNemesisSightData = new List<SightingData>();
+    private List<SightingData> listOfErasureSightData = new List<SightingData>();
+    private List<int> listOfBadNodes = new List<int>();                             //list of nodes to avoid for this turn, eg. nemesis or erasure team present (based on known info)
 
-    //Data gathering
-    List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
+    //Node and other Action data gathering
+    private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
+    private List<Node>[] arrayOfActorActions;                                       //list of nodes suitable for listOfArc[index] action
+    private bool[] arrayOfPlayerActions;                                            //flag indicates that listOfArc[index] action is possible at Player's current node
+    private bool fixerAction;                                                       //flag indicates that a fixer action is possible (provided fixer is in listOfArcs)
+    private bool recruitAction;                                                     //flag indicates that a recruit action is possible (provide recruiter is in listOfArcs)
+    
 
     //tasks
     List<AITask> listOfTasksPotential = new List<AITask>();
@@ -158,6 +164,7 @@ public class AIRebelManager : MonoBehaviour
         priorityLow = GameManager.instance.aiScript.priorityLowWeight;
         turnForStress = GameManager.instance.testScript.stressTurnResistance;
         maxStatValue = GameManager.instance.actorScript.maxStatValue;
+        maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -167,6 +174,12 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
+        Debug.Assert(maxNumOfOnMapActors > -1, "Invalid maxNumOfOnMapActors (-1)");
+        //collections
+        arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
+        for (int i = 0; i < arrayOfActorActions.Length; i++)
+        { arrayOfActorActions[i] = new List<Node>(); }
+        arrayOfPlayerActions = new bool[maxNumOfOnMapActors];
         //player (human / AI revert to human)
         playerName = GameManager.instance.playerScript.GetPlayerNameResistance();
         playerTag = GameManager.instance.scenarioScript.scenario.leaderResistance.tag;
@@ -258,6 +271,7 @@ public class AIRebelManager : MonoBehaviour
                     ProcessAdminTask();
                     ProcessMoveTask();
                     ProcessPeopleTask();
+                    ProcessActorTask();
                     ProcessIdleTask();
                 }
                 //task Execution
@@ -375,6 +389,21 @@ public class AIRebelManager : MonoBehaviour
     {
         listOfTasksPotential.Clear();
         listOfTasksCritical.Clear();
+        //actor & player actions
+        for (int i = 0; i < arrayOfActorActions.Length; i++)
+        {
+            List<Node> tempList = arrayOfActorActions[i];
+            if (tempList != null)
+            { tempList.Clear(); }
+            else { Debug.LogErrorFormat("Invalid tempList <Node> (Null) in arrayOfActorActions[\"{0}\"]", i); }
+        }
+        for (int i = 0; i < arrayOfPlayerActions.Length; i++)
+        {
+            //reset to false
+            arrayOfPlayerActions[i] = false;
+        }
+        fixerAction = false;
+        recruitAction = false;
     }
 
     /// <summary>
@@ -940,23 +969,20 @@ public class AIRebelManager : MonoBehaviour
     {
         int index;
         //get by value as we'll be deleting
-        Dictionary<int, ActorArc> dictOfArcs = new Dictionary<int, ActorArc>(GameManager.instance.dataScript.GetDictOfActorArcs());
-        if (dictOfArcs != null)
+        List<ActorArc> tempList = new List<ActorArc>(GameManager.instance.dataScript.GetListOfResistanceActorArcs());
+        if (tempList != null)
         {
-            List<ActorArc> tempList = dictOfArcs.Values.ToList();
-            if (tempList != null)
+            int limit = GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance);
+            for (int i = 0; i < limit; i++)
             {
-                for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance); i++)
-                {
-                    index = Random.Range(0, tempList.Count);
-                    listOfArcs.Add(tempList[i]);
-                    //delete to prevent duplicates
-                    tempList.RemoveAt(i);
-                }
+                index = Random.Range(0, tempList.Count);
+                listOfArcs.Add(tempList[index]);
+                Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessActorData: {0} actorArc added to list{1}", tempList[index].name, "\n");
+                //delete to prevent duplicates
+                tempList.RemoveAt(index);
             }
-            else { Debug.LogError("Invalid listOfArcs (Null)"); }
         }
-        else { Debug.LogError("Invalid dictOfArcs (Null)"); }
+        else { Debug.LogError("Invalid tempList ActorArcs (Null)"); }
     }
 
 
@@ -1309,7 +1335,43 @@ public class AIRebelManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Actor and Player actor action tasks. One task is generated for each ActorArc in listOfActorArcs
+    /// </summary>
+    private void ProcessActorTask()
+    {
+        for (int index = 0; index < listOfArcs.Count; index++)
+        {
+            switch (listOfArcs[index].name)
+            {
+                case "ANARCHIST":
+                    break;
+                case "BLOGGER":
+                    break;
+                case "FIXER":
+                    break;
+                case "HACKER":
+                    break;
+                case "HEAVY":
+                    break;
+                case "OBSERVER":
+                    break;
+                case "OPERATOR":
+                    break;
+                case "PLANNER":
+                    break;
+                case "RECRUITER":
+                    break;
+                default:
+                    Debug.LogErrorFormat("Unrecognised Actor Arc \"{0}\"", listOfArcs[index].name);
+                    break;
+            }
+        }
+    }
 
+    /// <summary>
+    /// deals with people specific tasks, eg. Stress Leave
+    /// </summary>
     private void ProcessPeopleTask()
     {
         //
