@@ -1379,6 +1379,7 @@ public class AIRebelManager : MonoBehaviour
                 case "ANARCHIST":
                     break;
                 case "BLOGGER":
+                    ProcessBloggerTask();
                     break;
                 case "FIXER":
                     ProcessFixerTask();
@@ -1462,6 +1463,23 @@ public class AIRebelManager : MonoBehaviour
                 AddWeightedTask(task);
             }
         }
+    }
+
+
+    /// <summary>
+    /// Blogger Actor Arc task.
+    /// </summary>
+    private void ProcessBloggerTask()
+    {
+        //generate task
+        AITask task = new AITask();
+        task.type = AITaskType.ActorArc;
+        task.data0 = gearPoolTopUp;
+        task.name0 = "BLOGGER";
+        task.priority = priorityBloggerTask;
+        //add task to list of potential tasks
+        AddWeightedTask(task);
+
     }
 
     /// <summary>
