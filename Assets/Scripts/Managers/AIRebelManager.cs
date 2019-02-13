@@ -71,6 +71,10 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 100)] public int gearAvailableOne = 20;
     [Tooltip("Maxium number of gear points that can be in the gear pool. Change this and you need to refactor the code")]
     [Range(6, 6)] public int gearPoolMaxSize = 6;
+    [Tooltip("Threshold at which below the Fixer action will trigger")]
+    [Range(0, 10)] public int gearPoolThreshold = 3;
+    [Tooltip("If a Fixer action occurs this is how many extra gear Points will be generated")]
+    [Range(0, 10)] public int gearPoolTopUp = 2;
 
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
@@ -101,7 +105,16 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityStressLeaveActor;
     private Priority priorityMovePlayer;
     private Priority priorityIdlePlayer;
-        
+    private Priority priorityFixerTask;
+    private Priority priorityAnarchistTask;
+    private Priority priorityBloggerTask;
+    private Priority priorityHackerTask;
+    private Priority priorityHeavyTask;
+    private Priority priorityObserverTask;
+    private Priority priorityOperatorTask;
+    private Priority priorityPlannerTask;
+    private Priority priorityRecruiterTask;
+
 
     //fast access
     private string playerName;
@@ -133,8 +146,8 @@ public class AIRebelManager : MonoBehaviour
     private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
     private List<Node>[] arrayOfActorActions;                                       //list of nodes suitable for listOfArc[index] action
     private bool[] arrayOfPlayerActions;                                            //flag indicates that listOfArc[index] action is possible at Player's current node
-    private bool fixerAction;                                                       //flag indicates that a fixer action is possible (provided fixer is in listOfArcs)
-    private bool recruitAction;                                                     //flag indicates that a recruit action is possible (provide recruiter is in listOfArcs)
+    /*private bool fixerAction;                                                       //flag indicates that a fixer action is possible (provided fixer is in listOfArcs)
+    private bool recruitAction;                                                     //flag indicates that a recruit action is possible (provide recruiter is in listOfArcs)*/
     
 
     //tasks
@@ -195,10 +208,28 @@ public class AIRebelManager : MonoBehaviour
         priorityStressLeaveActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeaveActor);
         priorityMovePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.movePriority);
         priorityIdlePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.idlePriority);
+        priorityAnarchistTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskAnarchist);
+        priorityBloggerTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskBlogger);
+        priorityFixerTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskFixer);
+        priorityHackerTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskHacker);
+        priorityHeavyTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskHeavy);
+        priorityObserverTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskObserver);
+        priorityOperatorTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskOperator);
+        priorityPlannerTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskPlanner);
+        priorityRecruiterTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskRecruiter);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
         Debug.Assert(priorityIdlePlayer != Priority.None, "Invalid priorityIdlePlayer (None)");
+        Debug.Assert(priorityAnarchistTask != Priority.None, "Invalid priorityAnarchistTask (None)");
+        Debug.Assert(priorityBloggerTask != Priority.None, "Invalid priorityBloggerTask (None)");
+        Debug.Assert(priorityFixerTask != Priority.None, "Invalid priorityFixerTask (None)");
+        Debug.Assert(priorityHackerTask != Priority.None, "Invalid priorityHackerTask (None)");
+        Debug.Assert(priorityHeavyTask != Priority.None, "Invalid priorityHeavyTask (None)");
+        Debug.Assert(priorityObserverTask != Priority.None, "Invalid priorityObserverTask (None)");
+        Debug.Assert(priorityOperatorTask != Priority.None, "Invalid priorityOperatorTask (None)");
+        Debug.Assert(priorityPlannerTask != Priority.None, "Invalid priorityPlannerTask (None)");
+        Debug.Assert(priorityRecruiterTask != Priority.None, "Invalid priorityRecruiterTask (None)");
     }
 
     /// <summary>
@@ -271,7 +302,7 @@ public class AIRebelManager : MonoBehaviour
                     ProcessAdminTask();
                     ProcessMoveTask();
                     ProcessPeopleTask();
-                    ProcessActorTask();
+                    ProcessActorArcTask();
                     ProcessIdleTask();
                 }
                 //task Execution
@@ -402,8 +433,8 @@ public class AIRebelManager : MonoBehaviour
             //reset to false
             arrayOfPlayerActions[i] = false;
         }
-        fixerAction = false;
-        recruitAction = false;
+        /*fixerAction = false;
+        recruitAction = false;*/
     }
 
     /// <summary>
@@ -1338,10 +1369,11 @@ public class AIRebelManager : MonoBehaviour
     /// <summary>
     /// Actor and Player actor action tasks. One task is generated for each ActorArc in listOfActorArcs
     /// </summary>
-    private void ProcessActorTask()
+    private void ProcessActorArcTask()
     {
         for (int index = 0; index < listOfArcs.Count; index++)
         {
+            //each branches to an sub method that generates a task
             switch (listOfArcs[index].name)
             {
                 case "ANARCHIST":
@@ -1349,6 +1381,7 @@ public class AIRebelManager : MonoBehaviour
                 case "BLOGGER":
                     break;
                 case "FIXER":
+                    ProcessFixerTask();
                     break;
                 case "HACKER":
                     break;
@@ -1404,9 +1437,31 @@ public class AIRebelManager : MonoBehaviour
         task.type = AITaskType.Idle;
         task.data0 = GameManager.instance.nodeScript.nodePlayer;
         task.data1 = playerID;
-        task.priority = priorityIdlePlayer;
+        task.priority = priorityIdlePlayer;        
         //add task to list of potential tasks
         AddWeightedTask(task);
+    }
+
+    /// <summary>
+    /// Fixer Actor Arc task to get extra gear points. Data0 is the amount to top up the gear pool, name0 is the actor arc name
+    /// </summary>
+    private void ProcessFixerTask()
+    {
+        //is the gear pool below the threshold
+        if (gearPool < gearPoolThreshold)
+        {
+            if (gearPool < gearPoolMaxSize)
+            {
+                //generate task
+                AITask task = new AITask();
+                task.type = AITaskType.ActorArc;
+                task.data0 = gearPoolTopUp;
+                task.name0 = "FIXER";
+                task.priority = priorityFixerTask;
+                //add task to list of potential tasks
+                AddWeightedTask(task);
+            }
+        }
     }
 
     /// <summary>
@@ -1515,12 +1570,13 @@ public class AIRebelManager : MonoBehaviour
             if (count > 0)
             {
 
-                /*//debug
+                //debug
                 for (int i = 0; i < count; i++)
                 {
                     AITask tempTask = listOfTasksPotential[i];
-                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, data0 {2}, data1 {3}{4}", tempTask.type, tempTask.priority, tempTask.data0, tempTask.data1, "\n");
-                }*/
+                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, data0: {2}, data1: {3}, name0: {4}{5}", tempTask.type, tempTask.priority, 
+                        tempTask.data0, tempTask.data1, tempTask.name0, "\n");
+                }
 
                 //select a task from listOfPotential Tasks
                 if (count > 1)
@@ -1554,6 +1610,9 @@ public class AIRebelManager : MonoBehaviour
                 break;
             case AITaskType.StressLeave:
                 ExecuteStressLeaveTask(task);
+                break;
+            case AITaskType.ActorArc:
+                ExecuteActorArcTask(task);
                 break;
             case AITaskType.Idle:
                 ExecuteIdleTask(task);
@@ -1743,6 +1802,53 @@ public class AIRebelManager : MonoBehaviour
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteStressLeaveTask: WARNING Insufficient resources {0} (need {1}) for Stress Leave{2}", resources, stressLeaveCost, "\n"); }
         }
         else { Debug.LogError("Invalid Task (null)"); }
+    }
+
+    /// <summary>
+    /// actor/player executes an actor arc task. task.name0 is the actorArc name
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteActorArcTask(AITask task)
+    {
+        if (task != null)
+        {
+            switch (task.name0)
+            {
+                case "ANARCHIST":
+                    break;
+                case "BLOGGER":
+                    break;
+                case "FIXER":
+                    ExecuteFixerTask(task.data0);
+                    break;
+                case "HACKER":
+                    break;
+                case "HEAVY":
+                    break;
+                case "OBSERVER":
+                    break;
+                case "OPERATOR":
+                    break;
+                case "PLANNER":
+                    break;
+                case "RECRUITER":
+                    break;
+                default:
+                    Debug.LogErrorFormat("Unrecognised task.name0 \"{0}\"", task.name0);
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid Task (null)"); }
+    }
+
+
+    private void ExecuteFixerTask(int gearPoints)
+    {
+        gearPool += gearPoints;
+        gearPool = Mathf.Min(gearPoolMaxSize, gearPool);
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: Fixer action, +{0} gearPoints, gearPool now {1} (max size {2}){3}", gearPoints, gearPool, gearPoolMaxSize, "\n");
+        //expend an action
+        UseAction("get gear points (FIXER)");
     }
 
     /// <summary>

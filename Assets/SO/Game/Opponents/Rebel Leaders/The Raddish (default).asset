@@ -22,3 +22,12 @@ MonoBehaviour:
   stressLeaveActor: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   movePriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   idlePriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  taskAnarchist: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskBlogger: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskFixer: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  taskHacker: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskHeavy: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskObserver: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskOperator: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskPlanner: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  taskRecruiter: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}

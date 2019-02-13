@@ -26,7 +26,7 @@ public class RebelLeader : ScriptableObject
     [Tooltip("Amount of starting gear points in the gear pool (NOTE: will automatically be adjusted downwards if greater than the maximum allowable amount)")]
     public int gearPoints = 2;
 
-    [Header("Priorities (can only be Low / med / high)")]
+    [Header("Priorities (Low/Med/High)")]
     [Tooltip("Player going on stress leave. Default Medium")]
     public GlobalChance stressLeavePlayer;
     [Tooltip("Actor going on stress leave. Default Low")]
@@ -35,4 +35,24 @@ public class RebelLeader : ScriptableObject
     public GlobalChance movePriority;
     [Tooltip("Player Idling. Default Low")]
     public GlobalChance idlePriority;
+
+    [Header("Task Priorities (Low/Med/High)")]
+    [Tooltip("Priority for any actor / player Anarchist Task")]
+    public GlobalChance taskAnarchist;
+    [Tooltip("Priority for any actor / player Blogger Task")]
+    public GlobalChance taskBlogger;
+    [Tooltip("Priority for any actor / player Fixer Task")]
+    public GlobalChance taskFixer;
+    [Tooltip("Priority for any actor / player Hacker Task")]
+    public GlobalChance taskHacker;
+    [Tooltip("Priority for any actor / player Heavy Task")]
+    public GlobalChance taskHeavy;
+    [Tooltip("Priority for any actor / player Observer Task")]
+    public GlobalChance taskObserver;
+    [Tooltip("Priority for any actor / player Operator Task")]
+    public GlobalChance taskOperator;
+    [Tooltip("Priority for any actor / player Planner Task")]
+    public GlobalChance taskPlanner;
+    [Tooltip("Priority for any actor / player Recruiter Task")]
+    public GlobalChance taskRecruiter;
 }
