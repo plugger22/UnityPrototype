@@ -18,9 +18,11 @@ public class RebelLeader : ScriptableObject
     [Tooltip("Description of AI personality profile, not used in game")]
     [TextArea] public string designNotes;
 
-    [Header("Survival")]
+    [Header("Chances")]
     [Tooltip("Chance of moving in a survival situation. A high number (75%) gets the leader moving around a lot and more likely to be captured, a middle number (50%) has them lying low more often")]
-    public int moveChance = 50;
+    [Range(0, 100)] public int moveChance = 50;
+    [Tooltip("Chance of the Player taking an ActorArc action at their current node rather than an Actor")]
+    [Range(0, 100)] public int playerChance = 30;
 
     [Header("Gear")]
     [Tooltip("Amount of starting gear points in the gear pool (NOTE: will automatically be adjusted downwards if greater than the maximum allowable amount)")]

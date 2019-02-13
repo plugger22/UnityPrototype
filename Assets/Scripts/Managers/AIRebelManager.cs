@@ -101,6 +101,7 @@ public class AIRebelManager : MonoBehaviour
 
     //rebel Player profile
     private int survivalMove;                           //The % chance of AI player moving away when they are at a Bad Node
+    private int playerAction;                           //The % chance of the player doing the ActorArc action, rather than an Actor
     private Priority priorityStressLeavePlayer;
     private Priority priorityStressLeaveActor;
     private Priority priorityMovePlayer;
@@ -134,6 +135,8 @@ public class AIRebelManager : MonoBehaviour
     private Condition conditionWounded;
     //tests
     private int turnForStress;
+    //actor arcs
+    private ActorArc arcFixer;
 
     //Authority activity
     private List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -178,6 +181,7 @@ public class AIRebelManager : MonoBehaviour
         turnForStress = GameManager.instance.testScript.stressTurnResistance;
         maxStatValue = GameManager.instance.actorScript.maxStatValue;
         maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        arcFixer = GameManager.instance.dataScript.GetActorArc()
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -202,6 +206,7 @@ public class AIRebelManager : MonoBehaviour
         { isPlayer = true; }
         //Rebel leader
         survivalMove = GameManager.instance.scenarioScript.scenario.leaderResistance.moveChance;
+        playerAction = GameManager.instance.scenarioScript.scenario.leaderResistance.playerChance;
         gearPool = GameManager.instance.scenarioScript.scenario.leaderResistance.gearPoints;
         gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         priorityStressLeavePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
@@ -742,7 +747,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    private bool CheckIfNodeBad(int nodeID)
+    private bool CheckForBadNode(int nodeID)
     { return listOfBadNodes.Exists(x => nodeID == x); }
 
     /// <summary>
@@ -1079,7 +1084,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Nemesis or Erasure team in current node (sighting report)
         //
-        if (CheckIfNodeBad(playerNodeID) == true)
+        if (CheckForBadNode(playerNodeID) == true)
         {
             //first response -> Move away
             Node nodePlayer = GameManager.instance.dataScript.GetNode(playerNodeID);
@@ -1322,7 +1327,7 @@ public class AIRebelManager : MonoBehaviour
             if (nodeMoveTo != null)
             {
                 //check if moveTo node on listOfBadNodes
-                if (CheckIfNodeBad(nodeMoveTo.nodeID) == true)
+                if (CheckForBadNode(nodeMoveTo.nodeID) == true)
                 {
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node id {0} is on listOfBadNodes{1}", nodeMoveTo.nodeID, "\n");
                     //get a random neighbouring node which is good
@@ -1444,19 +1449,32 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Fixer Actor Arc task to get extra gear points. Data0 is the amount to top up the gear pool, name0 is the actor arc name
+    /// Fixer Actor Arc task to get extra gear points. Data2 is the amount to top up the gear pool, name0 is the actor arc name
     /// </summary>
     private void ProcessFixerTask()
     {
+        int actorID, nodeID;
         //is the gear pool below the threshold
         if (gearPool < gearPoolThreshold)
         {
             if (gearPool < gearPoolMaxSize)
             {
+                //Player does action?
+                if (CheckPlayerAction() == true)
+                {
+                    actorID = playerID;
+                    nodeID = GameManager.instance.nodeScript.nodePlayer;
+                }
+                else
+                {
+                    actorID = FindActor()
+                }
                 //generate task
                 AITask task = new AITask();
                 task.type = AITaskType.ActorArc;
-                task.data0 = gearPoolTopUp;
+                task.data0 = actorID;
+                task.data1 = nodeID;
+                task.data2 = gearPoolTopUp;
                 task.name0 = "FIXER";
                 task.priority = priorityFixerTask;
                 //add task to list of potential tasks
@@ -1505,7 +1523,7 @@ public class AIRebelManager : MonoBehaviour
                         Node tempNode = listOfNeighbours[i];
                         if (tempNode != null)
                         {
-                            if (CheckIfNodeBad(tempNode.nodeID) == true)
+                            if (CheckForBadNode(tempNode.nodeID) == true)
                             {
                                 //remove bad node
                                 listOfNeighbours.RemoveAt(i);
@@ -1837,7 +1855,7 @@ public class AIRebelManager : MonoBehaviour
                 case "BLOGGER":
                     break;
                 case "FIXER":
-                    ExecuteFixerTask(task.data0);
+                    ExecuteFixerTask(task.data2);
                     break;
                 case "HACKER":
                     break;
@@ -1948,6 +1966,32 @@ public class AIRebelManager : MonoBehaviour
         if (string.IsNullOrEmpty(reason) == false)
         { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION used to {0}{1}", reason, "\n"); }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION for Unknown reason{0}", "\n"); }
+    }
+
+    //
+    // - - - Utility - - -
+    //
+
+    /// <summary>
+    /// determines whether it is the Player who will carry out the ActorArc action. Player's node needs to be not bad and needs to pass a test
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckPlayerAction()
+    {
+        bool isPlayer = false;
+        int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+        //not a bad node
+        if (CheckForBadNode(playerNodeID) == false)
+        {
+            int rnd = Random.Range(0, 100);
+            //pass a random check
+            if (rnd < playerAction)
+            {
+                isPlayer = true;
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will do Action (needed {0}, rolled {1}){2}", playerAction, rnd, "\n");
+            }
+        }
+        return isPlayer;
     }
 
     //
