@@ -135,6 +135,9 @@ public class AIRebelManager : MonoBehaviour
     private Condition conditionWounded;
     //tests
     private int turnForStress;
+    //Activity notifications
+    private int delayNoSpider = -1;
+    private int delayYesSpider = -1;
     //actor arcs
     private ActorArc arcFixer;
 
@@ -180,6 +183,8 @@ public class AIRebelManager : MonoBehaviour
         turnForStress = GameManager.instance.testScript.stressTurnResistance;
         maxStatValue = GameManager.instance.actorScript.maxStatValue;
         maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
+        delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
@@ -191,7 +196,10 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         Debug.Assert(maxNumOfOnMapActors > -1, "Invalid maxNumOfOnMapActors (-1)");
+        Debug.Assert(delayNoSpider > -1, "Invalid delayNoSpider (-1)");
+        Debug.Assert(delayYesSpider > -1, "Invalid delayYesSpider (-1)");
         Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
+
         //collections
         arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
         for (int i = 0; i < arrayOfActorActions.Length; i++)
@@ -1471,7 +1479,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessFixerTask()
     {
-        int actorID, nodeID;
+        int actorID, nodeID = -1;
         //is the gear pool below the threshold
         if (gearPool < gearPoolThreshold)
         {
@@ -1716,7 +1724,7 @@ public class AIRebelManager : MonoBehaviour
                     if (CheckGearAvailable() == true)
                     { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: GEAR USED to remain unnoticed while moving{0}", "\n"); }
                     else
-                    { UpdateInvisibility(connection, node); }
+                    { UpdateInvisibilityMove(connection, node); }
                 }
             }
             else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", task.data1); }
@@ -1881,9 +1889,10 @@ public class AIRebelManager : MonoBehaviour
                 case "ANARCHIST":
                     break;
                 case "BLOGGER":
+                    ExecuteBloggerTask(task);
                     break;
                 case "FIXER":
-                    ExecuteFixerTask(task.data2);
+                    ExecuteFixerTask(task);
                     break;
                 case "HACKER":
                     break;
@@ -1905,14 +1914,55 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogError("Invalid Task (null)"); }
     }
 
-
-    private void ExecuteFixerTask(int gearPoints)
+    /// <summary>
+    /// Fixer actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteFixerTask(AITask task)
     {
-        gearPool += gearPoints;
+        string actorName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        gearPool += task.data2;
         gearPool = Mathf.Min(gearPoolMaxSize, gearPool);
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: Fixer action, +{0} gearPoints, gearPool now {1} (max size {2}){3}", gearPoints, gearPool, gearPoolMaxSize, "\n");
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: Fixer action, +{0} gearPoints, gearPool now {1} (max size {2}){3}", task.data2, gearPool, gearPoolMaxSize, "\n");
+        //expend an action -> get actor Name
+        if (task.data0 == playerID) { actorName = "Player"; isPlayer = true; }
+        else
+        {
+            actor = GameManager.instance.dataScript.GetActor(task.data0);
+            if (actor != null)
+            { actorName = actor.actorName; }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+        }
+        //get node name
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        { nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID; }
+        UseAction(string.Format("get gear points ({0}, FIXER at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
+        //gear used to stay invisible (gear can be used but there is no deduction of gear points for the AI Fixer action)
+        if (CheckGearAvailable(false) == false)
+        {
+            //invisibility drops
+            if (isPlayer == true)
+            { UpdateInvisibilityNode(node); }
+            else { UpdateInvisibilityNode(node, actor); }
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: GEAR USED to remain undetected while getting gear (gearPoint NOT lost)"); }
+    }
+
+    /// <summary>
+    /// Blogger actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteBloggerTask(AITask task)
+    {
+
         //expend an action
-        UseAction("get gear points (FIXER)");
+        UseAction("spread fake news (BLOGGER)");
     }
 
     /// <summary>
@@ -1926,12 +1976,17 @@ public class AIRebelManager : MonoBehaviour
         UseAction("Idle (Player)");
     }
 
+
+    //
+    // - - - Utility - - -
+    //
+
     /// <summary>
-    /// submethod that handles invisibility loss for ExecuteMoveTask
+    /// submethod that handles Player invisibility loss for ExecuteMoveTask
     /// NOTE: connection and node checked for null by parent method. Also it's assumed that security is > 'None'
     /// </summary>
     /// <param name="secLevel"></param>
-    private void UpdateInvisibility(Connection connection, Node node)
+    private void UpdateInvisibilityMove(Connection connection, Node node)
     {
         int changeInvisibility = 0;
         int aiPlayerInvisibility = GameManager.instance.playerScript.Invisibility;
@@ -1985,6 +2040,113 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Updates player or actor invisibility for a node action. Actor is null for Player. Handles AI activity notifications
+    /// NOTE: both node and actor are checked for null by the calling method, actor is deliberately null to indicae the Player
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void UpdateInvisibilityNode(Node node, Actor actor = null)
+    {
+        int delay = -1;
+        int actorID = -1; //player/actorID, used for AI activity notification
+        int aiInvisibility;
+        string actorName = "Unknown";
+        string actorArc = "Unknown";
+        //
+        // - - - Player - - -
+        //
+        if (actor != null)
+        {
+            actorID = playerID;
+            actorName = playerName;
+            actorArc = "Player";
+            aiInvisibility = GameManager.instance.playerScript.Invisibility;
+            //player did an action with invisibility zero
+            if (aiInvisibility == 0)
+            {
+                //delay of Zero
+                delay = 0;
+                //immediate flag true
+                GameManager.instance.aiScript.immediateFlagResistance = true;
+            }
+            aiInvisibility -= 1;
+            //double loss of invisibility if spider present
+            if (node.isSpider == true)
+            { aiInvisibility -= 1; }
+            //min cap zero
+            aiInvisibility = Mathf.Max(0, aiInvisibility);
+            //update player Invisibility
+            GameManager.instance.playerScript.Invisibility = aiInvisibility;
+            //capture check
+            if (aiInvisibility == 0)
+            {
+                //Erasure team picks up player immediately if invisibility 0
+                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
+                if (captureDetails != null)
+                {
+                    //Player captured!
+                    captureDetails.effects = "They kicked in the door before you could run";
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
+                }
+            }
+        }
+        //
+        // - - - Actor - - -
+        //
+        else
+        {
+            actorID = actor.actorID;
+            actorName = actor.actorName;
+            actorArc = actor.arc.name;
+            aiInvisibility = actor.datapoint2;
+            //actor did an action with invisibility zero
+            if (aiInvisibility == 0)
+            {
+                //delay of Zero
+                delay = 0;
+                //immediate flag true
+                GameManager.instance.aiScript.immediateFlagResistance = true;
+            }
+            aiInvisibility -= 1;
+            //double loss of invisibility if spider present
+            if (node.isSpider == true)
+            { aiInvisibility -= 1; }
+            //min cap zero
+            aiInvisibility = Mathf.Max(0, aiInvisibility);
+            //update actor Invisibility
+            actor.datapoint2 = aiInvisibility;
+            //capture check
+            if (aiInvisibility == 0)
+            {
+                //Erasure team picks up actor immediately if invisibility 0
+                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
+                if (captureDetails != null)
+                {
+                    //actor captured!
+                    captureDetails.effects = "They got you";
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
+                }
+            }
+        }
+        //
+        // - - - Notification of Resistance activity - - -
+        //
+        if (delay < 0)
+        {
+            if (node.isSpider == true) { delay = delayYesSpider; }
+            else { delay = delayNoSpider; }
+        }
+        string text = string.Format("Resistance Activity \"{0}\" ({1})", actorArc, actorName);
+        GameManager.instance.messageScript.AINodeActivity(text, node, actorID, delay);
+        //AI Immediate message
+        if (GameManager.instance.aiScript.immediateFlagResistance == true)
+        {
+            text = string.Format("Immediate Activity \"{0}\" ({1})", actorArc, actorName);
+            string reason = "district action";
+            GameManager.instance.messageScript.AIImmediateActivity(text, reason, node.nodeID, -1, actorID);
+        }
+    }
+
+    /// <summary>
     /// Action used, message to that effect. Reason in format 'Action used to ... [reason]'
     /// </summary>
     /// <param name="reason"></param>
@@ -1996,9 +2158,6 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION for Unknown reason{0}", "\n"); }
     }
 
-    //
-    // - - - Utility - - -
-    //
 
     /// <summary>
     /// determines whether it is the Player who will carry out the ActorArc action. Player's node needs to be not bad and needs to pass a test
@@ -2086,10 +2245,10 @@ public class AIRebelManager : MonoBehaviour
 
     /// <summary>
     /// returns true if a suitable piece of gear is available for the specified task. Chance is proportional to the number of gear points in the pool, more the points, greater the chance
-    /// If availabe will deduct a gear point from the gear pool as it's assumed that the gear will be used
+    /// If availabe will deduct a gear point from the gear pool as it's assumed that the gear will be used (unless isDeductGearPoint set false)
     /// </summary>
     /// <returns></returns>
-    private bool CheckGearAvailable()
+    private bool CheckGearAvailable(bool isDeductGearPoint = true)
     {
         bool isAvailable = false;
         int rnd = Random.Range(0, 100);
@@ -2110,10 +2269,13 @@ public class AIRebelManager : MonoBehaviour
         if (rnd < threshold)
         {
             isAvailable = true;
-            //deduct one gear point from gear pool (automatically used, no option to recover or retain gear)
-            gearPool--;
-            gearPointsUsed++;
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n");
+            if (isDeductGearPoint == true)
+            {
+                //deduct one gear point from gear pool (automatically used, no option to recover or retain gear)
+                gearPool--;
+                gearPointsUsed++;
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n");
+            }
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is NOT Available, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n"); }
         return isAvailable;
