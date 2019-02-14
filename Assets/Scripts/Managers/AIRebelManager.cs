@@ -149,8 +149,7 @@ public class AIRebelManager : MonoBehaviour
     private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
     private List<Node>[] arrayOfActorActions;                                       //list of nodes suitable for listOfArc[index] action
     private bool[] arrayOfPlayerActions;                                            //flag indicates that listOfArc[index] action is possible at Player's current node
-    /*private bool fixerAction;                                                       //flag indicates that a fixer action is possible (provided fixer is in listOfArcs)
-    private bool recruitAction;                                                     //flag indicates that a recruit action is possible (provide recruiter is in listOfArcs)*/
+    private List<Actor> listOfCurrentActors = new List<Actor>();                    //list of current onMap, Active, actors at start of each action
     
 
     //tasks
@@ -181,7 +180,7 @@ public class AIRebelManager : MonoBehaviour
         turnForStress = GameManager.instance.testScript.stressTurnResistance;
         maxStatValue = GameManager.instance.actorScript.maxStatValue;
         maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        arcFixer = GameManager.instance.dataScript.GetActorArc()
+        arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -192,6 +191,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         Debug.Assert(maxNumOfOnMapActors > -1, "Invalid maxNumOfOnMapActors (-1)");
+        Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
         //collections
         arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
         for (int i = 0; i < arrayOfActorActions.Length; i++)
@@ -438,8 +438,7 @@ public class AIRebelManager : MonoBehaviour
             //reset to false
             arrayOfPlayerActions[i] = false;
         }
-        /*fixerAction = false;
-        recruitAction = false;*/
+        listOfCurrentActors.Clear();
     }
 
     /// <summary>
@@ -610,7 +609,7 @@ public class AIRebelManager : MonoBehaviour
                         listOfNemesisSightData.Add(sighting);
                         /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfNemesisSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");*/
                     }
-                    else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
+                    else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker d0: {0}, d1: {1}, turn {2}", tracker.data0, tracker.data1, tracker.turn); }
                 }
                 else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfNemesisReports[{0}]", i); }
             }
@@ -638,7 +637,7 @@ public class AIRebelManager : MonoBehaviour
                         listOfErasureSightData.Add(sighting);
                         /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSightingData: listOfErasureSightData.Add( nodeID {0} priority \"{1}\"){2}", sighting.nodeID, sighting.priority, "\n");*/
                     }
-                    else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker data0 {0} data1 {1} turn {2}", tracker.data0, tracker.data1, tracker.turn); }
+                    else { Debug.LogWarningFormat("Invalid sightingData (Null) for tracker d0: {0},  d1 {1}, turn {2}", tracker.data0, tracker.data1, tracker.turn); }
                 }
                 else { Debug.LogErrorFormat("Invalid tracker (Null) for listOfErasureReports[{0}]", i); }
             }
@@ -1376,6 +1375,25 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessActorArcTask()
     {
+        //create a list of all active, current, onMap actors (used for AI decision logic)
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    { listOfCurrentActors.Add(actor); }
+                }
+            }
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessActorArcTask: listOfCurrentActors has {0} records{1}", listOfCurrentActors.Count, "\n");
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+
+        //loop arcs and create a task for each
         for (int index = 0; index < listOfArcs.Count; index++)
         {
             //each branches to an sub method that generates a task
@@ -1467,18 +1485,27 @@ public class AIRebelManager : MonoBehaviour
                 }
                 else
                 {
-                    actorID = FindActor()
+                    actorID = FindActor(arcFixer);
+                    nodeID = FindNodeRandom(actorID);
                 }
-                //generate task
-                AITask task = new AITask();
-                task.type = AITaskType.ActorArc;
-                task.data0 = actorID;
-                task.data1 = nodeID;
-                task.data2 = gearPoolTopUp;
-                task.name0 = "FIXER";
-                task.priority = priorityFixerTask;
-                //add task to list of potential tasks
-                AddWeightedTask(task);
+                if (actorID > -1)
+                {
+                    if (nodeID > -1)
+                    {
+                        //generate task
+                        AITask task = new AITask();
+                        task.type = AITaskType.ActorArc;
+                        task.data0 = actorID;
+                        task.data1 = nodeID;
+                        task.data2 = gearPoolTopUp;
+                        task.name0 = "FIXER";
+                        task.priority = priorityFixerTask;
+                        //add task to list of potential tasks
+                        AddWeightedTask(task);
+                    }
+                    else { Debug.LogWarning("No Fixer task as invalid nodeID (-1)"); }
+                }
+                else { Debug.LogWarning("No Fixer task as invalid actorID (-1)"); }
             }
         }
     }
@@ -1610,8 +1637,8 @@ public class AIRebelManager : MonoBehaviour
                 for (int i = 0; i < count; i++)
                 {
                     AITask tempTask = listOfTasksPotential[i];
-                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, data0: {2}, data1: {3}, name0: {4}{5}", tempTask.type, tempTask.priority, 
-                        tempTask.data0, tempTask.data1, tempTask.name0, "\n");
+                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", tempTask.type, tempTask.priority, 
+                        tempTask.data0, tempTask.data1, tempTask.data2, tempTask.name0, "\n");
                 }
 
                 //select a task from listOfPotential Tasks
@@ -1634,7 +1661,8 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ExecuteTask(AITask task)
     {
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: task {0}, {1} priority, data0 {2}, data1 {3}{4}", task.type, task.priority, task.data0, task.data1, "\n");
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: task {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", task.type, task.priority, task.data0, task.data1, 
+            task.data2, task.name0, "\n");
         //execute taks
         switch (task.type)
         {
@@ -1993,6 +2021,64 @@ public class AIRebelManager : MonoBehaviour
         }
         return isPlayer;
     }
+
+    /// <summary>
+    /// Checks onMap actors to see if that actorArc is present, if so returns actorID, if not randomly selects one onMap actor and returns their actorID. Returns -1 if a problem
+    /// </summary>
+    /// <param name="arc"></param>
+    /// <returns></returns>
+    private int FindActor(ActorArc arc)
+    {
+        //is there an actor of this type present and Active
+        int actorID = GameManager.instance.dataScript.CheckActorPresent(arc.ActorArcID, globalResistance);
+        if (actorID < 0)
+        {
+            //select a random onMap, Active, actor
+            Actor actor = listOfCurrentActors[Random.Range(0, listOfCurrentActors.Count)];
+            if (actor != null)
+            { actorID = actor.actorID; }
+            else { Debug.LogError("Invalid randomly selected Actor (Null)"); }
+        }
+        return actorID;
+    }
+
+    /// <summary>
+    /// Finds a suitable node (randomly selected) that is part of the specified actor's contact network, returns -1 if a problem
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <param name="criteria"></param>
+    /// <returns></returns>
+    private int FindNodeRandom(int actorID)
+    {
+        int count;
+        int nodeID = -1;
+        //get list of all nodes where actor has an active contact. 
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfActorContacts(actorID);
+        List<int> listOfNodeID = new List<int>();
+        count = listOfNodes.Count();
+        if (count > 0)
+        {
+            //weed out any bad nodes
+            int tempNodeID;
+            for (int i = 0; i < count; i++)
+            {
+                tempNodeID = listOfNodes[i].nodeID;
+                if (CheckForBadNode(tempNodeID) == false)
+                { listOfNodeID.Add(tempNodeID); }
+            }
+            //any suitable nodes
+            count = listOfNodeID.Count;
+            if (count > 0)
+            {
+                //select random node
+                nodeID = listOfNodeID[Random.Range(0, count)];
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfNodes (Empty) for actorID {0}", actorID); }
+        return nodeID;
+    }
+
+
 
     //
     // - - - Gear - - -

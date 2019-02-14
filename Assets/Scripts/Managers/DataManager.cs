@@ -154,6 +154,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();   //Key -> nodeID, Value -> PathData
     private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();     //Key -> nodeID, Value -> PathData
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
+    private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();          //Key -> actorArc name, Value -> actorArcID
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
     private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
     private Dictionary<int, TraitEffect> dictOfTraitEffects = new Dictionary<int, TraitEffect>();   //Key -> teffID, Value -> TraitEffect
@@ -559,8 +560,34 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Gets actor arc based on actor arc name (upper case), eg. "FIXER", returns null if not found
+    /// </summary>
+    /// <param name="actorArcName"></param>
+    /// <returns></returns>
+    public ActorArc GetActorArc(string arcName)
+    {
+        ActorArc arc = null;
+        if (string.IsNullOrEmpty(arcName) == false)
+        {
+            //get ID
+            if (dictOfLookUpActorArcs.ContainsKey(arcName) == true)
+            {
+                int actorArcID = dictOfLookUpActorArcs[arcName];
+                //get ActorArc
+                if (dictOfActorArcs.TryGetValue(actorArcID, out arc))
+                { return arc; }
+            }
+        }
+        else { Debug.LogWarning("Invalid arcName parameter (Null)"); }
+        return arc;
+    }
+
     public Dictionary<int, ActorArc> GetDictOfActorArcs()
     { return dictOfActorArcs; }
+
+    public Dictionary<string, int> GetDictOfLookUpActorArcs()
+    { return dictOfLookUpActorArcs; }
 
     public List<ActorArc> GetListOfAuthorityActorArcs()
     { return authorityActorArcs; }
@@ -819,6 +846,65 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
+        return listOfNodes;
+    }
+
+    /// <summary>
+    /// return a list of all Nodes where actor has Active contacts, returns empty list if none
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public List<Node> GetListOfActorContacts(int actorID)
+    {
+        List<Node> listOfNodes = new List<Node>();
+        bool isActiveContact;
+        if (dictOfActorContacts.ContainsKey(actorID) == true)
+        {
+            List<int> listOfNodeID = new List<int>(dictOfActorContacts[actorID]);
+            if (listOfNodeID != null)
+            {
+                //loop through list and convert nodeID's to Nodes
+                for (int i = 0; i < listOfNodeID.Count; i++)
+                {
+                    //check there is an active contact for this actor at the node
+                    isActiveContact = false;
+                    List<Contact> listOfContacts = GetListOfNodeContacts(listOfNodeID[i]);
+                    if (listOfContacts != null)
+                    {
+                        //loop contacts present at node
+                        for (int j = 0; j < listOfContacts.Count; j++)
+                        {
+                            Contact contact = listOfContacts[j];
+                            if (contact != null)
+                            {
+                                if (contact.status == ContactStatus.Active)
+                                {
+                                    //correct actor
+                                    if (contact.actorID == actorID)
+                                    {
+                                        isActiveContact = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid contact (Null) for listOfContacts[{0}]", i); }
+                        }
+                    }
+                    //active contact for actor, add node to list
+                    if (isActiveContact == true)
+                    {
+                        Node node = GetNode(listOfNodeID[i]);
+                        if (node != null)
+                        {
+                            //add node to return list
+                            listOfNodes.Add(node);
+                        }
+                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodeID[i]); }
+                    }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfNodeID (null) for actorID {0}", actorID); }
+        }
         return listOfNodes;
     }
 

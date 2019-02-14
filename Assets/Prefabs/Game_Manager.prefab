@@ -1581,7 +1581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stressTurnAuthority: -1
   stressWhoAuthority: 999
-  stressTurnResistance: 10
+  stressTurnResistance: -1
   stressWhoResistance: 999
 --- !u!114 &114584680957149894
 MonoBehaviour:

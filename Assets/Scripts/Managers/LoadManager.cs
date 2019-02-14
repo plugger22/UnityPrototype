@@ -615,14 +615,17 @@ public class LoadManager : MonoBehaviour
         // - - - Actor Arcs - - 
         //
         Dictionary<int, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
+        Dictionary<string, int> dictOfLookUpActorArcs = GameManager.instance.dataScript.GetDictOfLookUpActorArcs();
         List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
         List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
+        int counterLookUp = 0;
         if (dictOfActorArcs != null)
         {
             if (authorityActorArcs != null)
             {
                 if (resistanceActorArcs != null)
                 {
+                    
                     counter = 0;
                     numArray = arrayOfActorArcs.Length;
                     for (int i = 0; i < numArray; i++)
@@ -638,6 +641,11 @@ public class LoadManager : MonoBehaviour
                             if (arc.side.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
                             else if (arc.side.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
                             else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side.name, arc.name)); }
+                            //add to lookup dictionary
+                            try
+                            { dictOfLookUpActorArcs.Add(arc.name, arc.ActorArcID); counterLookUp++; }
+                            catch (ArgumentException)
+                            { Debug.LogError(string.Format("Invalid actorArc.name (duplicate) \"{0}\" for \"{1}\"", counterLookUp, arc.name)); counterLookUp--; }
                         }
                         catch (ArgumentNullException)
                         { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
@@ -645,12 +653,17 @@ public class LoadManager : MonoBehaviour
                         { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
                     }
                     numDict = dictOfActorArcs.Count;
+                    int numDictLookup = dictOfLookUpActorArcs.Count;
                     Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", numDict, "\n");
+                    Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpActorArcs has {0} entries{1}", numDictLookup, "\n");
                     Debug.LogFormat("[Loa] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
                     Debug.LogFormat("[Loa] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
                     Debug.Assert(numDict == counter, "Mismatch on count");
+                    Debug.Assert(numDictLookup == counterLookUp, "Mismatch on Lookup Count");
                     Debug.Assert(numDict > 0, "No Actor Arcs have been imported");
+                    Debug.Assert(numDictLookup > 0, "No actorArc LookUps have been imported");
                     Debug.Assert(numArray == numDict, string.Format("Mismatch on ActorArcs count, array {0}, dict {1}", numArray, numDict));
+                    Debug.Assert(numArray == numDictLookup, string.Format("Mismatch on ActorArcs Lookup count, array {0}, dict {1}", numArray, numDictLookup));
                 }
                 else { Debug.LogError("Invalid resistanceActorArcs (Null) -> Import failed"); }
             }
