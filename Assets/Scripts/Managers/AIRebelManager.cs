@@ -302,7 +302,7 @@ public class AIRebelManager : MonoBehaviour
             int counter = 0;
             do
             {
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: commence action {0} of {1}{2}", actionsUsed + 1, actionAllowance, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: commence action {0} of {1} - - -{2}", actionsUsed + 1, actionAllowance, "\n");
                 ClearAICollectionsLate();
                 //task creation
                 if (actionsUsed == 0)
@@ -1398,6 +1398,7 @@ public class AIRebelManager : MonoBehaviour
 
         //create a task depending on the number of actorArcs but capped by number of onMap active actors
         limit = Mathf.Min(listOfArcs.Count, listOfCurrentActors.Count);
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessActorArcTask: Creating {0} Tasks (listOfArcs {1} records, listOfCurrentActors {2} records){3}", limit, listOfArcs.Count, listOfCurrentActors.Count, "\n");
         //loop arcs and create a task for each
         for (int index = 0; index < limit; index++)
         {
@@ -1494,10 +1495,8 @@ public class AIRebelManager : MonoBehaviour
                     actorID = FindActor(arcFixer);
                     nodeID = FindNodeRandom(actorID);
                 }
-                if (actorID > -1)
+                if (actorID > -1 && nodeID > -1)
                 {
-                    if (nodeID > -1)
-                    {
                         //generate task
                         AITask task = new AITask();
                         task.type = AITaskType.ActorArc;
@@ -1508,12 +1507,11 @@ public class AIRebelManager : MonoBehaviour
                         task.priority = priorityFixerTask;
                         //add task to list of potential tasks
                         AddWeightedTask(task);
-                    }
-                    else { Debug.LogWarning("No Fixer task as invalid nodeID (-1)"); }
                 }
-                else { Debug.LogWarning("No Fixer task as invalid actorID (-1)"); }
+                else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFixerTask: Invalid FIXER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
             }
         }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFixerTask: No FIXER task as gearPool {0} >= gearPoolThreshold {1}{2}", gearPool, gearPoolThreshold, "\n"); }
     }
 
 
@@ -1551,7 +1549,7 @@ public class AIRebelManager : MonoBehaviour
             //add task to list of potential tasks
             AddWeightedTask(task);
         }
-
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessBloggerTask: Invalid BLOGGER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
     }
 
     /// <summary>
@@ -2215,7 +2213,7 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogError("Invalid actorArcName (Null)"); reasonNot = "Error"; }
         if (isPlayer == true)
         { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will do {0} Action (needed {1}, rolled {2}){3}", actorArcName, playerAction, rnd, "\n"); }
-        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will NOT do {0} Action because {1}{2}", actorArcName, reasonNot, "\n"); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will not do {0} Action because {1}{2}", actorArcName, reasonNot, "\n"); }
         return isPlayer;
     }
 
@@ -2289,6 +2287,7 @@ public class AIRebelManager : MonoBehaviour
         int count;
         List<Node> listOfContactNodes = new List<Node>();
         List<Node> listOfSuitableNodes = new List<Node>();
+        List<int> listOfActorID = new List<int>();
         //get a list of all contacts nodeID's from active, onMap, actors 
         for (int i = 0; i < listOfCurrentActors.Count; i++)
         {
@@ -2298,6 +2297,8 @@ public class AIRebelManager : MonoBehaviour
             {
                 //add to list (by Value)
                 listOfContactNodes.AddRange(tempList);
+                //add actorID to list
+                listOfActorID.Add(listOfCurrentActors[i].actorID);
             }
             else { Debug.LogErrorFormat("Invalid listOfContactNodes (Null) for actorID {0}", listOfCurrentActors[i].actorID); }
         }
@@ -2306,6 +2307,14 @@ public class AIRebelManager : MonoBehaviour
         Debug.LogFormat("[Rim] AIRebelManager.cs -> FindNodeActorRandom: listOfContactNodes has {0} records{1}", count, "\n");
         if (count > 0)
         {
+            /*DebugShowList(listOfActorID);*/
+
+            //take listOfActorID's and randomly shuffle them
+            ShuffleList(listOfActorID);
+
+            /*Debug.LogFormat("[Tst] AFTER SHUFFLE{0}", "\n");
+            DebugShowList(listOfActorID);*/
+
             //loop nodes and find those that match the actorArc criteria
             for (int i = 0; i < count; i++)
             {
@@ -2320,13 +2329,49 @@ public class AIRebelManager : MonoBehaviour
         }
         //are there any suitable nodes -> if not return default values of -1 and ignore this actorArc task
         count = listOfSuitableNodes.Count();
+        List<int> listOfActorsAtNode = new List<int>();
         if (count > 0)
         {
             //see if you can match a node to an onMap actor
-
+            for (int i = 0; i < count; i++)
+            {
+                Node node = listOfSuitableNodes[i];
+                int actorToFind;
+                //already null checked, get list of actorID's who have contacts at node
+                listOfActorsAtNode = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
+                if (listOfActorsAtNode != null)
+                {
+                    //look for a match with any OnMap, active, Actor. Take the first you get (listOfActorID has been randomly shuffled so no actor is favoured)
+                    for (int index = 0; index < listOfActorsAtNode.Count; index++)
+                    {
+                        actorToFind = listOfActorsAtNode[index];
+                        if (listOfActorID.Exists(x => x == actorToFind) == true)
+                        {
+                            actorID = actorToFind;
+                            nodeID = node.nodeID;
+                            break;
+                        }
+                    }
+                }
+                //break out of loop if you found a match already
+                if (actorID > -1 && nodeID > -1)
+                {
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> FindNodeActorRandom: Match found, actorID {0}, nodeID {1}{2}", actorID, nodeID, "\n");
+                    break;
+                }
+            }
         }
-        
         return new Tuple<int, int>(nodeID, actorID);
+    }
+
+    /// <summary>
+    /// Debug method to display contents of a list
+    /// </summary>
+    /// <param name="tempList"></param>
+    private void DebugShowList(List<int> tempList)
+    {
+        for (int i = 0; i < tempList.Count; i++)
+        { Debug.LogFormat("[Tst] tempList[{0}] -> {1}{2}", i, tempList[i], "\n"); }
     }
 
     /// <summary>
@@ -2355,6 +2400,29 @@ public class AIRebelManager : MonoBehaviour
                 break;
         }
         return isValid;
+    }
+
+    /// <summary>
+    /// method to randomly shuffle a list of int's. Uses the Fisher-Yates algorithm
+    /// </summary>
+    /// <param name="tempList"></param>
+    private void ShuffleList(List<int> tempList)
+    {
+        if (tempList != null)
+        {
+            int rnd;
+            int mem;
+            int count = tempList.Count;
+            while (count > 1)
+            {
+                count--;
+                rnd = Random.Range(0, count + 1);
+                mem = tempList[rnd];
+                tempList[rnd] = tempList[count];
+                tempList[count] = mem;
+            }
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
     }
 
     //
