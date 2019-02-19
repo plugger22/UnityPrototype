@@ -75,6 +75,8 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 10)] public int gearPoolThreshold = 3;
     [Tooltip("If a Fixer action occurs this is how many extra gear Points will be generated")]
     [Range(0, 10)] public int gearPoolTopUp = 2;
+    [Tooltip("The % chance of Renown/Resource point being used to retain gear (random roll every time gear is used. Cannot send resources below zero")]
+    [Range(0, 100)] public int gearRenownChance = 20;
 
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
@@ -1407,6 +1409,7 @@ public class AIRebelManager : MonoBehaviour
             switch (actorArcName)
             {
                 case "ANARCHIST":
+                    ProcessAnarchistTask(actorArcName);
                     break;
                 case "BLOGGER":
                     ProcessBloggerTask(actorArcName);
@@ -1415,6 +1418,7 @@ public class AIRebelManager : MonoBehaviour
                     ProcessFixerTask(actorArcName);
                     break;
                 case "HACKER":
+                    ProcessHackerTask(actorArcName);
                     break;
                 case "HEAVY":
                     break;
@@ -1550,6 +1554,80 @@ public class AIRebelManager : MonoBehaviour
             AddWeightedTask(task);
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessBloggerTask: Invalid BLOGGER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+    }
+
+    /// <summary>
+    /// Hacker Actor Arc task.
+    /// NOTE: actorArcName checked for null by calling method
+    /// </summary>
+    private void ProcessHackerTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        //Player does action?
+        if (CheckPlayerAction(actorArcName) == true)
+        {
+            actorID = playerID;
+            nodeID = GameManager.instance.nodeScript.nodePlayer;
+        }
+        else
+        {
+            //get node and actorID
+            Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+            nodeID = results.Item1;
+            actorID = results.Item2;
+        }
+        //generate task if valid data is present, if none, ignore task
+        if (nodeID > -1 && actorID > -1)
+        {
+            //generate task
+            AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = "HACKER";
+            task.priority = priorityHackerTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessHackerTask: Invalid HACKER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+    }
+
+    /// <summary>
+    /// Anarchist Actor Arc task.
+    /// NOTE: actorArcName checked for null by calling method
+    /// </summary>
+    private void ProcessAnarchistTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        //Player does action?
+        if (CheckPlayerAction(actorArcName) == true)
+        {
+            actorID = playerID;
+            nodeID = GameManager.instance.nodeScript.nodePlayer;
+        }
+        else
+        {
+            //get node and actorID
+            Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+            nodeID = results.Item1;
+            actorID = results.Item2;
+        }
+        //generate task if valid data is present, if none, ignore task
+        if (nodeID > -1 && actorID > -1)
+        {
+            //generate task
+            AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = "ANARCHIST";
+            task.priority = priorityAnarchistTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAnarchistTask: Invalid HACKER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
     }
 
     /// <summary>
@@ -1911,6 +1989,7 @@ public class AIRebelManager : MonoBehaviour
             switch (task.name0)
             {
                 case "ANARCHIST":
+                    ExecuteAnarchistTask(task);
                     break;
                 case "BLOGGER":
                     ExecuteBloggerTask(task);
@@ -1919,6 +1998,7 @@ public class AIRebelManager : MonoBehaviour
                     ExecuteFixerTask(task);
                     break;
                 case "HACKER":
+                    ExecuteHackerTask(task);
                     break;
                 case "HEAVY":
                     break;
@@ -1950,32 +2030,43 @@ public class AIRebelManager : MonoBehaviour
         bool isPlayer = false;
         int nodeID = -1;
         Actor actor = null;
-        gearPool += task.data2;
-        gearPool = Mathf.Min(gearPoolMaxSize, gearPool);
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: Fixer action, +{0} gearPoints, gearPool now {1} (max size {2}){3}", task.data2, gearPool, gearPoolMaxSize, "\n");
-        //expend an action -> get actor Name
-        if (task.data0 == playerID) { actorName = "Player"; isPlayer = true; }
-        else
-        {
-            actor = GameManager.instance.dataScript.GetActor(task.data0);
-            if (actor != null)
-            { actorName = actor.actorName; }
-            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
-        }
         //get node name
         Node node = GameManager.instance.dataScript.GetNode(task.data1);
         if (node != null)
-        { nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID; }
-        UseAction(string.Format("get gear points ({0}, FIXER at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
-        //gear used to stay invisible (gear can be used but there is no deduction of gear points for the AI Fixer action)
-        if (CheckGearAvailable(false) == false)
         {
-            //invisibility drops
-            if (isPlayer == true)
-            { UpdateInvisibilityNode(node); }
-            else { UpdateInvisibilityNode(node, actor); }
+            nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
+            gearPool += task.data2;
+            gearPool = Mathf.Min(gearPoolMaxSize, gearPool);
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: Fixer action, +{0} gearPoints, gearPool now {1} (max size {2}){3}", task.data2, gearPool, gearPoolMaxSize, "\n");
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            UseAction(string.Format("get gear points ({0}, FIXER at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible (gear can be used but there is no deduction of gear points for the AI Fixer action)
+            if (CheckGearAvailable(false) == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: GEAR USED to remain undetected while getting gear (gearPoint NOT lost)"); }
         }
-        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: GEAR USED to remain undetected while getting gear (gearPoint NOT lost)"); }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
 
     /// <summary>
@@ -2003,12 +2094,22 @@ public class AIRebelManager : MonoBehaviour
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteBloggerTask: Blogger action, nodeID {0} Support {1}{2}", node.nodeID, node.Support, "\n");
 
             //expend an action -> get actor Name
-            if (task.data0 == playerID) { actorName = playerName; actorArcName = "Player"; isPlayer = true; }
+            if (task.data0 == playerID)
+            {
+                actorName = playerName;
+                actorArcName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
             else
             {
                 actor = GameManager.instance.dataScript.GetActor(task.data0);
                 if (actor != null)
-                { actorName = actor.actorName; actorArcName = actor.arc.name; }
+                {
+                    actorName = actor.actorName;
+                    actorArcName = actor.arc.name;
+                    UpdateRenown(actor);
+                }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
             //expend action
@@ -2022,6 +2123,122 @@ public class AIRebelManager : MonoBehaviour
                 else { UpdateInvisibilityNode(node, actor); }
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteBloggerTask: GEAR USED to remain undetected while increasing district Support"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
+    /// Anarchist actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteAnarchistTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            node.Stability--;
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteAnarchistTask: {0}, {1}, ID {2}, Stability now {3} (changed by +1){4}", nodeName, nodeArc, nodeID, node.Stability, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteAnarchistTask: Anarchist action, nodeID {0} Stability {1}{2}", node.nodeID, node.Stability, "\n");
+
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = playerName;
+                actorArcName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    actorArcName = actor.arc.name;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            //expend action
+            UseAction(string.Format("decrease Stability ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible 
+            if (CheckGearAvailable() == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteAnarchistTask: GEAR USED to remain undetected while decreasing district Stability"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
+    /// Hacker actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteHackerTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            node.Security--;
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteHackerTask: {0}, {1}, ID {2}, Security now {3} (changed by +1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteHackerTask: Hacker action, nodeID {0} Security {1}{2}", node.nodeID, node.Security, "\n");
+
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = playerName;
+                actorArcName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    actorArcName = actor.arc.name;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            //expend action
+            UseAction(string.Format("decrease Security ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible 
+            if (CheckGearAvailable() == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteHackerTask: GEAR USED to remain undetected while increasing district Support"); }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
@@ -2041,6 +2258,26 @@ public class AIRebelManager : MonoBehaviour
     //
     // - - - Utility - - -
     //
+
+    /// <summary>
+    /// increment renown (actors) and resources (player) as a result of taking an action. Leave actor as Null for Player.
+    /// </summary>
+    /// <param name="actor"></param>
+    private void UpdateRenown(Actor actor = null)
+    {
+        if (actor == null)
+        {
+            //Player -> Resources
+            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+            resources++;
+            GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+        }
+        else
+        {
+            //Actor
+            actor.Renown++;
+        }
+    }
 
     /// <summary>
     /// submethod that handles Player invisibility loss for ExecuteMoveTask
@@ -2452,6 +2689,16 @@ public class AIRebelManager : MonoBehaviour
                 if (node.Support < maxStatValue)
                 { isValid = true; }
                 break;
+            case "ANARCHIST":
+                //Node stability must be > 0
+                if (node.Stability > 0)
+                { isValid = true; }
+                break;
+            case "HACKER":
+                //Node security must be > 0
+                if (node.Security > 0)
+                { isValid = true; }
+                break;
             case "FIXER":
                 //can be any node
                 isValid = true;
@@ -2525,6 +2772,23 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is NOT Available, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n"); }
+        
+        if (threshold > 0)
+        {
+            //renown/resource point expended (random chance regardless of whether gear is available or not)
+            rnd = Random.Range(0, 100);
+            if (rnd < gearRenownChance)
+            {
+                //deduct one resource but cannot go below zero
+                int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                if (resources > 0)
+                {
+                    resources--;
+                    GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: 1 resource expended on Gear retention (need {0}, rolled {1}){2}", gearRenownChance, rnd, "\n");
+                }
+            }
+        }
         return isAvailable;
     }
 
