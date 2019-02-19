@@ -2028,7 +2028,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 29913
+  seed: 0
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0

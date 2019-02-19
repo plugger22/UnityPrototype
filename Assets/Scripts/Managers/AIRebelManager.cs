@@ -1662,8 +1662,12 @@ public class AIRebelManager : MonoBehaviour
                 for (int i = 0; i < count; i++)
                 {
                     AITask tempTask = listOfTasksPotential[i];
-                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", tempTask.type, tempTask.priority, 
-                        tempTask.data0, tempTask.data1, tempTask.data2, tempTask.name0, "\n");
+                    if (string.IsNullOrEmpty(tempTask.name0) == false)
+                    { Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", tempTask.type, tempTask.priority,
+                          tempTask.data0, tempTask.data1, tempTask.data2, tempTask.name0, "\n"); }
+                    else
+                    { Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}{5}", tempTask.type, tempTask.priority,
+                          tempTask.data0, tempTask.data1, tempTask.data2, "\n"); }
                 }
 
                 //select a task from listOfPotential Tasks
@@ -1686,8 +1690,11 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ExecuteTask(AITask task)
     {
-        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: task {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", task.type, task.priority, task.data0, task.data1, 
-            task.data2, task.name0, "\n");
+        if (string.IsNullOrEmpty(task.name0) == false)
+        { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: task {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", task.type, task.priority, task.data0, task.data1,
+              task.data2, task.name0, "\n"); }
+        else
+        { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTask: task {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}{5}", task.type, task.priority, task.data0, task.data1, task.data2, "\n"); }
         //execute taks
         switch (task.type)
         {
@@ -1977,9 +1984,46 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteBloggerTask(AITask task)
     {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            node.Support++;
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteBloggerTask: {0}, {1}, ID {2}, Support now {3} (changed by +1){4}", nodeName, nodeArc, nodeID, node.Support, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteBloggerTask: Blogger action, nodeID {0} Support {1}{2}", node.nodeID, node.Support, "\n");
 
-        //expend an action
-        UseAction("spread fake news (BLOGGER)");
+            //expend an action -> get actor Name
+            if (task.data0 == playerID) { actorName = playerName; actorArcName = "Player"; isPlayer = true; }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                { actorName = actor.actorName; actorArcName = actor.arc.name; }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            //expend action
+            UseAction(string.Format("increase Support ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible 
+            if (CheckGearAvailable() == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteBloggerTask: GEAR USED to remain undetected while increasing district Support"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
 
     /// <summary>
@@ -2101,6 +2145,7 @@ public class AIRebelManager : MonoBehaviour
                 if (captureDetails != null)
                 {
                     //Player captured!
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, Player, CAPTURED by Erasure Team at {1}, {2}, ID {3}{4}", playerName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                     captureDetails.effects = "They kicked in the door before you could run";
                     EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
                 }
@@ -2124,9 +2169,13 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.aiScript.immediateFlagResistance = true;
             }
             aiInvisibility -= 1;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, {1}, ID {2}, invisibility -1, now {3}{4}", actorName, actorArc, actorID, aiInvisibility, "\n");
             //double loss of invisibility if spider present
             if (node.isSpider == true)
-            { aiInvisibility -= 1; }
+            {
+                aiInvisibility -= 1;
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, {1}, ID {2}, invisibility -1 (SPIDER), now {3}{4}", actorName, actorArc, actorID, aiInvisibility, "\n");
+            }
             //min cap zero
             aiInvisibility = Mathf.Max(0, aiInvisibility);
             //update actor Invisibility
@@ -2135,10 +2184,12 @@ public class AIRebelManager : MonoBehaviour
             if (aiInvisibility == 0)
             {
                 //Erasure team picks up actor immediately if invisibility 0
-                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
+                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
                 if (captureDetails != null)
                 {
                     //actor captured!
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, {1}, ID {2}, CAPTURED by Erasure Team at {3}, {4}, ID {5}{6}", actorName, actorArc, actorID,
+                        node.nodeName, node.Arc.name, node.nodeID, "\n");
                     captureDetails.effects = "They got you";
                     EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
                 }
@@ -2284,9 +2335,10 @@ public class AIRebelManager : MonoBehaviour
     {
         int nodeID = -1;
         int actorID = -1;
+        int tempNodeID;
         int count;
         List<Node> listOfContactNodes = new List<Node>();
-        List<Node> listOfSuitableNodes = new List<Node>();
+        List<int> listOfSuitableNodes = new List<int>();
         List<int> listOfActorID = new List<int>();
         //get a list of all contacts nodeID's from active, onMap, actors 
         for (int i = 0; i < listOfCurrentActors.Count; i++)
@@ -2322,7 +2374,11 @@ public class AIRebelManager : MonoBehaviour
                 if (node != null)
                 {
                     if (CheckNodeCriteria(actorArcName, node) == true)
-                    { listOfSuitableNodes.Add(node); }
+                    {
+                        //if not already on list, add to list of nodes that meet the criteria
+                        if (listOfSuitableNodes.Exists(x => x == node.nodeID) == false)
+                        { listOfSuitableNodes.Add(node.nodeID); }
+                    }
                 }
                 else { Debug.LogErrorFormat("Invalid node (Null) for listOfContactNodes[{0}]", i); }
             }
@@ -2332,13 +2388,18 @@ public class AIRebelManager : MonoBehaviour
         List<int> listOfActorsAtNode = new List<int>();
         if (count > 0)
         {
+            ShuffleList(listOfSuitableNodes);
+
+            /*Debug.LogFormat("[Tst] AFTER SHUFFLE{0}", "\n");
+            DebugShowList(listOfSuitableNodes);*/
+
             //see if you can match a node to an onMap actor
             for (int i = 0; i < count; i++)
             {
-                Node node = listOfSuitableNodes[i];
+                tempNodeID = listOfSuitableNodes[i];
                 int actorToFind;
                 //already null checked, get list of actorID's who have contacts at node
-                listOfActorsAtNode = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
+                listOfActorsAtNode = GameManager.instance.dataScript.CheckContactResistanceAtNode(tempNodeID);
                 if (listOfActorsAtNode != null)
                 {
                     //look for a match with any OnMap, active, Actor. Take the first you get (listOfActorID has been randomly shuffled so no actor is favoured)
@@ -2348,7 +2409,7 @@ public class AIRebelManager : MonoBehaviour
                         if (listOfActorID.Exists(x => x == actorToFind) == true)
                         {
                             actorID = actorToFind;
-                            nodeID = node.nodeID;
+                            nodeID = tempNodeID;
                             break;
                         }
                     }
@@ -2460,7 +2521,7 @@ public class AIRebelManager : MonoBehaviour
                 //deduct one gear point from gear pool (automatically used, no option to recover or retain gear)
                 gearPool--;
                 gearPointsUsed++;
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is AVAILABLE, need < {0}, rolled {1} (Gear Pool now {2}){3}", threshold, rnd, gearPool, "\n");
             }
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: Gear is NOT Available, need < {0}, rolled {1} (Gear Pool {2}){3}", threshold, rnd, gearPool, "\n"); }
