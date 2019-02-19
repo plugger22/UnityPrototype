@@ -17,6 +17,7 @@ MonoBehaviour:
     distinctive personal body aroma.
   designNotes: Standard, default, opponent
   moveChance: 50
+  playerChance: 30
   gearPoints: 2
   stressLeavePlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   stressLeaveActor: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
@@ -24,7 +25,7 @@ MonoBehaviour:
   idlePriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   taskAnarchist: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   taskBlogger: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  taskFixer: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  taskFixer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   taskHacker: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   taskHeavy: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   taskObserver: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}

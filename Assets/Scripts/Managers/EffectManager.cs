@@ -1140,8 +1140,7 @@ public class EffectManager : MonoBehaviour
                 case "Tracer":
                     if (node != null)
                     {
-                        node.isTracer = true;
-                        node.tracerTimer = GameManager.instance.nodeScript.observerTimer;
+                        node.AddTracer();
 
                         /*node.isTracerActive = true;
                         //neighbouring nodes made active

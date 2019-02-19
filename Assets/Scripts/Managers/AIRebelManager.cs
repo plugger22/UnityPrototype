@@ -1423,8 +1423,10 @@ public class AIRebelManager : MonoBehaviour
                 case "HEAVY":
                     break;
                 case "OBSERVER":
+                    ProcessObserverTask(actorArcName);
                     break;
                 case "OPERATOR":
+                    ProcessOperatorTask(actorArcName);
                     break;
                 case "PLANNER":
                     break;
@@ -1628,6 +1630,44 @@ public class AIRebelManager : MonoBehaviour
             AddWeightedTask(task);
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAnarchistTask: Invalid HACKER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+    }
+
+    /// <summary>
+    /// Observer Actor Arc task
+    /// NOTE: actorArcName checked for null by calling method
+    /// </summary>
+    /// <param name="actorArcName"></param>
+    private void ProcessObserverTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        //Player does action?
+        if (CheckPlayerAction(actorArcName) == true)
+        {
+            actorID = playerID;
+            nodeID = GameManager.instance.nodeScript.nodePlayer;
+        }
+        else
+        {
+            //get node and actorID
+            Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+            nodeID = results.Item1;
+            actorID = results.Item2;
+        }
+        //generate task if valid data is present, if none, ignore task
+        if (nodeID > -1 && actorID > -1)
+        {
+            //generate task
+            AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = "OBSERVER";
+            task.priority = priorityObserverTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessObserverTask: Invalid HACKER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
     }
 
     /// <summary>
@@ -2003,8 +2043,10 @@ public class AIRebelManager : MonoBehaviour
                 case "HEAVY":
                     break;
                 case "OBSERVER":
+                    ExecuteObserverTask(task);
                     break;
                 case "OPERATOR":
+                    ExecuteOperatorTask(task);
                     break;
                 case "PLANNER":
                     break;
@@ -2035,6 +2077,7 @@ public class AIRebelManager : MonoBehaviour
         if (node != null)
         {
             nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
+            //effect
             gearPool += task.data2;
             gearPool = Mathf.Min(gearPoolMaxSize, gearPool);
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: Fixer action, +{0} gearPoints, gearPool now {1} (max size {2}){3}", task.data2, gearPool, gearPoolMaxSize, "\n");
@@ -2055,7 +2098,7 @@ public class AIRebelManager : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
-            UseAction(string.Format("get gear points ({0}, FIXER at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
+            UseAction(string.Format("get Gear ({0}, FIXER at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
             //gear used to stay invisible (gear can be used but there is no deduction of gear points for the AI Fixer action)
             if (CheckGearAvailable(false) == false)
             {
@@ -2089,6 +2132,7 @@ public class AIRebelManager : MonoBehaviour
             nodeName = node.nodeName;
             nodeArc = node.Arc.name;
             nodeID = node.nodeID;
+            //effect
             node.Support++;
             Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteBloggerTask: {0}, {1}, ID {2}, Support now {3} (changed by +1){4}", nodeName, nodeArc, nodeID, node.Support, "\n");
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteBloggerTask: Blogger action, nodeID {0} Support {1}{2}", node.nodeID, node.Support, "\n");
@@ -2147,10 +2191,10 @@ public class AIRebelManager : MonoBehaviour
             nodeName = node.nodeName;
             nodeArc = node.Arc.name;
             nodeID = node.nodeID;
+            //effect
             node.Stability--;
-            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteAnarchistTask: {0}, {1}, ID {2}, Stability now {3} (changed by +1){4}", nodeName, nodeArc, nodeID, node.Stability, "\n");
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteAnarchistTask: {0}, {1}, ID {2}, Stability now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Stability, "\n");
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteAnarchistTask: Anarchist action, nodeID {0} Stability {1}{2}", node.nodeID, node.Stability, "\n");
-
             //expend an action -> get actor Name
             if (task.data0 == playerID)
             {
@@ -2186,6 +2230,65 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Observer actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteObserverTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            //effect
+            node.AddTracer();
+            if (node.isSpider == true) { node.isSpiderKnown = true; }
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteObserverTask: {0}, {1}, ID {2}, TRACER inserted{3}", nodeName, nodeArc, nodeID, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteObserverTask: Observer action, nodeID {0} TRACER inserted{1}", node.nodeID, "\n");
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = playerName;
+                actorArcName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    actorArcName = actor.arc.name;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            //expend action
+            UseAction(string.Format("insert Tracer ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible 
+            if (CheckGearAvailable() == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteObserverTask: GEAR USED to remain undetected while decreasing district Stability"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
     /// Hacker actorArc task execution
     /// </summary>
     /// <param name="task"></param>
@@ -2206,7 +2309,7 @@ public class AIRebelManager : MonoBehaviour
             nodeArc = node.Arc.name;
             nodeID = node.nodeID;
             node.Security--;
-            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteHackerTask: {0}, {1}, ID {2}, Security now {3} (changed by +1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteHackerTask: {0}, {1}, ID {2}, Security now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteHackerTask: Hacker action, nodeID {0} Security {1}{2}", node.nodeID, node.Security, "\n");
 
             //expend an action -> get actor Name
@@ -2685,23 +2788,32 @@ public class AIRebelManager : MonoBehaviour
         switch (actorArcName)
         {
             case "BLOGGER":
-                //Node support must be < max
-                if (node.Support < maxStatValue)
+                //Node support must be < max & no Media team present
+                if (node.Support < maxStatValue && node.isSupportTeam == false)
                 { isValid = true; }
                 break;
             case "ANARCHIST":
-                //Node stability must be > 0
-                if (node.Stability > 0)
+                //Node stability must be > 0 & no Civil team present
+                if (node.Stability > 0 && node.isStabilityTeam == false)
                 { isValid = true; }
                 break;
             case "HACKER":
-                //Node security must be > 0
-                if (node.Security > 0)
+                //Node security must be > 0 & no Control team present
+                if (node.Security > 0 && node.isSecurityTeam == false)
                 { isValid = true; }
                 break;
             case "FIXER":
                 //can be any node
                 isValid = true;
+                break;
+            case "OBSERVER":
+                //no tracer present and no Spider TEAM present 
+                if (node.isTracer == false && node.isSpiderTeam == false)
+                { isValid = true; }
+                break;
+            case "OPERATOR":
+                if (node.CheckNumOfTeams() > 0)
+                { isValid = true; }
                 break;
             default:
                 Debug.LogErrorFormat("Unrecognised actorArcName \"{0}\"", actorArcName);

@@ -116,7 +116,7 @@ public class Node : MonoBehaviour
     {
         get
         {
-            //any Ongoing effect overides current setting
+            //any Ongoing effect overides current setting (if no ongoing effect then current setting stands)
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTracers);
             if (value < 0 && isProbeTeam == false) { return false; }
             else if (value > 0 || isProbeTeam == true) { return true; }
@@ -129,7 +129,7 @@ public class Node : MonoBehaviour
     {
         get
         {
-            //any Ongoing effect overides current setting
+            //any Ongoing effect overides current setting (if no ongoing effect then current setting stands)
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusSpiders);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
@@ -145,7 +145,7 @@ public class Node : MonoBehaviour
     {
         get
         {
-            //any Ongoing effect & presence of a Probe team overides current setting
+            //any Ongoing effect & presence of a Probe team overides current setting (if no ongoing effect then current setting stands)
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusContacts);
             if (value < 0 && isProbeTeam == false) { return false; }
             else if (value > 0 || isProbeTeam == true) { return true; }
@@ -158,7 +158,7 @@ public class Node : MonoBehaviour
     {
         get
         {
-            //any Ongoing effect overides current setting
+            //any Ongoing effect overides current setting (if no ongoing effect then current setting stands)
             int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTeams);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
@@ -698,6 +698,22 @@ public class Node : MonoBehaviour
     { return _Material; }
 
     /// <summary>
+    /// Add Tracer
+    /// </summary>
+    public void AddTracer()
+    {
+        isTracer = true;
+        //reveals any spiders
+        if (isSpider == true)
+        { isSpiderKnown = true; }
+        //set timer
+        tracerTimer = GameManager.instance.nodeScript.observerTimer;
+        //teams
+        if (listOfTeams.Count > 0)
+        { isTeamKnown = true; }
+    }
+
+    /// <summary>
     /// remove Tracer from node and tidy up bool fields for tracer coverage
     /// </summary>
     public void RemoveTracer()
@@ -705,7 +721,10 @@ public class Node : MonoBehaviour
         if (isTracer == true)
         {
             isTracer = false;
-            Debug.Log(string.Format("Tracer removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n"));
+            isTracerKnown = false;
+            isTeamKnown = false;
+            isSpiderKnown = false;
+            Debug.LogFormat("[Nod] Node.cs -> RemoveTracer: Tracer removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n");
             
             /*//check neighbours
             foreach(Node node in listOfNeighbourNodes)
