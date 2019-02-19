@@ -151,7 +151,6 @@ public class AIRebelManager : MonoBehaviour
     //Node and other Action data gathering
     private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
     private List<Node>[] arrayOfActorActions;                                       //list of nodes suitable for listOfArc[index] action
-    private bool[] arrayOfPlayerActions;                                            //flag indicates that listOfArc[index] action is possible at Player's current node
     private List<Actor> listOfCurrentActors = new List<Actor>();                    //list of current onMap, Active, actors at start of each action
     
 
@@ -204,7 +203,6 @@ public class AIRebelManager : MonoBehaviour
         arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
         for (int i = 0; i < arrayOfActorActions.Length; i++)
         { arrayOfActorActions[i] = new List<Node>(); }
-        arrayOfPlayerActions = new bool[maxNumOfOnMapActors];
         //player (human / AI revert to human)
         playerName = GameManager.instance.playerScript.GetPlayerNameResistance();
         playerTag = GameManager.instance.scenarioScript.scenario.leaderResistance.tag;
@@ -294,7 +292,7 @@ public class AIRebelManager : MonoBehaviour
             ProcessSightingData();
             ProcessTargetData();
             ProcessPeopleData();
-            ProcessActorData();
+            ProcessActorArcData();
             //restore back to original state after any changes & prior to any moves, tasks, etc. Calcs will still use updated sighting data dijkstra (weighted)
             if (isConnectionsChanged == true)
             { RestoreConnections(); }
@@ -433,18 +431,13 @@ public class AIRebelManager : MonoBehaviour
     {
         listOfTasksPotential.Clear();
         listOfTasksCritical.Clear();
-        //actor & player actions
+        //actor actions
         for (int i = 0; i < arrayOfActorActions.Length; i++)
         {
             List<Node> tempList = arrayOfActorActions[i];
             if (tempList != null)
             { tempList.Clear(); }
             else { Debug.LogErrorFormat("Invalid tempList <Node> (Null) in arrayOfActorActions[\"{0}\"]", i); }
-        }
-        for (int i = 0; i < arrayOfPlayerActions.Length; i++)
-        {
-            //reset to false
-            arrayOfPlayerActions[i] = false;
         }
         listOfCurrentActors.Clear();
     }
@@ -1008,7 +1001,7 @@ public class AIRebelManager : MonoBehaviour
     /// <summary>
     /// determines which set of actor arcs are valid for use this turn. One actor arc is randomly chosen for each Active, onMap, actor present
     /// </summary>
-    private void ProcessActorData()
+    private void ProcessActorArcData()
     {
         int index;
         //get by value as we'll be deleting
@@ -1383,6 +1376,8 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessActorArcTask()
     {
+        int limit;
+        string actorArcName;
         //create a list of all active, current, onMap actors (used for AI decision logic)
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActors != null)
@@ -1401,19 +1396,22 @@ public class AIRebelManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
 
+        //create a task depending on the number of actorArcs but capped by number of onMap active actors
+        limit = Mathf.Min(listOfArcs.Count, listOfCurrentActors.Count);
         //loop arcs and create a task for each
-        for (int index = 0; index < listOfArcs.Count; index++)
+        for (int index = 0; index < limit; index++)
         {
+            actorArcName = listOfArcs[index].name;
             //each branches to an sub method that generates a task
-            switch (listOfArcs[index].name)
+            switch (actorArcName)
             {
                 case "ANARCHIST":
                     break;
                 case "BLOGGER":
-                    ProcessBloggerTask();
+                    ProcessBloggerTask(actorArcName);
                     break;
                 case "FIXER":
-                    ProcessFixerTask();
+                    ProcessFixerTask(actorArcName);
                     break;
                 case "HACKER":
                     break;
@@ -1477,7 +1475,7 @@ public class AIRebelManager : MonoBehaviour
     /// <summary>
     /// Fixer Actor Arc task to get extra gear points. Data2 is the amount to top up the gear pool, name0 is the actor arc name
     /// </summary>
-    private void ProcessFixerTask()
+    private void ProcessFixerTask(string actorArcName)
     {
         int actorID, nodeID = -1;
         //is the gear pool below the threshold
@@ -1486,7 +1484,7 @@ public class AIRebelManager : MonoBehaviour
             if (gearPool < gearPoolMaxSize)
             {
                 //Player does action?
-                if (CheckPlayerAction() == true)
+                if (CheckPlayerAction(actorArcName) == true)
                 {
                     actorID = playerID;
                     nodeID = GameManager.instance.nodeScript.nodePlayer;
@@ -1521,17 +1519,38 @@ public class AIRebelManager : MonoBehaviour
 
     /// <summary>
     /// Blogger Actor Arc task.
+    /// NOTE: actorArcName checked for null by calling method
     /// </summary>
-    private void ProcessBloggerTask()
+    private void ProcessBloggerTask(string actorArcName)
     {
-        //generate task
-        AITask task = new AITask();
-        task.type = AITaskType.ActorArc;
-        task.data0 = gearPoolTopUp;
-        task.name0 = "BLOGGER";
-        task.priority = priorityBloggerTask;
-        //add task to list of potential tasks
-        AddWeightedTask(task);
+        int actorID = -1;
+        int nodeID = -1;
+        //Player does action?
+        if (CheckPlayerAction(actorArcName) == true)
+        {
+            actorID = playerID;
+            nodeID = GameManager.instance.nodeScript.nodePlayer;
+        }
+        else
+        {
+            //get node and actorID
+            Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+            nodeID = results.Item1;
+            actorID = results.Item2;
+        }
+        //generate task if valid data is present, if none, ignore task
+        if (nodeID > -1 && actorID > -1)
+        {
+            //generate task
+            AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = "BLOGGER";
+            task.priority = priorityBloggerTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+        }
 
     }
 
@@ -2054,7 +2073,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Player - - -
         //
-        if (actor != null)
+        if (actor == null)
         {
             actorID = playerID;
             actorName = playerName;
@@ -2160,24 +2179,43 @@ public class AIRebelManager : MonoBehaviour
 
 
     /// <summary>
-    /// determines whether it is the Player who will carry out the ActorArc action. Player's node needs to be not bad and needs to pass a test
+    /// determines whether it is the Player who will carry out the ActorArc action. Player's node needs to be not bad and needs to pass a test. 
+    /// will check if the player's current node will allow this actorArcName action based on the actorArc criteria, eg. Blogger needs node support < max
     /// </summary>
     /// <returns></returns>
-    private bool CheckPlayerAction()
+    private bool CheckPlayerAction(string actorArcName)
     {
-        bool isPlayer = false;
+        int rnd = -1;
         int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
-        //not a bad node
-        if (CheckForBadNode(playerNodeID) == false)
+        bool isPlayer = false;
+        string reasonNot = "Unknown";
+        if (string.IsNullOrEmpty(actorArcName) == false)
         {
-            int rnd = Random.Range(0, 100);
-            //pass a random check
-            if (rnd < playerAction)
+            //not a bad node
+            if (CheckForBadNode(playerNodeID) == false)
             {
-                isPlayer = true;
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will do Action (needed {0}, rolled {1}){2}", playerAction, rnd, "\n");
+                rnd = Random.Range(0, 100);
+                //pass a random check
+                if (rnd < playerAction)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(playerNodeID);
+                    if (node != null)
+                    {
+                        if (CheckNodeCriteria(actorArcName, node) == true)
+                        { isPlayer = true; }
+                        else { reasonNot = "does not meet CRITERIA"; }
+                    }
+                    else { Debug.LogErrorFormat("Invalid nodeID (Null) for playerNodeID {0}", playerNodeID); }
+
+                }
+                else { reasonNot = "Failed Roll"; }
             }
+            else { reasonNot = "Bad Node"; }
         }
+        else { Debug.LogError("Invalid actorArcName (Null)"); reasonNot = "Error"; }
+        if (isPlayer == true)
+        { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will do {0} Action (needed {1}, rolled {2}){3}", actorArcName, playerAction, rnd, "\n"); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will NOT do {0} Action because {1}{2}", actorArcName, reasonNot, "\n"); }
         return isPlayer;
     }
 
@@ -2238,6 +2276,86 @@ public class AIRebelManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Finds a suitable node (randomly selected) that meets the actor Arc criteria and attempts to match with correct actor (if not then random) and returns a tuple of nodeID (item1) and actorID (item2)
+    /// if a problem returns -1 for both
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private Tuple<int, int>  FindNodeActorRandom(string actorArcName)
+    {
+        int nodeID = -1;
+        int actorID = -1;
+        int count;
+        List<Node> listOfContactNodes = new List<Node>();
+        List<Node> listOfSuitableNodes = new List<Node>();
+        //get a list of all contacts nodeID's from active, onMap, actors 
+        for (int i = 0; i < listOfCurrentActors.Count; i++)
+        {
+            //get actor network contact nodes
+            List<Node> tempList = GameManager.instance.dataScript.GetListOfActorContacts(listOfCurrentActors[i].actorID);
+            if (tempList != null)
+            {
+                //add to list (by Value)
+                listOfContactNodes.AddRange(tempList);
+            }
+            else { Debug.LogErrorFormat("Invalid listOfContactNodes (Null) for actorID {0}", listOfCurrentActors[i].actorID); }
+        }
+        //do we have a viable list
+        count = listOfContactNodes.Count();
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> FindNodeActorRandom: listOfContactNodes has {0} records{1}", count, "\n");
+        if (count > 0)
+        {
+            //loop nodes and find those that match the actorArc criteria
+            for (int i = 0; i < count; i++)
+            {
+                Node node = listOfContactNodes[i];
+                if (node != null)
+                {
+                    if (CheckNodeCriteria(actorArcName, node) == true)
+                    { listOfSuitableNodes.Add(node); }
+                }
+                else { Debug.LogErrorFormat("Invalid node (Null) for listOfContactNodes[{0}]", i); }
+            }
+        }
+        //are there any suitable nodes -> if not return default values of -1 and ignore this actorArc task
+        count = listOfSuitableNodes.Count();
+        if (count > 0)
+        {
+            //see if you can match a node to an onMap actor
+
+        }
+        
+        return new Tuple<int, int>(nodeID, actorID);
+    }
+
+    /// <summary>
+    /// returns true if node meets actor arc criteria, false otherwise. Called by FindNodeActorRandom and CheckPlayerAction
+    /// NOTE: both paramaters are checked for null by the calling methods
+    /// </summary>
+    /// <param name="actorArcName"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private bool CheckNodeCriteria(string actorArcName, Node node)
+    {
+        bool isValid = false;
+        switch (actorArcName)
+        {
+            case "BLOGGER":
+                //Node support must be < max
+                if (node.Support < maxStatValue)
+                { isValid = true; }
+                break;
+            case "FIXER":
+                //can be any node
+                isValid = true;
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised actorArcName \"{0}\"", actorArcName);
+                break;
+        }
+        return isValid;
+    }
 
     //
     // - - - Gear - - -
