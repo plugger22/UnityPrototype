@@ -925,6 +925,16 @@ public class ActorManager : MonoBehaviour
                                                             action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
                                                         };
                                                         break;
+                                                    case "TargetInfo":
+                                                        details = new EventButtonDetails()
+                                                        {
+                                                            buttonTitle = tempAction.name,
+                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                            buttonTooltipMain = tempAction.tooltipText,
+                                                            buttonTooltipDetail = builder.ToString(),
+                                                            action = () => { EventManager.instance.PostNotification(EventType.TargetInfoAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                        };
+                                                        break;
                                                     default:
                                                         Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.special \"{0}\"", actor.arc.nodeAction.special.name));
                                                         break;

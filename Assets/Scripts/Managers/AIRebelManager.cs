@@ -2520,7 +2520,11 @@ public class AIRebelManager : MonoBehaviour
                 }
                 //current node
                 if (node.Stability > 0)
-                { node.Stability--; counter++; }
+                {
+                    node.Stability--;
+                    counter++;
+                    Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteHeavyTask: {0}, {1}, ID {2}, Stability now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Stability, "\n");
+                }
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteHeavyTask: Heavy action, {0} districts have had their Stability reduced by 1{1}", counter, "\n");
                 //expend an action -> get actor Name
                 if (task.data0 == playerID)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Spread Instability
   m_EditorClassIdentifier: 
   effectID: 196
-  description: Neighbouring districts Stability -1
+  description: Current and neighbouring districts Stability -1
   ongoingTooltip: 
   listOfCriteria:
   - {fileID: 11400000, guid: 93f0c3950282cf845ab0fe6a6c6bb42e, type: 2}

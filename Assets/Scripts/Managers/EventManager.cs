@@ -45,6 +45,7 @@ public enum EventType
     NodeAction,
     NodeGearAction,
     TargetAction,
+    TargetInfoAction,
     InsertTeamAction,
     RecallTeamAction,
     NeutraliseTeamAction,

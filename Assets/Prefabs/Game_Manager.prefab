@@ -702,6 +702,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38552352d8d09044cacef41d16af41cc, type: 2}
   - {fileID: 11400000, guid: f4843e1ef56aed149a17bffa322b2b81, type: 2}
   - {fileID: 11400000, guid: 8ddd388f8ab6bc74c9f4a5d89e282577, type: 2}
+  - {fileID: 11400000, guid: 6a6e455e35f599b47bfb28750928527e, type: 2}
   - {fileID: 11400000, guid: 174613b1b2f0afc45b1c7320ebb66295, type: 2}
   - {fileID: 11400000, guid: 32e0ad742fc24454bb4e0902f7abb785, type: 2}
   - {fileID: 11400000, guid: 55a9600dd63891549a15c42fc447884d, type: 2}
@@ -713,7 +714,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ad8cd2448f36744babe163fab812826, type: 2}
   - {fileID: 11400000, guid: 25066a7645a226e468e5cf7e977253b6, type: 2}
   - {fileID: 11400000, guid: 2e6edebc0aececc45ae4a189e947a34c, type: 2}
-  - {fileID: 11400000, guid: 5f00769bc4a39804699dbb8ed5983849, type: 2}
   - {fileID: 11400000, guid: 1089473171d4be84e85935bb90aead41, type: 2}
   - {fileID: 11400000, guid: adfcbe2001e30a2488136680a80e0cec, type: 2}
   - {fileID: 11400000, guid: 9393f5837dd8ce442b502bbef9ea08f1, type: 2}
@@ -729,6 +729,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 175593e4dfa215844ace971f3d0dbd41, type: 2}
   - {fileID: 11400000, guid: aa8bf97f824298c4287afe512208e36d, type: 2}
   - {fileID: 11400000, guid: 3d039f08013305f49ac6a3fdc9eaf285, type: 2}
+  - {fileID: 11400000, guid: 5f00769bc4a39804699dbb8ed5983849, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -2031,12 +2032,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 53125
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 20
+  autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1
