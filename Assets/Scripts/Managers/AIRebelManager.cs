@@ -1710,6 +1710,43 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Heavy Actor Arc task.
+    /// NOTE: actorArcName checked for null by calling method
+    /// </summary>
+    private void ProcessHeavyTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        //Player does action?
+        if (CheckPlayerAction(actorArcName) == true)
+        {
+            actorID = playerID;
+            nodeID = GameManager.instance.nodeScript.nodePlayer;
+        }
+        else
+        {
+            //get node and actorID
+            Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+            nodeID = results.Item1;
+            actorID = results.Item2;
+        }
+        //generate task if valid data is present, if none, ignore task
+        if (nodeID > -1 && actorID > -1)
+        {
+            //generate task
+            AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = "HEAVY";
+            task.priority = priorityHeavyTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessHeavyTask: Invalid HEAVY task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+    }
+
+    /// <summary>
     /// randomly selects a good node (not on listOfBadNodes) from the specified node's immediate neighbours. Returns Null if none found.
     /// </summary>
     /// <param name="nodeID"></param>
@@ -2446,6 +2483,82 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Heavy actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteHeavyTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        int counter = 0;
+        Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            //effect -> Current and all neighbouring nodes have their Stability reduced by 1
+            List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
+            if (listOfNeighbouringNodes != null)
+            {
+                //neighbouring nodes 
+                foreach (Node nearNode in listOfNeighbouringNodes)
+                {
+                    if (nearNode.Stability > 0)
+                    {
+                        nearNode.Stability--;
+                        counter++;
+                        Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteHeavyTask: {0}, {1}, ID {2}, Stability now {3} (changed by -1){4}", nearNode.nodeName, nearNode.Arc.name, nearNode.nodeID, 
+                            nearNode.Stability, "\n");
+                    }
+                }
+                //current node
+                if (node.Stability > 0)
+                { node.Stability--; counter++; }
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteHeavyTask: Heavy action, {0} districts have had their Stability reduced by 1{1}", counter, "\n");
+                //expend an action -> get actor Name
+                if (task.data0 == playerID)
+                {
+                    actorName = playerName;
+                    actorArcName = "Player";
+                    isPlayer = true;
+                    UpdateRenown();
+                }
+                else
+                {
+                    actor = GameManager.instance.dataScript.GetActor(task.data0);
+                    if (actor != null)
+                    {
+                        actorName = actor.actorName;
+                        actorArcName = actor.arc.name;
+                        UpdateRenown(actor);
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+                }
+                //expend action
+                UseAction(string.Format("decrease Stability in neighbouring Nodes ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+                //gear used to stay invisible 
+                if (CheckGearAvailable() == false)
+                {
+                    //invisibility drops
+                    if (isPlayer == true)
+                    { UpdateInvisibilityNode(node); }
+                    else { UpdateInvisibilityNode(node, actor); }
+                }
+                else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteHeavyTask: GEAR USED to remain undetected while decreasing neighbouring district Stability"); }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfNeighbouring Nodes (Null) for nodeID {0}", node.nodeID); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
     /// do nothing task
     /// </summary>
     private void ExecuteIdleTask(AITask task)
@@ -2915,10 +3028,20 @@ public class AIRebelManager : MonoBehaviour
                 { isValid = true; }
                 break;
             case "HEAVY":
-                //Node stability must be Zero and no Civil team present
-                if (node.Stability == 0 && node.isStabilityTeam == false)
+                //Node stability must be One or less and no Civil team present
+                if (node.Stability <= 1 && node.isStabilityTeam == false)
                 {
-                    isValid = true;
+                    //a least one neighbouring node must have stability > 0
+                    List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
+                    if (listOfNeighbouringNodes != null)
+                    {
+                        foreach (Node nearNode in listOfNeighbouringNodes)
+                        {
+                            if (nearNode.Stability > 0)
+                            { isValid = true; break; }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfNeighbouring nodes (Null) for nodeID {0)", node.nodeID); }
                 }
                 break;
             default:

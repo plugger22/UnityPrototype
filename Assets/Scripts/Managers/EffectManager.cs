@@ -249,6 +249,12 @@ public class EffectManager : MonoBehaviour
                                                     if (compareTip != null)
                                                     { BuildString(result, "Stability " + compareTip); }
                                                     break;
+                                                case "NodeStabilityLow":
+                                                    val = GameManager.instance.nodeScript.medNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Stability " + compareTip); }
+                                                    break;
                                                 case "NodeSupportMax":
                                                     val = GameManager.instance.nodeScript.maxNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Support, criteria.comparison);

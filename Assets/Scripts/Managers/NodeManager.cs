@@ -33,9 +33,13 @@ public class NodeManager : MonoBehaviour
 
     [Header("Datapoints")]
     [Tooltip("Maximum value of a node datapoint")]
-    [Range(2,4)] public int maxNodeValue = 3;
+    [Range(0,4)] public int maxNodeValue = 3;
     [Tooltip("Minimum value of a node datapoint")]
-    [Range(2, 4)] public int minNodeValue = 0;
+    [Range(0, 4)] public int minNodeValue = 0;
+    [Tooltip("Low value of a node datapoint")]
+    [Range(0, 4)] public int lowNodeValue = 1;
+    [Tooltip("Medium value of a node datapoint")]
+    [Range(0, 4)] public int medNodeValue = 2;
 
     [Header("Crisis")]
     [Tooltip("Base % chance of a node with any datapoint in the danger zone turning into a crisis")]

@@ -209,6 +209,7 @@ MonoBehaviour:
   gearPoolMaxSize: 6
   gearPoolThreshold: 3
   gearPoolTopUp: 2
+  gearRenownChance: 20
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
@@ -615,6 +616,8 @@ MonoBehaviour:
   observerTimer: 10
   maxNodeValue: 3
   minNodeValue: 0
+  lowNodeValue: 1
+  medNodeValue: 2
   crisisBaseChance: 40
   crisisNodeTimer: 3
   crisisWaitTimer: 3

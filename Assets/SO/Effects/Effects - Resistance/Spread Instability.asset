@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: Spread Instability
   m_EditorClassIdentifier: 
-  effectID: 197
+  effectID: 196
   description: Neighbouring districts Stability -1
-  textTag: Neighbouring Nodes Stability -1
+  ongoingTooltip: 
   listOfCriteria:
-  - {fileID: 11400000, guid: 9448cf832a53a4249a9825e214c568ea, type: 2}
+  - {fileID: 11400000, guid: 93f0c3950282cf845ab0fe6a6c6bb42e, type: 2}
   - {fileID: 11400000, guid: 686d0012df9a71c4db9ac0a9f03a3445, type: 2}
   - {fileID: 11400000, guid: f1cdceb45b5c3b14fac0cc5d988f5e7f, type: 2}
   apply: {fileID: 11400000, guid: ea4162d04bdf345419d8618ed297b5af, type: 2}
