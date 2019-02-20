@@ -1421,6 +1421,7 @@ public class AIRebelManager : MonoBehaviour
                     ProcessHackerTask(actorArcName);
                     break;
                 case "HEAVY":
+                    ProcessHeavyTask(actorArcName);
                     break;
                 case "OBSERVER":
                     ProcessObserverTask(actorArcName);
@@ -1629,7 +1630,7 @@ public class AIRebelManager : MonoBehaviour
             //add task to list of potential tasks
             AddWeightedTask(task);
         }
-        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAnarchistTask: Invalid HACKER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAnarchistTask: Invalid ANARCHIST task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
     }
 
     /// <summary>
@@ -1667,7 +1668,45 @@ public class AIRebelManager : MonoBehaviour
             //add task to list of potential tasks
             AddWeightedTask(task);
         }
-        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessObserverTask: Invalid HACKER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessObserverTask: Invalid OBSERVER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+    }
+
+    /// <summary>
+    /// Operator Actor Arc task
+    /// NOTE: actorArcName checked for null by calling method
+    /// </summary>
+    /// <param name="actorArcName"></param>
+    private void ProcessOperatorTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        //Player does action?
+        if (CheckPlayerAction(actorArcName) == true)
+        {
+            actorID = playerID;
+            nodeID = GameManager.instance.nodeScript.nodePlayer;
+        }
+        else
+        {
+            //get node and actorID
+            Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+            nodeID = results.Item1;
+            actorID = results.Item2;
+        }
+        //generate task if valid data is present, if none, ignore task
+        if (nodeID > -1 && actorID > -1)
+        {
+            //generate task
+            AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = "OPERATOR";
+            task.priority = priorityOperatorTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessOperatorTask: Invalid OPERATOR task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
     }
 
     /// <summary>
@@ -2041,6 +2080,7 @@ public class AIRebelManager : MonoBehaviour
                     ExecuteHackerTask(task);
                     break;
                 case "HEAVY":
+                    ExecuteHeavyTask(task);
                     break;
                 case "OBSERVER":
                     ExecuteObserverTask(task);
@@ -2284,6 +2324,65 @@ public class AIRebelManager : MonoBehaviour
                 else { UpdateInvisibilityNode(node, actor); }
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteObserverTask: GEAR USED to remain undetected while decreasing district Stability"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
+    /// Operator actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteOperatorTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        string teamArcName = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            //effect
+            teamArcName = node.RemoveTeamAI();
+            Debug.LogFormat("[Tea] AIRebelManager.cs -> ExecuteOperatorTask: {0}, {1}, ID {2}, {3} team Removed{4}", nodeName, nodeArc, nodeID, teamArcName, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteOperatorTask: Observer action, nodeID {0}, {1} team Removed{2}", node.nodeID, teamArcName, "\n");
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = playerName;
+                actorArcName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    actorArcName = actor.arc.name;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            //expend action
+            UseAction(string.Format("neutralise Team ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible 
+            if (CheckGearAvailable() == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteOperatorTask:  OPERATOR unable to remain undetected while neutralising team"); }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
@@ -2814,6 +2913,13 @@ public class AIRebelManager : MonoBehaviour
             case "OPERATOR":
                 if (node.CheckNumOfTeams() > 0)
                 { isValid = true; }
+                break;
+            case "HEAVY":
+                //Node stability must be Zero and no Civil team present
+                if (node.Stability == 0 && node.isStabilityTeam == false)
+                {
+                    isValid = true;
+                }
                 break;
             default:
                 Debug.LogErrorFormat("Unrecognised actorArcName \"{0}\"", actorArcName);

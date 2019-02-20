@@ -861,6 +861,52 @@ public class Node : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// AIRebelManager.cs specific implementation for Operator action. Will remove an Erasure team if present, otherwise a random team. Handles all Admin. Returns team Arc name of team removed, "Unknown" if none
+    /// </summary>
+    /// <returns></returns>
+    public string RemoveTeamAI()
+    {
+        string teamArcName = "Unknown";
+        int count = listOfTeams.Count;
+        Team team;
+        if (count > 0)
+        {
+            //Erasure team present
+            if (isErasureTeam == true)
+            {
+                //loop list looking for an erasure team
+                for (int i = 0; i < count; i++)
+                {
+                    if (listOfTeams[i].arc.name.Equals("ERASURE") == true)
+                    {
+                        //remove Erasure team
+                        team = listOfTeams[i];
+                        if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
+                        { teamArcName = team.arc.name;}
+                        else
+                        {
+                            Debug.LogWarning("Erasure team not found even though isErasureTeam is set true");
+                            //remove a random team
+                            team = listOfTeams[Random.Range(0, count)];
+                            if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
+                            { teamArcName = team.arc.name; }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //remove a random team
+                team = listOfTeams[Random.Range(0, count)];
+                if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
+                { teamArcName = team.arc.name; }
+            }
+        }
+        else { Debug.LogWarning("There are no teams present at the node"); }
+        return teamArcName;
+    }
+
 
     /// <summary>
     /// Returns number of teams present at node, '0' if none

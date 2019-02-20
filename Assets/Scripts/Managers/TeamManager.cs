@@ -698,7 +698,7 @@ public class TeamManager : MonoBehaviour
     }
 
     /// <summary>
-    /// handles all admin for AI moving a team from one pool to another. Assumed movement direction is 'Reserve -> OnMap -> InTransit -> Reserve'
+    /// handles all admin for AI moving a team from one pool to another. Assumed movement direction is 'Reserve Pool -> OnMap -> InTransit -> Reserve Pool'
     /// Takes care of all checks, eg. enough teams present in reserve for one to move to the map
     /// AI Teams aren't associated with Actors
     /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
