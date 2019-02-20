@@ -36,7 +36,8 @@ public class EffectManager : MonoBehaviour
     private int actorNeverResigns;
     private int actorReserveTimerDoubled;
     private int actorReserveTimerHalved;
-
+    //fast access -> assorted
+    private int maxTargetInfo = -1;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -104,13 +105,15 @@ public class EffectManager : MonoBehaviour
         teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
-        Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
-        Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
-        Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe");
-        Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
-        Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
-        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
+        maxTargetInfo = GameManager.instance.targetScript.maxTargetInfo;
+        Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil (-1)");
+        Debug.Assert(teamArcControl > -1, "Invalid teamArcControl (-1)");
+        Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia (-1)");
+        Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe (-1)");
+        Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider (-1)");
+        Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage (-1)");
+        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
+        Debug.Assert(maxTargetInfo > -1, "Invalid maxTargetInfo (-1)");
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
     }
@@ -447,6 +450,18 @@ public class EffectManager : MonoBehaviour
                                                     {
                                                         if (listOfLiveTargets.Count == 0)
                                                         { BuildString(result, "No Targets present"); }
+                                                        else
+                                                        {
+                                                            bool isSuccess = false;
+                                                            //loop targets looking for at least one who has targetInfo < max
+                                                            foreach(Target target in listOfLiveTargets)
+                                                            {
+                                                                if (target.infoLevel < maxTargetInfo)
+                                                                { isSuccess = true;  break; }
+                                                            }
+                                                            if (isSuccess == false)
+                                                            { BuildString(result, "All Targets have MAX Info already"); }
+                                                        }
                                                     }
                                                     else { Debug.LogError("Invalid listOfLiveTargets (Null)"); errorFlag = true; }
                                                     break;

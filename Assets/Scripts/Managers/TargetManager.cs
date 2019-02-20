@@ -1370,7 +1370,7 @@ public class TargetManager : MonoBehaviour
     /// Choose Target for gaining Target Info (Resistance only): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// </summary>
     /// <param name="details"></param>
-    private void InitialiseGenericPickerTargetInfo(ModalActionDetails details)
+    /*private void InitialiseGenericPickerTargetInfo(ModalActionDetails details)
     {
         //first Gear Pick this action
         bool errorFlag = false;
@@ -1429,15 +1429,18 @@ public class TargetManager : MonoBehaviour
                 //generate temp list of gear to choose from
 
             List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
-            if (listOfLiveTargets != )
+            if (listOfLiveTargets != null)
+            {
+                
                 //
                 //select three Targets for the picker 
                 //
 
                 //need to sort by distance from current node 
-                
+
 
                 //check there is at least one item of target available
+                count = listOfLiveTargets.Count;
                 if (count < 1)
                 {
                     //OUTCOME -> No gear available
@@ -1446,33 +1449,40 @@ public class TargetManager : MonoBehaviour
                 }
                 else
                 {
+                    count = Mathf.Min(3, count);
+                    Target[] arrayOfTargets = new Target[count];
+                    //transfer list targets to array targets
+                    for (int i = 0; i < count; i++)
+                    { arrayOfTargets[i] = listOfLiveTargets[i]; }
                     //
                     //loop targetID's that have been selected and package up ready for ModalGenericPicker
                     //
                     for (int i = 0; i < count; i++)
                     {
-                        Gear gear = GameManager.instance.dataScript.GetGear(arrayOfGear[i]);
-                        if (gear != null)
+                        Target target = arrayOfTargets[i];
+                        if (target != null)
                         {
                             //tooltip 
-                            GenericTooltipDetails tooltipDetails = GetGearTooltip(gear);
+                            GenericTooltipDetails tooltipDetails = GetTargetTooltip(target);
                             if (tooltipDetails != null)
                             {
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
-                                optionDetails.optionID = gear.gearID;
+                                optionDetails.optionID = target.targetID;
                                 optionDetails.text = gear.name.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[i] = optionDetails;
                                 genericDetails.arrayOfTooltips[i] = tooltipDetails;
                             }
-                            else { Debug.LogError(string.Format("Invalid tooltip Details (Null) for gearID {0}", arrayOfGear[i])); }
+                            else { Debug.LogErrorFormat("Invalid tooltip Details (Null) for targetID {0}", target.targetID); }
                         }
-                        else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", arrayOfGear[i])); }
+                        else { Debug.LogErrorFormat("Invalid target (Null) for target ID {0}", target.targetID); }
                     }
                 }
                 #endregion
+            }
+            else { Debug.LogError("Invalid listOfLiveTargets (Null)"); }
         }
         else
         {
@@ -1494,7 +1504,7 @@ public class TargetManager : MonoBehaviour
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
-    }
+    }*/
 
     //place methods above here
 }
