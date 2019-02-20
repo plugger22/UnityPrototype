@@ -431,6 +431,45 @@ public class EffectManager : MonoBehaviour
                                     }
                                     break;
                                 //
+                                // - - - All Nodes - - -
+                                //
+                                case "NodeAll":
+                                    if (node != null)
+                                    {
+                                        if (criteria.effectCriteria != null)
+                                        {
+                                            switch (criteria.effectCriteria.name)
+                                            {
+                                                case "TargetPresent":
+                                                    //There must be at least one Live target
+                                                    List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+                                                    if (listOfLiveTargets != null)
+                                                    {
+                                                        if (listOfLiveTargets.Count == 0)
+                                                        { BuildString(result, "No Targets present"); }
+                                                    }
+                                                    else { Debug.LogError("Invalid listOfLiveTargets (Null)"); errorFlag = true; }
+                                                    break;
+                                                default:
+                                                    BuildString(result, "Error!");
+                                                    Debug.LogWarning(string.Format("NodeNeighbours: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                    errorFlag = true;
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for criteria {0}", criteria.name));
+                                            errorFlag = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
+                                        errorFlag = true;
+                                    }
+                                    break;
+                                //
                                 // - - - Current Actor / Player - - -
                                 //
                                 case "ActorCurrent":

@@ -90,6 +90,7 @@ public enum EventType
     //generic picker returns
     GenericTeamRecall,
     GenericNeutraliseTeam,
+    GenericTargetInfo,
     GenericGearChoice,
     GenericCompromisedGear,
     GenericRecruitActorResistance,

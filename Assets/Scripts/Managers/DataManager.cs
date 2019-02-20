@@ -2398,7 +2398,10 @@ public class DataManager : MonoBehaviour
         return false;
     }
 
-
+    /// <summary>
+    /// returns list all nodes with non-Dormant targets
+    /// </summary>
+    /// <returns></returns>
     public List<int> GetNodesWithTargetsList()
     { return listOfNodesWithTargets; }
 
