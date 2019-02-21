@@ -4,6 +4,7 @@ using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -1370,7 +1371,7 @@ public class TargetManager : MonoBehaviour
     /// Choose Target for gaining Target Info (Resistance only): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// </summary>
     /// <param name="details"></param>
-    /*private void InitialiseGenericPickerTargetInfo(ModalActionDetails details)
+    private void InitialiseGenericPickerTargetInfo(ModalActionDetails details)
     {
         //first Gear Pick this action
         bool errorFlag = false;
@@ -1431,54 +1432,85 @@ public class TargetManager : MonoBehaviour
             List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
             if (listOfLiveTargets != null)
             {
-                
                 //
                 //select three Targets for the picker 
                 //
-
-                //need to sort by distance from current node 
-
-
-                //check there is at least one item of target available
                 count = listOfLiveTargets.Count;
                 if (count < 1)
                 {
-                    //OUTCOME -> No gear available
+                    //OUTCOME -> No targets available
                     Debug.LogWarning("TargetManager: No Targets available in InitaliseGenericPickerTargetInfo");
                     errorFlag = true;
                 }
                 else
                 {
-                    count = Mathf.Min(3, count);
-                    Target[] arrayOfTargets = new Target[count];
-                    //transfer list targets to array targets
-                    for (int i = 0; i < count; i++)
-                    { arrayOfTargets[i] = listOfLiveTargets[i]; }
-                    //
-                    //loop targetID's that have been selected and package up ready for ModalGenericPicker
-                    //
+                    //dict to hold key -> distance to target from current node, value -> target (live and space for more intel)
+                    Dictionary<Target, int> dictOfTargetDistances = new Dictionary<Target, int>();
+                    int distance;
+                    //loop live Targets
                     for (int i = 0; i < count; i++)
                     {
-                        Target target = arrayOfTargets[i];
+                        Target target = listOfLiveTargets[i];
                         if (target != null)
                         {
-                            //tooltip 
-                            GenericTooltipDetails tooltipDetails = GetTargetTooltip(target);
-                            if (tooltipDetails != null)
+                            //has space for more intel
+                            if (target.infoLevel < maxTargetInfo)
                             {
-                                //option details
-                                GenericOptionDetails optionDetails = new GenericOptionDetails();
-                                optionDetails.optionID = target.targetID;
-                                optionDetails.text = gear.name.ToUpper();
-                                optionDetails.sprite = gear.sprite;
-                                //add to master arrays
-                                genericDetails.arrayOfOptions[i] = optionDetails;
-                                genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                                //get distance
+                                if (target.nodeID == node.nodeID)
+                                { dictOfTargetDistances.Add(target, 0); }
+                                else
+                                {
+                                    distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, target.nodeID);
+                                    if (distance > -1)
+                                    { dictOfTargetDistances.Add(target, distance); }
+                                    else { Debug.LogErrorFormat("Invalid dijkstra distance between nodeID {0} and target nodeID {1}", node.nodeID, target.nodeID); }
+                                }
                             }
-                            else { Debug.LogErrorFormat("Invalid tooltip Details (Null) for targetID {0}", target.targetID); }
                         }
-                        else { Debug.LogErrorFormat("Invalid target (Null) for target ID {0}", target.targetID); }
+                        else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
                     }
+                    //any records in dictionary
+                    count = dictOfTargetDistances.Count;
+                    if (count > 0)
+                    {
+                        //sort by distance
+                        var sortedDistance = from pair in dictOfTargetDistances orderby pair.Value ascending select pair;
+                        //Put generic picker data package together
+                        count = Mathf.Min(3, count);
+                        Target[] arrayOfTargets = new Target[count];
+                        //transfer list targets to array targets
+                        for (int i = 0; i < count; i++)
+                        {
+                            arrayOfTargets[i] = sortedDistance[i];
+                            }
+                        //
+                        //loop targetID's that have been selected and package up ready for ModalGenericPicker
+                        //
+                        for (int i = 0; i < count; i++)
+                        {
+                            Target target = arrayOfTargets[i];
+                            if (target != null)
+                            {
+                                //tooltip 
+                                GenericTooltipDetails tooltipDetails = GetTargetTooltip(target);
+                                if (tooltipDetails != null)
+                                {
+                                    //option details
+                                    GenericOptionDetails optionDetails = new GenericOptionDetails();
+                                    optionDetails.optionID = target.targetID;
+                                    optionDetails.text = target.targetName.ToUpper();
+                                    optionDetails.sprite = GameManager.instance.guiScript.targetInfoSprite;
+                                    //add to master arrays
+                                    genericDetails.arrayOfOptions[i] = optionDetails;
+                                    genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                                }
+                                else { Debug.LogErrorFormat("Invalid tooltip Details (Null) for targetID {0}", target.targetID); }
+                            }
+                            else { Debug.LogErrorFormat("Invalid target (Null) for target ID {0}", target.targetID); }
+                        }
+                    }
+                    else { Debug.LogWarning("NOTIFICATION Only: No records in dictOfTargetDistances"); }
                 }
                 #endregion
             }
@@ -1504,7 +1536,29 @@ public class TargetManager : MonoBehaviour
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
-    }*/
+    }
+
+    /// <summary>
+    /// returns a data package of 3 formatted strings ready to slot into a gear tooltip. Null if a problem.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    private GenericTooltipDetails GetTargetTooltip(Target target)
+    {
+        GenericTooltipDetails details = null;
+        if (target != null)
+        {
+            details = new GenericTooltipDetails();
+            StringBuilder builderHeader = new StringBuilder();
+            StringBuilder builderDetails = new StringBuilder();
+
+            details.textHeader = builderHeader.ToString();
+            details.textMain = "Test";
+            details.textDetails = builderDetails.ToString();
+        }
+        else { Debug.LogError("Invalid target (Null)"); }
+        return details;
+    }
 
     //place methods above here
 }

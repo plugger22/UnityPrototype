@@ -69,7 +69,7 @@ public class Target : ScriptableObject
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
     /*[HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
     [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node*/
-
+    [HideInInspector] public int distance;                          //distance to current node (used for Planner). Dynamic (targetManager.cs -> InitialiseGenericPickerTargetInfo. Can be ignored.
     //Tracking data
     [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted, -1 default
     [HideInInspector] public int turnDone;                          //turn # when target done, -1 default

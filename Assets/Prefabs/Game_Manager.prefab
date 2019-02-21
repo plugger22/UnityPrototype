@@ -1933,6 +1933,7 @@ MonoBehaviour:
   targetSuccessSprite: {fileID: 21300000, guid: 3d2c635d61b7f234d9229ab32709ca48,
     type: 3}
   targetFailSprite: {fileID: 21300000, guid: ba64a13b5fa7f564291634b219db3f6d, type: 3}
+  targetInfoSprite: {fileID: 21300000, guid: ba64a13b5fa7f564291634b219db3f6d, type: 3}
   capturedSprite: {fileID: 21300000, guid: da42b871045e63245a09d2a925187a26, type: 3}
   releasedSprite: {fileID: 21300000, guid: 930c8db1522bddd4c8d966c644025449, type: 3}
   firedSprite: {fileID: 21300000, guid: e39bfbb77fecee147bc22b86ea5c4567, type: 3}

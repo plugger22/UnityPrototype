@@ -55,6 +55,8 @@ public class GUIManager : MonoBehaviour
     public Sprite targetSuccessSprite;
     [Tooltip("Used for Target attempts that fail")]
     public Sprite targetFailSprite;
+    [Tooltip("Used for Generic Picker with Planner action to select target (maybe there could be three colour variations of the same sprite to indicate how much intel you will gain?")]
+    public Sprite targetInfoSprite;
     [Tooltip("Used for Player or Actor having been captured (152 x 160 png)")]
     public Sprite capturedSprite;
     [Tooltip("Used for Player or Actor being released from captivity (152 x 160 png)")]
