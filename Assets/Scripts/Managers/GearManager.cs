@@ -1098,7 +1098,7 @@ public class GearManager : MonoBehaviour
                                 string textMsg;
                                 if (isPlayer == true)
                                 {
-                                    textMsg = string.Format("{0} ({1}) has been acquired ( by PLAYER)", gear.name, gear.type.name);
+                                    textMsg = string.Format("{0} ({1}) has been acquired (by PLAYER)", gear.name, gear.type.name);
                                     GameManager.instance.messageScript.GearObtained(textMsg, node, gear);
                                 }
                                 else

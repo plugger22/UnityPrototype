@@ -1381,7 +1381,6 @@ public class TargetManager : MonoBehaviour
     {
         //first Gear Pick this action
         bool errorFlag = false;
-        bool isPlayer = false;
         int count;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
@@ -1398,7 +1397,6 @@ public class TargetManager : MonoBehaviour
                 { actorID = actor.actorID; }
                 else { Debug.LogError(string.Format("Invalid actor (Null) from details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
             }
-            else { isPlayer = true; }
             //check capture provided no errors
             if (errorFlag == false)
             {
@@ -1474,7 +1472,7 @@ public class TargetManager : MonoBehaviour
                                     else { Debug.LogErrorFormat("Invalid dijkstra distance between nodeID {0} and target nodeID {1}", node.nodeID, target.nodeID); }
                                 }
                                 target.distance = distance;
-                                target.newIntel = GetTargetInfo(distance, target.infoLevel);
+                                target.newIntel = GetTargetInfoChange(distance, target.infoLevel);
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
@@ -1578,10 +1576,32 @@ public class TargetManager : MonoBehaviour
     /// <summary>
     /// Process Planner gain target info for selected target (from generic picker)
     /// </summary>
-    /// <param name="returnDataTarget"></param>
-    private void ProcessTargetInfo(GenericReturnData returnDataTarget)
+    /// <param name="details"></param>
+    private void ProcessTargetInfo(GenericReturnData details)
     {
+        Target target = GameManager.instance.dataScript.GetTarget(details.optionID);
+        if (target != null)
+        {
+            //update target info level
+            target.infoLevel += target.newIntel;
+            if (target.infoLevel > maxTargetInfo)
+            {
+                target.infoLevel = maxTargetInfo;
+                Debug.LogWarning("Invalid target.infoLevel (exceeds maxTargetInfo)");
+            }
+            //Get actor
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
+            if (actor != null)
+            { 
 
+
+
+
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", details.actorSlotID); }
+        }
+        else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", details.optionID); }
+            
     }
 
     /// <summary>
@@ -1589,7 +1609,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    private int GetTargetInfo(int distance, int existingInfo)
+    private int GetTargetInfoChange(int distance, int existingInfo)
     {
         int intel = Mathf.Max(1, 3 - distance);
         intel += existingInfo;
