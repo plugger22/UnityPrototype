@@ -1474,6 +1474,7 @@ public class TargetManager : MonoBehaviour
                                     else { Debug.LogErrorFormat("Invalid dijkstra distance between nodeID {0} and target nodeID {1}", node.nodeID, target.nodeID); }
                                 }
                                 target.distance = distance;
+                                target.newIntel = GetTargetInfo(distance, target.infoLevel);
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
@@ -1562,7 +1563,8 @@ public class TargetManager : MonoBehaviour
             StringBuilder builderDetails = new StringBuilder();
 
             builderHeader.AppendFormat("{0}{1}{2}", colourGear, target.targetName, colourEnd);
-            builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}<size=90%>MAX Intel allowed is {5}{6}", colourNeutral, GetTargetInfo(target.distance), colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
+            builderMain.AppendFormat("<b>Existing Intel {0}</b>{1}", target.infoLevel, "\n");
+            builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}</size>MAX Intel allowed is {5}{6}", colourNeutral, target.newIntel, colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
             builderDetails.AppendFormat("<b>Distance {0}</b>", target.distance);
             
             details.textHeader = builderHeader.ToString();
@@ -1583,12 +1585,16 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
-    /// algorithim to give the amount of intel gained based on distance between node and target. Closer the better. Note that this doesn't take into account the MAX cap of targetManager.cs -> maxTargetInfo
+    /// algorithim to give the amount of intel gained based on distance between node and target. Closer the better. Note that this takes into account the MAX cap of targetManager.cs -> maxTargetInfo
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    private int GetTargetInfo(int distance)
-    { return Mathf.Max(1, 3 - distance); }
+    private int GetTargetInfo(int distance, int existingInfo)
+    {
+        int intel = Mathf.Max(1, 3 - distance);
+        intel += existingInfo;
+        return Mathf.Min(maxTargetInfo, intel);
+    }
 
     //place methods above here
 }
