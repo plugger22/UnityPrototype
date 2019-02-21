@@ -107,6 +107,8 @@ public class TargetManager : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TargetManager");
+        EventManager.instance.AddListener(EventType.TargetInfoAction, OnEvent, "TargetManager");
+        EventManager.instance.AddListener(EventType.GenericTargetInfo, OnEvent, "TargetManager");
     }
 
 
@@ -129,7 +131,11 @@ public class TargetManager : MonoBehaviour
                 break;
             case EventType.TargetInfoAction:
                 ModalActionDetails details = Param as ModalActionDetails;
-                //InitialiseGenericPickerTargetInfo(details);
+                InitialiseGenericPickerTargetInfo(details);
+                break;
+            case EventType.GenericTargetInfo:
+                GenericReturnData returnDataTarget = Param as GenericReturnData;
+                ProcessTargetInfo(returnDataTarget);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1456,9 +1462,10 @@ public class TargetManager : MonoBehaviour
                             //has space for more intel
                             if (target.infoLevel < maxTargetInfo)
                             {
+                                distance = -1;
                                 //get distance
                                 if (target.nodeID == node.nodeID)
-                                { dictOfTargetDistances.Add(target, 0); }
+                                { dictOfTargetDistances.Add(target, 0); distance = 0; }
                                 else
                                 {
                                     distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, target.nodeID);
@@ -1466,6 +1473,7 @@ public class TargetManager : MonoBehaviour
                                     { dictOfTargetDistances.Add(target, distance); }
                                     else { Debug.LogErrorFormat("Invalid dijkstra distance between nodeID {0} and target nodeID {1}", node.nodeID, target.nodeID); }
                                 }
+                                target.distance = distance;
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
@@ -1475,15 +1483,15 @@ public class TargetManager : MonoBehaviour
                     if (count > 0)
                     {
                         //sort by distance
-                        var sortedDistance = from pair in dictOfTargetDistances orderby pair.Value ascending select pair;
+                        var sortedDistance = from pair in dictOfTargetDistances orderby pair.Value ascending select pair.Key;
+                        List<Target> tempListSorted = sortedDistance.ToList();
                         //Put generic picker data package together
                         count = Mathf.Min(3, count);
                         Target[] arrayOfTargets = new Target[count];
+                        
                         //transfer list targets to array targets
                         for (int i = 0; i < count; i++)
-                        {
-                            arrayOfTargets[i] = sortedDistance[i];
-                            }
+                        { arrayOfTargets[i] = tempListSorted[i]; }
                         //
                         //loop targetID's that have been selected and package up ready for ModalGenericPicker
                         //
@@ -1493,7 +1501,7 @@ public class TargetManager : MonoBehaviour
                             if (target != null)
                             {
                                 //tooltip 
-                                GenericTooltipDetails tooltipDetails = GetTargetTooltip(target);
+                                GenericTooltipDetails tooltipDetails = GetTargetGenericTooltip(target);
                                 if (tooltipDetails != null)
                                 {
                                     //option details
@@ -1543,22 +1551,44 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="target"></param>
     /// <returns></returns>
-    private GenericTooltipDetails GetTargetTooltip(Target target)
+    private GenericTooltipDetails GetTargetGenericTooltip(Target target)
     {
         GenericTooltipDetails details = null;
         if (target != null)
         {
             details = new GenericTooltipDetails();
             StringBuilder builderHeader = new StringBuilder();
+            StringBuilder builderMain = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
 
+            builderHeader.AppendFormat("{0}{1}{2}", colourGear, target.targetName, colourEnd);
+            builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}<size=90%>MAX Intel allowed is {5}{6}", colourNeutral, GetTargetInfo(target.distance), colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
+            builderDetails.AppendFormat("<b>Distance {0}</b>", target.distance);
+            
             details.textHeader = builderHeader.ToString();
-            details.textMain = "Test";
+            details.textMain = builderMain.ToString();
             details.textDetails = builderDetails.ToString();
         }
         else { Debug.LogError("Invalid target (Null)"); }
         return details;
     }
+
+    /// <summary>
+    /// Process Planner gain target info for selected target (from generic picker)
+    /// </summary>
+    /// <param name="returnDataTarget"></param>
+    private void ProcessTargetInfo(GenericReturnData returnDataTarget)
+    {
+
+    }
+
+    /// <summary>
+    /// algorithim to give the amount of intel gained based on distance between node and target. Closer the better. Note that this doesn't take into account the MAX cap of targetManager.cs -> maxTargetInfo
+    /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    private int GetTargetInfo(int distance)
+    { return Mathf.Max(1, 3 - distance); }
 
     //place methods above here
 }

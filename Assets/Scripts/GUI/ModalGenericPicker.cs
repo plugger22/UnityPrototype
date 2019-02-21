@@ -431,6 +431,19 @@ public class ModalGenericPicker : MonoBehaviour
                         }
                         else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
+                    case EventType.GenericTargetInfo:
+                        if (data.optionID > -1)
+                        {
+                            Target target = GameManager.instance.dataScript.GetTarget(data.optionID);
+                            if (target != null)
+                            {
+                                text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, target.targetName.ToUpper(), colourEnd, colourDefault, colourEnd);
+                                Debug.LogFormat("[UI] -> ModalGenericPicker: targetID {0} selected{1}", data.optionID, "\n");
+                            }
+                            else { Debug.LogError(string.Format("Invalid target (Null) for targetID {0}", data.optionID)); }
+                        }
+                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        break;
                     case EventType.GenericCompromisedGear:
                         if (data.optionID > -1)
                         {
@@ -614,6 +627,9 @@ public class ModalGenericPicker : MonoBehaviour
                 case EventType.GenericGearChoice:
                     text = string.Format("{0}Gear{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
                     break;
+                case EventType.GenericTargetInfo:
+                    text = string.Format("{0}Target{1} {2}selection{3}", colourEffect, colourEnd, colourNormal, colourEnd);
+                    break;
                 case EventType.GenericCompromisedGear:
                     text = string.Format("{0}Use Renown to {1}{2}SAVE ONE{3}{4} item{5} <size=70%>(optional)</size>", colourNormal, colourEnd, colourNeutral, colourEnd, 
                         colourNormal, colourEnd);
@@ -661,6 +677,7 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericTeamRecall:
             case EventType.GenericNeutraliseTeam:
             case EventType.GenericGearChoice:
+            case EventType.GenericTargetInfo:
             case EventType.GenericCompromisedGear:
             case EventType.GenericRecruitActorResistance:
             case EventType.GenericRecruitActorAuthority:
