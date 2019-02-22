@@ -289,7 +289,7 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void CheckForCompromisedGear()
     {
-        int chance, rnd, gearID;
+        int chance, rnd;
         bool isCompromisedGear = false;
         listOfCompromisedGear.Clear();
         //inclues all gear held by player and actors
@@ -453,7 +453,7 @@ public class GearManager : MonoBehaviour
                                     msgText = string.Format("Gear {0} LOST", gear.name);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                     //remove gear AFTER message
-                                    actor.RemoveGear();
+                                    actor.RemoveGear(GearRemoved.Lost);
 
                                 }
                                 else

@@ -79,7 +79,7 @@ public class TargetManager : MonoBehaviour
     private string colourNormal;
     private string colourDefault;
     private string colourGrey;
-    private string colourAlert;
+    //private string colourAlert;
     //private string colourRebel;
     private string colourTarget;
     private string colourEnd;
@@ -158,7 +158,7 @@ public class TargetManager : MonoBehaviour
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -923,7 +923,7 @@ public class TargetManager : MonoBehaviour
                 //
                 tempList.Add(string.Format("{0}Target Success Chance{1}", colourTarget, colourEnd));
                 //base chance
-                tempList.Add(string.Format("{0}<size=95%> Base Chance +{1}</size>{2}", colourNeutral, baseTargetChance * 0.1, colourEnd));
+                tempList.Add(string.Format("{0}<size=95%> Base Chance {1}</size>{2}", colourNeutral, baseTargetChance * 0.1, colourEnd));
                 //Loop listOfFactors to ensure consistency of calculations across methods
                 foreach (TargetFactors factor in listOfFactors)
                 {
@@ -1061,7 +1061,7 @@ public class TargetManager : MonoBehaviour
                 int tally = GetTargetTally(targetID);
                 int chance = GetTargetChance(tally);
                 //add tally and chance to string
-                tempList.Add(string.Format("{0}<size=95%>Total {1}{2}</size>{3}", colourNeutral, tally > 0 ? "+" : "", tally, colourEnd));
+                tempList.Add(string.Format("{0}<size=95%>Total {1}</size>{2}", colourNeutral, tally, colourEnd));
                 tempList.Add(string.Format("{0}{1}SUCCESS {2}%{3}{4}", colourDefault, "<mark=#FFFFFF4D>", chance, "</mark>", colourEnd));
             }
             else

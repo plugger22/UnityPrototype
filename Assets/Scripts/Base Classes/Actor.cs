@@ -71,7 +71,7 @@ namespace gameAPI
                 _status = value;
                 //remove gear
                 if (_status != ActorStatus.Active && _status != ActorStatus.Inactive)
-                { RemoveGear(); }
+                { RemoveGear(GearRemoved.Lost); }
             }
         }
 

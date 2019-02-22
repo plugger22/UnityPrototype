@@ -1666,7 +1666,7 @@ public class ActionManager : MonoBehaviour
             if (errorFlag == false)
             {
                 //remove gear from actor
-                actor.RemoveGear(true);
+                actor.RemoveGear(GearRemoved.Taken);
                 //Give Gear to Player
                 GameManager.instance.playerScript.AddGear(gear.gearID);
                 //deduct motivation from actor
@@ -2307,8 +2307,7 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
-        bool isPlayer = false;
-        int targetID, gearID;
+        int targetID;
         int actorID = GameManager.instance.playerScript.actorID; ;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
@@ -2332,7 +2331,6 @@ public class ActionManager : MonoBehaviour
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
-                    isPlayer = true;
                     details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
                     if (GameManager.instance.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }

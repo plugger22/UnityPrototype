@@ -336,7 +336,9 @@ public class TooltipNode : MonoBehaviour
         //ascertain whether actors shown or not
         proceedFlag = false;
         numRecordsCurrent = data.listOfContactsCurrent.Count;
-        numRecordsOther = data.listOfContactsOther.Count;
+        if (data.listOfContactsOther != null)
+        { numRecordsOther = data.listOfContactsOther.Count; }
+        else { numRecordsOther = 0; }
         //contact info depends on side status
         if (currentSide.level == globalResistance.level)
         {

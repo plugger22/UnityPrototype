@@ -4007,7 +4007,18 @@ public class ActorManager : MonoBehaviour
                             {
                                 Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                 if (gear != null)
-                                { actor.ResetGearItem(gear); }
+                                {
+                                    if (gear.isCompromised == true)
+                                    {
+                                        //gear automatically lost after Target use (other uses are taken care elsewhere)
+                                        actor.RemoveGear(GearRemoved.Compromised);
+                                        //message
+                                        string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                        GameManager.instance.messageScript.GearLost(msgText, gear, actor);
+                                    }
+                                    else { actor.ResetGearItem(gear); }
+
+                                }
                                 else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                             }
                         }
@@ -4242,8 +4253,11 @@ public class ActorManager : MonoBehaviour
                                         {
                                             if (gear.isCompromised == true)
                                             {
-                                                //gear automatically lost
-                                                actor.RemoveGear();
+                                                //gear automatically lost after Target use (other uses are taken care elsewhere)
+                                                actor.RemoveGear(GearRemoved.Compromised);
+                                                //message
+                                                string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                                GameManager.instance.messageScript.GearLost(msgText, gear, actor);
                                             }
                                             else {actor.ResetGearItem(gear); }
                                             

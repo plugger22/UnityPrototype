@@ -1756,7 +1756,6 @@ public class AIRebelManager : MonoBehaviour
         Node goodNode = null;
         if (node != null)
         {
-            int currentNodeID = node.nodeID;
             //get list of current node neighbours (by value, not reference otherwise you'll delete from the nodes list of Neighbours)
             List<Node> listOfNeighbours = new List<Node>(node.GetNeighbouringNodes());
             if (listOfNeighbours != null)
