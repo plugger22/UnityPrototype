@@ -687,7 +687,7 @@ namespace gameAPI
         /// <summary>
         /// remove gear for various reasons. Msg only if gear present in first place. isTaken true if you are taking gear from actor, false (by default) otherwise
         /// </summary>
-        public void RemoveGear(bool isTaken = false)
+        public void RemoveGear(GearRemoved reason)
         {
             if (gearID > -1)
             {
@@ -698,14 +698,22 @@ namespace gameAPI
                 //remove gear AFTER logger
                 gearID = -1;
                 gearTimer = 0;
-                //if gear has been taken, increment counter
-                if (isTaken == true)
-                { gearTimesTaken++; }
-                else
+                switch (reason)
                 {
-                    //gear Lost
-                    if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
-                    { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+                    case GearRemoved.Lost:
+                        if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+                        break;
+                    case GearRemoved.Taken:
+                        gearTimesTaken++;
+                        break;
+                    case GearRemoved.Compromised:
+                        if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID); }
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Unrecognised GearRemoved reason \"{0}\"", reason);
+                        break;
                 }
             }
         }

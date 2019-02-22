@@ -289,11 +289,12 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void CheckForCompromisedGear()
     {
-        int chance, rnd;
+        int chance, rnd, gearID;
         bool isCompromisedGear = false;
         listOfCompromisedGear.Clear();
         //inclues all gear held by player and actors
         List<int> listOfGear = GameManager.instance.dataScript.GetListOfCurrentGear();
+        List<int> listOfPlayerGear = new List<int>();
         if (listOfGear != null)
         {
             if (listOfGear.Count > 0)
@@ -315,10 +316,16 @@ public class GearManager : MonoBehaviour
                                 {
                                     //gear COMPROMISED
                                     gear.isCompromised = true;
-                                    isCompromisedGear = true;
                                     gear.chanceOfCompromise = chance;
                                     //add to list (used for outcome dialogues)
                                     listOfCompromisedGear.Add(gear.name.ToUpper());
+                                    if (GameManager.instance.playerScript.CheckGearPresent(gear.gearID) == true)
+                                    {
+                                        listOfPlayerGear.Add(gear.gearID);
+                                        isCompromisedGear = true;
+                                        GameManager.instance.playerScript.isEndOfTurnGearCheck = true;
+                                    }
+                                    else { GameManager.instance.actorScript.isGearCheckRequired = true; }
                                     //stat (before message)
                                     gear.statTimesCompromised++;
                                     //admin
@@ -341,12 +348,9 @@ public class GearManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[i]); }
                 }
-                //any compromised gear?
+                //any Player compromised gear? (Actor gear is automatically lost if compromised, handled by ActorManager.cs -> CheckActive/InactiveResistanceActorsHuman)
                 if (isCompromisedGear == true)
                 {
-                    //set flags indicating that all gear has been checked & resets are required
-                    GameManager.instance.playerScript.isEndOfTurnGearCheck = true;
-                    GameManager.instance.actorScript.isGearCheckRequired = true;
                     //check Player has enough renown to save gear
                     int playerRenown = GameManager.instance.playerScript.Renown;
                     if (playerRenown >= gearSaveCurrentCost)
@@ -468,7 +472,7 @@ public class GearManager : MonoBehaviour
     }
 
     /// <summary>
-    /// sets up and triggers generic picker for end of turn compromised gear decision 
+    /// sets up and triggers generic picker for end of turn compromised gear decision. Player gear only
     /// </summary>
     private void InitialiseCompromisedGearPicker()
     {
@@ -980,7 +984,7 @@ public class GearManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process end of turn Compromised Gear choices
+    /// Process end of turn Compromised Gear choices (Player gear only)
     /// </summary>
     /// <param name="data"></param>
     public void ProcessCompromisedGear(GenericReturnData data)

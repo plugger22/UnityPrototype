@@ -82,6 +82,11 @@
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
 
     //
+    // - - - Gear - - -
+    //
+    public enum GearRemoved { Lost, Taken, Compromised }                        //Actor.cs -> RemoveGear, reason why
+
+    //
     // - - - Contacts - - -
     //
     public enum ContactStatus { Active, Inactive, ContactPool }

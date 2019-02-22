@@ -3916,6 +3916,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckInactiveResistanceActorsHuman()
     {
+        int gearID;
         // Resistance actors only
         Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActorsResistance != null)
@@ -4242,6 +4243,7 @@ public class ActorManager : MonoBehaviour
                                             if (gear.isCompromised == true)
                                             {
                                                 //gear automatically lost
+                                                actor.RemoveGear();
                                             }
                                             else {actor.ResetGearItem(gear); }
                                             
