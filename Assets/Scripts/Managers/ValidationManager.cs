@@ -90,8 +90,15 @@ public class ValidationManager : MonoBehaviour
                 {
                     //should be duration 'Ongoing'
                     if (target.OngoingEffect.duration.name.Equals("Ongoing") == false)
-                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" ongoing effect \"{1}\" NOT Ongoing", target.targetName, target.OngoingEffect.name); }
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>ongoing effect \"{1}\" NOT Ongoing</b>", target.targetName, target.OngoingEffect.name); }
                 }
+                //Target gear present and shouldn't be infiltration
+                if (target.gear != null)
+                {
+                    if (target.gear.name.Equals("Infiltration") == true)
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>is using INFILTRATION gear</b> (doubled up as can be used automatically on any target)", target.targetName); }
+                }
+                else {Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Gear (Null)", target.targetName); }
             }
             else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", index); }
         }

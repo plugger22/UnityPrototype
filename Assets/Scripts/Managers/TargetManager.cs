@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum TargetFactors { TargetInfo, NodeSupport, ActorAndGear, NodeSecurity, TargetLevel, Teams} //Sequence is order of factor display
+public enum TargetFactors { TargetIntel, NodeSupport, ActorAndGear, NodeSecurity, TargetLevel, Teams} //Sequence is order of factor display
 
 /// <summary>
 /// Handles all node target related matters
@@ -79,6 +79,7 @@ public class TargetManager : MonoBehaviour
     private string colourNormal;
     private string colourDefault;
     private string colourGrey;
+    private string colourAlert;
     //private string colourRebel;
     private string colourTarget;
     private string colourEnd;
@@ -157,6 +158,7 @@ public class TargetManager : MonoBehaviour
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -634,7 +636,7 @@ public class TargetManager : MonoBehaviour
                         target.turnDone = -1;
                         target.numOfAttempts = 0;
                         target.ongoingID = -1;
-                        target.infoLevel = 0;
+                        target.intel = 0;
                         //status and message
                         switch (target.profile.trigger.name)
                         {
@@ -806,8 +808,8 @@ public class TargetManager : MonoBehaviour
                 {
                     //resistance player
                     tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourDefault, target.descriptorResistance, colourEnd));
-                    tempList.Add(string.Format("{0}Info level{1}  {2}<b>{3}</b>{4}", colourDefault, colourEnd,
-                        GameManager.instance.colourScript.GetValueColour(target.infoLevel), target.infoLevel, colourEnd));
+                    tempList.Add(string.Format("{0}Intel{1}  {2}<b>{3}</b>{4}", colourDefault, colourEnd,
+                        GameManager.instance.colourScript.GetValueColour(target.intel), target.intel, colourEnd));
                     tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));
                     tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
                     tempList.Add(string.Format("Available for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.timerWindow, colourEnd, target.timerWindow != 1 ? "s" : ""));
@@ -927,9 +929,11 @@ public class TargetManager : MonoBehaviour
                 {
                     switch (factor)
                     {
-                        case TargetFactors.TargetInfo:
+                        case TargetFactors.TargetIntel:
                             //good -> info
-                            tempList.Add(string.Format("{0}<size=95%>Info {1}{2}</size>{3}", colourGood, target.infoLevel > 0 ? "+" : "", target.infoLevel, colourEnd));
+                            if (target.intel > 0)
+                            { tempList.Add(string.Format("{0}<size=95%>Intel {1}{2}</size>{3}", colourGood, target.intel > 0 ? "+" : "", target.intel, colourEnd)); }
+                            else { tempList.Add(string.Format("{0}<size=95%>Intel {1}</size>{2}", colourGrey, target.intel, colourEnd)); }
                             break;
                         case TargetFactors.NodeSupport:
                             //good -> support
@@ -1071,9 +1075,9 @@ public class TargetManager : MonoBehaviour
                 {
                     switch (factor)
                     {
-                        case TargetFactors.TargetInfo:
+                        case TargetFactors.TargetIntel:
                             //good -> info
-                            tally += target.infoLevel;
+                            tally += target.intel;
                             break;
                         case TargetFactors.NodeSupport:
                             //good -> support
@@ -1422,7 +1426,7 @@ public class TargetManager : MonoBehaviour
                 #region TargetSelection
                 //Obtain Gear
                 genericDetails.returnEvent = EventType.GenericTargetInfo;
-                genericDetails.textHeader = "Choose Target";
+                genericDetails.textHeader = "Select Target";
                 genericDetails.side = globalResistance;
                 genericDetails.nodeID = details.nodeID;
                 genericDetails.actorSlotID = details.actorDataID;
@@ -1458,7 +1462,7 @@ public class TargetManager : MonoBehaviour
                         if (target != null)
                         {
                             //has space for more intel
-                            if (target.infoLevel < maxTargetInfo)
+                            if (target.intel < maxTargetInfo)
                             {
                                 distance = -1;
                                 //get distance
@@ -1472,7 +1476,15 @@ public class TargetManager : MonoBehaviour
                                     else { Debug.LogErrorFormat("Invalid dijkstra distance between nodeID {0} and target nodeID {1}", node.nodeID, target.nodeID); }
                                 }
                                 target.distance = distance;
-                                target.newIntel = GetTargetInfoChange(distance, target.infoLevel);
+                                target.newIntel = GetTargetInfoNew(distance, target.intel);
+                                target.intelGain = GetTargetInfoGain(distance);
+                            }
+                            else
+                            {
+                                //zero out dynamic fields
+                                target.distance = 0;
+                                target.newIntel = 0;
+                                target.intelGain = 0;
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
@@ -1500,7 +1512,7 @@ public class TargetManager : MonoBehaviour
                             if (target != null)
                             {
                                 //tooltip 
-                                GenericTooltipDetails tooltipDetails = GetTargetGenericTooltip(target);
+                                GenericTooltipDetails tooltipDetails = GetTargetTooltipGeneric(target);
                                 if (tooltipDetails != null)
                                 {
                                     //option details
@@ -1550,7 +1562,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="target"></param>
     /// <returns></returns>
-    private GenericTooltipDetails GetTargetGenericTooltip(Target target)
+    private GenericTooltipDetails GetTargetTooltipGeneric(Target target)
     {
         GenericTooltipDetails details = null;
         if (target != null)
@@ -1559,11 +1571,11 @@ public class TargetManager : MonoBehaviour
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderMain = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-
+            string colourIntel = GameManager.instance.colourScript.GetValueColour(target.intel);
             builderHeader.AppendFormat("{0}{1}{2}", colourGear, target.targetName, colourEnd);
-            builderMain.AppendFormat("<b>Existing Intel {0}</b>{1}", target.infoLevel, "\n");
-            builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}</size>MAX Intel allowed is {5}{6}", colourNeutral, target.newIntel, colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
-            builderDetails.AppendFormat("<b>Distance {0}</b>", target.distance);
+            builderMain.AppendFormat("<b>Existing Intel {0}{1}{2}</b>{3}", colourIntel, target.intel, colourEnd, "\n");
+            builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}</size>MAX Intel allowed is {5}{6}", colourNeutral, target.intelGain, colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
+            builderDetails.AppendFormat("Distance {0}{1}{2}", colourNeutral, target.distance, colourEnd);
             
             details.textHeader = builderHeader.ToString();
             details.textMain = builderMain.ToString();
@@ -1577,44 +1589,93 @@ public class TargetManager : MonoBehaviour
     /// Process Planner gain target info for selected target (from generic picker)
     /// </summary>
     /// <param name="details"></param>
-    private void ProcessTargetInfo(GenericReturnData details)
+    private void ProcessTargetInfo(GenericReturnData detailsGeneric)
     {
-        Target target = GameManager.instance.dataScript.GetTarget(details.optionID);
+        Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionID);
         if (target != null)
         {
-            //update target info level
-            target.infoLevel += target.newIntel;
-            if (target.infoLevel > maxTargetInfo)
-            {
-                target.infoLevel = maxTargetInfo;
-                Debug.LogWarning("Invalid target.infoLevel (exceeds maxTargetInfo)");
-            }
             //Get actor
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorSlotID, globalResistance);
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(detailsGeneric.actorSlotID, globalResistance);
             if (actor != null)
-            { 
-
-
-
-
+            {
+                Sprite sprite = actor.arc.sprite;
+                Node node = GameManager.instance.dataScript.GetNode(detailsGeneric.nodeID);
+                if (node != null)
+                {
+                    StringBuilder builderTop = new StringBuilder();
+                    StringBuilder builderBottom = new StringBuilder();
+                    //update target info level
+                    target.intel = target.newIntel;
+                    if (target.intel > maxTargetInfo)
+                    { target.intel = maxTargetInfo; }
+                    builderTop.AppendFormat("{0}{1} target{2}{3}{4}", colourGear, target.targetName, colourEnd, "\n", "\n");
+                    builderTop.AppendFormat("{0}+{1}{2} INTEL gained, now {3}{4}{5}", colourNeutral, target.intelGain, colourEnd, GameManager.instance.colourScript.GetValueColour(target.intel), 
+                        target.intel, colourEnd);
+                    //message
+                    Debug.LogFormat("[Tar] TargetManager.cs -> ProcessTargetInfo: {0}, id {1} at {2}, {3}, id {4}, Intel +{5}, now {6} (PLANNER action){7}", target.targetName, target.targetID,
+                        node.nodeName, node.Arc.name, node.nodeID, target.intelGain, target.intel, "\n");
+                    //Process any other effects, if acquisition was successfull, ignore otherwise
+                    Action action = actor.arc.nodeAction;
+                    EffectDataInput dataInput = new EffectDataInput();
+                    dataInput.originText = "Target Intel";
+                    List<Effect> listOfEffects = action.GetEffects();
+                    if (listOfEffects.Count > 0)
+                    {
+                        foreach (Effect effect in listOfEffects)
+                        {
+                            if (effect.ignoreEffect == false)
+                            {
+                                //process effect normally
+                                EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                                if (effectReturn != null)
+                                {
+                                    builderTop.AppendLine();
+                                    builderTop.Append(effectReturn.topText);
+                                    if (builderBottom.Length > 0)
+                                    { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                    builderBottom.Append(effectReturn.bottomText);
+                                }
+                                else { Debug.LogError("Invalid effectReturn (Null)"); }
+                            }
+                        }
+                    }
+                    //OUTCOME Window
+                    ModalOutcomeDetails detailsModal = new ModalOutcomeDetails();
+                    detailsModal.textTop = builderTop.ToString();
+                    detailsModal.textBottom = builderBottom.ToString();
+                    detailsModal.sprite = sprite;
+                    detailsModal.side = GameManager.instance.globalScript.sideResistance;
+                    detailsModal.isAction = true;
+                    detailsModal.reason = "Gain Target Intel";
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, detailsModal, "TargetManager.cs -> ProcessTargetInfo");
+                }
+                else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", detailsGeneric.nodeID)); }
             }
-            else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", details.actorSlotID); }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", detailsGeneric.actorSlotID); }
         }
-        else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", details.optionID); }
-            
+        else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", detailsGeneric.optionID); }
     }
 
     /// <summary>
-    /// algorithim to give the amount of intel gained based on distance between node and target. Closer the better. Note that this takes into account the MAX cap of targetManager.cs -> maxTargetInfo
+    /// algorithim to give the amount of intel gained (shows new level) based on distance between node and target. Closer the better. 
+    /// Note that this takes into account the MAX cap of targetManager.cs -> maxTargetInfo
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    private int GetTargetInfoChange(int distance, int existingInfo)
+    private int GetTargetInfoNew(int distance, int existingInfo)
     {
         int intel = Mathf.Max(1, 3 - distance);
         intel += existingInfo;
         return Mathf.Min(maxTargetInfo, intel);
     }
+
+    /// <summary>
+    /// gives the amount of intel to be gained, solely based around distance, ignoring max cap
+    /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    private int GetTargetInfoGain(int distance)
+    { return Mathf.Max(1, 3 - distance); }
 
     //place methods above here
 }

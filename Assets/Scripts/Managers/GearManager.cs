@@ -605,7 +605,7 @@ public class GearManager : MonoBehaviour
                 #region gearSelection
                 //Obtain Gear
                 genericDetails.returnEvent = EventType.GenericGearChoice;
-                genericDetails.textHeader = "Choose Gear";
+                genericDetails.textHeader = "Select Gear";
                 genericDetails.side = globalResistance;
                 genericDetails.nodeID = details.nodeID;
                 genericDetails.actorSlotID = details.actorDataID;

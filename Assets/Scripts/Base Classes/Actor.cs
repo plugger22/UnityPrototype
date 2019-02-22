@@ -81,6 +81,8 @@ namespace gameAPI
             set
             {
                 _renown = value;
+                //need this here to prevent UpdateActorRenownUI choking on a negative renown
+                _renown = Mathf.Max(0, _renown);
                 //update renownUI regardless of whether it is on or off
                 GameManager.instance.actorPanelScript.UpdateActorRenownUI(actorSlotID, _renown);
             }

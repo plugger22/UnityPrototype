@@ -62,7 +62,7 @@ public class Target : ScriptableObject
     [HideInInspector] public TargetProfile profile;                 //Profile that used in code
     [HideInInspector] public Status targetStatus;                   //default status of Dormant
     /*[HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live*/
-    [HideInInspector] public int infoLevel;                         //from 1 to 3 but can be zero in some cases
+    [HideInInspector] public int intel;                             //from 1 to 3, default 0. Gained by Planner action
     [HideInInspector] public int targetID;
     [HideInInspector] public int ongoingID;                         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;                      //is known by the AI?
@@ -71,7 +71,8 @@ public class Target : ScriptableObject
     [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node*/
 
     [HideInInspector] public int distance;                          //distance to current node (used for Planner). Dynamic (targetManager.cs -> InitialiseGenericPickerTargetInfo. Can be ignored.
-    [HideInInspector] public int newIntel;                          //amount of intel gained (info) if selected in generic picker. Dynamic. Can be ignored 
+    [HideInInspector] public int newIntel;                          //new level of intel after gain, takes into account max cap and existing intel level. Dynamic. Can be ignored. 
+    [HideInInspector] public int intelGain;                         //amount of intel gained (info) if selected in generic picker. Dynamic. Can be ignored 
 
     //Tracking data
     [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted, -1 default

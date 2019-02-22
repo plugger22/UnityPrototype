@@ -456,7 +456,7 @@ public class EffectManager : MonoBehaviour
                                                             //loop targets looking for at least one who has targetInfo < max
                                                             foreach(Target target in listOfLiveTargets)
                                                             {
-                                                                if (target.infoLevel < maxTargetInfo)
+                                                                if (target.intel < maxTargetInfo)
                                                                 { isSuccess = true;  break; }
                                                             }
                                                             if (isSuccess == false)
@@ -838,7 +838,7 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes effects and returns results in a class. Leave actor as Null for (Resistance?) Player effect
+    /// Processes effects and returns results in a class. Leave actor as Null for (Resistance?) Player effect (Invisibility, Renown etc. auto checks node for Player being present, so can provide Actor)
     /// Use player node if an issue but check to see if node is used (often to determine who is affected, player or actor)
     /// </summary>
     /// <param name="effect"></param>
@@ -1364,7 +1364,7 @@ public class EffectManager : MonoBehaviour
                                             invisibility += effect.value;
                                             invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
                                             actor.datapoint2 = invisibility;
-                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name,
+                                            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                                 dataBefore, invisibility, "\n");
                                         }
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
@@ -1400,7 +1400,7 @@ public class EffectManager : MonoBehaviour
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
                                         actor.datapoint2 = invisibility;
-                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.arc.name, actor.arc.name,
+                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                             dataBefore, invisibility, "\n");
                                         //AI activity message
                                         int delay;
@@ -1509,7 +1509,7 @@ public class EffectManager : MonoBehaviour
                                         effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
                                         break;
                                 }
-                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.arc.name, actor.arc.name, dataBefore, actor.Renown, "\n");
+                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
                             }
                             else
                             {

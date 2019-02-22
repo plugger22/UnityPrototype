@@ -726,7 +726,7 @@ public class LoadManager : MonoBehaviour
                 target.targetID = counter++;
                 target.targetStatus = Status.Dormant;
                 //target.timer = -1;
-                target.infoLevel = 1;
+                target.intel = 1;
                 target.isKnownByAI = false;
                 target.nodeID = -1;
                 target.ongoingID = -1;
