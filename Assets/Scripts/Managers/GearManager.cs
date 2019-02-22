@@ -285,14 +285,15 @@ public class GearManager : MonoBehaviour
 
 
     /// <summary>
-    /// run at turn end to check all gear that has been used to see if it's compromised. Generates Generic Picker for player choice (use renown to keep gear) if so
+    /// run at turn end to check all gear (Player and actor, eg. target use) that has been used to see if it's compromised. Generates Generic Picker for player choice (use renown to keep gear) if so
     /// </summary>
     public void CheckForCompromisedGear()
     {
         int chance, rnd;
         bool isCompromisedGear = false;
         listOfCompromisedGear.Clear();
-        List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        //inclues all gear held by player and actors
+        List<int> listOfGear = GameManager.instance.dataScript.GetListOfCurrentGear();
         if (listOfGear != null)
         {
             if (listOfGear.Count > 0)
@@ -343,8 +344,9 @@ public class GearManager : MonoBehaviour
                 //any compromised gear?
                 if (isCompromisedGear == true)
                 {
-                    //set flag indicating that all gear has been checked
+                    //set flags indicating that all gear has been checked & resets are required
                     GameManager.instance.playerScript.isEndOfTurnGearCheck = true;
+                    GameManager.instance.actorScript.isGearCheckRequired = true;
                     //check Player has enough renown to save gear
                     int playerRenown = GameManager.instance.playerScript.Renown;
                     if (playerRenown >= gearSaveCurrentCost)
@@ -491,46 +493,54 @@ public class GearManager : MonoBehaviour
             //loop gear (max 3 pieces of gear / max 3 options)
             for (int index = 0; index < listOfGear.Count; index++)
             {
-                Debug.Assert(index < 3, "Invalid index (max. of 3 gear and 3 options)");
-                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[index]);
-                if (gear != null)
+                if (index < 3)
                 {
-                    //is gear compromised?
-                    if (gear.isCompromised == true)
+                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[index]);
+                    if (gear != null)
                     {
-                        //generate an option for picker
-                        GenericTooltipDetails tooltipDetails = GetCompromisedGearTooltip(gear);
-                        if (tooltipDetails != null)
+                        //is gear compromised?
+                        if (gear.isCompromised == true)
                         {
-                            //option details
-                            GenericOptionDetails optionDetails = new GenericOptionDetails();
-                            optionDetails.optionID = gear.gearID;
-                            optionDetails.text = gear.name.ToUpper();
-                            optionDetails.sprite = gear.sprite;
-                            //add to master arrays
-                            genericDetails.arrayOfOptions[index] = optionDetails;
-                            genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                            //generate an option for picker
+                            GenericTooltipDetails tooltipDetails = GetCompromisedGearTooltip(gear);
+                            if (tooltipDetails != null)
+                            {
+                                //option details
+                                GenericOptionDetails optionDetails = new GenericOptionDetails();
+                                optionDetails.optionID = gear.gearID;
+                                optionDetails.text = gear.name.ToUpper();
+                                optionDetails.sprite = gear.sprite;
+                                //add to master arrays
+                                genericDetails.arrayOfOptions[index] = optionDetails;
+                                genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                            }
+                        }
+                        else if (gear.timesUsed > 0)
+                        {
+                            //gear is Used but NOT Compromised -> faded & unselectable option
+                            GenericTooltipDetails tooltipDetails = GetUsedGearTooltip(gear);
+                            if (tooltipDetails != null)
+                            {
+                                //option details
+                                GenericOptionDetails optionDetails = new GenericOptionDetails();
+                                optionDetails.optionID = gear.gearID;
+                                optionDetails.text = gear.name.ToUpper();
+                                optionDetails.sprite = gear.sprite;
+                                optionDetails.isOptionActive = false;
+                                //add to master arrays
+                                genericDetails.arrayOfOptions[index] = optionDetails;
+                                genericDetails.arrayOfTooltips[index] = tooltipDetails;
+                            }
                         }
                     }
-                    else if (gear.timesUsed > 0)
-                    {
-                        //gear is Used but NOT Compromised -> faded & unselectable option
-                        GenericTooltipDetails tooltipDetails = GetUsedGearTooltip(gear);
-                        if (tooltipDetails != null)
-                        {
-                            //option details
-                            GenericOptionDetails optionDetails = new GenericOptionDetails();
-                            optionDetails.optionID = gear.gearID;
-                            optionDetails.text = gear.name.ToUpper();
-                            optionDetails.sprite = gear.sprite;
-                            optionDetails.isOptionActive = false;
-                            //add to master arrays
-                            genericDetails.arrayOfOptions[index] = optionDetails;
-                            genericDetails.arrayOfTooltips[index] = tooltipDetails;
-                        }
-                    }
+                    else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
                 }
-                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
+                else
+                {
+                    //can only have 3 options
+                    Debug.LogWarning("Max of 3 gear options available -> appears to be more");
+                    break;
+                }
             }
             //open picker
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
@@ -977,7 +987,6 @@ public class GearManager : MonoBehaviour
     {
         if (data != null)
         {
-
             //deduct renown
             if (data.optionID > -1)
             {

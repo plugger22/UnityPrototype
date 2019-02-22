@@ -19,7 +19,7 @@ MonoBehaviour:
   metaLevel: {fileID: 0}
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
-  gear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
+  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
@@ -35,18 +35,21 @@ MonoBehaviour:
   profileBase: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 11400000, guid: 4b3cd6537cbd8d8428c54947a8e44f90, type: 2}
-  profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
-  targetStatus: 4
-  infoLevel: 0
+  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  targetStatus: 1
+  intel: 0
   targetID: 11
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: -1
+  nodeID: 12
+  distance: 0
+  newIntel: 0
+  intelGain: 0
   turnSuccess: -1
-  turnDone: 6
+  turnDone: -1
   numOfAttempts: 0
-  turnsWindow: 5
-  timerDelay: 0
+  turnsWindow: 10
+  timerDelay: 5
   timerHardLimit: 0
-  timerWindow: 0
-  listOfRumourContacts: 
+  timerWindow: 10
+  listOfRumourContacts: 24000000

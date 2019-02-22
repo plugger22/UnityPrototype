@@ -19,7 +19,7 @@ MonoBehaviour:
   metaLevel: {fileID: 0}
   targetLevel: 2
   actorArc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
-  gear: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
+  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
@@ -37,11 +37,14 @@ MonoBehaviour:
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
   targetStatus: 0
-  infoLevel: 1
+  intel: 1
   targetID: 12
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
+  distance: 0
+  newIntel: 0
+  intelGain: 0
   turnSuccess: -1
   turnDone: 24
   numOfAttempts: 0

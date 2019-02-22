@@ -2307,7 +2307,8 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
-        int targetID;
+        bool isPlayer = false;
+        int targetID, gearID;
         int actorID = GameManager.instance.playerScript.actorID; ;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
@@ -2331,6 +2332,7 @@ public class ActionManager : MonoBehaviour
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
+                    isPlayer = true;
                     details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
                     if (GameManager.instance.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }
@@ -2424,17 +2426,9 @@ public class ActionManager : MonoBehaviour
                         {
                             node.isTargetKnown = true;
                             Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
-                            /*//only authority player should know this
-                            text = string.Format("Target {0} attempt KNOWN", target.targetName);
-                            GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);*/
                         }
                         else
-                        {
-                            Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
-                            /*//only authority player should know this
-                            text = string.Format("Target {0} attempt UNDETECTED", target.targetName);
-                            GameManager.instance.messageScript.GeneralRandom(text, "Attempt Known", failedTargetChance, roll, true);*/
-                        }
+                        { Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n"); }
                     }
                     //if zero invisibility then target auto known to authorities
                     else { node.isTargetKnown = true; }
@@ -2507,6 +2501,9 @@ public class ActionManager : MonoBehaviour
                         else { Debug.LogWarning("Invalid effect (Null)"); }
                     }
                 }
+
+                //Gear -> handled by TargetManager.cs -> GetTargetTally
+
                 //
                 // - - - Outcome - - -
                 //                        

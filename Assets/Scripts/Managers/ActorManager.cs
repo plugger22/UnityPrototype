@@ -91,6 +91,8 @@ public class ActorManager : MonoBehaviour
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
     [HideInInspector] public int doomTimer;                                     //countdown doom timer set when player gains the DOOMED condition (infected with a slow acting lethal virus)
 
+    [HideInInspector] public bool isGearCheckRequired;                          //GearManager.cs -> used to flag that actors need to reset their gear
+
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection
     private int resistanceActorTurn;                                            //turn number of last choice for an resistance Actor Recruit selection
@@ -3994,6 +3996,20 @@ public class ActorManager : MonoBehaviour
                             string detailsBottom = string.Format("<b>Their network of contacts will become available once they are {0}back in touch</b>{1}", colourNeutral, colourEnd);
                             GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
                         }
+                        //
+                        // - - - Gear - - -
+                        //
+                        gearID = actor.GetGearID();
+                        if (gearID > -1)
+                        {
+                            if (isGearCheckRequired == true)
+                            {
+                                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                if (gear != null)
+                                { actor.ResetGearItem(gear); }
+                                else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                            }
+                        }
                     }
                     else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                 }
@@ -4098,6 +4114,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActorsHuman()
     {
+        int gearID;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if AI player is not Active
         if (GameManager.instance.aiRebelScript.status == ActorStatus.Active)
@@ -4211,11 +4228,34 @@ public class ActorManager : MonoBehaviour
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
                                 }
+                                //
+                                // - - - Gear - - -
+                                //
+                                gearID = actor.GetGearID();
+                                if (gearID > -1)
+                                {
+                                    if (isGearCheckRequired == true)
+                                    {
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        if (gear != null)
+                                        {
+                                            if (gear.isCompromised == true)
+                                            {
+                                                //gear automatically lost
+                                            }
+                                            else {actor.ResetGearItem(gear); }
+                                            
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                                    }
+                                }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                     }
                 }
+                //reset gear check flag as all active and inactive resistance actors have had their gear checked by now
+                isGearCheckRequired = false;
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
@@ -4223,6 +4263,8 @@ public class ActorManager : MonoBehaviour
         text = string.Format("Lie Low Timer {0}", lieLowTimer);
         GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
     }
+
+
 
 
     /// <summary>

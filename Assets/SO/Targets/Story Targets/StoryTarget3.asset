@@ -18,8 +18,8 @@ MonoBehaviour:
   rumourText: Resolve the Story
   metaLevel: {fileID: 0}
   targetLevel: 1
-  actorArc: {fileID: 0}
-  gear: {fileID: 0}
+  actorArc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
+  gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
   nodeArc: {fileID: 0}
@@ -32,11 +32,14 @@ MonoBehaviour:
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
   targetStatus: 0
-  infoLevel: 1
+  intel: 1
   targetID: 26
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
+  distance: 0
+  newIntel: 0
+  intelGain: 0
   turnSuccess: 0
   turnDone: 0
   numOfAttempts: 0

@@ -979,15 +979,17 @@ public class TargetManager : MonoBehaviour
                             }
                             else
                             {
+                                Actor actor = null;
                                 //player not at node ->  check if node active for the correct actor
                                 if (target.actorArc != null)
                                 {
-                                    //check if actor present in team
+                                    //check if actor present OnMap and Active (that actor is assumed to be tackling target, the target doesn't have to be part of a contact network)
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available
                                         tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
+                                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
                                     }
                                     else
                                     {
@@ -998,8 +1000,41 @@ public class TargetManager : MonoBehaviour
                                 //gear not applicable (only when player at node)
                                 if (target.gear != null)
                                 {
-                                    tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd));
-                                    tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd));
+                                    //only if correct actor arc is present & live
+                                    if (actor != null)
+                                    {
+                                        //actor with actor arc required can use applicable gear just like a player
+                                        int gearID = actor.GetGearID();
+                                        if (gearID > -1)
+                                        {
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            if (gear != null)
+                                            {
+                                                //correct type of gear
+                                                if (gear.type.name.Equals(target.gear.name) == true)
+                                                { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
+                                                else
+                                                {
+                                                    tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd));
+                                                    
+                                                    /*Debug.LogFormat("[Tst]: TargetManager.cs -> GetTargetFactors: {0}, {1}, gear present but not applicable to target{2}", gear.name, gear.type.name, "\n");*/
+
+                                                    //infiltration gear can be used
+                                                    if (gear.type.name.Equals(infiltrationGear.name) == true)
+                                                    { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.name, gearEffect * (gear.rarity.level + 1), colourEnd)); }
+                                                    else
+                                                    { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd)); }
+                                                }
+                                            }
+                                            else
+                                            { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gearID {0}", gearID)); }
+                                        }
+                                        else
+                                        {
+                                            tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd));
+                                            tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd));
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -1129,11 +1164,47 @@ public class TargetManager : MonoBehaviour
                                 //player NOT at node ->  check if actor is present in OnMap line-up
                                 if (target.actorArc != null)
                                 {
+                                    Actor actor = null;
                                     int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
                                     if (slotID > -1)
                                     {
-                                        //actor present and available
+                                        //actor of the required actor Arc is present
                                         tally += actorEffect;
+                                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
+                                        if (actor != null)
+                                        {
+                                            if (target.gear != null)
+                                            {
+                                                //actor, of the required actor arc type, present and available. Can use gear same as a Player
+                                                int gearID = actor.GetGearID();
+                                                if (gearID > -1)
+                                                {
+                                                    Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                                    if (gear != null)
+                                                    {
+                                                        //correct type of gear
+                                                        if (gear.type.name.Equals(target.gear.name) == true)
+                                                        {
+                                                            tally += gearEffect * (gear.rarity.level + 1);
+                                                            if (setGearAsUsed == true)
+                                                            { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                                        }
+                                                        else
+                                                        {
+                                                            //infiltration gear can be used
+                                                            if (gear.type.name.Equals(infiltrationGear.name) == true)
+                                                            {
+                                                                tally += gearEffect * (gear.rarity.level + 1);
+                                                                if (setGearAsUsed == true)
+                                                                { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                                            }
+                                                        }
+                                                    }
+                                                    else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                                                }
+                                            }
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
                                     }
                                 }
                             }

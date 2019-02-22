@@ -726,6 +726,19 @@ namespace gameAPI
         public int GetGearID()
         { return gearID; }
 
+        /// <summary>
+        /// Resets gear (single item) at start of turn (ActorManager.cs -> CheckActiveResistanceActorsHuman)
+        /// NOTE: Gear checked for Null by calling method
+        /// </summary>
+        /// <param name="gear"></param>
+        public void ResetGearItem(Gear gear)
+        {
+            gear.timesUsed = 0;
+            gear.reasonUsed = "";
+            gear.isCompromised = false;
+            gear.chanceOfCompromise = 0;
+        }
+
 
         //
         // - - - Tooltip - - -
