@@ -78,6 +78,16 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("The % chance of Renown/Resource point being used to retain gear (random roll every time gear is used. Cannot send resources below zero")]
     [Range(0, 100)] public int gearRenownChance = 20;
 
+    [Header("Target Intel")]
+    [Tooltip("The maximum amount of target Intel that can be held. You can go beyond this but no Planner action will be generated to gain more, will only do so if targetIntel < targetIntelMax")]
+    [Range(0, 10)] public int targetIntelMax = 6;
+    [Tooltip("Amount of targetIntel gained from a single Planner Action (chance of an extra intel point beyond this)")]
+    [Range(0, 5)] public int targetIntelTopUp = 1;
+    [Tooltip("Chance of gaining an extra point of target intel whenever a Planner action is used (normally you gain +1 intel per action but chance of +2)")]
+    [Range(0, 100)] public int targetIntelExtra = 40;
+    [Tooltip("Max amount of intel to be used on any given Target attempt (if it's present)")]
+    [Range(0, 5)] public int targetIntelAttempt = 3;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -90,7 +100,8 @@ public class AIRebelManager : MonoBehaviour
 
     private int gearPool;                               //number of gear points in pool
     private int gearPointsUsed;                         //number of gear points expended by AI
-    
+
+    private int targetIntel;                            //number of target intel points (gained by Planner and used for target attempts)
 
     private int targetNodeID;                           //goal to move towards
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
@@ -1430,6 +1441,7 @@ public class AIRebelManager : MonoBehaviour
                     ProcessOperatorTask(actorArcName);
                     break;
                 case "PLANNER":
+                    ProcessPlannerTask(actorArcName);
                     break;
                 case "RECRUITER":
                     break;
@@ -1510,13 +1522,14 @@ public class AIRebelManager : MonoBehaviour
                         task.data0 = actorID;
                         task.data1 = nodeID;
                         task.data2 = gearPoolTopUp;
-                        task.name0 = "FIXER";
+                        task.name0 = actorArcName;
                         task.priority = priorityFixerTask;
                         //add task to list of potential tasks
                         AddWeightedTask(task);
                 }
                 else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFixerTask: Invalid FIXER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
             }
+          else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFixerTask: No FIXER task as gearPool {0} Maxxed out (limit {1}){2}", gearPool, gearPoolMaxSize, "\n"); }
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFixerTask: No FIXER task as gearPool {0} >= gearPoolThreshold {1}{2}", gearPool, gearPoolThreshold, "\n"); }
     }
@@ -1551,7 +1564,7 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
-            task.name0 = "BLOGGER";
+            task.name0 = actorArcName;
             task.priority = priorityBloggerTask;
             //add task to list of potential tasks
             AddWeightedTask(task);
@@ -1588,7 +1601,7 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
-            task.name0 = "HACKER";
+            task.name0 = actorArcName;
             task.priority = priorityHackerTask;
             //add task to list of potential tasks
             AddWeightedTask(task);
@@ -1625,7 +1638,7 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
-            task.name0 = "ANARCHIST";
+            task.name0 = actorArcName;
             task.priority = priorityAnarchistTask;
             //add task to list of potential tasks
             AddWeightedTask(task);
@@ -1663,7 +1676,7 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
-            task.name0 = "OBSERVER";
+            task.name0 = actorArcName;
             task.priority = priorityObserverTask;
             //add task to list of potential tasks
             AddWeightedTask(task);
@@ -1701,7 +1714,7 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
-            task.name0 = "OPERATOR";
+            task.name0 = actorArcName;
             task.priority = priorityOperatorTask;
             //add task to list of potential tasks
             AddWeightedTask(task);
@@ -1738,12 +1751,54 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
-            task.name0 = "HEAVY";
+            task.name0 = actorArcName;
             task.priority = priorityHeavyTask;
             //add task to list of potential tasks
             AddWeightedTask(task);
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessHeavyTask: Invalid HEAVY task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+    }
+
+    /// <summary>
+    /// Planner Actor Arc task. Ther eis no limit on the amount of intel that can be acquired
+    /// NOTE: actorArcName checked for null by calling method
+    /// </summary>
+    private void ProcessPlannerTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        if (targetIntel < targetIntelMax)
+        {
+            //Player does action?
+            if (CheckPlayerAction(actorArcName) == true)
+            {
+                actorID = playerID;
+                nodeID = GameManager.instance.nodeScript.nodePlayer;
+            }
+            else
+            {
+                //get node and actorID
+                Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+                nodeID = results.Item1;
+                actorID = results.Item2;
+            }
+            //generate task if valid data is present, if none, ignore task
+            if (nodeID > -1 && actorID > -1)
+            {
+                //generate task
+                AITask task = new AITask();
+                task.type = AITaskType.ActorArc;
+                task.data0 = actorID;
+                task.data1 = nodeID;
+                task.data2 = targetIntelTopUp;
+                task.name0 = actorArcName;
+                task.priority = priorityPlannerTask;
+                //add task to list of potential tasks
+                AddWeightedTask(task);
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPlannerTask: Invalid PLANNER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPlannerTask: PLANNER task NOT generated as already at Max targetIntel (have {0}, max is {1}){2}", targetIntel, targetIntelMax, "\n"); }
     }
 
     /// <summary>
@@ -2125,6 +2180,7 @@ public class AIRebelManager : MonoBehaviour
                     ExecuteOperatorTask(task);
                     break;
                 case "PLANNER":
+                    ExecutePlannerTask(task);
                     break;
                 case "RECRUITER":
                     break;
@@ -2184,6 +2240,59 @@ public class AIRebelManager : MonoBehaviour
                 else { UpdateInvisibilityNode(node, actor); }
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteFixerTask: GEAR USED to remain undetected while getting gear (gearPoint NOT lost)"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
+    /// Planner actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecutePlannerTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node name
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
+            //effect
+            int newIntel = task.data2;
+            if (Random.Range(0, 100) < targetIntelExtra) { newIntel++; }
+            targetIntel += newIntel;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecutePlannerTask: Planner action, +{0} targetIntel, targetIntel now {1}{2}", newIntel, targetIntel, "\n");
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            UseAction(string.Format("get target Intel ({0}, PLANNER at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible
+            if (CheckGearAvailable(false) == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecutePlannerTask: GEAR USED to remain undetected while acquiring targetIntel (gearPoint NOT lost)"); }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
@@ -3021,6 +3130,10 @@ public class AIRebelManager : MonoBehaviour
                 //can be any node
                 isValid = true;
                 break;
+            case "PLANNER":
+                //can be any node
+                isValid = true;
+                break;
             case "OBSERVER":
                 //no tracer present and no Spider TEAM present 
                 if (node.isTracer == false && node.isSpiderTeam == false)
@@ -3199,6 +3312,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
         builder.AppendFormat(" Gear Used: {0}{1}", gearPointsUsed, "\n");
+        builder.AppendFormat(" Target Intel: {0}{1}", targetIntel, "\n");
 
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)

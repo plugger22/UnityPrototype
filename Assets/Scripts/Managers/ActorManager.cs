@@ -135,8 +135,8 @@ public class ActorManager : MonoBehaviour
     private int actorReserveTimerHalved;
     private int actorReserveActionNone;
     private int actorReserveActionDoubled;
-
-
+    //generic picker
+    private int maxGenericOptions = -1;
     //gear
     private int maxNumOfGear;
     private int gearGracePeriod = -1;
@@ -196,6 +196,7 @@ public class ActorManager : MonoBehaviour
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
+        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
         Debug.Assert(numOfQualities > 0, "Invalid numOfQualities (zero or less)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
@@ -211,6 +212,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
+        Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
         //cached TraitEffects
         actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
         actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
@@ -2821,7 +2823,7 @@ public class ActorManager : MonoBehaviour
                 //
                 //select three actors for the picker
                 //
-                numOfOptions = Math.Min(3, listOfPoolActors.Count);
+                numOfOptions = Math.Min(maxGenericOptions, listOfPoolActors.Count);
                 for (int i = 0; i < numOfOptions; i++)
                 {
                     index = Random.Range(0, listOfPoolActors.Count);

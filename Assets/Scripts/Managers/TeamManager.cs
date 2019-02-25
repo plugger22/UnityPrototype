@@ -39,6 +39,7 @@ public class TeamManager : MonoBehaviour
     private GlobalSide globalResistance;
     private int spotTeamChance = -1;
     private int maxSpotTeam = -1;
+    private int maxGenericOptions;
 
     private string colourEffect;
     private string colourTeam;
@@ -59,10 +60,12 @@ public class TeamManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         spotTeamChance = GameManager.instance.contactScript.spotTeamChance;
         maxSpotTeam = GameManager.instance.contactScript.maxSpotTeam;
+        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(spotTeamChance > -1, "Invalid spotTeamChance (less than Zero)");
         Debug.Assert(maxSpotTeam > -1, "Invalid maxSpotTeam (less than Zero)");
+        Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
         //Teams
         int teamArcCount = 0;
         Debug.Assert(listOfTeamPrioritiesHigh != null, "Invalid listOfTeamPrioritiesHigh (Null)");
@@ -992,10 +995,10 @@ public class TeamManager : MonoBehaviour
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
-                    //check that limit hasn't been exceeded (max 3 options)
-                    if (i > 2)
+                    //check that limit hasn't been exceeded (maxGenericOptions)
+                    if (i == maxGenericOptions)
                     {
-                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", nodeID));
+                        Debug.LogError(string.Format("Invalid number of Teams (more than {0}) at NodeId {1}", maxGenericOptions, nodeID));
                         break;
                     }
                 }
@@ -1076,10 +1079,10 @@ public class TeamManager : MonoBehaviour
                         genericDetails.arrayOfTooltips[i] = tooltipDetails;
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for listOfTeams[{0}]", i)); }
-                    //check that limit hasn't been exceeded (max 3 options)
-                    if (i > 2)
+                    //check that limit hasn't been exceeded (maxGenericOptions)
+                    if (i == maxGenericOptions)
                     {
-                        Debug.LogError(string.Format("Invalid number of Teams (more than 3) at NodeId {0}", details.nodeID));
+                        Debug.LogError(string.Format("Invalid number of Teams (more than {0}) at NodeId {1}", maxGenericOptions, details.nodeID));
                         break;
                     }
                 }

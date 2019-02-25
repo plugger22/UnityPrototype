@@ -13,6 +13,9 @@ using System;
 public class ModalGenericPicker : MonoBehaviour
 {
 
+    [Tooltip("Max number of options allowed in Modal Generic Picker")]
+    [Range(3, 3)] public int maxOptions = 3;
+
     public GameObject modalGenericObject;
     public GameObject modalPanelObject;
     public Image modalPanel;
@@ -89,6 +92,7 @@ public class ModalGenericPicker : MonoBehaviour
 
     private void Start()
     {
+        Debug.Assert(maxOptions == 3, "Invalid maxOptions (must be 3)");
         //register listener
         EventManager.instance.AddListener(EventType.OpenGenericPicker, OnEvent, "ModalGenericPicker");
         EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
@@ -233,7 +237,7 @@ public class ModalGenericPicker : MonoBehaviour
                         genericData = arrayOfGenericOptions[i].GetComponent<GenericInteraction>();
                         if (genericData != null)
                         {
-                            //there are 3 options but not all of them may be used
+                            //there are 'maxOptions' options but not all of them may be used
                             if (details.arrayOfOptions[i] != null)
                             {
                                 //get option canvas

@@ -57,6 +57,7 @@ public class GearManager : MonoBehaviour
     //compromised gear
     private int gearSaveCurrentCost;                                          //how much renown to save a compromised item of gear (increments +1 each time option used)
     private List<string> listOfCompromisedGear;                               //list cleared each turn that contains names of compromised gear (used for outcome dialogues)
+    private int maxGenericOptions = -1;
     //fast access -> traits
     private int actorLoseGearHigh = -1;
     private int actorLoseGearNone = -1;
@@ -130,10 +131,12 @@ public class GearManager : MonoBehaviour
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         actorLoseGearHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearHigh");
         actorLoseGearNone = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearNone");
+        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(actorLoseGearHigh > -1, "Invalid actorLoseGearHigh (-1)");
         Debug.Assert(actorLoseGearNone > -1, "Invalid actorLoseGearNone (-1)");
+        Debug.Assert(maxGenericOptions != -1, "Invalid maxGenericOptions (-1)");
         if (listOfGearType != null)
         {
             foreach (GearType gearType in listOfGearType)
@@ -191,7 +194,7 @@ public class GearManager : MonoBehaviour
                 if (gearEntry.Value.metaLevel == null || gearEntry.Value.metaLevel.level == gameLevel)
                 {
                     //reset stats (SO carries values over between sessions)
-                    gearEntry.Value.Reset();
+                    gearEntry.Value.ResetStats();
                     //assign to a list based on rarity
                     int index = gearEntry.Value.rarity.level;
                     arrayOfGearLists[index].Add(gearEntry.Key);
@@ -494,10 +497,10 @@ public class GearManager : MonoBehaviour
         List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         if (listOfGear != null && listOfGear.Count > 0)
         {
-            //loop gear (max 3 pieces of gear / max 3 options)
+            //loop gear (max 'maxGenericOptions' pieces of gear / max 'maxGenericOptions' options)
             for (int index = 0; index < listOfGear.Count; index++)
             {
-                if (index < 3)
+                if (index < maxGenericOptions)
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[index]);
                     if (gear != null)
@@ -542,7 +545,7 @@ public class GearManager : MonoBehaviour
                 else
                 {
                     //can only have 3 options
-                    Debug.LogWarning("Max of 3 gear options available -> appears to be more");
+                    Debug.LogWarningFormat("Max of {0} gear options available -> appears to be more", maxGenericOptions);
                     break;
                 }
             }

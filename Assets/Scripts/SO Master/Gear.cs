@@ -46,7 +46,7 @@ public class Gear : ScriptableObject
     /// <summary>
     /// called by GearManager.cs -> Initialise to zero all values as SO's carry values over between sessions
     /// </summary>
-    public void Reset()
+    public void ResetStats()
     {
         timesUsed = 0;
         isCompromised = false;

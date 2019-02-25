@@ -210,6 +210,10 @@ MonoBehaviour:
   gearPoolThreshold: 3
   gearPoolTopUp: 2
   gearRenownChance: 20
+  targetIntelMax: 6
+  targetIntelTopUp: 1
+  targetIntelExtra: 40
+  targetIntelAttempt: 3
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
@@ -1793,6 +1797,7 @@ MonoBehaviour:
   lieLowCooldownPeriod: 5
   lieLowTimer: 0
   doomTimer: 0
+  isGearCheckRequired: 0
 --- !u!114 &114677223304800786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2033,12 +2038,12 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 53125
+  seed: 0
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  autoRunTurns: 0
+  autoRunTurns: 20
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

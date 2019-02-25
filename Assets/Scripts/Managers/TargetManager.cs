@@ -70,6 +70,7 @@ public class TargetManager : MonoBehaviour
     private GearType infiltrationGear;
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
+    private int maxGenericOptions = -1;
 
     //colour Palette
     private string colourGood;
@@ -102,9 +103,11 @@ public class TargetManager : MonoBehaviour
         infiltrationGear = GameManager.instance.dataScript.GetGearType("Infiltration");
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
         Debug.Assert(infiltrationGear != null, "Invalid infiltrationGear (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(maxGenericOptions != -1, "Invalid maxGenericOptions (-1)");
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TargetManager");
@@ -1568,7 +1571,7 @@ public class TargetManager : MonoBehaviour
                         var sortedDistance = from pair in dictOfTargetDistances orderby pair.Value ascending select pair.Key;
                         List<Target> tempListSorted = sortedDistance.ToList();
                         //Put generic picker data package together
-                        count = Mathf.Min(3, count);
+                        count = Mathf.Min(maxGenericOptions, count);
                         Target[] arrayOfTargets = new Target[count];
                         
                         //transfer list targets to array targets
