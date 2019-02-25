@@ -1397,20 +1397,32 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessTargetTask()
     {
+        int targetTally, targetID;
+        bool isSuccess = false;
         Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
         //
         // - - - Player - - -
         //
         if (nodePlayer.nodeID == targetNodeID)
         {
+            targetID = nodePlayer.targetID;
             //Player at target node
+            targetTally = GameManager.instance.targetScript.GetTargetTallyAI(targetID);
+            //must be above minimum odds threshold to proceed
+            if (targetTally >= targetAttemptMinOdds)
+            {
+                //generate task for Player Attempt
 
-
+                isSuccess = true;
+            }
         }
         //
         // - - - Actors - - -
         //
-
+        if (isSuccess == false)
+        {
+            //only look at actors if player is NOT attempting a target
+        }
     }
 
 
