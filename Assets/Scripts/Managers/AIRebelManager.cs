@@ -88,6 +88,9 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Max amount of intel to be used on any given Target attempt (if it's present)")]
     [Range(0, 5)] public int targetIntelAttempt = 3;
 
+    [Header("Target Attempts")]
+
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -115,6 +118,7 @@ public class AIRebelManager : MonoBehaviour
     //rebel Player profile
     private int survivalMove;                           //The % chance of AI player moving away when they are at a Bad Node
     private int playerAction;                           //The % chance of the player doing the ActorArc action, rather than an Actor
+    private int targetAttemptMinOdds;                   //The minimum % odds that are required for the Player/Actor to attempt a target
     private Priority priorityStressLeavePlayer;
     private Priority priorityStressLeaveActor;
     private Priority priorityMovePlayer;
@@ -128,6 +132,7 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityOperatorTask;
     private Priority priorityPlannerTask;
     private Priority priorityRecruiterTask;
+    
 
 
     //fast access
@@ -226,6 +231,7 @@ public class AIRebelManager : MonoBehaviour
         //Rebel leader
         survivalMove = GameManager.instance.scenarioScript.scenario.leaderResistance.moveChance;
         playerAction = GameManager.instance.scenarioScript.scenario.leaderResistance.playerChance;
+        targetAttemptMinOdds = GameManager.instance.scenarioScript.scenario.leaderResistance.targetAttemptMinOdds;
         gearPool = GameManager.instance.scenarioScript.scenario.leaderResistance.gearPoints;
         gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         priorityStressLeavePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
@@ -254,6 +260,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(priorityOperatorTask != Priority.None, "Invalid priorityOperatorTask (None)");
         Debug.Assert(priorityPlannerTask != Priority.None, "Invalid priorityPlannerTask (None)");
         Debug.Assert(priorityRecruiterTask != Priority.None, "Invalid priorityRecruiterTask (None)");
+        Debug.Assert(targetAttemptMinOdds > 0, "Invalid targetAttemptMinOdds (Zero or less)");
     }
 
     /// <summary>
@@ -323,7 +330,8 @@ public class AIRebelManager : MonoBehaviour
                 //only one task possible and if survival task has been generated no point in going further
                 if (listOfTasksCritical.Count == 0)
                 {
-                    ProcessAdminTask();
+                    /*ProcessAdminTask();*/
+                    ProcessTargetTask();
                     ProcessMoveTask();
                     ProcessPeopleTask();
                     ProcessActorArcTask();
@@ -1376,13 +1384,35 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// assorted administrative tasks
     /// </summary>
     private void ProcessAdminTask()
     {
 
+    }*/
+
+    /// <summary>
+    /// Player or Actors attempt target/s. One task generated for player (if criteria O.K). If not player task then one target task per actor (possibly if enough targets and criteria O.K)
+    /// </summary>
+    private void ProcessTargetTask()
+    {
+        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        //
+        // - - - Player - - -
+        //
+        if (nodePlayer.nodeID == targetNodeID)
+        {
+            //Player at target node
+
+
+        }
+        //
+        // - - - Actors - - -
+        //
+
     }
+
 
     /// <summary>
     /// Actor and Player actor action tasks. One task is generated for each ActorArc in listOfActorArcs
