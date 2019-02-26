@@ -2851,13 +2851,292 @@ public class AIRebelManager : MonoBehaviour
         string nodeArc = "Unknown";
         bool isPlayer = false;
         int nodeID = -1;
-        int counter = 0;
         Actor actor = null;
+        //get node
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName;
+            nodeArc = node.Arc.name;
+            nodeID = node.nodeID;
+            //effect
+            ExecuteTargetAttempt(task);
+            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteTargetTask: {0}, {1}, ID {2}, Security now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: attempt Target, nodeID {0} Security {1}{2}", node.nodeID, node.Security, "\n");
 
-
-        //expend action
-            UseAction("TARGET");
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = playerName;
+                actorArcName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    actorArcName = actor.arc.name;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            //expend action
+            UseAction(string.Format("attempt Target ({0}, {1} at {2}, {3}, id {4})", actorName, actorArcName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible 
+            if (CheckGearAvailable() == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: GEAR USED to remain undetected while increasing district Support"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
+
+    /// <summary>
+    /// subMethod to handle target attempt, called by ExecuteTargetTask
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteTargetAttempt(AITask task)
+    {
+        bool errorFlag = false;
+        bool isAction = false;
+        bool isSuccessful = false;
+        bool isZeroInvisibility = false;
+        int targetID;
+        int actorID = GameManager.instance.playerScript.actorID; ;
+        string text;
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        CaptureDetails details = new CaptureDetails();
+        Actor actor = null;
+        if (node != null)
+        {
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            //two builders for top and bottom texts
+            StringBuilder builderTop = new StringBuilder();
+            StringBuilder builderBottom = new StringBuilder();
+            //target
+            targetID = node.targetID;
+            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+            if (target != null)
+            {
+                //
+                // - - - Actor/Player captured beforehand (target is safe if captured) -> if so exit - - -
+                //
+
+                //Player
+                if (nodeID == GameManager.instance.nodeScript.nodePlayer)
+                {
+                    details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
+                    if (GameManager.instance.playerScript.Invisibility == 0)
+                    { isZeroInvisibility = true; }
+                }
+                //Actor
+                else
+                {
+                    //check correct actor arc for target is present in line up
+                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, GameManager.instance.globalScript.sideResistance);
+                    if (slotID > -1)
+                    {
+                        //get actor
+                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.globalScript.sideResistance);
+                        if (actor != null)
+                        {
+                            details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID);
+                            actorID = actor.actorID;
+                            if (actor.datapoint2 == 0)
+                            { isZeroInvisibility = true; }
+                        }
+                        else
+                        { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); errorFlag = true; }
+                    }
+                    else
+                    { Debug.LogErrorFormat("Invalid slotID (-1) for target.actorArc.ActorArcID {0}", target.actorArc.ActorArcID); }
+                }
+                //Player/Actor captured (provided no errors, otherwise bypass)
+                if (errorFlag == false)
+                {
+                    if (details != null)
+                    {
+                        //Target aborted, deal with Capture
+                        details.effects = string.Format("{0} Attempt on Target \"{1}\" misfired{2}", colourNeutral, target.targetName, colourEnd);
+                        EventManager.instance.PostNotification(EventType.Capture, this, details, "ActionManager.cs -> ProcessNodeTarget");
+                        return;
+                    }
+                }
+                else
+                {
+                    //reset flag
+                    errorFlag = false;
+                }
+                //NOT captured, proceed with target
+
+                //
+                // - - - Attempt Target - - -  
+                //
+                isAction = true;
+                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID, true);
+                int chance = GameManager.instance.targetScript.GetTargetChance(tally);
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.targetName, "\n");
+                target.numOfAttempts++;
+                int roll = Random.Range(0, 100);
+                if (roll < chance)
+                {
+                    //Success
+                    isSuccessful = true;
+                    target.turnSuccess = GameManager.instance.turnScript.Turn;
+                    //Ongoing effects then target moved to completed pool
+                    if (target.OngoingEffect != null)
+                    {
+                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
+                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Outstanding);
+                        target.targetStatus = Status.Outstanding;
+                    }
+                    //NO ongoing effects -> target  done with. 
+                    else
+                    { GameManager.instance.targetScript.SetTargetDone(target, node); }
+                    text = string.Format("Target \"{0}\" successfully attempted", target.targetName, "\n");
+                    GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
+                    //random roll
+                    Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
+                    text = string.Format("Target {0} attempt SUCCESS", target.targetName);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
+                }
+                else
+                {
+                    Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n");
+                    text = string.Format("Target {0} attempt FAILED", target.targetName);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
+                }
+                //set isTargetKnown -> auto if success, % chance otherwise
+                if (isSuccessful == true) { node.isTargetKnown = true; }
+                else
+                {
+                    //chance of being known
+                    if (isZeroInvisibility == false)
+                    {
+                        roll = Random.Range(0, 100);
+                        if (roll < failedTargetChance)
+                        {
+                            node.isTargetKnown = true;
+                            Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
+                        }
+                        else
+                        { Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n"); }
+                    }
+                    //if zero invisibility then target auto known to authorities
+                    else { node.isTargetKnown = true; }
+                }
+                Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Authority aware of target: {0}", node.isTargetKnown);
+                //
+                // - - - Effects - - - 
+                //
+                List<Effect> listOfEffects = new List<Effect>();
+                //target SUCCESSFUL
+                if (isSuccessful == true)
+                {
+                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt <b>Successful</b>", colourNeutral, target.targetName, colourEnd, "\n");
+                    //combine all effects into one list for processing
+                    listOfEffects.AddRange(target.listOfGoodEffects);
+                    listOfEffects.AddRange(target.listOfBadEffects);
+                    listOfEffects.Add(target.OngoingEffect);
+                }
+                else
+                {
+                    //FAILED target attempt
+                    listOfEffects.AddRange(target.listOfFailEffects);
+                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.targetName, colourEnd, "\n");
+                    if (isZeroInvisibility == false)
+                    { builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd); }
+                    else
+                    { builderBottom.AppendFormat("{0}Authorities are aware of the attempt (due to Zero Invisibility){1}", colourBad, colourEnd); }
+                    text = string.Format("Target \"{0}\" unsuccessfully attempted", target.targetName, "\n");
+                    GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
+                }
+                //Process effects
+                EffectDataReturn effectReturn = new EffectDataReturn();
+                //pass through data package
+                EffectDataInput dataInput = new EffectDataInput();
+                dataInput.originText = "Target Attempt";
+                //handle any Ongoing effects of target completed -> only if target Successful
+                if (isSuccessful == true && target.OngoingEffect != null)
+                {
+                    dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
+                    dataInput.ongoingText = target.reasonText;
+                    //add to target so it can link to effects
+                    target.ongoingID = dataInput.ongoingID;
+                }
+                //any effects to process?
+                if (listOfEffects.Count > 0)
+                {
+                    foreach (Effect effect in listOfEffects)
+                    {
+                        if (effect != null)
+                        {
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                            if (effectReturn != null)
+                            {
+                                //update stringBuilder texts (Bottom only)
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(effectReturn.bottomText);
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
+                            }
+                            else
+                            {
+                                builderTop.AppendLine();
+                                builderTop.Append("Error");
+                                builderBottom.AppendLine();
+                                builderBottom.Append("Error");
+                                effectReturn.errorFlag = true;
+                                break;
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid effect (Null)"); }
+                    }
+                }
+
+                //Gear -> handled by TargetManager.cs -> GetTargetTally
+
+                //
+                // - - - Outcome - - -
+                //                        
+                //action (if valid) expended -> must be BEFORE outcome window event
+                outcomeDetails.isAction = isAction;
+                if (isSuccessful == true)
+                { outcomeDetails.reason = "Target Success"; }
+                else { outcomeDetails.reason = "Target Fail"; }
+                if (errorFlag == false)
+                {
+                    //outcome
+                    outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
+                    outcomeDetails.textTop = builderTop.ToString();
+                    outcomeDetails.textBottom = builderBottom.ToString();
+                    //which sprite to use
+                    if (isSuccessful == true) { outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite; }
+                    else { outcomeDetails.sprite = GameManager.instance.guiScript.targetFailSprite; }
+                }
+                else
+                {
+                    //fault, pass default data to window
+                    outcomeDetails.textTop = "There is a fault in the system. Target not responding";
+                    outcomeDetails.textBottom = "Target Acquition Failed";
+                    outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+                }
+                //generate a create modal window event
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeTarget");
+            }
+            else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", nodeID); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+    }
+        
+
 
     /// <summary>
     /// do nothing task
