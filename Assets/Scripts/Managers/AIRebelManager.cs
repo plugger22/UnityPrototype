@@ -118,7 +118,7 @@ public class AIRebelManager : MonoBehaviour
     //rebel Player profile
     private int survivalMove;                           //The % chance of AI player moving away when they are at a Bad Node
     private int playerAction;                           //The % chance of the player doing the ActorArc action, rather than an Actor
-    private int targetAttemptMinOdds;                   //The minimum % odds that are required for the Player/Actor to attempt a target
+    private int targetAttemptMinOdds;                   //The minimum odds that are required for the Player/Actor to attempt a target (Note: RebelLeader % converted to 0 to 10 range for ease of target tally calc)
     private Priority priorityStressLeavePlayer;
     private Priority priorityStressLeaveActor;
     private Priority priorityMovePlayer;
@@ -132,7 +132,8 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityOperatorTask;
     private Priority priorityPlannerTask;
     private Priority priorityRecruiterTask;
-    
+    private Priority priorityTargetPlayer;
+    private Priority priorityTargetActor;
 
 
     //fast access
@@ -231,7 +232,7 @@ public class AIRebelManager : MonoBehaviour
         //Rebel leader
         survivalMove = GameManager.instance.scenarioScript.scenario.leaderResistance.moveChance;
         playerAction = GameManager.instance.scenarioScript.scenario.leaderResistance.playerChance;
-        targetAttemptMinOdds = GameManager.instance.scenarioScript.scenario.leaderResistance.targetAttemptMinOdds;
+        targetAttemptMinOdds = GameManager.instance.scenarioScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
         gearPool = GameManager.instance.scenarioScript.scenario.leaderResistance.gearPoints;
         gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         priorityStressLeavePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
@@ -247,6 +248,8 @@ public class AIRebelManager : MonoBehaviour
         priorityOperatorTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskOperator);
         priorityPlannerTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskPlanner);
         priorityRecruiterTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskRecruiter);
+        priorityTargetPlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetPlayer);
+        priorityTargetActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetActor);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
@@ -1400,6 +1403,10 @@ public class AIRebelManager : MonoBehaviour
         int targetTally, targetID;
         bool isSuccess = false;
         Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        //intel assumed to be used at max for any target attempt
+        int intelTemp;
+        if (targetIntel >= targetIntelAttempt) { intelTemp = targetIntelAttempt; }
+        else { intelTemp = targetIntel; }
         //
         // - - - Player - - -
         //
@@ -1408,20 +1415,88 @@ public class AIRebelManager : MonoBehaviour
             targetID = nodePlayer.targetID;
             //Player at target node
             targetTally = GameManager.instance.targetScript.GetTargetTallyAI(targetID);
+            targetTally += intelTemp;
+            if (gearPool > 0 && CheckGearAvailable(false) == true) 
+            { targetTally++; }
             //must be above minimum odds threshold to proceed
             if (targetTally >= targetAttemptMinOdds)
             {
                 //generate task for Player Attempt
-
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: <b>Player target attempt passed Odds check (threshold {0}, tally {1}){2}", targetAttemptMinOdds, targetTally, "\n");
                 isSuccess = true;
+                //generate task
+                AITask task = new AITask();
+                task.data0 = playerID;
+                task.data1 = nodePlayer.nodeID;
+                task.data2 = targetID;
+                task.type = AITaskType.Target;
+                task.priority = priorityTargetPlayer;
+                //add task to list of potential tasks
+                AddWeightedTask(task);
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player Attempt Target task, targetID {0} at {1}, {2}, id {3}{4}", targetID, nodePlayer.nodeName, nodePlayer.Arc.name, 
+                    nodePlayer.nodeID, "\n");
             }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player target NOT attempted due to low odds (threshold {0}, tally {1}){2}", targetAttemptMinOdds, targetTally, "\n"); }
         }
         //
         // - - - Actors - - -
         //
         if (isSuccess == false)
         {
-            //only look at actors if player is NOT attempting a target
+            //is there at least on Live target available
+            List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+            if (listOfLiveTargets != null)
+            {
+                int actorID;
+                Target target;
+                for (int i = 0; i < listOfLiveTargets.Count; i++)
+                {
+                    target = listOfLiveTargets[i];
+                    if (target != null)
+                    {
+                        if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true)
+                        {
+                            //actor of that type present 
+                            if (CheckActorArcPresent(target.actorArc.ActorArcID) == true)
+                            {
+                                //Actor present, check target odds
+                                targetTally = GameManager.instance.targetScript.GetTargetTallyAI(target.targetID);
+                                targetTally += intelTemp;
+                                if (gearPool > 0 && CheckGearAvailable(false) == true)
+                                { targetTally++; }
+                                //must be above minimum odds threshold to proceed
+                                if (targetTally >= targetAttemptMinOdds)
+                                {
+                                    //which OnMap actor is used
+                                    actorID = GetOnMapActor(target.actorArc.ActorArcID);
+                                    //generate task for Actor Attempt
+                                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: <b>{0} target attempt passed Odds check (threshold {1}, tally {2}){3}", target.actorArc.name, 
+                                        targetAttemptMinOdds, targetTally, "\n");
+                                    if (actorID > -1)
+                                    {
+                                        //generate task
+                                        AITask task = new AITask();
+                                        task.data0 = actorID;
+                                        task.data1 = target.nodeID;
+                                        task.data2 = target.targetID;
+                                        task.type = AITaskType.Target;
+                                        task.priority = priorityTargetActor;
+                                        //add task to list of potential tasks
+                                        AddWeightedTask(task);
+                                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} attempt Target task, targetID {1} at {2}, {3}, id {4}{5}", target.actorArc.name,
+                                            target.targetID, nodePlayer.nodeName, nodePlayer.Arc.name, nodePlayer.nodeID, "\n");
+                                    }
+                                    else { Debug.LogError("Invalid actorID {-1)"); }
+                                }
+                                else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} target NOT attempted due to low odds (threshold {1}, tally {2}){3}", target.actorArc.name,
+                                    targetAttemptMinOdds, targetTally, "\n"); }
+                            }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfLiveTargets (Null)"); }
         }
     }
 
@@ -2002,6 +2077,9 @@ public class AIRebelManager : MonoBehaviour
                 break;
             case AITaskType.Idle:
                 ExecuteIdleTask(task);
+                break;
+            case AITaskType.Target:
+                ExecuteTargetTask(task);
                 break;
             default:
                 Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
@@ -2713,6 +2791,15 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Player or Actor attempts a target
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteTargetTask(AITask task)
+    {
+
+    }
+
+    /// <summary>
     /// do nothing task
     /// </summary>
     private void ExecuteIdleTask(AITask task)
@@ -3327,6 +3414,63 @@ public class AIRebelManager : MonoBehaviour
         //recalculate weighted data
         GameManager.instance.dijkstraScript.RecalculateWeightedData();
         isConnectionsChanged = false;
+    }
+
+    /// <summary>
+    /// returns true if specific actor arc ID present in listOfArcs (the actor arcs chosen for this turns actions)
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    private bool CheckActorArcPresent(int actorArcID)
+    { return listOfArcs.Exists(x => x.ActorArcID == actorArcID); }
+
+    /// <summary>
+    /// returns actorID of any OnMap, active, actor of the same type. If none, returns a random onMap, active, actor. Returns -1 if a problem
+    /// </summary>
+    /// <param name="actorArcID"></param>
+    /// <returns></returns>
+    private int GetOnMapActor(int actorArcID)
+    {
+        int actorID = -1;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        List<int> listOfActiveActorID = new List<int>();
+        if (arrayOfActors != null)
+        {
+            //loop actors
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //Active actor
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            if (actor.arc.ActorArcID == actorArcID)
+                            { actorID = actor.actorID; break; }
+                            else
+                            {
+                                //add live actor 
+                                listOfActiveActorID.Add(actor.actorID);
+                            }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+            //no actor of required type chosen
+            if (actorID == -1)
+            {
+                //select a random actor from list of OnMap, Active, actors
+                if (listOfActiveActorID.Count > 0)
+                { actorID = listOfActiveActorID[Random.Range(0, listOfActiveActorID.Count)]; }
+                else { Debug.LogError("Invalid listOfActiveActorID (no records)"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return actorID;
     }
 
     //

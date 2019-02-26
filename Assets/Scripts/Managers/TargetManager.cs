@@ -1240,6 +1240,65 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns tally of all factors in target success, eg. -2, +1, etc. AI version. Ignores intel and gear (done by calling method in AIRebelManager.cs -> ProcessTargetTask)
+    /// </summary>
+    /// <param name="targetID"></param>
+    /// <returns></returns>
+    public int GetTargetTallyAI(int targetID)
+    {
+        int tally = 0;
+        //base chance
+        tally += (int)(baseTargetChance * 0.1);
+        //get target
+        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        if (target != null)
+        {
+            //get node
+            Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+            if (node != null)
+            {
+                //Loop listOfFactors to ensure consistency of calculations across methods
+                foreach (TargetFactors factor in listOfFactors)
+                {
+                    switch (factor)
+                    {
+                        case TargetFactors.TargetIntel:
+                            break;
+                        case TargetFactors.NodeSupport:
+                            //good -> support
+                            if (node.Support > 0)
+                            { tally += node.Support; }
+                            break;
+                        case TargetFactors.ActorAndGear:
+                            break;
+                        case TargetFactors.NodeSecurity:
+                            //bad -> security
+                            tally -= node.Security;
+                            break;
+                        case TargetFactors.TargetLevel:
+                            //bad -> target level
+                            tally -= target.targetLevel;
+                            break;
+                        case TargetFactors.Teams:
+                            //Teams
+                            if (node.isSecurityTeam == true)
+                            { tally -= GameManager.instance.teamScript.controlNodeEffect; }
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));
+                            break;
+                    }
+                }
+            }
+            else
+            { Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}", target.nodeID, "\n")); }
+        }
+        else
+        { Debug.LogError(string.Format("Invalid Target (null), ID \"{0}\"{1}", targetID, "\n")); }
+        return tally;
+    }
+
+    /// <summary>
     /// returns % chance (whole numbers) of target resolution being a success
     /// Formula -> baseTargetChance + tally * 10
     /// </summary>

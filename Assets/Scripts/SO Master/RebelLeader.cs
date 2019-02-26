@@ -25,7 +25,7 @@ public class RebelLeader : ScriptableObject
     [Range(0, 100)] public int playerChance = 30;
 
     [Header("Target Attempts")]
-    [Tooltip("The minimum odds for a target that is required for the Player/Actor AI to attempt the target")]
+    [Tooltip("The minimum % odds for a target that is required for the Player/Actor AI to attempt the target")]
     [Range(0, 100)] public int targetAttemptMinOdds = 50;
 
     [Header("Gear")]
@@ -61,4 +61,10 @@ public class RebelLeader : ScriptableObject
     public GlobalChance taskPlanner;
     [Tooltip("Priority for any actor / player Recruiter Task")]
     public GlobalChance taskRecruiter;
+
+    [Header("Target Priorities (Low/Med/High)")]
+    [Tooltip("Player priority for resolving targets")]
+    public GlobalChance targetPlayer;
+    [Tooltip("Actor priority for resolving targets")]
+    public GlobalChance targetActor;
 }
