@@ -18,6 +18,9 @@ MonoBehaviour:
   designNotes: Standard, default, opponent
   moveChance: 50
   playerChance: 30
+  targetAttemptMinOdds: 50
+  targetAttemptPlayerChance: 75
+  targetAttemptActorChance: 90
   gearPoints: 2
   stressLeavePlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   stressLeaveActor: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
@@ -32,3 +35,5 @@ MonoBehaviour:
   taskOperator: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   taskPlanner: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   taskRecruiter: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  targetPlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  targetActor: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}

@@ -214,6 +214,7 @@ MonoBehaviour:
   targetIntelTopUp: 1
   targetIntelExtra: 40
   targetIntelAttempt: 3
+  targetAttemptsMax: 2
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
