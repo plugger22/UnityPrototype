@@ -869,7 +869,8 @@ public class Node : MonoBehaviour
     {
         string teamArcName = "Unknown";
         int count = listOfTeams.Count;
-        Team team;
+        int index;
+        Team team = null;
         if (count > 0)
         {
             //Erasure team present
@@ -883,27 +884,50 @@ public class Node : MonoBehaviour
                         //remove Erasure team
                         team = listOfTeams[i];
                         if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
-                        { teamArcName = team.arc.name;}
+                        {
+                            teamArcName = team.arc.name;
+                            break;
+                        }
                         else
                         {
                             Debug.LogWarning("Erasure team not found even though isErasureTeam is set true");
                             //remove a random team
-                            team = listOfTeams[Random.Range(0, count)];
+                            index = Random.Range(0, count);
+                            team = listOfTeams[index];
                             if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
-                            { teamArcName = team.arc.name; }
+                            {
+                                teamArcName = team.arc.name;
+                                break;
+                            }
                         }
                     }
                 }
             }
             else
             {
-                //remove a random team
-                team = listOfTeams[Random.Range(0, count)];
+                //remove a random team.
+                index = Random.Range(0, count);
+                team = listOfTeams[index];
+                //Move Team handles all admin including removing from team node list
                 if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
                 { teamArcName = team.arc.name; }
             }
         }
         else { Debug.LogWarning("There are no teams present at the node"); }
+        //set appropriate team flags
+        if (team != null)
+        {
+            switch (team.arc.name)
+            {
+                case "CIVIL": isStabilityTeam = false; break;
+                case "CONTROL": isSecurityTeam = false; break;
+                case "MEDIA": isSupportTeam = false; break;
+                case "PROBE": isProbeTeam = false; break;
+                case "SPIDER": isSpiderTeam = false; break;
+                case "DAMAGE": isDamageTeam = false; break;
+                case "ERASURE": isErasureTeam = false; break;
+            }
+        }
         return teamArcName;
     }
 

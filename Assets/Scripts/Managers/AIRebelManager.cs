@@ -89,7 +89,8 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 5)] public int targetIntelAttempt = 3;
 
     [Header("Target Attempts")]
-
+    [Tooltip("Maximum number of target attempt tasks that can be generated in a single turn")]
+    [Range(0, 5)] public int targetAttemptsMax = 2;
 
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
@@ -1410,19 +1411,20 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Player - - -
         //
-        if (nodePlayer.nodeID == targetNodeID)
+        targetID = nodePlayer.targetID;
+        //target present
+        if (targetID > -1)
         {
-            targetID = nodePlayer.targetID;
             //Player at target node
             targetTally = GameManager.instance.targetScript.GetTargetTallyAI(targetID);
             targetTally += intelTemp;
-            if (gearPool > 0 && CheckGearAvailable(false) == true) 
+            if (gearPool > 0 && CheckGearAvailable(false) == true)
             { targetTally++; }
             //must be above minimum odds threshold to proceed
             if (targetTally >= targetAttemptMinOdds)
             {
                 //generate task for Player Attempt
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: <b>Player target attempt passed Odds check (threshold {0}, tally {1}){2}", targetAttemptMinOdds, targetTally, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player target attempt passed Odds check (threshold {0}, tally {1}){2}", targetAttemptMinOdds, targetTally, "\n");
                 isSuccess = true;
                 //generate task
                 AITask task = new AITask();
@@ -1433,7 +1435,7 @@ public class AIRebelManager : MonoBehaviour
                 task.priority = priorityTargetPlayer;
                 //add task to list of potential tasks
                 AddWeightedTask(task);
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player Attempt Target task, targetID {0} at {1}, {2}, id {3}{4}", targetID, nodePlayer.nodeName, nodePlayer.Arc.name, 
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player Attempt Target task, targetID {0} at {1}, {2}, id {3}{4}", targetID, nodePlayer.nodeName, nodePlayer.Arc.name,
                     nodePlayer.nodeID, "\n");
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player target NOT attempted due to low odds (threshold {0}, tally {1}){2}", targetAttemptMinOdds, targetTally, "\n"); }
@@ -1443,19 +1445,19 @@ public class AIRebelManager : MonoBehaviour
         //
         if (isSuccess == false)
         {
+            int numOfTasks = 0;
             //is there at least on Live target available
             List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
             if (listOfLiveTargets != null)
             {
                 int actorID;
-                Target target;
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Consider possible Actor attempts, {0} targets available{1}", listOfLiveTargets.Count, "\n");
                 for (int i = 0; i < listOfLiveTargets.Count; i++)
                 {
-                    target = listOfLiveTargets[i];
+                    Target target = listOfLiveTargets[i];
                     if (target != null)
                     {
-                        if (GameManager.instance.dataScript.CheckActorArcPresent(target.actorArc, globalResistance) == true)
+                        if (CheckActorArcPresent(target.actorArc.ActorArcID) == true)
                         {
                             //actor of that type present 
                             if (CheckActorArcPresent(target.actorArc.ActorArcID) == true)
@@ -1471,21 +1473,27 @@ public class AIRebelManager : MonoBehaviour
                                     //which OnMap actor is used
                                     actorID = GetOnMapActor(target.actorArc.ActorArcID);
                                     //generate task for Actor Attempt
-                                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: <b>{0} target attempt passed Odds check (threshold {1}, tally {2}){3}", target.actorArc.name, 
+                                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} target attempt passed Odds check (threshold {1}, tally {2}){3}", target.actorArc.name, 
                                         targetAttemptMinOdds, targetTally, "\n");
                                     if (actorID > -1)
                                     {
-                                        //generate task
-                                        AITask task = new AITask();
-                                        task.data0 = actorID;
-                                        task.data1 = target.nodeID;
-                                        task.data2 = target.targetID;
-                                        task.type = AITaskType.Target;
-                                        task.priority = priorityTargetActor;
-                                        //add task to list of potential tasks
-                                        AddWeightedTask(task);
-                                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} attempt Target task, targetID {1} at {2}, {3}, id {4}{5}", target.actorArc.name,
-                                            target.targetID, nodePlayer.nodeName, nodePlayer.Arc.name, nodePlayer.nodeID, "\n");
+                                        Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+                                        if (node != null)
+                                        {
+                                            //generate task
+                                            numOfTasks++;
+                                            AITask task = new AITask();
+                                            task.data0 = actorID;
+                                            task.data1 = target.nodeID;
+                                            task.data2 = target.targetID;
+                                            task.type = AITaskType.Target;
+                                            task.priority = priorityTargetActor;
+                                            //add task to list of potential tasks
+                                            AddWeightedTask(task);
+                                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} attempt Target task, targetID {1} at {2}, {3}, id {4}{5}", target.actorArc.name,
+                                                target.targetID, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", target.nodeID); }
                                     }
                                     else { Debug.LogError("Invalid actorID {-1)"); }
                                 }
@@ -1496,6 +1504,12 @@ public class AIRebelManager : MonoBehaviour
                         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} target IGNORED as actor arc type not present{1}", target.actorArc.name, "\n"); }
                     }
                     else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
+                    //limit the number of target tasks that can be generated
+                    if (numOfTasks >= targetAttemptsMax)
+                    {
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: MAX number of target attempt tasks reached (limit {0}){1}", targetAttemptsMax, "\n");
+                        break;
+                    }
                 }
             }
             else { Debug.LogError("Invalid listOfLiveTargets (Null)"); }
@@ -2798,7 +2812,18 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteTargetTask(AITask task)
     {
+        string actorName = "Unknown";
+        string actorArcName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        int counter = 0;
+        Actor actor = null;
 
+
+        //expend action
+            UseAction("TARGET");
     }
 
     /// <summary>
