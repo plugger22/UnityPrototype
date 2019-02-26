@@ -2861,8 +2861,9 @@ public class AIRebelManager : MonoBehaviour
             nodeID = node.nodeID;
             //effect
             ExecuteTargetAttempt(task);
-            Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteTargetTask: {0}, {1}, ID {2}, Security now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: attempt Target, nodeID {0} Security {1}{2}", node.nodeID, node.Security, "\n");
+
+            /*Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteTargetTask: {0}, {1}, ID {2}, Security now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: attempt Target, nodeID {0} Security {1}{2}", node.nodeID, node.Security, "\n");*/
 
             //expend an action -> get actor Name
             if (task.data0 == playerID)
@@ -2894,6 +2895,15 @@ public class AIRebelManager : MonoBehaviour
                 else { UpdateInvisibilityNode(node, actor); }
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: GEAR USED to remain undetected while increasing district Support"); }
+            //gear used for target attempt
+            if (CheckGearAvailable() == true)
+            { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: GEAR USED during target attempt (gearPool now {0})", gearPool); }
+            //target intel
+            int tempIntel = targetIntel;
+            if (targetIntel >= targetIntelAttempt)
+            { targetIntel -= targetIntelAttempt; tempIntel = targetIntelAttempt; }
+            else { tempIntel = targetIntel;  targetIntel = 0; }
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: {0} Intel used during target attempt (remaining Intel {1}){2}", tempIntel, targetIntel, "\n");
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
@@ -2916,10 +2926,6 @@ public class AIRebelManager : MonoBehaviour
         Actor actor = null;
         if (node != null)
         {
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            //two builders for top and bottom texts
-            StringBuilder builderTop = new StringBuilder();
-            StringBuilder builderBottom = new StringBuilder();
             //target
             targetID = node.targetID;
             Target target = GameManager.instance.dataScript.GetTarget(targetID);
@@ -3040,7 +3046,6 @@ public class AIRebelManager : MonoBehaviour
                 //target SUCCESSFUL
                 if (isSuccessful == true)
                 {
-                    builderTop.AppendFormat("{0}{1}{2}{3}Attempt <b>Successful</b>", colourNeutral, target.targetName, colourEnd, "\n");
                     //combine all effects into one list for processing
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
@@ -3081,18 +3086,12 @@ public class AIRebelManager : MonoBehaviour
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
                             if (effectReturn != null)
                             {
-                                //update stringBuilder texts (Bottom only)
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.Append(effectReturn.bottomText);
-                                //exit effect loop on error
-                                if (effectReturn.errorFlag == true) { break; }
+                                 //exit effect loop on error
+                                if (effectReturn.errorFlag == true)
+                                { break; }
                             }
                             else
                             {
-                                builderTop.AppendLine();
-                                builderTop.Append("Error");
-                                builderBottom.AppendLine();
-                                builderBottom.Append("Error");
                                 effectReturn.errorFlag = true;
                                 break;
                             }
@@ -3100,36 +3099,6 @@ public class AIRebelManager : MonoBehaviour
                         else { Debug.LogWarning("Invalid effect (Null)"); }
                     }
                 }
-
-                //Gear -> handled by TargetManager.cs -> GetTargetTally
-
-                //
-                // - - - Outcome - - -
-                //                        
-                //action (if valid) expended -> must be BEFORE outcome window event
-                outcomeDetails.isAction = isAction;
-                if (isSuccessful == true)
-                { outcomeDetails.reason = "Target Success"; }
-                else { outcomeDetails.reason = "Target Fail"; }
-                if (errorFlag == false)
-                {
-                    //outcome
-                    outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
-                    outcomeDetails.textTop = builderTop.ToString();
-                    outcomeDetails.textBottom = builderBottom.ToString();
-                    //which sprite to use
-                    if (isSuccessful == true) { outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite; }
-                    else { outcomeDetails.sprite = GameManager.instance.guiScript.targetFailSprite; }
-                }
-                else
-                {
-                    //fault, pass default data to window
-                    outcomeDetails.textTop = "There is a fault in the system. Target not responding";
-                    outcomeDetails.textBottom = "Target Acquition Failed";
-                    outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-                }
-                //generate a create modal window event
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeTarget");
             }
             else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", nodeID); }
         }
