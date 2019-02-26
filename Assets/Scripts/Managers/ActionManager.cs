@@ -2308,7 +2308,7 @@ public class ActionManager : MonoBehaviour
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
         int targetID;
-        int actorID = GameManager.instance.playerScript.actorID; ;
+        int actorID = GameManager.instance.playerScript.actorID;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         CaptureDetails details = new CaptureDetails();
