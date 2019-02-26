@@ -1449,6 +1449,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 int actorID;
                 Target target;
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Consider possible Actor attempts, {0} targets available{1}", listOfLiveTargets.Count, "\n");
                 for (int i = 0; i < listOfLiveTargets.Count; i++)
                 {
                     target = listOfLiveTargets[i];
@@ -1492,6 +1493,7 @@ public class AIRebelManager : MonoBehaviour
                                     targetAttemptMinOdds, targetTally, "\n"); }
                             }
                         }
+                        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} target IGNORED as actor arc type not present{1}", target.actorArc.name, "\n"); }
                     }
                     else { Debug.LogErrorFormat("Invalid target (Null) for listOfLiveTargets[{0}]", i); }
                 }
