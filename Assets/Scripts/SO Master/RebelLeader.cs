@@ -29,9 +29,9 @@ public class RebelLeader : ScriptableObject
     [Tooltip("The minimum % odds for a target that is required for the Player/Actor AI to attempt the target")]
     [Range(0, 100)] public int targetAttemptMinOdds = 50;
     [Tooltip("Chance of a player attempting a target if one present")]
-    [Range(0, 100)] public int targetAttemptPlayerChance = 75;
+    [Range(0, 100)] public int targetAttemptPlayerChance = 100;
     [Tooltip("Chance of an actor attempting a target if one present")]
-    [Range(0, 100)] public int targetAttemptActorChance = 90;
+    [Range(0, 100)] public int targetAttemptActorChance = 100;
 
     [Header("Gear")]
     [Tooltip("Amount of starting gear points in the gear pool (NOTE: will automatically be adjusted downwards if greater than the maximum allowable amount)")]

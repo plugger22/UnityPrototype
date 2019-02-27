@@ -106,6 +106,7 @@ public class AIRebelManager : MonoBehaviour
     private int gearPointsUsed;                         //number of gear points expended by AI
 
     private int targetIntel;                            //number of target intel points (gained by Planner and used for target attempts)
+    private int targetIntelUsed;                        //number of intel points expended by AI
 
     private int targetNodeID;                           //goal to move towards
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
@@ -2852,7 +2853,6 @@ public class AIRebelManager : MonoBehaviour
         string actorArcName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
         int nodeID = -1;
         Actor actor = null;
         //get node
@@ -2864,10 +2864,6 @@ public class AIRebelManager : MonoBehaviour
             nodeID = node.nodeID;
             //effect
             ExecuteTargetAttempt(node, task.data0, task.data2);
-
-            /*Debug.LogFormat("[Nod] AIRebelManager.cs -> ExecuteTargetTask: {0}, {1}, ID {2}, Security now {3} (changed by -1){4}", nodeName, nodeArc, nodeID, node.Security, "\n");
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: attempt Target, nodeID {0} Security {1}{2}", node.nodeID, node.Security, "\n");*/
-
             //expend an action -> get actor Name
             if (task.data0 == playerID)
             {
@@ -2903,21 +2899,18 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteTargetAttempt(Node node, int actorID, int targetID)
     {
-        bool errorFlag = false;
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
         bool isPlayer = false;
         if (actorID == playerID) { isPlayer = true; }
         string text;
         Actor actor = null;
-        CaptureDetails details = new CaptureDetails();
         if (isPlayer == false)
         {
             actor = GameManager.instance.dataScript.GetActor(actorID);
             if (actor == null)
             { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         }
-
         //target
         targetID = node.targetID;
         Target target = GameManager.instance.dataScript.GetTarget(targetID);
@@ -2961,21 +2954,24 @@ public class AIRebelManager : MonoBehaviour
                 tally += 1;
             }
             //target intel
-            int tempIntel = targetIntel;
+            int usedIntel = targetIntel;
             if (targetIntel >= targetIntelAttempt)
-            { targetIntel -= targetIntelAttempt; tempIntel = targetIntelAttempt; }
-            else { tempIntel = targetIntel; targetIntel = 0; }
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: {0} Intel used during target attempt (remaining Intel {1}){2}", tempIntel, targetIntel, "\n");
-            tally += tempIntel;
+            { targetIntel -= targetIntelAttempt; usedIntel = targetIntelAttempt; }
+            else { usedIntel = targetIntel; targetIntel = 0; }
+            targetIntelUsed += usedIntel;
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: {0} Intel used during target attempt (remaining Intel {1}){2}", usedIntel, targetIntel, "\n");
+            tally += usedIntel;
             //convert to % chance
             int chance = GameManager.instance.targetScript.GetTargetChance(tally);
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}{1}", target.targetName, "\n");
             target.numOfAttempts++;
+            GameManager.instance.dataScript.StatisticIncrement(StatType.TargetAttempts);
             int roll = Random.Range(0, 100);
             if (roll < chance)
             {
                 //Success
                 isSuccessful = true;
+                GameManager.instance.dataScript.StatisticIncrement(StatType.TargetSuccesses);
                 target.turnSuccess = GameManager.instance.turnScript.Turn;
                 //Ongoing effects then target moved to completed pool
                 if (target.OngoingEffect != null)
@@ -3014,12 +3010,12 @@ public class AIRebelManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt KNOWN need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n");
                     }
                     else
-                    { Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n"); }
+                    { Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt UNDETECTED need < {0}, rolled {1}{2}", failedTargetChance, roll, "\n"); }
                 }
                 //if zero invisibility then target auto known to authorities
                 else { node.isTargetKnown = true; }
             }
-            Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Authority aware of target: {0}", node.isTargetKnown);
+            Debug.LogFormat("[Tar] AIRebelManager.cs -> ExecuteTargetAttempt: Authority aware of target: {0}", node.isTargetKnown);
             //
             // - - - Effects - - - 
             //
@@ -3036,11 +3032,6 @@ public class AIRebelManager : MonoBehaviour
             {
                 //FAILED target attempt
                 listOfEffects.AddRange(target.listOfFailEffects);
-                builderTop.AppendFormat("{0}{1}{2}{3}Attempt Failed!", colourNeutral, target.targetName, colourEnd, "\n");
-                if (isZeroInvisibility == false)
-                { builderBottom.AppendFormat("{0}There is a {1} % chance of the Authority becoming aware of the attempt{2}", colourAlert, failedTargetChance, colourEnd); }
-                else
-                { builderBottom.AppendFormat("{0}Authorities are aware of the attempt (due to Zero Invisibility){1}", colourBad, colourEnd); }
                 text = string.Format("Target \"{0}\" unsuccessfully attempted", target.targetName, "\n");
                 GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
             }
@@ -3791,6 +3782,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
         builder.AppendFormat(" Gear Used: {0}{1}", gearPointsUsed, "\n");
         builder.AppendFormat(" Target Intel: {0}{1}", targetIntel, "\n");
+        builder.AppendFormat(" Target Intel Used: {0}{1}", targetIntelUsed, "\n");
 
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)

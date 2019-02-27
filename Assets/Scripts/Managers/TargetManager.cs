@@ -846,7 +846,7 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns formatted string of all good and bad target effects. Returns null if none.
+    /// returns formatted string of all good and bad target effects. Returns 'None' if no effects present
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
@@ -859,7 +859,6 @@ public class TargetManager : MonoBehaviour
         {
             //good effects
             Effect effect = null;
-            tempList.Add("Target Effects");
             if (target.listOfGoodEffects.Count > 0)
             {
                 //add header
@@ -894,11 +893,23 @@ public class TargetManager : MonoBehaviour
         }
         //convert to a string
         StringBuilder builder = new StringBuilder();
-        foreach(string text in tempList)
+        //add header
+        builder.AppendLine("<b>Target Effects</b>");
+        if (tempList.Count > 0)
         {
-            if (builder.Length > 0)
-            { builder.AppendLine(); }
-            builder.Append(text);
+            //Effects
+            foreach (string text in tempList)
+            {
+                if (builder.Length > 0)
+                { builder.AppendLine(); }
+                builder.Append(text);
+            }
+        }
+        else
+        {
+            //No effects present
+            builder.AppendLine();
+            builder.Append("None");
         }
         return builder.ToString();
     }

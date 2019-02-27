@@ -18,6 +18,9 @@ public class StatisticManager : MonoBehaviour
         //stress leave
         GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveAuthority);
         GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveResistance);
+        //targets
+        GameManager.instance.dataScript.StatisticAddNew(StatType.TargetAttempts);
+        GameManager.instance.dataScript.StatisticAddNew(StatType.TargetSuccesses);
     }
 
 
@@ -29,10 +32,15 @@ public class StatisticManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Statistics{0}{1}", "\n", "\n");
+        //player
         builder.AppendFormat(" Player Breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerBreakdown), "\n");
         builder.AppendFormat(" Player Lie Low: {0}{1}{2}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerLieLow), "\n", "\n");
+        //stress leave
         builder.AppendFormat(" Stress Leave Authority (all): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveAuthority), "\n");
         builder.AppendFormat(" Stress Leave Resistance (all): {0}{1}{2}", GameManager.instance.dataScript.StatisticGet(StatType.StressLeaveResistance), "\n", "\n");
+        //targets
+        builder.AppendFormat(" Target Attempts (Resistance): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.TargetAttempts), "\n");
+        builder.AppendFormat(" Target Successes (Resistance): {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.TargetSuccesses), "\n", "\n");
         return builder.ToString();
     }
 

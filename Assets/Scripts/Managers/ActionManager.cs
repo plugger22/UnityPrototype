@@ -2383,11 +2383,13 @@ public class ActionManager : MonoBehaviour
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.targetName, "\n");
                 target.numOfAttempts++;
+                GameManager.instance.dataScript.StatisticIncrement(StatType.TargetAttempts);
                 int roll = Random.Range(0, 100);
                 if (roll < chance)
                 {
                     //Success
                     isSuccessful = true;
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.TargetSuccesses);
                     target.turnSuccess = GameManager.instance.turnScript.Turn;
                     //Ongoing effects then target moved to completed pool
                     if (target.OngoingEffect != null)
