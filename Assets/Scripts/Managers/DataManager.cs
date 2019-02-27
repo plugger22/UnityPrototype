@@ -2706,13 +2706,13 @@ public class DataManager : MonoBehaviour
                 if (target.Value.profile.activation != null)
                 {
                     //non-dormant but has follow-on target & valid activation
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, tar id {8}{9}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, follow id {8}{9}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
                         target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
                 }
                 else
                 {
                     //dormant ->  follow-on target & NO valid activation
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act n.a, {3}, d {4}, w {5}, nodeID {6}, tar id {7}{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act n.a, {3}, d {4}, w {5}, nodeID {6}, follow id {7}{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
                         target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
                 }
             }
@@ -2722,7 +2722,7 @@ public class DataManager : MonoBehaviour
                 if (target.Value.profile.activation != null)
                 {
                     //active / live / outstanding -> valid activation
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, tar id n.a{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, follow id n.a{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
                           target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
                 }
                 else

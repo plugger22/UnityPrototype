@@ -93,9 +93,17 @@ public class TargetManager : MonoBehaviour
         Debug.Assert(activateLowChance < activateMedChance, "invalid activateLowChance (should be less than MED)");
         Debug.Assert(activateMedChance < activateHighChance, "invalid activateMedChance (should be less than HIGH)");
         Debug.Assert(activateHighChance < activateExtremeChance, "invalid activateHighChance (should be less than EXTREME)");
+        Debug.Assert(activateLowChance > 0, "Invalid activateLowChance (Zero or Less)");
+        Debug.Assert(activateMedChance > 0, "Invalid activateMedChance (Zero or Less)");
+        Debug.Assert(activateHighChance > 0, "Invalid activateHighChance (Zero or Less)");
+        Debug.Assert(activateExtremeChance > 0, "Invalid activateExtremeChance (Zero or Less)");
         Debug.Assert(activateLowLimit > activateMedLimit, "invalid activateLowLimit (should be more than MED)");
         Debug.Assert(activateMedLimit > activateHighLimit, "invalid activateMedLimit (should be more than HIGH)");
         Debug.Assert(activateHighLimit > activateExtremeLimit, "invalid activateHighLimit (should be more than EXTREME)");
+        Debug.Assert(activateLowLimit > 0, "Invalid activateLowLimit (Zero or Less");
+        Debug.Assert(activateMedLimit > 0, "Invalid activateMedimit (Zero or Less");
+        Debug.Assert(activateHighLimit > 0, "Invalid activateHighLimit (Zero or Less");
+        Debug.Assert(activateExtremeLimit > 0, "Invalid activateExtremeLimit (Zero or Less");
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
@@ -217,8 +225,27 @@ public class TargetManager : MonoBehaviour
                         //
                         switch (target.targetStatus)
                         {
+                            case Status.Live:
+                                if (target.timerWindow == 0)
+                                {
+                                    Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0}, id {1} Expired", target.targetName, target.targetID);
+                                    string text = string.Format("Target {0} at {1}, {2}, has Expired", target.targetName, node.nodeName, node.Arc.name);
+                                    GameManager.instance.messageScript.TargetExpired(text, node, target);
+                                    SetTargetDone(target, node);
+                                }
+                                else
+                                {
+                                    //warning message -> Resistance player only
+                                    if (target.timerWindow == targetWarning && GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                                    {
+                                        string text = string.Format("Target {0} at {1}, {2}, about to Expire", target.targetName, node.nodeName, node.Arc.name);
+                                        GameManager.instance.messageScript.TargetExpiredWarning(text, node, target);
+                                    }
+                                    target.timerWindow--;
+                                }
+                                break;
                             case Status.Active:
-                                if (target.timerDelay == 0)
+                                if (target.timerDelay <= 0)
                                 {
                                     //activation roll
                                     isLive = false;
@@ -238,7 +265,8 @@ public class TargetManager : MonoBehaviour
                                             break;
                                         case 1:
                                             //Medium
-                                            if (rndNum < activateMedChance) { isLive = true; /*Debug.LogFormat("[Tst] Med Roll {0} < {1}", rndNum, activateMedChance);*/}
+                                            /*Debug.LogFormat("[Tst] target  {0}, ID {1}, Med Roll (need {2}, roll {3}", target.targetName, target.targetID, activateMedChance, rndNum);*/
+                                            if (rndNum < activateMedChance) { isLive = true;}
                                             else if (target.timerHardLimit >= activateMedLimit) { isLive = true;  }
                                             break;
                                         case 0:
@@ -263,25 +291,6 @@ public class TargetManager : MonoBehaviour
                                 }
                                 else
                                 { target.timerDelay--; }
-                                break;
-                            case Status.Live:
-                                if (target.timerWindow == 0)
-                                {
-                                    Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0}, id {1} Expired", target.targetName, target.targetID);
-                                    string text = string.Format("Target {0} at {1}, {2}, has Expired", target.targetName, node.nodeName, node.Arc.name);
-                                    GameManager.instance.messageScript.TargetExpired(text, node, target);
-                                    SetTargetDone(target, node);
-                                }
-                                else
-                                {
-                                    //warning message -> Resistance player only
-                                    if (target.timerWindow == targetWarning && GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
-                                    {
-                                        string text = string.Format("Target {0} at {1}, {2}, about to Expire", target.targetName, node.nodeName, node.Arc.name);
-                                        GameManager.instance.messageScript.TargetExpiredWarning(text, node, target);
-                                    }
-                                    target.timerWindow--;
-                                }
                                 break;
                         }
                     }
