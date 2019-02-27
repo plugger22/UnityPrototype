@@ -24,8 +24,8 @@ public class ItemDataManager : MonoBehaviour
     //fast access
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
-    private string playerName;                      //human player even if autorun
-    private string playerNameResistance;            //could be human or ai
+    /*private string playerName;                      //human player even if autorun
+    private string playerNameResistance;            //could be human or ai*/
 
     private string colourRebel;
     //private string colourAuthority;
@@ -54,12 +54,12 @@ public class ItemDataManager : MonoBehaviour
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        playerName = GameManager.instance.playerScript.PlayerName;
-        playerNameResistance = GameManager.instance.playerScript.GetPlayerNameResistance();
+        /*playerName = GameManager.instance.playerScript.PlayerName;
+        playerNameResistance = GameManager.instance.playerScript.GetPlayerNameResistance();*/
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(string.IsNullOrEmpty(playerName) == false, "Invalid playerName (Null or Empty)");
-        Debug.Assert(string.IsNullOrEmpty(playerNameResistance) == false, "Invalid playerNameResistance (Null or Empty)");
+        /*Debug.Assert(string.IsNullOrEmpty(playerName) == false, "Invalid playerName (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(playerNameResistance) == false, "Invalid playerNameResistance (Null or Empty)");*/
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
@@ -201,7 +201,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerMoveDetails(Node node, int changeInvisibility, int aiDelay)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<b>{1}</b>{2} now at{3}{4}", colourNeutral, playerNameResistance, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2} now at{3}{4}", colourNeutral, GameManager.instance.playerScript.GetPlayerNameResistance(), colourEnd, "\n", "\n");
         builder.AppendFormat("{0}, a {1}<b>{2}</b>{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         if (GameManager.instance.optionScript.debugData == true)
         { builder.AppendFormat(", ID {0}", node.nodeID); }
@@ -243,7 +243,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //player
-        builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", playerNameResistance, colourAlert, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourAlert, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0}, {1}{2}</b>{3}, district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         //details
         if (string.IsNullOrEmpty(detailsTop) == false)
@@ -279,7 +279,7 @@ public class ItemDataManager : MonoBehaviour
             else { status = GameManager.instance.aiRebelScript.status; }
             //message
             if (string.IsNullOrEmpty(reason) == false)
-            { builder.AppendFormat("<b>{0}{1}, PLAYER</b>{2}{3}<b>{4}</b>{5}{6}", playerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
+            { builder.AppendFormat("<b>{0}{1}, PLAYER</b>{2}{3}<b>{4}</b>{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
             builder.AppendFormat("{0}PLAYER{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, status, colourEnd);
         }
         else
@@ -307,7 +307,7 @@ public class ItemDataManager : MonoBehaviour
             //Player
             if (side.level == globalAuthority.level)
             { builder.AppendFormat("The {0}<b>Mayor{1}, {2},</b> has left the office for a short while", colourAlert, colourEnd, GameManager.instance.playerScript.GetPlayerNameAuthority()); }
-            else { builder.AppendFormat("The {0}<b>Player{1}, {2},</b> has left for a short while", colourAlert, colourEnd, playerNameResistance); }
+            else { builder.AppendFormat("The {0}<b>Player{1}, {2},</b> has left for a short while", colourAlert, colourEnd, GameManager.instance.playerScript.GetPlayerNameResistance()); }
             builder.AppendFormat("{0}{1}When they return they will be {2}<b>Stress Free</b>{3}", "\n", "\n", colourGood, colourEnd);
         }
         else
@@ -1003,7 +1003,7 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             //player got gear
-            builder.AppendFormat("Sourced by <b>{0}, {1}PLAYER</b>{2}{3}{4}", playerName, colourAlert, colourEnd, "\n", "\n");
+            builder.AppendFormat("Sourced by <b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
             builder.AppendFormat("at <b>{0}, {1}{2}</b>{3} district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         }
         return builder.ToString();
@@ -1175,6 +1175,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetAIDetectedDetails(int nodeID, int delay)
     {
         StringBuilder builder = new StringBuilder();
+        string playerNameResistance = GameManager.instance.playerScript.GetPlayerNameResistance();
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
@@ -1196,7 +1197,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetAIConnectionActivityDetails(Node destinationNode, int delay)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}Resistance Leader{2}{3}", playerNameResistance, colourAlert, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}Resistance Leader{2}{3}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourAlert, colourEnd, "\n");
         builder.AppendFormat("{0}<b>DETECTED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
         builder.AppendFormat("On Connection travelling to{0}{1}{2}, {3}{4}{5}{6}", "\n", colourNeutral, destinationNode.nodeName, destinationNode.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}Detected {1}{2}<b>{3}{4}</b>{5} turns ago{6}", colourAlert, colourEnd, colourNeutral, delay, colourEnd, colourAlert, colourEnd);
@@ -1637,10 +1638,10 @@ public class ItemDataManager : MonoBehaviour
         string actorArc = "Unknown";
         string targetEffects;
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.targetName, colourEnd, "\n");
-        builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         //who did it?
         if (actorID == 999)
-        { actorName = playerNameResistance;  actorArc = "Player"; }
+        { actorName = GameManager.instance.playerScript.GetPlayerNameResistance();  actorArc = "Player"; }
         else
         {
             Actor actor = GameManager.instance.dataScript.GetActor(actorID);
@@ -1651,12 +1652,12 @@ public class ItemDataManager : MonoBehaviour
         if (target.targetStatus == Status.Live)
         {
             //failed
-            builder.AppendFormat("{0}{1}<b>{2}, {3}{4}{5}{6}attempt {7}FAILED</b>{8}", "\n", "\n", actorName, colourAlert, actorArc, colourEnd, "\n", colourBad, colourEnd);
+            builder.AppendFormat("{0}{1}<b>{2}, {3}{4}{5}</b>{6}attempt {7}<b>FAILED</b>{8}", "\n", "\n", actorName, colourAlert, actorArc, colourEnd, "\n", colourBad, colourEnd);
         }
         else
         {
             //success
-            builder.AppendFormat("<b>{0}, {1}{2}{3}{4}attempt {5}SUCCEEDED</b>{6}{7}{8}", actorName, colourAlert, actorArc, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
+            builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}attempt {5}<b>SUCCEEDED</b>{6}{7}{8}", actorName, colourAlert, actorArc, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
             //effects
             targetEffects = GameManager.instance.targetScript.GetTargetEffects(target.targetID);
             builder.AppendFormat(targetEffects);
@@ -1706,7 +1707,7 @@ public class ItemDataManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player
-                builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", playerName, colourAlert, colourEnd, "\n", "\n");
+                builder.AppendFormat("<b>{0}, {1}PLAYER</b>{2}{3}{4}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", "\n");
             }
             else
             {
@@ -1743,7 +1744,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (ongoing.node != null)
         { builder.AppendFormat("{0}, {1}{2}{3}", ongoing.node.nodeName, colourAlert, ongoing.node.Arc.name, colourEnd); }
-        else { builder.AppendFormat("{0}, {1}PLAYER{2}, {3}", playerName, colourAlert, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}, {1}PLAYER{2}, {3}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n"); }
         if (string.IsNullOrEmpty(ongoing.reason) == false)
         { builder.AppendFormat("{0}due to {1}", "\n", ongoing.reason); }
         if (string.IsNullOrEmpty(ongoing.description) == false)

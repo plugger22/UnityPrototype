@@ -365,11 +365,13 @@ public class SideManager : MonoBehaviour
                                         List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
                                         if (listOfBadConditions.Count > 0)
                                         { GameManager.instance.actorScript.ProcessCompatibility(actor, listOfBadConditions); }
-                                        //
-                                        // - - - Invisibility Zero warning - - -
+
+                                        /*//
+                                        // - - - Invisibility Zero warning (Edit: causes duplicate msg) - - -
                                         //
                                         if (actor.datapoint2 == 0)
-                                        { GameManager.instance.actorScript.ProcessInvisibilityWarning(actor); }
+                                        { GameManager.instance.actorScript.ProcessInvisibilityWarning(actor); }*/
+
                                         //
                                         // - - - Motivation Warning - - -
                                         //

@@ -561,12 +561,7 @@ public class ContactManager : MonoBehaviour
                                             contact.contactID, target.targetName, target.targetID, "\n");*/
 
                                         //correct node used? -> depends on contact effectiveness
-                                        Node node = null;
-                                        //city targets always have the correct node (would be silly to have an airport target not at the airport)
-                                        if (target.targetType.name.Equals("City") == true)
-                                        { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
-                                        else
-                                        { node = GameManager.instance.dataScript.GetNode(target.nodeID); }
+                                        Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
                                         //if valid node generate message
                                         if (node != null)
                                         {

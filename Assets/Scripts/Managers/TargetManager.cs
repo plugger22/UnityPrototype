@@ -888,13 +888,13 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Target (null) for ID {0}{1}", targetID, "\n"));
+            Debug.LogErrorFormat("Invalid Target (null) for ID {0}{1}", targetID, "\n");
             return null;
         }
         //convert to a string
         StringBuilder builder = new StringBuilder();
         //add header
-        builder.AppendLine("<b>Target Effects</b>");
+        builder.AppendFormat("{0}Target Effects{1}", colourTarget, colourEnd);
         if (tempList.Count > 0)
         {
             //Effects
@@ -908,8 +908,7 @@ public class TargetManager : MonoBehaviour
         else
         {
             //No effects present
-            builder.AppendLine();
-            builder.Append("None");
+            builder.AppendLine("None");
         }
         return builder.ToString();
     }
@@ -1342,7 +1341,7 @@ public class TargetManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Called whenever a target is done (finished OnMap, eg. Contained or Completed with no ongoing effects or timed out (window). Returns true if all O.K
+    /// Called whenever a target is done (finished OnMap, eg. Contained or Completed with no ongoing effects or timed out (window). Handles all admin. Returns true if all O.K
     /// </summary>
     /// <param name="target"></param>
     /// <param name="node"></param>

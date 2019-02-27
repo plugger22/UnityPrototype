@@ -2899,16 +2899,19 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteTargetAttempt(Node node, int actorID, int targetID)
     {
+        string text;
+        string actorArc = "Unknown";
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
         bool isPlayer = false;
-        if (actorID == playerID) { isPlayer = true; }
-        string text;
+        if (actorID == playerID) { isPlayer = true; actorArc = "Player"; }
         Actor actor = null;
         if (isPlayer == false)
         {
             actor = GameManager.instance.dataScript.GetActor(actorID);
-            if (actor == null)
+            if (actor != null)
+            { actorArc = actor.arc.name; }
+            else
             { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         }
         //target
@@ -2987,12 +2990,16 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                 //random roll
                 Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, ID {1}, attempted SUCCESSFULLY by {2}, ID {3}, at nodeID {4}{5}", target.targetName, target.targetID, actorArc,
+                    actorID, node.nodeID, "\n");
                 text = string.Format("Target {0} attempt SUCCESS", target.targetName);
                 GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
             }
             else
             {
                 Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, ID {1}, attempt FAILED by {2}, ID {3}, at nodeID {4}{5}", target.targetName, target.targetID, actorArc,
+                    actorID, node.nodeID, "\n");
                 text = string.Format("Target {0} attempt FAILED", target.targetName);
                 GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
             }
