@@ -2195,15 +2195,18 @@ public class AIRebelManager : MonoBehaviour
             history.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
             GameManager.instance.dataScript.AddHistoryRebelMove(history);
 
-            //Erasure team picks up player immediately if invisibility 0
-            CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
-            if (captureDetails != null)
+            //Erasure team may pick up player  if invisibility 1 or less
+            if (GameManager.instance.playerScript.Invisibility <= 1)
             {
-                //Player captured!
-                captureDetails.effects = "The move went bad";
-                EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
+                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
+                if (captureDetails != null)
+                {
+                    //Player captured!
+                    captureDetails.effects = "The move went bad";
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> ExecuteMoveTask");
+                }
             }
-            else
+            if (GameManager.instance.playerScript.status != ActorStatus.Captured)
             {
                 //Nemesis, if at same node, can interact and damage player
                 GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
@@ -3231,7 +3234,7 @@ public class AIRebelManager : MonoBehaviour
             //update player Invisibility
             GameManager.instance.playerScript.Invisibility = aiInvisibility;
             //capture check
-            if (aiInvisibility == 0)
+            if (aiInvisibility <= 1)
             {
                 //Erasure team picks up player immediately if invisibility 0
                 CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
@@ -3241,7 +3244,7 @@ public class AIRebelManager : MonoBehaviour
                     isCaptured = true;
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, Player, CAPTURED by Erasure Team at {1}, {2}, ID {3}{4}", playerName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                     captureDetails.effects = "They kicked in the door before you could run";
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> UpdateInvisibilityNode");
                 }
             }
         }
@@ -3275,7 +3278,7 @@ public class AIRebelManager : MonoBehaviour
             //update actor Invisibility
             actor.datapoint2 = aiInvisibility;
             //capture check
-            if (aiInvisibility == 0)
+            if (aiInvisibility <= 1)
             {
                 //Erasure team picks up actor immediately if invisibility 0
                 CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
@@ -3286,7 +3289,7 @@ public class AIRebelManager : MonoBehaviour
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, {1}, ID {2}, CAPTURED by Erasure Team at {3}, {4}, ID {5}{6}", actorName, actorArc, actorID,
                         node.nodeName, node.Arc.name, node.nodeID, "\n");
                     captureDetails.effects = "They got you";
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
+                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> UpdateInvisibility");
                 }
             }
         }
@@ -3307,19 +3310,6 @@ public class AIRebelManager : MonoBehaviour
             string reason = "district action";
             GameManager.instance.messageScript.AIImmediateActivity(text, reason, node.nodeID, -1, actorID);
         }
-        return isCaptured;
-    }
-
-    /// <summary>
-    /// subMethod to check if Player / actor is captured by an Erasure team or damaged by their Nemesis
-    /// </summary>
-    /// <param name="nodeID"></param>
-    /// <param name="actorID"></param>
-    /// <returns></returns>
-    private bool CheckIfCaptured(int nodeID, int actorID)
-    {
-        bool isCaptured = false;
-
         return isCaptured;
     }
 
