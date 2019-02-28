@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using gameAPI;
-
+using System.Text;
+using modalAPI;
 
 /// <summary>
 /// Handles change of Sides, eg. Rebel / Authority, admin
@@ -426,6 +427,30 @@ public class SideManager : MonoBehaviour
             default:
                 Debug.LogError(string.Format("Invalid _playerSide.level \"{0}\"", _playerSide.level));
                 break;
+        }
+        //
+        // - - - Events of note occur during the AutoRun
+        //
+        //only if nobody has yet won
+        if (GameManager.instance.turnScript.winState == WinState.None)
+        {
+            List<string> listOfEvents = GameManager.instance.dataScript.GetListOfHistoryAutoRun();
+            if (listOfEvents != null)
+            {
+                if (listOfEvents.Count > 0)
+                {
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < listOfEvents.Count; i++)
+                    { builder.AppendLine(listOfEvents[i]); }
+                    //create an outcome window to notify player
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                    outcomeDetails.side = _playerSide;
+                    outcomeDetails.textTop = "AutoRun complete";
+                    outcomeDetails.textBottom = builder.ToString();
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
+                }
+            }
+            else { Debug.LogError("Invalid listOfHistoryAutoRun (Null)"); }
         }
     }
 

@@ -142,6 +142,7 @@ public class DataManager : MonoBehaviour
     //Tracker data
     private List<HistoryRebelMove> listOfHistoryRebelMove = new List<HistoryRebelMove>();
     private List<HistoryNemesisMove> listOfHistoryNemesisMove = new List<HistoryNemesisMove>();
+    private List<string> listOfHistoryAutoRun = new List<string>();
 
 
     //dictionaries
@@ -5402,6 +5403,22 @@ public class DataManager : MonoBehaviour
         { listOfHistoryNemesisMove.Add(data); }
         else { Debug.LogError("Invalid Nemesis Tracker data (Null)"); }
     }
+
+    /// <summary>
+    /// Add a text to the listOfHistoryAutoRun. Text should be a formatted, self-contained sentence (short) summarising the event. Ignore turn # as it's added automatically. Ignore Bold as auto bold everything.
+    /// </summary>
+    /// <param name="text"></param>
+    public void AddHistoryAutoRun(String text)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        { listOfHistoryAutoRun.Add(string.Format("D{0}: {1}", GameManager.instance.turnScript.Turn, text)); }
+        else { Debug.LogWarning("Invalid listOfHistoryAutoRun text (Null or Empty)"); }
+    }
+
+
+    public List<string> GetListOfHistoryAutoRun()
+    { return listOfHistoryAutoRun; }
+
 
     /// <summary>
     /// Debug display of Resistance player moves

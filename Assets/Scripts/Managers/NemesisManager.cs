@@ -1430,7 +1430,7 @@ public class NemesisManager : MonoBehaviour
             }
             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
             Debug.LogFormat("[Ply] NemesisManager.cs -> ProcessPlayerDamage: Nemesis DAMAGES (\"{0}\") Player{1}", damage.name, "\n");
-            string text;
+            string text, textAutoRun;
             GlobalSide sideWho;
             //Message
             string msgText = string.Format("{0} has been {1} by their {2} Nemesis", GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, nemesis.name);
@@ -1438,6 +1438,7 @@ public class NemesisManager : MonoBehaviour
             {
                 //resistance human player
                 text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
+                textAutoRun = string.Format("You have been {0}{1}{2} by your {3}Nemesis{4}", colourBad, nemesis.damage.tag, colourEnd, colourAlert, colourEnd);
                 builder.AppendFormat("{0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
                 builder.AppendFormat("{0}<b>Resistance Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);
                 builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectResistance, colourEnd);
@@ -1448,13 +1449,17 @@ public class NemesisManager : MonoBehaviour
             {
                 //authority human player
                 text = string.Format("Resistance Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
+                textAutoRun = string.Format("{0} has been {1}{2}{3} by their {4}Nemesis{5}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourBad, nemesis.damage.tag, 
+                    colourEnd, colourAlert, colourEnd);
                 builder.AppendFormat("{0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
                 builder.AppendFormat("{0}<b>{1} {2}</b>{3}", colourBad, GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, colourEnd);
                 builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectAuthority, colourEnd);
                 GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectAuthority, nemesisNode.nodeID);
                 sideWho = GameManager.instance.globalScript.sideAuthority;
             }
-
+            //AutoRun Event
+            if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
+            { GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun); }
             //player damaged outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
