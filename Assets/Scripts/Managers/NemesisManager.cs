@@ -1434,7 +1434,7 @@ public class NemesisManager : MonoBehaviour
             GlobalSide sideWho;
             //Message
             string msgText = string.Format("{0} has been {1} by their {2} Nemesis", GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, nemesis.name);
-            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
             {
                 //resistance human player
                 text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);

@@ -5,8 +5,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using gameAPI;
 using delegateAPI;
-
-
+using System.IO;
+using System.Globalization;
 
 public struct StartMethod
 {
@@ -135,6 +135,10 @@ public class GameManager : MonoBehaviour
         { seed = (int)DateTime.Now.Ticks & 0x0000FFFF; }
         Debug.Log("Seed: " + seed);
         Random.InitState(seed);
+        //debug -> write seed to file
+        DateTime date1 = DateTime.Now;
+        string seedInfo = string.Format("Seed {0} -> {1}", seed, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
+        File.AppendAllText("Seed.txt", seedInfo);
         //Get component references
         startScript = GetComponent<StartManager>();
         levelScript = GetComponent<LevelManager>();

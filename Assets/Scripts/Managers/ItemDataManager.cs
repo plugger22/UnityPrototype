@@ -221,11 +221,15 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="damageInfo"></param>
     /// <param name="damageEffect"></param>
     /// <returns></returns>
-    public string GetPlayerDamageDetails(string damageInfo, string damageEffect)
+    public string GetPlayerDamageDetails(string damageInfo, string damageEffect, bool isResistance)
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(damageInfo) == false)
-        { builder.AppendFormat("You have been <b>{0}</b>{1}{2}", damageInfo, "\n", "\n"); }
+        {
+            if (isResistance == true)
+            { builder.AppendFormat("You have been <b>{0}</b>{1}{2}", damageInfo, "\n", "\n"); }
+            else { builder.AppendFormat("{0} has been <b>{1}</b>{2}{3}", GameManager.instance.playerScript.GetPlayerNameResistance(), damageInfo, "\n", "\n"); }
+        }
         if (string.IsNullOrEmpty(damageEffect) == false)
         { builder.AppendFormat("{0}<b>{1}</b>{2}", colourAlert, damageEffect, colourEnd); }
         return builder.ToString();

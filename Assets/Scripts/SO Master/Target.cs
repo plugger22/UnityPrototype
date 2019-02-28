@@ -116,4 +116,17 @@ public class Target : ScriptableObject
     public bool CheckRumourContact(int contactID)
     { return listOfRumourContacts.Exists(x => x == contactID); }
 
+    /// <summary>
+    /// Resets basic fields, statistics and flags
+    /// </summary>
+    public void Reset()
+    {
+        isKnownByAI = false;
+        turnSuccess = -1;
+        turnDone = -1;
+        numOfAttempts = 0;
+        ongoingID = -1;
+        intel = 0;
+    }
+
 }

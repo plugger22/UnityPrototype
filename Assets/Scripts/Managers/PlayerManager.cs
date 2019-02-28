@@ -92,7 +92,7 @@ public class PlayerManager : MonoBehaviour
                 _renownResistance = value;
 
                 //update AI side tab (not using an Event here) -> no updates for the first turn
-                if (GameManager.instance.turnScript.Turn > 0)
+                if (GameManager.instance.turnScript.Turn > 0 && GameManager.instance.sideScript.resistanceOverall == SideState.Human)
                 { GameManager.instance.aiScript.UpdateSideTabData(_renownResistance); }
                 //update renown UI (regardless of whether on or off
                 GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(_renownResistance);

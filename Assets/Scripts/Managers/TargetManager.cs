@@ -643,12 +643,7 @@ public class TargetManager : MonoBehaviour
                         target.timerWindow = target.profile.window;
                         target.turnsWindow = target.profile.window;
                         //defaults (need to set as Target SO could be carrying over data from a previous level)
-                        target.isKnownByAI = false;
-                        target.turnSuccess = -1;
-                        target.turnDone = -1;
-                        target.numOfAttempts = 0;
-                        target.ongoingID = -1;
-                        target.intel = 0;
+                        target.Reset();
                         //status and message
                         switch (target.profile.trigger.name)
                         {

@@ -5185,20 +5185,33 @@ public class ActorManager : MonoBehaviour
     {
         int rnd;
         int playerID = GameManager.instance.playerScript.actorID;
-        string text, topText, detailsTop, detailsBottom;
+        string text, itemText, topText, detailsTop, detailsBottom;
+        string reason = "Unknown";
+        string warning = "Unknown";
         string playerName = GameManager.instance.playerScript.PlayerName;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //doom timer
+
         if (doomTimer > 0)
         {
             //decrement timer
             doomTimer--;
             //warning message
-            text = string.Format("Player doomTimer now {0}. Death is imminent", doomTimer);
-            string itemText = string.Format("{0}'s DOOM TIMER is ticking down", playerName);
-            topText = "You are Dying";
-            string reason = string.Format("{0}The deadly <b>gene tailored virus</b> is spreading throughout your body{1}{2}You need to find a <b>CURE</b>", "\n", "\n", "\n");
-            string warning = string.Format("You have {0} day{1} left to live", doomTimer, doomTimer != 1 ? "s" : "");
+            text = string.Format("Resistance Player doomTimer now {0}. Death is imminent", doomTimer);
+            if (playerSide.level == globalResistance.level)
+            {
+                topText = "You are Dying";
+                itemText = string.Format("{0}'s DOOM TIMER is ticking down", playerName);
+                reason = string.Format("{0}The deadly <b>gene tailored virus</b> is spreading throughout your body{1}{2}You need to find a <b>CURE</b>", "\n", "\n", "\n");
+                warning = string.Format("You have {0} day{1} left to live", doomTimer, doomTimer != 1 ? "s" : "");
+            }
+            else
+            {
+                topText = string.Format("{0} is Dying", GameManager.instance.playerScript.GetPlayerNameResistance());
+                itemText = string.Format("{0}'s DOOM TIMER is ticking down", GameManager.instance.playerScript.GetPlayerNameResistance());
+                reason = string.Format("{0}The deadly <b>gene tailored virus</b> is spreading throughout their body{1}{2}They have to find a <b>CURE</b>", "\n", "\n", "\n");
+                warning = string.Format("They have {0} day{1} left to live", doomTimer, doomTimer != 1 ? "s" : "");
+            }
             GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
             //timer expired, Authority wins
             if (doomTimer == 0)
@@ -5216,6 +5229,7 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
             }
         }
+        
         //check for Conditions -> both sides
         switch (GameManager.instance.playerScript.status)
         {
@@ -5324,8 +5338,8 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                 //message (public)
                                 text = "Player has suffered a Breakdown (Stressed)";
-                                string itemText = "has suffered a BREAKDOWN";
-                                string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
+                                itemText = "has suffered a BREAKDOWN";
+                                reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",

@@ -3046,7 +3046,8 @@ public class AIRebelManager : MonoBehaviour
                 //combine all effects into one list for processing
                 listOfEffects.AddRange(target.listOfGoodEffects);
                 listOfEffects.AddRange(target.listOfBadEffects);
-                listOfEffects.Add(target.OngoingEffect);
+                if (target.OngoingEffect != null)
+                { listOfEffects.Add(target.OngoingEffect); }
             }
             else
             {
@@ -3306,6 +3307,19 @@ public class AIRebelManager : MonoBehaviour
             string reason = "district action";
             GameManager.instance.messageScript.AIImmediateActivity(text, reason, node.nodeID, -1, actorID);
         }
+        return isCaptured;
+    }
+
+    /// <summary>
+    /// subMethod to check if Player / actor is captured by an Erasure team or damaged by their Nemesis
+    /// </summary>
+    /// <param name="nodeID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    private bool CheckIfCaptured(int nodeID, int actorID)
+    {
+        bool isCaptured = false;
+
         return isCaptured;
     }
 
@@ -3799,6 +3813,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" isBreakdown: {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
+        builder.AppendFormat(" Doom Timer: {0}{1}", GameManager.instance.actorScript.doomTimer, "\n");
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
         builder.AppendFormat(" Gear Used: {0}{1}", gearPointsUsed, "\n");
         builder.AppendFormat(" Target Intel: {0}{1}", targetIntel, "\n");

@@ -420,17 +420,22 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(nodeID >= 0, string.Format("Invalid dataID {0}", nodeID));
         if (string.IsNullOrEmpty(text) == false)
         {
-            Message message = new Message();
+            bool isResistance = true;
+            if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+            { isResistance = false; }
+                Message message = new Message();
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Damage;
-            message.side = globalResistance;
+            message.side = globalBoth;
             message.data0 = nodeID;
             //ItemData
             ItemData data = new ItemData();
             data.topText = "Nemesis Attacks";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerDamageDetails(damageInfo, damageEffect);
-            data.itemText = "You have been Damaged by your NEMESIS";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerDamageDetails(damageInfo, damageEffect, isResistance);
+            if (isResistance)
+            { data.itemText = "You have been Damaged by your NEMESIS"; }
+            else { data.itemText = string.Format("{0} has been Damaged by their NEMESIS", GameManager.instance.playerScript.GetPlayerNameResistance()); }
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
             data.tab = ItemTab.ALERTS;
