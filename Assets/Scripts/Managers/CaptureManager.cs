@@ -211,7 +211,7 @@ public class CaptureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Resistance Actor captured
+    /// Resistance Actor (Human/AI) captured
     /// NOTE: node, team and actor checked for null by parent method
     /// </summary>
     /// <param name="node"></param>
@@ -219,13 +219,7 @@ public class CaptureManager : MonoBehaviour
     /// <param name="actor"></param>
     private void CaptureActor(CaptureDetails details)
     {
-        //effects builder
-        StringBuilder builder = new StringBuilder();
-        //any carry over text?
-        if (string.IsNullOrEmpty(details.effects) == false)
-        { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
         string text = string.Format("{0}, {1}, Captured at \"{2}\", {3}", details.actor.actorName, details.actor.arc.name, details.node.nodeName, details.node.Arc.name);
-        builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
         //message
         GameManager.instance.messageScript.AICapture(text, details.node, details.team, details.actor.actorID);
         //raise city loyalty
@@ -233,14 +227,10 @@ public class CaptureManager : MonoBehaviour
         cause += actorCaptured;
         cause = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cause);
         GameManager.instance.cityScript.CityLoyalty = cause;
-
-        builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
         //invisibility set to zero (most likely already is)
         details.actor.datapoint2 = 0;
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
-        //reduce actor alpha to show inactive (sprite and text)
-        GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
         //update contacts
         GameManager.instance.contactScript.UpdateNodeContacts();
         //admin
@@ -248,16 +238,28 @@ public class CaptureManager : MonoBehaviour
         details.actor.Status = ActorStatus.Captured;
         details.actor.tooltipStatus = ActorTooltip.Captured;
         details.actor.nodeCaptured = details.node.nodeID;
-        //actor captured outcome window
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
         {
-            textTop = text,
-            textBottom = builder.ToString(),
-            sprite = GameManager.instance.guiScript.errorSprite,
-            isAction = false,
-            side = GameManager.instance.globalScript.sideResistance
-        };
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
+            //effects builder
+            StringBuilder builder = new StringBuilder();
+            //any carry over text?
+            if (string.IsNullOrEmpty(details.effects) == false)
+            { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
+            builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
+            builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
+            //reduce actor alpha to show inactive (sprite and text)
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+            //actor captured outcome window
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            {
+                textTop = text,
+                textBottom = builder.ToString(),
+                sprite = GameManager.instance.guiScript.errorSprite,
+                isAction = false,
+                side = GameManager.instance.globalScript.sideResistance
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
+        }
     }
 
     

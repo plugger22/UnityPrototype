@@ -5,22 +5,26 @@ using System.Diagnostics;
 using UnityEngine;
 
 /// <summary>
-/// Handles all Tests
+/// Handles all Tests. Note: AutoRun tests implemented in AIManager.cs / AIRebelManager.cs -> DebugTest
 /// NOTE: Debug calls are tricky because of conflicts with C# diagnostic API's. Use 'UnityEngine.Debug.LogFormat' format and expect strange behaviour
 /// </summary>
 public class TestManager : MonoBehaviour
 {
     [Header("Authority Player AutoRun tests")]
-    [Tooltip("Specify a turn (within autorun) where the Stressed condition will be given to the Authority player")]
-    public int stressTurnAuthority = -1;
-    [Tooltip("Who gets stressed? use 0/1/2/3  (slotID's) for authority actors and 999 for Player")]
-    public int stressWhoAuthority = 999;
+    [Tooltip("Specify a turn (within autorun) where the indicated Condition will be given to the Authority player")]
+    public int conditionTurnAuthority = -1;
+    [Tooltip("Who gets the Condition? use 0/1/2/3  (slotID's) for authority actors and 999 for Player")]
+    public int conditionWhoAuthority = 999;
+    [Tooltip("Condition to be applied")]
+    public Condition condtionAuthority;
 
     [Header("Resistance Player AutoRun tests")]
-    [Tooltip("Specify a turn (within autorun) where the Stressed condition will be given to the Resistance player")]
-    public int stressTurnResistance = -1;
-    [Tooltip("Who gets stressed? use 0/1/2/3  (slotID's) for resistance actors and 999 for Player")]
-    public int stressWhoResistance = 999;
+    [Tooltip("Specify a turn (within autorun) where the Condition will be given to the Resistance player")]
+    public int conditionTurnResistance = -1;
+    [Tooltip("Who gets the Condition? use 0/1/2/3  (slotID's) for resistance actors and 999 for Player")]
+    public int conditionWhoResistance = 999;
+    [Tooltip("Condition to be applied")]
+    public Condition conditionResistance;
 
 
     Stopwatch timer;

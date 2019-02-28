@@ -138,7 +138,10 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityRecruiterTask;
     private Priority priorityTargetPlayer;
     private Priority priorityTargetActor;
-
+    //autoRun testing
+    private bool isAutoRunTest;
+    private int turnForCondition;
+    private Condition conditionAutoRunTest;
 
     //fast access
     private string playerName;
@@ -157,8 +160,6 @@ public class AIRebelManager : MonoBehaviour
     //conditions
     private Condition conditionStressed;
     private Condition conditionWounded;
-    //tests
-    private int turnForStress;
     //Activity notifications
     private int delayNoSpider = -1;
     private int delayYesSpider = -1;
@@ -193,7 +194,15 @@ public class AIRebelManager : MonoBehaviour
         aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
-        GameManager.instance.playerScript.Invisibility = 3;
+        GameManager.instance.playerScript.Invisibility = GameManager.instance.actorScript.maxStatValue;
+        //autoRun test
+        if (GameManager.instance.testScript.condtionAuthority != null && GameManager.instance.testScript.conditionTurnAuthority > -1)
+        {
+            isAutoRunTest = true;
+            turnForCondition = GameManager.instance.testScript.conditionTurnAuthority;
+            conditionAutoRunTest = GameManager.instance.testScript.condtionAuthority;
+        }
+        else { isAutoRunTest = false; }
         //fast access
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         playerID = GameManager.instance.playerScript.actorID;
@@ -201,10 +210,11 @@ public class AIRebelManager : MonoBehaviour
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+        conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
         priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
         priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
         priorityLow = GameManager.instance.aiScript.priorityLowWeight;
-        turnForStress = GameManager.instance.testScript.stressTurnResistance;
+        turnForCondition = GameManager.instance.testScript.conditionTurnResistance;
         maxStatValue = GameManager.instance.actorScript.maxStatValue;
         maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
@@ -316,7 +326,8 @@ public class AIRebelManager : MonoBehaviour
     {
         isConnectionsChanged = false;
         //debugging
-        DebugTest();
+        if (isAutoRunTest == true)
+        { DebugTest(); }
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
@@ -3941,22 +3952,23 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void DebugTest()
     {
+        //Add condition to a set actor/player at a set turn (condition assumed to not be Null due to code at initialisation)
         int turn = GameManager.instance.turnScript.Turn;
-        int slotID = GameManager.instance.testScript.stressWhoResistance;
-        //Add STRESSED condition
-        if (turn == turnForStress)
+        //Add Condition
+        if (turn == turnForCondition)
         {
-            //resistance player stressed
+            int slotID = GameManager.instance.testScript.conditionWhoResistance;
+            //Resistance player stressed
             if (slotID == 999)
-            { GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "for Debugging"); }
+            { GameManager.instance.playerScript.AddCondition(conditionAutoRunTest, globalResistance, "for Debugging"); }
             else if (slotID > -1 && slotID < 4)
             {
-                //Resistance actor stressed -> check present
+                //Resistance actor given condition -> check present
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalResistance) == true)
                 {
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
                     if (actor != null)
-                    { actor.AddCondition(conditionStressed, "Debug Test Action"); }
+                    { actor.AddCondition(conditionAutoRunTest, "Debug Test Action"); }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
                 }
             }

@@ -331,7 +331,10 @@ public class AIManager : MonoBehaviour
     private int resistanceMaxTasksPerTurn;
     //player target (Nemesis / Erasure teams)
     private int playerTargetNodeID;                                     //most likely node where player is, -1 if no viable recent information available
-
+    //autoRun testing
+    private bool isAutoRunTest;
+    private int turnForCondition;
+    private Condition conditionAutoRunTest;
     //decision data
     private float connSecRatio;
     private float teamRatio;
@@ -360,7 +363,8 @@ public class AIManager : MonoBehaviour
     private int aiHandoutCostLower;
     private int aiHandoutCostHigher;
     //conditions
-    private Condition stressedCondition;
+    
+    private Condition conditionStressed;
     //sides
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -368,7 +372,6 @@ public class AIManager : MonoBehaviour
     private int totalNodes;
     private int totalConnections;
     private int playerID = -1;
-    private Condition conditionStressed;
     //decisions Authority
     private DecisionAI decisionAPB;
     private DecisionAI decisionConnSec;
@@ -404,8 +407,6 @@ public class AIManager : MonoBehaviour
     private string freeHackingEffectText;
     private string invisibileHackingEffectText;
     private string lowerDetectionEffectText;
-    //testing
-    private int turnForStress;
 
     //colour palette 
     private string colourGood;
@@ -460,6 +461,14 @@ public class AIManager : MonoBehaviour
         numOfSuccessfulResourceRequests = 0;
         numOfCrisis = 0;
         isInsufficientResources = false;
+        //autoRun test
+        if (GameManager.instance.testScript.condtionAuthority != null && GameManager.instance.testScript.conditionTurnAuthority > -1)
+        {
+            isAutoRunTest = true;
+            turnForCondition = GameManager.instance.testScript.conditionTurnAuthority;
+            conditionAutoRunTest = GameManager.instance.testScript.condtionAuthority;
+        }
+        else { isAutoRunTest = false; }
         //decision ID's
         int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
         decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
@@ -530,13 +539,11 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionHoliday != null, "Invalid decisionHoliday (Null)");
         Debug.Assert(decisionStressLeave != null, "Invalid decisionStressLeave (Null)");
         Debug.Assert(decisionLobbyHQ != null, "Invalid decisionLobbyHQ (Null)");
-        //conditions
-        stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
-        Debug.Assert(stressedCondition != null, "Invalid stressedCondition (Null)");
         //sides
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        
         city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
@@ -572,7 +579,7 @@ public class AIManager : MonoBehaviour
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
-        turnForStress = GameManager.instance.testScript.stressTurnAuthority;
+        
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
@@ -679,7 +686,8 @@ public class AIManager : MonoBehaviour
     {
         Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
         //debugging
-        DebugTest();
+        if (isAutoRunTest == true)
+        { DebugTest(); }
         ExecuteTasks(authorityMaxTasksPerTurn);
         ClearAICollections();
         /*UpdateResources(globalAuthority);*/
@@ -4636,8 +4644,7 @@ public class AIManager : MonoBehaviour
             }
             //Player Stressed
             string textStressed = "";
-            stressedCondition = GameManager.instance.dataScript.GetCondition("STRESSED");
-            if (GameManager.instance.playerScript.CheckConditionPresent(stressedCondition, globalResistance) == true)
+            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
             {
                 chance += hackingStressedDetectionEffect;
                 textStressed = string.Format("{0}<size=95%>{1}STRESSED +{2}{3}</size>", "\n", colourBad, hackingStressedDetectionEffect, colourEnd);
@@ -4999,28 +5006,33 @@ public class AIManager : MonoBehaviour
     }
 
 
+   
     /// <summary>
     /// Runs specific turn based test conditions for debugging purposes
     /// </summary>
     private void DebugTest()
     {
-        int turn = GameManager.instance.turnScript.Turn;
-        int slotID = GameManager.instance.testScript.stressWhoAuthority;
-        //Add STRESSED condition
-        if (turn == turnForStress)
+        //Add condition to a set actor/player at a set turn
+        if (conditionAutoRunTest != null)
         {
-            //authority player stressed
-            if (slotID == 999)
-            { GameManager.instance.playerScript.AddCondition(conditionStressed, globalAuthority, "for Debugging"); }
-            else if (slotID > -1 && slotID < 4)
+            int turn = GameManager.instance.turnScript.Turn;
+            //Add Condition
+            if (turn == turnForCondition)
             {
-                //authority actor stressed -> check present
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalAuthority) == true)
+                int slotID = GameManager.instance.testScript.conditionWhoAuthority;
+                //Authority player stressed
+                if (slotID == 999)
+                { GameManager.instance.playerScript.AddCondition(conditionAutoRunTest, globalAuthority, "for Debugging"); }
+                else if (slotID > -1 && slotID < 4)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
-                    if (actor != null)
-                    { actor.AddCondition(conditionStressed, "Debug Test Action"); }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
+                    //Authority actor given condition -> check present
+                    if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalAuthority) == true)
+                    {
+                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
+                        if (actor != null)
+                        { actor.AddCondition(conditionAutoRunTest, "Debug Test Action"); }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
+                    }
                 }
             }
         }
