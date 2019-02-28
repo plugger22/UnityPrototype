@@ -205,6 +205,8 @@ public class CaptureManager : MonoBehaviour
         {
             //AI Resistance Player
             GameManager.instance.aiRebelScript.status = ActorStatus.Captured;
+            //Remove Gear
+            GameManager.instance.aiRebelScript.GearPoolEmpty("being CAPTURED");
         }
     }
 
@@ -258,6 +260,7 @@ public class CaptureManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
     }
 
+    
     /// <summary>
     /// Release Human Resitance player from captitivity
     /// </summary>

@@ -3780,6 +3780,20 @@ public class AIRebelManager : MonoBehaviour
         return actorID;
     }
 
+    /// <summary>
+    /// Gear pool zeroed out for a reason in format 'due to ... [reason]'
+    /// </summary>
+    /// <param name="reason"></param>
+    public void GearPoolEmpty(string reason)
+    {
+        if (string.IsNullOrEmpty(reason) == false)
+        {
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> GearPoolEmpty: Gear Pool emptied (was {0} points) due to {1}{2}", gearPool, reason, "\n");
+            gearPool = 0;
+        }
+        else { Debug.LogError("Invalid reason (Null or Empty)"); }
+    }
+
     //
     // - - -  Debug - - -
     //
