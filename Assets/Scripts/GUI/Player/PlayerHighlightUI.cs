@@ -41,14 +41,31 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         //Flasher
         Node node = null;
         //get correct node (captured node if captured)
-        switch (GameManager.instance.playerScript.status)
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
         {
-            case ActorStatus.Captured:
-                node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
-                break;
-            default:
-                node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                break;
+            //human resistance player
+            switch (GameManager.instance.playerScript.status)
+            {
+                case ActorStatus.Captured:
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                    break;
+                default:
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    break;
+            }
+        }
+        else
+        {
+            //AI Resistance player
+            switch (GameManager.instance.aiRebelScript.status)
+            {
+                case ActorStatus.Captured:
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                    break;
+                default:
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    break;
+            }
         }
         if (node != null)
         {

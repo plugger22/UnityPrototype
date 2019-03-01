@@ -11,6 +11,7 @@ using packageAPI;
 /// </summary>
 public class CaptureManager : MonoBehaviour
 {
+    [Header("City Loyalty")]
     /*[Tooltip("The increase to city loyalty due to the Player being Captured")]
     [Range(0, 2)] public int playerCaptured = 1;*/
     [Tooltip("The increase to city loyalty due to a Resistance Actor, or Player, being Captured")]
@@ -18,8 +19,13 @@ public class CaptureManager : MonoBehaviour
     [Tooltip("The decrease to city loyalty due to an Actor being Released")]
     [Range(0, 2)] public int actorReleased = 1;
 
+    [Header("Invisibility")]
     [Tooltip("The value of the Actor's invisibility upon Release")]
     [Range(0, 3)] public int releaseInvisibility = 2;
+
+    [Header("Detention Period")]
+    [Tooltip("How many turns will the player/actor be held for when Captured")]
+    [Range(1, 10)] public int captureTimerValue = 2;
 
     //fast access
     private int teamErasureID;
@@ -69,8 +75,8 @@ public class CaptureManager : MonoBehaviour
                 ReleasePlayer();
                 break;
             case EventType.ReleaseActor:
-                CaptureDetails detailsRelease = Param as CaptureDetails;
-                ReleaseActor(detailsRelease);
+                Actor actor = Param as Actor;
+                ReleaseActor(actor);
                 break;
             case EventType.StartTurnEarly:
                 CheckStartTurnCapture();
@@ -121,9 +127,17 @@ public class CaptureManager : MonoBehaviour
     {
         //PLAYER CAPTURED
         string text = string.Format("Player Captured at \"{0}\", {1} district by {2}{3}{4} {5}", details.node.nodeName, details.node.Arc.name, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
+        //AutoRun (both sides)
+        if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
+        {
+            string textAutoRun = string.Format("{0} {1}Captured{2}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourBad, colourEnd);
+            GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+        }
 
         /*Debug.LogFormat("[Ply] CaptureManager.cs -> CapturePlayer: {0}{1}", text, "\n");*/
 
+        //detention period
+        GameManager.instance.actorScript.captureTimer = captureTimerValue;
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?
@@ -222,6 +236,14 @@ public class CaptureManager : MonoBehaviour
         string text = string.Format("{0}, {1}, Captured at \"{2}\", {3}", details.actor.actorName, details.actor.arc.name, details.node.nodeName, details.node.Arc.name);
         //message
         GameManager.instance.messageScript.AICapture(text, details.node, details.team, details.actor.actorID);
+        //AutoRun (both sides)
+        if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
+        {
+            string textAutoRun = string.Format("{0}, {1}{2}{3}, {4}Captured{5}", details.actor.actorName, colourAlert, details.actor.arc.name, colourEnd, colourBad, colourEnd);
+            GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+        }
+        //detention period
+        details.actor.captureTimer = captureTimerValue;
         //raise city loyalty
         int cause = GameManager.instance.cityScript.CityLoyalty;
         cause += actorCaptured;
@@ -262,108 +284,54 @@ public class CaptureManager : MonoBehaviour
         }
     }
 
-    
+
     /// <summary>
-    /// Release Human Resitance player from captitivity
+    /// Release Human/AI Resitance player from captitivity
     /// </summary>
     public void ReleasePlayer()
     {
+        string text;
         StringBuilder builder = new StringBuilder();
         //update nodes
         int nodeID = GameManager.instance.nodeScript.nodeCaptured;
-        GameManager.instance.nodeScript.nodePlayer = nodeID;
-        GameManager.instance.nodeScript.nodeCaptured = -1;
-        //reset state
-        /*GameManager.instance.turnScript.resistanceState = ResistanceState.Normal;*/
-        GameManager.instance.playerScript.status = ActorStatus.Active;
-        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
-        //actor gains condition questionable
-        GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "has been interrogated by Authority");
-        //decrease city loyalty
-        int cause = GameManager.instance.cityScript.CityLoyalty;
-        cause -= actorReleased;
-        cause = Mathf.Max(0, cause);
-        GameManager.instance.cityScript.CityLoyalty = cause;
-        builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
-        //invisibility
-        int invisibilityNew = releaseInvisibility;
-        GameManager.instance.playerScript.Invisibility = invisibilityNew;
-        builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
-        //Human resistance player
-        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
-        {
-            //AI side tab (otherwise 'player indisposed' message when accessing tab)
-            GameManager.instance.aiScript.UpdateSideTabData();
-            //update Player alpha
-            GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
-        }
-        //update map
-        GameManager.instance.nodeScript.NodeRedraw = true;
         //message
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            string text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
+            text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
             GameManager.instance.messageScript.AIRelease(text, node, GameManager.instance.playerScript.actorID);
-            //player released outcome window
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            GameManager.instance.nodeScript.nodePlayer = nodeID;
+            GameManager.instance.nodeScript.nodeCaptured = -1;
+            //actor gains condition questionable
+            GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "has been interrogated by Authority");
+            //decrease city loyalty
+            int cause = GameManager.instance.cityScript.CityLoyalty;
+            cause -= actorReleased;
+            cause = Mathf.Max(0, cause);
+            GameManager.instance.cityScript.CityLoyalty = cause;
+            //invisibility
+            int invisibilityNew = releaseInvisibility;
+            GameManager.instance.playerScript.Invisibility = invisibilityNew;
+            //autorun
+            if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
             {
-                textTop = text,
-                textBottom = builder.ToString(),
-                sprite = GameManager.instance.guiScript.errorSprite,
-                isAction = false,
-                side = GameManager.instance.globalScript.sideResistance
-            };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleasePlayer");
-        }
-        else { Debug.LogError(string.Format("Invalid node (Null) for nodeId {0}", nodeID)); }
-    }
-
-    /// <summary>
-    /// Release actor from captitivty, only Actor is needed from CaptureDetails
-    /// </summary>
-    /// <param name="actorID"></param>
-    public void ReleaseActor(CaptureDetails details)
-    {
-        string text = "unknown";
-        if (details.actor != null)
-        {
-            if (details.actor.Status == ActorStatus.Captured)
+                text = string.Format("{0} {1}Released{2}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourGood, colourEnd);
+                GameManager.instance.dataScript.AddHistoryAutoRun(text);
+            }
+            //human resistance player
+            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
             {
-                StringBuilder builder = new StringBuilder();
-                //node (needed only for record keeping / messaging purposes NOTE: needs to be done here as it's reset to -1 thereafter
-                Node node = GameManager.instance.dataScript.GetNode(details.actor.nodeCaptured);
-                if (node == null)
-                { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", details.actor.nodeCaptured); }
-                details.actor.nodeCaptured = -1;
-                //reset actor state
-                details.actor.Status = ActorStatus.Active;
-                details.actor.tooltipStatus = ActorTooltip.None;
-                //actor gains condition questionable
-                details.actor.AddCondition(conditionQuestionable, "has been interrogated by Authority");
-                //decrease City loyalty
-                int cause = GameManager.instance.cityScript.CityLoyalty;
-                cause -= actorReleased;
-                cause = Mathf.Max(0, cause);
-                GameManager.instance.cityScript.CityLoyalty = cause;
+                //reset state
+                GameManager.instance.playerScript.status = ActorStatus.Active;
+                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                 builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
-                //invisibility
-                int invisibilityNew = releaseInvisibility;
-                details.actor.datapoint2 = invisibilityNew;
-                builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, details.actor.actorName, invisibilityNew, colourEnd);
-                //update contacts
-                GameManager.instance.contactScript.UpdateNodeContacts();
-                //update actor alpha
-                GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                //admin
-                GameManager.instance.actorScript.numOfActiveActors++;
-                if (node != null)
-                {
-                    //message
-                    text = string.Format("{0} released from captivity", details.actor.actorName);
-                    if (node != null)
-                    { GameManager.instance.messageScript.AIRelease(text, node, details.actor.actorID); }
-                }
+                builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
+                //AI side tab (otherwise 'player indisposed' message when accessing tab)
+                GameManager.instance.aiScript.UpdateSideTabData();
+                //update Player alpha
+                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                //update map
+                GameManager.instance.nodeScript.NodeRedraw = true;
                 //player released outcome window
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                 {
@@ -373,9 +341,87 @@ public class CaptureManager : MonoBehaviour
                     isAction = false,
                     side = GameManager.instance.globalScript.sideResistance
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleaseActor");
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleasePlayer");
             }
-            else { Debug.LogWarningFormat("{0}, {1} can't be released as not presently captured", details.actor.arc.name, details.actor.actorName); }
+            else
+            {
+                //AI resistance player
+                GameManager.instance.aiRebelScript.status = ActorStatus.Active;
+
+            }
+        }
+        else { Debug.LogError(string.Format("Invalid node (Null) for nodeId {0}", nodeID)); }
+    }
+
+    /// <summary>
+    /// Release actor from captitivty, only Actor is needed from CaptureDetails
+    /// </summary>
+    /// <param name="actorID"></param>
+    public void ReleaseActor(Actor actor)
+    {
+        string text = "unknown";
+        if (actor != null)
+        {
+            if (actor.Status == ActorStatus.Captured)
+            {
+                StringBuilder builder = new StringBuilder();
+                //node (needed only for record keeping / messaging purposes NOTE: needs to be done here as it's reset to -1 thereafter
+                Node node = GameManager.instance.dataScript.GetNode(actor.nodeCaptured);
+                if (node == null)
+                {
+                    actor.nodeCaptured = -1;
+                    //reset actor state
+                    actor.Status = ActorStatus.Active;
+                    actor.tooltipStatus = ActorTooltip.None;
+                    //actor gains condition questionable
+                    actor.AddCondition(conditionQuestionable, "has been interrogated by Authority");
+                    //decrease City loyalty
+                    int cause = GameManager.instance.cityScript.CityLoyalty;
+                    cause -= actorReleased;
+                    cause = Mathf.Max(0, cause);
+                    GameManager.instance.cityScript.CityLoyalty = cause;
+                    builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
+                    //invisibility
+                    int invisibilityNew = releaseInvisibility;
+                    actor.datapoint2 = invisibilityNew;
+                    builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, actor.actorName, invisibilityNew, colourEnd);
+                    //update contacts
+                    GameManager.instance.contactScript.UpdateNodeContacts();
+                    //admin
+                    GameManager.instance.actorScript.numOfActiveActors++;
+                    //message
+                    text = string.Format("{0} released from captivity", actor.actorName);
+                    GameManager.instance.messageScript.AIRelease(text, node, actor.actorID);
+                    //autorun
+                    if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
+                    {
+                        text = string.Format("{0}, {1}{2}{3}, {4}Released{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, colourGood, colourEnd);
+                        GameManager.instance.dataScript.AddHistoryAutoRun(text);
+                    }
+                    //Human resistance player
+                    if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+                    {
+                        //update actor alpha
+                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                        //actor released outcome window
+                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                        {
+                            textTop = text,
+                            textBottom = builder.ToString(),
+                            sprite = GameManager.instance.guiScript.errorSprite,
+                            isAction = false,
+                            side = GameManager.instance.globalScript.sideResistance
+                        };
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleaseActor");
+                    }
+                    else
+                    {
+                        //AI Resistance player
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", actor.nodeCaptured); }
+            }
+            else { Debug.LogWarningFormat("{0}, {1} can't be released as not presently captured", actor.arc.name, actor.actorName); }
         }
         else { Debug.LogError("Invalid details.actor (Null)"); }
     }

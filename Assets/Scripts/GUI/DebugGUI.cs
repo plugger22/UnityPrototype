@@ -603,9 +603,7 @@ public class DebugGUI : MonoBehaviour
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, GameManager.instance.globalScript.sideResistance);
                         if (actor.Status == ActorStatus.Captured)
                         {
-                            CaptureDetails details = new CaptureDetails();
-                            details.actor = actor;
-                            GameManager.instance.captureScript.ReleaseActor(details);
+                            GameManager.instance.captureScript.ReleaseActor(actor);
                             break;
                         }
                     }
@@ -1261,7 +1259,7 @@ public class DebugGUI : MonoBehaviour
                     case 43:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.aiRebelScript.DebugShowRebelAIStatus();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 750), analysis, customBackground);
                         break;
                     //Rebel Tracker data
                     case 44:

@@ -3829,6 +3829,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
         builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
         builder.AppendFormat(" Doom Timer: {0}{1}", GameManager.instance.actorScript.doomTimer, "\n");
+        builder.AppendFormat(" Capture Timer: {0}{1}", GameManager.instance.actorScript.captureTimer, "\n");
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
         builder.AppendFormat(" Gear Used: {0}{1}", gearPointsUsed, "\n");
         builder.AppendFormat(" Target Intel: {0}{1}", targetIntel, "\n");

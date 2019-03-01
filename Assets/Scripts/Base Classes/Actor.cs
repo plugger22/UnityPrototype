@@ -21,8 +21,9 @@ namespace gameAPI
         [HideInInspector] public int actorID;
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
-        [HideInInspector] public int unhappyTimer;             //used when in Reserves. Becomes 'Unhappy' once expires
+        [HideInInspector] public int unhappyTimer;              //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public int blackmailTimer;            //default 0 but set to new global value once actor gains Blackmailer condition
+        [HideInInspector] public int captureTimer;              //ticks down and determines how long an actor will be inactive while captured
         [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap

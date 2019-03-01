@@ -89,7 +89,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
-    [HideInInspector] public int doomTimer;                                     //countdown doom timer set when player gains the DOOMED condition (infected with a slow acting lethal virus)
+    [HideInInspector] public int doomTimer;                                     //countdown doom timer set when resistance player gains the DOOMED condition (infected with a slow acting lethal virus)
+    [HideInInspector] public int captureTimer;                                  //countdown timer which determines how long the Resistance player is inactive while captured
 
     [HideInInspector] public bool isGearCheckRequired;                          //GearManager.cs -> used to flag that actors need to reset their gear
 
@@ -4049,8 +4050,11 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfActorsResistance[i];
                     if (actor != null)
                     {
-                        if (actor.Status == ActorStatus.Inactive)
+
+                        /*if (actor.Status == ActorStatus.Inactive)*/
+                        switch(actor.Status)
                         {
+                            case ActorStatus.Inactive:
                             switch (actor.inactiveStatus)
                             {
                                 case ActorInactive.LieLow:
@@ -4100,6 +4104,12 @@ public class ActorManager : MonoBehaviour
                                     GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
                                     break;
                             }
+                                break;
+                            case ActorStatus.Captured:
+                                actor.captureTimer--;
+                                if (actor.captureTimer <= 0)
+                                { GameManager.instance.captureScript.ReleaseActor(actor); }
+                                break;
                         }
                         //
                         // - - - Lie Low Info App - - -
@@ -5485,6 +5495,12 @@ public class ActorManager : MonoBehaviour
         //
         switch (GameManager.instance.aiRebelScript.status)
         {
+            case ActorStatus.Captured:
+                //decrement timer
+                captureTimer--;
+                if (captureTimer <= 0)
+                { GameManager.instance.captureScript.ReleasePlayer(); }
+                break;
             case ActorStatus.Inactive:
                 switch (GameManager.instance.aiRebelScript.inactiveStatus)
                 {
