@@ -591,18 +591,6 @@ public class AIRebelManager : MonoBehaviour
                     {
                         switch (condition.name)
                         {
-                            case "BLACKMAILER":
-                            case "CORRUPT":
-                            case "INCOMPETENT":
-                            case "QUESTIONABLE":
-                            case "STAR":
-                            case "UNHAPPY":
-                            case "TAGGED":
-                            case "IMAGED":
-                                break;
-                            case "DOOMED":
-
-                                break;
                             case "STRESSED":
                                 //Player has priority for stress leave
                                 isPlayerStressed = true;
@@ -618,6 +606,17 @@ public class AIRebelManager : MonoBehaviour
                                         Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: Rebel AI Player WOUNDED. Maximum one action{0}", "\n");
                                     }
                                 }
+                                break;
+                            case "BLACKMAILER":
+                            case "CORRUPT":
+                            case "INCOMPETENT":
+                            case "QUESTIONABLE":
+                            case "STAR":
+                            case "UNHAPPY":
+                            case "TAGGED":
+                            case "IMAGED":
+                            case "DOOMED":
+                                //All of the above dealt with (if appropriate) in ActorManager.cs -> CheckPlayerResistanceAI
                                 break;
                             default:
                                 Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.name);

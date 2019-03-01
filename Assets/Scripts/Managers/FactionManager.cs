@@ -477,7 +477,7 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// use this to adjust faction approval level (auto checks for various faction mechanics & generates a message)
+    /// use this to adjust faction approval level (auto checks for various faction mechanics & generates a message) 'Reason' is self contained
     /// </summary>
     /// <param name="amount"></param>
     public void ChangeFactionApproval(int amountToChange, GlobalSide side, string reason)
@@ -494,7 +494,7 @@ public class FactionManager : MonoBehaviour
                     oldApproval = ApprovalAuthority;
                     ApprovalAuthority += amountToChange;
                     Debug.LogFormat("[Fac] Authority Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
-                    if (GameManager.instance.turnScript.currentSide.level == globalAuthority.level)
+                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     {
                         msgText = string.Format("{0} faction approval {1}{2}", factionAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
                         GameManager.instance.messageScript.FactionApproval(msgText, reason, factionAuthority, oldApproval, amountToChange, ApprovalAuthority);
@@ -505,7 +505,7 @@ public class FactionManager : MonoBehaviour
                     oldApproval = ApprovalResistance;
                     ApprovalResistance += amountToChange;
                     Debug.LogFormat("[Fac] Resistance Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
-                    if (GameManager.instance.turnScript.currentSide.level == globalResistance.level)
+                    if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                     {
                         msgText = string.Format("{0} faction approval {1}{2}", factionResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
                         GameManager.instance.messageScript.FactionApproval(msgText, reason, factionResistance, oldApproval, amountToChange, ApprovalResistance);

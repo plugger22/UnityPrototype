@@ -223,9 +223,9 @@
     {
         None,
         StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
-        PlayerBreakdown, PlayerLieLow,
+        PlayerBreakdown, PlayerLieLow, PlayerCaptured,
         TargetAttempts, TargetSuccesses
-            
+        
     }
 
 

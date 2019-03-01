@@ -156,6 +156,8 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.cityScript.CityLoyalty = cause;
         //invisibility set to zero (most likely already is)
         GameManager.instance.playerScript.Invisibility = 0;
+        //statistics
+        GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCaptured);
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //set security state back to normal
@@ -574,7 +576,7 @@ public class CaptureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks player at start of turn (early) to see if invisibility is zero and Erasure team present
+    /// Checks player at start of turn (early) to see if invisibility is one or less and Erasure team present
     /// </summary>
     private void CheckStartTurnCapture()
     {
