@@ -360,18 +360,20 @@ public class SideManager : MonoBehaviour
                                 switch (actor.Status)
                                 {
                                     case ActorStatus.Active:
-                                        //
-                                        // - - - Compatibility - - -
+
+                                        /*//
+                                        // - - - Compatibility (Edit: cause duplicate msg)
                                         //
                                         List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
                                         if (listOfBadConditions.Count > 0)
                                         { GameManager.instance.actorScript.ProcessCompatibility(actor, listOfBadConditions); }
 
-                                        /*//
+                                        //
                                         // - - - Invisibility Zero warning (Edit: causes duplicate msg) - - -
                                         //
                                         if (actor.datapoint2 == 0)
                                         { GameManager.instance.actorScript.ProcessInvisibilityWarning(actor); }*/
+
 
                                         //
                                         // - - - Motivation Warning - - -

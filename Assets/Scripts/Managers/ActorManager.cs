@@ -4167,20 +4167,7 @@ public class ActorManager : MonoBehaviour
                 //compatibility (actors with player)
                 List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
                 if (listOfBadConditions.Count > 0)
-                {
-                    StringBuilder builder = new StringBuilder();
-                    foreach (Condition condition in listOfBadConditions)
-                    {
-                        if (builder.Length > 0) { builder.Append(", "); }
-                        builder.Append(condition.name);
-                    }
-                    //warning message
-                    string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
-                    string itemText = "Your Reputation is poor. Subordinates may resign";
-                    string reason = string.Format("You are {0}<b>{1}</b>{2}{3}", colourBad, builder.ToString(), colourEnd, "\n");
-                    string warning = string.Format("Your Subordinates may resign unless you {0}{1}<b>Improve your Reputation</b>{2}", "\n", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
-                }
+                { SetReputationWarningMessage(listOfBadConditions); }
                 //
                 // - - - loop Active actors - - -
                 //
@@ -4343,24 +4330,8 @@ public class ActorManager : MonoBehaviour
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
                 //compatibility (actors with player)
                 List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
-                if (listOfBadConditions.Count > 0)
-                {
-                    StringBuilder builder = new StringBuilder();
-                    foreach (Condition condition in listOfBadConditions)
-                    {
-                        if (builder.Length > 0) { builder.Append(", "); }
-                        builder.Append(condition.name);
-                    }
-                    if (isPlayer == true)
-                    {
-                        //warning message
-                        string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
-                        string itemText = "Your Reputation is poor. Subordinates may resign";
-                        string reason = string.Format("You are {0}<b>{1}</b>{2}{3}", colourBad, builder.ToString(), colourEnd, "\n");
-                        string warning = string.Format("Your Subordinates may resign unless you {0}{1}<b>Improve your Reputation</b>{2}", "\n", colourNeutral, colourEnd);
-                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
-                    }
-                }
+                if (listOfBadConditions.Count > 0 && isPlayer == true)
+                { SetReputationWarningMessage(listOfBadConditions); }
                 //
                 // - - - loop Active actors - - -
                 //
@@ -4447,7 +4418,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveAuthorityActorsHuman()
     {
-        string msgText, itemText, reason, warning, text, topText, detailsTop, detailsBottom;
+        string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
@@ -4462,20 +4433,7 @@ public class ActorManager : MonoBehaviour
                 //compatibility (actors with player)
                 List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalAuthority);
                 if (listOfBadConditions.Count > 0)
-                {
-                    StringBuilder builder = new StringBuilder();
-                    foreach (Condition condition in listOfBadConditions)
-                    {
-                        if (builder.Length > 0) { builder.Append(", "); }
-                        builder.Append(condition.name);
-                    }
-                    //warning message
-                    msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
-                    itemText = "Your Reputation is poor. Subordinates may resign";
-                    reason = string.Format("You are {0}<b>{1}</b>{2}{3}{4}", colourBad, builder.ToString(), colourEnd, "\n", "\n");
-                    warning = string.Format("Your Subordinates may resign unless you {0}<b>Improve your Reputation</b>{1}", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
-                }
+                { SetReputationWarningMessage(listOfBadConditions); }
                 //loop actors
                 for (int i = 0; i < arrayOfActors.Length; i++)
                 {
@@ -4594,24 +4552,8 @@ public class ActorManager : MonoBehaviour
                 List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
                 //compatibility (actors with player)
                 List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalAuthority);
-                if (listOfBadConditions.Count > 0)
-                {
-                    StringBuilder builder = new StringBuilder();
-                    foreach (Condition condition in listOfBadConditions)
-                    {
-                        if (builder.Length > 0) { builder.Append(", "); }
-                        builder.Append(condition.name);
-                    }
-                    if (isPlayer == true)
-                    {
-                        //warning message
-                        string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
-                        string itemText = "Your Reputation is poor. Subordinates may resign";
-                        string reason = string.Format("You are {0}<b>{1}</b>{2}{3}", colourBad, builder.ToString(), colourEnd, "\n");
-                        string warning = string.Format("Your Subordinates may resign unless you {0}{1}<b>Improve your Reputation</b>{2}", "\n", colourNeutral, colourEnd);
-                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Upset Subordinates", reason, warning);
-                    }
-                }
+                if (listOfBadConditions.Count > 0 && isPlayer == true)
+                { SetReputationWarningMessage(listOfBadConditions); }
                 //
                 // - - - loop Active actors - - -
                 //
@@ -4691,6 +4633,35 @@ public class ActorManager : MonoBehaviour
             text = string.Format("Lie Low Timer {0}", lieLowTimer);
             GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
         }
+    }
+
+    /// <summary>
+    /// subMtethod to handle a warning message. NOTE: it's assumed that the calling method has isPlayer set to true (for AI versions only)
+    /// </summary>
+    private void SetReputationWarningMessage(List<Condition> listOfBadConditions)
+    {
+        if (listOfBadConditions != null)
+        {
+            bool isQuestionable = false;
+            StringBuilder builder = new StringBuilder();
+            foreach (Condition condition in listOfBadConditions)
+            {
+                //check for questionable condition
+                if (condition.name.Equals(conditionQuestionable.name) == true)
+                { isQuestionable = true; }
+                if (builder.Length > 0) { builder.Append(", "); }
+                builder.Append(condition.name);
+            }
+            //warning message
+            string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
+            string itemText = "Your Reputation is poor";
+            string reason = string.Format("{0}You are {1}<b>{2}</b>{3}{4}", "\n", colourBad, builder.ToString(), colourEnd, "\n");
+            string warning = string.Format("{0}Your Subordinates may resign{1}", colourAlert, colourEnd);
+            if (isQuestionable == true)
+            { warning = string.Format("{0}Your Subordinates may resign{1}{2}HQ APPROVAL may fall{3}", colourAlert, "\n", "\n", colourEnd); }
+            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Dubious Reputation", reason, warning);
+        }
+        else { Debug.LogError("Invalid listOfBadConditions (Null)"); }
     }
 
 

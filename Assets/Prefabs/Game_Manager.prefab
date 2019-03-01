@@ -1794,6 +1794,7 @@ MonoBehaviour:
   breakdownChance: 20
   playerBadResignChance: 5
   playerRecognisedChance: 20
+  playerQuestionableChance: 30
   playerDoomTimerValue: 5
   stressLeaveRenownCostAuthority: 2
   stressLeaveRenownCostResistance: 2
@@ -2044,7 +2045,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 24988
-  isAuthority: 1
+  isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
