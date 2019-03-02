@@ -443,10 +443,13 @@ public class AIManager : MonoBehaviour
     List<AITask> listOfErasureTasks = new List<AITask>();
     List<AITask> listOfDecisionTasksNonCritical = new List<AITask>();
     List<AITask> listOfDecisionTasksCritical = new List<AITask>();
-
+    //stats
+    private int[] arrayOfAITaskTypes;                                                       //used for analysis of which tasks the AI generates (not executes but tracks the ones placed into the pool)
 
     public void Initialise()
     {
+        //collections
+        arrayOfAITaskTypes = new int[(int)AITaskType.Count];
         //factions
         factionAuthority = GameManager.instance.factionScript.factionAuthority;
         factionResistance = GameManager.instance.factionScript.factionResistance;
@@ -2711,6 +2714,9 @@ public class AIManager : MonoBehaviour
         float baseOdds = 100f;
         int numTasksSelected = 0;
         int maxCombinedTasks = Mathf.Min(numOfFinalTasks, numOfFactionTasks);
+        //stats
+        UpdateTaskTypeStats(listOfTasksPotential);
+        //process tasks
         if (numTasks > 0)
         {
             List<AITask> listOfTasksCritical = new List<AITask>();
@@ -4765,6 +4771,28 @@ public class AIManager : MonoBehaviour
         policyEffectLoyalty = -1;
     }
 
+    /// <summary>
+    /// subMethod to keep tally of which AITaskTypes are being generated and placed into the pools (critical and potential), NOT a tally of which are executed
+    /// </summary>
+    /// <param name="listOfTasks"></param>
+    private void UpdateTaskTypeStats(List<AITask> listOfTasks)
+    {
+        if (listOfTasks != null)
+        {
+            for (int i = 0; i < listOfTasks.Count; i++)
+            {
+                AITask task = listOfTasks[i];
+                if (task != null)
+                {
+                    //add to tally
+                    arrayOfAITaskTypes[(int)task.type]++;
+                }
+                else { Debug.LogErrorFormat("Invalid task (Null) for listOfTasks[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTasks (Null)"); }
+    }
+
     //
     // - - - Debug - - -
     //
@@ -5036,6 +5064,44 @@ public class AIManager : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    /// <summary>
+    /// returns a breakdown of tasks by type from the start of the level to the current turn
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowTaskAnalysis()
+    {
+        int total = 0;
+        float typeShare = 0f;
+        StringBuilder builder = new StringBuilder();
+        Dictionary<AITaskType, float> dictTemp = new Dictionary<AITaskType, float>();
+        builder.AppendFormat(" - AITaskTypes Analysis{0}{1}", "\n", "\n");
+        builder.AppendFormat(" - Authority{0}", "\n");
+        //get a total of all tasks
+        for (int i = 0; i < arrayOfAITaskTypes.Length; i++)
+        { total += arrayOfAITaskTypes[i]; }
+        //make calcs of % share of task
+        for (int i = 0; i < arrayOfAITaskTypes.Length; i++)
+        {
+            if (arrayOfAITaskTypes[i] > 0)
+            {
+                typeShare = (float)arrayOfAITaskTypes[i] / (float)total * 100;
+                //add to dictionary
+                dictTemp.Add((AITaskType)i, typeShare);
+            }
+        }
+        //sort dict descending order
+        var result = from pair in dictTemp
+                     orderby pair.Value descending
+                     select pair;
+        foreach (var item in result)
+        {
+            //generate raw stats display
+            builder.AppendFormat(" {0}: {1} %{2}", item.Key, (int)item.Value, "\n");
+        }
+        return builder.ToString();
     }
 
     /// <summary>

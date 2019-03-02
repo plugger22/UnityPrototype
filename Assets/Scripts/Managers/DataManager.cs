@@ -3635,9 +3635,13 @@ public class DataManager : MonoBehaviour
         int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         for (int i = 0; i < numOfActors; i++)
         {
-            Actor actor = arrayOfActors[side.level, i];
-            if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
-            { return actor.actorSlotID; }
+            //check if there is an actor in the slot (not vacant)
+            if (CheckActorSlotStatus(i, side) == true)
+            {
+                Actor actor = arrayOfActors[side.level, i];
+                if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
+                { return actor.actorSlotID; }
+            }
         }
         return slotID;
     }

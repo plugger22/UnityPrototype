@@ -178,11 +178,13 @@ public class AIRebelManager : MonoBehaviour
     private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
     private List<Node>[] arrayOfActorActions;                                       //list of nodes suitable for listOfArc[index] action
     private List<Actor> listOfCurrentActors = new List<Actor>();                    //list of current onMap, Active, actors at start of each action
-    
+
+    //stats
+    private int[] arrayOfAITaskTypes;                                                       //used for analysis of which tasks the AI generates (not executes but tracks the ones placed into the pool)
 
     //tasks
-    List<AITask> listOfTasksPotential = new List<AITask>();
-    List<AITask> listOfTasksCritical = new List<AITask>();
+    private List<AITask> listOfTasksPotential = new List<AITask>();
+    private List<AITask> listOfTasksCritical = new List<AITask>();
 
     //targets
     private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();   //key -> target, Value -> Distance (weighted and adjusted for threats)
@@ -190,6 +192,8 @@ public class AIRebelManager : MonoBehaviour
 
     public void Initialise()
     {
+        //collections
+        arrayOfAITaskTypes = new int[(int)AITaskType.Count];
         //set initial move node to start position (will trigger a new targetNodeID)
         targetNodeID = GameManager.instance.nodeScript.nodePlayer;
         aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
@@ -2120,6 +2124,9 @@ public class AIRebelManager : MonoBehaviour
     private void ProcessTaskFinal()
     {
         AITask task = null;
+        //stats
+        UpdateTaskTypeStats(listOfTasksCritical);
+        UpdateTaskTypeStats(listOfTasksPotential);
         //check for Critical tasks for
         int count = listOfTasksCritical.Count;
         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTaskFinal: {0} Critical Task{1} available{2}", count, count != 1 ? "s" : "", "\n");
@@ -3842,6 +3849,28 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogError("Invalid reason (Null or Empty)"); }
     }
 
+    /// <summary>
+    /// subMethod to keep tally of which AITaskTypes are being generated and placed into the pools (critical and potential), NOT a tally of which are executed
+    /// </summary>
+    /// <param name="listOfTasks"></param>
+    private void UpdateTaskTypeStats(List<AITask> listOfTasks)
+    {
+        if (listOfTasks != null)
+        {
+            for (int i = 0; i < listOfTasks.Count; i++)
+            {
+                AITask task = listOfTasks[i];
+                if (task != null)
+                {
+                    //add to tally
+                    arrayOfAITaskTypes[(int)task.type]++;
+                }
+                else { Debug.LogErrorFormat("Invalid task (Null) for listOfTasks[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTasks (Null)"); }
+    }
+
     //
     // - - -  Debug - - -
     //
@@ -3977,6 +4006,18 @@ public class AIRebelManager : MonoBehaviour
                 { builder.AppendFormat(" nodeID {0}{1}", listOfBadNodes[i], "\n"); }
             }
             else { builder.AppendFormat(" No records present{0}", "\n"); }
+            //
+            // - - - Spider Nodes
+            //
+            count = listOfSpiderNodes.Count;
+            builder.AppendFormat("{0}- ListOfSpiderNodes (current turn {1}){2}", "\n", turn - 1, "\n");
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { builder.AppendFormat(" nodeID {0}{1}", listOfSpiderNodes[i], "\n"); }
+            }
+            else { builder.AppendFormat(" No records present{0}", "\n"); }
+
         }
         else { builder.AppendFormat("{0}{1} - CAPTURED (no report or sighting data)", "\n", "\n"); }
 
@@ -4011,6 +4052,42 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// returns a breakdown of tasks by type from the start of the level to the current turn
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowTaskAnalysis()
+    {
+        int total = 0;
+        float typeShare = 0f;
+        StringBuilder builder = new StringBuilder();
+        Dictionary<AITaskType, float> dictTemp = new Dictionary<AITaskType, float>();
+        builder.AppendFormat("{0}{1}{2} - Resistance{3}", "\n", "\n", "\n", "\n");
+        //get a total of all tasks
+        for (int i = 0; i < arrayOfAITaskTypes.Length; i++)
+        { total += arrayOfAITaskTypes[i]; }
+        //make calcs of % share of task
+        for (int i = 0; i < arrayOfAITaskTypes.Length; i++)
+        {
+            if (arrayOfAITaskTypes[i] > 0)
+            {
+                typeShare = (float)arrayOfAITaskTypes[i] / (float)total * 100;
+                //add to dictionary
+                dictTemp.Add((AITaskType)i, typeShare);
+            }
+        }
+        //sort dict descending order
+        var result = from pair in dictTemp
+                     orderby pair.Value descending
+                     select pair;
+        foreach(var item in result)
+        { 
+            //generate raw stats display
+            builder.AppendFormat(" {0}: {1} %{2}", item.Key, (int)item.Value, "\n");
+        }
+        return builder.ToString();
     }
 
     //new methods above here

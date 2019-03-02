@@ -110,7 +110,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 40), "Option Menu", customBackground);
             //background box (Info)
-            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 150), "Info Menu", customBackground);
+            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 200), "Info Menu", customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 200), "Action Menu", customBackground);
             //background box (Level)
@@ -331,7 +331,16 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentyfirst button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 20 + button_height * 20, button_width, button_height), "Rebel Tracker"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 20 + button_height * 20, button_width, button_height), "Analysis Data"))
+            {
+                Debug.Log("[Dbg] Button -> AI Analysis Data");
+                if (debugDisplay != 51)
+                { debugDisplay = 51; }
+                else { debugDisplay = 0; }
+            }
+
+            //twentysecond button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 21 + button_height * 21, button_width, button_height), "Rebel Tracker"))
             {
                 Debug.Log("[Dbg] Button -> Rebel Tracker");
                 if (debugDisplay != 44)
@@ -339,8 +348,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //twentysecond button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 21 + button_height * 21, button_width, button_height), "Nemesis Tracker"))
+            //twentythird button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Nemesis Tracker"))
             {
                 Debug.Log("[Dbg] Button -> Nemesis Tracker");
                 if (debugDisplay != 45)
@@ -1316,6 +1325,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.statScript.DebugShowStatistics();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //AI Analysis Data
+                    case 51:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = string.Format("{0}{1}", GameManager.instance.aiScript.DebugShowTaskAnalysis(), GameManager.instance.aiRebelScript.DebugShowTaskAnalysis());
+                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 300), analysis, customBackground);
                         break;
                 }
             }
