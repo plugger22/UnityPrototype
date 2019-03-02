@@ -663,15 +663,15 @@ public class MainInfoUI : MonoBehaviour
     {
         if (data != null)
         {
-            //exit any generic or node tooltips
-            GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
-            GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
             currentTurn = GameManager.instance.turnScript.Turn;
             viewTurnNumber = currentTurn;
             // Populate data
             UpdateData(data);
+            //exit any generic or node tooltips
+            GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
+            GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             // Display Main page by default
             OpenTab(0);
             // Navigation buttons

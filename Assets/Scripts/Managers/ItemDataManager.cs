@@ -1236,7 +1236,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetAIImmediateActivityDetails(string reason, int nodeID, int connID, string actorName, string actorArcName)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
+        builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
         builder.AppendFormat("{0}<b>CURRENT LOCATION KNOWN</b>{1}{2}", colourBad, colourEnd, "\n");
         if (string.IsNullOrEmpty(reason) == false)
         { builder.AppendFormat("due to {0}{1}{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
@@ -1245,8 +1245,8 @@ public class ItemDataManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                builder.AppendFormat("{0}Spotted at {1}, {2}{3}{4}", "\n", node.nodeName, node.Arc.name, "\n", "\n");
-                builder.AppendFormat("{0}{1}'s Invisibility dropped below Zero{2}", colourNeutral, actorName, colourEnd);
+                builder.AppendFormat("{0}Spotted at <b>{1}, {2}{3}</b>{4}{5}{6}", "\n", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}{1}'s Invisibility dropped <b>below Zero</b>{2}", colourNeutral, actorName, colourEnd);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }
@@ -1255,8 +1255,9 @@ public class ItemDataManager : MonoBehaviour
             Connection conn = GameManager.instance.dataScript.GetConnection(connID);
             if (conn != null)
             {
-                builder.AppendFormat("{0}Spotted moving between {1}, {2} and {3}, {4}{5}{6}", "\n", conn.node1.nodeName, conn.node1.Arc.name, conn.node2.nodeName, conn.node2.Arc.name, "\n", "\n");
-                builder.AppendFormat("{0}{1}'s Invisibility dropped below Zero{2}", colourNeutral, actorName, colourEnd);
+                builder.AppendFormat("{0}Spotted moving between <b>{1}, {2}{3}</b>{4} and <b>{5}, {6}{7}</b>{8}{9}{10}", "\n", conn.node1.nodeName, colourAlert, conn.node1.Arc.name, colourEnd,
+                    conn.node2.nodeName, colourAlert, conn.node2.Arc.name, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}{1}'s Invisibility dropped <b>below Zero</b>{2}", colourNeutral, actorName, colourEnd);
             }
             else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
         }
@@ -1292,10 +1293,10 @@ public class ItemDataManager : MonoBehaviour
     public string GetAIReleaseDetails(string actorName, string actorArcName, Node node)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
+        builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
         builder.AppendFormat("{0}<b>has been RELEASED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
-        builder.AppendFormat("at {0}, {1}{2}{3}", node.nodeName, node.Arc.name, "\n", "\n");
-        builder.AppendFormat("{0}{1} is under a cloud of suspicion as a result of their time with the Authority{2}", colourBad, actorName, colourEnd);
+        builder.AppendFormat("at <b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1} is under a cloud of suspicion as a result of their time with the Authority</b>{2}", colourBad, actorName, colourEnd);
         return builder.ToString();
     }
 

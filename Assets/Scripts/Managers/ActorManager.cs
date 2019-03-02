@@ -75,6 +75,8 @@ public class ActorManager : MonoBehaviour
     [Range(0, 50)] public int playerRecognisedChance = 20;
     [Tooltip("Chance per turn of the player, with the QUESTIONABLE condition, losing one notch of Rebel HQ approval")]
     [Range(0, 100)] public int playerQuestionableChance = 30;
+    [Tooltip("Chance of an actor, who has been captured, becoming a traitor (secretly) on release. Chance is multiplied by the # of times they have been captured.")]
+    [Range(0, 100)] public int actorTraitorChance = 25;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
     [Range(1, 10)] public int playerDoomTimerValue = 5;
 
@@ -4061,58 +4063,58 @@ public class ActorManager : MonoBehaviour
                     {
 
                         /*if (actor.Status == ActorStatus.Inactive)*/
-                        switch(actor.Status)
+                        switch (actor.Status)
                         {
                             case ActorStatus.Inactive:
-                            switch (actor.inactiveStatus)
-                            {
-                                case ActorInactive.LieLow:
-                                    int invis = actor.datapoint2;
-                                    //increment invisibility (not the first turn)
-                                    if (actor.isLieLowFirstturn == false)
-                                    { invis++; }
-                                    else { actor.isLieLowFirstturn = false; }
-                                    if (invis >= maxStatValue)
-                                    {
-                                        //actor has recovered from lying low, needs to be activated
-                                        actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                                switch (actor.inactiveStatus)
+                                {
+                                    case ActorInactive.LieLow:
+                                        int invis = actor.datapoint2;
+                                        //increment invisibility (not the first turn)
+                                        if (actor.isLieLowFirstturn == false)
+                                        { invis++; }
+                                        else { actor.isLieLowFirstturn = false; }
+                                        if (invis >= maxStatValue)
+                                        {
+                                            //actor has recovered from lying low, needs to be activated
+                                            actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                                            actor.Status = ActorStatus.Active;
+                                            actor.inactiveStatus = ActorInactive.None;
+                                            actor.tooltipStatus = ActorTooltip.None;
+                                            if (isPlayer == true)
+                                            {
+                                                //message -> status change
+                                                string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
+                                                GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
+                                            }
+                                            Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has finished LYING LOW{3}", actor.actorName,
+                                                actor.arc.name, actor.actorID, "\n");
+                                            //check if actor has stressed condition
+                                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                                            { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
+                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+
+                                            /*//update contacts
+                                            GameManager.instance.contactScript.UpdateNodeContacts();*/
+                                        }
+                                        else
+                                        { actor.datapoint2 = invis; }
+                                        break;
+                                    case ActorInactive.Breakdown:
+                                        //restore actor (one stress turn only)
                                         actor.Status = ActorStatus.Active;
                                         actor.inactiveStatus = ActorInactive.None;
                                         actor.tooltipStatus = ActorTooltip.None;
                                         if (isPlayer == true)
                                         {
-                                            //message -> status change
-                                            string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
-                                            GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
+                                            string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                            GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalResistance);
                                         }
-                                        Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has finished LYING LOW{3}", actor.actorName, 
+                                        Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
                                             actor.arc.name, actor.actorID, "\n");
-                                        //check if actor has stressed condition
-                                        if (actor.CheckConditionPresent(conditionStressed) == true)
-                                        { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
                                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-
-                                        /*//update contacts
-                                        GameManager.instance.contactScript.UpdateNodeContacts();*/
-                                    }
-                                    else
-                                    { actor.datapoint2 = invis; }
-                                    break;
-                                case ActorInactive.Breakdown:
-                                    //restore actor (one stress turn only)
-                                    actor.Status = ActorStatus.Active;
-                                    actor.inactiveStatus = ActorInactive.None;
-                                    actor.tooltipStatus = ActorTooltip.None;
-                                    if (isPlayer == true)
-                                    {
-                                        string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalResistance);
-                                    }
-                                    Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
-                                        actor.arc.name, actor.actorID, "\n");
-                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
-                                    break;
-                            }
+                                        break;
+                                }
                                 break;
                             case ActorStatus.Captured:
                                 actor.captureTimer--;
@@ -5037,7 +5039,10 @@ public class ActorManager : MonoBehaviour
                             if (conditionUpsetOver != null)
                             {
                                 if (String.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
-                                { msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag); }
+                                {
+                                    msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag);
+                                    Debug.LogFormat("[Ply] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
+                                }
                                 else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
                             }
                             else { Debug.LogWarning("Invalid conditionUpsetOver (Null)"); }

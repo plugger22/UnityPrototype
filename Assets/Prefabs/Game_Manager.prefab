@@ -1577,7 +1577,7 @@ MonoBehaviour:
   actorCaptured: 1
   actorReleased: 1
   releaseInvisibility: 3
-  captureTimerValue: 2
+  captureTimerValue: 3
 --- !u!114 &114558055555623972
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2044,7 +2044,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seed: 0
+  seed: 5476
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0

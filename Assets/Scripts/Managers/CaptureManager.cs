@@ -21,11 +21,11 @@ public class CaptureManager : MonoBehaviour
 
     [Header("Invisibility")]
     [Tooltip("The value of the Actor's invisibility upon Release")]
-    [Range(0, 3)] public int releaseInvisibility = 2;
+    [Range(0, 3)] public int releaseInvisibility = 3;
 
     [Header("Detention Period")]
     [Tooltip("How many turns will the player/actor be held for when Captured")]
-    [Range(1, 10)] public int captureTimerValue = 2;
+    [Range(1, 10)] public int captureTimerValue = 3;
 
     //fast access
     private int teamErasureID;
@@ -133,9 +133,6 @@ public class CaptureManager : MonoBehaviour
             string textAutoRun = string.Format("{0} {1}Captured{2}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourBad, colourEnd);
             GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
         }
-
-        /*Debug.LogFormat("[Ply] CaptureManager.cs -> CapturePlayer: {0}{1}", text, "\n");*/
-
         //detention period
         GameManager.instance.actorScript.captureTimer = captureTimerValue;
         //effects builder
@@ -168,6 +165,7 @@ public class CaptureManager : MonoBehaviour
             //Human resistance player
             GameManager.instance.playerScript.status = ActorStatus.Captured;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
+            GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
             //AI side tab
             GameManager.instance.aiScript.UpdateSideTabData();
             //add renown to authority actor who owns the team (only if they are still OnMap
@@ -260,8 +258,10 @@ public class CaptureManager : MonoBehaviour
         //admin
         GameManager.instance.actorScript.numOfActiveActors--;
         details.actor.Status = ActorStatus.Captured;
+        details.actor.inactiveStatus = ActorInactive.None;
         details.actor.tooltipStatus = ActorTooltip.Captured;
         details.actor.nodeCaptured = details.node.nodeID;
+        details.actor.numOfTimesCaptured++;
         if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
         {
             //effects builder
@@ -302,6 +302,7 @@ public class CaptureManager : MonoBehaviour
         {
             text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
             GameManager.instance.messageScript.AIRelease(text, node, GameManager.instance.playerScript.actorID);
+            Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
             GameManager.instance.nodeScript.nodePlayer = nodeID;
             GameManager.instance.nodeScript.nodeCaptured = -1;
             //actor gains condition questionable
@@ -369,7 +370,7 @@ public class CaptureManager : MonoBehaviour
                 StringBuilder builder = new StringBuilder();
                 //node (needed only for record keeping / messaging purposes NOTE: needs to be done here as it's reset to -1 thereafter
                 Node node = GameManager.instance.dataScript.GetNode(actor.nodeCaptured);
-                if (node == null)
+                if (node != null)
                 {
                     actor.nodeCaptured = -1;
                     //reset actor state
@@ -391,9 +392,19 @@ public class CaptureManager : MonoBehaviour
                     GameManager.instance.contactScript.UpdateNodeContacts();
                     //admin
                     GameManager.instance.actorScript.numOfActiveActors++;
+                    //traitor
+                    int rndNum = Random.Range(0, 100);
+                    int chance = actor.numOfTimesCaptured * GameManager.instance.actorScript.actorTraitorChance;
+                    if (rndNum < chance)
+                    {
+                        actor.isTraitor = true;
+                        Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, becomes a TRAITOR (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n");
+                    }
+                    else { Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, does NOT become a Traitor (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n"); }
                     //message
                     text = string.Format("{0} released from captivity", actor.actorName);
                     GameManager.instance.messageScript.AIRelease(text, node, actor.actorID);
+                    Debug.LogFormat("[Ply] CaptureManager.cs -> ReleaseActor: {0}{1}", text, "\n");
                     //autorun
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
                     {
@@ -468,7 +479,7 @@ public class CaptureManager : MonoBehaviour
                                 {
                                     //Player Captured
                                     details = new CaptureDetails { node = node, team = team, actor = null };
-                                    Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: Resistance Player is captured by an Erasure team at {0}, {1}, id {2}{3}", 
+                                    Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: Resistance Player is captured by an Erasure team at {0}, {1}, id {2}{3}",
                                         node.nodeName, node.Arc.name, node.nodeID, "\n");
                                 }
                                 else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
@@ -481,6 +492,8 @@ public class CaptureManager : MonoBehaviour
                                 {
                                     //Player Captured
                                     details = new CaptureDetails { node = node, team = team, actor = null };
+                                    Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: Resistance Player is captured by an Erasure team at {0}, {1}, id {2}{3}",
+                                        node.nodeName, node.Arc.name, node.nodeID, "\n");
                                 }
                             }
                         }
@@ -496,25 +509,29 @@ public class CaptureManager : MonoBehaviour
                         //Erasure team picks up player/actor immediately if invisibility 0
                         if (CheckCaptureVisibility(actor.datapoint2) == true)
                         {
-                                int teamID = node.CheckTeamPresent(teamErasureID);
-                                if (teamID > -1)
+                            int teamID = node.CheckTeamPresent(teamErasureID);
+                            if (teamID > -1)
+                            {
+                                team = GameManager.instance.dataScript.GetTeam(teamID);
+                                if (team != null)
                                 {
-                                    team = GameManager.instance.dataScript.GetTeam(teamID);
-                                    if (team != null)
-                                    {
-                                        //Actor Captured
-                                        details = new CaptureDetails { node = node, team = team, actor = actor };
-                                    }
-                                    else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                                    //Actor Captured
+                                    details = new CaptureDetails { node = node, team = team, actor = actor };
+                                    Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: {0}, {1},  is captured by an Erasure team at {2}, {3}, id {4}{5}", actor.actorName, actor.arc.name,
+                                        node.nodeName, node.Arc.name, node.nodeID, "\n");
                                 }
+                                else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
+                            }
                             //Security Alert -> Check if an Erasure team is in a neighbouring node
                             if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SecurityAlert)
                             {
                                 team = CheckCaptureAlert(node);
                                 if (team != null)
                                 {
-                                    //Player Captured
+                                    //Actor Captured
                                     details = new CaptureDetails { node = node, team = team, actor = actor };
+                                    Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: {0}, {1},  is captured by an Erasure team at {2}, {3}, id {4}{5}", actor.actorName, actor.arc.name,
+                                        node.nodeName, node.Arc.name, node.nodeID, "\n");
                                 }
                             }
                         }

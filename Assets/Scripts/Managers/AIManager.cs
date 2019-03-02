@@ -5077,8 +5077,7 @@ public class AIManager : MonoBehaviour
         float typeShare = 0f;
         StringBuilder builder = new StringBuilder();
         Dictionary<AITaskType, float> dictTemp = new Dictionary<AITaskType, float>();
-        builder.AppendFormat(" - AITaskTypes Analysis{0}{1}", "\n", "\n");
-        builder.AppendFormat(" - Authority{0}", "\n");
+
         //get a total of all tasks
         for (int i = 0; i < arrayOfAITaskTypes.Length; i++)
         { total += arrayOfAITaskTypes[i]; }
@@ -5092,6 +5091,8 @@ public class AIManager : MonoBehaviour
                 dictTemp.Add((AITaskType)i, typeShare);
             }
         }
+        builder.AppendFormat(" AITaskTypes Analysis{0}{1}", "\n", "\n");
+        builder.AppendFormat(" Authority ({0} tasks){1}", total, "\n");
         //sort dict descending order
         var result = from pair in dictTemp
                      orderby pair.Value descending

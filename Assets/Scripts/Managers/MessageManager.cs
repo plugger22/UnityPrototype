@@ -1627,18 +1627,24 @@ public class MessageManager : MonoBehaviour
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-            { data.itemText = "AI knows Resistance leader's CURRENT LOCATION"; }
-            else { data.itemText = "AI knows your CURRENT LOCATION"; }
+
             data.topText = "Location Known";
             if (actorID == 999)
-            { data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, GameManager.instance.playerScript.PlayerName, "Player"); }
+            {
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                { data.itemText = "AI knows Resistance leader's CURRENT LOCATION"; }
+                else { data.itemText = "AI knows of your  CURRENT LOCATION"; }
+                data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, GameManager.instance.playerScript.PlayerName, "Player");
+            }
             else
             {
                 //actor
                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                 if (actor != null)
-                {  data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, actor.actorName, actor.arc.name); }
+                {
+                    data.itemText = string.Format("AI knows of {0}, {1}'s, CURRENT LOCATION", actor.actorName, actor.arc.name);
+                    data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, actor.actorName, actor.arc.name);
+                }
                 else
                 {
                     Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID);
