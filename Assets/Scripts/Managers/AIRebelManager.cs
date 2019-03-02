@@ -172,6 +172,7 @@ public class AIRebelManager : MonoBehaviour
     private List<SightingData> listOfNemesisSightData = new List<SightingData>();
     private List<SightingData> listOfErasureSightData = new List<SightingData>();
     private List<int> listOfBadNodes = new List<int>();                             //list of nodes to avoid for this turn, eg. nemesis or erasure team present (based on known info)
+    private List<int> listOfSpiderNodes = new List<int>();                          //list of all nodes where spiders are known to be (node.isSpiderKnown true)
 
     //Node and other Action data gathering
     private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
@@ -338,6 +339,7 @@ public class AIRebelManager : MonoBehaviour
             ProcessTargetData();
             ProcessPeopleData();
             ProcessActorArcData();
+            ProcessSpiderData();
             //restore back to original state after any changes & prior to any moves, tasks, etc. Calcs will still use updated sighting data dijkstra (weighted)
             if (isConnectionsChanged == true)
             { RestoreConnections(); }
@@ -412,6 +414,7 @@ public class AIRebelManager : MonoBehaviour
         listOfNemesisSightData.Clear();
         listOfErasureSightData.Clear();
         listOfBadNodes.Clear();
+        listOfSpiderNodes.Clear();
         listOfArcs.Clear();
         //
         // - - - Sighting Reports
@@ -631,6 +634,24 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// sets up listOfSpiderNodes which includes all nodes where spiders are known to be (have to be known to Resistance)
+    /// </summary>
+    private void ProcessSpiderData()
+    {
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
+        {
+            //loop nodes looking for ones where the Spider is known to be
+            for (int i = 0; i < listOfNodes.Count; i++)
+            {
+                if (listOfNodes[i].isSpiderKnown == true)
+                { listOfSpiderNodes.Add(listOfNodes[i].nodeID); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+    }
+
+    /// <summary>
     /// Take all sighting reports and convert to sorted, prioritised, Sighting Data ready for analysis. Update connections
     /// </summary>
     private void ProcessSightingData()
@@ -788,12 +809,29 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns true if nodeID is on listOfBadNodes, false if not
+    /// returns true if nodeID is on listOfBadNodes, false if not. If isMoveOnly true (default false) considers listOfBadNodes only. If true checks also listOfSpiderNodes (considered bad nodes if doing an action)
     /// </summary>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    private bool CheckForBadNode(int nodeID)
-    { return listOfBadNodes.Exists(x => nodeID == x); }
+    private bool CheckForBadNode(int nodeID, bool isMoveOnly = false)
+    {
+        bool isBad = false;
+        //Move only, ignore spider nodes
+        if (isMoveOnly == true)
+        { isBad = listOfBadNodes.Exists(x => nodeID == x); }
+        else
+        {
+            //Action (doing something that involves a potential loss of invisibility) -> take into account spider and bad nodes
+            isBad = listOfBadNodes.Exists(x => nodeID == x);
+            //only bother to check further if drew a blank with bad nodes
+            if (isBad == false)
+            {
+                if (listOfSpiderNodes.Exists(x => nodeID == x) == true)
+                { isBad = true; }
+            }
+        }
+        return isBad;
+    }
 
     /// <summary>
     /// updates all of a node's connections to the specified security level (if lower, ignore otherwise)
@@ -1129,7 +1167,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Nemesis or Erasure team in current node (sighting report)
         //
-        if (CheckForBadNode(playerNodeID) == true)
+        if (CheckForBadNode(playerNodeID, true) == true)
         {
             //first response -> Move away
             Node nodePlayer = GameManager.instance.dataScript.GetNode(playerNodeID);
@@ -1372,7 +1410,7 @@ public class AIRebelManager : MonoBehaviour
             if (nodeMoveTo != null)
             {
                 //check if moveTo node on listOfBadNodes
-                if (CheckForBadNode(nodeMoveTo.nodeID) == true)
+                if (CheckForBadNode(nodeMoveTo.nodeID, true) == true)
                 {
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: Selected node id {0} is on listOfBadNodes{1}", nodeMoveTo.nodeID, "\n");
                     //get a random neighbouring node which is good
@@ -2016,7 +2054,7 @@ public class AIRebelManager : MonoBehaviour
                         Node tempNode = listOfNeighbours[i];
                         if (tempNode != null)
                         {
-                            if (CheckForBadNode(tempNode.nodeID) == true)
+                            if (CheckForBadNode(tempNode.nodeID, true) == true)
                             {
                                 //remove bad node
                                 listOfNeighbours.RemoveAt(i);

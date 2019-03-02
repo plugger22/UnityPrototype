@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actorCaptured: 1
   actorReleased: 1
-  releaseInvisibility: 2
+  releaseInvisibility: 3
   captureTimerValue: 2
 --- !u!114 &114558055555623972
 MonoBehaviour:
