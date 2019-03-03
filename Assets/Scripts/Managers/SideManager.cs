@@ -456,4 +456,5 @@ public class SideManager : MonoBehaviour
         }
     }
 
+    //add new methods above here
 }

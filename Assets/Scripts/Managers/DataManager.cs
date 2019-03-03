@@ -314,7 +314,8 @@ public class DataManager : MonoBehaviour
             //add to current info data
             currentInfoData.arrayOfItemData[outer].AddRange(tempList);
             //check list length -> need to know if too long so I can adjust to accommodate max. possible
-            Debug.Assert(tempList.Count <= 20, string.Format("tempList has {0} records for tab {1}", tempList.Count, outer));
+            if (tempList.Count > 20)
+            { Debug.LogWarningFormat("tempList has {0} records for tab {1}", tempList.Count, outer); }
             //empty out temp list ready for next tab data set
             tempList.Clear();
         }
@@ -811,6 +812,27 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Overloaded. Based on side. Returns null if not either Authority or Resistance
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Dictionary<int, List<int>> GetDictOfNodeContacts(GlobalSide side)
+    {
+        switch (side.level)
+        {
+            case 1:
+                //Authority
+                return dictOfNodeContactsAuthority;
+            case 2:
+                //Resistance
+                return dictOfNodeContactsResistance;
+            default:
+                Debug.LogWarningFormat("Invalid side.level {0}", side.level);
+                return null;
+        }
+    }
+
 
 
     /// <summary>
@@ -990,26 +1012,7 @@ public class DataManager : MonoBehaviour
         return isPresent;
     }
 
-    /// <summary>
-    /// Overloaded. Based on side. Returns null if not either Authority or Resistance
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public Dictionary<int, List<int>> GetDictOfNodeContacts(GlobalSide side)
-    {
-        switch (side.level)
-        {
-            case 1:
-                //Authority
-                return dictOfNodeContactsAuthority;
-            case 2:
-                //Resistance
-                return dictOfNodeContactsResistance;
-            default:
-                Debug.LogWarningFormat("Invalid side.level {0}", side.level);
-                return null;
-        }
-    }
+
 
     public Dictionary<int, List<int>> GetDictOfActorContacts()
     { return dictOfActorContacts; }
@@ -1131,10 +1134,10 @@ public class DataManager : MonoBehaviour
             List<int> listOfNodes = new List<int>(dictOfActorContacts[actorID]);
             int numOfNodes = listOfNodes.Count;
             int nodeID;
-            Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts();
             Actor actor = GetActor(actorID);
             if (actor != null)
             {
+                Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts(actor.side);
                 if (numOfNodes > 0)
                 {
                     //loop nodes and remove actorID from each node contact list

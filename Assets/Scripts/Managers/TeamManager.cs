@@ -538,7 +538,7 @@ public class TeamManager : MonoBehaviour
                         //update team status
                         team.ResetTeamData(TeamPool.Reserve);
                         //confirmation
-                        Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}{4}", team.arc.name, team.teamName, team.teamID, destinationPool, "\n"));
+                        Debug.Log(string.Format("[Tea] TeamManager.cs -> MoveTeam: {0} {1}, ID {2}, moved to {3}{4}", team.arc.name, team.teamName, team.teamID, destinationPool, "\n"));
                     }
                     else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
                     break;
@@ -578,7 +578,7 @@ public class TeamManager : MonoBehaviour
                                                     //confirmation
                                                     string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.arc.name, team.teamName, team.teamID,
                                                         destinationPool, node.nodeID);
-                                                    Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
+                                                    Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0}{1}", text, "\n");
                                                     //message
                                                     GameManager.instance.messageScript.TeamDeploy(text, node, team, actor);
                                                 }
@@ -654,8 +654,8 @@ public class TeamManager : MonoBehaviour
                                         //remove team from actor list
                                         actor.RemoveTeam(team.teamID);
                                         //confirmation
-                                        Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
-                                        destinationPool, node.nodeID, "\n"));
+                                        Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
+                                        destinationPool, node.nodeID, "\n");
                                     }
                                     else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
 
@@ -734,7 +734,7 @@ public class TeamManager : MonoBehaviour
                         //update team status
                         team.ResetTeamData(TeamPool.Reserve);
                         //confirmation
-                        Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}{4}", team.arc.name, team.teamName, team.teamID, destinationPool, "\n"));
+                        Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeamAI: {0} {1}, ID {2}, moved to {3}{4}", team.arc.name, team.teamName, team.teamID, destinationPool, "\n");
                     }
                     else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
                     break;
@@ -795,8 +795,8 @@ public class TeamManager : MonoBehaviour
                             //update team status
                             team.ResetTeamData(TeamPool.InTransit);
                             //confirmation
-                            Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
-                            destinationPool, node.nodeID, "\n"));
+                            Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeamAI: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
+                            destinationPool, node.nodeID, "\n");
                         }
                         else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
 
@@ -1146,11 +1146,11 @@ public class TeamManager : MonoBehaviour
                         if (MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node) == true)
                         {
                             //message
-                            string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, 
+                            string text = string.Format("{0} {1}, ID {2}, RECALLED from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, 
                                 node.nodeName, node.nodeID);
                             string reason = string.Format("{0} has done so on your orders", actor.actorName);
                             GameManager.instance.messageScript.TeamWithdraw(text, reason, node, team, actor);
-                            Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
+                            Debug.LogFormat("[Tea] TeamManager.cs -> ProcessRecallTeam: {0}{1}", text, "\n");
                         }
                         else
                         {
@@ -1216,10 +1216,10 @@ public class TeamManager : MonoBehaviour
                             if (proceedFlag == true)
                             {
                                 //message (notification to Authority Side)
-                                string text = string.Format("{0} {1}, ID {2}, neutralised at {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
+                                string text = string.Format("{0} {1}, ID {2}, NEUTRALISED at {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                     node.nodeName, node.nodeID);
                                 GameManager.instance.messageScript.TeamNeutralise(text, node, team, actor);
-                                Debug.Log(string.Format("TeamManager: {0}{1}", text, "\n"));
+                                Debug.LogFormat("[Tea] TeamManager.cs -> ProcessNeutraliseTeam: {0}{1}", text, "\n");
                                 //team successfully removed
                                 builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} team removed{4}", colourTeam, team.arc.name, colourEnd, 
@@ -1488,7 +1488,7 @@ public class TeamManager : MonoBehaviour
                             //update team status
                             team.ResetTeamData(TeamPool.Reserve);
                             //confirmation
-                            Debug.Log(string.Format("TeamManager: {0} {1}, ID {2}, auto Moved to {3} as Actor has left{4}", team.arc.name, team.teamName, team.teamID, team.pool, "\n"));
+                            Debug.LogFormat("[Tea] TeamManager.cs -> ProcessNeutraliseTeam: {0} {1}, ID {2}, AUTO MOVED to {3} (Actor has left){4}", team.arc.name, team.teamName, team.teamID, team.pool, "\n");
                             //message
                             string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                 node.nodeName, node.nodeID);
@@ -1568,10 +1568,60 @@ public class TeamManager : MonoBehaviour
                             }
                             else
                             {
-                                //out of actors, assign to a random actor slot (0 to 3)
-                                rndNum = Random.Range(0, 3);
-                                team.actorSlotID = rndNum;
-                                Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", rndNum);
+                                if (listOfActorSlots.Count > 0)
+                                {
+                                    //out of actors, assign to a random actor slot (0 to 3)
+                                    rndNum = Random.Range(0, 3);
+                                    team.actorSlotID = rndNum;
+                                    Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", rndNum);
+                                }
+                                else
+                                {
+                                    //no more actors present. Team auto sent to Reserves (avoid using MoveTeamAI as this bypasses the normal sequence of OnMap -> Transit -> Reserve)
+                                    switch(team.pool)
+                                    {
+                                        case TeamPool.InTransit:
+                                            if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
+                                            {
+                                                GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                                                //adjust tallies
+                                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
+                                                //update team status
+                                                team.ResetTeamData(TeamPool.Reserve);
+                                                Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActor: {0}, {1}, ID {2}, moved to Reserve (NO ACTOR available){3}",
+                                                    team.arc.name, team.teamName, team.teamID, "\n");
+                                            }
+                                            else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
+                                            break;
+                                        case TeamPool.OnMap:
+                                            Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                                            if (node != null)
+                                            {
+                                                if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
+                                                {
+
+                                                    //adjust tallies
+                                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
+                                                    GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                                                    //remove from node list
+                                                    node.RemoveTeam(team.teamID);
+                                                    //update team status
+                                                    team.ResetTeamData(TeamPool.Reserve);
+                                                    //confirmation
+                                                    Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActor: {0} {1}, ID {2}, moved to Reserve, from nodeID {3} (NO ACTOR available){4}", 
+                                                        team.arc.name, team.teamName, team.teamID, node.nodeID, "\n");
+                                                }
+                                                else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
+                                            }
+                                            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} (Team not moved to reserves)", team.nodeID); }
+                                            break;
+                                        default:
+                                            Debug.LogErrorFormat("Unrecognised team.pool \"[0}\"", team.pool);
+                                            break;
+                                    }
+                                }
                             }
                             numUpdated++;
                         }

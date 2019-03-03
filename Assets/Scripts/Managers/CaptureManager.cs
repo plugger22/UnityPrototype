@@ -239,7 +239,7 @@ public class CaptureManager : MonoBehaviour
         //AutoRun (both sides)
         if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
         {
-            string textAutoRun = string.Format("{0}, {1}{2}{3}, {4}Captured{5}", details.actor.actorName, colourAlert, details.actor.arc.name, colourEnd, colourBad, colourEnd);
+            string textAutoRun = string.Format("{0}{1}{2}, {3}Captured{4}", colourAlert, details.actor.arc.name, colourEnd, colourBad, colourEnd);
             GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
         }
         //detention period
@@ -408,7 +408,7 @@ public class CaptureManager : MonoBehaviour
                     //autorun
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
                     {
-                        text = string.Format("{0}, {1}{2}{3}, {4}Released{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, colourGood, colourEnd);
+                        text = string.Format("{0}{1}{2}, {3}Released{4}", colourAlert, actor.arc.name, colourEnd, colourGood, colourEnd);
                         GameManager.instance.dataScript.AddHistoryAutoRun(text);
                     }
                     //Human resistance player

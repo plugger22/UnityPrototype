@@ -477,7 +477,7 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// use this to adjust faction approval level (auto checks for various faction mechanics & generates a message) 'Reason' is self contained
+    /// use this to adjust faction approval level (auto checks for various faction mechanics & generates a message) 'Reason' is self contained. Amount to change should be negative to lower Approval
     /// </summary>
     /// <param name="amount"></param>
     public void ChangeFactionApproval(int amountToChange, GlobalSide side, string reason)

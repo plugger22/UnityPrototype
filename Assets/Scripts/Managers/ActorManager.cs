@@ -69,14 +69,14 @@ public class ActorManager : MonoBehaviour
     [Header("Condition Related")]
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
     [Range(1, 99)] public int breakdownChance = 5;
-    [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
-    [Range(0, 10)] public int playerBadResignChance = 5;
     [Tooltip("Chance per turn of the player, with the IMAGED condition, being picked up by a facial recognition scan and losing a level of invisibility")]
     [Range(0, 50)] public int playerRecognisedChance = 20;
     [Tooltip("Chance per turn of the player, with the QUESTIONABLE condition, losing one notch of Rebel HQ approval")]
     [Range(0, 100)] public int playerQuestionableChance = 30;
     [Tooltip("Chance of an actor, who has been captured, becoming a traitor (secretly) on release. Chance is multiplied by the # of times they have been captured.")]
     [Range(0, 100)] public int actorTraitorChance = 25;
+    [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
+    [Range(0, 10)] public int actorResignChance = 5;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
     [Range(1, 10)] public int playerDoomTimerValue = 5;
 
@@ -764,228 +764,232 @@ public class ActorManager : MonoBehaviour
                 //
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-                foreach (Actor actor in arrayOfActors)
+                if (arrayOfActors.Length > 0)
                 {
-                    //if invalid actor or vacant position then ignore
-                    if (actor != null)
+                    foreach (Actor actor in arrayOfActors)
                     {
-                        details = null;
-                        //correct side?
-                        if (actor.side.level == playerSide.level)
+                        //if invalid actor or vacant position then ignore
+                        if (actor != null)
                         {
-                            //actor active?
-                            if (actor.Status == ActorStatus.Active)
+                            details = null;
+                            //correct side?
+                            if (actor.side.level == playerSide.level)
                             {
-                                proceedFlag = true;
-                                //active node for actor or player at node
-                                if (nodeID != playerID)
-                                { 
-                                    //check for actor connections at node
-                                    /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)*/
-                                    if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
+                                //actor active?
+                                if (actor.Status == ActorStatus.Active)
+                                {
+                                    proceedFlag = true;
+                                    //active node for actor or player at node
+                                    if (nodeID != playerID)
                                     {
-                                        //Not if actor has Spooked trait and Security Measures in place
-                                        if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures ) == true && securityState != AuthoritySecurityState.Normal)
+                                        //check for actor connections at node
+                                        /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)*/
+                                        if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
                                         {
-                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actor.arc.name, colourNeutral, colourEnd);
-                                            TraitLogMessage(actor, "for a district action", "to CANCEL action due to Security Measures");
-                                            proceedFlag = false;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //actor has no connections at node
-                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                        infoBuilder.AppendFormat("{0} has no connections", actor.arc.name);
-                                        proceedFlag = false;
-                                    }
-                                }
-                                if (proceedFlag == true)
-                                    { 
-                                    //get node action
-                                    tempAction = actor.arc.nodeAction;
-                                    if (tempAction != null)
-                                    {
-                                        //effects
-                                        StringBuilder builder = new StringBuilder();
-                                        listOfEffects = tempAction.listOfEffects;
-                                        if (listOfEffects.Count > 0)
-                                        {
-                                            string colourEffect = colourDefault;
-                                            for (int i = 0; i < listOfEffects.Count; i++)
+                                            //Not if actor has Spooked trait and Security Measures in place
+                                            if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
                                             {
-                                                Effect effect = listOfEffects[i];
-                                                //colour code effects according to type
-                                                if (effect.typeOfEffect != null)
-                                                {
-                                                    switch (effect.typeOfEffect.name)
-                                                    {
-                                                        case "Good":
-                                                            colourEffect = colourGood;
-                                                            break;
-                                                        case "Neutral":
-                                                            colourEffect = colourNeutral;
-                                                            break;
-                                                        case "Bad":
-                                                            colourEffect = colourBad;
-                                                            break;
-                                                    }
-                                                }
-                                                //check effect criteria is valid
-                                                CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                                                {
-                                                    nodeID = nodeID,
-                                                    listOfCriteria = effect.listOfCriteria
-                                                };
-                                                effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                                                if (effectCriteria == null)
-                                                {
-                                                    //Effect criteria O.K -> tool tip text
-                                                    if (builder.Length > 0) { builder.AppendLine(); }
-                                                    if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
-                                                    { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
-                                                    else
-                                                    {
-                                                        //handle renown & invisibility situations - players or actors?
-                                                        if (nodeID == playerID)
-                                                        {
-                                                            //player affected (good for renown, bad for invisibility)
-                                                            if (effect.outcome.name.Equals("Renown"))
-                                                            { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.description, colourEnd); }
-                                                            else
-                                                            {
-                                                                builder.AppendFormat("{0}Player {1}{2}", colourBad, effect.description, colourEnd);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            //actor affected
-                                                            builder.AppendFormat("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    //invalid effect criteria -> Action cancelled
-                                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                    infoBuilder.AppendFormat("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                        colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                        colourAuthority, effectCriteria, colourEnd);
-                                                    proceedFlag = false;
-                                                }
+                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                infoBuilder.AppendFormat("{0} is {1}Spooked{2} (Trait) due to Security Measures", actor.arc.name, colourNeutral, colourEnd);
+                                                TraitLogMessage(actor, "for a district action", "to CANCEL action due to Security Measures");
+                                                proceedFlag = false;
                                             }
                                         }
                                         else
-                                        { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
-                                        if (proceedFlag == true)
                                         {
-                                            //Details to pass on for processing via button click
-                                            ModalActionDetails actionDetails = new ModalActionDetails() { };
-
-                                            actionDetails.side = globalResistance;
-                                            actionDetails.nodeID = nodeID;
-                                            actionDetails.actorDataID = actor.actorSlotID;
-                                            //pass all relevant details to ModalActionMenu via Node.OnClick()
-                                            if (actor.arc.nodeAction.special == null)
+                                            //actor has no connections at node
+                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                            infoBuilder.AppendFormat("{0} has no connections", actor.arc.name);
+                                            proceedFlag = false;
+                                        }
+                                    }
+                                    if (proceedFlag == true)
+                                    {
+                                        //get node action
+                                        tempAction = actor.arc.nodeAction;
+                                        if (tempAction != null)
+                                        {
+                                            //effects
+                                            StringBuilder builder = new StringBuilder();
+                                            listOfEffects = tempAction.listOfEffects;
+                                            if (listOfEffects.Count > 0)
                                             {
-                                                details = new EventButtonDetails()
+                                                string colourEffect = colourDefault;
+                                                for (int i = 0; i < listOfEffects.Count; i++)
                                                 {
-                                                    buttonTitle = tempAction.name,
-                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                    buttonTooltipMain = tempAction.tooltipText,
-                                                    buttonTooltipDetail = builder.ToString(),
-                                                    //use a Lambda to pass arguments to the action
-                                                    action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                };
+                                                    Effect effect = listOfEffects[i];
+                                                    //colour code effects according to type
+                                                    if (effect.typeOfEffect != null)
+                                                    {
+                                                        switch (effect.typeOfEffect.name)
+                                                        {
+                                                            case "Good":
+                                                                colourEffect = colourGood;
+                                                                break;
+                                                            case "Neutral":
+                                                                colourEffect = colourNeutral;
+                                                                break;
+                                                            case "Bad":
+                                                                colourEffect = colourBad;
+                                                                break;
+                                                        }
+                                                    }
+                                                    //check effect criteria is valid
+                                                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                                    {
+                                                        nodeID = nodeID,
+                                                        listOfCriteria = effect.listOfCriteria
+                                                    };
+                                                    effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                                                    if (effectCriteria == null)
+                                                    {
+                                                        //Effect criteria O.K -> tool tip text
+                                                        if (builder.Length > 0) { builder.AppendLine(); }
+                                                        if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                        { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
+                                                        else
+                                                        {
+                                                            //handle renown & invisibility situations - players or actors?
+                                                            if (nodeID == playerID)
+                                                            {
+                                                                //player affected (good for renown, bad for invisibility)
+                                                                if (effect.outcome.name.Equals("Renown"))
+                                                                { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.description, colourEnd); }
+                                                                else
+                                                                {
+                                                                    builder.AppendFormat("{0}Player {1}{2}", colourBad, effect.description, colourEnd);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                //actor affected
+                                                                builder.AppendFormat("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        //invalid effect criteria -> Action cancelled
+                                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                        infoBuilder.AppendFormat("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                            colourInvalid, actor.arc.name, "\n", colourEnd,
+                                                            colourAuthority, effectCriteria, colourEnd);
+                                                        proceedFlag = false;
+                                                    }
+                                                }
                                             }
-                                            //special case, Resistance node actions only
                                             else
+                                            { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
+                                            if (proceedFlag == true)
                                             {
-                                                switch (actor.arc.nodeAction.special.name)
+                                                //Details to pass on for processing via button click
+                                                ModalActionDetails actionDetails = new ModalActionDetails() { };
+
+                                                actionDetails.side = globalResistance;
+                                                actionDetails.nodeID = nodeID;
+                                                actionDetails.actorDataID = actor.actorSlotID;
+                                                //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                                if (actor.arc.nodeAction.special == null)
                                                 {
-                                                    case "NeutraliseTeam":
-                                                        details = new EventButtonDetails()
-                                                        {
-                                                            buttonTitle = tempAction.name,
-                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                            buttonTooltipMain = tempAction.tooltipText,
-                                                            buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                        };
-                                                        break;
-                                                    case "GetGear":
-                                                        details = new EventButtonDetails()
-                                                        {
-                                                            buttonTitle = tempAction.name,
-                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                            buttonTooltipMain = tempAction.tooltipText,
-                                                            buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                        };
-                                                        break;
-                                                    case "GetRecruit":
-                                                        details = new EventButtonDetails()
-                                                        {
-                                                            buttonTitle = tempAction.name,
-                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                            buttonTooltipMain = tempAction.tooltipText,
-                                                            buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                        };
-                                                        break;
-                                                    case "TargetInfo":
-                                                        details = new EventButtonDetails()
-                                                        {
-                                                            buttonTitle = tempAction.name,
-                                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                            buttonTooltipMain = tempAction.tooltipText,
-                                                            buttonTooltipDetail = builder.ToString(),
-                                                            action = () => { EventManager.instance.PostNotification(EventType.TargetInfoAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                        };
-                                                        break;
-                                                    default:
-                                                        Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.special \"{0}\"", actor.arc.nodeAction.special.name));
-                                                        break;
+                                                    details = new EventButtonDetails()
+                                                    {
+                                                        buttonTitle = tempAction.name,
+                                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                        buttonTooltipMain = tempAction.tooltipText,
+                                                        buttonTooltipDetail = builder.ToString(),
+                                                        //use a Lambda to pass arguments to the action
+                                                        action = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                    };
+                                                }
+                                                //special case, Resistance node actions only
+                                                else
+                                                {
+                                                    switch (actor.arc.nodeAction.special.name)
+                                                    {
+                                                        case "NeutraliseTeam":
+                                                            details = new EventButtonDetails()
+                                                            {
+                                                                buttonTitle = tempAction.name,
+                                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                                buttonTooltipMain = tempAction.tooltipText,
+                                                                buttonTooltipDetail = builder.ToString(),
+                                                                action = () => { EventManager.instance.PostNotification(EventType.NeutraliseTeamAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                            };
+                                                            break;
+                                                        case "GetGear":
+                                                            details = new EventButtonDetails()
+                                                            {
+                                                                buttonTitle = tempAction.name,
+                                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                                buttonTooltipMain = tempAction.tooltipText,
+                                                                buttonTooltipDetail = builder.ToString(),
+                                                                action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                            };
+                                                            break;
+                                                        case "GetRecruit":
+                                                            details = new EventButtonDetails()
+                                                            {
+                                                                buttonTitle = tempAction.name,
+                                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                                buttonTooltipMain = tempAction.tooltipText,
+                                                                buttonTooltipDetail = builder.ToString(),
+                                                                action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                            };
+                                                            break;
+                                                        case "TargetInfo":
+                                                            details = new EventButtonDetails()
+                                                            {
+                                                                buttonTitle = tempAction.name,
+                                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                                buttonTooltipMain = tempAction.tooltipText,
+                                                                buttonTooltipDetail = builder.ToString(),
+                                                                action = () => { EventManager.instance.PostNotification(EventType.TargetInfoAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                            };
+                                                            break;
+                                                        default:
+                                                            Debug.LogError(string.Format("Invalid actor.Arc.nodeAction.special \"{0}\"", actor.arc.nodeAction.special.name));
+                                                            break;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
 
-                            }
-                            else
-                            {
-                                //actor isn't Active
-                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                switch (actor.Status)
+                                }
+                                else
                                 {
-                                    case ActorStatus.Inactive:
-                                        switch (actor.inactiveStatus)
-                                        {
-                                            case ActorInactive.LieLow:
-                                                infoBuilder.AppendFormat("{0} is lying low and unavailable", actor.arc.name);
-                                                break;
-                                            case ActorInactive.Breakdown:
-                                                infoBuilder.AppendFormat("{0} is having a Stress Breakdown", actor.arc.name);
-                                                break;
-                                        }
-                                        break;
-                                    case ActorStatus.Captured:
-                                        infoBuilder.AppendFormat("{0} has been captured", actor.arc.name);
-                                        break;
-                                    default:
-                                        infoBuilder.AppendFormat("{0} is unavailable", actor.arc.name);
-                                        break;
+                                    //actor isn't Active
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    switch (actor.Status)
+                                    {
+                                        case ActorStatus.Inactive:
+                                            switch (actor.inactiveStatus)
+                                            {
+                                                case ActorInactive.LieLow:
+                                                    infoBuilder.AppendFormat("{0} is lying low and unavailable", actor.arc.name);
+                                                    break;
+                                                case ActorInactive.Breakdown:
+                                                    infoBuilder.AppendFormat("{0} is having a Stress Breakdown", actor.arc.name);
+                                                    break;
+                                            }
+                                            break;
+                                        case ActorStatus.Captured:
+                                            infoBuilder.AppendFormat("{0} has been captured", actor.arc.name);
+                                            break;
+                                        default:
+                                            infoBuilder.AppendFormat("{0} is unavailable", actor.arc.name);
+                                            break;
+                                    }
                                 }
-                            }
 
-                            //add to list
-                            if (details != null)
-                            { tempList.Add(details); }
+                                //add to list
+                                if (details != null)
+                                { tempList.Add(details); }
+                            }
                         }
                     }
                 }
+                else { infoBuilder.Append("No Subordinates present"); }
             }
             //
             // - - - Authority - - -
@@ -1033,170 +1037,174 @@ public class ActorManager : MonoBehaviour
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
                 arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
-                //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
-                foreach (Actor actor in arrayOfActors)
+                if (arrayOfActors.Length > 0)
                 {
-                    proceedFlag = true;
-                    details = null;
-                    isAnyTeam = false;
-                    //correct side?
-                    if (actor.side.level == playerSide.level)
+                    //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
+                    foreach (Actor actor in arrayOfActors)
                     {
-                        //actor active?
-                        if (actor.Status == ActorStatus.Active)
+                        proceedFlag = true;
+                        details = null;
+                        isAnyTeam = false;
+                        //correct side?
+                        if (actor.side.level == playerSide.level)
                         {
-                            //assign preferred team as default (doesn't matter if actor has ANY Team action)
-                            teamArcID = actor.arc.preferredTeam.TeamArcID;
-                            tempAction = null;
-                            //active node for actor
-                            /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.actorSlotID) == true)*/
-                            if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
+                            //actor active?
+                            if (actor.Status == ActorStatus.Active)
                             {
-                                //get ANY TEAM node action
-                                actionID = GameManager.instance.dataScript.GetActionID("Any Team");
-                                if (actionID > -1)
+                                //assign preferred team as default (doesn't matter if actor has ANY Team action)
+                                teamArcID = actor.arc.preferredTeam.TeamArcID;
+                                tempAction = null;
+                                //active node for actor
+                                /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.actorSlotID) == true)*/
+                                if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
                                 {
-                                    tempAction = GameManager.instance.dataScript.GetAction(actionID);
-                                    isAnyTeam = true;
-                                }
-                            }
-                            //actor not live at node -> Preferred team
-                            else
-                            { tempAction = actor.arc.nodeAction; }
-                            //default main tooltip text body
-                            tooltipMain = tempAction.tooltipText;
-                            //tweak if ANY TEAM
-                            if (isAnyTeam == true)
-                            { tooltipMain = string.Format("{0} as the {1} has Influence here", tooltipMain, GameManager.instance.metaScript.GetAuthorityTitle()); }
-                            //valid action?
-                            if (tempAction != null)
-                            {
-                                //effects
-                                StringBuilder builder = new StringBuilder();
-                                listOfEffects = tempAction.listOfEffects;
-                                if (listOfEffects.Count > 0)
-                                {
-                                    for (int i = 0; i < listOfEffects.Count; i++)
+                                    //get ANY TEAM node action
+                                    actionID = GameManager.instance.dataScript.GetActionID("Any Team");
+                                    if (actionID > -1)
                                     {
-                                        Effect effect = listOfEffects[i];
-                                        //check effect criteria is valid
-                                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                        tempAction = GameManager.instance.dataScript.GetAction(actionID);
+                                        isAnyTeam = true;
+                                    }
+                                }
+                                //actor not live at node -> Preferred team
+                                else
+                                { tempAction = actor.arc.nodeAction; }
+                                //default main tooltip text body
+                                tooltipMain = tempAction.tooltipText;
+                                //tweak if ANY TEAM
+                                if (isAnyTeam == true)
+                                { tooltipMain = string.Format("{0} as the {1} has Influence here", tooltipMain, GameManager.instance.metaScript.GetAuthorityTitle()); }
+                                //valid action?
+                                if (tempAction != null)
+                                {
+                                    //effects
+                                    StringBuilder builder = new StringBuilder();
+                                    listOfEffects = tempAction.listOfEffects;
+                                    if (listOfEffects.Count > 0)
+                                    {
+                                        for (int i = 0; i < listOfEffects.Count; i++)
                                         {
-                                            nodeID = nodeID,
-                                            teamArcID = teamArcID,
-                                            actorSlotID = actor.actorSlotID,
-                                            listOfCriteria = effect.listOfCriteria
-                                        };
-                                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                                        if (effectCriteria == null)
-                                        {
-                                            //Effect criteria O.K -> tool tip text
-                                            if (builder.Length > 0) { builder.AppendLine(); }
-                                            if (effect.outcome.name.Equals("Renown") == false)
+                                            Effect effect = listOfEffects[i];
+                                            //check effect criteria is valid
+                                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
                                             {
-                                                //sort out colour, remember effect.typeOfEffect is from POV of resistance so good will be bad for authority
-                                                if (effect.typeOfEffect != null)
+                                                nodeID = nodeID,
+                                                teamArcID = teamArcID,
+                                                actorSlotID = actor.actorSlotID,
+                                                listOfCriteria = effect.listOfCriteria
+                                            };
+                                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                                            if (effectCriteria == null)
+                                            {
+                                                //Effect criteria O.K -> tool tip text
+                                                if (builder.Length > 0) { builder.AppendLine(); }
+                                                if (effect.outcome.name.Equals("Renown") == false)
                                                 {
-                                                    switch (effect.typeOfEffect.name)
+                                                    //sort out colour, remember effect.typeOfEffect is from POV of resistance so good will be bad for authority
+                                                    if (effect.typeOfEffect != null)
                                                     {
-                                                        case "Good":
-                                                            builder.AppendFormat("{0}{1}{2}", colourBad, effect.description, colourEnd);
-                                                            break;
-                                                        case "Neutral":
-                                                            builder.AppendFormat("{0}{1}{2}", colourNeutral, effect.description, colourEnd);
-                                                            break;
-                                                        case "Bad":
-                                                            builder.AppendFormat("{0}{1}{2}", colourGood, effect.description, colourEnd);
-                                                            break;
-                                                        default:
-                                                            builder.AppendFormat("{0}{1}{2}", colourDefault, effect.description, colourEnd);
-                                                            Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
-                                                            break;
+                                                        switch (effect.typeOfEffect.name)
+                                                        {
+                                                            case "Good":
+                                                                builder.AppendFormat("{0}{1}{2}", colourBad, effect.description, colourEnd);
+                                                                break;
+                                                            case "Neutral":
+                                                                builder.AppendFormat("{0}{1}{2}", colourNeutral, effect.description, colourEnd);
+                                                                break;
+                                                            case "Bad":
+                                                                builder.AppendFormat("{0}{1}{2}", colourGood, effect.description, colourEnd);
+                                                                break;
+                                                            default:
+                                                                builder.AppendFormat("{0}{1}{2}", colourDefault, effect.description, colourEnd);
+                                                                Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
+                                                                break;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        builder.Append(effect.description);
+                                                        Debug.LogWarning(string.Format("Invalid effect.typeOfEffect (Null) for \"{0}\"", effect.name));
+                                                    }
+                                                    //if an ANY TEAM action then display available teams
+                                                    if (isAnyTeam == true)
+                                                    {
+                                                        foreach (string teamName in tempTeamList)
+                                                        {
+                                                            builder.AppendLine();
+                                                            builder.AppendFormat("{0}{1}{2}", colourNeutral, teamName, colourEnd);
+                                                        }
                                                     }
                                                 }
+                                                //actor automatically accumulates renown for their faction
                                                 else
-                                                {
-                                                    builder.Append(effect.description);
-                                                    Debug.LogWarning(string.Format("Invalid effect.typeOfEffect (Null) for \"{0}\"", effect.name));
-                                                }
-                                                //if an ANY TEAM action then display available teams
-                                                if (isAnyTeam == true)
-                                                {
-                                                    foreach (string teamName in tempTeamList)
-                                                    {
-                                                        builder.AppendLine();
-                                                        builder.AppendFormat("{0}{1}{2}", colourNeutral, teamName, colourEnd);
-                                                    }
-                                                }
-                                            }
-                                            //actor automatically accumulates renown for their faction
-                                            else
-                                            { builder.AppendFormat("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.description, colourEnd); }
+                                                { builder.AppendFormat("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.description, colourEnd); }
 
+                                            }
+                                            else
+                                            {
+                                                //invalid effect criteria -> Action cancelled
+                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                infoBuilder.AppendFormat("{0}{1} action invalid{2}{3}{4}({5}){6}",
+                                                    colourInvalid, actor.arc.name, "\n", colourEnd,
+                                                    colourAuthority, effectCriteria, colourEnd);
+                                                proceedFlag = false;
+                                            }
                                         }
+                                    }
+                                    else
+                                    { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
+                                    if (proceedFlag == true)
+                                    {
+                                        //Details to pass on for processing via button click
+                                        ModalActionDetails actionDetails = new ModalActionDetails() { };
+                                        actionDetails.side = globalAuthority;
+                                        actionDetails.nodeID = nodeID;
+                                        actionDetails.actorDataID = actor.actorSlotID;
+                                        //Node action is standard but other actions are possible
+                                        UnityAction clickAction = null;
+                                        //Team action
+                                        if (isAnyTeam)
+                                        { clickAction = () => { EventManager.instance.PostNotification(EventType.InsertTeamAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }; }
+                                        //Node action
                                         else
+                                        { clickAction = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }; }
+                                        //pass all relevant details to ModalActionMenu via Node.OnClick()
+                                        details = new EventButtonDetails()
                                         {
-                                            //invalid effect criteria -> Action cancelled
-                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.AppendFormat("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                colourInvalid, actor.arc.name, "\n", colourEnd,
-                                                colourAuthority, effectCriteria, colourEnd);
-                                            proceedFlag = false;
-                                        }
+                                            buttonTitle = tempAction.name,
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                            buttonTooltipMain = tooltipMain,
+                                            buttonTooltipDetail = builder.ToString(),
+                                            //use a Lambda to pass arguments to the action
+                                            action = clickAction
+                                        };
                                     }
                                 }
                                 else
-                                { Debug.LogWarning(string.Format("Action \"{0}\" has no effects", tempAction)); }
-                                if (proceedFlag == true)
                                 {
-                                    //Details to pass on for processing via button click
-                                    ModalActionDetails actionDetails = new ModalActionDetails() { };
-                                    actionDetails.side = globalAuthority;
-                                    actionDetails.nodeID = nodeID;
-                                    actionDetails.actorDataID = actor.actorSlotID;
-                                    //Node action is standard but other actions are possible
-                                    UnityAction clickAction = null;
-                                    //Team action
-                                    if (isAnyTeam)
-                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.InsertTeamAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); };  }
-                                    //Node action
-                                    else
-                                    { clickAction = () => { EventManager.instance.PostNotification(EventType.NodeAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); };  }
-                                    //pass all relevant details to ModalActionMenu via Node.OnClick()
-                                    details = new EventButtonDetails()
-                                    {
-                                        buttonTitle = tempAction.name,
-                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                        buttonTooltipMain = tooltipMain,
-                                        buttonTooltipDetail = builder.ToString(),
-                                        //use a Lambda to pass arguments to the action
-                                        action = clickAction
-                                    };
+                                    Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.actorSlotID));
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("{0} is having a bad day", actor.arc.name);
                                 }
                             }
                             else
                             {
-                                Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.actorSlotID));
-                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.AppendFormat("{0} is having a bad day", actor.arc.name);
+                                //Inactive actor
+                                switch (actor.inactiveStatus)
+                                {
+                                    case ActorInactive.Breakdown:
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.AppendFormat("{0} is having a Stress Breakdown", actor.arc.name);
+                                        break;
+                                }
                             }
+                            //add to list
+                            if (details != null)
+                            { tempList.Add(details); }
                         }
-                        else
-                        {
-                            //Inactive actor
-                            switch (actor.inactiveStatus)
-                            {
-                                case ActorInactive.Breakdown:
-                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("{0} is having a Stress Breakdown", actor.arc.name);
-                                    break;
-                            }
-                        }
-                        //add to list
-                        if (details != null)
-                        { tempList.Add(details); }
                     }
                 }
+                else { infoBuilder.Append("No Ministers present"); }
             }
             //
             // - - - Cancel
@@ -5017,7 +5025,7 @@ public class ActorManager : MonoBehaviour
                 //proceed only if actor doesn't have do not resign trait
                 if (actor.CheckTraitEffect(actorNeverResigns) == false)
                 {
-                    chance = playerBadResignChance * numOfBadConditions;
+                    chance = actorResignChance * numOfBadConditions;
                     //trait check -> 'Ethical' (triple chance of resigning)
                     if (actor.CheckTraitEffect(actorResignHigh) == true)
                     {
@@ -5049,7 +5057,7 @@ public class ActorManager : MonoBehaviour
                             //autoRun
                             if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
                             {
-                                string textAutoRun = string.Format("{0}, {1}{2}{3}, {4}Resigns{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
+                                string textAutoRun = string.Format("{0}{1}{2}, {3}Resigns{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
                                 GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
                             }
                         }
@@ -6279,7 +6287,7 @@ public class ActorManager : MonoBehaviour
     public GenericTooltipData GetVacantActorTooltip()
     {
         GenericTooltipData data = new GenericTooltipData();
-        data.header = "Position Vacant";
+        data.header = string.Format("{0}<size=120%>Position Vacant</size>{1}", colourBad, colourEnd);
         data.main = string.Format("{0}There is currently nobody acting in this position{1}", colourNormal, colourEnd);
         data.details = string.Format("{0}Go to the {1}{2}Reserve Pool{3}{4} and click on a person for the option to recall them to active duty{5}",
             colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd);

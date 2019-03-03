@@ -1704,6 +1704,7 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
         }
+        else { Debug.LogWarning("No available actors present for ActorArcTasks{0}"); }
     }
 
     /// <summary>
