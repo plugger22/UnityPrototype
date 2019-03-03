@@ -126,6 +126,7 @@
         Plyr_Secret,
         Plyr_Damage,
         Plyr_Recognised,
+        Plyr_Betrayed,
         //Team
         Team_Add,
         Team_Deploy,

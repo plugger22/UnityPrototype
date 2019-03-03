@@ -1589,13 +1589,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conditionTurnAuthority: 1
+  conditionTurnAuthority: -1
   conditionWhoAuthority: 999
-  condtionAuthority: {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
-  conditionTurnResistance: 1
+  condtionAuthority: {fileID: 0}
+  conditionTurnResistance: -1
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84,
-    type: 2}
+  conditionResistance: {fileID: 0}
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1797,6 +1796,7 @@ MonoBehaviour:
   playerQuestionableChance: 30
   actorTraitorChance: 25
   actorResignChance: 5
+  traitorActiveChance: 5
   playerDoomTimerValue: 5
   stressLeaveRenownCostAuthority: 2
   stressLeaveRenownCostResistance: 2
@@ -2047,7 +2047,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
-  isAuthority: 1
+  isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

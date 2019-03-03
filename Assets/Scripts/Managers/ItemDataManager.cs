@@ -257,6 +257,18 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Player betrayed
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlayerBetrayedDetails()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>A {0}TRAITOR{1} in {2}Rebel HQ{3}{4}or perhaps one of your{5}{6}Subordinates{7}?</b>", colourBad, colourEnd, colourAlert, colourEnd, "\n", "\n", colourAlert, colourEnd);
+        builder.AppendFormat("<b>{0}{1}{2}Invisibility -1{3}</b>", "\n", "\n", colourBad, colourEnd);
+        return builder.ToString();
+    }
+
 
     //
     // - - - Actor - - -

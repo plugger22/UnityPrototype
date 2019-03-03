@@ -6463,6 +6463,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="numOfTraitors"></param>
     private void CheckForBetrayal(int numOfTraitors)
     {
+        string text;
         int chance = traitorActiveChance + (traitorActiveChance * numOfTraitors);
         int rndNum = Random.Range(0, 100);
         if (rndNum < chance)
@@ -6481,7 +6482,9 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"BETRAYED\" (Player)", "Betrayed (subordinate or RebelHQ)", node.nodeID, -1);
                 }
                 //lower invisibility by -1
-                GameManager.instance.messageScript.AINodeActivity("Resistance Activity \"BETRAYED\" (Player)", node, GameManager.instance.playerScript.actorID, 0);
+                GameManager.instance.playerScript.Invisibility--;
+                text = string.Format("{0}, Resistance Leader, BETRAYED at {0}, {1}, ID {2}{3}", GameManager.instance.playerScript.PlayerName, node.nodeName, node.Arc.name, node.nodeID);
+                GameManager.instance.messageScript.PlayerBetrayed(text, node);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
         }

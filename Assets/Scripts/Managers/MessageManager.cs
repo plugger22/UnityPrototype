@@ -492,6 +492,44 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Player betrayed (drop in invisibility) by traitorous subordinate or somebody in RebelHQ
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message PlayerBetrayed(string text, Node node)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Betrayed;
+            message.side = globalResistance;
+            message.isPublic = true;
+            message.data0 = node.nodeID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "You have been BETRAYED";
+            data.topText = "Information Leaked";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerBetrayedDetails();
+            data.priority = ItemPriority.High;
+            data.sprite = playerSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            if (node != null)
+            { data.nodeID = node.nodeID; }
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //
