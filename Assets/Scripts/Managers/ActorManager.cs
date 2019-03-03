@@ -77,6 +77,8 @@ public class ActorManager : MonoBehaviour
     [Range(0, 100)] public int actorTraitorChance = 25;
     [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
     [Range(0, 10)] public int actorResignChance = 5;
+    [Tooltip("Base chance of a traitor revealing the Player's location each turn (could be RebelHQ or Actors). Actual chance -> base chance * # of traitors")]
+    [Range(0, 10)] public int traitorActiveChance = 5;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
     [Range(1, 10)] public int playerDoomTimerValue = 5;
 
@@ -4166,6 +4168,7 @@ public class ActorManager : MonoBehaviour
     private void CheckActiveResistanceActorsHuman()
     {
         int gearID;
+        int numOfTraitors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if AI player is not Active
         if (GameManager.instance.aiRebelScript.status == ActorStatus.Active)
@@ -4197,6 +4200,10 @@ public class ActorManager : MonoBehaviour
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
                         {
+                            //Checks all actors -> can inform on Player regardless of their status
+                            if (actor.isTraitor == true)
+                            { numOfTraitors++; }
+                            //Active actors only
                             if (actor.Status == ActorStatus.Active)
                             {
                                 //
@@ -4298,6 +4305,8 @@ public class ActorManager : MonoBehaviour
                 }
                 //reset gear check flag as all active and inactive resistance actors have had their gear checked by now
                 isGearCheckRequired = false;
+                //Check for a betrayal
+                CheckForBetrayal(numOfTraitors);
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
@@ -4314,6 +4323,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActorsAI(bool isPlayer)
     {
+        int numOfTraitors = 0;
         string text, topText, detailsTop, detailsBottom;
         bool isProceed = true;
         bool isSecrets = false;
@@ -4361,6 +4371,9 @@ public class ActorManager : MonoBehaviour
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
                         {
+                            //Checks all actors -> can inform on Player regardless of their status
+                            if (actor.isTraitor == true)
+                            { numOfTraitors++; }
                             if (actor.Status == ActorStatus.Active)
                             {
                                 //
@@ -4420,6 +4433,8 @@ public class ActorManager : MonoBehaviour
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
                     }
                 }
+                //Check for a betrayal
+                CheckForBetrayal(numOfTraitors);
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
@@ -6440,6 +6455,38 @@ public class ActorManager : MonoBehaviour
 
     public void StopDoomTimer()
     { doomTimer = 0; }
+
+    /// <summary>
+    /// checks for possibility of the Resistance Player/Leader being betrayed by traitorous minions or anonymous haters in RebelHQ
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="numOfTraitors"></param>
+    private void CheckForBetrayal(int numOfTraitors)
+    {
+        int chance = traitorActiveChance + (traitorActiveChance * numOfTraitors);
+        int rndNum = Random.Range(0, 100);
+        if (rndNum < chance)
+        {
+            //Betrayal
+            Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader BETRAYED (need {0}, rolled {1}){2}", chance, rndNum, "\n");
+            int invisibility = GameManager.instance.playerScript.Invisibility;
+            //immediate notification if invis 0
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+            if (node != null)
+            {
+                if (invisibility == 0)
+                {
+                    GameManager.instance.aiScript.immediateFlagResistance = true;
+                    //AI Immediate message
+                    GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"BETRAYED\" (Player)", "Betrayed (subordinate or RebelHQ)", node.nodeID, -1);
+                }
+                //lower invisibility by -1
+                GameManager.instance.messageScript.AINodeActivity("Resistance Activity \"BETRAYED\" (Player)", node, GameManager.instance.playerScript.actorID, 0);
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+        }
+        else { Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader Not Betrayed (need {0}, rolled {1}){2}", chance, rndNum, "\n"); }
+    }
 
     //new methods above here
 }
