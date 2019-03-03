@@ -706,11 +706,15 @@ public class AIManager : MonoBehaviour
             ProcessErasureData();
             ProcessDecisionData();
             //AI Rulesets
-            ProcessNodeTasks();
-            ProcessProbeTask();
-            ProcessSpiderTask();
-            ProcessDamageTask();
-            ProcessErasureTask();
+            if (GameManager.instance.dataScript.CheckNumOfActiveActors(globalAuthority) > 0)
+            {
+                ProcessNodeTasks();
+                ProcessProbeTask();
+                ProcessSpiderTask();
+                ProcessDamageTask();
+                ProcessErasureTask();
+            }
+            else { Debug.LogFormat("[Aim] AIManager.cs -> ProcessAISideAuthority: No actors present. Only decision tasks are considered{0}", "\n"); }
             ProcessDecisionTask();
             //choose tasks for the following turn
             ProcessFinalTasks(authorityMaxTasksPerTurn);
@@ -1801,6 +1805,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// master method that determines up to 3 separate tasks, one for each node datapoint and the relevant team (Control/Civil/Media)
+    /// NOTE: checked for no actors being present by calling method
     /// </summary>
     private void ProcessNodeTasks()
     {
@@ -1839,6 +1844,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// selects a probe team task if one is available
+    /// NOTE: checked for no actors being present by calling method
     /// </summary>
     private void ProcessProbeTask()
     {
@@ -1872,6 +1878,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// selects a spider team if a one is available
+    /// NOTE: checked for no actors being present by calling method
     /// </summary>
     private void ProcessSpiderTask()
     {
@@ -1967,6 +1974,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// Determines the Erasure task 
+    /// NOTE: checked for no actors being present by calling method
     /// </summary>
     private void ProcessErasureTask()
     {
@@ -2030,6 +2038,7 @@ public class AIManager : MonoBehaviour
 
     /// <summary>
     /// selects a damage team if one available
+    /// NOTE: checked for no actors being present by calling method
     /// </summary>
     private void ProcessDamageTask()
     {

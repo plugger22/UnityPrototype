@@ -764,7 +764,7 @@ public class ActorManager : MonoBehaviour
                 //
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                 arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-                if (arrayOfActors.Length > 0)
+                if (GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance) > 0)
                 {
                     foreach (Actor actor in arrayOfActors)
                     {
@@ -989,7 +989,11 @@ public class ActorManager : MonoBehaviour
                         }
                     }
                 }
-                else { infoBuilder.Append("No Subordinates present"); }
+                else
+                {
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.Append("No Subordinates present");
+                }
             }
             //
             // - - - Authority - - -
@@ -1037,7 +1041,7 @@ public class ActorManager : MonoBehaviour
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.instance.dataScript.GetAvailableReserveTeams(node);
                 arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
-                if (arrayOfActors.Length > 0)
+                if (GameManager.instance.dataScript.CheckNumOfActiveActors(globalAuthority) > 0)
                 {
                     //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
                     foreach (Actor actor in arrayOfActors)
@@ -1204,7 +1208,11 @@ public class ActorManager : MonoBehaviour
                         }
                     }
                 }
-                else { infoBuilder.Append("No Ministers present"); }
+                else
+                {
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.Append("No Ministers present");
+                }
             }
             //
             // - - - Cancel
@@ -4359,7 +4367,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Compatibility - - -
                                 //
                                 if (listOfBadConditions.Count > 0)
-                                { ProcessCompatibility(actor, listOfBadConditions); }
+                                { ProcessCompatibility(actor, listOfBadConditions, globalResistance); }
                                 //
                                 // - - - Stress Condition - - -
                                 //
@@ -4581,7 +4589,7 @@ public class ActorManager : MonoBehaviour
                                 // - - - Compatibility - - -
                                 //
                                 if (listOfBadConditions.Count > 0)
-                                { ProcessCompatibility(actor, listOfBadConditions); }
+                                { ProcessCompatibility(actor, listOfBadConditions, globalAuthority); }
                                 //
                                 // - - - Stress Condition - - -
                                 //
@@ -5006,12 +5014,12 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod to check if actors resign due to the Player having a bad condition (Corrupt/Incompetent/Questionable)
+    /// subMethod to check if actors resign due to the Player having a bad condition (Corrupt/Incompetent/Questionable). Leave side as Null for default player side, specify otherwise
     /// NOTE: Actor checked for null by calling method
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="numOfBadConditions"></param>
-    public void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions)
+    public void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions, GlobalSide side = null)
     {
         int chance, rnd;
         string itemText, reason, warning;
@@ -5021,7 +5029,9 @@ public class ActorManager : MonoBehaviour
             int numOfBadConditions = listOfBadConditions.Count;
             if (numOfBadConditions > 0)
             {
-                GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+                //default player side if not specified
+                if (side == null)
+                { side = GameManager.instance.sideScript.PlayerSide; }
                 //proceed only if actor doesn't have do not resign trait
                 if (actor.CheckTraitEffect(actorNeverResigns) == false)
                 {
@@ -5060,6 +5070,10 @@ public class ActorManager : MonoBehaviour
                                 string textAutoRun = string.Format("{0}{1}{2}, {3}Resigns{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
                                 GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
                             }
+                            //statistics
+                            if (side.level == globalResistance.level)
+                            { GameManager.instance.dataScript.StatisticIncrement(StatType.actorsResignedResistance); }
+                            else { GameManager.instance.dataScript.StatisticIncrement(StatType.actorsResignedAuthority); }
                         }
                         //message
                         if (String.IsNullOrEmpty(msgText) == false)

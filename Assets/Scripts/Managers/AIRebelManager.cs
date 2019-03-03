@@ -419,6 +419,7 @@ public class AIRebelManager : MonoBehaviour
         listOfErasureSightData.Clear();
         listOfBadNodes.Clear();
         listOfSpiderNodes.Clear();
+        listOfCurrentActors.Clear();
         listOfArcs.Clear();
         //
         // - - - Sighting Reports
@@ -492,7 +493,7 @@ public class AIRebelManager : MonoBehaviour
             { tempList.Clear(); }
             else { Debug.LogErrorFormat("Invalid tempList <Node> (Null) in arrayOfActorActions[\"{0}\"]", i); }
         }
-        listOfCurrentActors.Clear();
+        
     }
 
     /// <summary>
@@ -1586,7 +1587,7 @@ public class AIRebelManager : MonoBehaviour
                                                             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} attempt Target task, targetID {1} at {2}, {3}, id {4}{5}", target.actorArc.name,
                                                                 target.targetID, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                                         }
-                                                        else { Debug.LogError("Invalid actorID {-1)"); }
+                                                        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: target task aborted as no SUITABLE Active, OnMap, actor found"); }
                                                     }
                                                     else
                                                     {
@@ -1621,8 +1622,8 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.turnScript.Turn > 0)
-                { Debug.LogWarning("There are no OnMap actors present"); }
+                /*if (GameManager.instance.turnScript.Turn > 0)
+                { Debug.LogWarning("There are no OnMap actors present"); }*/
             }
         }
     }
@@ -1704,7 +1705,7 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogWarning("No available actors present for ActorArcTasks{0}"); }
+        else { Debug.LogWarning("[Rim] AIRebelManager.cs -> ProcessActorArcTask: actorArc tasks aborted as NO available actors present for ActorArcTasks{0}"); }
     }
 
     /// <summary>
@@ -3807,7 +3808,7 @@ public class AIRebelManager : MonoBehaviour
     { return listOfArcs.Exists(x => x.ActorArcID == actorArcID); }
 
     /// <summary>
-    /// returns actorID of any OnMap, active, actor of the same type. If none, returns a random onMap, active, actor. Returns -1 if a problem
+    /// returns actorID of any OnMap, active, actor of the same type. If none, returns a random onMap, active, actor. Returns -1 if none that meet criteria
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
@@ -3848,7 +3849,7 @@ public class AIRebelManager : MonoBehaviour
                 //select a random actor from list of OnMap, Active, actors
                 if (listOfActiveActorID.Count > 0)
                 { actorID = listOfActiveActorID[Random.Range(0, listOfActiveActorID.Count)]; }
-                else { Debug.LogError("Invalid listOfActiveActorID (no records)"); }
+                /*else { Debug.LogError("Invalid listOfActiveActorID (no records)"); } Edit: 3Mar19 -> not needed as quite possible for there to be no actor which meets criteria*/
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }

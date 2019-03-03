@@ -580,7 +580,7 @@ public class ContactManager : MonoBehaviour
                             }
                             else { Debug.LogWarningFormat("Invalid actor (Null) for SlotID {0}", slotID); }
                         }
-                        else { Debug.LogWarning("Invalid slotID (-1) for Target"); }
+                        /*else { Debug.LogWarning("Invalid slotID (-1) for Target"); }  Note: 3Mar19 -> ignore this as if an actor not present in slot, eg. resigned, then will generate error for no good reason*/
                     }
                 }
             }
@@ -605,9 +605,13 @@ public class ContactManager : MonoBehaviour
             tally += arrayOfNetworks[i];
             if (tally - rndNum >= 0)
             {
-                //found the correct slot
-                slotID = i;
-                break;
+                //check not an empty slot
+                if (arrayOfNetworks[i] != 0)
+                {
+                    //found the correct slot
+                    slotID = i;
+                    break;
+                }
             }
         }
         return slotID;

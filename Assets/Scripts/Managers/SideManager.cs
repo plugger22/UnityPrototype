@@ -229,6 +229,11 @@ public class SideManager : MonoBehaviour
         ActorInactive inactiveStatus;
         float inactiveAlpha = GameManager.instance.guiScript.alphaInactive;
         float activeAlpha = GameManager.instance.guiScript.alphaActive;
+        //flashing red alert at top UI for Security Status -> switch on/off
+        if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
+        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer");  }
+        else
+        { EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer");  }
         switch (_playerSide.level)
         {
             case 1:
@@ -320,8 +325,6 @@ public class SideManager : MonoBehaviour
                 {
                     case ActorStatus.Captured:
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
-                        ///switch off flashing red indicator on top widget UI
-                        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
                         //reduce player alpha to show inactive (sprite and text)
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                         break;
@@ -361,19 +364,8 @@ public class SideManager : MonoBehaviour
                                 {
                                     case ActorStatus.Active:
 
-                                        /*//
                                         // - - - Compatibility (Edit: cause duplicate msg)
-                                        //
-                                        List<Condition> listOfBadConditions = GameManager.instance.playerScript.GetNumOfBadConditionPresent(globalResistance);
-                                        if (listOfBadConditions.Count > 0)
-                                        { GameManager.instance.actorScript.ProcessCompatibility(actor, listOfBadConditions); }
-
-                                        //
-                                        // - - - Invisibility Zero warning (Edit: causes duplicate msg) - - -
-                                        //
-                                        if (actor.datapoint2 == 0)
-                                        { GameManager.instance.actorScript.ProcessInvisibilityWarning(actor); }*/
-
+                                        // - - - Invisibility Zero warning (Edit: causes duplicate msg)
 
                                         //
                                         // - - - Motivation Warning - - -

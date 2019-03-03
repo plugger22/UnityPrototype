@@ -493,7 +493,7 @@ public class FactionManager : MonoBehaviour
                     //Authority
                     oldApproval = ApprovalAuthority;
                     ApprovalAuthority += amountToChange;
-                    Debug.LogFormat("[Fac] Authority Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
+                    Debug.LogFormat("[Fac] <b>Authority</b> Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     {
                         msgText = string.Format("{0} faction approval {1}{2}", factionAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
