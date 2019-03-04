@@ -300,7 +300,7 @@ public class CaptureManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
+            text = string.Format("{0}, Player, released at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name);
             GameManager.instance.messageScript.ActorRelease(text, node, GameManager.instance.playerScript.actorID);
             Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
             GameManager.instance.nodeScript.nodePlayer = nodeID;
@@ -403,7 +403,7 @@ public class CaptureManager : MonoBehaviour
                     }
                     else { Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, does NOT become a Traitor (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n"); }
                     //message
-                    text = string.Format("{0} released from captivity", actor.actorName);
+                    text = string.Format("{0}, {1}, released from captivity", actor.actorName, actor.arc.name);
                     GameManager.instance.messageScript.ActorRelease(text, node, actor.actorID);
                     Debug.LogFormat("[Ply] CaptureManager.cs -> ReleaseActor: {0}{1}", text, "\n");
                     //autorun

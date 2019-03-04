@@ -355,21 +355,27 @@ public class AIRebelManager : MonoBehaviour
             {
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: commence action {0} of {1} - - -{2}", actionsUsed + 1, actionAllowance, "\n");
                 ClearAICollectionsLate();
-                //task creation
-                if (actionsUsed == 0)
-                { ProcessSurvivalTask(); }
-                //only one task possible and if survival task has been generated no point in going further
-                if (listOfTasksCritical.Count == 0)
+                if (actionsUsed > 0)
+                { FilterActorArcList(listOfArcs); }
+                if (listOfArcs.Count > 0)
                 {
-                    ProcessAdminTask(); //first in list
-                    ProcessTargetTask();
-                    ProcessMoveTask();
-                    ProcessPeopleTask();
-                    ProcessActorArcTask();
-                    ProcessIdleTask();
+                    //task creation
+                    if (actionsUsed == 0)
+                    { ProcessSurvivalTask(); }
+                    //only one task possible and if survival task has been generated no point in going further
+                    if (listOfTasksCritical.Count == 0)
+                    {
+                        ProcessAdminTask(); //first in list
+                        ProcessTargetTask();
+                        ProcessMoveTask();
+                        ProcessPeopleTask();
+                        ProcessActorArcTask();
+                        ProcessIdleTask();
+                    }
+                    //task Execution
+                    ProcessTaskFinal();
                 }
-                //task Execution
-                ProcessTaskFinal();
+                else { Debug.LogError("Invalid listOfArcs (Empty)"); }
                 counter++;
                 if (counter > 3)
                 {
@@ -1096,7 +1102,15 @@ public class AIRebelManager : MonoBehaviour
         List<ActorArc> tempList = new List<ActorArc>(GameManager.instance.dataScript.GetListOfResistanceActorArcs());
         if (tempList != null)
         {
+            //Filter out any arcs that match OnMap actors and who are currently not Active -> reverse loop tempList
+            tempList = FilterActorArcList(tempList);
+            //Randomly select from filtered pool of actorArcs
             int limit = GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance);
+            if (limit > tempList.Count)
+            {
+                Debug.LogWarningFormat("There are not enough actorArcs in the pool (need {0}, have {1})", limit, tempList.Count);
+                limit = tempList.Count;
+            }
             for (int i = 0; i < limit; i++)
             {
                 index = Random.Range(0, tempList.Count);
@@ -1109,6 +1123,38 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogError("Invalid tempList ActorArcs (Null)"); }
     }
 
+    /// <summary>
+    /// subMethod to filter out of a list of ActorArcs any that match OnMap actors and who aren't currently Active
+    /// </summary>
+    /// <param name="tempList"></param>
+    /// <returns></returns>
+    private List<ActorArc> FilterActorArcList(List<ActorArc> tempList)
+    {
+        if (tempList != null)
+        {
+            for (int i = tempList.Count - 1; i >= 0; i--)
+            {
+                ActorArc arc = tempList[i];
+                if (arc != null)
+                {
+                    //is ActorArc present in the current OnMap lineup?
+                    if (GameManager.instance.dataScript.CheckActorArcPresent(arc, globalResistance, true) == true)
+                    {
+                        //check actor is Active
+                        if (GameManager.instance.dataScript.CheckActorPresent(arc.ActorArcID, globalResistance) < 0)
+                        {
+                            //remove that arc from the list as actors who aren't currently active can't perform actions
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> FilterActorArcList: {0} removed from pool as actor OnMap and NOT ACTIVE{1}", arc.name, "\n");
+                            tempList.RemoveAt(i);
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid arc (Null) in tempList[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+        return tempList;
+    }
 
 
     /// <summary>

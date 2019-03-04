@@ -3977,6 +3977,8 @@ public class ActorManager : MonoBehaviour
                                             //message -> status change
                                             text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
+                                            Debug.LogFormat("[Ply] ActorManager.cs -> CheckInactiveResistanceActorsHuman: {0}, {1}, id {2} is no longer LYING LOW{3}", actor.actorName,
+                                                actor.arc.name, actor.actorID, "\n");
                                             //check if actor has stressed condition
                                             if (actor.CheckConditionPresent(conditionStressed) == true)
                                             { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
@@ -4105,7 +4107,7 @@ public class ActorManager : MonoBehaviour
                                                 string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                                 GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
                                             }
-                                            Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has finished LYING LOW{3}", actor.actorName,
+                                            Debug.LogFormat("[Ply] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} is no longer LYING LOW{3}", actor.actorName,
                                                 actor.arc.name, actor.actorID, "\n");
                                             //check if actor has stressed condition
                                             if (actor.CheckConditionPresent(conditionStressed) == true)

@@ -3666,7 +3666,7 @@ public class DataManager : MonoBehaviour
                 if (CheckActorSlotStatus(i, side) == true)
                 {
                     Actor actor = arrayOfActors[side.level, i];
-                    //check actor is of the correct tpe
+                    //check actor is of the correct type
                     if (actor.arc == arc)
                     {
                         //ignore active status condition
