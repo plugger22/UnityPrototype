@@ -56,3 +56,16 @@ Seed 55777 -> Sunday, 3 March 2019 8:42 PM
 Seed 59389 -> Sunday, 3 March 2019 8:44 PM
 Seed 22780 -> Sunday, 3 March 2019 8:49 PM
 Seed 12096 -> Sunday, 3 March 2019 8:50 PM
+Seed 50165 -> Monday, 4 March 2019 9:35 AM
+Seed 31495 -> Monday, 4 March 2019 9:49 AM
+Seed 18979 -> Monday, 4 March 2019 10:25 AM
+Seed 47738 -> Monday, 4 March 2019 10:25 AM
+Seed 9151 -> Monday, 4 March 2019 10:27 AM
+Seed 43321 -> Monday, 4 March 2019 10:27 AM
+Seed 47609 -> Monday, 4 March 2019 10:57 AM
+Seed 2229 -> Monday, 4 March 2019 11:12 AM
+Seed 26247 -> Monday, 4 March 2019 11:13 AM
+Seed 27348 -> Monday, 4 March 2019 11:14 AM
+Seed 45606 -> Monday, 4 March 2019 11:17 AM
+Seed 7091 -> Monday, 4 March 2019 11:18 AM
+Seed 40984 -> Monday, 4 March 2019 11:19 AM

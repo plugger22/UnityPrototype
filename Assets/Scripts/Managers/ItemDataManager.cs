@@ -261,11 +261,13 @@ public class ItemDataManager : MonoBehaviour
     /// Player betrayed
     /// </summary>
     /// <returns></returns>
-    public string GetPlayerBetrayedDetails()
+    public string GetPlayerBetrayedDetails(bool isImmediate)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>A {0}TRAITOR{1} in {2}Rebel HQ{3}{4}or perhaps one of your{5}{6}Subordinates{7}?</b>", colourBad, colourEnd, colourAlert, colourEnd, "\n", "\n", colourAlert, colourEnd);
         builder.AppendFormat("<b>{0}{1}{2}Invisibility -1{3}</b>", "\n", "\n", colourBad, colourEnd);
+        if (isImmediate == true)
+        { builder.AppendFormat("{0}{1}{2}<size=110%><b>Authority will know immediately</b></size>{3}", "\n", "\n", colourBad, colourEnd); }
         return builder.ToString();
     }
 
@@ -1284,7 +1286,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="node"></param>
     /// <param name="team"></param>
     /// <returns></returns>
-    public string GetAICaptureDetails(string actorName, string actorArcName, Node node, Team team)
+    public string GetActorCaptureDetails(string actorName, string actorArcName, Node node, Team team)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");
@@ -1302,7 +1304,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="actorArcName"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public string GetAIReleaseDetails(string actorName, string actorArcName, Node node)
+    public string GetActorReleaseDetails(string actorName, string actorArcName, Node node)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}", actorName, colourAlert, actorArcName, colourEnd, "\n");

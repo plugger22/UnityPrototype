@@ -142,7 +142,7 @@ public class CaptureManager : MonoBehaviour
         { builder.Append(string.Format("{0}{1}{2}", details.effects, "\n", "\n")); }
         builder.Append(string.Format("{0}Player has been Captured{1}{2}{3}", colourBad, colourEnd, "\n", "\n"));
         //message
-        GameManager.instance.messageScript.AICapture(text, details.node, details.team);
+        GameManager.instance.messageScript.ActorCapture(text, details.node, details.team);
         //update node trackers
         GameManager.instance.nodeScript.nodePlayer = -1;
         GameManager.instance.nodeScript.nodeCaptured = details.node.nodeID;
@@ -235,7 +235,7 @@ public class CaptureManager : MonoBehaviour
     {
         string text = string.Format("{0}, {1}, Captured at \"{2}\", {3}", details.actor.actorName, details.actor.arc.name, details.node.nodeName, details.node.Arc.name);
         //message
-        GameManager.instance.messageScript.AICapture(text, details.node, details.team, details.actor.actorID);
+        GameManager.instance.messageScript.ActorCapture(text, details.node, details.team, details.actor.actorID);
         //AutoRun (both sides)
         if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
         {
@@ -301,7 +301,7 @@ public class CaptureManager : MonoBehaviour
         if (node != null)
         {
             text = string.Format("Player released at \"{0}\", {1}", node.nodeName, node.Arc.name);
-            GameManager.instance.messageScript.AIRelease(text, node, GameManager.instance.playerScript.actorID);
+            GameManager.instance.messageScript.ActorRelease(text, node, GameManager.instance.playerScript.actorID);
             Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
             GameManager.instance.nodeScript.nodePlayer = nodeID;
             GameManager.instance.nodeScript.nodeCaptured = -1;
@@ -398,12 +398,13 @@ public class CaptureManager : MonoBehaviour
                     if (rndNum < chance)
                     {
                         actor.isTraitor = true;
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.actorResistanceTraitors);
                         Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, becomes a TRAITOR (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n");
                     }
                     else { Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, does NOT become a Traitor (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n"); }
                     //message
                     text = string.Format("{0} released from captivity", actor.actorName);
-                    GameManager.instance.messageScript.AIRelease(text, node, actor.actorID);
+                    GameManager.instance.messageScript.ActorRelease(text, node, actor.actorID);
                     Debug.LogFormat("[Ply] CaptureManager.cs -> ReleaseActor: {0}{1}", text, "\n");
                     //autorun
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == true)

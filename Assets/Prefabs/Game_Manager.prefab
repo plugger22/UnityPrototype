@@ -1794,7 +1794,7 @@ MonoBehaviour:
   breakdownChance: 20
   playerRecognisedChance: 20
   playerQuestionableChance: 30
-  actorTraitorChance: 25
+  actorTraitorChance: 30
   actorResignChance: 5
   traitorActiveChance: 5
   playerDoomTimerValue: 5

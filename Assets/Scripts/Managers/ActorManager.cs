@@ -74,7 +74,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Chance per turn of the player, with the QUESTIONABLE condition, losing one notch of Rebel HQ approval")]
     [Range(0, 100)] public int playerQuestionableChance = 30;
     [Tooltip("Chance of an actor, who has been captured, becoming a traitor (secretly) on release. Chance is multiplied by the # of times they have been captured.")]
-    [Range(0, 100)] public int actorTraitorChance = 25;
+    [Range(0, 100)] public int actorTraitorChance = 30;
     [Tooltip("Chance, per turn, of a character resigning if the Player has a bad condition (corrupt/quesitonable/incompetent). Chance stacks for each bad condition present")]
     [Range(0, 10)] public int actorResignChance = 5;
     [Tooltip("Base chance of a traitor revealing the Player's location each turn (could be RebelHQ or Actors). Actual chance -> base chance * # of traitors")]
@@ -5044,27 +5044,27 @@ public class ActorManager : MonoBehaviour
             int numOfBadConditions = listOfBadConditions.Count;
             if (numOfBadConditions > 0)
             {
+                chance = actorResignChance * numOfBadConditions;
+                rnd = Random.Range(0, 100);
                 //default player side if not specified
                 if (side == null)
                 { side = GameManager.instance.sideScript.PlayerSide; }
                 //proceed only if actor doesn't have do not resign trait
                 if (actor.CheckTraitEffect(actorNeverResigns) == false)
                 {
-                    chance = actorResignChance * numOfBadConditions;
                     //trait check -> 'Ethical' (triple chance of resigning)
                     if (actor.CheckTraitEffect(actorResignHigh) == true)
                     {
                         chance *= 3;
                         TraitLogMessage(actor, "for a Resignation check", "to TRIPLE chance of Resigning");
                     }
-                    rnd = Random.Range(0, 100);
                     if (rnd < chance)
                     {
-                        //random message
+                        //Actor RESIGNS -> random message
                         Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: Resign check SUCCESS need < {0}, rolled {1}{2}", chance, rnd, "\n");
                         string text = string.Format("{0} Resign attempt SUCCESS", actor.arc.name);
                         GameManager.instance.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
-                        //actor resigns
+                        //resignation
                         if (GameManager.instance.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
                         {
                             //choose a random condition that actor is upset about
@@ -5104,14 +5104,18 @@ public class ActorManager : MonoBehaviour
                 }
                 else
                 {
-                    //trait actorResignNone "Loyal"
-                    TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
-                    //General Info message
-                    msgText = string.Format("{0} considered Resigning but didn't because they are LOYAL", actor.arc.name);
-                    itemText = string.Format("{0} almost RESIGNS", actor.arc.name);
-                    reason = string.Format("{0}, {1}{2}{3}{4}{5}considered Resigning{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd);
-                    warning = string.Format("But didn't because they are <b>{0}</b>", actor.GetTrait().tag);
-                    GameManager.instance.messageScript.GeneralInfo(msgText, itemText, "Resignation", reason, warning, false);
+                    //only generate message if the actor was about to resign
+                    if (rnd < chance)
+                    {
+                        //trait actorResignNone "Loyal"
+                        TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
+                        //General Info message
+                        msgText = string.Format("{0} considered Resigning but didn't because they are LOYAL", actor.arc.name);
+                        itemText = string.Format("{0} almost RESIGNS", actor.arc.name);
+                        reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}considered Resigning</b>{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd);
+                        warning = string.Format("But didn't because they are <b>{0}</b>", actor.GetTrait().tag);
+                        GameManager.instance.messageScript.GeneralInfo(msgText, itemText, "Resignation", reason, warning, false);
+                    }
                 }
             }
             else { Debug.LogWarning("Invalid listOfBadConditions (empty)"); }
@@ -6463,32 +6467,53 @@ public class ActorManager : MonoBehaviour
     /// <param name="numOfTraitors"></param>
     private void CheckForBetrayal(int numOfTraitors)
     {
-        string text;
-        int chance = traitorActiveChance + (traitorActiveChance * numOfTraitors);
-        int rndNum = Random.Range(0, 100);
-        if (rndNum < chance)
+        bool isProceed = true;
+        //only if Resistance Player Active
+        switch (GameManager.instance.sideScript.resistanceOverall)
         {
-            //Betrayal
-            Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader BETRAYED (need {0}, rolled {1}){2}", chance, rndNum, "\n");
-            int invisibility = GameManager.instance.playerScript.Invisibility;
-            //immediate notification if invis 0
-            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-            if (node != null)
-            {
-                if (invisibility == 0)
-                {
-                    GameManager.instance.aiScript.immediateFlagResistance = true;
-                    //AI Immediate message
-                    GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"BETRAYED\" (Player)", "Betrayed (subordinate or RebelHQ)", node.nodeID, -1);
-                }
-                //lower invisibility by -1
-                GameManager.instance.playerScript.Invisibility--;
-                text = string.Format("{0}, Resistance Leader, BETRAYED at {0}, {1}, ID {2}{3}", GameManager.instance.playerScript.PlayerName, node.nodeName, node.Arc.name, node.nodeID);
-                GameManager.instance.messageScript.PlayerBetrayed(text, node);
-            }
-            else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+            case SideState.AI:
+                if (GameManager.instance.aiRebelScript.status != ActorStatus.Active)
+                { isProceed = false; }
+                break;
+            case SideState.Human:
+                if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                { isProceed = false; }
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised Side State for resistanceOverall \"{0}\"", GameManager.instance.sideScript.resistanceOverall);
+                break;
         }
-        else { Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader Not Betrayed (need {0}, rolled {1}){2}", chance, rndNum, "\n"); }
+        if (isProceed == true)
+        {
+            string text;
+            int chance = traitorActiveChance + (traitorActiveChance * numOfTraitors);
+            int rndNum = Random.Range(0, 100);
+            if (rndNum < chance)
+            {
+                //Betrayal
+                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader BETRAYED (need {0}, rolled {1}){2}", chance, rndNum, "\n");
+                int invisibility = GameManager.instance.playerScript.Invisibility;
+                //statistic
+                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerBetrayed);
+                //immediate notification if invis 0
+                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                if (node != null)
+                {
+                    if (invisibility == 0)
+                    {
+                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                        //AI Immediate message
+                        GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"BETRAYED\" (Player)", "Betrayed (subordinate or RebelHQ)", node.nodeID, -1);
+                    }
+                    //lower invisibility by -1
+                    GameManager.instance.playerScript.Invisibility--;
+                    text = string.Format("{0}, Resistance Leader, BETRAYED at {0}, {1}, ID {2}{3}", GameManager.instance.playerScript.PlayerName, node.nodeName, node.Arc.name, node.nodeID);
+                    GameManager.instance.messageScript.PlayerBetrayed(text, true);
+                }
+                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+            }
+            else { Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader Not Betrayed (need {0}, rolled {1}){2}", chance, rndNum, "\n"); }
+        }
     }
 
     //new methods above here

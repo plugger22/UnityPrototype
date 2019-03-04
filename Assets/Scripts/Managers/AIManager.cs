@@ -1172,12 +1172,6 @@ public class AIManager : MonoBehaviour
                         }
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0} -> AI data NOT extracted", message.data0)); }
                         break;
-                    case MessageSubType.AI_Capture:
-                    case MessageSubType.AI_Release:
-
-                        //- - - TO DO - - - 
-
-                        break;
                     case MessageSubType.AI_Immediate:
                         //immediate flag is set by EffectManager.cs -> ProcessEffect (Invisibility) prior to this
                         if (message.data1 > -1)

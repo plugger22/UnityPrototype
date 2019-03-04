@@ -493,14 +493,13 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player betrayed (drop in invisibility) by traitorous subordinate or somebody in RebelHQ
+    /// Player betrayed (drop in invisibility) by traitorous subordinate or somebody in RebelHQ. isImmediate true if immediate notification to authority.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message PlayerBetrayed(string text, Node node)
+    public Message PlayerBetrayed(string text, bool isImmediate = false)
     {
-        Debug.Assert(node != null, "Invalid node (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -509,19 +508,20 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Plyr_Betrayed;
             message.side = globalResistance;
             message.isPublic = true;
-            message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = "You have been BETRAYED";
             data.topText = "Information Leaked";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerBetrayedDetails();
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerBetrayedDetails(isImmediate);
             data.priority = ItemPriority.High;
             data.sprite = playerSprite;
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
-            if (node != null)
-            { data.nodeID = node.nodeID; }
             data.help = 1;
+            data.tag0 = "betrayal_0";
+            data.tag1 = "betrayal_1";
+            data.tag2 = "betrayal_2";
+            data.tag3 = "betrayal_3";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1088,6 +1088,166 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.side = message.side;
             data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// notification of Player (use default actorID 999) or actor being captured at a node
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="teamID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message ActorCapture(string text, Node node, Team team, int actorID = 999)
+    {
+        Debug.Assert(node != null, "Invalid Node (Null)");
+        Debug.Assert(team != null, "Invalid team (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Captured;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = node.nodeID;
+            message.data1 = team.teamID;
+            message.data2 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            string playerName = GameManager.instance.playerScript.PlayerName;
+            if (actorID == 999)
+            {
+                //player captured
+                data.itemText = string.Format("{0}, Player, has been CAPTURED", playerName);
+                data.topText = "Player Captured";
+                data.bottomText = GameManager.instance.itemDataScript.GetActorCaptureDetails(playerName, "Player", node, team);
+            }
+            else
+            {
+                //actor captured
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.itemText = string.Format("{0}, {1}, has been CAPTURED", actor.actorName, actor.arc.name);
+                    data.topText = string.Format("{0} Captured", actor.arc.name);
+                    data.bottomText = GameManager.instance.itemDataScript.GetActorCaptureDetails(actor.actorName, actor.arc.name, node, team);
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.capturedSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// warning, eg. Actor can be captured 'cause invisibility zero -> InfoApp effect
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="sprite"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message ActorWarningOngoing(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID)
+    {
+        Debug.Assert(sprite != null, "Invalid spirte (Null)");
+        Debug.Assert(actorID > -1, "Invalid actorID (less than Zero)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Warning;
+            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.isPublic = true;
+            message.data0 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = text;
+            data.topText = "Warning";
+            data.bottomText = GameManager.instance.itemDataScript.GetActorWarningOngoingDetails(detailsTop, detailsBottom);
+            data.priority = ItemPriority.Low;
+            data.sprite = sprite;
+            data.tab = ItemTab.Effects;
+            data.side = message.side;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// notification of Player or Actor (Resistance) being released from capture
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Message ActorRelease(string text, Node node, int actorID = 999)
+    {
+        Debug.Assert(node != null, "Invalid Node (Null)");
+        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Captured;
+            message.side = globalBoth;
+            message.isPublic = true;
+            message.data0 = node.nodeID;
+            message.data1 = actorID;
+            //ItemData
+            ItemData data = new ItemData();
+            string playerName = GameManager.instance.playerScript.PlayerName;
+            if (actorID == 999)
+            {
+                //player captured
+                data.itemText = string.Format("{0}, Player, has been RELEASED", playerName);
+                data.topText = "Player Released";
+                data.bottomText = GameManager.instance.itemDataScript.GetActorReleaseDetails(playerName, "Player", node);
+            }
+            else
+            {
+                //actor captured
+                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                if (actor != null)
+                {
+                    data.itemText = string.Format("{0}, {1}, has been RELEASED", actor.actorName, actor.arc.name);
+                    data.topText = string.Format("{0} Released", actor.arc.name);
+                    data.bottomText = GameManager.instance.itemDataScript.GetActorReleaseDetails(actor.actorName, actor.arc.name, node);
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+            }
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.releasedSprite;
+            data.tab = ItemTab.ALERTS;
+            data.side = message.side;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            data.tag0 = "traitor_0";
+            data.tag1 = "traitor_1";
+            data.tag2 = "traitor_2";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1695,163 +1855,6 @@ public class MessageManager : MonoBehaviour
             data.side = message.side;
             data.nodeID = nodeID;
             data.connID = connID;
-            data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }
-
-    /// <summary>
-    /// AI notification of Player (use default actorID 999) or actor being captured at a node
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="nodeID"></param>
-    /// <param name="teamID"></param>
-    /// <param name="actorID"></param>
-    /// <returns></returns>
-    public Message AICapture(string text, Node node, Team team, int actorID = 999)
-    {
-        Debug.Assert(node != null, "Invalid Node (Null)");
-        Debug.Assert(team != null, "Invalid team (Null)");
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.AI;
-            message.subType = MessageSubType.AI_Capture;
-            message.side = globalBoth;
-            message.isPublic = true;
-            message.data0 = node.nodeID;
-            message.data1 = team.teamID;
-            message.data2 = actorID;
-            //ItemData
-            ItemData data = new ItemData();
-            string playerName = GameManager.instance.playerScript.PlayerName;
-            if (actorID == 999)
-            {
-                //player captured
-                data.itemText = string.Format("{0}, Player, has been CAPTURED", playerName);
-                data.topText = "Player Captured";
-                data.bottomText = GameManager.instance.itemDataScript.GetAICaptureDetails(playerName, "Player", node, team);
-            }
-            else
-            {
-                //actor captured
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
-                if (actor != null)
-                {
-                    data.itemText = string.Format("{0}, {1}, has been CAPTURED", actor.actorName, actor.arc.name);
-                    data.topText = string.Format("{0} Captured", actor.arc.name);
-                    data.bottomText = GameManager.instance.itemDataScript.GetAICaptureDetails(actor.actorName, actor.arc.name, node, team);
-                }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
-            }
-            data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.capturedSprite;
-            data.tab = ItemTab.ALERTS;
-            data.side = message.side;
-            data.nodeID = node.nodeID;
-            data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }
-
-    /// <summary>
-    /// warning, eg. Actor can be captured 'cause invisibility zero -> InfoApp effect
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="detailsTop"></param>
-    /// <param name="detailsBottom"></param>
-    /// <param name="sprite"></param>
-    /// <param name="actorID"></param>
-    /// <param name="node"></param>
-    /// <returns></returns>
-    public Message ActorWarningOngoing(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID)
-    {
-        Debug.Assert(sprite != null, "Invalid spirte (Null)");
-        Debug.Assert(actorID > -1, "Invalid actorID (less than Zero)");
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.ONGOING;
-            message.subType = MessageSubType.Ongoing_Warning;
-            message.side = GameManager.instance.sideScript.PlayerSide;
-            message.isPublic = true;
-            message.data0 = actorID;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = text;
-            data.topText = "Warning";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorWarningOngoingDetails(detailsTop, detailsBottom);
-            data.priority = ItemPriority.Low;
-            data.sprite = sprite;
-            data.tab = ItemTab.Effects;
-            data.side = message.side;
-            data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }
-
-    /// <summary>
-    /// AI notification of Player or Actor (Resistance) being released from capture
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="nodeID"></param>
-    /// <param name="actorID"></param>
-    /// <returns></returns>
-    public Message AIRelease(string text, Node node, int actorID = 999)
-    {
-        Debug.Assert(node != null, "Invalid Node (Null)");
-        Debug.Assert(actorID >= 0, string.Format("Invalid actorID {0}", actorID));
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.AI;
-            message.subType = MessageSubType.AI_Capture;
-            message.side = globalBoth;
-            message.isPublic = true;
-            message.data0 = node.nodeID;
-            message.data1 = actorID;
-            //ItemData
-            ItemData data = new ItemData();
-            string playerName = GameManager.instance.playerScript.PlayerName;
-            if (actorID == 999)
-            {
-                //player captured
-                data.itemText = string.Format("{0}, Player, has been RELEASED", playerName);
-                data.topText = "Player Released";
-                data.bottomText = GameManager.instance.itemDataScript.GetAIReleaseDetails(playerName, "Player", node);
-            }
-            else
-            {
-                //actor captured
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
-                if (actor != null)
-                {
-                    data.itemText = string.Format("{0}, {1}, has been RELEASED", actor.actorName, actor.arc.name);
-                    data.topText = string.Format("{0} Released", actor.arc.name);
-                    data.bottomText = GameManager.instance.itemDataScript.GetAIReleaseDetails(actor.actorName, actor.arc.name, node);
-                }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
-            }
-            data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.releasedSprite;
-            data.tab = ItemTab.ALERTS;
-            data.side = message.side;
-            data.nodeID = node.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);

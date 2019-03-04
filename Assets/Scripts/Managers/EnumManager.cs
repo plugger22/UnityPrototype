@@ -170,6 +170,7 @@
         Actor_Reassured,
         Actor_Conflict,
         Actor_Trait,
+        Actor_Captured,
         //Contact
         Contact_Change,
         Contact_Target_Rumour,
@@ -224,9 +225,9 @@
     {
         None,
         StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
-        PlayerBreakdown, PlayerLieLow, PlayerCaptured,
+        PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
         TargetAttempts, TargetSuccesses,
-        actorsResignedAuthority, actorsResignedResistance
+        actorsResignedAuthority, actorsResignedResistance, actorResistanceTraitors
         
     }
 
