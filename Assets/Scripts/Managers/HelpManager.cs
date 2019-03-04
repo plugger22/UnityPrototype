@@ -273,7 +273,37 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("How can you tell if a subordinate is a {0}TRAITOR{1}? You can't. Any leaks could be coming from Rebel HQ but if they become more frequent, take a hard look at any {2}QUESTIONABLE{3} subordinates",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-
+        //
+        // - - - Questionable Condition
+        //
+        //Over
+        data = new HelpData();
+        data.tag = "questionable_0";
+        data.header = "Questionable Condition";
+        data.text = string.Format("Whenever you, or one of your subordinates, are {0}Captured{1}, you become QUESTIONABLE. People wonder if you've secretly become an {2}informant for the Authority{3}. Your loyalty is in quesiton",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //player
+        data = new HelpData();
+        data.tag = "questionable_1";
+        data.header = "Questionable Player";
+        data.text = string.Format("Rebel HQ and your subordinates will {0}doubt your Loyalty{1} to the cause. Your approval with Rebel HQ may suffer and your subordinates may {2}Resign{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //actor
+        data = new HelpData();
+        data.tag = "questionable_2";
+        data.header = "Questionable Subordinate";
+        data.text = string.Format("There is a chance that the subordinate secretly becomes a {0}Traitor{1} and will, from time to time, {2}inform the Authority{3} of the Player's whereabouts.",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "questionable_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("You can ask Rebel HQ to quietly {0}Dispose Of{1} a QUESTIONABLE subordinate at {2}no cost{3} in Renown if you suspect that they might be a traitor",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         //return help
         return listOfHelp;
 

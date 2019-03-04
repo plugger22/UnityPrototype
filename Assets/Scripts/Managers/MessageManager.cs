@@ -787,6 +787,19 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.side = message.side;
             data.help = 1;
+            if (condition != null)
+            {
+                //tooltip
+                switch (condition.name)
+                {
+                    case "QUESTIONABLE":
+                        data.tag0 = "questionable_0";
+                        data.tag1 = "questionable_1";
+                        data.tag2 = "questionable_2";
+                        data.tag3 = "questionable_3";
+                        break;
+                }
+            }
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
