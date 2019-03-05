@@ -181,6 +181,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<Quality>(GameManager.instance.loadScript.arrayOfQualities);
         //Condition
         ValidateSOGeneric<Condition>(GameManager.instance.loadScript.arrayOfConditions);
+        //Cure
+        ValidateSOGeneric<Cure>(GameManager.instance.loadScript.arrayOfCures);
         //TraitCategory
         ValidateSOGeneric<TraitCategory>(GameManager.instance.loadScript.arrayOfTraitCategories);
         //TraitEffect

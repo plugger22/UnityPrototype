@@ -14364,6 +14364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0c0a05a2588a340ac40c972ce72e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxOptions: 3
   modalGenericObject: {fileID: 978518015}
   modalPanelObject: {fileID: 205246893}
   modalPanel: {fileID: 205246897}

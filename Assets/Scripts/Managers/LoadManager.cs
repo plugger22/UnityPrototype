@@ -39,6 +39,7 @@ public class LoadManager : MonoBehaviour
 
     [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
+    public Cure[] arrayOfCures;
     public TraitCategory[] arrayOfTraitCategories;
     public TraitEffect[] arrayOfTraitEffects;
     public SecretType[] arrayOfSecretTypes;
@@ -358,6 +359,36 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Condition Load -> array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Conditions present"); }
+        //
+        // - - - Cures - - -
+        //
+        counter = 0;
+        numArray = arrayOfCures.Length;
+        if (numArray > 0)
+        {
+            Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based unique ID number
+                Cure cure = arrayOfCures[i];
+                if (cure != null)
+                {
+                    //assign a unique zero based ID
+                    cure.cureID = counter++;
+                    //add to dictionary
+                    try
+                    { dictOfCures.Add(cure.name, cure); }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid Cure (duplicate) \"{0}\"", cure.name)); }
+                }
+                else { Debug.LogErrorFormat("Invalid Cure (Null) for arrayOfCures[\"{0}\"]", i); }
+            }
+            numDict = dictOfCures.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfCures has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on Cure Load -> array {0}, dict {1}", numArray, numDict));
+            Debug.Assert(counter == numDict, string.Format("Mismatch on Cure Load -> counter (ID) {0}, dict {1}", counter, numDict));
+        }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Cures present"); }
         //
         // - - - TraitCategories - - -
         //

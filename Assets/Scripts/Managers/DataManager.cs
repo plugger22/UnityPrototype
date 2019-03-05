@@ -200,6 +200,7 @@ public class DataManager : MonoBehaviour
 
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
+    private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                          //Key -> Cure.name, Value -> Cure
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
 
     //
@@ -5103,6 +5104,10 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfConditions (Null)"); }
         return dictOfConditionsByType;
     }
+
+
+    public Dictionary<string, Cure> GetDictOfCures()
+    { return dictOfCures; }
 
     /// <summary>
     /// Returns ManageAction SO, Null if not found in dictionary

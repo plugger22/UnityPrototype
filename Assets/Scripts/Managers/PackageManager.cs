@@ -315,7 +315,7 @@ namespace packageAPI
     /// </summary>
     public class PathData
     {
-        public int[] pathArray;                  //nodeID index, path back to source node via lookup
+        public int[] pathArray;                //nodeID index, path back to source node via lookup
         public int[] distanceArray;            //nodeID index, distance back to source node assuming unweighted (1 each) connections
 
         /// <summary>
