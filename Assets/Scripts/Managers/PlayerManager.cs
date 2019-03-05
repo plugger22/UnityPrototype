@@ -599,7 +599,11 @@ public class PlayerManager : MonoBehaviour
                     listOfConditions.Add(condition);
                     //special conditions
                     if (condition.name.Equals(conditionDoomed.name) == true)
-                    { GameManager.instance.actorScript.SetDoomTimer(); }
+                    {
+                        GameManager.instance.actorScript.SetDoomTimer();
+                        GameManager.instance.nodeScript.SetCureNode(conditionDoomed.cure);
+                    }
+
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                     {

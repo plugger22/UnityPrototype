@@ -50,6 +50,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public NodeCrisis crisis = null;             //type of Nodecrisis, eg. "Riot"
 
     [HideInInspector] public LoiterData loiter;         //pre-configured data at game start to aid nemesis moving to the nearest loiter node
+    [HideInInspector] public Cure cure = null;          //cure node (condition). Null if none.
 
 
     private Coroutine myCoroutine;

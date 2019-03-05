@@ -31,6 +31,7 @@ public class DataManager : MonoBehaviour
     private List<Node> listOfMostConnectedNodes = new List<Node>();                             //top connected nodes (3+ connections), used by AI for ProcessSpiderTeam
     private List<Node> listOfDecisionNodes = new List<Node>();                                  //dynamic list of nodes used for connection security level decisions
     private List<Node> listOfLoiterNodes = new List<Node>();                                    //nodes where the nemesis can go to and wait until something happens
+    private List<Node> listOfCureNodes = new List<Node>();
     private List<Node> listOfCrisisNodes = new List<Node>();
     private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
@@ -2141,6 +2142,28 @@ public class DataManager : MonoBehaviour
 
     public List<Node> GetListOfLoiterNodes()
     { return listOfLoiterNodes; }
+
+    public List<Node> GetListOfCureNodes()
+    { return listOfCureNodes; }
+
+    /// <summary>
+    /// add cure to listOfCures, checking for existing duplicates first
+    /// </summary>
+    /// <param name="node"></param>
+    public void AddCureNode(Node node)
+    {
+        if (node != null)
+        {
+            if (node.cure != null)
+            {
+                if (listOfCureNodes.Exists(x => x.cure.cureID == node.cure.cureID) == false)
+                { listOfCureNodes.Add(node); }
+                else { Debug.LogWarningFormat("Invalid {0} cure (Duplicate) in listOfCures", node.cure.cureName); }
+            }
+            else { Debug.LogWarningFormat("Invalid cure (Null) for node {0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID); }
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+    }
 
     public List<Node> GetListOfDecisionNodes()
     { return listOfDecisionNodes; }

@@ -66,7 +66,6 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
 
-    private int[] arrayOfCureNodes;                                 //nodeID's where cures are available for Player conditions, default -1 values. Index is Cure.coreID
 
     private bool isFlashOn = false;                                 //used for flashing Node coroutine
     private bool showPlayerNode = true;         
@@ -147,10 +146,6 @@ public class NodeManager : MonoBehaviour
 
     public void Initialise()
     {
-        //collections
-        arrayOfCureNodes = new int[GameManager.instance.loadScript.arrayOfCures.Length];
-        for (int i = 0; i < arrayOfCureNodes.Length; i++)
-        { arrayOfCureNodes[i] = -1; }
         //Set node contact flags (player side & non-player side)
         GameManager.instance.contactScript.UpdateNodeContacts();
         GameManager.instance.contactScript.UpdateNodeContacts(false);
@@ -302,6 +297,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.NearNeighbours:
                     case NodeUI.DecisionNodes:
                     case NodeUI.LoiterNodes:
+                    case NodeUI.CureNodes:
                     case NodeUI.CrisisNodes:
                     case NodeUI.NodeArc0:
                     case NodeUI.NodeArc1:
@@ -729,6 +725,29 @@ public class NodeManager : MonoBehaviour
                 {
                     Debug.LogWarning("Invalid loiterList (Null)");
                     displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Loiter districts", colourEnd);
+                }
+                break;
+            case NodeUI.CureNodes:
+                List<Node> cureList = GameManager.instance.dataScript.GetListOfCureNodes();
+                if (cureList != null)
+                {
+                    if (cureList.Count > 0)
+                    {
+                        foreach (Node node in cureList)
+                        {
+                            if (node != null)
+                            { node.SetMaterial(materialActive); }
+                            else { Debug.LogWarning("Invalid node (Null)"); }
+                        }
+                        displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, cureList.Count, colourEnd, colourHighlight,
+                            cureList.Count != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid cureList (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Can't find Cure districts", colourEnd);
                 }
                 break;
             case NodeUI.DecisionNodes:
@@ -2407,7 +2426,17 @@ public class NodeManager : MonoBehaviour
         int nodeID = GetCureNode(cure);
         if (nodeID > -1)
         {
-
+            //set
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            {
+                if (node != null)
+                {
+                    node.cure = cure;
+                    GameManager.instance.dataScript.AddCureNode(node);
+                    Debug.LogFormat("[Nod] NodeManager.cs -> SetCureNode: {0} cure set at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+            }
         }
         else { Debug.LogErrorFormat("Invalid Cure nodeID (-1) for \"{0}\", distance {1}", cure.cureName, cure.distance); }
     }
@@ -2434,12 +2463,17 @@ public class NodeManager : MonoBehaviour
                     int[] arrayOfDistances = data.distanceArray;
                     //get exclusion list of nodes currently with a cure
                     List<int> listOfExclusion = new List<int>();
-                    for (int i = 0; i < arrayOfCureNodes.Length; i++)
+                    List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
+                    if (listOfCureNodes != null)
                     {
-                        if (arrayOfCureNodes[i] > -1)
-                        { listOfExclusion.Add(arrayOfCureNodes[i]); }
+                        for (int i = 0; i < listOfCureNodes.Count; i++)
+                        {
+                            if (listOfCureNodes[i] != null)
+                            { listOfExclusion.Add(listOfCureNodes[i].nodeID); }
+                            else { Debug.LogErrorFormat("Invalid node (Null) for listOfCureNodes[{0}]", i); }
+                        }
                     }
-
+                    else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
                     //get max distance possible from Resistance Player's current node
                     furthestDistance = arrayOfDistances.Max();
                     //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
