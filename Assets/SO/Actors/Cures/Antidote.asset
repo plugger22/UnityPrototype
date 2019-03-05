@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: d2b98e75e09328b4da5ffe7da355afe0, type: 2}
   cureName: Antidote
-  level: 0
+  distance: 7
+  cureID: 0

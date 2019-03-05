@@ -469,12 +469,24 @@ public class Node : MonoBehaviour
                         else { showSpider = true; }
                     }
                     //
+                    // - - - Cure
+                    //
+                    string specialText;
+                    //combined with special Text
+                    if (cure != null)
+                    {
+                        if (string.IsNullOrEmpty(specialName) == false)
+                        { specialText = string.Format("{0}{1}{2}", specialName, "\n", cure.cureName); }
+                        else { specialText = cure.cureName; }
+                    }
+                    else { specialText = specialName; }
+                    //
                     // - - Data package
                     //
                     NodeTooltipData dataTooltip = new NodeTooltipData()
                     {
                         nodeName = textName,
-                        specialName = specialName,
+                        specialName = specialText,
                         type = textType,
                         isTargetKnown = isTargetKnown,
                         isTracer = isTracer,

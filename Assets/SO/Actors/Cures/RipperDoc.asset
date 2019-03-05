@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: RipperDoc
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: 8a92e519a923a9640bf583dcb18ef65b, type: 2}
-  cureName: RipperDoc
-  distance: 4
+  cureName: Ripper Doc
+  distance: 5
   cureID: 1

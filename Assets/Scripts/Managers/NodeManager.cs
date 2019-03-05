@@ -2512,7 +2512,12 @@ public class NodeManager : MonoBehaviour
                         {
                             //not on exclusion list
                             if (listOfExclusion.Exists(x => x == index) == false)
-                            { cureNodeID = index; break; }
+                            {
+                                Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: Straight Match for {0} cure, nodeID {1}, distance {2} (actual {3}){4}", 
+                                    cure.cureName, index, cure.distance, actualDistance, "\n");
+                                cureNodeID = index;
+                                break;
+                            }
                         }
                     }
                     //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
@@ -2532,7 +2537,12 @@ public class NodeManager : MonoBehaviour
                                     {
                                         //not on exclusion list
                                         if (listOfExclusion.Exists(x => x == index) == false)
-                                        { cureNodeID = index; break; }
+                                        {
+                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE UP for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
+                                                cure.cureName, index, cure.distance, actualDistance, "\n");
+                                            cureNodeID = index;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (cureNodeID > -1) { break; }
@@ -2553,7 +2563,12 @@ public class NodeManager : MonoBehaviour
                                     {
                                         //not on exclusion list
                                         if (listOfExclusion.Exists(x => x == index) == false)
-                                        { cureNodeID = index; break; }
+                                        {
+                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE DOWN for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
+                                                cure.cureName, index, cure.distance, actualDistance, "\n");
+                                            cureNodeID = index;
+                                            break;
+                                        }
                                     }
                                 }
                                 if (cureNodeID > -1) { break; }

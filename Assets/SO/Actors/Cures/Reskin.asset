@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Name: Reskin
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: c376ab92e7aa96643a05ed6f291a0c4a, type: 2}
-  cureName: Reskin
-  level: 0
+  cureName: Reskin Shop
+  distance: 5
+  cureID: 3
