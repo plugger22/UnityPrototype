@@ -2398,16 +2398,32 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// sets a cure node and handles all admin
+    /// </summary>
+    /// <param name="cure"></param>
+    /// <returns></returns>
+    public void SetCureNode(Cure cure)
+    {
+        int nodeID = GetCureNode(cure);
+        if (nodeID > -1)
+        {
+
+        }
+        else { Debug.LogErrorFormat("Invalid Cure nodeID (-1) for \"{0}\", distance {1}", cure.cureName, cure.distance); }
+    }
+
+    /// <summary>
     /// finds a random node, 'x' distance links away from the Resistance Player's current location (may end up being less), one that doesn't already have a cure. Returns -1 if a problem
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    private int SetCureNode(Cure cure, int distance)
+    private int GetCureNode(Cure cure)
     {
         int cureNodeID = -1;
+        int requiredDistance = cure.distance;
         int furthestDistance = 0;
         int actualDistance = 0;
-        Debug.Assert(distance > 0, "Invalid distance (must be at least One)");
+        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
         if (cure != null)
         {
             PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodePlayer);
@@ -2415,6 +2431,7 @@ public class NodeManager : MonoBehaviour
             {
                 if (data.distanceArray != null)
                 {
+                    int[] arrayOfDistances = data.distanceArray;
                     //get exclusion list of nodes currently with a cure
                     List<int> listOfExclusion = new List<int>();
                     for (int i = 0; i < arrayOfCureNodes.Length; i++)
@@ -2424,16 +2441,16 @@ public class NodeManager : MonoBehaviour
                     }
 
                     //get max distance possible from Resistance Player's current node
-                    furthestDistance = data.distanceArray.Max();
+                    furthestDistance = arrayOfDistances.Max();
                     //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
-                    actualDistance = Mathf.Min(furthestDistance, distance);
+                    actualDistance = Mathf.Min(furthestDistance, requiredDistance);
                     //loop distance Array and find first node that is that distance, or greater, and one that doesn't currently have a cure location
-                    for (int i = 0; i < data.distanceArray.Length; i++)
+                    for (int i = 0; i < arrayOfDistances.Length; i++)
                     {
-                        if (data.distanceArray[i] == actualDistance)
+                        if (arrayOfDistances[i] == actualDistance)
                         {
                             //not on exclusion list
-                            if (listOfExclusion.Exists(x => x == data.distanceArray[i]) == false)
+                            if (listOfExclusion.Exists(x => x == arrayOfDistances[i]) == false)
                             { cureNodeID = i; break; }
                         }
                     }
@@ -2448,12 +2465,12 @@ public class NodeManager : MonoBehaviour
                             {
                                 tempDistance++;
                                 //search on new distance criteria
-                                for (int i = 0; i < data.distanceArray.Length; i++)
+                                for (int i = 0; i < arrayOfDistances.Length; i++)
                                 {
-                                    if (data.distanceArray[i] == tempDistance)
+                                    if (arrayOfDistances[i] == tempDistance)
                                     {
                                         //not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == data.distanceArray[i]) == false)
+                                        if (listOfExclusion.Exists(x => x == arrayOfDistances[i]) == false)
                                         { cureNodeID = i; break; }
                                     }
                                 }
@@ -2469,12 +2486,12 @@ public class NodeManager : MonoBehaviour
                             {
                                 tempDistance--;
                                 //search on new distance criteria
-                                for (int i = 0; i < data.distanceArray.Length; i++)
+                                for (int i = 0; i < arrayOfDistances.Length; i++)
                                 {
-                                    if (data.distanceArray[i] == tempDistance)
+                                    if (arrayOfDistances[i] == tempDistance)
                                     {
                                         //not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == data.distanceArray[i]) == false)
+                                        if (listOfExclusion.Exists(x => x == arrayOfDistances[i]) == false)
                                         { cureNodeID = i; break; }
                                     }
                                 }
