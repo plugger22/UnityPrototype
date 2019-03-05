@@ -1253,6 +1253,66 @@ public class ActionManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Process cure for a player condition (Resistance only)
+    /// </summary>
+    /// <param name="details"></param>
+    private void ProcessPlayerCure(ModalActionDetails details)
+    {
+        bool errorFlag = false;
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        //default data 
+        outcomeDetails.side = details.side;
+        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        if (details != null)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
+            if (actor != null)
+            {
+                string title = "";
+                if (details.side == GameManager.instance.globalScript.sideAuthority)
+                { title = string.Format(" {0} ", GameManager.instance.metaScript.GetAuthorityTitle()); }
+
+                //Reactivate actor
+                actor.Status = ActorStatus.Active;
+                actor.inactiveStatus = ActorInactive.None;
+                actor.tooltipStatus = ActorTooltip.None;
+                outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
+                outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
+                outcomeDetails.sprite = actor.arc.sprite;
+                //message
+                string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
+                GameManager.instance.messageScript.ActorStatus(text, "Recalled", "has been Recalled", actor.actorID, details.side);
+                //update contacts
+                GameManager.instance.contactScript.UpdateNodeContacts();
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+
+        if (errorFlag == true)
+        {
+            //fault, pass default data to Outcome window
+            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
+            outcomeDetails.textBottom = "Bad, all Bad";
+        }
+        else
+        {
+            //change alpha of actor to indicate inactive status
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
+        }
+        //action (if valid) expended -> must be BEFORE outcome window event
+        if (errorFlag == false)
+        {
+            outcomeDetails.isAction = true;
+            outcomeDetails.reason = "Activate Actor";
+        }
+        //generate a create modal window event
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
+    }
+
 
     /// <summary>
     /// Process Activate actor action (Resistance only at present but set up for both sides)
@@ -3102,6 +3162,26 @@ public class ActionManager : MonoBehaviour
 
     public string GetPlayerActionMenuHeader()
     { return string.Format("{0}Personal Actions{1}", colourResistance, colourEnd); }
+
+
+    /// <summary>
+    /// Default data set for outcome if a problem
+    /// </summary>
+    /// <param name="details"></param>
+    /// <returns></returns>
+    private ModalOutcomeDetails SetDefaultOutcome(ModalActionDetails details)
+    {
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        if (details != null)
+        {
+            //default data 
+            outcomeDetails.side = details.side;
+            outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
+            outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
+            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        }
+        return outcomeDetails;
+    }
 
     //methods above here
 }

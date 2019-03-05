@@ -343,7 +343,7 @@ public class NodeManager : MonoBehaviour
                 CreateMoveMenu((int)Param);
                 break;
             case EventType.CreateGearNodeMenu:
-                CreateGearNodeMenu((int)Param);
+                CreateSpecialNodeMenu((int)Param);
                 break;
             case EventType.MoveAction:
                 ModalMoveDetails details = Param as ModalMoveDetails;
@@ -1446,10 +1446,10 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Right Click the Resistance Player's current node -> gear actions
+    /// Right Click the Resistance Player's current node -> special actions (Gear & Cure)
     /// </summary>
     /// <param name="nodeID"></param>
-    private void CreateGearNodeMenu(int nodeID)
+    private void CreateSpecialNodeMenu(int nodeID)
     {
         Debug.LogFormat("[UI] NodeManager.cs -> CreateGearNodeMenu{0}", "\n");
         int counter = 0;                    //num of gear that can be used
@@ -1787,6 +1787,29 @@ public class NodeManager : MonoBehaviour
                     }
                 }
                 //
+                // - - - Cure - - -
+                //
+                //if node has an active cure then it must be required for one of the Player's conditions
+                if (node.cure != null)
+                {
+                    ModalActionDetails cureActionDetails = new ModalActionDetails();
+                    cureActionDetails.side = GameManager.instance.globalScript.sideResistance;
+                    cureActionDetails.nodeID = nodeID;
+                    cureActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                    cureActionDetails.renownCost = 0;
+                    EventButtonDetails cureDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = node.cure.cureName,
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "Cure Condition", colourEnd),
+                        buttonTooltipMain = string.Format("Remove your {0} condition", node.cure.condition.name),
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, node.cure.tooltipText, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.CurePlayerAction, this, cureActionDetails, "NodeManager.cs -> CreateGearMenu"); }
+                    };
+                    //add Activate button to list
+                    tempList.Add(cureDetails);
+                }
+                //
                 // - - - Cancel
                 //
                 //Cancel button is added last
@@ -1858,8 +1881,8 @@ public class NodeManager : MonoBehaviour
         ModalPanelDetails details = new ModalPanelDetails()
         {
             itemID = nodeID,
-            itemName = node.nodeName,
-            itemDetails = string.Format("{0}District Gear Actions{1}", colourResistance, colourEnd),
+            itemName = string.Format("{0}", node.nodeName),
+            itemDetails = string.Format("{0}District Special Actions{1}", colourResistance, colourEnd),
             itemPos = node.transform.position,
             listOfButtonDetails = tempList,
             menuType = ActionMenuType.NodeGear
@@ -2539,7 +2562,7 @@ public class NodeManager : MonoBehaviour
                                         if (listOfExclusion.Exists(x => x == index) == false)
                                         {
                                             Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE UP for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                                cure.cureName, index, cure.distance, actualDistance, "\n");
+                                                cure.cureName, index, cure.distance, tempDistance, "\n");
                                             cureNodeID = index;
                                             break;
                                         }
@@ -2565,7 +2588,7 @@ public class NodeManager : MonoBehaviour
                                         if (listOfExclusion.Exists(x => x == index) == false)
                                         {
                                             Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE DOWN for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                                cure.cureName, index, cure.distance, actualDistance, "\n");
+                                                cure.cureName, index, cure.distance, tempDistance, "\n");
                                             cureNodeID = index;
                                             break;
                                         }

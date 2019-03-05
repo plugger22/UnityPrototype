@@ -13,5 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: d2b98e75e09328b4da5ffe7da355afe0, type: 2}
   cureName: Antidote
-  distance: 7
+  distance: 1
+  tooltipText: Rebel HQ have sourced a rogue bioGeneticist who is anxiously waiting
+    here for you with a smuggled antidote.
   cureID: 0

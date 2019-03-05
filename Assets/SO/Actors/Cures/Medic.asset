@@ -13,5 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: 95c716c635b9cc5438a8e737e366e310, type: 2}
   cureName: Medic
-  distance: 7
+  distance: 1
+  tooltipText: It's not easy to source a sympathetic Medical practitioner who has
+    access to the necessary equipment. One is waiting here for you now
   cureID: 2

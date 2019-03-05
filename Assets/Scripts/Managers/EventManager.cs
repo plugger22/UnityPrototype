@@ -59,6 +59,7 @@ public enum EventType
     LieLowPlayerAction,
     ActivateActorAction,
     ActivatePlayerAction,
+    CurePlayerAction,
     GiveGearAction,
     TakeGearAction,
     UseGearAction,

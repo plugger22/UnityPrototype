@@ -1889,7 +1889,6 @@ public class ActorManager : MonoBehaviour
                         }
                     }
                     else { Debug.LogWarning("Invalid listOfGearID (Null)"); }
-
                     //
                     // - - - Lie Low - - -
                     //
