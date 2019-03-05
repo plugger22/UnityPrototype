@@ -23,6 +23,8 @@ public class Condition : ScriptableObject
     public GlobalType bottomTextTypeActor;
     [Tooltip("Determines the colour of the bottomText in the InfoApp (can be different from 'type')")]
     public GlobalType bottomTextTypePlayer;
+    [Tooltip("If there is a node based cure for this Condition (ignore otherwise) specify here")]
+    public Cure cure;
     [Tooltip("[Actor] is now 'a' STAR, -> the 'a' is included if True, ignored otherwise")]
     public bool isNowA;
 }

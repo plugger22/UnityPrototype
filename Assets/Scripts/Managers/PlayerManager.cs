@@ -45,7 +45,9 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionIncompetent;
     private Condition conditionQuestionable;
     private Condition conditionDoomed;
-    
+    private Condition conditionTagged;
+    private Condition conditionWounded;
+    private Condition conditionImaged;
 
     
 
@@ -146,6 +148,9 @@ public class PlayerManager : MonoBehaviour
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
+        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+        conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
+        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
@@ -154,6 +159,9 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
+        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+        Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
+        Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
         //place Player in a random start location (Sprawl node)
         InitialisePlayerStartNode();
         //set stats
@@ -598,12 +606,22 @@ public class PlayerManager : MonoBehaviour
                 {
                     listOfConditions.Add(condition);
                     //special conditions
-                    if (condition.name.Equals(conditionDoomed.name) == true)
+                    switch (condition.name)
                     {
+                        case "DOOMED":
                         GameManager.instance.actorScript.SetDoomTimer();
-                        GameManager.instance.nodeScript.SetCureNode(conditionDoomed.cure);
-                    }
-
+                        GameManager.instance.nodeScript.AddCureNode(conditionDoomed.cure);
+                            break;
+                        case "TAGGED":
+                            GameManager.instance.nodeScript.AddCureNode(conditionTagged.cure);
+                            break;
+                        case "WOUNDED":
+                            GameManager.instance.nodeScript.AddCureNode(conditionWounded.cure);
+                            break;
+                        case "IMAGED":
+                            GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
+                            break;
+                    }               
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                     {
@@ -682,9 +700,23 @@ public class PlayerManager : MonoBehaviour
                                 string msgText = string.Format("{0} Player, {1}, condition \"{2}\" removed", side.name, GetPlayerName(side), condition.name);
                                 GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason, isResistance);
                             }
-                            //Special case -> Doomed condition
-                            if (condition.name.Equals(conditionDoomed.name) == true)
-                            { GameManager.instance.actorScript.StopDoomTimer(); }
+                            //special conditions
+                            switch (condition.name)
+                            {
+                                case "DOOMED":
+                                    GameManager.instance.actorScript.StopDoomTimer();
+                                    GameManager.instance.nodeScript.RemoveCureNode(conditionDoomed.cure);
+                                    break;
+                                case "TAGGED":
+                                    GameManager.instance.nodeScript.RemoveCureNode(conditionTagged.cure);
+                                    break;
+                                case "WOUNDED":
+                                    GameManager.instance.nodeScript.RemoveCureNode(conditionWounded.cure);
+                                    break;
+                                case "IMAGED":
+                                    GameManager.instance.nodeScript.RemoveCureNode(conditionImaged.cure);
+                                    break;
+                            }
                             return true;
                         }
                     }
@@ -924,6 +956,7 @@ public class PlayerManager : MonoBehaviour
         { builder.Append(string.Format(" Invisibility {0}{1}", Invisibility, "\n")); }
         builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
         if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
+        //Conditions
         if (listOfConditions != null)
         {
             builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
@@ -935,6 +968,19 @@ public class PlayerManager : MonoBehaviour
             else { builder.AppendFormat(" None{0}", "\n"); }
         }
         else { Debug.LogError("Invalid listOfConditions (Null)"); }
+        //Cures
+        List<Node> listOfCures = GameManager.instance.dataScript.GetListOfCureNodes();
+        if (listOfCures != null)
+        {
+            builder.Append(string.Format("{0}- Cures{1}", "\n", "\n"));
+            if (listOfCures.Count > 0)
+            {
+                for (int i = 0; i < listOfCures.Count; i++)
+                { builder.AppendFormat(" {0} at {1}, {2}, ID {3}{4}", listOfCures[i].cure.cureName, listOfCures[i].nodeName, listOfCures[i].Arc.name, listOfCures[i].nodeID, "\n"); }
+            }
+            else { builder.AppendFormat(" None{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfCures (Null)"); }
         builder.Append(string.Format("{0}- States{1}", "\n", "\n"));
         builder.Append(string.Format(" Status {0}{1}", status, "\n"));
         builder.Append(string.Format(" InactiveStatus {0}{1}", inactiveStatus, "\n"));

@@ -3840,6 +3840,39 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Debug method to remove a condition to an actor (debug input). Both sides.
+    /// </summary>
+    /// <param name="what"></param>
+    /// <param name="who"></param>
+    /// <returns></returns>
+    public string DebugRemoveCondition(string what, string who)
+    {
+        Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
+        string text = "";
+        //Condition
+        Condition condition = GameManager.instance.dataScript.GetCondition(what.ToUpper());
+        if (condition != null)
+        {
+            //Who to? (0 to 3 actorSlotID's and 'p' or 'P' for Player
+            switch (who)
+            {
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                    text = DebugRemoveConditionToActor(Convert.ToInt32(who), condition);
+                    break;
+                case "p":
+                case "P":
+                    text = DebugRemoveConditionToPlayer(condition);
+                    break;
+            }
+        }
+        else { text = "Input Condition is INVALID and is NOT removed"; }
+        return text;
+    }
+
+    /// <summary>
     /// subMethod for DebugAddCondition to add a condition to the player. Returns a string indicating success, or otherwise
     /// </summary>
     /// <param name="condition"></param>
@@ -3861,12 +3894,67 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// subMethod for DebugRemoveCondition to remove a condition to the player. Returns a string indicating success, or otherwise
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private string DebugRemoveConditionToPlayer(Condition condition)
+    {
+        Debug.Assert(condition != null, "Invalid Condition (Null)");
+        string text = "Unknown";
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //does actor already have the condition?
+        if (GameManager.instance.playerScript.CheckConditionPresent(condition, side) == true)
+        {
+            //remove condition
+            GameManager.instance.playerScript.RemoveCondition(condition, side, "Debug action");
+            text = string.Format("Condition {0} removed from Player", condition.name);
+        }
+        else { text = string.Format("Player DOES NOT already have Condition {0}", condition.name); }
+        return string.Format("{0}{1}Press ESC to Exit", text, "\n");
+    }
+
+    /// <summary>
     /// subMethod for DebugAddCondition to add a condition to an actor and return a string indicating success, or otherwise
     /// </summary>
     /// <param name="slotID"></param>
     /// <param name="condition"></param>
     /// <returns></returns>
     private string DebugAddConditionToActor(int actorSlotID, Condition condition)
+    {
+        Debug.Assert(actorSlotID > -1 && actorSlotID < maxNumOfOnMapActors, string.Format("Invalid actorSlotID {0}", actorSlotID));
+        Debug.Assert(condition != null, "Invalid Condition (Null)");
+        string text = "Unknown";
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        //Get actor
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+            if (actor != null)
+            {
+                //does actor already have the condition?
+                if (actor.CheckConditionPresent(condition) == true)
+                {
+                    //add condition
+                    if (actor.RemoveCondition(condition, "Debug Action") == true)
+                    { text = string.Format("Condition {0} removed from {1}, {2}", condition.name, actor.arc.name, actor.actorName); }
+                    else { text = string.Format("Condition {0} NOT removed", condition.name); }
+                }
+                else { text = string.Format("{0} DOES NOT already have Condition {1}", actor.arc.name, condition.name); }
+            }
+            else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
+        }
+        else { text = string.Format("There is no Actor Present in Slot {0}", actorSlotID); }
+        return string.Format("{0}{1}Press ESC to Exit", text, "\n");
+    }
+
+    /// <summary>
+    /// subMethod for DebugRemoveCondition to remove a condition to an actor and return a string indicating success, or otherwise
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private string DebugRemoveConditionToActor(int actorSlotID, Condition condition)
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < maxNumOfOnMapActors, string.Format("Invalid actorSlotID {0}", actorSlotID));
         Debug.Assert(condition != null, "Invalid Condition (Null)");

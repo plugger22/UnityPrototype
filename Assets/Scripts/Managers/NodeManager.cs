@@ -696,7 +696,7 @@ public class NodeManager : MonoBehaviour
                         displayText = string.Format("{0}{1}{2}{3} Most Connected district{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
                             connectedList.Count != 1 ? "s" : "", colourEnd);
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "0 Most Connected Districts present", colourEnd); }
                 }
                 else
                 {
@@ -719,7 +719,7 @@ public class NodeManager : MonoBehaviour
                         displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, loiterList.Count, colourEnd, colourHighlight,
                             loiterList.Count != 1 ? "s" : "", colourEnd);
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "0 Loiter Districts present", colourEnd); }
                 }
                 else
                 {
@@ -739,10 +739,10 @@ public class NodeManager : MonoBehaviour
                             { node.SetMaterial(materialActive); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, cureList.Count, colourEnd, colourHighlight,
+                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourDefault, cureList.Count, colourEnd, colourHighlight,
                             cureList.Count != 1 ? "s" : "", colourEnd);
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "0 Cure Districts present", colourEnd); }
                 }
                 else
                 {
@@ -766,7 +766,7 @@ public class NodeManager : MonoBehaviour
                         displayText = string.Format("{0}{1}{2}{3} Decision district{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
                             decisionList.Count != 1 ? "s" : "", colourEnd);
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "0 Decision Districts present", colourEnd); }
                 }
                 else
                 {
@@ -792,7 +792,7 @@ public class NodeManager : MonoBehaviour
                         displayText = string.Format("{0}{1}{2}{3} Crisis district{4}{5}", colourDefault, crisisList.Count, colourEnd, colourHighlight,
                             crisisList.Count != 1 ? "s" : "", colourEnd);
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "0 Crisis Districts present", colourEnd); }
                 }
                 else
                 {
@@ -820,7 +820,7 @@ public class NodeManager : MonoBehaviour
                             displayText = string.Format("{0}{1}{2}{3} Near Neighbouring district{4}{5}", colourDefault, listOfNearNeighbours.Count, colourEnd, colourHighlight,
                                 listOfNearNeighbours.Count != 1 ? "s" : "", colourEnd);
                         }
-                        else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                        else { displayText = string.Format("{0}{1}{2}", colourError, "0 Near Neighbours present", colourEnd); }
                     }
                     else
                     {
@@ -857,7 +857,7 @@ public class NodeManager : MonoBehaviour
                         displayText = string.Format("{0}{1}{2}{3} Centred district{4}{5}", colourDefault, counter, colourEnd, colourHighlight,
                             listOfCentreNodes.Count != 1 ? "s" : "", colourEnd);
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Records present", colourEnd); }
+                    else { displayText = string.Format("{0}{1}{2}", colourError, "0 Centre Districts present", colourEnd); }
                 }
                 else
                 {
@@ -2417,28 +2417,55 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// sets a cure node and handles all admin
+    /// Add a cure to a node location and handles all admin
     /// </summary>
     /// <param name="cure"></param>
     /// <returns></returns>
-    public void SetCureNode(Cure cure)
+    public void AddCureNode(Cure cure)
     {
-        int nodeID = GetCureNode(cure);
-        if (nodeID > -1)
+        if (cure != null)
         {
-            //set
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            int nodeID = GetCureNode(cure);
+            if (nodeID > -1)
             {
-                if (node != null)
+                //set
+                Node node = GameManager.instance.dataScript.GetNode(nodeID);
                 {
-                    node.cure = cure;
-                    GameManager.instance.dataScript.AddCureNode(node);
-                    Debug.LogFormat("[Nod] NodeManager.cs -> SetCureNode: {0} cure set at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                    if (node != null)
+                    {
+                        node.cure = cure;
+                        GameManager.instance.dataScript.AddCureNode(node);
+                        Debug.LogFormat("[Nod] NodeManager.cs -> AddCureNode: {0} cure ADDED at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                    }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                 }
-                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
             }
+            else { Debug.LogErrorFormat("Invalid Cure nodeID (-1) for \"{0}\", distance {1}", cure.cureName, cure.distance); }
         }
-        else { Debug.LogErrorFormat("Invalid Cure nodeID (-1) for \"{0}\", distance {1}", cure.cureName, cure.distance); }
+        else { Debug.LogError("Invalid cure (Null)"); }
+    }
+
+    /// <summary>
+    /// Removes a specified cure from it's node location and handles all admin
+    /// </summary>
+    /// <param name="cure"></param>
+    public void RemoveCureNode(Cure cure)
+    {
+        if (cure != null)
+        {
+            Node node = GameManager.instance.dataScript.GetCureNode(cure);
+            if (node != null)
+            {
+                if (GameManager.instance.dataScript.RemoveCureNode(node) == true)
+                {
+                    node.cure = null;
+                    Debug.LogFormat("[Nod] NodeManager.cs -> RemoveCureNode: {0} cure REMOVED at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                }
+                else { Debug.LogErrorFormat("{0}, {1}, ID {2}, NOT REMOVED from listOfCureNodes", node.nodeName, node.Arc.name, node.nodeID); }
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) for \"{0}\", ID {1} cure", cure.cureName, cure.cureID); }
+        }
+        else { Debug.LogError("Invalid cure (Null)"); }
     }
 
     /// <summary>
@@ -2466,11 +2493,11 @@ public class NodeManager : MonoBehaviour
                     List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
                     if (listOfCureNodes != null)
                     {
-                        for (int i = 0; i < listOfCureNodes.Count; i++)
+                        for (int index = 0; index < listOfCureNodes.Count; index++)
                         {
-                            if (listOfCureNodes[i] != null)
-                            { listOfExclusion.Add(listOfCureNodes[i].nodeID); }
-                            else { Debug.LogErrorFormat("Invalid node (Null) for listOfCureNodes[{0}]", i); }
+                            if (listOfCureNodes[index] != null)
+                            { listOfExclusion.Add(listOfCureNodes[index].nodeID); }
+                            else { Debug.LogErrorFormat("Invalid node (Null) for listOfCureNodes[{0}]", index); }
                         }
                     }
                     else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
@@ -2479,13 +2506,13 @@ public class NodeManager : MonoBehaviour
                     //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
                     actualDistance = Mathf.Min(furthestDistance, requiredDistance);
                     //loop distance Array and find first node that is that distance, or greater, and one that doesn't currently have a cure location
-                    for (int i = 0; i < arrayOfDistances.Length; i++)
+                    for (int index = 0; index < arrayOfDistances.Length; index++)
                     {
-                        if (arrayOfDistances[i] == actualDistance)
+                        if (arrayOfDistances[index] == actualDistance)
                         {
                             //not on exclusion list
-                            if (listOfExclusion.Exists(x => x == arrayOfDistances[i]) == false)
-                            { cureNodeID = i; break; }
+                            if (listOfExclusion.Exists(x => x == index) == false)
+                            { cureNodeID = index; break; }
                         }
                     }
                     //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
@@ -2499,13 +2526,13 @@ public class NodeManager : MonoBehaviour
                             {
                                 tempDistance++;
                                 //search on new distance criteria
-                                for (int i = 0; i < arrayOfDistances.Length; i++)
+                                for (int index = 0; index < arrayOfDistances.Length; index++)
                                 {
-                                    if (arrayOfDistances[i] == tempDistance)
+                                    if (arrayOfDistances[index] == tempDistance)
                                     {
                                         //not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == arrayOfDistances[i]) == false)
-                                        { cureNodeID = i; break; }
+                                        if (listOfExclusion.Exists(x => x == index) == false)
+                                        { cureNodeID = index; break; }
                                     }
                                 }
                                 if (cureNodeID > -1) { break; }
@@ -2520,13 +2547,13 @@ public class NodeManager : MonoBehaviour
                             {
                                 tempDistance--;
                                 //search on new distance criteria
-                                for (int i = 0; i < arrayOfDistances.Length; i++)
+                                for (int index = 0; index < arrayOfDistances.Length; index++)
                                 {
-                                    if (arrayOfDistances[i] == tempDistance)
+                                    if (arrayOfDistances[index] == tempDistance)
                                     {
                                         //not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == arrayOfDistances[i]) == false)
-                                        { cureNodeID = i; break; }
+                                        if (listOfExclusion.Exists(x => x == index) == false)
+                                        { cureNodeID = index; break; }
                                     }
                                 }
                                 if (cureNodeID > -1) { break; }

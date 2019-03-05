@@ -2165,6 +2165,34 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid node (Null)"); }
     }
 
+    /// <summary>
+    /// returns Node for a specified cure provided it is active OnMap. Returns Null otherwise
+    /// </summary>
+    /// <param name="cure"></param>
+    /// <returns></returns>
+    public Node GetCureNode(Cure cure)
+    {
+        Node node = null;
+        if (cure != null)
+        { node = listOfCureNodes.Find(x => x.cure.cureID == cure.cureID); }
+        else { Debug.LogError("Invalid cure (Null)"); }
+        return node;
+    }
+
+    /// <summary>
+    /// Remove a specified cure (it's current OnMap node) from listOfCureNodes. Returns true if successful
+    /// </summary>
+    /// <param name="cure"></param>
+    /// <returns></returns>
+    public bool RemoveCureNode(Node node)
+    {
+        bool isSuccess = false;
+        if (node != null)
+        { isSuccess = listOfCureNodes.Remove(node); }
+        else { Debug.LogError("Invalid cure (Null)"); }
+        return isSuccess;
+    }
+
     public List<Node> GetListOfDecisionNodes()
     { return listOfDecisionNodes; }
 

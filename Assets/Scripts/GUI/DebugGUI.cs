@@ -11,7 +11,7 @@ using System;
 public class DebugGUI : MonoBehaviour
 {
     //for whenever interaction is needed
-    private enum GUIStatus { None, GiveGear, GiveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle}
+    private enum GUIStatus { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle}
 
     public GUIStyle customBackground;
 
@@ -114,7 +114,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 200), "Action Menu", customBackground);
             //background box (Level)
-            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 40), "Level Menu", customBackground);
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Level Menu", customBackground);
 
             //
             // - - - Info (first box)
@@ -600,23 +600,13 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Release Actor"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Remove Condition"))
             {
-                //will release a captured actor each time pressed, nothing happens if no captured actors are present
-                Debug.Log("[Dbg] Button -> Release Actor");
-                int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-                if (GameManager.instance.actorScript.numOfActiveActors < numOfActors)
-                {
-                    for (int i = 0; i < numOfActors; i++)
-                    {
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, GameManager.instance.globalScript.sideResistance);
-                        if (actor.Status == ActorStatus.Captured)
-                        {
-                            GameManager.instance.captureScript.ReleaseActor(actor);
-                            break;
-                        }
-                    }
-                }
+                //removes a condition from Player or an actor
+                Debug.Log("[Dbg] Button -> Remove Condition");
+                if (debugDisplay != 52)
+                { debugDisplay = 52; }
+                else { debugDisplay = 0; }
             }
 
             //sixth button
@@ -877,6 +867,12 @@ public class DebugGUI : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.LoiterNodes, "DebugGUI.cs -> OnGUI");
             }
 
+            //tenth button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Cure Nodes"))
+            {
+                Debug.Log("[Dbg] Button -> Show Cure Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.CureNodes, "DebugGUI.cs -> OnGUI");
+            }
 
             //
             // - - - Analysis at Right Hand side of Screen - - -
@@ -942,7 +938,7 @@ public class DebugGUI : MonoBehaviour
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.playerScript.DisplayPlayerStats();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 500), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 600), analysis, customBackground);
                         break;
                     //Toggle Messages
                     case 9:
@@ -1332,6 +1328,25 @@ public class DebugGUI : MonoBehaviour
                         analysis = string.Format("{0}{1}", GameManager.instance.aiScript.DebugShowTaskAnalysis(), GameManager.instance.aiRebelScript.DebugShowTaskAnalysis());
                         GUI.Box(new Rect(Screen.width - 205, 10, 200, 300), analysis, customBackground);
                         break;
+                    //Remove Condition
+                    case 52:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 400, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 395, 55, 190, 20), "Input Condition name (lwr case)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 350, 75, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3 or p)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 350, 120, 100, 20), textInput_1);
+                        status = GUIStatus.RemoveCondition;
+                        textOutput = null;
+                        break;
+                    //Remove Condition processing and Output
+                    case 53:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.actorScript.DebugRemoveCondition(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1349,6 +1364,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.GiveCondition:
                         debugDisplay = 19;
+                        break;
+                    case GUIStatus.RemoveCondition:
+                        debugDisplay = 53;
                         break;
                     case GUIStatus.GiveActorTrait:
                         debugDisplay = 21;

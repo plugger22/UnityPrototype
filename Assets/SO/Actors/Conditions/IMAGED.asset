@@ -22,4 +22,5 @@ MonoBehaviour:
   bottomTextTypeActor: {fileID: 0}
   bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
+  cure: {fileID: 11400000, guid: 1a46adcf9419dd94ebc7ef04f847d170, type: 2}
   isNowA: 0
