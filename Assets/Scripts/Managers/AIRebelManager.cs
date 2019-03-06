@@ -108,12 +108,15 @@ public class AIRebelManager : MonoBehaviour
     private int targetIntel;                            //number of target intel points (gained by Planner and used for target attempts)
     private int targetIntelUsed;                        //number of intel points expended by AI
 
-    private int targetNodeID;                           //goal to move towards
+    private int targetNodeID;                           //goal to move towards (Target)
+    private int cureNodeID;                             //goal to move towards (Cure)
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
 
     private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
     private bool isPlayer;                              //if true the Resistance side is also the human player side (it's AI due to an autorun)
     private bool isWounded;
+    private bool isCureNeeded;                           //true if Player possesses a condition that could benefit from a cure
+    private bool isCureCritical;                          //true if Player has a condition needing a cure that is on a timer, eg. Doomed condition
     private bool isPlayerStressed;                        //true only if player is stressed
     private int stressedActorID;                          //player or actorID that is chosen to have go on stress leave (player has priority)
 
@@ -160,6 +163,7 @@ public class AIRebelManager : MonoBehaviour
     //conditions
     private Condition conditionStressed;
     private Condition conditionWounded;
+    private Condition conditionDoomed;
     //Activity notifications
     private int delayNoSpider = -1;
     private int delayYesSpider = -1;
@@ -215,6 +219,7 @@ public class AIRebelManager : MonoBehaviour
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
         conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
         priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
         priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
@@ -234,6 +239,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(priorityLow > -1, "Invalid priorityLow (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+        Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         Debug.Assert(maxNumOfOnMapActors > -1, "Invalid maxNumOfOnMapActors (-1)");
         Debug.Assert(delayNoSpider > -1, "Invalid delayNoSpider (-1)");
@@ -368,6 +374,7 @@ public class AIRebelManager : MonoBehaviour
                     {
                         ProcessAdminTask(); //first in list
                         ProcessTargetTask();
+                        ProcessCureTask();
                         ProcessMoveToTargetTask();
                         ProcessPeopleTask();
                         ProcessActorArcTask();
@@ -1394,33 +1401,150 @@ public class AIRebelManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// determine whether player has a cure related condition and, if so, set a node to move to
+    /// </summary>
     private void ProcessCureData()
     {
         //does player have a condition that comes with a cure?
-
-        //is there a cure available?
-
-        //if multiple conditions and multiple cures available, rank in priority
-
-        //select a cure, specify a node to move to
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        //reset flags each turn
+        isCureNeeded = false;
+        isCureCritical = false;
+        cureNodeID = -1;
+        Node node = null;
+        //check Player's conditions and available OnMap cures
+        int count = listOfConditions.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (listOfConditions[i].cure != null)
+                {
+                    isCureNeeded = true;
+                    Condition condition = listOfConditions[i];
+                    if (condition != null)
+                    {
+                        //Critical condition (Doomed), eg. timer
+                        if (listOfConditions[i].name.Equals(conditionDoomed.name) == true)
+                        {
+                            isCureCritical = true;
+                            //is there a cure available -> if so assign node to move towards (overrides all other cure nodes)
+                            node = GameManager.instance.dataScript.GetCureNode(conditionDoomed.cure);
+                            if (node != null && node.cure.isActive == true)
+                            { cureNodeID = node.nodeID; }
+                            break;
+                        }
+                        else
+                        {
+                            //non-critical condition -> take last one found with a cure as a node to move towards
+                            node = GameManager.instance.dataScript.GetCureNode(listOfConditions[i].cure);
+                            //can't override a critical condition cure node
+                            if (node != null && isCureCritical == false && node.cure.isActive == true)
+                            { cureNodeID = node.nodeID; }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid condition (Null) in listOfConditions[{0}]", i); }
+                }
+            }
+        }
     }
 
-
+    /// <summary>
+    /// Select a suitable node to move to (single node move) in the direction of a chosen cure
+    /// </summary>
     private void ProcessCureTask()
     {
         //is there a valid cure node destination?
-
-        //if so move towards the destination
-
-        //find best path to destination (avoiding bad nodes/connections)
-
-        //if at cure node (any), expend action to do cure
-
-        //task priority high (if doomed or wounded -> critical)
-
-        //zero out cure node destination
-
+        if (cureNodeID > -1)
+        {
+            Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+            Node nodeMoveTo = null;
+            Connection connection = null;
+            bool isProceed = true;
+            if (nodePlayer != null)
+            {
+                //AT CURE NODE
+                if (nodePlayer.nodeID == cureNodeID)
+                {
+                    if (nodePlayer.cure != null && nodePlayer.cure.isActive == true)
+                    {
+                        //generate task -> critical priority if a critical condition, eg. Doomed
+                        AITask task = new AITask();
+                        task.data0 = cureNodeID;
+                        task.type = AITaskType.Cure;
+                        if (isCureCritical == true)
+                        { task.priority = Priority.Critical; }
+                        else { task.priority = Priority.High; }
+                        //add task to list of potential tasks
+                        AddWeightedTask(task);
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: AT cureNodeID {0}, Cure ACTION{1}", cureNodeID, "\n");
+                    }
+                }
+                else if (nodePlayer.cure != null && nodePlayer.cure.isActive == true)
+                {
+                    //At another cure node -> standard High priority task as it won't be a critical one
+                    AITask task = new AITask();
+                    task.data0 = cureNodeID;
+                    task.type = AITaskType.Cure;
+                    task.priority = Priority.High;
+                    //add task to list of potential tasks
+                    AddWeightedTask(task);
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: AT cureNodeID {0}, Cure ACTION{1}", cureNodeID, "\n");
+                }
+                //NOT AT Cure Node, or any other node that happens to have a cure available
+                else
+                { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: AI Player continues to move towards Cure at nodeID {0}{1}", cureNodeID, "\n"); }
+                //path to cure 
+                List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, cureNodeID, true);
+                //get next node in sequence
+                if (pathList != null)
+                {
+                    connection = pathList[0];
+                    if (connection.node1.nodeID != nodePlayer.nodeID)
+                    { nodeMoveTo = connection.node1; }
+                    else { nodeMoveTo = connection.node2; }
+                }
+                else { Debug.LogError("Invalid pathList (Null)"); }
+                //GENERATE TASK
+                if (nodeMoveTo != null)
+                {
+                    //check if moveTo node on listOfBadNodes
+                    if (CheckForBadNode(nodeMoveTo.nodeID, true) == true)
+                    {
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: Selected node id {0} is on listOfBadNodes{1}", nodeMoveTo.nodeID, "\n");
+                        //get a random neighbouring node which is good
+                        nodeMoveTo = GetRandomGoodNode(nodePlayer);
+                        if (nodeMoveTo == null)
+                        {
+                            //no viable node that isn't bad amongst neighbours. Cancel move task
+                            isProceed = false;
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: Selected node is BAD, no viable alternative. Move task CANCELLED{0}", "\n");
+                        }
+                    }
+                    if (isProceed == true)
+                    {
+                        //get connectionID (may have changed)
+                        Connection conn = nodePlayer.GetConnection(nodeMoveTo.nodeID);
+                        if (conn != null)
+                        {
+                            //generate task
+                            AITask task = new AITask();
+                            task.data0 = nodeMoveTo.nodeID;
+                            task.data1 = conn.connID;
+                            task.type = AITaskType.Cure;
+                            task.priority = priorityMovePlayer;
+                            //add task to list of potential tasks
+                            AddWeightedTask(task);
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: cureNodeID {0}, move to {1}{2}", cureNodeID, nodeMoveTo.nodeID, "\n");
+                        }
+                        else { Debug.LogErrorFormat("Invalid connection (Null) for nodeID {0}", nodeMoveTo.nodeID); }
+                    }
+                }
+                else { Debug.LogError("Invalid nodeMoveTo (Null)"); }
+            }
+            else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+        }
     }
 
 
@@ -1532,13 +1656,6 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
     }
 
-    /*/// <summary>
-    /// assorted administrative tasks
-    /// </summary>
-    private void ProcessAdminTask()
-    {
-
-    }*/
 
     /// <summary>
     /// Player or Actors attempt target/s. One task generated for player (if criteria O.K). If not player task then one target task per actor (possibly if enough targets and criteria O.K)
@@ -2304,6 +2421,9 @@ public class AIRebelManager : MonoBehaviour
             case AITaskType.Target:
                 ExecuteTargetTask(task);
                 break;
+            case AITaskType.Cure:
+                ExecuteCureTask(task);
+                break;
             default:
                 Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
                 break;
@@ -3014,6 +3134,15 @@ public class AIRebelManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid listOfNeighbouring Nodes (Null) for nodeID {0}", node.nodeID); }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
+    /// <summary>
+    /// Player either moves towards a cure node or actions a cure at their current node
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteCureTask(AITask task)
+    {
+
     }
 
     /// <summary>

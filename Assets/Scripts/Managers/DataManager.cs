@@ -2166,7 +2166,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns Node for a specified cure provided it is active OnMap. Returns Null otherwise
+    /// returns Node for a specified cure provided it is OnMap (Does NOT check if isActive true/false). Returns Null otherwise
     /// </summary>
     /// <param name="cure"></param>
     /// <returns></returns>
