@@ -2432,11 +2432,12 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// AI Player moves, task.data0 is nodeID, task.data1 is connectionID
+    /// AI Player moves, task.data0 is nodeID, task.data1 is connectionID. Returns true if successful
     /// NOTE: Task checked for Null by parent method
     /// </summary>
-    private void ExecuteMoveTask(AITask task)
+    private bool ExecuteMoveTask(AITask task)
     {
+        bool isSuccess = false;
         Node node = GameManager.instance.dataScript.GetNode(task.data0);
         if (node != null)
         {
@@ -2447,8 +2448,7 @@ public class AIRebelManager : MonoBehaviour
             UseAction("Move");
             //move list (for when autorun ends)
             node.SetPlayerMoveNodes();
-            //gear
-
+            isSuccess = true;
             //invisibility
             Connection connection = GameManager.instance.dataScript.GetConnection(task.data1);
             if (connection != null)
@@ -2490,6 +2490,7 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0);}
+        return isSuccess;
     }
 
 
@@ -3138,11 +3139,54 @@ public class AIRebelManager : MonoBehaviour
 
     /// <summary>
     /// Player either moves towards a cure node or actions a cure at their current node
+    /// NOTE: Task checked for Null by calling method (it's parent actually)
     /// </summary>
     /// <param name="task"></param>
     private void ExecuteCureTask(AITask task)
     {
-
+        bool isSuccess = false;
+        string reason = "Unknown";
+        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        //check situation
+        if (task.data0 == nodePlayer.nodeID)
+        {
+            //cure in current node
+            if (nodePlayer.cure != null)
+            {
+                if (nodePlayer.cure.isActive == true)
+                {
+                    Condition condition = nodePlayer.cure.condition;
+                    if (condition != null)
+                    {
+                        reason = string.Format("{0} used to cure {1} condition", nodePlayer.cure.cureName, condition.name);
+                        if (GameManager.instance.playerScript.RemoveCondition(condition, globalResistance, reason) == true)
+                        {
+                            isSuccess = true;
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} condition CURED by {1} at {2}, {3}, ID {4}{5}", condition.name, nodePlayer.cure.cureName,
+                                nodePlayer.nodeName, nodePlayer.Arc.name, nodePlayer.nodeID, "\n");
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid condition (Null) for nodeID {0}", nodePlayer.nodeID); }
+                }
+                else { Debug.LogWarningFormat("Invalid cure (isActive FALSE) in nodeID {0}", nodePlayer.nodeID); }
+            }
+            else { Debug.LogWarningFormat("No cure present (Null) in nodeID {0}", nodePlayer.nodeID); }
+        }
+        else
+        {
+            //move to a node towards a cure
+            if (ExecuteMoveTask(task) == true)
+            {
+                isSuccess = true;
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} moving towards CURE{0}", "\n");
+            }
+        }
+        //expend action
+        if (isSuccess == true)
+        {
+            //expend action
+            UseAction(reason);
+        }
     }
 
     /// <summary>
