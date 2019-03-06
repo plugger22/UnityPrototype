@@ -242,12 +242,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         bool isAction = false;
         CaptureDetails captureDetails = null;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         //resolve action
         if (details != null)
         {
@@ -377,13 +372,6 @@ public class ActionManager : MonoBehaviour
             errorFlag = true;
             Debug.LogError("Invalid ModalActionDetails (null) as argument");
         }
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
         {
@@ -404,14 +392,9 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         Node node = null;
         Action action = null;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         //renown (do prior to effects as Player renown will change)
         int renownBefore = GameManager.instance.playerScript.Renown;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         //resolve action
         if (details != null)
         {
@@ -495,13 +478,6 @@ public class ActionManager : MonoBehaviour
             errorFlag = true;
             Debug.LogError("Invalid ModalActionDetails (null) as argument");
         }
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
         //action (if valid) expended -> must be BEFORE outcome window event
         if (errorFlag == false && isAction == true)
         {
@@ -526,14 +502,7 @@ public class ActionManager : MonoBehaviour
         }
         //ERROR ->  go straight to outcome window
         else
-        {
-            //fault, pass default data to a modal outcome dialogue
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-            //generate a create modal window event
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction");
-        }
+        { EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
     }
 
 
@@ -1109,15 +1078,10 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.turnScript.authoritySecurityState));
         bool errorFlag = false;
         bool isStressed = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         int numOfTurns = 0;
         string actorName = "Unknown";
         string actorArc = "Unknown";
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
         if (details != null)
         {
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
@@ -1144,14 +1108,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
+        if (errorFlag == false)
         {
             //set lie low timer
             GameManager.instance.actorScript.SetLieLowTimer();
@@ -1181,12 +1138,7 @@ public class ActionManager : MonoBehaviour
         int invis = GameManager.instance.playerScript.Invisibility;
         int numOfTurns = 3 - invis;
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = modalDetails.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(modalDetails);
         if (modalDetails != null)
         {
             GameManager.instance.playerScript.status = ActorStatus.Inactive;
@@ -1203,14 +1155,7 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, modalDetails.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
+        if (errorFlag == false)
         {
             //set lie low timer
             GameManager.instance.actorScript.SetLieLowTimer();
@@ -1260,55 +1205,26 @@ public class ActionManager : MonoBehaviour
     private void ProcessPlayerCure(ModalActionDetails details)
     {
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         if (details != null)
         {
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
-            if (actor != null)
+            Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
+            if (node != null)
             {
-                string title = "";
-                if (details.side == GameManager.instance.globalScript.sideAuthority)
-                { title = string.Format(" {0} ", GameManager.instance.metaScript.GetAuthorityTitle()); }
-
-                //Reactivate actor
-                actor.Status = ActorStatus.Active;
-                actor.inactiveStatus = ActorInactive.None;
-                actor.tooltipStatus = ActorTooltip.None;
-                outcomeDetails.textTop = string.Format(" {0} {1} has been Recalled", actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1}{2} is now fully Activated{3}", colourNeutral, actor.actorName, title, colourEnd);
-                outcomeDetails.sprite = actor.arc.sprite;
-                //message
-                string text = string.Format("{0} {1} has been Recalled. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                GameManager.instance.messageScript.ActorStatus(text, "Recalled", "has been Recalled", actor.actorID, details.side);
-                //update contacts
-                GameManager.instance.contactScript.UpdateNodeContacts();
+                //remove condition
+                string reason = string.Format("Cure {0}{1}{2} condition", colourBad, node.cure.cureName, colourEnd);
+                if (GameManager.instance.playerScript.RemoveCondition(node.cure.condition, details.side, reason) == true)
+                {
+                    outcomeDetails.reason = reason;
+                    outcomeDetails.isAction = true;
+                    outcomeDetails.textTop = string.Format("{0} has cured your {1}{2}{3} condition", node.cure.cureName, colourBad, node.cure.condition.name, colourEnd);
+                    outcomeDetails.textBottom = string.Format(;
+                }
+                else { Debug.LogWarning("Condition Not Removed");  errorFlag = true; }
             }
-            else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", details.nodeID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
-        {
-            //change alpha of actor to indicate inactive status
-            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        if (errorFlag == false)
-        {
-            outcomeDetails.isAction = true;
-            outcomeDetails.reason = "Activate Actor";
-        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }
@@ -1321,12 +1237,7 @@ public class ActionManager : MonoBehaviour
     public void ProcessActivateActorAction(ModalActionDetails details)
     {
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         if (details != null)
         {
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
@@ -1352,14 +1263,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
+        if (errorFlag == false)
         {
             //change alpha of actor to indicate inactive status
             GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actorDataID, GameManager.instance.guiScript.alphaActive);
@@ -1382,12 +1286,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string playerName = GameManager.instance.playerScript.PlayerName;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         if (details != null)
         {
 
@@ -1407,14 +1306,7 @@ public class ActionManager : MonoBehaviour
                 GameManager.instance.messageScript.ActorStatus(text, "Recalled", "has been Recalled", GameManager.instance.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
+        if (errorFlag == false)
         {
             //change alpha of player to indicate inactive status
             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
@@ -1437,7 +1329,6 @@ public class ActionManager : MonoBehaviour
     {
         if (modalDetails != null)
         {
-
             GameManager.instance.playerScript.status = ActorStatus.Inactive;
             GameManager.instance.playerScript.inactiveStatus = ActorInactive.StressLeave;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Leave;
@@ -1554,14 +1445,9 @@ public class ActionManager : MonoBehaviour
     {
         int motivationBoost = 0;
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Gear gear = null;
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         StringBuilder builder = new StringBuilder();
         if (details != null)
         {
@@ -1621,14 +1507,7 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
+        if (errorFlag == false)
         {
             //Remove Gear
             if (gear != null)
@@ -1662,14 +1541,9 @@ public class ActionManager : MonoBehaviour
     {
         int motivationCost = 0;
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Gear gear = null;
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         StringBuilder builder = new StringBuilder();
         if (details != null)
         {
@@ -1713,51 +1587,39 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
-
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-        }
-        else
+        if (errorFlag == false)
         {
             //Transfer Gear
-            if (errorFlag == false)
+
+            //remove gear from actor
+            actor.RemoveGear(GearRemoved.Taken);
+            //Give Gear to Player
+            GameManager.instance.playerScript.AddGear(gear.gearID);
+            //deduct motivation from actor
+            if (motivationCost > 0)
             {
-                //remove gear from actor
-                actor.RemoveGear(GearRemoved.Taken);
-                //Give Gear to Player
-                GameManager.instance.playerScript.AddGear(gear.gearID);
-                //deduct motivation from actor
-                if (motivationCost > 0)
-                {                    
-                    //relationship Conflict  (ActorConflict)
-                    if (actor.datapoint1 < motivationCost)
-                    {
-                        builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
-                        builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
-                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
-                    }
-                    //deduct motivation
-                    actor.datapoint1 -= motivationCost;
-                    actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
-                }
-                else
+                //relationship Conflict  (ActorConflict)
+                if (actor.datapoint1 < motivationCost)
                 {
-                    //no motivation cost
-                    builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
+                    builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
                 }
-            } 
+                //deduct motivation
+                actor.datapoint1 -= motivationCost;
+                actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+            }
+            else
+            {
+                //no motivation cost
+                builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
+            }
             outcomeDetails.sprite = gear.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //message
             string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationCost, false);
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        if (errorFlag == false)
-        {
+            //action (if valid) expended -> must be BEFORE outcome window event
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Take Gear";
             //is there a delegate method that needs processing?
@@ -1778,12 +1640,7 @@ public class ActionManager : MonoBehaviour
         //two builders for top and bottom texts
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        //default data 
-        outcomeDetails.side = details.side;
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
         if (node != null)
         {
@@ -1869,15 +1726,7 @@ public class ActionManager : MonoBehaviour
         //
         // - - - Outcome - - -
         //
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            //generate a create modal window event
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessUseGearAction");
-        }
-        else
+        if (errorFlag == false)
         {
             //action (if valid) expended -> must be BEFORE outcome window event
             if (isAction == true)
@@ -1913,15 +1762,8 @@ public class ActionManager : MonoBehaviour
     {
         int benefit = GameManager.instance.actorScript.unhappyReassureBoost;
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}Goodness me, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
@@ -1951,16 +1793,8 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        else
-        {
+        if (errorFlag == false)
+        { 
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Reassure Actor";
             //is there a delegate method that needs processing?
@@ -1980,15 +1814,8 @@ public class ActionManager : MonoBehaviour
     {
         int benefit = GameManager.instance.actorScript.unhappyBullyBoost;
         bool errorFlag = false;
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}Wow, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
@@ -2027,15 +1854,7 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a spike in the circuit. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        else
+        if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Threaten Actor";
@@ -2058,15 +1877,8 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         int numOfTeams = 0;
         StringBuilder builder = new StringBuilder();
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}We whack me with a feather, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
@@ -2127,15 +1939,7 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        else
+        if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Let Actor Go";
@@ -2159,15 +1963,8 @@ public class ActionManager : MonoBehaviour
         int renownCost = details.renownCost;
         Debug.Assert(details.renownCost > 0, "Invalid renownCost (zero)");
         StringBuilder builder = new StringBuilder();
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}Hit me with your rythmn stick and tell me what happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
@@ -2221,15 +2018,7 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a glitch in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        else
+        if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Dismiss Actor";
@@ -2250,15 +2039,8 @@ public class ActionManager : MonoBehaviour
         int motivationGain = GameManager.instance.actorScript.motivationGainActiveDuty;
         bool errorFlag = false;
         StringBuilder builder = new StringBuilder();
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
-        //default data 
-        outcomeDetails.side = details.side;
-        outcomeDetails.textTop = string.Format("{0}Well bugger me, nothing happened?{1}", colourError, colourEnd);
-        outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-        outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        outcomeDetails.modalLevel = details.modalLevel;
-        outcomeDetails.modalState = details.modalState;
         if (details != null)
         {
             actor = GameManager.instance.dataScript.GetActor(details.actorDataID);
@@ -2338,15 +2120,7 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
-        if (errorFlag == true)
-        {
-            //fault, pass default data to Outcome window
-            outcomeDetails.textTop = "There is a nasty bug in the system. Something has gone wrong";
-            outcomeDetails.textBottom = "Bad, all Bad";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        else
+        if (errorFlag == false)
         {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Active Duty";
@@ -2581,13 +2355,6 @@ public class ActionManager : MonoBehaviour
                     //which sprite to use
                     if (isSuccessful == true) { outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite; }
                     else { outcomeDetails.sprite = GameManager.instance.guiScript.targetFailSprite; }
-                }
-                else
-                {
-                    //fault, pass default data to window
-                    outcomeDetails.textTop = "There is a fault in the system. Target not responding";
-                    outcomeDetails.textBottom = "Target Acquition Failed";
-                    outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                 }
                 //generate a create modal window event
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeTarget");
@@ -3179,6 +2946,8 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
             outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
             outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+            outcomeDetails.modalLevel = details.modalLevel;
+            outcomeDetails.modalState = details.modalState;
         }
         return outcomeDetails;
     }

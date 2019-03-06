@@ -16,6 +16,8 @@ public class Cure : ScriptableObject
     [Range(1, 10)] public int distance = 4;
     [Tooltip("Tooltip description for Player Action menu. Self contained")]
     [TextArea] public string tooltipText;
+    [Tooltip("Outcome message details text")]
+    [TextArea] public string outcomeText;
 
     [HideInInspector] public int cureID;                         //assigned a zero based ID at time of import. Max ID num is LoadManager.cs -> arrayOfCures.Length - 1
 
