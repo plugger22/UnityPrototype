@@ -17,4 +17,6 @@ MonoBehaviour:
   tooltipText: The subdermal chip inside you needs to be removed. The Ripper Doc isn't
     pretty but he gets the job done. You're lucky we could find him. Is he sober?
     Hopefully.
+  outcomeText: The Ripper Doc has yanked the chip out via your nose with a pair of
+    orthopedic pliers. His breath stinks.
   cureID: 1

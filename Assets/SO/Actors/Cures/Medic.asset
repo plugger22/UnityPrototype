@@ -16,4 +16,6 @@ MonoBehaviour:
   distance: 1
   tooltipText: It's not easy to source a sympathetic Medical practitioner who has
     access to the necessary equipment. One is waiting here for you now
+  outcomeText: It's good to be back on your feet. The Medic didn't say much but you
+    got the impression that your situation was serious.
   cureID: 2

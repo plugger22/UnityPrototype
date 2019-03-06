@@ -473,7 +473,7 @@ public class Node : MonoBehaviour
                     //
                     string specialText;
                     //combined with special Text
-                    if (cure != null)
+                    if (cure != null && cure.isActive == true)
                     {
                         if (string.IsNullOrEmpty(specialName) == false)
                         { specialText = string.Format("{0}{1}{2}", specialName, "\n", cure.cureName); }

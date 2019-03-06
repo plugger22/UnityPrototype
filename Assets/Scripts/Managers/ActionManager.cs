@@ -94,6 +94,7 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.LeavePlayerAction, OnEvent, "ActionManager");
         EventManager.instance.AddListener(EventType.LeaveActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.CurePlayerAction, OnEvent, "ActionManager");
     }
 
     /// <summary>
@@ -149,6 +150,10 @@ public class ActionManager : MonoBehaviour
             case EventType.ActivatePlayerAction:
                 ModalActionDetails detailsActivatePlayer = Param as ModalActionDetails;
                 ProcessActivatePlayerAction(detailsActivatePlayer);
+                break;
+            case EventType.CurePlayerAction:
+                ModalActionDetails detailsCurePlayer = Param as ModalActionDetails;
+                ProcessPlayerCure(detailsCurePlayer);
                 break;
             case EventType.GiveGearAction:
                 ModalActionDetails detailsGiveGear = Param as ModalActionDetails;
@@ -1204,27 +1209,32 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     private void ProcessPlayerCure(ModalActionDetails details)
     {
-        bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         if (details != null)
         {
             Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
             if (node != null)
             {
-                //remove condition
-                string reason = string.Format("Cure {0}{1}{2} condition", colourBad, node.cure.cureName, colourEnd);
-                if (GameManager.instance.playerScript.RemoveCondition(node.cure.condition, details.side, reason) == true)
+                Cure cure = node.cure;
+                if (cure != null)
                 {
-                    outcomeDetails.reason = reason;
-                    outcomeDetails.isAction = true;
-                    outcomeDetails.textTop = string.Format("{0} has cured your {1}{2}{3} condition", node.cure.cureName, colourBad, node.cure.condition.name, colourEnd);
-                    outcomeDetails.textBottom = string.Format(;
+                    //remove condition
+                    string reason = string.Format("Cure {0}{1}{2} condition", colourBad, cure.cureName, colourEnd);
+                    if (GameManager.instance.playerScript.RemoveCondition(cure.condition, details.side, reason) == true)
+                    {
+                        outcomeDetails.reason = reason;
+                        outcomeDetails.isAction = true;
+                        outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
+                        outcomeDetails.textTop = string.Format("{0} has cured your {1}{2}{3} condition", cure.cureName, colourBad, cure.condition.name, colourEnd);
+                        outcomeDetails.textBottom = string.Format("{0}{1}{2}", colourNormal, cure.outcomeText, colourEnd);
+                    }
+                    else { Debug.LogWarning("Condition Not Removed"); }
                 }
-                else { Debug.LogWarning("Condition Not Removed");  errorFlag = true; }
+                else { Debug.LogErrorFormat("Invalid cure (Null) for nodeID {0}", node.nodeID); }
             }
-            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", details.nodeID); errorFlag = true; }
+            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", details.nodeID); }
         }
-        else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
+        else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }

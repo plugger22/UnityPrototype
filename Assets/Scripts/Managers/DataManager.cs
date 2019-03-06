@@ -2193,6 +2193,15 @@ public class DataManager : MonoBehaviour
         return isSuccess;
     }
 
+    /// <summary>
+    /// Switch all onMap cures (at nodes) to isActive 'true'
+    /// </summary>
+    public void DebugActivateAllCures()
+    {
+        for (int i = 0; i < listOfCureNodes.Count; i++)
+        { listOfCureNodes[i].cure.isActive = true; }
+    }
+
     public List<Node> GetListOfDecisionNodes()
     { return listOfDecisionNodes; }
 

@@ -728,6 +728,8 @@ public class NodeManager : MonoBehaviour
                 }
                 break;
             case NodeUI.CureNodes:
+                //NOTE: will only show nodes if a cure is present AND is Active
+                counter = 0;
                 List<Node> cureList = GameManager.instance.dataScript.GetListOfCureNodes();
                 if (cureList != null)
                 {
@@ -736,11 +738,13 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in cureList)
                         {
                             if (node != null)
-                            { node.SetMaterial(materialActive); }
+                            {
+                                if (node.cure.isActive == true)
+                                { node.SetMaterial(materialActive); counter++; }
+                            }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourDefault, cureList.Count, colourEnd, colourHighlight,
-                            cureList.Count != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}{1}{2}{3} Cure district{4}{5}", colourDefault, counter, colourEnd, colourHighlight, counter != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourError, "0 Cure Districts present", colourEnd); }
                 }
@@ -1790,7 +1794,7 @@ public class NodeManager : MonoBehaviour
                 // - - - Cure - - -
                 //
                 //if node has an active cure then it must be required for one of the Player's conditions
-                if (node.cure != null)
+                if (node.cure != null && node.cure.isActive == true)
                 {
                     ModalActionDetails cureActionDetails = new ModalActionDetails();
                     cureActionDetails.side = GameManager.instance.globalScript.sideResistance;
@@ -2440,11 +2444,11 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a cure to a node location and handles all admin
+    /// Add a cure to a node location and handles all admin. isActive sets initial state of Cure (default false)
     /// </summary>
     /// <param name="cure"></param>
     /// <returns></returns>
-    public void AddCureNode(Cure cure)
+    public void AddCureNode(Cure cure, bool isActive = false)
     {
         if (cure != null)
         {
@@ -2457,6 +2461,7 @@ public class NodeManager : MonoBehaviour
                     if (node != null)
                     {
                         node.cure = cure;
+                        cure.isActive = isActive;
                         GameManager.instance.dataScript.AddCureNode(node);
                         Debug.LogFormat("[Nod] NodeManager.cs -> AddCureNode: {0} cure ADDED at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                     }
@@ -2481,6 +2486,8 @@ public class NodeManager : MonoBehaviour
             {
                 if (GameManager.instance.dataScript.RemoveCureNode(node) == true)
                 {
+                    cure.timesCured++;
+                    cure.isActive = false;
                     node.cure = null;
                     Debug.LogFormat("[Nod] NodeManager.cs -> RemoveCureNode: {0} cure REMOVED at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 }

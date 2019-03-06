@@ -16,4 +16,6 @@ MonoBehaviour:
   distance: 1
   tooltipText: You need a new face. Not totally new, but enough to fool the recognition
     software. This Reskin shop is willing to try. They do good work with cars.
+  outcomeText: It's a new face. Does that change who you are as a person? No, but
+    it sure feels like it.
   cureID: 3

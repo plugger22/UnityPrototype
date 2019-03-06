@@ -16,4 +16,7 @@ MonoBehaviour:
   distance: 1
   tooltipText: Rebel HQ have sourced a rogue bioGeneticist who is anxiously waiting
     here for you with a smuggled antidote.
+  outcomeText: The injection didn't hurt and it looks like breathing is still a thing
+    for you. Probably not for the bioGeneticist though. He even <i>looks</i> like
+    a Dead Man Walking.
   cureID: 0

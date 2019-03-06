@@ -19,7 +19,26 @@ public class Cure : ScriptableObject
     [Tooltip("Outcome message details text")]
     [TextArea] public string outcomeText;
 
-    [HideInInspector] public int cureID;                         //assigned a zero based ID at time of import. Max ID num is LoadManager.cs -> arrayOfCures.Length - 1
+    [HideInInspector] public int cureID;                        //assigned a zero based ID at time of import. Max ID num is LoadManager.cs -> arrayOfCures.Length - 1
+    [HideInInspector] public bool isActive;                     //cure only useable if active (can be present but not yet active, eg. awaiting HQ approval)
+
+    [HideInInspector] public int timesCured;                    //number of times cure has been used
 
 
+    /// <summary>
+    /// reset persistant data
+    /// </summary>
+    public void Awake()
+    {
+        Reset();
+    }
+
+    /// <summary>
+    /// reset fields
+    /// </summary>
+    public void Reset()
+    {
+        isActive = false;
+        timesCured = 0;
+    }
 }

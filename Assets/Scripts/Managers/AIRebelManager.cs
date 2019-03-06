@@ -344,6 +344,7 @@ public class AIRebelManager : MonoBehaviour
             ProcessActorArcData();
             ProcessPeopleData();
             ProcessTargetData();
+            ProcessCureData();
             //restore back to original state after any changes & prior to any moves, tasks, etc. Calcs will still use updated sighting data dijkstra (weighted)
             if (isConnectionsChanged == true)
             { RestoreConnections(); }
@@ -367,7 +368,7 @@ public class AIRebelManager : MonoBehaviour
                     {
                         ProcessAdminTask(); //first in list
                         ProcessTargetTask();
-                        ProcessMoveTask();
+                        ProcessMoveToTargetTask();
                         ProcessPeopleTask();
                         ProcessActorArcTask();
                         ProcessIdleTask();
@@ -1393,10 +1394,40 @@ public class AIRebelManager : MonoBehaviour
         }
     }
 
+
+    private void ProcessCureData()
+    {
+        //does player have a condition that comes with a cure?
+
+        //is there a cure available?
+
+        //if multiple conditions and multiple cures available, rank in priority
+
+        //select a cure, specify a node to move to
+    }
+
+
+    private void ProcessCureTask()
+    {
+        //is there a valid cure node destination?
+
+        //if so move towards the destination
+
+        //find best path to destination (avoiding bad nodes/connections)
+
+        //if at cure node (any), expend action to do cure
+
+        //task priority high (if doomed or wounded -> critical)
+
+        //zero out cure node destination
+
+    }
+
+
     /// <summary>
-    /// Select a suitable node to move to (single node move)
+    /// Select a suitable node to move to (single node move) in the direction of a chosen target
     /// </summary>
-    private void ProcessMoveTask()
+    private void ProcessMoveToTargetTask()
     {
         Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
         Node nodeMoveTo = null;

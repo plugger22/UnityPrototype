@@ -782,13 +782,20 @@ public class DebugGUI : MonoBehaviour
                 else { GameManager.instance.tooltipHelpScript.CloseTooltip(); }
             }
 
-            //eighteenth button
+            //nineteenth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Toggle Contact"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Contact Active/Inactive");
                 if (debugDisplay != 47)
                 { debugDisplay = 47; }
                 else { debugDisplay = 0; }
+            }
+
+            //twentyfourth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Activate Cures"))
+            {
+                Debug.Log("[Dbg] Button -> Activate Cures");
+                GameManager.instance.dataScript.DebugActivateAllCures();
             }
 
             //

@@ -3270,8 +3270,8 @@ public class ActorManager : MonoBehaviour
                             actorRecruited.isNewRecruit = true;
                             //actor successfully recruited
                             builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
-                            builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
-                                actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
+                            builderBottom.AppendFormat("{0}, {1}{2}{3}, {4}has been recruited and is available in the Reserve List{5}", actorRecruited.actorName, colourArc,
+                                actorRecruited.arc.name, colourEnd, colourNormal, colourEnd);
                             builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                                 traitText, colourEnd);
                             //message
