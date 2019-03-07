@@ -2444,7 +2444,7 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a cure to a node location and handles all admin. isActive sets initial state of Cure (default false)
+    /// Add a cure to a node location and handles all admin. isActive sets initial state of Cure (default false). Overriden to true if Resistance is controlled by AI.
     /// </summary>
     /// <param name="cure"></param>
     /// <returns></returns>
@@ -2462,6 +2462,9 @@ public class NodeManager : MonoBehaviour
                     {
                         node.cure = cure;
                         cure.isActive = isActive;
+                        //automatically make active if Resistance is AI
+                        if (isActive == false && GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                        { cure.isActive = true; }
                         GameManager.instance.dataScript.AddCureNode(node);
                         Debug.LogFormat("[Nod] NodeManager.cs -> AddCureNode: {0} cure ADDED at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                     }

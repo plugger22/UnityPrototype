@@ -1408,6 +1408,7 @@ public class AIRebelManager : MonoBehaviour
     {
         //does player have a condition that comes with a cure?
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        
         //reset flags each turn
         isCureNeeded = false;
         isCureCritical = false;
@@ -1415,6 +1416,7 @@ public class AIRebelManager : MonoBehaviour
         Node node = null;
         //check Player's conditions and available OnMap cures
         int count = listOfConditions.Count;
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureData: {0} conditions present{1}", count, "\n");
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
@@ -1448,10 +1450,11 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
         }
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureData: isCureNeeded: {0}, isCureCritical: {1}, cureNodeID {2}{3}", isCureNeeded, isCureCritical, cureNodeID, "\n");
     }
 
     /// <summary>
-    /// Select a suitable node to move to (single node move) in the direction of a chosen cure
+    /// Select a suitable node to move to (single node move) in the direction of a chosen cure. All cure tasks are critical
     /// </summary>
     private void ProcessCureTask()
     {
@@ -1469,10 +1472,11 @@ public class AIRebelManager : MonoBehaviour
                 {
                     if (nodePlayer.cure != null && nodePlayer.cure.isActive == true)
                     {
-                        //generate task -> critical priority if a critical condition, eg. Doomed
+                        //generate task
                         AITask task = new AITask();
                         task.data0 = cureNodeID;
                         task.type = AITaskType.Cure;
+                        //if a critical  cure situation, then critical priority
                         if (isCureCritical == true)
                         { task.priority = Priority.Critical; }
                         else { task.priority = Priority.High; }
@@ -1494,54 +1498,59 @@ public class AIRebelManager : MonoBehaviour
                 }
                 //NOT AT Cure Node, or any other node that happens to have a cure available
                 else
-                { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: AI Player continues to move towards Cure at nodeID {0}{1}", cureNodeID, "\n"); }
-                //path to cure 
-                List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, cureNodeID, true);
-                //get next node in sequence
-                if (pathList != null)
                 {
-                    connection = pathList[0];
-                    if (connection.node1.nodeID != nodePlayer.nodeID)
-                    { nodeMoveTo = connection.node1; }
-                    else { nodeMoveTo = connection.node2; }
-                }
-                else { Debug.LogError("Invalid pathList (Null)"); }
-                //GENERATE TASK
-                if (nodeMoveTo != null)
-                {
-                    //check if moveTo node on listOfBadNodes
-                    if (CheckForBadNode(nodeMoveTo.nodeID, true) == true)
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: AI Player continues to move towards Cure at nodeID {0}{1}", cureNodeID, "\n");
+                    //path to cure 
+                    List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, cureNodeID, true);
+                    //get next node in sequence
+                    if (pathList != null)
                     {
-                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: Selected node id {0} is on listOfBadNodes{1}", nodeMoveTo.nodeID, "\n");
-                        //get a random neighbouring node which is good
-                        nodeMoveTo = GetRandomGoodNode(nodePlayer);
-                        if (nodeMoveTo == null)
+                        connection = pathList[0];
+                        if (connection.node1.nodeID != nodePlayer.nodeID)
+                        { nodeMoveTo = connection.node1; }
+                        else { nodeMoveTo = connection.node2; }
+                    }
+                    else { Debug.LogError("Invalid pathList (Null)"); }
+                    //GENERATE TASK
+                    if (nodeMoveTo != null)
+                    {
+                        //check if moveTo node on listOfBadNodes
+                        if (CheckForBadNode(nodeMoveTo.nodeID, true) == true)
                         {
-                            //no viable node that isn't bad amongst neighbours. Cancel move task
-                            isProceed = false;
-                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: Selected node is BAD, no viable alternative. Move task CANCELLED{0}", "\n");
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: Selected node id {0} is on listOfBadNodes{1}", nodeMoveTo.nodeID, "\n");
+                            //get a random neighbouring node which is good
+                            nodeMoveTo = GetRandomGoodNode(nodePlayer);
+                            if (nodeMoveTo == null)
+                            {
+                                //no viable node that isn't bad amongst neighbours. Cancel move task
+                                isProceed = false;
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: Selected node is BAD, no viable alternative. Move task CANCELLED{0}", "\n");
+                            }
+                        }
+                        if (isProceed == true)
+                        {
+                            //get connectionID (may have changed)
+                            Connection conn = nodePlayer.GetConnection(nodeMoveTo.nodeID);
+                            if (conn != null)
+                            {
+                                //generate task
+                                AITask task = new AITask();
+                                task.data0 = nodeMoveTo.nodeID;
+                                task.data1 = conn.connID;
+                                task.type = AITaskType.Cure;
+                                //critical priority if a critical cure situation, high otherwise
+                                if (isCureCritical == true)
+                                { task.priority = Priority.Critical; }
+                                else { task.priority = Priority.High; }
+                                //add task to list of potential tasks
+                                AddWeightedTask(task);
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: cureNodeID {0}, move to {1}{2}", cureNodeID, nodeMoveTo.nodeID, "\n");
+                            }
+                            else { Debug.LogErrorFormat("Invalid connection (Null) for nodeID {0}", nodeMoveTo.nodeID); }
                         }
                     }
-                    if (isProceed == true)
-                    {
-                        //get connectionID (may have changed)
-                        Connection conn = nodePlayer.GetConnection(nodeMoveTo.nodeID);
-                        if (conn != null)
-                        {
-                            //generate task
-                            AITask task = new AITask();
-                            task.data0 = nodeMoveTo.nodeID;
-                            task.data1 = conn.connID;
-                            task.type = AITaskType.Cure;
-                            task.priority = priorityMovePlayer;
-                            //add task to list of potential tasks
-                            AddWeightedTask(task);
-                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: cureNodeID {0}, move to {1}{2}", cureNodeID, nodeMoveTo.nodeID, "\n");
-                        }
-                        else { Debug.LogErrorFormat("Invalid connection (Null) for nodeID {0}", nodeMoveTo.nodeID); }
-                    }
+                    else { Debug.LogError("Invalid nodeMoveTo (Null)"); }
                 }
-                else { Debug.LogError("Invalid nodeMoveTo (Null)"); }
             }
             else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
         }
@@ -2354,6 +2363,23 @@ public class AIRebelManager : MonoBehaviour
             if (count > 1)
             { task = listOfTasksCritical[Random.Range(0, count)]; }
             else { task = listOfTasksCritical[0]; }
+
+            //debug
+            for (int i = 0; i < count; i++)
+            {
+                AITask tempTask = listOfTasksCritical[i];
+                if (string.IsNullOrEmpty(tempTask.name0) == false)
+                {
+                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", tempTask.type, tempTask.priority,
+                        tempTask.data0, tempTask.data1, tempTask.data2, tempTask.name0, "\n");
+                }
+                else
+                {
+                    Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}{5}", tempTask.type, tempTask.priority,
+                        tempTask.data0, tempTask.data1, tempTask.data2, "\n");
+                }
+            }
+
         }
         else
         {
@@ -3158,11 +3184,11 @@ public class AIRebelManager : MonoBehaviour
                     Condition condition = nodePlayer.cure.condition;
                     if (condition != null)
                     {
-                        reason = string.Format("{0} used to cure {1} condition", nodePlayer.cure.cureName, condition.name);
+                        reason = string.Format("cure {0} condition", condition.name);
                         if (GameManager.instance.playerScript.RemoveCondition(condition, globalResistance, reason) == true)
                         {
                             isSuccess = true;
-                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} condition CURED by {1} at {2}, {3}, ID {4}{5}", condition.name, nodePlayer.cure.cureName,
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} condition CURED by {1} at {2}, {3}, ID {4}{5}", condition.name, condition.cure.cureName,
                                 nodePlayer.nodeName, nodePlayer.Arc.name, nodePlayer.nodeID, "\n");
                         }
                     }
@@ -3178,7 +3204,8 @@ public class AIRebelManager : MonoBehaviour
             if (ExecuteMoveTask(task) == true)
             {
                 isSuccess = true;
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} moving towards CURE{0}", "\n");
+                reason = string.Format("move to CURE at nodeID {0}", task.data0);
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: {0}, Player moving towards CURE{1}", playerName, "\n");
             }
         }
         //expend action
@@ -3652,8 +3679,8 @@ public class AIRebelManager : MonoBehaviour
     {
         actionsUsed++;
         if (string.IsNullOrEmpty(reason) == false)
-        { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION used to {0}{1}", reason, "\n"); }
-        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION for Unknown reason{0}", "\n"); }
+        { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION {0} used to {1}{2}", actionsUsed, reason, "\n"); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> UseAction: ACTION {0} used for Unknown reason{0}", actionsUsed, "\n"); }
     }
 
 
