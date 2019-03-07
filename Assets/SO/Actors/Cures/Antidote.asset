@@ -13,10 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: d2b98e75e09328b4da5ffe7da355afe0, type: 2}
   cureName: Antidote
-  distance: 1
+  distance: 7
   tooltipText: Rebel HQ have sourced a rogue bioGeneticist who is anxiously waiting
     here for you with a smuggled antidote.
   outcomeText: The injection didn't hurt and it looks like breathing is still a thing
     for you. Probably not for the bioGeneticist though. He even <i>looks</i> like
     a Dead Man Walking.
   cureID: 0
+  isActive: 1
+  timesCured: 0

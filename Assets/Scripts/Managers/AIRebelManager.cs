@@ -2458,10 +2458,10 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// AI Player moves, task.data0 is nodeID, task.data1 is connectionID. Returns true if successful
+    /// AI Player moves, task.data0 is nodeID, task.data1 is connectionID. Returns true if successful. isAction parameter (default true) as can be called by another ExecuteTask method, eg. ExecuteCureTask
     /// NOTE: Task checked for Null by parent method
     /// </summary>
-    private bool ExecuteMoveTask(AITask task)
+    private bool ExecuteMoveTask(AITask task, bool isAction = true)
     {
         bool isSuccess = false;
         Node node = GameManager.instance.dataScript.GetNode(task.data0);
@@ -2471,7 +2471,8 @@ public class AIRebelManager : MonoBehaviour
             GameManager.instance.nodeScript.nodePlayer = node.nodeID;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: AI Player moves to {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
             //expend action
-            UseAction("Move");
+            if (isAction == true)
+            { UseAction("Move"); }
             //move list (for when autorun ends)
             node.SetPlayerMoveNodes();
             isSuccess = true;
@@ -3201,7 +3202,7 @@ public class AIRebelManager : MonoBehaviour
         else
         {
             //move to a node towards a cure
-            if (ExecuteMoveTask(task) == true)
+            if (ExecuteMoveTask(task, false) == true)
             {
                 isSuccess = true;
                 reason = string.Format("move to CURE at nodeID {0}", task.data0);

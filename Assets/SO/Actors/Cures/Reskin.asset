@@ -13,9 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: c376ab92e7aa96643a05ed6f291a0c4a, type: 2}
   cureName: Reskin Shop
-  distance: 1
+  distance: 5
   tooltipText: You need a new face. Not totally new, but enough to fool the recognition
     software. This Reskin shop is willing to try. They do good work with cars.
   outcomeText: It's a new face. Does that change who you are as a person? No, but
     it sure feels like it.
   cureID: 3
+  isActive: 0
+  timesCured: 0

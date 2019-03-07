@@ -13,10 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   condition: {fileID: 11400000, guid: 8a92e519a923a9640bf583dcb18ef65b, type: 2}
   cureName: Ripper Doc
-  distance: 1
+  distance: 5
   tooltipText: The subdermal chip inside you needs to be removed. The Ripper Doc isn't
     pretty but he gets the job done. You're lucky we could find him. Is he sober?
     Hopefully.
   outcomeText: The Ripper Doc has yanked the chip out via your nose with a pair of
     orthopedic pliers. His breath stinks.
   cureID: 1
+  isActive: 0
+  timesCured: 5
