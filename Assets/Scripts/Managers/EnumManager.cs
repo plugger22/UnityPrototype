@@ -95,7 +95,7 @@
     // - - - AI - - -
     //
     public enum Priority { None, Low, Medium, High, Critical }
-    public enum AITaskType { None, Team, Decision, Move, LieLow, StressLeave, Idle, ActorArc, Target, Cure, Count }  //used for both AI Authority and Rebel sides. Not all options apply to each side.
+    public enum AITaskType { None, Team, Decision, Move, LieLow, StressLeave, Idle, ActorArc, Target, Cure, Recruit, Count }  //used for both AI Authority and Rebel sides. Not all options apply to each side.
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                             //used for toggling debugGUI.cs  AI data
     public enum AINodeCriteria { None }                                                     //AIResistanceManager.cs -> ActorArc node task (find node with this criteria)
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI

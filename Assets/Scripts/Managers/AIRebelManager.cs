@@ -1923,6 +1923,7 @@ public class AIRebelManager : MonoBehaviour
                         ProcessPlannerTask(actorArcName);
                         break;
                     case "RECRUITER":
+                        ProcessRecruiterTask(actorArcName);
                         break;
                     default:
                         Debug.LogErrorFormat("Unrecognised Actor Arc \"{0}\"", listOfArcs[index].name);
@@ -2241,7 +2242,7 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Planner Actor Arc task. Ther eis no limit on the amount of intel that can be acquired
+    /// Planner Actor Arc task. There is no limit on the amount of intel that can be acquired
     /// NOTE: actorArcName checked for null by calling method
     /// </summary>
     private void ProcessPlannerTask(string actorArcName)
@@ -2280,6 +2281,48 @@ public class AIRebelManager : MonoBehaviour
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPlannerTask: Invalid PLANNER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
         }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPlannerTask: PLANNER task NOT generated as already at Max targetIntel (have {0}, max is {1}){2}", targetIntel, targetIntelMax, "\n"); }
+    }
+
+    /// <summary>
+    /// Recruiter Actor Arc task. 
+    /// </summary>
+    /// <param name="actorArcName"></param>
+    private void ProcessRecruiterTask(string actorArcName)
+    {
+        int actorID = -1;
+        int nodeID = -1;
+        bool isRecruit = false;
+        //check if vacancy in current line-up
+        if (GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance) < maxNumOfOnMapActors)
+        { 
+            //Player does action?
+            if (CheckPlayerAction(actorArcName) == true)
+            {
+                actorID = playerID;
+                nodeID = GameManager.instance.nodeScript.nodePlayer;
+            }
+            else
+            {
+                //get node and actorID
+                Tuple<int, int> results = FindNodeActorRandom(actorArcName);
+                nodeID = results.Item1;
+                actorID = results.Item2;
+            }
+            //generate task if valid data is present, if none, ignore task
+            if (nodeID > -1 && actorID > -1)
+            {
+                AITask task = new AITask();
+            task.type = AITaskType.ActorArc;
+            task.data0 = actorID;
+            task.data1 = nodeID;
+            task.name0 = actorArcName;
+            task.priority = priorityRecruiterTask;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: Invalid RECRUITER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
+        }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: RECRUITER task NOT generated (no vacancy in line-up){0}", "\n"); }
     }
 
     /// <summary>
@@ -2695,6 +2738,7 @@ public class AIRebelManager : MonoBehaviour
                     ExecutePlannerTask(task);
                     break;
                 case "RECRUITER":
+                    ExecuteRecruiterTask(task);
                     break;
                 default:
                     Debug.LogErrorFormat("Unrecognised task.name0 \"{0}\"", task.name0);
@@ -2808,6 +2852,59 @@ public class AIRebelManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
     }
+
+    /// <summary>
+    /// Recruiter actorArc task execution
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteRecruiterTask(AITask task)
+    {
+        string actorName = "Unknown";
+        string nodeName = "Unknown";
+        string nodeArc = "Unknown";
+        bool isPlayer = false;
+        int nodeID = -1;
+        Actor actor = null;
+        //get node name
+        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        if (node != null)
+        {
+            nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
+            //effect
+
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: Recruiter action, {0}", "\n");
+
+            //expend an action -> get actor Name
+            if (task.data0 == playerID)
+            {
+                actorName = "Player";
+                isPlayer = true;
+                UpdateRenown();
+            }
+            else
+            {
+                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                if (actor != null)
+                {
+                    actorName = actor.actorName;
+                    UpdateRenown(actor);
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
+            }
+            UseAction(string.Format("get target Intel ({0}, Recruiter at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
+            //gear used to stay invisible
+            if (CheckGearAvailable(false) == false)
+            {
+                //invisibility drops
+                if (isPlayer == true)
+                { UpdateInvisibilityNode(node); }
+                else { UpdateInvisibilityNode(node, actor); }
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: GEAR USED to remain undetected while recruiting (gearPoint NOT lost)"); }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data1); }
+    }
+
 
     /// <summary>
     /// Blogger actorArc task execution

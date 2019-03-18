@@ -2052,7 +2052,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
-  isAuthority: 0
+  isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
