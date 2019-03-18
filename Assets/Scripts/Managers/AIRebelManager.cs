@@ -2291,9 +2291,8 @@ public class AIRebelManager : MonoBehaviour
     {
         int actorID = -1;
         int nodeID = -1;
-        bool isRecruit = false;
         //check if vacancy in current line-up
-        if (GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance) < maxNumOfOnMapActors)
+        if (GameManager.instance.dataScript.CheckForSpareActorSlot(globalResistance) > -1)
         { 
             //Player does action?
             if (CheckPlayerAction(actorArcName) == true)
@@ -4048,6 +4047,11 @@ public class AIRebelManager : MonoBehaviour
             case "PLANNER":
                 //can be any node
                 isValid = true;
+                break;
+            case "RECRUITER":
+                //No probe team present
+                if (node.isProbeTeam == false)
+                { isValid = true; }
                 break;
             case "OBSERVER":
                 //no tracer present and no Spider TEAM present 

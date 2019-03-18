@@ -3803,7 +3803,7 @@ public class DataManager : MonoBehaviour
     { return arrayOfActorsPresent; }
 
     /// <summary>
-    /// returns the number of active OnMap actors for a side
+    /// returns the number of Active OnMap actors for a side
     /// </summary>
     /// <returns></returns>
     public int CheckNumOfActiveActors(GlobalSide side)
@@ -3812,10 +3812,20 @@ public class DataManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == true)
-            { numOfActors++; }
+            {
+                Actor actor = arrayOfActors[side.level, i];
+                if (actor != null)
+                {
+                    if (actor.Status == ActorStatus.Active)
+                    { numOfActors++; }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for {0}, slotID {1}", side.name, i); }
+            }
         }
         return numOfActors;
     }
+
+
 
 
     /// <summary>
