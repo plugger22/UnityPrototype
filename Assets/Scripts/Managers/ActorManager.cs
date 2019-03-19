@@ -2760,6 +2760,7 @@ public class ActorManager : MonoBehaviour
         }
         #endregion
 
+        #region cachedSelection
         //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same recruit is available on each attempt
         if (isResistance == true)
         {
@@ -2781,6 +2782,7 @@ public class ActorManager : MonoBehaviour
             if (authorityTurn != GameManager.instance.turnScript.Turn || isNewActionAuthority == true)
             { isIgnoreCache = true; }
         }
+        #endregion
 
         //proceed with a new Recruit Selection
         if (isIgnoreCache == true)
@@ -2789,6 +2791,8 @@ public class ActorManager : MonoBehaviour
             //Recruit actor (both sides)
             if (details.side.level == globalAuthority.level || node != null)
             {
+
+                #region setupAdmin
                 if (details.side.level == globalResistance.level) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
                 else if (details.side.level == globalAuthority.level) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
                 else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
@@ -2810,6 +2814,8 @@ public class ActorManager : MonoBehaviour
                 List<int> listOfPoolActors = new List<int>();
                 List<int> listOfPickerActors = new List<int>();
                 List<int> listOfCurrentArcIDs = new List<int>(GameManager.instance.dataScript.GetAllCurrentActorArcIDs(details.side));
+                #endregion
+
                 //selection methodology varies for each side -> need to populate 'listOfPoolActors'
                 if (details.side.level == globalResistance.level)
                 {
@@ -6603,6 +6609,16 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader Not Betrayed (need {0}, rolled {1}){2}", chance, rndNum, "\n"); }
         }
+    }
+
+    /// <summary>
+    /// add a new actor
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="node"></param>
+    public void AddNewActorAI(GlobalSide side, Node node)
+    {
+
     }
 
     //new methods above here
