@@ -170,3 +170,17 @@ Seed 60615 -> Monday, 18 March 2019 5:17 PM
 Seed 36738 -> Monday, 18 March 2019 5:19 PM
 Seed 44841 -> Monday, 18 March 2019 5:19 PM
 Seed 64677 -> Tuesday, 19 March 2019 4:56 PM
+Seed 60509 -> Wednesday, 20 March 2019 2:14 PM
+Seed 43610 -> Wednesday, 20 March 2019 2:14 PM
+Seed 62203 -> Wednesday, 20 March 2019 2:14 PM
+Seed 19077 -> Wednesday, 20 March 2019 2:15 PM
+Seed 54818 -> Wednesday, 20 March 2019 2:16 PM
+Seed 54212 -> Wednesday, 20 March 2019 2:16 PM
+Seed 56565 -> Wednesday, 20 March 2019 2:50 PM
+Seed 4445 -> Wednesday, 20 March 2019 2:53 PM
+Seed 32248 -> Wednesday, 20 March 2019 2:53 PM
+Seed 58930 -> Wednesday, 20 March 2019 2:54 PM
+Seed 48725 -> Wednesday, 20 March 2019 2:58 PM
+Seed 57699 -> Wednesday, 20 March 2019 2:58 PM
+Seed 13791 -> Wednesday, 20 March 2019 2:59 PM
+Seed 41543 -> Wednesday, 20 March 2019 3:01 PM

@@ -1597,9 +1597,10 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: -1
+  conditionTurnResistance: 20
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 0}
+  conditionResistance: {fileID: 11400000, guid: 8d211107db009064782ea763fea77830,
+    type: 2}
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1

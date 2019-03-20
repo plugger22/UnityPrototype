@@ -939,7 +939,7 @@ public class DebugGUI : MonoBehaviour
                     case 7:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DisplayActorLists();
-                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 450), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 450), analysis, customBackground);
                         break;
                     //Player stats
                     case 8:

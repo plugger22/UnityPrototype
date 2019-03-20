@@ -2292,7 +2292,8 @@ public class AIRebelManager : MonoBehaviour
         int actorID = -1;
         int nodeID = -1;
         //check if vacancy in current line-up
-        if (GameManager.instance.dataScript.CheckForSpareActorSlot(globalResistance) > -1)
+        int slotID = GameManager.instance.dataScript.CheckForSpareActorSlot(globalResistance);
+        if (slotID > -1)
         { 
             //Player does action?
             if (CheckPlayerAction(actorArcName) == true)
@@ -2314,6 +2315,7 @@ public class AIRebelManager : MonoBehaviour
             task.type = AITaskType.ActorArc;
             task.data0 = actorID;
             task.data1 = nodeID;
+            task.data2 = slotID;
             task.name0 = actorArcName;
             task.priority = priorityRecruiterTask;
             //add task to list of potential tasks
@@ -2869,53 +2871,8 @@ public class AIRebelManager : MonoBehaviour
         if (node != null)
         {
             nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
-
             //effect
-            List<int> listOfPoolActors = new List<int>();
-            List<int> listOfCurrentArcIDs = new List<int>(GameManager.instance.dataScript.GetAllCurrentActorArcIDs(globalResistance));
-            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
-            {
-                //player at node, select from 3 x level 1 options, different from current OnMap actor types
-                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance));
-            }
-            else
-            {
-                //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
-                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance));
-            }
-            if (listOfPoolActors.Count > 0)
-            {
-                //loop backwards through pool of actors (do for both) and remove any that match the curent OnMap types
-                for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
-                {
-                    Actor actorTemp = GameManager.instance.dataScript.GetActor(listOfPoolActors[i]);
-                    if (actorTemp != null)
-                    {
-                        if (listOfCurrentArcIDs.Exists(x => x == actorTemp.arc.ActorArcID))
-                        { listOfPoolActors.RemoveAt(i); }
-                    }
-                    else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
-                }
-                //actors present
-                if (listOfPoolActors.Count > 0)
-                {
-                    //randomly select an actor
-                    int actorID = listOfPoolActors[Random.Range(0, listOfPoolActors.Count)];
-                    Actor actorNew = GameManager.instance.dataScript.GetActor(actorID);
-                    if (actorNew != null)
-                    {
-                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
-                        string textAutoRun = string.Format("{0}{1}{2} Recruited", colourAlert, actorNew.arc.name, colourEnd);
-                        GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
-                    }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
-                }
-                else { Debug.LogFormat("[Rim] AIRebelManager.cs"); }
-            }
-            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: NO SUITABLE RECRUITS AVAILABLE{0}", "\n"); }
-
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: Recruiter action, {0}", "\n");
-
+            GameManager.instance.actorScript.AddNewActorAI(globalResistance, node, task.data2);
             //expend an action -> get actor Name
             if (task.data0 == playerID)
             {
@@ -2933,7 +2890,7 @@ public class AIRebelManager : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
-            UseAction(string.Format("get target Intel ({0}, Recruiter at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
+            UseAction(string.Format("Recruit new Actor ({0}, Recruiter at {1}, {2}, id {3})", actorName, nodeName, nodeArc, nodeID));
             //gear used to stay invisible
             if (CheckGearAvailable(false) == false)
             {
