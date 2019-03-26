@@ -3825,6 +3825,21 @@ public class DataManager : MonoBehaviour
         return numOfActors;
     }
 
+    /// <summary>
+    /// returns the number of OnMap actors (status irrelevant) for a side. Returns Zero if none.
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public int  CheckNumOfOnMapActors(GlobalSide side)
+    {
+        int numOfActors = 0;
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            if (arrayOfActorsPresent[side.level, i] == true)
+            { numOfActors++; }
+        }
+        return numOfActors;
+    }
 
 
 

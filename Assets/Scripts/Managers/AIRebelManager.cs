@@ -92,6 +92,10 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Maximum number of target attempt tasks that can be generated in a single turn")]
     [Range(0, 5)] public int targetAttemptsMax = 2;
 
+    [Header("Recruiting")]
+    [Tooltip("If number of OnMap actors (status ignored) falls BELOW this number then a survival task is generated to recruit an actor (Critical task)")]
+    [Range(0, 4)] public int actorNumThreshold = 3;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -364,26 +368,30 @@ public class AIRebelManager : MonoBehaviour
                 ClearAICollectionsLate();
                 if (actionsUsed > 0)
                 { FilterActorArcList(listOfArcs); }
-                if (listOfArcs.Count > 0)
+
+                //task creation
+                if (actionsUsed == 0)
+                { ProcessSurvivalTask(); }
+                ProcessCureTask();
+                //only one task possible and if survival task has been generated no point in going further
+                if (listOfTasksCritical.Count == 0)
                 {
-                    //task creation
-                    if (actionsUsed == 0)
-                    { ProcessSurvivalTask(); }
-                    ProcessCureTask();
-                    //only one task possible and if survival task has been generated no point in going further
-                    if (listOfTasksCritical.Count == 0)
+                    ProcessAdminTask(); //first in list
+
+                    ProcessMoveToTargetTask();
+                    ProcessPeopleTask();
+                    if (listOfArcs.Count > 0)
                     {
-                        ProcessAdminTask(); //first in list
-                        ProcessTargetTask();
-                        ProcessMoveToTargetTask();
-                        ProcessPeopleTask();
+                        //can only process if actor Arcs present)
                         ProcessActorArcTask();
-                        ProcessIdleTask();
+                        ProcessTargetTask();
                     }
-                    //task Execution
-                    ProcessTaskFinal();
+                    else { Debug.LogWarning("Invalid listOfArcs (Empty)"); }
+                    ProcessIdleTask();
                 }
-                else { Debug.LogError("Invalid listOfArcs (Empty)"); }
+                //task Execution
+                ProcessTaskFinal();
+
                 counter++;
                 if (counter > 3)
                 {
@@ -1222,6 +1230,7 @@ public class AIRebelManager : MonoBehaviour
         int invisibility = GameManager.instance.playerScript.Invisibility;
         int lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
         int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+        int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
         bool isSuccess = false;
         //can only take action if Active (Captured/Stressed/Lie Low etc. can't do anything)
         if (status == ActorStatus.Active)
@@ -1334,6 +1343,14 @@ public class AIRebelManager : MonoBehaviour
                         }
                     }
                 }
+                //
+                // - - - Running low on Actors - - -
+                //
+                else if (numOfActors < actorNumThreshold)
+                {
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: {0} actors currently OnMap. RECRUIT THRESHOLD triggered{1}", numOfActors, "\n");
+                    ProcessRecruiterTask("RECRUITER", true);
+                }
                 //actor lie low
                 else
                 {
@@ -1403,6 +1420,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessSurvivalTask: Survival Task assessmenet CANCELLED due to need for a Critical Cure{0}", "\n"); }
         }
+
     }
 
     /// <summary>
@@ -1855,7 +1873,7 @@ public class AIRebelManager : MonoBehaviour
 
 
     /// <summary>
-    /// sets up listOfCurrentActors used by subsequent Process 'x' Tasks
+    /// sets up listOfCurrentActors used by subsequent Process 'x' Tasks (actors who are OnMap and Active)
     /// </summary>
     private void ProcessAdminTask()
     {
@@ -1865,11 +1883,11 @@ public class AIRebelManager : MonoBehaviour
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
-                //check actor is present in slot (not vacant)
+                //check actor is present in slot & Active
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
-                    if (actor != null)
+                    if (actor != null && actor.Status == ActorStatus.Active)
                     { listOfCurrentActors.Add(actor); }
                 }
             }
@@ -2284,17 +2302,17 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Recruiter Actor Arc task. 
+    /// Recruiter Actor Arc task. If 'isAutoPlayer' true then player automatically does the task if there is no other viable alternative (ignores bad node). Used for ProcessSurvivalTask)
     /// </summary>
     /// <param name="actorArcName"></param>
-    private void ProcessRecruiterTask(string actorArcName)
+    private void ProcessRecruiterTask(string actorArcName, bool isAutoPlayer = false)
     {
         int actorID = -1;
         int nodeID = -1;
         //check if vacancy in current line-up
         int slotID = GameManager.instance.dataScript.CheckForSpareActorSlot(globalResistance);
         if (slotID > -1)
-        { 
+        {
             //Player does action?
             if (CheckPlayerAction(actorArcName) == true)
             {
@@ -2308,18 +2326,44 @@ public class AIRebelManager : MonoBehaviour
                 nodeID = results.Item1;
                 actorID = results.Item2;
             }
+            //no viable option found
+            if (nodeID < 0 || actorID < 0)
+            {
+                //player does action regardless of status, bad nodes (used by ProcessSurvivalTask to prevent running out of OnMap actors)
+                if (isAutoPlayer == true)
+                {
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: No viable option available, AUTOMATIC Player Recruit action invoked{0}", "\n");
+                    nodeID = GameManager.instance.nodeScript.nodePlayer;
+                    Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                    if (node != null)
+                    {
+                        if (CheckNodeCriteria("RECRUITER", node) == true)
+                        { actorID = playerID; }
+                        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: Automatic Player Recruit action but FAILED node Criteria check{0}", "\n"); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+                }
+            }
             //generate task if valid data is present, if none, ignore task
             if (nodeID > -1 && actorID > -1)
             {
                 AITask task = new AITask();
-            task.type = AITaskType.ActorArc;
-            task.data0 = actorID;
-            task.data1 = nodeID;
-            task.data2 = slotID;
-            task.name0 = actorArcName;
-            task.priority = priorityRecruiterTask;
-            //add task to list of potential tasks
-            AddWeightedTask(task);
+                task.type = AITaskType.ActorArc;
+                task.data0 = actorID;
+                task.data1 = nodeID;
+                task.data2 = slotID;
+                task.name0 = actorArcName;
+                //priority can be automatically overidden depending on number of OnMap actors present
+                int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
+                if (numOfActors > 0)
+                {
+                    if (numOfActors < actorNumThreshold)
+                    { task.priority = Priority.Critical; }
+                    else { task.priority = priorityRecruiterTask; }
+                    //add task to list of potential tasks
+                    AddWeightedTask(task);
+                }
+                else { Debug.LogWarning("No actors present OnMap (yet indicated previously that there were"); }
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: Invalid RECRUITER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
         }
@@ -3867,7 +3911,7 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds a suitable node (randomly selected) that is part of the specified actor's contact network, returns -1 if a problem
+    /// Finds a suitable node (randomly selected) that is part of the specified actor's contact network, returns -1 if a problem (may not be any due to bad nodes, no contacts, etc.)
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="criteria"></param>
@@ -3898,7 +3942,7 @@ public class AIRebelManager : MonoBehaviour
                 nodeID = listOfNodeID[Random.Range(0, count)];
             }
         }
-        else { Debug.LogWarningFormat("Invalid listOfNodes (Empty) for actorID {0}", actorID); }
+        else { Debug.LogFormat("[Rim] AIRebelManager.cs -> FindNodeRandom: actorID {0} unable to find any good contact nodes{1}", actorID, "\n"); }
         return nodeID;
     }
 
