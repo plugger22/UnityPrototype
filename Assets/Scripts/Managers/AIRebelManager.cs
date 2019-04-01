@@ -398,7 +398,7 @@ public class AIRebelManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("Invalid listOfArcs (Empty). Emergency Recruit Task generated");
+                        Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: Invalid listOfArcs (Empty). Emergency Recruit Task generated");
                         ProcessRecruiterTask("RECRUITER", true);
                     }
                     ProcessIdleTask();
