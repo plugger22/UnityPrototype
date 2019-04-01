@@ -96,6 +96,10 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("If number of OnMap actors (status ignored) falls BELOW this number then a survival task is generated to recruit an actor (Critical task)")]
     [Range(0, 4)] public int actorNumThreshold = 3;
 
+    [Header("Faction")]
+    [Tooltip("Below this level of faction support a faction task can be generated to raise support")]
+    [Range(0, 5)] public int factionSupportThreshold = 4;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -145,6 +149,7 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityRecruiterTask;
     private Priority priorityTargetPlayer;
     private Priority priorityTargetActor;
+    private Priority priorityFactionApproval;
     //autoRun testing
     private bool isAutoRunTest;
     private int turnForCondition;
@@ -173,6 +178,8 @@ public class AIRebelManager : MonoBehaviour
     private int delayYesSpider = -1;
     //actor arcs
     private ActorArc arcFixer;
+    //resistance faction (dynamically updated in ProcessResources)
+    Faction factionResistance;
 
     //Authority activity
     private List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -284,6 +291,7 @@ public class AIRebelManager : MonoBehaviour
         priorityRecruiterTask = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.taskRecruiter);
         priorityTargetPlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetPlayer);
         priorityTargetActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetActor);
+        priorityFactionApproval = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.approvalPriority);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
@@ -300,6 +308,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(targetAttemptMinOdds > 0, "Invalid targetAttemptMinOdds (Zero or less)");
         Debug.Assert(targetAttemptPlayerChance > 0, "Invalid targetAttemptPlayerChance (Zero or less)");
         Debug.Assert(targetAttemptActorChance > 0, "Invalid targetAttemptActorChance (Zero or less)");
+        Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (Null)");
     }
 
     /// <summary>
@@ -380,6 +389,7 @@ public class AIRebelManager : MonoBehaviour
 
                     ProcessMoveToTargetTask();
                     ProcessPeopleTask();
+                    ProcessFactionTask();
                     if (listOfArcs.Count > 0)
                     {
                         //can only process if actor Arcs present)
@@ -1183,7 +1193,7 @@ public class AIRebelManager : MonoBehaviour
         int approvalResistance = GameManager.instance.factionScript.ApprovalResistance;
         int renownPerTurn = GameManager.instance.factionScript.renownPerTurn;
         int threshold = approvalResistance * 10;
-        Faction factionResistance = GameManager.instance.factionScript.factionResistance;
+        factionResistance = GameManager.instance.factionScript.factionResistance;
         if (factionResistance != null)
         {
             if (rnd < threshold)
@@ -1976,6 +1986,35 @@ public class AIRebelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// deals with all faction specific tasks, eg. approval level
+    /// </summary>
+    private void ProcessFactionTask()
+    {
+        //
+        // - - - Approval Level - - -
+        //
+        int approvalLevel = GameManager.instance.factionScript.ApprovalResistance;
+        if (approvalLevel < factionSupportThreshold)
+        {
+            //check only if Player Active (node irrelevant in this situation as invisibility not an issue)
+            if (GameManager.instance.playerScript.status == ActorStatus.Active)
+            {
+                //generate task
+                AITask task = new AITask();
+                task.type = AITaskType.Faction;
+                //normal priority as per RebelLeader but Critical if approval level zero
+                if (approvalLevel == 0)
+                { task.priority = Priority.Critical; }
+                else { task.priority = priorityFactionApproval; }
+                //add task to list of potential tasks
+                AddWeightedTask(task);
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFactionTask: approval Level {0}, task Priority {1}", approvalLevel, task.priority, "\n");
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessFactionTask: Player Inactive. NO TASK Generated for Faction Approval (currently {0}){1}", approvalLevel, "\n"); }
+        }
+    }
+
 
     /// <summary>
     /// Do nothing default task
@@ -2555,6 +2594,9 @@ public class AIRebelManager : MonoBehaviour
                 break;
             case AITaskType.Cure:
                 ExecuteCureTask(task);
+                break;
+            case AITaskType.Faction:
+                ExecuteFactionTask(task);
                 break;
             default:
                 Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
@@ -3621,6 +3663,16 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", node.targetID); }
     }
         
+    /// <summary>
+    /// Raise level of faction support by one
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteFactionTask(AITask task)
+    {
+        GameManager.instance.factionScript.ChangeFactionApproval(1, globalResistance, "Rebel Leader lobbies HQ");
+        //action
+        UseAction("raise Faction Approval Level");
+    }
 
 
     /// <summary>

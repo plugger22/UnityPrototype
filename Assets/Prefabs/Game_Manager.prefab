@@ -215,6 +215,7 @@ MonoBehaviour:
   targetIntelExtra: 40
   targetIntelAttempt: 3
   targetAttemptsMax: 2
+  actorNumThreshold: 3
   status: 0
   inactiveStatus: 0
   isBreakdown: 0

@@ -44,6 +44,8 @@ public class RebelLeader : ScriptableObject
     public GlobalChance stressLeaveActor;
     [Tooltip("Player Moving to target. Default Medium")]
     public GlobalChance movePriority;
+    [Tooltip("Raise faction Approval task. Default Low")]
+    public GlobalChance approvalPriority;
     [Tooltip("Player Idling. Default Low")]
     public GlobalChance idlePriority;
 
