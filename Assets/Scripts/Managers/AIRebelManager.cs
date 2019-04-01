@@ -396,7 +396,11 @@ public class AIRebelManager : MonoBehaviour
                         ProcessActorArcTask();
                         ProcessTargetTask();
                     }
-                    else { Debug.LogWarning("Invalid listOfArcs (Empty)"); }
+                    else
+                    {
+                        Debug.LogWarning("Invalid listOfArcs (Empty). Emergency Recruit Task generated");
+                        ProcessRecruiterTask("RECRUITER", true);
+                    }
                     ProcessIdleTask();
                 }
                 //task Execution
@@ -2394,15 +2398,31 @@ public class AIRebelManager : MonoBehaviour
                 task.name0 = actorArcName;
                 //priority can be automatically overidden depending on number of OnMap actors present
                 int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
-                if (numOfActors > 0)
+                if (numOfActors < actorNumThreshold)
                 {
-                    if (numOfActors < actorNumThreshold)
-                    { task.priority = Priority.Critical; }
-                    else { task.priority = priorityRecruiterTask; }
+                    if (isAutoPlayer == true)
+                    {
+                        task.priority = Priority.Critical;
+                        //add task to list of critical tasks
+                        AddWeightedTask(task);
+                    }
+                    else
+                    {
+                        if (numOfActors > 0)
+                        {
+                            task.priority = priorityRecruiterTask;
+                            //add task to list of potential tasks
+                            AddWeightedTask(task);
+                        }
+                        else { Debug.LogWarning("No actors present OnMap (yet indicated previously that there were"); }
+                    }
+                }
+                else
+                {
+                    task.priority = priorityRecruiterTask;
                     //add task to list of potential tasks
                     AddWeightedTask(task);
                 }
-                else { Debug.LogWarning("No actors present OnMap (yet indicated previously that there were"); }
             }
             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: Invalid RECRUITER task (nodeID {0}, actorID {1}). No task generated{2}", nodeID, actorID, "\n"); }
         }
