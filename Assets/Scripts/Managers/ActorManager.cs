@@ -6740,6 +6740,15 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorReserveAI: No actors available to add to Reserve Pool{0}", "\n"); }
     }
 
+    /// <summary>
+    /// AI fires an actor
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="actorID"></param>
+    public void FireActorAI(GlobalSide side, int actorID)
+    {
+
+    }
 
     //new methods above here
 }

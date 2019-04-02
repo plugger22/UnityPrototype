@@ -1980,7 +1980,7 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// deals with people specific tasks, eg. Stress Leave
+    /// deals with people specific tasks, eg. Stress Leave, fired for being questionable
     /// </summary>
     private void ProcessPeopleTask()
     {
@@ -2630,6 +2630,9 @@ public class AIRebelManager : MonoBehaviour
                 break;
             case AITaskType.Faction:
                 ExecuteFactionTask(task);
+                break;
+            case AITaskType.Fire:
+                ExecuteFireTask(task);
                 break;
             default:
                 Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
@@ -3705,6 +3708,17 @@ public class AIRebelManager : MonoBehaviour
         GameManager.instance.factionScript.ChangeFactionApproval(1, globalResistance, "Rebel Leader lobbies HQ");
         //action
         UseAction("raise Faction Approval Level");
+    }
+
+    /// <summary>
+    /// Fire a questionable actor (auto done by player, uses an action but no invisibility impact. Considered a management task)
+    /// </summary>
+    /// <param name="task"></param>
+    private void ExecuteFireTask(AITask task)
+    {
+        GameManager.instance.actorScript.FireActorAI(globalResistance, task.data0);
+        //action
+        UseAction("fire Questionable subordinate");
     }
 
 
