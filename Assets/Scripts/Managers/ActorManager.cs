@@ -6612,11 +6612,11 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// add a new actor
+    /// add a new OnMap actor
     /// </summary>
     /// <param name="side"></param>
     /// <param name="node"></param>
-    public void AddNewActorAI(GlobalSide side, Node node, int slotID)
+    public void AddNewActorOnMapAI(GlobalSide side, Node node, int slotID)
     {
         if (side != null)
         {
@@ -6667,15 +6667,15 @@ public class ActorManager : MonoBehaviour
                                 //place actor on Map (reset states)
                                 GameManager.instance.dataScript.AddCurrentActor(side, actorNew, slotID);
                                 //admin
-                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
+                                Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
                                 string textAutoRun = string.Format("{0}{1}{2} {3}Recruited{4}", colourAlert, actorNew.arc.name, colourEnd, colourGood, colourEnd);
                                 GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
                             }
                             else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
                         }
-                        else { Debug.LogFormat("[Rim] AIRebelManager.cs"); }
+                        else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: No actors available to add to OnMap roster{0}", "\n"); }
                     }
-                    else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteRecruiterTask: NO SUITABLE RECRUITS AVAILABLE{0}", "\n"); }
+                    else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: NO SUITABLE RECRUITS AVAILABLE{0}", "\n"); }
                 }
                 else { Debug.LogError("Invalid slotID (less than Zero)"); }
             }
@@ -6683,6 +6683,63 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid side (Null)"); }
     }
+
+
+    /// <summary>
+    /// Add a new Reserve actor. NOTE: Reserve Pool is assumed to be empty
+    /// </summary>
+    public void AddNewActorReserveAI(GlobalSide side)
+    {
+        int unhappyTimer = recruitedReserveTimer;
+        //get new actor (50/50 chance of level 1 or 2)
+        int actorLevel = Random.Range(1, 2);
+        List<int> listOfPoolActors = new List<int>();
+        listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(actorLevel, side));
+        //actors present
+        if (listOfPoolActors.Count > 0)
+        {
+            //randomly select an actor
+            int actorID = listOfPoolActors[Random.Range(0, listOfPoolActors.Count)];
+            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+            if (actor != null)
+            {
+                //
+                // - - - Add Actor
+                //
+                GameManager.instance.dataScript.RemoveActorFromPool(actor.actorID, actor.level, side);
+                //place actor in Reserves
+                if (GameManager.instance.dataScript.AddActorToReserve(actor.actorID, side) == true)
+                {
+                    //traits that affect unhappy timer
+                    if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
+                    {
+                        unhappyTimer *= 2;
+                        TraitLogMessage(actor, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
+                    }
+                    else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
+                    {
+                        unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer);
+                        TraitLogMessage(actor, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
+                    }
+                    //change actor's status
+                    actor.Status = ActorStatus.Reserve;
+                    //remove actor from appropriate pool list
+                    GameManager.instance.dataScript.RemoveActorFromPool(actor.actorID, actor.level, side);
+                    //initiliase unhappy timer
+                    actor.unhappyTimer = unhappyTimer;
+                    actor.isNewRecruit = true;
+                }
+                else { Debug.LogWarningFormat("Actor unable to be added to Reserve Pool"); }
+                //admin
+                Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorReserveAI: {0}, {1}, ID {2} added to RESERVE POOL{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                string textAutoRun = string.Format("{0}{1}{2} {3}Reserves{4}", colourAlert, actor.arc.name, colourEnd, colourNeutral, colourEnd);
+                GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+            }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+        }
+        else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorReserveAI: No actors available to add to Reserve Pool{0}", "\n"); }
+    }
+
 
     //new methods above here
 }

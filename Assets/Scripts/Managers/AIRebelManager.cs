@@ -224,6 +224,7 @@ public class AIRebelManager : MonoBehaviour
         }
         else { isAutoRunTest = false; }
         //fast access
+        
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         playerID = GameManager.instance.playerScript.actorID;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -241,7 +242,7 @@ public class AIRebelManager : MonoBehaviour
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");        
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
         Debug.Assert(failedTargetChance > -1, "Invalid failedTargetChance (-1)");
@@ -348,10 +349,14 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
+        int numOfAutoRunTurns = 0;
         isConnectionsChanged = false;
         //debugging
         if (isAutoRunTest == true)
-        { DebugTest(); }
+        {
+            DebugTest();
+            numOfAutoRunTurns = GameManager.instance.autoRunTurns - 1;
+        }
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
@@ -440,6 +445,12 @@ public class AIRebelManager : MonoBehaviour
         //recalculate Dijkstra weighted data once done (set back to original state)
         if (isConnectionsChanged == true)
         { RestoreDijkstraCalculations(); }
+        //top up reserve actors if last turn of AutoRun
+        if (numOfAutoRunTurns > 0)
+        {
+            if (numOfAutoRunTurns == GameManager.instance.turnScript.Turn)
+            { ExecuteReserveTask(); }
+        }
     }
 
 
@@ -2978,7 +2989,7 @@ public class AIRebelManager : MonoBehaviour
         {
             nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
             //effect
-            GameManager.instance.actorScript.AddNewActorAI(globalResistance, node, task.data2);
+            GameManager.instance.actorScript.AddNewActorOnMapAI(globalResistance, node, task.data2);
             //expend an action -> get actor Name
             if (task.data0 == playerID)
             {
@@ -3694,6 +3705,34 @@ public class AIRebelManager : MonoBehaviour
         UseAction("raise Faction Approval Level");
     }
 
+
+    /// <summary>
+    /// tops up Reserve actor pool at completion of autorun depending on RebelLeader priority (manageReserve)
+    /// </summary>
+    private void ExecuteReserveTask()
+    {
+        int numOfActors;
+        Priority priorityReserveActors = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.manageReserve);
+        if (priorityReserveActors != Priority.None)
+        {
+            //get the required number of actors
+            switch (priorityReserveActors)
+            {
+                case Priority.High: numOfActors = 2; break;
+                case Priority.Medium: numOfActors = 1; break;
+                case Priority.Low: numOfActors = 0; break;
+                default: Debug.LogWarningFormat("Unrecognised priority \"{0}\"", priorityReserveActors); numOfActors = 0; break;
+            }
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteReserveTask: Populate RESERVE POOL, priority {0}, {1} actor{2} to add{3}", priorityReserveActors, numOfActors, numOfActors != 1 ? "s" : "", "\n");
+            if (numOfActors > 0)
+            {
+                //add the required number of actors to the reserve
+                for (int i = 0; i < numOfActors; i++)
+                { GameManager.instance.actorScript.AddNewActorReserveAI(globalResistance); }
+            }
+        }
+        else { Debug.LogError("Invalid RebelLeader.SO manageReserve priority (None)"); }
+    }
 
     /// <summary>
     /// do nothing task

@@ -25,7 +25,7 @@ MonoBehaviour:
   stressLeavePlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   stressLeaveActor: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   movePriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  approvalPriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  approvalPriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   idlePriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   taskAnarchist: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   taskBlogger: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
@@ -38,3 +38,4 @@ MonoBehaviour:
   taskRecruiter: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetPlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetActor: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  manageReserve: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}

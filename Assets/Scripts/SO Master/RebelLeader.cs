@@ -74,4 +74,9 @@ public class RebelLeader : ScriptableObject
     public GlobalChance targetPlayer;
     [Tooltip("Actor priority for resolving targets")]
     public GlobalChance targetActor;
+
+    [Header("Management Priorities (Low/Med/High)")]
+    [Tooltip("The number of reserve actors that will be added at end of autoRun. Low gives none, Med one, High two")]
+    public GlobalChance manageReserve;
+    
 }

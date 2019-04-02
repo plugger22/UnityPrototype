@@ -216,6 +216,7 @@ MonoBehaviour:
   targetIntelAttempt: 3
   targetAttemptsMax: 2
   actorNumThreshold: 3
+  factionSupportThreshold: 4
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
