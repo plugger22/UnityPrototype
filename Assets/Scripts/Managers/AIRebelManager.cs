@@ -150,6 +150,7 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityTargetPlayer;
     private Priority priorityTargetActor;
     private Priority priorityFactionApproval;
+    private Priority priorityReserveActors;
     //autoRun testing
     private bool isAutoRunTest;
     private int turnForCondition;
@@ -223,8 +224,7 @@ public class AIRebelManager : MonoBehaviour
             conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
         }
         else { isAutoRunTest = false; }
-        //fast access
-        
+        //fast access     
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         playerID = GameManager.instance.playerScript.actorID;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -293,6 +293,7 @@ public class AIRebelManager : MonoBehaviour
         priorityTargetPlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetPlayer);
         priorityTargetActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetActor);
         priorityFactionApproval = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.approvalPriority);
+        priorityReserveActors = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.manageReserve);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
@@ -310,6 +311,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(targetAttemptPlayerChance > 0, "Invalid targetAttemptPlayerChance (Zero or less)");
         Debug.Assert(targetAttemptActorChance > 0, "Invalid targetAttemptActorChance (Zero or less)");
         Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (Null)");
+        Debug.Assert(priorityReserveActors != Priority.None, "Invalid priorityReserveActors (Null)");
     }
 
     /// <summary>
@@ -446,7 +448,7 @@ public class AIRebelManager : MonoBehaviour
         if (isConnectionsChanged == true)
         { RestoreDijkstraCalculations(); }
         //top up reserve actors if last turn of AutoRun
-        if (numOfAutoRunTurns > 0)
+        if (numOfAutoRunTurns > 0 && isPlayer == true)
         {
             if (numOfAutoRunTurns == GameManager.instance.turnScript.Turn)
             { ExecuteReserveTask(); }
@@ -2980,7 +2982,7 @@ public class AIRebelManager : MonoBehaviour
         string actorName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         Actor actor = null;
         //get node name
@@ -2994,7 +2996,7 @@ public class AIRebelManager : MonoBehaviour
             if (task.data0 == playerID)
             {
                 actorName = "Player";
-                isPlayer = true;
+                isPlayerAction = true;
                 UpdateRenown();
             }
             else
@@ -3012,7 +3014,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckGearAvailable(false) == false)
             {
                 //invisibility drops
-                if (isPlayer == true)
+                if (isPlayerAction == true)
                 { UpdateInvisibilityNode(node); }
                 else { UpdateInvisibilityNode(node, actor); }
             }
@@ -3032,7 +3034,7 @@ public class AIRebelManager : MonoBehaviour
         string actorArcName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         Actor actor = null;
         //get node
@@ -3052,7 +3054,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = playerName;
                 actorArcName = "Player";
-                isPlayer = true;
+                isPlayerAction = true;
                 UpdateRenown();
             }
             else
@@ -3072,7 +3074,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckGearAvailable() == false)
             {
                 //invisibility drops
-                if (isPlayer == true)
+                if (isPlayerAction == true)
                 { UpdateInvisibilityNode(node); }
                 else { UpdateInvisibilityNode(node, actor); }
             }
@@ -3091,7 +3093,7 @@ public class AIRebelManager : MonoBehaviour
         string actorArcName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         Actor actor = null;
         //get node
@@ -3110,7 +3112,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = playerName;
                 actorArcName = "Player";
-                isPlayer = true;
+                isPlayerAction = true;
                 UpdateRenown();
             }
             else
@@ -3130,7 +3132,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckGearAvailable() == false)
             {
                 //invisibility drops
-                if (isPlayer == true)
+                if (isPlayerAction == true)
                 { UpdateInvisibilityNode(node); }
                 else { UpdateInvisibilityNode(node, actor); }
             }
@@ -3149,7 +3151,7 @@ public class AIRebelManager : MonoBehaviour
         string actorArcName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         Actor actor = null;
         //get node
@@ -3169,7 +3171,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = playerName;
                 actorArcName = "Player";
-                isPlayer = true;
+                isPlayerAction = true;
                 UpdateRenown();
             }
             else
@@ -3189,7 +3191,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckGearAvailable() == false)
             {
                 //invisibility drops
-                if (isPlayer == true)
+                if (isPlayerAction == true)
                 { UpdateInvisibilityNode(node); }
                 else { UpdateInvisibilityNode(node, actor); }
             }
@@ -3209,7 +3211,7 @@ public class AIRebelManager : MonoBehaviour
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
         string teamArcName = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         Actor actor = null;
         //get node
@@ -3228,7 +3230,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = playerName;
                 actorArcName = "Player";
-                isPlayer = true;
+                isPlayerAction = true;
                 UpdateRenown();
             }
             else
@@ -3248,7 +3250,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckGearAvailable() == false)
             {
                 //invisibility drops
-                if (isPlayer == true)
+                if (isPlayerAction == true)
                 { UpdateInvisibilityNode(node); }
                 else { UpdateInvisibilityNode(node, actor); }
             }
@@ -3267,7 +3269,7 @@ public class AIRebelManager : MonoBehaviour
         string actorArcName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         Actor actor = null;
         //get node
@@ -3286,7 +3288,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = playerName;
                 actorArcName = "Player";
-                isPlayer = true;
+                isPlayerAction = true;
                 UpdateRenown();
             }
             else
@@ -3306,7 +3308,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckGearAvailable() == false)
             {
                 //invisibility drops
-                if (isPlayer == true)
+                if (isPlayerAction == true)
                 { UpdateInvisibilityNode(node); }
                 else { UpdateInvisibilityNode(node, actor); }
             }
@@ -3325,7 +3327,7 @@ public class AIRebelManager : MonoBehaviour
         string actorArcName = "Unknown";
         string nodeName = "Unknown";
         string nodeArc = "Unknown";
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         int nodeID = -1;
         int counter = 0;
         Actor actor = null;
@@ -3364,7 +3366,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = playerName;
                     actorArcName = "Player";
-                    isPlayer = true;
+                    isPlayerAction = true;
                     UpdateRenown();
                 }
                 else
@@ -3384,7 +3386,7 @@ public class AIRebelManager : MonoBehaviour
                 if (CheckGearAvailable() == false)
                 {
                     //invisibility drops
-                    if (isPlayer == true)
+                    if (isPlayerAction == true)
                     { UpdateInvisibilityNode(node); }
                     else { UpdateInvisibilityNode(node, actor); }
                 }
@@ -3480,7 +3482,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = playerName;
                 actorArcName = "Player";
-                isPlayer = true;
+                /*isPlayerAction = true;*/
                 UpdateRenown();
             }
             else
@@ -3514,10 +3516,10 @@ public class AIRebelManager : MonoBehaviour
         string actorArc = "Unknown";
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
-        bool isPlayer = false;
-        if (actorID == playerID) { isPlayer = true; actorArc = "Player"; }
+        bool isPlayerAction = false;
+        if (actorID == playerID) { isPlayerAction = true; actorArc = "Player"; }
         Actor actor = null;
-        if (isPlayer == false)
+        if (isPlayerAction == false)
         {
             actor = GameManager.instance.dataScript.GetActor(actorID);
             if (actor != null)
@@ -3544,7 +3546,7 @@ public class AIRebelManager : MonoBehaviour
                 else
                 {
                     //set flags for immediate notification of rebel activity
-                    if (isPlayer == true)
+                    if (isPlayerAction == true)
                     {
                         if (GameManager.instance.playerScript.Invisibility == 0)
                         { isZeroInvisibility = true; }
@@ -3712,7 +3714,7 @@ public class AIRebelManager : MonoBehaviour
     private void ExecuteReserveTask()
     {
         int numOfActors;
-        Priority priorityReserveActors = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.manageReserve);
+        
         if (priorityReserveActors != Priority.None)
         {
             //get the required number of actors
@@ -3969,7 +3971,7 @@ public class AIRebelManager : MonoBehaviour
     {
         int rnd = -1;
         int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
-        bool isPlayer = false;
+        bool isPlayerAction = false;
         string reasonNot = "Unknown";
         if (string.IsNullOrEmpty(actorArcName) == false)
         {
@@ -3984,7 +3986,7 @@ public class AIRebelManager : MonoBehaviour
                     if (node != null)
                     {
                         if (CheckNodeCriteria(actorArcName, node) == true)
-                        { isPlayer = true; }
+                        { isPlayerAction = true; }
                         else { reasonNot = "does not meet CRITERIA"; }
                     }
                     else { Debug.LogErrorFormat("Invalid nodeID (Null) for playerNodeID {0}", playerNodeID); }
@@ -3995,10 +3997,10 @@ public class AIRebelManager : MonoBehaviour
             else { reasonNot = "Bad Node"; }
         }
         else { Debug.LogError("Invalid actorArcName (Null)"); reasonNot = "Error"; }
-        if (isPlayer == true)
+        if (isPlayerAction == true)
         { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will do {0} Action (needed {1}, rolled {2}){3}", actorArcName, playerAction, rnd, "\n"); }
         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckPlayerAction: Player will not do {0} Action because {1}{2}", actorArcName, reasonNot, "\n"); }
-        return isPlayer;
+        return isPlayerAction;
     }
 
     /// <summary>
