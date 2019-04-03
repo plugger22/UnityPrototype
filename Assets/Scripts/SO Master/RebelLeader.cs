@@ -78,5 +78,7 @@ public class RebelLeader : ScriptableObject
     [Header("Management Priorities (Low/Med/High)")]
     [Tooltip("The number of reserve actors that will be added at end of autoRun. Low gives none, Med one, High two")]
     public GlobalChance manageReserve;
+    [Tooltip("Priority given to dismissing subordinates with the Questionable trait (Low/Med/High)")]
+    public GlobalChance manageQuestionable;
     
 }

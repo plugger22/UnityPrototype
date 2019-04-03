@@ -3165,7 +3165,6 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         if (actor != null)
         {
-
             //admin depends on where actor is going
             switch (status)
             {

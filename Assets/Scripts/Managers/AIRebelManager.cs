@@ -127,6 +127,7 @@ public class AIRebelManager : MonoBehaviour
     private bool isCureCritical;                          //true if Player has a condition needing a cure that is on a timer, eg. Doomed condition
     private bool isPlayerStressed;                        //true only if player is stressed
     private int stressedActorID;                          //player or actorID that is chosen to have go on stress leave (player has priority)
+    private int questionableID;                           //randomly chosen actor who has the questionable trait
 
     //rebel Player profile
     private int survivalMove;                           //The % chance of AI player moving away when they are at a Bad Node
@@ -151,6 +152,7 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityTargetActor;
     private Priority priorityFactionApproval;
     private Priority priorityReserveActors;
+    private Priority priorityQuestionableActor;
     //autoRun testing
     private bool isAutoRunTest;
     private int turnForCondition;
@@ -172,6 +174,7 @@ public class AIRebelManager : MonoBehaviour
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     //conditions
     private Condition conditionStressed;
+    private Condition conditionQuestionable;
     private Condition conditionWounded;
     private Condition conditionDoomed;
     //Activity notifications
@@ -194,6 +197,7 @@ public class AIRebelManager : MonoBehaviour
     private List<ActorArc> listOfArcs = new List<ActorArc>();                       //current actor arcs valid for this turn
     private List<Node>[] arrayOfActorActions;                                       //list of nodes suitable for listOfArc[index] action
     private List<Actor> listOfCurrentActors = new List<Actor>();                    //list of current onMap, Active, actors at start of each action
+    private List<int> listOfQuestionableActors = new List<int>();                   //any actors with the questionable condition
 
     //stats
     private int[] arrayOfAITaskTypes;                                                       //used for analysis of which tasks the AI generates (not executes but tracks the ones placed into the pool)
@@ -230,6 +234,7 @@ public class AIRebelManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
         conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
         conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
@@ -250,6 +255,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(priorityMedium > -1, "Invalid priorityMedium (-1)");
         Debug.Assert(priorityLow > -1, "Invalid priorityLow (-1)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
@@ -294,6 +300,7 @@ public class AIRebelManager : MonoBehaviour
         priorityTargetActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.targetActor);
         priorityFactionApproval = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.approvalPriority);
         priorityReserveActors = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.manageReserve);
+        priorityQuestionableActor = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.manageQuestionable);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
@@ -310,8 +317,9 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(targetAttemptMinOdds > 0, "Invalid targetAttemptMinOdds (Zero or less)");
         Debug.Assert(targetAttemptPlayerChance > 0, "Invalid targetAttemptPlayerChance (Zero or less)");
         Debug.Assert(targetAttemptActorChance > 0, "Invalid targetAttemptActorChance (Zero or less)");
-        Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (Null)");
-        Debug.Assert(priorityReserveActors != Priority.None, "Invalid priorityReserveActors (Null)");
+        Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (None)");
+        Debug.Assert(priorityReserveActors != Priority.None, "Invalid priorityReserveActors (None)");
+        Debug.Assert(priorityQuestionableActor != Priority.None, "invalid priorityQuestionableActor (None)");
     }
 
     /// <summary>
@@ -393,7 +401,6 @@ public class AIRebelManager : MonoBehaviour
                 if (listOfTasksCritical.Count == 0)
                 {
                     ProcessAdminTask(); //first in list
-
                     ProcessMoveToTargetTask();
                     ProcessPeopleTask();
                     ProcessFactionTask();
@@ -408,6 +415,9 @@ public class AIRebelManager : MonoBehaviour
                         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessAI: Invalid listOfArcs (Empty). Emergency Recruit Task generated");
                         ProcessRecruiterTask("RECRUITER", true);
                     }
+                    //do only as last action as could remove an actor and invalidate previously collated data
+                    if ((actionsUsed + 1) == actionAllowance)
+                    { ProcessManageTask(); }
                     ProcessIdleTask();
                 }
                 //task Execution
@@ -469,6 +479,7 @@ public class AIRebelManager : MonoBehaviour
         listOfBadNodes.Clear();
         listOfSpiderNodes.Clear();
         listOfCurrentActors.Clear();
+        listOfQuestionableActors.Clear();
         listOfArcs.Clear();
         //
         // - - - Sighting Reports
@@ -635,6 +646,7 @@ public class AIRebelManager : MonoBehaviour
         isPlayerStressed = false;
         isWounded = false;
         stressedActorID = -1;
+        questionableID = -1;
         //check for conditions
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)
@@ -1080,12 +1092,12 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Assesses player and actors for any relevant personal situations, eg. need to take stress leave
+    /// Assesses player and actors for any relevant personal situations, eg. need to take stress leave, Questionable condition present, etc.
     /// </summary>
     private void ProcessPeopleData()
     {
         int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
-
+        int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
         //Stress Leave
         if (resources >= stressLeaveCost)
         {
@@ -1128,8 +1140,25 @@ public class AIRebelManager : MonoBehaviour
                                 }
                             }
                         }
+                        //
+                        // - - - Questionable actors (only if min. # of actors currently OnMap)
+                        //
+                        if (numOfActors >= actorNumThreshold)
+                        {
+                            if (actor.CheckConditionPresent(conditionQuestionable) == true)
+                            {
+                                //add to list (cleared each turn in Admin early)
+                                listOfQuestionableActors.Add(actor.actorID);
+                            }
+                        }
                     }
                 }
+            }
+            //check for any questionable actors
+            if (listOfQuestionableActors.Count > 0)
+            {
+                //select one actor (if > 1) randomly (used as a candidate to be fired by ProcessManageTask)
+                questionableID = listOfQuestionableActors[Random.Range(0, listOfQuestionableActors.Count)];
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
@@ -1980,7 +2009,7 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// deals with people specific tasks, eg. Stress Leave, fired for being questionable
+    /// deals with people specific tasks, eg. Stress Leave
     /// </summary>
     private void ProcessPeopleTask()
     {
@@ -2000,6 +2029,25 @@ public class AIRebelManager : MonoBehaviour
             //add task to list of potential tasks
             AddWeightedTask(task);
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPeopleTask: stressedActorID {0}, Stress Leave{1}", stressedActorID, "\n");
+        }
+    }
+
+    /// <summary>
+    /// deals with Management tasks, eg. fire a questionable subordinate
+    /// </summary>
+    private void ProcessManageTask()
+    {
+        //actor with questionable condition present
+        if (questionableID > -1)
+        {
+            //generate task -> player or actor
+            AITask task = new AITask();
+            task.data0 = questionableID;
+            task.type = AITaskType.Dismiss;
+            task.priority = priorityQuestionableActor;
+            //add task to list of potential tasks
+            AddWeightedTask(task);
+            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessDismissTask: actorID {0}, Questionable, Dismiss{1}", questionableID, "\n");
         }
     }
 
@@ -2631,8 +2679,8 @@ public class AIRebelManager : MonoBehaviour
             case AITaskType.Faction:
                 ExecuteFactionTask(task);
                 break;
-            case AITaskType.Fire:
-                ExecuteFireTask(task);
+            case AITaskType.Dismiss:
+                ExecuteDismissTask(task);
                 break;
             default:
                 Debug.LogErrorFormat("Invalid task (Unrecognised) \"{0}\"", task.type);
@@ -3714,9 +3762,15 @@ public class AIRebelManager : MonoBehaviour
     /// Fire a questionable actor (auto done by player, uses an action but no invisibility impact. Considered a management task)
     /// </summary>
     /// <param name="task"></param>
-    private void ExecuteFireTask(AITask task)
+    private void ExecuteDismissTask(AITask task)
     {
-        GameManager.instance.actorScript.FireActorAI(globalResistance, task.data0);
+        Actor actor = GameManager.instance.dataScript.GetActor(task.data0);
+        if (actor != null)
+        {
+            //Fire actor
+            GameManager.instance.actorScript.DismaissActorAI(globalResistance, actor);
+        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", questionableID); }
         //action
         UseAction("fire Questionable subordinate");
     }

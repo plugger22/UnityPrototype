@@ -6745,9 +6745,16 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actorID"></param>
-    public void FireActorAI(GlobalSide side, int actorID)
+    public void DismaissActorAI(GlobalSide side, Actor actor)
     {
-
+        //fire actor
+        if (GameManager.instance.dataScript.RemoveCurrentActor(globalResistance, actor, ActorStatus.Dismissed) == true)
+        {
+            //admin
+            Debug.LogFormat("[Rim] ActorManager.cs -> FireActorAI: {0}, {1}, ID {2}, FIRED (Questionable){3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+            string textAutoRun = string.Format("{0}{1}{2} {3}Fired{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
+            GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+        }
     }
 
     //new methods above here
