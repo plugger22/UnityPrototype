@@ -39,3 +39,4 @@ MonoBehaviour:
   targetPlayer: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   targetActor: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   manageReserve: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  manageQuestionable: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}

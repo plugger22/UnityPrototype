@@ -135,6 +135,7 @@ public class AIRebelManager : MonoBehaviour
     private int targetAttemptMinOdds;                   //The minimum odds that are required for the Player/Actor to attempt a target (Note: RebelLeader % converted to 0 to 10 range for ease of target tally calc)
     private int targetAttemptPlayerChance;              //The % chance of a player attempting a target if one is available
     private int targetAttemptActorChance;               //The % chance of an actor attempting a target if one is availables
+    private int dismissChance;                          //The % chance of a questionable actor being dismissed per turn (chance if low priority, x 2 if Med priority, x 3 if High)
     private Priority priorityStressLeavePlayer;
     private Priority priorityStressLeaveActor;
     private Priority priorityMovePlayer;
@@ -281,6 +282,7 @@ public class AIRebelManager : MonoBehaviour
         targetAttemptMinOdds = GameManager.instance.scenarioScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
         targetAttemptPlayerChance = GameManager.instance.scenarioScript.scenario.leaderResistance.targetAttemptPlayerChance;
         targetAttemptActorChance = GameManager.instance.scenarioScript.scenario.leaderResistance.targetAttemptActorChance;
+        dismissChance = GameManager.instance.actorScript.dismissQuestionableChance;
         gearPool = GameManager.instance.scenarioScript.scenario.leaderResistance.gearPoints;
         gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         priorityStressLeavePlayer = GetPriority(GameManager.instance.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
@@ -317,6 +319,7 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(targetAttemptMinOdds > 0, "Invalid targetAttemptMinOdds (Zero or less)");
         Debug.Assert(targetAttemptPlayerChance > 0, "Invalid targetAttemptPlayerChance (Zero or less)");
         Debug.Assert(targetAttemptActorChance > 0, "Invalid targetAttemptActorChance (Zero or less)");
+        Debug.Assert(dismissChance > 0, "Invalid dismissChance (Zero or less)");
         Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (None)");
         Debug.Assert(priorityReserveActors != Priority.None, "Invalid priorityReserveActors (None)");
         Debug.Assert(priorityQuestionableActor != Priority.None, "invalid priorityQuestionableActor (None)");
@@ -1155,10 +1158,12 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
             //check for any questionable actors
-            if (listOfQuestionableActors.Count > 0)
+            int count = listOfQuestionableActors.Count;
+            if ( count > 0)
             {
                 //select one actor (if > 1) randomly (used as a candidate to be fired by ProcessManageTask)
-                questionableID = listOfQuestionableActors[Random.Range(0, listOfQuestionableActors.Count)];
+                questionableID = listOfQuestionableActors[Random.Range(0, count)];
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessPeopleData: {0} Questionable actor{1}, {2} ID selected{3}", count, count != 1 ? "s" : "", questionableID, "\n");
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
@@ -2040,14 +2045,28 @@ public class AIRebelManager : MonoBehaviour
         //actor with questionable condition present
         if (questionableID > -1)
         {
-            //generate task -> player or actor
-            AITask task = new AITask();
-            task.data0 = questionableID;
-            task.type = AITaskType.Dismiss;
-            task.priority = priorityQuestionableActor;
-            //add task to list of potential tasks
-            AddWeightedTask(task);
-            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessDismissTask: actorID {0}, Questionable, Dismiss{1}", questionableID, "\n");
+            //chance of a task
+            int chance = dismissChance;
+            switch (priorityQuestionableActor)
+            {
+                case Priority.High: chance *= 3; break;
+                case Priority.Medium: chance *= 2; break;
+                case Priority.Low: chance *= 1; break;
+                default: Debug.LogErrorFormat("Unrecognised priorityQuestionableActor \"{0}\"", priorityQuestionableActor); break;
+            }
+            int rndNum = Random.Range(0, 100);
+            if (rndNum < chance)
+            {
+                //generate task -> player or actor
+                AITask task = new AITask();
+                task.data0 = questionableID;
+                task.type = AITaskType.Dismiss;
+                task.priority = priorityQuestionableActor;
+                //add task to list of potential tasks
+                AddWeightedTask(task);
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessManageTask: actorID {0}, Questionable, Dismiss{1}", questionableID, "\n");
+            }
+            else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessManageTask: Failed Roll to Dismiss questionable actor (needed {0}, rolled {1}){2}", chance, rndNum, "\n"); }
         }
     }
 

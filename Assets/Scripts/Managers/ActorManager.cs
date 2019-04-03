@@ -61,6 +61,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 3)] public int motivationLossFire = 2;
     [Tooltip("Amount of motivation gained when recalled from Reserves to Active Duty")]
     [Range(1, 3)] public int motivationGainActiveDuty = 2;
+    [Tooltip("Base chance (low priority) of an AI leader dismissing a Questionable actor (adds AITasks into pool) during an autorun (Med priority x 2 chance, High x 3)")]
+    [Range(1, 30)] public int dismissQuestionableChance = 15;
 
     [Header("Assorted")]
     [Tooltip("Renown cost for negating a bad gear use roll")]
@@ -6751,7 +6753,7 @@ public class ActorManager : MonoBehaviour
         if (GameManager.instance.dataScript.RemoveCurrentActor(globalResistance, actor, ActorStatus.Dismissed) == true)
         {
             //admin
-            Debug.LogFormat("[Rim] ActorManager.cs -> FireActorAI: {0}, {1}, ID {2}, FIRED (Questionable){3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+            Debug.LogFormat("[Rim] ActorManager.cs -> FireActorAI: {0}, {1}, ID {2}, DISMISSED (Questionable loyalty){3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
             string textAutoRun = string.Format("{0}{1}{2} {3}Fired{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
             GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
         }
