@@ -6528,6 +6528,7 @@ public class ActorManager : MonoBehaviour
             {
                 case ActorStatus.Active:
                 case ActorStatus.Inactive:
+                case ActorStatus.Reserve:
                     numOfSecrets = actor.CheckNumOfSecrets();
                     break;
                 case ActorStatus.Dismissed:

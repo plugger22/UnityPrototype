@@ -2855,9 +2855,9 @@ public class EffectManager : MonoBehaviour
                 data = manageDismissCost.renownCost;
                 GameManager.instance.playerScript.Renown -= data;
                 StringBuilder builderDismiss = new StringBuilder();
-                builderDismiss.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 if (String.IsNullOrEmpty(manageDismissCost.tooltip) == false)
-                { builderDismiss.Append(manageDismissCost.tooltip); }
+                { builderDismiss.AppendLine(manageDismissCost.tooltip); builderDismiss.AppendLine(); }
+                builderDismiss.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 effectResolve.bottomText = builderDismiss.ToString();
                 break;
             case "ManageDisposeRenown":
@@ -2865,9 +2865,9 @@ public class EffectManager : MonoBehaviour
                 data = manageDisposeCost.renownCost;
                 GameManager.instance.playerScript.Renown -= data;
                 StringBuilder builderDispose = new StringBuilder();
-                builderDispose.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 if (String.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
-                { builderDispose.Append(manageDisposeCost.tooltip); }
+                { builderDispose.AppendLine(manageDisposeCost.tooltip); builderDispose.AppendLine(); }
+                builderDispose.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 effectResolve.bottomText = builderDispose.ToString();
                 break;
             case "UnhappyTimerCurrent":

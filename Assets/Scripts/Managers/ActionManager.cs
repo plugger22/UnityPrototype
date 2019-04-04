@@ -185,7 +185,7 @@ public class ActionManager : MonoBehaviour
                 break;
             case EventType.InventoryFire:
                 ModalActionDetails detailsFire = Param as ModalActionDetails;
-                ProcessFireActor(detailsFire);
+                ProcessFireReserveActor(detailsFire);
                 break;
             case EventType.GenericHandleActor:
                 GenericReturnData returnDataHandle = Param as GenericReturnData;
@@ -1965,7 +1965,7 @@ public class ActionManager : MonoBehaviour
     /// NOTE: calling method checks that Player has enough renown
     /// </summary>
     /// <param name="actorID"></param>
-    private void ProcessFireActor(ModalActionDetails details)
+    private void ProcessFireReserveActor(ModalActionDetails details)
     {
         /*int motivationLoss = GameManager.instance.actorScript.motivationLossFire;*/
         bool errorFlag = false;
@@ -1985,19 +1985,7 @@ public class ActionManager : MonoBehaviour
                     //remove all active teams connected with this actor
                     numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
                 }
-                //pay Player renown cost (passed in by data package)
-                int playerRenown = GameManager.instance.playerScript.Renown;
-                playerRenown -= details.renownCost;
-                playerRenown = Mathf.Max(0, playerRenown);
-                GameManager.instance.playerScript.Renown = playerRenown;
-                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, details.renownCost, colourEnd);
-                if (actor.isThreatening == true)
-                {
-                    builder.AppendFormat("{0} (Double Cost as {1} was Threatening Player{2}", colourAlert, actor.actorName, colourEnd);
-                    builder.AppendLine(); builder.AppendLine();
-                    builder.AppendFormat("{0}{1} is no longer a threat{2}", colourGood, actor.actorName, colourEnd);
-                }
-                builder.AppendLine(); builder.AppendLine();
+
                 //change actors status
                 actor.Status = ActorStatus.Dismissed;
                 actor.ResetStates();
@@ -2012,6 +2000,28 @@ public class ActionManager : MonoBehaviour
                 //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
                 actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+
+                //Renown cost
+                int playerRenown = GameManager.instance.playerScript.Renown;
+                ManageRenownCost renownData = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
+                playerRenown -= renownData.renownCost;
+                //min capped at Zero
+                playerRenown = Mathf.Max(0, playerRenown);
+                GameManager.instance.playerScript.Renown = playerRenown;
+                if (renownData.tooltip.Length > 0)
+                {
+                    builder.AppendLine(renownData.tooltip);
+                    builder.AppendLine();
+                }
+                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownData.renownCost, colourEnd);
+
+                /*if (actor.isThreatening == true)
+                {
+                    builder.AppendFormat("{0} (Double Cost as {1} was Threatening Player{2}", colourAlert, actor.actorName, colourEnd);
+                    builder.AppendLine(); builder.AppendLine();
+                    builder.AppendFormat("{0}{1} is no longer a threat{2}", colourGood, actor.actorName, colourEnd);
+                }
+                builder.AppendLine(); builder.AppendLine();*/
 
                 //teams
                 if (numOfTeams > 0)
