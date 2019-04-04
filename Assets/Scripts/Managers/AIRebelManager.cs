@@ -100,6 +100,10 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Below this level of faction support a faction task can be generated to raise support")]
     [Range(0, 5)] public int factionSupportThreshold = 4;
 
+    [Header("Renown/Resources")]
+    [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of renown to the Resistance player")]
+    [Range(1, 3)] public int renownFactor = 2;
+
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
@@ -173,6 +177,9 @@ public class AIRebelManager : MonoBehaviour
     private int maxNumOfOnMapActors = -1;
     private int failedTargetChance = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
+    //traits
+    private int actorDismissDoubled = -1;
+    private int actorDismissHalved = -1;
     //conditions
     private Condition conditionStressed;
     private Condition conditionQuestionable;
@@ -248,6 +255,8 @@ public class AIRebelManager : MonoBehaviour
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
+        actorDismissDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorDismissActionDoubled");
+        actorDismissHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorDismissActionHalved");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");        
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -264,7 +273,8 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(delayNoSpider > -1, "Invalid delayNoSpider (-1)");
         Debug.Assert(delayYesSpider > -1, "Invalid delayYesSpider (-1)");
         Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
-
+        Debug.Assert(actorDismissDoubled > -1, "Invalid actorConnected (-1)");
+        Debug.Assert(actorDismissHalved > -1, "Invalid actorUnconnected (-1)");
         //collections
         arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
         for (int i = 0; i < arrayOfActorActions.Length; i++)
@@ -3792,11 +3802,23 @@ public class AIRebelManager : MonoBehaviour
                 //deduct renown/resources (min capped at Zero)
                 int numOfSecrets = actor.CheckNumOfSecrets();
                 int cost = numOfSecrets * GameManager.instance.actorScript.manageSecretRenown + GameManager.instance.actorScript.manageDismissRenown;
+                cost *= 2;
+                //check trait -> Connected/Unconnected
+                if (actor.CheckTraitEffect(actorDismissDoubled) == true)
+                {
+                    cost *= 2;
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, CONNECTED, cost Doubled{0}", "\n");
+                }
+                if (actor.CheckTraitEffect(actorDismissHalved) == true)
+                {
+                    cost /= 2;
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, UNCONNECTED, cost Halved{0}", "\n");
+                }
                 int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
                 resources = Mathf.Max(0, resources - cost);
                 GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
                 //admin
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, cost {1} renown ({2} secrets){3}", actor.arc.name, cost, numOfSecrets, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, cost {1} Renown ({2} secrets){3}", actor.arc.name, cost, numOfSecrets, "\n");
             }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", questionableID); }

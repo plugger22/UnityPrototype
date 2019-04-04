@@ -225,6 +225,7 @@ public class SideManager : MonoBehaviour
     /// </summary>
     public void RevertToHumanPlayer()
     {
+        int renown;
         ActorStatus status;
         ActorInactive inactiveStatus;
         float inactiveAlpha = GameManager.instance.guiScript.alphaInactive;
@@ -245,7 +246,10 @@ public class SideManager : MonoBehaviour
                 resistanceOverall = SideState.AI;
                 resistanceCurrent = SideState.AI;
                 //convert resources to renown
-                GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+                renown = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+                Debug.LogFormat("[Aim] SideManager.cs -> RevertToHumanPlayer: Authority has {0} Resources{1}", renown, "\n");
+                renown /= GameManager.instance.aiScript.renownFactor;
+                GameManager.instance.playerScript.Renown = renown;
                 //update states
                 status = GameManager.instance.aiScript.status;
                 inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
@@ -314,7 +318,10 @@ public class SideManager : MonoBehaviour
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
                 //convert resources to renown
-                GameManager.instance.playerScript.Renown = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                renown = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                Debug.LogFormat("[Rim] SideManager.cs -> RevertToHumanPlayer: Resistance has {0} Resources{1}", renown, "\n");
+                renown /= GameManager.instance.aiRebelScript.renownFactor;
+                GameManager.instance.playerScript.Renown = renown;
                 //update states
                 status = GameManager.instance.aiRebelScript.status;
                 inactiveStatus = GameManager.instance.aiRebelScript.inactiveStatus;

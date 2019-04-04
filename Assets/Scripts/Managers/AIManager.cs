@@ -277,6 +277,9 @@ public class AIManager : MonoBehaviour
     [Tooltip("When the AI instigates any Policies they will stay in place for this number of turns")]
     [Range(1, 10)] public int aiPolicyTimer= 5;
 
+    [Header("Renown/Resources")]
+    [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of renown to the Authority player")]
+    [Range(1, 3)] public int renownFactor = 2;
 
     //assorted
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
