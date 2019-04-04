@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: (Actor_General) Connected
   m_EditorClassIdentifier: 
   tag: Connected
-  description: Politically connected. Expensive to Dismiss
+  description: Politically connected. Expensive to get rid of
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 0}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: ea70c7c0eb02ab64495bc81ff4d2856e, type: 2}
-  tagFormatted: <color=#7FFF00>Blind</color>
-  traitID: 1
+  tagFormatted: <color=#FF4500>Connected</color>
+  traitID: 51

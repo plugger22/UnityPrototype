@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: (Actor_General) Unconnected
   m_EditorClassIdentifier: 
   tag: Unconnected
-  description: Has no patron. Cheap to Dismiss
+  description: Has no patron. Cheap to get rid of
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 0}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: 1b1deef2fdb08504d94039895b0b8b42, type: 2}
-  tagFormatted: <color=#7FFF00>Blind</color>
-  traitID: 1
+  tagFormatted: <color=#7FFF00>Unconnected</color>
+  traitID: 52

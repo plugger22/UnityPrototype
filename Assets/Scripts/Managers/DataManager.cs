@@ -3243,14 +3243,16 @@ public class DataManager : MonoBehaviour
             case ActorStatus.Promoted:
             case ActorStatus.Killed:
             case ActorStatus.RecruitPool:
-                //lose secrets
+                //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
+                actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
         }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
-
     }
+
+
 
     /// <summary>
     /// Remove actor from reserve pool list

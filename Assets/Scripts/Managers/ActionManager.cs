@@ -1970,7 +1970,6 @@ public class ActionManager : MonoBehaviour
         /*int motivationLoss = GameManager.instance.actorScript.motivationLossFire;*/
         bool errorFlag = false;
         int numOfTeams = 0;
-        int renownCost = details.renownCost;
         Debug.Assert(details.renownCost > 0, "Invalid renownCost (zero)");
         StringBuilder builder = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
@@ -1988,10 +1987,10 @@ public class ActionManager : MonoBehaviour
                 }
                 //pay Player renown cost (passed in by data package)
                 int playerRenown = GameManager.instance.playerScript.Renown;
-                playerRenown -= renownCost;
+                playerRenown -= details.renownCost;
                 playerRenown = Mathf.Max(0, playerRenown);
                 GameManager.instance.playerScript.Renown = playerRenown;
-                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, details.renownCost, colourEnd);
                 if (actor.isThreatening == true)
                 {
                     builder.AppendFormat("{0} (Double Cost as {1} was Threatening Player{2}", colourAlert, actor.actorName, colourEnd);
@@ -2004,9 +2003,16 @@ public class ActionManager : MonoBehaviour
                 actor.ResetStates();
                 //remove actor from reserve list
                 GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
-                //remove actor from map & handle admin
+
+                /*//remove actor from map & handle admin -> EDIT: Can't remove actor from Map as actor is in reserve pool
                 if (GameManager.instance.dataScript.RemoveCurrentActor(details.side, actor, actor.Status) == false)
-                { Debug.LogErrorFormat("Actor \"{0}\", {1}, actorID {2}, not removed", actor.actorName, actor.arc.name, actor.actorID); }
+                { Debug.LogErrorFormat("Actor \"{0}\", {1}, actorID {2}, not removed", actor.actorName, actor.arc.name, actor.actorID); }*/
+
+                GameManager.instance.dataScript.AddActorToDismissed(actor.actorID, details.side);
+                //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
+                actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
+                GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+
                 //teams
                 if (numOfTeams > 0)
                 {

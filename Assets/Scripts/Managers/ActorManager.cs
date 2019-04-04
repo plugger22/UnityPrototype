@@ -144,6 +144,8 @@ public class ActorManager : MonoBehaviour
     private int actorReserveTimerHalved;
     private int actorReserveActionNone;
     private int actorReserveActionDoubled;
+    private int actorRemoveActionDoubled;
+    private int actorRemoveActionHalved;
     //generic picker
     private int maxGenericOptions = -1;
     //gear
@@ -241,6 +243,8 @@ public class ActorManager : MonoBehaviour
         actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
         actorReserveActionNone = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionNone");
         actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
+        actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
+        actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
         Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
         Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
         Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
@@ -254,9 +258,11 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
         Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
         Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
-        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
-        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
-        Debug.Assert(actorReserveActionNone > -1, "Invalid actorReserveActionNone (-1) ");
+        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1)");
+        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1)");
+        Debug.Assert(actorReserveActionNone > -1, "Invalid actorReserveActionNone (-1)");
+        Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
+        Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
         //event listener is registered in InitialiseActors() due to GameManager sequence.
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
@@ -6516,7 +6522,20 @@ public class ActorManager : MonoBehaviour
         //proceed with a valid actor
         if (actor != null)
         {
-            int numOfSecrets = actor.CheckNumOfSecrets();
+            //how many secrets does actor know? (depends if has already been removed or not)
+            int numOfSecrets = 0;
+            switch (actor.Status)
+            {
+                case ActorStatus.Active:
+                case ActorStatus.Inactive:
+                    numOfSecrets = actor.CheckNumOfSecrets();
+                    break;
+                case ActorStatus.Dismissed:
+                case ActorStatus.Killed:
+                    //NOTE: use departedNumOfSecrets instead of CheckNumOfSecrets as all secrets are removed by DataManager.cs -> RemoveActorAdmin
+                    numOfSecrets = actor.departedNumOfSecrets;
+                    break;
+            }
             int extraSecretCost = 0;
             //calculate adjusted renown cost
             if (numOfSecrets > 0)
@@ -6536,8 +6555,24 @@ public class ActorManager : MonoBehaviour
             if (actor.isThreatening == true)
             {
                 builder.AppendLine();
-                builder.AppendFormat("({0}Double Renown cost as {1} is Threatening you){2}", colourBad, actor.arc.name, colourEnd);
+                builder.AppendFormat("{0}(Double Renown cost as {1} is Threatening you){2}", colourBad, actor.arc.name, colourEnd);
             }
+            //traits -> Connected / Unconnected (done last as effect is a global multiplier of all other effect)
+            if (actor.CheckTraitEffect(actorRemoveActionDoubled) == true)
+            {
+                manageRenown.renownCost *= 2;
+                builder.AppendLine();
+                builder.AppendFormat("{0}(Double overall Renown cost as {1} has {2}{3}{4}{5}{6} trait){7}", colourBad, actor.arc.name, colourEnd, colourAlert, actor.GetTrait().tag, colourEnd,
+                    colourBad, colourEnd);
+            }
+            if (actor.CheckTraitEffect(actorRemoveActionHalved) == true)
+            {
+                manageRenown.renownCost /= 2;
+                builder.AppendLine();
+                builder.AppendFormat("{0}(Halved overall Renown cost as {1} has {2}{3}{4}{5}{6} trait){7}", colourGood, actor.arc.name, colourEnd, colourAlert, actor.GetTrait().tag, colourEnd,
+                    colourGood, colourEnd);
+            }
+            //tooltip
             manageRenown.tooltip = builder.ToString();
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
@@ -6747,7 +6782,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actorID"></param>
-    public bool DismaissActorAI(GlobalSide side, Actor actor)
+    public bool DismissActorAI(GlobalSide side, Actor actor)
     {
         //Dismiss actor
         if (GameManager.instance.dataScript.RemoveCurrentActor(globalResistance, actor, ActorStatus.Dismissed) == true)

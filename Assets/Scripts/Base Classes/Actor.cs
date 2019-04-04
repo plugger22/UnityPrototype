@@ -26,6 +26,7 @@ namespace gameAPI
         [HideInInspector] public int captureTimer;              //ticks down and determines how long an actor will be inactive while captured
         [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying
         [HideInInspector] public int numOfTimesCaptured;        //chance of becoming a traitor increases for each time captured
+        [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate renown cost as secrets removed when actor leaves)
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
         [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
@@ -39,6 +40,7 @@ namespace gameAPI
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
+
 
 
         //gear

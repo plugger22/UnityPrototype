@@ -178,8 +178,8 @@ public class AIRebelManager : MonoBehaviour
     private int failedTargetChance = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     //traits
-    private int actorDismissDoubled = -1;
-    private int actorDismissHalved = -1;
+    private int actorRemoveActionDoubled;
+    private int actorRemoveActionHalved;
     //conditions
     private Condition conditionStressed;
     private Condition conditionQuestionable;
@@ -255,8 +255,8 @@ public class AIRebelManager : MonoBehaviour
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
-        actorDismissDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorDismissActionDoubled");
-        actorDismissHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorDismissActionHalved");
+        actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
+        actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");        
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -273,8 +273,8 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(delayNoSpider > -1, "Invalid delayNoSpider (-1)");
         Debug.Assert(delayYesSpider > -1, "Invalid delayYesSpider (-1)");
         Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
-        Debug.Assert(actorDismissDoubled > -1, "Invalid actorConnected (-1)");
-        Debug.Assert(actorDismissHalved > -1, "Invalid actorUnconnected (-1)");
+        Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
+        Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
         //collections
         arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
         for (int i = 0; i < arrayOfActorActions.Length; i++)
@@ -3796,24 +3796,26 @@ public class AIRebelManager : MonoBehaviour
         Actor actor = GameManager.instance.dataScript.GetActor(task.data0);
         if (actor != null)
         {
-            //Dismiss actor
-            if (GameManager.instance.actorScript.DismaissActorAI(globalResistance, actor) == true)
+            //calc renown/resources cost (need to do prior to DismissActorAI as secrets will be removed
+            int numOfSecrets = actor.CheckNumOfSecrets();
+            int cost = numOfSecrets * GameManager.instance.actorScript.manageSecretRenown + GameManager.instance.actorScript.manageDismissRenown;
+            cost *= 2;
+            //check trait -> Connected/Unconnected
+            if (actor.CheckTraitEffect(actorRemoveActionDoubled) == true)
             {
-                //deduct renown/resources (min capped at Zero)
-                int numOfSecrets = actor.CheckNumOfSecrets();
-                int cost = numOfSecrets * GameManager.instance.actorScript.manageSecretRenown + GameManager.instance.actorScript.manageDismissRenown;
                 cost *= 2;
-                //check trait -> Connected/Unconnected
-                if (actor.CheckTraitEffect(actorDismissDoubled) == true)
-                {
-                    cost *= 2;
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, CONNECTED, cost Doubled{0}", "\n");
-                }
-                if (actor.CheckTraitEffect(actorDismissHalved) == true)
-                {
-                    cost /= 2;
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, UNCONNECTED, cost Halved{0}", "\n");
-                }
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, CONNECTED, cost Doubled{0}", "\n");
+            }
+            if (actor.CheckTraitEffect(actorRemoveActionHalved) == true)
+            {
+                cost /= 2;
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, UNCONNECTED, cost Halved{0}", "\n");
+            }
+            //Dismiss actor
+            if (GameManager.instance.actorScript.DismissActorAI(globalResistance, actor) == true)
+            {
+
+                //deduct resources
                 int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
                 resources = Mathf.Max(0, resources - cost);
                 GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
