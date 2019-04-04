@@ -3786,8 +3786,18 @@ public class AIRebelManager : MonoBehaviour
         Actor actor = GameManager.instance.dataScript.GetActor(task.data0);
         if (actor != null)
         {
-            //Fire actor
-            GameManager.instance.actorScript.DismaissActorAI(globalResistance, actor);
+            //Dismiss actor
+            if (GameManager.instance.actorScript.DismaissActorAI(globalResistance, actor) == true)
+            {
+                //deduct renown/resources (min capped at Zero)
+                int numOfSecrets = actor.CheckNumOfSecrets();
+                int cost = numOfSecrets * GameManager.instance.actorScript.manageSecretRenown + GameManager.instance.actorScript.manageDismissRenown;
+                int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                resources = Mathf.Max(0, resources - cost);
+                GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                //admin
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, cost {1} renown ({2} secrets){3}", actor.arc.name, cost, numOfSecrets, "\n");
+            }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", questionableID); }
         //action

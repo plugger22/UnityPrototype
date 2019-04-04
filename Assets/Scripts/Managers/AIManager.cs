@@ -123,12 +123,6 @@ public class AISideTabData
 /// </summary>
 public class AIManager : MonoBehaviour
 {
-    [Tooltip("The % of the total map, from the centre outwards, that encompasses the geographic centre where any node in the area is node.isCentreNode true")]
-    [Range(0, 100)] public float nodeGeographicCentre = 30f;
-    [Tooltip("When a target is attempted and the attempt fails this is the % chance of Authority becoming aware of the target (node.isTargetKnown true)")]
-    [Range(0, 100)] public int targetAttemptChance = 50;
-    [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
-    [Range(5, 15)] public int activityTimeLimit = 10;
 
     [Header("Priorities")]
     [Tooltip("When selecting Non-Critical tasks where there are an excess to available choices how much relative weight do I assign to High Priority tasks")]
@@ -139,6 +133,8 @@ public class AIManager : MonoBehaviour
     [Range(0, 10)] public int priorityLowWeight = 1;
 
     [Header("Tracking")]
+    [Tooltip("How many turns, after the event, that the AI will track Connection & Node activity before ignoring it")]
+    [Range(5, 15)] public int activityTimeLimit = 10;
     [Tooltip("How many of the most recent AI activities are tracked (keeps this number of most recent in a priorityQueue)")]
     [Range(0, 10)] public int numOfActivitiesTracked = 5;
     [Tooltip("How many turns ago (activity wise) will the AI use to select a target node for Erasure team AI processing")]
@@ -147,6 +143,8 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int trackerNumOfTurnsAgoNemesis = 2;
 
     [Header("Nodes")]
+    [Tooltip("The % of the total map, from the centre outwards, that encompasses the geographic centre where any node in the area is node.isCentreNode true")]
+    [Range(0, 100)] public float nodeGeographicCentre = 30f;
     [Tooltip("The listOfMostConnectedNodes includes all nodes with this number, or greater, connections. If < 3 nodes then the next set down are added. Max capped at total nodes/2")]
     [Range(0, 5)] public int nodeConnectionThreshold = 3;
     [Tooltip("Spider/Erasure Team node score -> Each resistance activity point is multiplied by this factor")]
@@ -175,6 +173,10 @@ public class AIManager : MonoBehaviour
     [Range(0, 5)] public int securityMediumFactor = 1;
     [Tooltip("Spider Team node score -> This is added to the score for ever High security connection the node has")]
     [Range(0, 5)] public int securityHighFactor = 0;
+
+    [Header("Targets")]
+    [Tooltip("When a target is attempted and the attempt fails this is the % chance of Authority becoming aware of the target (node.isTargetKnown true)")]
+    [Range(0, 100)] public int targetAttemptChance = 50;
 
     [Header("AI Tasks")]
     [Tooltip("The aiming point for the number of final tasks (if available) generated each turn. The faction chooses their set num of tasks out of this pool")]

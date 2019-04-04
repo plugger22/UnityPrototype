@@ -38,7 +38,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Base Renown cost for carrying out Manage Dismiss Actor actions")]
     [Range(1, 5)] public int manageDismissRenown = 2;
     [Tooltip("Extra renown cost to dismiss or displose per secret known, added to base  costs before other modifiers")]
-    [Range(0, 3)] public int manageSecretCost = 1;
+    [Range(0, 3)] public int manageSecretRenown = 2;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
@@ -6521,7 +6521,7 @@ public class ActorManager : MonoBehaviour
             //calculate adjusted renown cost
             if (numOfSecrets > 0)
             {
-                extraSecretCost = numOfSecrets * manageSecretCost;
+                extraSecretCost = numOfSecrets * manageSecretRenown;
                 manageRenown.renownCost += extraSecretCost;
             }
             if (actor.isThreatening == true) { manageRenown.renownCost *= 2; }
@@ -6743,20 +6743,22 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// AI fires an actor
+    /// AI fires an actor, returns true if successful
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actorID"></param>
-    public void DismaissActorAI(GlobalSide side, Actor actor)
+    public bool DismaissActorAI(GlobalSide side, Actor actor)
     {
-        //fire actor
+        //Dismiss actor
         if (GameManager.instance.dataScript.RemoveCurrentActor(globalResistance, actor, ActorStatus.Dismissed) == true)
         {
             //admin
-            Debug.LogFormat("[Rim] ActorManager.cs -> FireActorAI: {0}, {1}, ID {2}, DISMISSED (Questionable loyalty){3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+            Debug.LogFormat("[Rim] ActorManager.cs -> DismissActorAI: {0}, {1}, ID {2}, DISMISSED (Questionable loyalty){3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
             string textAutoRun = string.Format("{0}{1}{2} {3}Fired{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
             GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+            return true;
         }
+        return false;
     }
 
     //new methods above here
