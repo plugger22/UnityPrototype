@@ -609,8 +609,8 @@ public class PlayerManager : MonoBehaviour
                     switch (condition.name)
                     {
                         case "DOOMED":
-                        GameManager.instance.actorScript.SetDoomTimer();
-                        GameManager.instance.nodeScript.AddCureNode(conditionDoomed.cure);
+                            GameManager.instance.actorScript.SetDoomTimer();
+                            GameManager.instance.nodeScript.AddCureNode(conditionDoomed.cure);
                             break;
                         case "TAGGED":
                             GameManager.instance.nodeScript.AddCureNode(conditionTagged.cure);
@@ -830,6 +830,7 @@ public class PlayerManager : MonoBehaviour
                     secret.gainedWhen = GameManager.instance.turnScript.Turn;
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
+                    Debug.LogFormat("[Sec] PlayerManager.cs -> AddSecret: Player learns {0} secret, ID {1}{2}", secret.tag, secret.secretID, "\n");
                 }
                 else { Debug.LogWarning("Secret NOT added as not enough space"); }
             }
@@ -870,6 +871,8 @@ public class PlayerManager : MonoBehaviour
                     //remove secret
                     listOfSecrets.RemoveAt(i);
                     isSuccess = true;
+                    //admin
+                    Debug.LogFormat("[Sec] PlayerManager.cs -> RemoveSecret: Player REMOVES {0} secret, ID {1}{2}", secret.tag, secret.secretID, "\n");
                     break;
                 }
             }

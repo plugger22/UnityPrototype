@@ -500,6 +500,7 @@ namespace gameAPI
                         //message
                         string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
                         GameManager.instance.messageScript.ActorSecret(msgText, this, secret);
+                        Debug.LogFormat("[Sec] Actor.cs -> AddSecret: {0}, {1}, ID {2}, learns {3} secret, ID {4}{5}", actorName, arc.name, actorID, secret.tag, secret.secretID, "\n");
                     }
                     else { Debug.LogWarning("Secret NOT added as no space available"); }
                 }
@@ -524,6 +525,11 @@ namespace gameAPI
                     {
                         listOfSecrets.RemoveAt(i);
                         isSuccess = true;
+                        //admin
+                        Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
+                        if (secret != null)
+                        { Debug.LogFormat("[Sec] Actor.cs -> RemoveSecret: {0}, {1}, ID {2}, {3} secret REMOVED, ID {4}{5}", actorName, arc.name, actorID, secret.tag, secret.secretID, "\n"); }
+                        else { Debug.LogErrorFormat("Invalid secret (Null) for secretID {0}", secret.secretID); }
                         break;
                     }
                 }
