@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b88449de98084041af7aea549adba60, type: 3}
-  m_Name: Engineers
+  m_Name: Rebel HQ
   m_EditorClassIdentifier: 
-  descriptor: Networking us all into one
-  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
-  preferredArc: {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
-  hostileArc: {fileID: 0}
-  maxTaskPerTurn: 1
+  descriptor: Supreme Headquarters
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  preferredArc: {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
+  hostileArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
+  maxTaskPerTurn: 2
   resourcesAllowance: 1
   resourcesStarting: 5
   sprite: {fileID: 21300000, guid: f331d84d98316d347adc56e5e9f0b7ca, type: 3}
-  factionID: 0
+  factionID: 9

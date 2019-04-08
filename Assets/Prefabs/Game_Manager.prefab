@@ -1441,17 +1441,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 393e717d538c90743ab029faffc63bbd, type: 2}
   - {fileID: 11400000, guid: 9a46c226ee2b1dc49bfaa1a81c4505b0, type: 2}
   arrayOfFactions:
-  - {fileID: 11400000, guid: ec3367a7c7ea31142874adb8b75c1ab0, type: 2}
-  - {fileID: 11400000, guid: 066d73a3ca4d3304490a9b91243d46e8, type: 2}
-  - {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}
-  - {fileID: 11400000, guid: 6041e87eef1508646ad96be985691ba5, type: 2}
-  - {fileID: 11400000, guid: 03a87536ea8c7044c97e5e526ee52d6c, type: 2}
-  - {fileID: 11400000, guid: bceab10738a333d448540192a04a2c60, type: 2}
-  - {fileID: 11400000, guid: 460e31ea5dc55bf4e945f5739e098261, type: 2}
-  - {fileID: 11400000, guid: 0c2f99c24f95a9b48aaf4fef45bc45bb, type: 2}
-  - {fileID: 11400000, guid: 40037d21d20108748a33ed6859b32bce, type: 2}
-  - {fileID: 11400000, guid: 9abceb52536bb0241bf015b71e91d791, type: 2}
-  - {fileID: 11400000, guid: a42808aef2b590749b9d3c4087017e81, type: 2}
+  - {fileID: 11400000, guid: 72cd9e1a91eacf8429a5e4efae6a7ef4, type: 2}
+  - {fileID: 11400000, guid: fa8015dfe3e3b7a4cb14490effb1a8ee, type: 2}
   arrayOfCityArcs:
   - {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   - {fileID: 11400000, guid: bc0b3a48b2f6aa448a02418fcf746153, type: 2}
@@ -2062,7 +2053,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seed: 0
-  isAuthority: 1
+  isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

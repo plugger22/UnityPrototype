@@ -8,16 +8,35 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / Mayor")]
 public class Mayor : ScriptableObject
 {
+    [Header("Assorted")]
     [Tooltip("Faction that the Mayor belongs to. If Mayor in a city this is will be the faction of the city")]
     public Faction faction;
     [Tooltip("Motto of Mayor in 6 words or less")]
     public string motto;
     [Tooltip("Portrait sprite (152 x 160 png)")]
     public Sprite sprite;
+    [Tooltip("Unique characteristic (trait) of the Mayor")]
+    public Trait trait;
+
+    [Header("Node Arcs")]
+    [Tooltip("Node type that faction wants to protect (authority) or turn a blind eye to (resistance). Leave blank if none.")]
+    public NodeArc preferredArc;
+    [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
+    public NodeArc hostileArc;
+
+    [Header("AI Tasks")]
+    [Tooltip("How many actions the AI faction can carry out per turn")]
+    [Range(1, 3)] public int maxTaskPerTurn = 3;
+    [Header("AI Resources")]
+    [Tooltip("The number of AI Resources granted per turn (for Resistance side only) provided Faction decides to provide support (dependant on faction level as per normal)")]
+    [Range(1, 3)] public int resourcesAllowance = 1;
+    [Tooltip("The starting pool of AI Resources used for Decisions")]
+    [Range(1, 10)] public int resourcesStarting = 5;
+
 
     [HideInInspector] public int mayorID;
 
-    public Trait trait;
+
 
     [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
     public bool isTestOff = false;
