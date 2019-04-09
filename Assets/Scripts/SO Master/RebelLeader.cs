@@ -18,6 +18,10 @@ public class RebelLeader : ScriptableObject
     [Tooltip("Description of AI personality profile, not used in game")]
     [TextArea] public string designNotes;
 
+    [Header("Mechanics")]
+    [Tooltip("How many actions the AI Rebel Leader can carry out per turn (base amount)")]
+    [Range(2, 2)] public int actionsPerTurn = 2;
+
     [Header("Chances")]
     [Tooltip("Chance of moving in a survival situation. A high number (75%) gets the leader moving around a lot and more likely to be captured, a middle number (50%) has them lying low more often")]
     [Range(0, 100)] public int moveChance = 50;

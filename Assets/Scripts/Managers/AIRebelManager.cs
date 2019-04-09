@@ -4595,7 +4595,7 @@ public class AIRebelManager : MonoBehaviour
         int turn = GameManager.instance.turnScript.Turn;
         builder.AppendFormat(" Resistance AI Status {0}{1}", "\n", "\n");
         //player stats
-        builder.AppendFormat("- AI Player{0}", "\n");
+        builder.AppendFormat("- AI Player \"{0}\"{1}", playerName, "\n");
         builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
         builder.AppendFormat(" isBreakdown: {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");

@@ -452,7 +452,7 @@ public class FactionManager : MonoBehaviour
                     if (arc != null) { colourNode = colourBad; }
                     else { colourNode = colourGrey; }
                     builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.maxTaskPerTurn, colourEnd, colourNormal, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);
                     break;
                 case 2:
                     arc = factionResistance.preferredArc;
@@ -463,7 +463,7 @@ public class FactionManager : MonoBehaviour
                     if (arc != null) { colourNode = colourBad; }
                     else { colourNode = colourGrey; }
                     builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.maxTaskPerTurn, colourEnd, colourNormal, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -538,7 +538,7 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" {0}{1}{2}", factionAuthority.descriptor, "\n", "\n");
         builder.AppendFormat(" Preferred Nodes: {0}{1}", factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None", "\n");
         builder.AppendFormat(" Hostile Nodes: {0}{1}", factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n", "\n");
-        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}{2}", factionAuthority.maxTaskPerTurn, "\n", "\n");
+        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}{2}", factionAuthority.actionsTaskPerTurn, "\n", "\n");
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideAuthority), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainAuthority, "\n", "\n");
         //resistance
@@ -547,7 +547,7 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" {0}{1}{2}", factionResistance.descriptor, "\n", "\n");
         builder.AppendFormat(" Preferred Nodes: {0}{1}", factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None", "\n");
         builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");
-        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}{2}", factionResistance.maxTaskPerTurn, "\n", "\n");
+        builder.AppendFormat(" Max Number of Tasks per Turn: {0}{1}{2}", factionResistance.actionsTaskPerTurn, "\n", "\n");
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
         return builder.ToString();
