@@ -20,7 +20,7 @@ public class RebelLeader : ScriptableObject
 
     [Header("Mechanics")]
     [Tooltip("How many actions the AI Rebel Leader can carry out per turn (base amount)")]
-    [Range(2, 2)] public int actionsPerTurn = 2;
+    [Range(1, 3)] public int actionsPerTurn = 2;
 
     [Header("Chances")]
     [Tooltip("Chance of moving in a survival situation. A high number (75%) gets the leader moving around a lot and more likely to be captured, a middle number (50%) has them lying low more often")]
@@ -84,5 +84,13 @@ public class RebelLeader : ScriptableObject
     public GlobalChance manageReserve;
     [Tooltip("Priority given to dismissing subordinates with the Questionable trait (Low/Med/High)")]
     public GlobalChance manageQuestionable;
-    
+
+    /// <summary>
+    /// initialisation
+    /// </summary>
+    private void OnEnable()
+    {
+        Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
+    }
+
 }

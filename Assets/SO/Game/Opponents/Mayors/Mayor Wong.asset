@@ -14,6 +14,11 @@ MonoBehaviour:
   faction: {fileID: 11400000, guid: 72cd9e1a91eacf8429a5e4efae6a7ef4, type: 2}
   motto: The Bitcoin Billionaire
   sprite: {fileID: 21300000, guid: 09d09c53ef073954a812844a47b4bf57, type: 3}
-  mayorID: 14
   trait: {fileID: 11400000, guid: 7be47376ffdfd544d896e55420ab4b11, type: 2}
+  preferredArc: {fileID: 0}
+  hostileArc: {fileID: 0}
+  actionsPerTurn: 2
+  resourcesAllowance: 1
+  resourcesStarting: 5
+  mayorID: 14
   isTestOff: 0

@@ -575,7 +575,7 @@ public class AIManager : MonoBehaviour
         if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
         /*authorityMaxTasksPerTurn = factionAuthority.actionsTaskPerTurn;*/
         actionsPerTurn = city.mayor.actionsPerTurn;
-        Debug.Assert(actionsPerTurn != 2, "Invalid actionsPerTurn (should be 2)");
+        Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
         //fast access
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
@@ -4812,7 +4812,7 @@ public class AIManager : MonoBehaviour
         //Task lists
         builder.AppendFormat("Authority AI Status (Tasks){0}{1}", "\n", "\n");
         builder.AppendFormat("- Task Allowances{0}", "\n");
-        builder.AppendFormat(" {0} Authority tasks per turn ({1}){2}", actionsPerTurn, factionAuthority.name, "\n");
+        builder.AppendFormat(" {0} Authority tasks per turn ({1}){2}{3}", actionsPerTurn, factionAuthority.name, "\n", "\n");
         builder.AppendFormat("- Resource Pools{0}", "\n");
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");

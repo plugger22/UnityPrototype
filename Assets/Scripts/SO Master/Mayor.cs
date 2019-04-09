@@ -25,8 +25,9 @@ public class Mayor : ScriptableObject
     public NodeArc hostileArc;
 
     [Header("AI Tasks")]
-    [Tooltip("How many actions the AI Mayor can carry out per turn (base amount)")]
-    [Range(2, 2)] public int actionsPerTurn = 2;
+    [Tooltip("How many actions the AI Mayor can carry out per turn (base amount) Default 2")]
+    [Range(1, 3)] public int actionsPerTurn = 2;
+
     [Header("AI Resources")]
     [Tooltip("The number of AI Resources granted per turn (for Resistance side only) provided Faction decides to provide support (dependant on faction level as per normal)")]
     [Range(1, 3)] public int resourcesAllowance = 1;
@@ -49,6 +50,7 @@ public class Mayor : ScriptableObject
     private void OnEnable()
     {
         Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
     }
 
     //

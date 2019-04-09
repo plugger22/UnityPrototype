@@ -14,6 +14,11 @@ MonoBehaviour:
   faction: {fileID: 11400000, guid: 72cd9e1a91eacf8429a5e4efae6a7ef4, type: 2}
   motto: Automated Precision and Perfection
   sprite: {fileID: 21300000, guid: 09d09c53ef073954a812844a47b4bf57, type: 3}
-  mayorID: 1
   trait: {fileID: 11400000, guid: 6b9e8ebfecd390545b357843c68634a8, type: 2}
+  preferredArc: {fileID: 0}
+  hostileArc: {fileID: 0}
+  actionsPerTurn: 2
+  resourcesAllowance: 1
+  resourcesStarting: 5
+  mayorID: 1
   isTestOff: 0
