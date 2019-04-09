@@ -556,6 +556,8 @@ public class AIManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(city != null, "Invalid City (Null)");
+        //set AI resource levels
+        GameManager.instance.dataScript.SetAIResources(globalAuthority, GameManager.instance.scenarioScript.scenario.leaderAuthority.resourcesStarting);
         //cached TraitEffects
         aiDetectionChanceHigher = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceHigher");
         aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
@@ -3606,7 +3608,8 @@ public class AIManager : MonoBehaviour
         int adjustedChance = resourcesChance + numOfUnsuccessfulResourceRequests * resourcesBoost;
         if (rnd < adjustedChance)
         {
-            amount = factionAuthority.resourcesStarting + numOfSuccessfulResourceRequests;
+            /*amount = factionAuthority.resourcesStarting + numOfSuccessfulResourceRequests;*/
+            amount = city.mayor.resourcesStarting + numOfSuccessfulResourceRequests;
             numOfSuccessfulResourceRequests++;
             int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + amount;
             //add faction starting resources amount to their resource pool + 1 for each successful request

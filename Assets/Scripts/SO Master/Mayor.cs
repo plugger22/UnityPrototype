@@ -24,14 +24,10 @@ public class Mayor : ScriptableObject
     [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
     public NodeArc hostileArc;
 
-    [Header("AI Tasks")]
+    [Header("Mechanics")]
     [Tooltip("How many actions the AI Mayor can carry out per turn (base amount) Default 2")]
     [Range(1, 3)] public int actionsPerTurn = 2;
-
-    [Header("AI Resources")]
-    [Tooltip("The number of AI Resources granted per turn (for Resistance side only) provided Faction decides to provide support (dependant on faction level as per normal)")]
-    [Range(1, 3)] public int resourcesAllowance = 1;
-    [Tooltip("The starting pool of AI Resources used for Decisions")]
+    [Tooltip("The starting pool of AI Resources")]
     [Range(1, 10)] public int resourcesStarting = 5;
 
 

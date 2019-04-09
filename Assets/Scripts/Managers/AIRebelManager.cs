@@ -286,6 +286,8 @@ public class AIRebelManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
         { isPlayer = true; }
+        //set AI resource levels
+        GameManager.instance.dataScript.SetAIResources(globalResistance, GameManager.instance.scenarioScript.scenario.leaderResistance.resourcesStarting);
         //Rebel leader
         survivalMove = GameManager.instance.scenarioScript.scenario.leaderResistance.moveChance;
         playerAction = GameManager.instance.scenarioScript.scenario.leaderResistance.playerChance;

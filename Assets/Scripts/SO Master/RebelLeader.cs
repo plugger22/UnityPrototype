@@ -21,6 +21,8 @@ public class RebelLeader : ScriptableObject
     [Header("Mechanics")]
     [Tooltip("How many actions the AI Rebel Leader can carry out per turn (base amount)")]
     [Range(1, 3)] public int actionsPerTurn = 2;
+    [Tooltip("The starting pool of AI Resources")]
+    [Range(1, 10)] public int resourcesStarting = 5;
 
     [Header("Chances")]
     [Tooltip("Chance of moving in a survival situation. A high number (75%) gets the leader moving around a lot and more likely to be captured, a middle number (50%) has them lying low more often")]

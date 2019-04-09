@@ -25,6 +25,14 @@ public class Scenario : ScriptableObject
     [Tooltip("Mayor SO")]
     public Mayor leaderAuthority;
 
+    [Header("Starting Approval")]
+    [Tooltip("Rebel HQ approval (leave at Zero for a random value between 2 & 8)")]
+    [Range(0, 10)] public int approvalStartRebelHQ;
+    [Tooltip("Authority HQ approval (leave at Zero for a random value between 2 & 8)")]
+    [Range(0, 10)] public int approvalStartAuthorityHQ;
+    [Tooltip("City Loyalty (leave at Zero for a random value between 2 & 8")]
+    [Range(0, 10)] public int cityStartLoyalty;
+
     [Header("Mission")]
     [Tooltip("Resistance Target and objectives for the scenario")]
     public Mission missionResistance;
