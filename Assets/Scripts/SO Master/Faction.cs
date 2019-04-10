@@ -17,14 +17,6 @@ public class Faction : ScriptableObject
     [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
     public NodeArc hostileArc;
 
-    [Header("AI Tasks")]
-    /*[Tooltip("How many actions the AI faction can carry out per turn")]
-    [Range(1,3)] public int actionsTaskPerTurn = 3;*/
-    [Header("AI Resources")]
-    [Tooltip("The number of AI Resources granted per turn (Resistance side only) provided Faction decides to provide support (dependant on faction level as per normal)")]
-    [Range(1, 3)] public int resourcesAllowance = 1;
-    /*[Tooltip("The starting pool of AI Resources used for Decisions")]
-    [Range(1, 10)] public int resourcesStarting = 5;*/
     [Tooltip("Pictorial representation of faction (152 x 160 png)")]
     public Sprite sprite;
 

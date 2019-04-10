@@ -11,9 +11,9 @@ public class City : ScriptableObject
     [Tooltip("Short text summary that appears in city tooltip")]
     public string descriptor;
 
-    [Header("Stats")]
+    /*[Header("Stats")]
     [Tooltip("Starting loyalty to the Authorities of the City (10 is total loyalty)")]
-    [Range(0, 10)] public int baseLoyalty = 10;
+    [Range(0, 10)] public int baseLoyalty = 10;*/
 
     [Header("Archetypes")]
     [Tooltip("City Arc determines the size, layout and node type frequencies of the city")]

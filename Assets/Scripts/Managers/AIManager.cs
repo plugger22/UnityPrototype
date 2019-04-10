@@ -75,7 +75,7 @@ public class AIDisplayData
     public string task_3_chance;
     public string task_3_tooltipMain;
     public string task_3_tooltipDetails;
-    public string factionDetails;
+    public string aiDetails;
     public string renownDecision;
     public int nodeID_1;                   //used for highlighting node or connection referred to by task
     public int connID_1;
@@ -2972,7 +2972,7 @@ public class AIManager : MonoBehaviour
                             break;
                     }
                     //other data
-                    data.factionDetails = string.Format("{0} Action{1}{2}{3}", actionsPerTurn, actionsPerTurn != 1 ? "s" : "", "\n", factionAuthority.name);
+                    data.aiDetails = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagAIName, "\n");
                 }
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksFinal[{0}]", i); }
             }

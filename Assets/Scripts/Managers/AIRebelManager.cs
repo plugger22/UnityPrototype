@@ -101,6 +101,8 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 5)] public int factionSupportThreshold = 4;
 
     [Header("Renown/Resources")]
+    [Tooltip("The number of AI Resources granted per turn (Resistance side only) provided Faction decides to provide support (dependant on HQ support level as per normal)")]
+    [Range(1, 3)] public int resourcesAllowance = 1;
     [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of renown to the Resistance player")]
     [Range(1, 3)] public int renownFactor = 2;
 
@@ -1259,17 +1261,19 @@ public class AIRebelManager : MonoBehaviour
         factionResistance = GameManager.instance.factionScript.factionResistance;
         if (factionResistance != null)
         {
+            resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
             if (rnd < threshold)
             {
                 //Support given
-                resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance) + factionResistance.resourcesAllowance;
+                resources += resourcesAllowance;
                 GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
                 //Support Provided
                 Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                 if (isPlayer == true)
                 {
-                    string msgText = string.Format("{0} faction provides SUPPORT (+{1} Resource{2})", factionResistance.name, resources, resources != 1 ? "s" : "");
+                    string msgText = string.Format("{0} provides +{1} SUPPORT (now {2} Resource{3})", factionResistance.name, resourcesAllowance, resources, resources != 1 ? "s" : "");
                     GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: {0}", msgText);
                     //random
                     GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
                 }
@@ -1282,6 +1286,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
                     GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown);
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: No Support provided (now {0} Resource{1}){2}", resources, resources != 1 ? "s" : "", "\n");
                     //random
                     GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
                 }

@@ -82,7 +82,7 @@ public class CityManager : MonoBehaviour
         if (city.mayor != null)
         {
             city.faction = city.mayor.faction;
-            Debug.LogFormat("CityManager.cs -> City {0}, {1},  Trait {2}, Faction {3}{4}", city.name, city.mayor.name, city.mayor.trait.tag, city.mayor.faction.name, "\n");
+            Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}, Faction {3}{4}", city.name, city.mayor.name, city.mayor.trait.tag, city.mayor.faction.name, "\n");
             //initialise authority faction (determined by mayor's faction
             GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
         }
@@ -98,7 +98,10 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
-        CityLoyalty = city.baseLoyalty;
+        //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
+        int loyalty = GameManager.instance.scenarioScript.scenario.cityStartLoyalty;
+        if (loyalty == 0) { loyalty = Random.Range(2, 9); }
+        CityLoyalty = loyalty;
         //initialise number of districts
         city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
 

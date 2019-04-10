@@ -5478,7 +5478,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: '2 Actions
+  m_text: '4 Actions
 
     JinTeki Corporation'
   m_isRightToLeft: 0

@@ -86,7 +86,7 @@ public class AIDisplayUI : MonoBehaviour
     public void Awake()
     {
         hackingDetected = string.Format("Hacking Attempt{0}<b>DETECTED</b>", "\n");
-        tabBottomText.text = string.Format("Hacking Status{0}<b>UNKNOWN</b>", "\n");
+        tabBottomText.text = string.Format("Hacking Status{0}<b>UNKNOWN</b>", "\n");        
         //tabs
         topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
         bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
@@ -141,6 +141,8 @@ public class AIDisplayUI : MonoBehaviour
             //set button sprites
             cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
             proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+            //top text
+            tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagAIName, "\n");
             //active
             isActive = true;
         }
@@ -338,8 +340,8 @@ public class AIDisplayUI : MonoBehaviour
             bottomTaskTooltip.connID = data.connID_3;
             bottomTaskTooltip.testTag = "Bottom Task";
             //Faction
-            if (String.IsNullOrEmpty(data.factionDetails) == false)
-            { tabTopText.text = data.factionDetails; }
+            if (String.IsNullOrEmpty(data.aiDetails) == false)
+            { tabTopText.text = data.aiDetails; }
             else { tabTopText.text = ""; }
         }
         else { Debug.LogWarning("Invalid AIDisplayData package (Null)"); }
