@@ -85,9 +85,10 @@ public class FactionManager : MonoBehaviour
 
         //Authority faction -> cityManager decides current authority faction as it depends on mayor's faction
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
-        Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
+        
+        /*Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
         Debug.Assert(trait != null, "Invalid authority trait (Null)");
-        factionAuthority.AddTrait(trait);
+        factionAuthority.AddTrait(trait);*/
         
         /*//set AI resource levels
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideAuthority, factionAuthority.resourcesStarting);*/
@@ -95,9 +96,10 @@ public class FactionManager : MonoBehaviour
         //Resistance faction
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
-        trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
+        
+        /*trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
         Debug.Assert(trait != null, "Invalid resistance trait (Null)");
-        factionResistance.AddTrait(trait);
+        factionResistance.AddTrait(trait);*/
 
         /*//set AI resource levels
         GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);*/

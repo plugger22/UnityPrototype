@@ -218,6 +218,7 @@ MonoBehaviour:
   targetAttemptsMax: 2
   actorNumThreshold: 3
   factionSupportThreshold: 4
+  resourcesAllowance: 1
   renownFactor: 2
   status: 0
   inactiveStatus: 0
@@ -897,7 +898,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a46adcf9419dd94ebc7ef04f847d170, type: 2}
   arrayOfTraitCategories:
   - {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  - {fileID: 11400000, guid: 7209ba9199947a849895426eb0249b54, type: 2}
   - {fileID: 11400000, guid: 4dc6bc7afec85ba4593931a1144467d3, type: 2}
   arrayOfTraitEffects:
   - {fileID: 11400000, guid: 340c21bea40861f4292821384a8a851d, type: 2}
@@ -1024,6 +1024,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e419ee7ddb808e488b854181aa29cb4, type: 2}
   - {fileID: 11400000, guid: a63d143a2637f6f4e984a6bc9b0b5778, type: 2}
   - {fileID: 11400000, guid: 2664358faa20c1745a50ea08148f156f, type: 2}
+  - {fileID: 11400000, guid: e2276f99dcf907a47b7ef1532dfcd5bc, type: 2}
   - {fileID: 11400000, guid: 10b8b753df0e0dd4baf4fcff1884bb8e, type: 2}
   - {fileID: 11400000, guid: d8cae4f6ebce95a4b8cbdf3cec11ae60, type: 2}
   - {fileID: 11400000, guid: 0c438d411416ef6419c4f5d53aaa458d, type: 2}
@@ -1043,18 +1044,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7cdb439c3d65c014684d2ccfb16c75e3, type: 2}
   - {fileID: 11400000, guid: 93559269ee439f94ab62f9768de51855, type: 2}
   - {fileID: 11400000, guid: dc8a591757aa5fa4e896a61094c92585, type: 2}
+  - {fileID: 11400000, guid: 4f10dac9b65e6b444b9aedf275ec0aae, type: 2}
   - {fileID: 11400000, guid: e0a0c6e9f04965e44b9a9bfd4863c964, type: 2}
   - {fileID: 11400000, guid: c5272e86a8264aa448c93726b35ab9ed, type: 2}
   - {fileID: 11400000, guid: 4a04c9f485097d946a535db45d532a46, type: 2}
   - {fileID: 11400000, guid: 1edff31528bf3cc48951d9bd99ad5644, type: 2}
+  - {fileID: 11400000, guid: cbeaa8a1b6ff0a94c91dcb814114442d, type: 2}
   - {fileID: 11400000, guid: 837bf57d2df9488449695af72f57a7be, type: 2}
+  - {fileID: 11400000, guid: 432d6458cd6168441b7ea05014312e9e, type: 2}
   - {fileID: 11400000, guid: 1b7757c87b291d4418da2888d67bb8e6, type: 2}
   - {fileID: 11400000, guid: c8283205e0785884ca708cf77582d25f, type: 2}
   - {fileID: 11400000, guid: 9281d24b9b01cd64cb5850631c2877be, type: 2}
-  - {fileID: 11400000, guid: 8d5e8e7d248aefd449a3182a91b21013, type: 2}
-  - {fileID: 11400000, guid: 2e5834f797a75a444af155967b22301f, type: 2}
-  - {fileID: 11400000, guid: c68a55469d4c40a4d9da46601db382a4, type: 2}
-  - {fileID: 11400000, guid: 827f14f8fd6eae740b7a7228caf60f9f, type: 2}
   - {fileID: 11400000, guid: 277e28132ff46c24586a63f2296d1e5f, type: 2}
   - {fileID: 11400000, guid: b96be642652b6b144ac13b98c7d6559a, type: 2}
   - {fileID: 11400000, guid: fd4154a70074f6047a62e6202e894d88, type: 2}
@@ -1070,10 +1070,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6b9e8ebfecd390545b357843c68634a8, type: 2}
   - {fileID: 11400000, guid: efb963588c684c24c976937b83901841, type: 2}
   - {fileID: 11400000, guid: 4522b593a5d6f994b950325f427dc947, type: 2}
-  - {fileID: 11400000, guid: cbeaa8a1b6ff0a94c91dcb814114442d, type: 2}
-  - {fileID: 11400000, guid: 432d6458cd6168441b7ea05014312e9e, type: 2}
-  - {fileID: 11400000, guid: e2276f99dcf907a47b7ef1532dfcd5bc, type: 2}
-  - {fileID: 11400000, guid: 4f10dac9b65e6b444b9aedf275ec0aae, type: 2}
   arrayOfActorArcs:
   - {fileID: 11400000, guid: db747620427cca543b9d5e37f91ce0ef, type: 2}
   - {fileID: 11400000, guid: 19633dda06ebf4c4584309ee34b8623b, type: 2}

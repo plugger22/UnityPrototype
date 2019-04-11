@@ -15,10 +15,8 @@ MonoBehaviour:
   motto: Keep the furnaces burning
   sprite: {fileID: 21300000, guid: 09d09c53ef073954a812844a47b4bf57, type: 3}
   trait: {fileID: 11400000, guid: e5dab1fcc38ed5c478604f9b955ef570, type: 2}
-  preferredArc: {fileID: 0}
-  hostileArc: {fileID: 0}
+  preferredArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   actionsPerTurn: 2
-  resourcesAllowance: 1
   resourcesStarting: 5
   mayorID: 3
   isTestOff: 0

@@ -39,7 +39,6 @@ public class GlobalManager : MonoBehaviour
     //TraitCategory
     [HideInInspector] public TraitCategory categoryActor;
     [HideInInspector] public TraitCategory categoryMayor;
-    [HideInInspector] public TraitCategory categoryFaction;
 
     public void Initialise()
     {
@@ -334,10 +333,8 @@ public class GlobalManager : MonoBehaviour
         //
         categoryActor = GameManager.instance.dataScript.GetTraitCategory("Actor");
         categoryMayor = GameManager.instance.dataScript.GetTraitCategory("Mayor");
-        categoryFaction = GameManager.instance.dataScript.GetTraitCategory("Faction");
         Debug.Assert(categoryActor != null, "Invalid categoryActor");
         Debug.Assert(categoryMayor != null, "Invalid categoryMayor");
-        Debug.Assert(categoryFaction != null, "Invalid categoryFaction");
     }
 
 

@@ -11,20 +11,14 @@ public class Faction : ScriptableObject
     public string descriptor;
     public GlobalSide side;
 
-    /*[Header("Node Arcs")]
-    [Tooltip("Node type that faction wants to protect (authority) or turn a blind eye to (resistance). Leave blank if none.")]
-    public NodeArc preferredArc; 
-    [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
-    public NodeArc hostileArc;*/
-
     [Tooltip("Pictorial representation of faction (152 x 160 png)")]
     public Sprite sprite;
 
     
     [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import
 
-    private Trait trait;
-    private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+    /*private Trait trait;
+    private List<int> listOfTraitEffects = new List<int>();*/             //list of all traitEffect.teffID's
 
     private void OnEnable()
     {
@@ -32,10 +26,10 @@ public class Faction : ScriptableObject
     }
 
     //
-    // - - -  Trait - - -
+    // - - -  Trait - - - (EDIT: traits aren't for factions, only for people)
     //
 
-    public Trait GetTrait()
+    /*public Trait GetTrait()
     { return trait; }
 
     /// <summary>
@@ -64,6 +58,6 @@ public class Faction : ScriptableObject
         if (listOfTraitEffects != null)
         { return listOfTraitEffects.Exists(x => x == traitEffectID); }
         else { return false; }
-    }
+    }*/
 
 }

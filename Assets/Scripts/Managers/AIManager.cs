@@ -328,8 +328,6 @@ public class AIManager : MonoBehaviour
     private int detectModifierFaction;
     private int detectModifierGear;
     //factions
-    private Faction factionAuthority;
-    private Faction factionResistance;
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
    /* private string resistancePreferredArc;*/
     private int actionsPerTurn;                               //how many tasks the AI can undertake in a turns
@@ -454,12 +452,7 @@ public class AIManager : MonoBehaviour
     {
         //collections
         arrayOfAITaskTypes = new int[(int)AITaskType.Count];
-        //factions
-        factionAuthority = GameManager.instance.factionScript.factionAuthority;
-        factionResistance = GameManager.instance.factionScript.factionResistance;
         playerID = GameManager.instance.preloadScript.playerActorID;
-        Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
-        Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
         Debug.Assert(playerID > -1, "Invalid playerID (-1)");
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
@@ -574,8 +567,6 @@ public class AIManager : MonoBehaviour
         Debug.Assert(aiCounterMeasureTimerDoubled > -1, "Invalid aiCounterMeasuresTimerDoubled (-1)");
         //get names of node arcs (name or null, if none)
         if (city.mayor.preferredArc != null) { authorityPreferredArc = city.mayor.preferredArc.name; }
-        /*if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
-        authorityMaxTasksPerTurn = factionAuthority.actionsTaskPerTurn;*/
         actionsPerTurn = city.mayor.actionsPerTurn;
         Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
         //fast access
@@ -2606,64 +2597,59 @@ public class AIManager : MonoBehaviour
         List<Node> tempList = new List<Node>();
         if (listOfDecisionNodes != null)
         {
-            /*Debug.LogFormat("ListOfDecisionNodes -> Start -> {0}  Turn {1}", listOfDecisionNodes.Count, GameManager.instance.turnScript.Turn);*/
-            Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
-            if (factionAuthority != null)
+
+            NodeArc preferredNodeArc = city.mayor.preferredArc;
+            if (preferredNodeArc != null)
             {
-                NodeArc preferredNodeArc = city.mayor.preferredArc;
-                if (preferredNodeArc != null)
+                //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
+                for (int i = listOfDecisionNodes.Count - 1; i >= 0; i--)
                 {
-                    //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
-                    for (int i = listOfDecisionNodes.Count - 1; i >= 0; i--)
+                    if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
                     {
-                        if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
-                        {
-                            //add to tempList and remove from decision List
-                            tempList.Add(listOfDecisionNodes[i]);
-                            listOfDecisionNodes.RemoveAt(i);
-                        }
-                    }
-                    //found any suitable nodes and do they have suitable connections?
-                    if (tempList.Count > 0)
-                    {
-                        /*Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);*/
-                        do
-                        {
-                            index = Random.Range(0, tempList.Count);
-                            connID = ProcessConnectionSelectionNode(tempList[index]);
-                            if (connID == -1)
-                            { tempList.RemoveAt(index); }
-                            else { break; }
-                        }
-                        while (tempList.Count > 0);
+                        //add to tempList and remove from decision List
+                        tempList.Add(listOfDecisionNodes[i]);
+                        listOfDecisionNodes.RemoveAt(i);
                     }
                 }
-                else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
-
-                /*Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);*/
-
-                //keep looking if not yet successful. List should have all preferred nodes stripped out.
-                if (connID == -1)
+                //found any suitable nodes and do they have suitable connections?
+                if (tempList.Count > 0)
                 {
-                    /*Debug.Log("ListOfDecisionNodes -> Look for a Random Node");*/
-
-                    //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
-                    if (listOfDecisionNodes.Count > 0)
+                    /*Debug.LogFormat("ListOfDecisionNodes -> TempList.Count {0}", tempList.Count);*/
+                    do
                     {
-                        do
-                        {
-                            index = Random.Range(0, listOfDecisionNodes.Count);
-                            Node nodeTemp = listOfDecisionNodes[index];
-                            connID = ProcessConnectionSelectionNode(nodeTemp);
-                            if (connID == -1)
-                            { listOfDecisionNodes.RemoveAt(index); } //not needed with refactored code but left in anyway
-                            else { break; }
-                        }
-                        while (listOfDecisionNodes.Count > 0);
+                        index = Random.Range(0, tempList.Count);
+                        connID = ProcessConnectionSelectionNode(tempList[index]);
+                        if (connID == -1)
+                        { tempList.RemoveAt(index); }
+                        else { break; }
                     }
+                    while (tempList.Count > 0);
                 }
             }
-            else { Debug.LogWarning("Invalid factionAuthority (Null)"); }
+            else { Debug.LogWarning("Invalid preferredNodeArc (Null)"); }
+
+            /*Debug.LogFormat("ListOfDecisionNodes -> Preferred Nodes Done -> {0}", listOfDecisionNodes.Count);*/
+
+            //keep looking if not yet successful. List should have all preferred nodes stripped out.
+            if (connID == -1)
+            {
+                /*Debug.Log("ListOfDecisionNodes -> Look for a Random Node");*/
+
+                //randomly choose nodes looking for suitable connections. Delete as you go to prevent future selections.
+                if (listOfDecisionNodes.Count > 0)
+                {
+                    do
+                    {
+                        index = Random.Range(0, listOfDecisionNodes.Count);
+                        Node nodeTemp = listOfDecisionNodes[index];
+                        connID = ProcessConnectionSelectionNode(nodeTemp);
+                        if (connID == -1)
+                        { listOfDecisionNodes.RemoveAt(index); } //not needed with refactored code but left in anyway
+                        else { break; }
+                    }
+                    while (listOfDecisionNodes.Count > 0);
+                }
+            }
         }
         else { Debug.LogWarning("Invalid listOfMostConnectedNodes (Null)"); }
         if (isDone == true)
@@ -3608,7 +3594,6 @@ public class AIManager : MonoBehaviour
         int adjustedChance = resourcesChance + numOfUnsuccessfulResourceRequests * resourcesBoost;
         if (rnd < adjustedChance)
         {
-            /*amount = factionAuthority.resourcesStarting + numOfSuccessfulResourceRequests;*/
             amount = city.mayor.resourcesStarting + numOfSuccessfulResourceRequests;
             numOfSuccessfulResourceRequests++;
             int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + amount;
@@ -4815,7 +4800,7 @@ public class AIManager : MonoBehaviour
         //Task lists
         builder.AppendFormat("Authority AI Status (Tasks){0}{1}", "\n", "\n");
         builder.AppendFormat("- Task Allowances{0}", "\n");
-        builder.AppendFormat(" {0} Authority tasks per turn ({1}){2}{3}", actionsPerTurn, factionAuthority.name, "\n", "\n");
+        builder.AppendFormat(" {0} Authority Actions per turn ({1}){2}{3}", actionsPerTurn, city.mayor.name, "\n", "\n");
         builder.AppendFormat("- Resource Pools{0}", "\n");
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
