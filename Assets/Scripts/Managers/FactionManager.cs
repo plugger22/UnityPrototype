@@ -83,26 +83,13 @@ public class FactionManager : MonoBehaviour
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
 
-        //Authority faction -> cityManager decides current authority faction as it depends on mayor's faction
+        //Authority faction 
+        factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
-        
-        /*Trait trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
-        Debug.Assert(trait != null, "Invalid authority trait (Null)");
-        factionAuthority.AddTrait(trait);*/
-        
-        /*//set AI resource levels
-        GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideAuthority, factionAuthority.resourcesStarting);*/
 
         //Resistance faction
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
-        
-        /*trait = GameManager.instance.dataScript.GetRandomTrait(GameManager.instance.globalScript.categoryFaction);
-        Debug.Assert(trait != null, "Invalid resistance trait (Null)");
-        factionResistance.AddTrait(trait);*/
-
-        /*//set AI resource levels
-        GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, factionResistance.resourcesStarting);*/
 
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
         int approval = GameManager.instance.scenarioScript.scenario.approvalStartAuthorityHQ;
@@ -112,7 +99,7 @@ public class FactionManager : MonoBehaviour
         if (approval == 0)
         { approval = Random.Range(2, 9); }
         ApprovalResistance = approval;
-        Debug.LogFormat("[Fac] FactionManager -> Initialise: \"{0}\", approval {1}, \"{2}\", approval {3}{4}",
+        Debug.LogFormat("[Fac] FactionManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
             factionResistance, ApprovalResistance, factionAuthority, ApprovalAuthority, "\n");
 
         //update colours for AI Display tooltip data

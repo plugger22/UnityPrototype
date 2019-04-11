@@ -81,10 +81,11 @@ public class CityManager : MonoBehaviour
         city.mayor = mayor;
         if (city.mayor != null)
         {
-            city.faction = city.mayor.faction;
-            Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}, Faction {3}{4}", city.name, city.mayor.name, city.mayor.trait.tag, city.mayor.faction.name, "\n");
+            Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.name, city.mayor.name, city.mayor.trait.tag, "\n");
+            
+            /*city.faction = city.mayor.faction;
             //initialise authority faction (determined by mayor's faction
-            GameManager.instance.factionScript.factionAuthority = city.mayor.faction;
+            GameManager.instance.factionScript.factionAuthority = city.mayor.faction;*/
         }
         else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
 

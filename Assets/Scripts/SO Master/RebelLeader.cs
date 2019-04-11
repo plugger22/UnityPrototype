@@ -28,8 +28,7 @@ public class RebelLeader : ScriptableObject
     [Tooltip("Chance of moving in a survival situation. A high number (75%) gets the leader moving around a lot and more likely to be captured, a middle number (50%) has them lying low more often")]
     [Range(0, 100)] public int moveChance = 50;
     [Tooltip("Chance of the Player taking an ActorArc action at their current node rather than an Actor")]
-    [Range(0, 100)] public int playerChance = 30;
-    
+    [Range(0, 100)] public int playerChance = 30;    
 
     [Header("Target Attempts")]
     [Tooltip("The minimum % odds for a target that is required for the Player/Actor AI to attempt the target")]
