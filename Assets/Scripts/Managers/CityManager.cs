@@ -247,7 +247,7 @@ public class CityManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /// <summary>
+    /*/// <summary>
     /// returns a colour formatted string of current cities Faction. Used by cityInfoUI faction tooltip
     /// </summary>
     /// <returns></returns>
@@ -258,7 +258,7 @@ public class CityManager : MonoBehaviour
         if (string.IsNullOrEmpty(city.faction.descriptor) == false)
         { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.descriptor, colourEnd); }
         return builder.ToString();
-    }
+    }*/
 
     /// <summary>
     /// returns a colour formatted string of current city's faction details (preferred node Arc, disliked node Arc). Used by cityInfoUI faction tooltip.
@@ -267,17 +267,18 @@ public class CityManager : MonoBehaviour
     public string GetFactionDetails()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}Prefers{1}", colourNeutral, colourEnd);
+        builder.AppendFormat("Faction Details{0}{1}To be Done{2}", "\n", colourAlert, colourEnd);
+        /*builder.AppendFormat("{0}Prefers{1}", colourNeutral, colourEnd);
         builder.AppendLine();
-        if (city.faction.preferredArc != null)
-        { builder.AppendFormat("{0}{1}{2} Districts", colourGood, city.faction.preferredArc.name, colourEnd); }
+        if (city.mayor.preferredArc != null)
+        { builder.AppendFormat("{0}{1}{2} Districts", colourGood, city.mayor.preferredArc.name, colourEnd); }
         else { builder.AppendFormat("{0}None{1}", colourGrey, colourEnd); }
         builder.AppendLine();
         builder.AppendFormat("{0}Dislikes{1}", colourNeutral, colourEnd);
         builder.AppendLine();
         if (city.faction.hostileArc != null)
         { builder.AppendFormat("{0}{1}{2} Districts", colourBad, city.faction.preferredArc.name, colourEnd); }
-        else { builder.AppendFormat("{0}None{1}", colourGrey, colourEnd); }
+        else { builder.AppendFormat("{0}None{1}", colourGrey, colourEnd); }*/
         builder.AppendLine();
         return builder.ToString();
     }
@@ -321,7 +322,7 @@ public class CityManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /// <summary>
+   /* /// <summary>
     /// returns a colour formatted string of the Faction's trait. Used by cityInfoUI faction tooltip
     /// </summary>
     /// <returns></returns>
@@ -331,7 +332,7 @@ public class CityManager : MonoBehaviour
         builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.GetTrait().tagFormatted);
         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.GetTrait().description, colourEnd);
         return builder.ToString();
-    }
+    }*/
 
     /// <summary>
     /// checks city loyalty once per turn for min and max conditions, sets timers, gives outcomes. Checks for both sides, depending on who is player

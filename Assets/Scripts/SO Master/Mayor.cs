@@ -21,8 +21,8 @@ public class Mayor : ScriptableObject
     [Header("Node Arcs")]
     [Tooltip("Node type that faction wants to protect (authority) or turn a blind eye to (resistance). Leave blank if none.")]
     public NodeArc preferredArc;
-    [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
-    public NodeArc hostileArc;
+    /*[Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none. Currently not used")]
+    public NodeArc hostileArc;*/
 
     [Header("Mechanics")]
     [Tooltip("How many actions the AI Mayor can carry out per turn (base amount) Default 2")]

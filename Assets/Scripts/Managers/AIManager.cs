@@ -331,7 +331,7 @@ public class AIManager : MonoBehaviour
     private Faction factionAuthority;
     private Faction factionResistance;
     private string authorityPreferredArc;                               //string name of preferred node Arc for faction (if none then null)
-    private string resistancePreferredArc;
+   /* private string resistancePreferredArc;*/
     private int actionsPerTurn;                               //how many tasks the AI can undertake in a turns
     //player target (Nemesis / Erasure teams)
     private int playerTargetNodeID;                                     //most likely node where player is, -1 if no viable recent information available
@@ -573,9 +573,9 @@ public class AIManager : MonoBehaviour
         Debug.Assert(aiCounterMeasurePriorityRaise > -1, "Invalid aiCounterMeasurePriorityRaise (-1)");
         Debug.Assert(aiCounterMeasureTimerDoubled > -1, "Invalid aiCounterMeasuresTimerDoubled (-1)");
         //get names of node arcs (name or null, if none)
-        if (factionAuthority.preferredArc != null) { authorityPreferredArc = factionAuthority.preferredArc.name; }
-        if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
-        /*authorityMaxTasksPerTurn = factionAuthority.actionsTaskPerTurn;*/
+        if (city.mayor.preferredArc != null) { authorityPreferredArc = city.mayor.preferredArc.name; }
+        /*if (factionResistance.preferredArc != null) { resistancePreferredArc = factionResistance.preferredArc.name; }
+        authorityMaxTasksPerTurn = factionAuthority.actionsTaskPerTurn;*/
         actionsPerTurn = city.mayor.actionsPerTurn;
         Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
         //fast access
@@ -950,7 +950,7 @@ public class AIManager : MonoBehaviour
             }
             else { Debug.LogWarning("Invalid authorityPreferredArc (Null)"); }
 
-            //Resistance preferred -> TO DO
+            /*//Resistance preferred -> TO DO
             if (resistancePreferredArc != null)
             {
                 foreach (Node node in listOfNodes)
@@ -960,7 +960,7 @@ public class AIManager : MonoBehaviour
                     else { node.isPreferredResistance = false; }
                 }
             }
-            else { Debug.LogWarning("Invalid resistancePreferredArc (Null)"); }
+            else { Debug.LogWarning("Invalid resistancePreferredArc (Null)"); }*/
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
@@ -2610,7 +2610,7 @@ public class AIManager : MonoBehaviour
             Faction factionAuthority = GameManager.instance.factionScript.factionAuthority;
             if (factionAuthority != null)
             {
-                NodeArc preferredNodeArc = factionAuthority.preferredArc;
+                NodeArc preferredNodeArc = city.mayor.preferredArc;
                 if (preferredNodeArc != null)
                 {
                     //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)

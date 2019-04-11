@@ -364,25 +364,45 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction for the specified side in a colour formatted string
+    /// returns current faction for the specified side in a colour formatted string. 'isOversized' gives name at 115% (default), false for normal.
     /// </summary>
     /// <returns></returns>
-    public string GetFactionName(GlobalSide side)
+    public string GetFactionName(GlobalSide side, bool isOversized = true)
     {
         string description = "Unknown";
         if (side != null)
         {
-            switch (side.level)
+            if (isOversized == true)
             {
-                case 1:
-                    description = string.Format("<b>{0}{1}{2}</b>", colourSide, factionAuthority.name, colourEnd);
-                    break;
-                case 2:
-                    description = string.Format("<b>{0}{1}{2}</b>", colourSide, factionResistance.name, colourEnd);
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
-                    break;
+                //oversized text
+                switch (side.level)
+                {
+                    case 1:
+                        description = string.Format("<b><size=115%>{0}</size></b>", factionAuthority.name);
+                        break;
+                    case 2:
+                        description = string.Format("<b><size=115%>{0}</size></b>", factionResistance.name);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                        break;
+                }
+            }
+            else
+            {
+                //normal sized text
+                switch (side.level)
+                {
+                    case 1:
+                        description = string.Format("<b>{0}</b>", factionAuthority.name);
+                        break;
+                    case 2:
+                        description = string.Format("<b>{0}</b>", factionResistance.name);
+                        break;
+                    default:
+                        Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                        break;
+                }
             }
         }
         else { Debug.LogWarning("Invalid side (Null)"); }
@@ -401,10 +421,10 @@ public class FactionManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    description = string.Format("{0}{1}{2}", colourNormal, factionAuthority.descriptor, colourEnd);
+                    description = string.Format("{0}{1}{2}", colourNeutral, factionAuthority.descriptor, colourEnd);
                     break;
                 case 2:
-                    description = string.Format("{0}{1}{2}", colourNormal, factionResistance.descriptor, colourEnd);
+                    description = string.Format("{0}{1}{2}", colourNeutral, factionResistance.descriptor, colourEnd);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -451,11 +471,11 @@ public class FactionManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (side != null)
         {
-            NodeArc arc;
             switch (side.level)
             {
                 case 1:
-                    arc = factionAuthority.preferredArc;
+                    builder.AppendFormat("Faction details: {0}To be Done{1}", colourNode, colourEnd);
+                    /*arc = factionAuthority.preferredArc;
                     if (arc != null) { colourNode = colourGood; }
                     else { colourNode = colourGrey; }
                     builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
@@ -463,10 +483,11 @@ public class FactionManager : MonoBehaviour
                     if (arc != null) { colourNode = colourBad; }
                     else { colourNode = colourGrey; }
                     builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    /*builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);*/
+                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);*/
                     break;
                 case 2:
-                    arc = factionResistance.preferredArc;
+                    builder.AppendFormat("Faction details: {0}To be Done{1}", colourNode, colourEnd);
+                    /*arc = factionResistance.preferredArc;
                     if (arc != null) { colourNode = colourGood; }
                     else { colourNode = colourGrey; }
                     builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
@@ -474,7 +495,7 @@ public class FactionManager : MonoBehaviour
                     if (arc != null) { colourNode = colourBad; }
                     else { colourNode = colourGrey; }
                     builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    /*builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);*/
+                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);*/
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -486,6 +507,8 @@ public class FactionManager : MonoBehaviour
         { builder.Append("Unknown"); }
         return builder.ToString();
     }
+
+
 
     /// <summary>
     /// use this to adjust faction approval level (auto checks for various faction mechanics & generates a message) 'Reason' is self contained. Amount to change should be negative to lower Approval
@@ -547,16 +570,16 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" AUTHORITY{0}{1}", "\n", "\n");
         builder.AppendFormat(" {0} faction{1}", factionAuthority.name, "\n");
         builder.AppendFormat(" {0}{1}{2}", factionAuthority.descriptor, "\n", "\n");
-        builder.AppendFormat(" Preferred Nodes: {0}{1}", factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None", "\n");
-        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n", "\n");
+        /*builder.AppendFormat(" Preferred Nodes: {0}{1}", factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None", "\n");
+        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n", "\n");*/
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideAuthority), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainAuthority, "\n", "\n");
         //resistance
         builder.AppendFormat("{0} RESISTANCE{1}{2}", "\n", "\n", "\n");
         builder.AppendFormat(" {0} faction{1}", factionResistance.name, "\n");
         builder.AppendFormat(" {0}{1}{2}", factionResistance.descriptor, "\n", "\n");
-        builder.AppendFormat(" Preferred Nodes: {0}{1}", factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None", "\n");
-        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");
+        /*builder.AppendFormat(" Preferred Nodes: {0}{1}", factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None", "\n");
+        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");*/
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
         return builder.ToString();

@@ -11,11 +11,11 @@ public class Faction : ScriptableObject
     public string descriptor;
     public GlobalSide side;
 
-    [Header("Node Arcs")]
+    /*[Header("Node Arcs")]
     [Tooltip("Node type that faction wants to protect (authority) or turn a blind eye to (resistance). Leave blank if none.")]
     public NodeArc preferredArc; 
     [Tooltip("Node type that faction wants to destroy (resistance) or ignore (authority). Leave blank if none.")]
-    public NodeArc hostileArc;
+    public NodeArc hostileArc;*/
 
     [Tooltip("Pictorial representation of faction (152 x 160 png)")]
     public Sprite sprite;
