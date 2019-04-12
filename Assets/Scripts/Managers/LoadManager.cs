@@ -89,7 +89,8 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
 
 
-
+    #region InitialiseStart
+    
     public void InitialiseStart()
     {
         int numArray, numDict, counter;
@@ -522,7 +523,9 @@ public class LoadManager : MonoBehaviour
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
     }
 
+    #endregion
 
+    #region InitialiseEarly
 
     /// <summary>
     /// default main constructor
@@ -1425,6 +1428,9 @@ public class LoadManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfMissions (Null) -> Import failed"); }
     }
 
+    #endregion
+
+    #region InitialiseLate
 
     /// <summary>
     /// Stuff that is done after LevelManager.SetUp
@@ -1494,7 +1500,7 @@ public class LoadManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfHelp (Empty)"); }
     }
 
-
+    #endregion
 
     //new methods above here
 }

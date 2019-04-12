@@ -101,6 +101,10 @@ public class NodeManager : MonoBehaviour
     //flash
     private float flashNodeTime;
 
+    //fast access
+    private GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
+
     //colours
     string colourDefault;
     string colourNormal;
@@ -149,6 +153,11 @@ public class NodeManager : MonoBehaviour
         //Set node contact flags (player side & non-player side)
         GameManager.instance.contactScript.UpdateNodeContacts();
         GameManager.instance.contactScript.UpdateNodeContacts(false);
+        //fast access
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         //find specific SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
         if (arrayOfEffectOutcome != null)
@@ -579,15 +588,16 @@ public class NodeManager : MonoBehaviour
                 {
                     int count = 0;
                     //determine level of visibility
-                    switch (GameManager.instance.sideScript.PlayerSide.name)
+                    switch (GameManager.instance.sideScript.PlayerSide.level)
                     {
-                        case "Resistance":
-                            proceedFlag = true;
-                            break;
-                        case "Authority":
-                            //resistance -> if not FOW then auto show
+                        case 1:
+                            //Authority -> if not FOW then auto show
                             if (isFogOfWar == false)
                             { proceedFlag = true; }
+                            break;
+                        case 2:
+                            //Resistance
+                            proceedFlag = true;
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -632,12 +642,13 @@ public class NodeManager : MonoBehaviour
                 {
                     int count = 0;
                     //determine level of visibility
-                    switch (GameManager.instance.sideScript.PlayerSide.name)
+                    switch (GameManager.instance.sideScript.PlayerSide.level)
                     {
-                        case "Authority":
+                        case 1:
+                            //Authority
                             proceedFlag = true;
                             break;
-                        case "Resistance":
+                        case 2:
                             //resistance -> if not FOW then auto show
                             if (isFogOfWar == false)
                             { proceedFlag = true; }
@@ -950,7 +961,7 @@ public class NodeManager : MonoBehaviour
         string displayText;
         string minionTitle;
         //work out minion's appropriate title
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
         { minionTitle = string.Format("{0} of ", GameManager.instance.metaScript.GetAuthorityTitle()); }
         else { minionTitle = "Rebel "; }
         if (actor != null)
@@ -1006,7 +1017,7 @@ public class NodeManager : MonoBehaviour
             if (showPlayerNode == true)
             {
                 //player's current node (Resistance side only if FOW ON)
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                 {
                     if (GameManager.instance.optionScript.fogOfWar == true)
                     { proceedFlag = false; }
@@ -1030,7 +1041,7 @@ public class NodeManager : MonoBehaviour
                 }
                 //Nemesis current node (Resistance side only if FOW ON & Nemesis present)
                 proceedFlag = true;
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                 {
                     //Nemesis has a separate FOW setting
                     if (GameManager.instance.nemesisScript.isShown == false)
@@ -1797,7 +1808,7 @@ public class NodeManager : MonoBehaviour
                 if (node.cure != null && node.cure.isActive == true)
                 {
                     ModalActionDetails cureActionDetails = new ModalActionDetails();
-                    cureActionDetails.side = GameManager.instance.globalScript.sideResistance;
+                    cureActionDetails.side = globalResistance;
                     cureActionDetails.nodeID = nodeID;
                     cureActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
                     cureActionDetails.renownCost = 0;
@@ -2044,7 +2055,7 @@ public class NodeManager : MonoBehaviour
             outcomeDetails.textBottom = data.text;
             outcomeDetails.sprite = GameManager.instance.guiScript.alarmSprite;
             outcomeDetails.isAction = true;
-            outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
+            outcomeDetails.side = globalResistance;
             outcomeDetails.reason = "Player Move";
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
             //Nemesis, if at same node, can interact and damage player
@@ -2325,7 +2336,7 @@ public class NodeManager : MonoBehaviour
                                         string warning = string.Format("{0} turn{1} left for Authority to resolve Crisis", node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         //good for Resistance, bad for Authority
                                         bool isBad = false;
-                                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
+                                        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { isBad = true; }
                                         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "District Crisis", reason, warning, true, isBad);
                                     }
                                     else

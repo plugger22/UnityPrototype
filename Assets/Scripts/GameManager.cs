@@ -618,5 +618,36 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region InitialiseGlobal
+    /// <summary>
+    /// Initialise Global aspects of the game
+    /// </summary>
+    private void InitialiseGlobal()
+    {
+
+    }
+    #endregion
+
+    #region InitialiseMenu
+    /// <summary>
+    /// Initialise Main Menu
+    /// </summary>
+    private void InitialiseMenu()
+    {
+
+    }
+    #endregion
+
+    #region InitialiseLevel
+    /// <summary>
+    /// Initialise a new Level
+    /// </summary>
+    private void InitialiseLevel()
+    {
+
+    }
+    #endregion
+
+
     //place methods above here
 }
