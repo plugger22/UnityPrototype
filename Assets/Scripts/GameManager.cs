@@ -696,7 +696,17 @@ public class GameManager : MonoBehaviour
             action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
         };
         details.listOfButtonDetails.Add(button4);
-
+        //sixth button
+        EventButtonDetails button5 = new EventButtonDetails()
+        {
+            buttonTitle = "CANCEL",
+            buttonTooltipHeader = "Placeholder",
+            buttonTooltipMain = "Placeholder",
+            buttonTooltipDetail = "Placeholder",
+            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        };
+        details.listOfButtonDetails.Add(button5);
+        //activate menu
         GameManager.instance.mainMenuScript.SetMainMenu(details);
     }
     #endregion

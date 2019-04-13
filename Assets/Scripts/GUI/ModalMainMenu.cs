@@ -171,8 +171,7 @@ public class ModalMainMenu : MonoBehaviour
             }
         }
 
-        //convert coordinates
-        /*Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);*/
+        //No need to convert coordinates (already screen coords)
         Vector3 screenPos = details.itemPos;
         //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
         Canvas.ForceUpdateCanvases();
@@ -180,7 +179,11 @@ public class ModalMainMenu : MonoBehaviour
         //get dimensions of dynamic menu
         float width = rectTransform.rect.width;
         float height = rectTransform.rect.height;
-        //calculate offset - height (default above)
+        //place menu in centre of given position
+        screenPos.x -= width / 2;
+        screenPos.y += height / 2;
+
+        /*//calculate offset - height (default above) -> No Auto adjust for hitting screen boundaries (it's wonky)
         if (screenPos.y + height + offset < Screen.height)
         { screenPos.y += height + offset; }
         else { screenPos.y -= offset; }
@@ -191,7 +194,8 @@ public class ModalMainMenu : MonoBehaviour
         else if (screenPos.x - offset - width <= 0)
         { screenPos.x += offset - width; }
         else
-        { screenPos.x += offset; }
+        { screenPos.x += offset; }*/
+
         //set new position
         modalMenuObject.transform.position = screenPos;
         //set states
