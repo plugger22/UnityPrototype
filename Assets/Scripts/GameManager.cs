@@ -7,6 +7,7 @@ using gameAPI;
 using delegateAPI;
 using System.IO;
 using System.Globalization;
+using modalAPI;
 
 public struct StartMethod
 {
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tooltip static instance
     [HideInInspector] public TooltipHelp tooltipHelpScript;           //help tooltip static instance
     [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
+    [HideInInspector] public ModalMainMenu mainMenuScript;            //Modal Main Menu
     [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
     [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
     [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
@@ -194,6 +196,7 @@ public class GameManager : MonoBehaviour
         tooltipGenericScript = TooltipGeneric.Instance();
         tooltipHelpScript = TooltipHelp.Instance();
         actionMenuScript = ModalActionMenu.Instance();
+        mainMenuScript = ModalMainMenu.Instance();
         outcomeScript = ModalOutcome.Instance();
         teamPickerScript = ModalTeamPicker.Instance();
         genericPickerScript = ModalGenericPicker.Instance();
@@ -266,6 +269,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(tooltipPlayerScript != null, "Invalid tooltipPlayerScript (Null)");
         Debug.Assert(tooltipGenericScript != null, "Invalid tooltipGenericScript (Null)");
         Debug.Assert(actionMenuScript != null, "Invalid actionMenuScript (Null)");
+        Debug.Assert(mainMenuScript != null, "Invalid mainMenuScript (Null)");
         Debug.Assert(outcomeScript != null, "Invalid outcomeScript (Null)");
         Debug.Assert(teamPickerScript != null, "Invalid teamPickerScript (Null)");
         Debug.Assert(genericPickerScript != null, "Invalid genericPickerScript (Null)");
@@ -304,6 +308,8 @@ public class GameManager : MonoBehaviour
         //AutoRun
         if (autoRunTurns > 0)
         { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
+        else
+        { InitialiseMainMenu(); }
     }
     #endregion
 
@@ -632,9 +638,66 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Initialise Main Menu
     /// </summary>
-    private void InitialiseMenu()
+    private void InitialiseMainMenu()
     {
+        //menu
+        ModalPanelDetails details = new ModalPanelDetails();
+        details.itemName = "Main Menu";
+        details.itemDetails = "2033";
+        details.itemPos = new Vector3(Screen.width / 2, Screen.height / 2);
 
+        //first button
+        EventButtonDetails button0 = new EventButtonDetails()
+        {
+            buttonTitle = "Resume",
+            buttonTooltipHeader = "Placeholder",
+            buttonTooltipMain = "Placeholder",
+            buttonTooltipDetail = "Placeholder",
+            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        };
+        details.listOfButtonDetails.Add(button0);
+        //second button
+        EventButtonDetails button1 = new EventButtonDetails()
+        {
+            buttonTitle = "New Game",
+            buttonTooltipHeader = "Placeholder",
+            buttonTooltipMain = "Placeholder",
+            buttonTooltipDetail = "Placeholder",
+            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        };
+        details.listOfButtonDetails.Add(button1);
+        //third button
+        EventButtonDetails button2 = new EventButtonDetails()
+        {
+            buttonTitle = "Load Game",
+            buttonTooltipHeader = "Placeholder",
+            buttonTooltipMain = "Placeholder",
+            buttonTooltipDetail = "Placeholder",
+            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        };
+        details.listOfButtonDetails.Add(button2);
+        //fourth button
+        EventButtonDetails button3 = new EventButtonDetails()
+        {
+            buttonTitle = "Options",
+            buttonTooltipHeader = "Placeholder",
+            buttonTooltipMain = "Placeholder",
+            buttonTooltipDetail = "Placeholder",
+            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        };
+        details.listOfButtonDetails.Add(button3);
+        //fifth button
+        EventButtonDetails button4 = new EventButtonDetails()
+        {
+            buttonTitle = "Feedback",
+            buttonTooltipHeader = "Placeholder",
+            buttonTooltipMain = "Placeholder",
+            buttonTooltipDetail = "Placeholder",
+            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        };
+        details.listOfButtonDetails.Add(button4);
+
+        GameManager.instance.mainMenuScript.SetMainMenu(details);
     }
     #endregion
 

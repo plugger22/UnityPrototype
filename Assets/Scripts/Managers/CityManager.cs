@@ -309,7 +309,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetMayorFactionFormatted()
-    { return string.Format("{0}Faction Alignment{1}{2}<b>{3}</b>", colourNeutral, colourEnd, "\n", city.faction.name); }
+    { return string.Format("{0}Faction Alignment{1}{2}<b>{3}</b>", colourNeutral, colourEnd, "\n", "Placeholder"); }
 
     /// <summary>
     /// returns a colour formatted string of the Mayor's trait. Used by cityInfoUI mayor tooltip

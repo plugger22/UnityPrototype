@@ -32,13 +32,14 @@ namespace modalAPI
         public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
         public Vector3 itemPos;                                         //position of item in world units (transform)
-        public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.)
+        public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.) Ignore if not an Action Menu
 
         public ModalPanelDetails()
         {
             modalLevel = 1;
             modalState = ModalState.None;
             itemID = -1;
+            listOfButtonDetails = new List<EventButtonDetails>();
         }
     }
 

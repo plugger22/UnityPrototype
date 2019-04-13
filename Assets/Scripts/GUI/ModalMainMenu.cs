@@ -115,22 +115,6 @@ public class ModalMainMenu : MonoBehaviour
         itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
         //tooltip at top of menu -> pass through data
         ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
-        modal.menuType = details.menuType;
-        switch (details.menuType)
-        {
-            case ActionMenuType.Node:
-            case ActionMenuType.NodeGear:
-                modal.nodeID = details.itemID;
-                break;
-            case ActionMenuType.Actor:
-                modal.actorSlotID = details.itemID;
-                break;
-            case ActionMenuType.Player:
-                break;
-            case ActionMenuType.Gear:
-                modal.gearID = details.itemID;
-                break;
-        }
         //There can be a max of 6 buttons (5 plus 1 x Cancel)
         int counter = 0;
         Button tempButton;
@@ -188,7 +172,8 @@ public class ModalMainMenu : MonoBehaviour
         }
 
         //convert coordinates
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);
+        /*Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);*/
+        Vector3 screenPos = details.itemPos;
         //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
         Canvas.ForceUpdateCanvases();
         rectTransform = modalMenuObject.GetComponent<RectTransform>();
@@ -210,7 +195,7 @@ public class ModalMainMenu : MonoBehaviour
         //set new position
         modalMenuObject.transform.position = screenPos;
         //set states
-        ModalStateData package = new ModalStateData() { mainState = ModalState.ActionMenu };
+        ModalStateData package = new ModalStateData() { mainState = ModalState.MainMenu };
         GameManager.instance.inputScript.SetModalState(package);
         //block raycasts to gameobjects
         GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
