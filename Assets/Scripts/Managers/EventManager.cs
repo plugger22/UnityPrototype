@@ -14,12 +14,14 @@ public enum EventType
     ChangeLevel,
     UseAction,
     ExitGame,
-    //UI
+    //UI Menus
     CloseActionMenu,
-    OpenOutcomeWindow,
-    CloseOutcomeWindow,
+    CloseMainMenu,
     CreateMoveMenu,
     CreateGearNodeMenu,
+    //UI Windows
+    CloseOutcomeWindow,
+    OpenOutcomeWindow,
     //highlighted node or connection
     FlashNodeStart,
     FlashNodeStop,

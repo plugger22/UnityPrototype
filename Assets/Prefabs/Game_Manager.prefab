@@ -1704,7 +1704,6 @@ MonoBehaviour:
   nodeSecurity: {fileID: 0}
   categoryActor: {fileID: 0}
   categoryMayor: {fileID: 0}
-  categoryFaction: {fileID: 0}
 --- !u!114 &114639168605164212
 MonoBehaviour:
   m_ObjectHideFlags: 1
