@@ -117,7 +117,11 @@ public class GameManager : MonoBehaviour
 
    
     
-    private List<StartMethod> listOfStartMethods = new List<StartMethod>();
+    private List<StartMethod> listOfStartMethods = new List<StartMethod>();         //current, all-encompassing system
+
+    private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //start game global methods
+    private List<StartMethod> listOfLevelMethods = new List<StartMethod>();         //start level methods
+
     #endregion
 
     #region Awake method
@@ -330,10 +334,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.preloadScript.Initialise;
         startMethod.className = "PreLoadManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
         startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
 #if (UNITY_EDITOR)
         //SO Checker (After LoadManager.cs / Optional)
         if (isValidateSO == true)
@@ -341,46 +347,55 @@ public class GameManager : MonoBehaviour
             startMethod.handler = GameManager.instance.validateScript.ValidateSO;
             startMethod.className = "ValidationManager (SO)";
             listOfStartMethods.Add(startMethod);
+            listOfGameMethods.Add(startMethod);
         }
 #endif
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
         startMethod.handler = GameManager.instance.globalScript.Initialise;
         startMethod.className = "GlobalManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //Colour Manager
         startMethod.handler = GameManager.instance.colourScript.Initialise;
         startMethod.className = "ColourManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //Message Manager -> after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
         startMethod.handler = GameManager.instance.messageScript.InitialiseEarly;
         startMethod.className = "MessageManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
+
         //ItemData Manager
         startMethod.handler = GameManager.instance.itemDataScript.Initialise;
         startMethod.className = "ItemDataManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //ModalGUI
         startMethod.handler = GameManager.instance.modalGUIScript.Initialise;
         startMethod.className = "ModalGUI";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //Tooltip Node
         startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
-        listOfStartMethods.Add(startMethod);        
-
+        listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //Actor Manager -> PreInitialise
         startMethod.handler = GameManager.instance.actorScript.PreInitialiseActors;
         startMethod.className = "ActorManager";
         listOfStartMethods.Add(startMethod);
+        listOfLevelMethods.Add(startMethod);
         //Load Manager -> InitialiseEarly
         startMethod.handler = GameManager.instance.loadScript.InitialiseEarly;
         startMethod.className = "LoadManager";
         listOfStartMethods.Add(startMethod);
+        listOfGameMethods.Add(startMethod);
         //GUI Manager -> before any actor scripts (acttrScript.PreInitialiseActors is O.K to be earlier)
         startMethod.handler = GameManager.instance.guiScript.Initialise;
         startMethod.className = "GUIManager";
         listOfStartMethods.Add(startMethod);
-
+        listOfGameMethods.Add(startMethod);
         //Scenario Manager InitialiseEarly -> before level & Side Managers
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
@@ -634,7 +649,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region InitialiseGlobal
+    #region InitialiseGlobals
     /// <summary>
     /// Initialise Global aspects of the game
     /// </summary>

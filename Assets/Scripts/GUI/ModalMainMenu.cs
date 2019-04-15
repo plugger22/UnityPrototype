@@ -26,22 +26,21 @@ public class ModalMainMenu : MonoBehaviour
     public Button button4;
     public Button button5;
     public Button button6;
-    public Text button1Text;
-    public Text button2Text;
-    public Text button3Text;
-    public Text button4Text;
-    public Text button5Text;
-    public Text button6Text;
-    
-    [HideInInspector] public string tooltip1;
-    [HideInInspector] public string tooltip2;
-    [HideInInspector] public string tooltip3;
-    [HideInInspector] public string tooltip4;
-    [HideInInspector] public string tooltip5;
-
+    public Button button7;
+    public Button button8;
+    public Button button9;
+    public TextMeshProUGUI button1Text;
+    public TextMeshProUGUI button2Text;
+    public TextMeshProUGUI button3Text;
+    public TextMeshProUGUI button4Text;
+    public TextMeshProUGUI button5Text;
+    public TextMeshProUGUI button6Text;
+    public TextMeshProUGUI button7Text;
+    public TextMeshProUGUI button8Text;
+    public TextMeshProUGUI button9Text;
 
     private RectTransform rectTransform;
-    private int offset;
+    /*private int offset;*/
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetMainMenu
     private ModalState modalState;                          //modal state to return to if main menu closed
 
@@ -50,13 +49,41 @@ public class ModalMainMenu : MonoBehaviour
     private string colourEnd;*/
 
     private static ModalMainMenu modalMainMenu;
-    
+
+    public void Awake()
+    {
+        Debug.Assert(modalMenuObject != null, "Invalid modalMenuObject (Null)");
+        Debug.Assert(modalPanel != null, "Invalid modalPanel (Null)");
+        Debug.Assert(background != null, "Invalid background (Null)");
+        Debug.Assert(divider != null, "Invalid divider (Null)");
+        Debug.Assert(itemDetails != null, "Invalid itemDetails (Null)");
+        Debug.Assert(button1 != null, "Invalid button1 (Null)");
+        Debug.Assert(button2 != null, "Invalid button2 (Null)");
+        Debug.Assert(button3 != null, "Invalid button3 (Null)");
+        Debug.Assert(button4 != null, "Invalid button4 (Null)");
+        Debug.Assert(button5 != null, "Invalid button5 (Null)");
+        Debug.Assert(button6 != null, "Invalid button6 (Null)");
+        Debug.Assert(button7 != null, "Invalid button7 (Null)");
+        Debug.Assert(button8 != null, "Invalid button8 (Null)");
+        Debug.Assert(button9 != null, "Invalid button9 (Null)");
+        Debug.Assert(button1Text != null, "Invalid button1Text (Null)");
+        Debug.Assert(button2Text != null, "Invalid button2Text (Null)");
+        Debug.Assert(button3Text != null, "Invalid button3Text (Null)");
+        Debug.Assert(button4Text != null, "Invalid button4Text (Null)");
+        Debug.Assert(button5Text != null, "Invalid button5Text (Null)");
+        Debug.Assert(button6Text != null, "Invalid button6Text (Null)");
+        Debug.Assert(button7Text != null, "Invalid button7Text (Null)");
+        Debug.Assert(button8Text != null, "Invalid button8Text (Null)");
+        Debug.Assert(button9Text != null, "Invalid button9Text (Null)");
+    }
+
     /// <summary>
     /// initialisation
     /// </summary>
     private void Start()
     {
-        offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
+        /*offset = GameManager.instance.tooltipScript.tooltipOffset * 2;*/
+
         //register listener
         EventManager.instance.AddListener(EventType.CloseMainMenu, OnEvent, "ModalMainMenu");
     }
@@ -111,15 +138,18 @@ public class ModalMainMenu : MonoBehaviour
         button4.gameObject.SetActive(false);
         button5.gameObject.SetActive(false);
         button6.gameObject.SetActive(false);
+        button7.gameObject.SetActive(false);
+        button8.gameObject.SetActive(false);
+        button9.gameObject.SetActive(false);
 
         //set up ModalActionObject
         itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
         //tooltip at top of menu -> pass through data
         ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
-        //There can be a max of 6 buttons (5 plus 1 x Cancel)
+        //There can be a max of 9 buttons
         int counter = 0;
         Button tempButton;
-        Text title;
+        TextMeshProUGUI title;
         foreach (EventButtonDetails buttonDetails in details.listOfButtonDetails)
         {
             tempButton = null;
@@ -151,6 +181,18 @@ public class ModalMainMenu : MonoBehaviour
                 case 6:
                     tempButton = button6;
                     title = button6Text;
+                    break;
+                case 7:
+                    tempButton = button7;
+                    title = button7Text;
+                    break;
+                case 8:
+                    tempButton = button8;
+                    title = button8Text;
+                    break;
+                case 9:
+                    tempButton = button9;
+                    title = button9Text;
                     break;
                 default:
                     Debug.LogWarning("To many EventButtonDetails in list!\n");
@@ -237,7 +279,7 @@ public class ModalMainMenu : MonoBehaviour
                 Debug.LogErrorFormat("Unrecognised alignHorizontal \"{0}\"", detailsMain.alignHorizontal);
                 break;
         }
-
+        //position
         details.menuPos = new Vector3(horizontalPos, verticalPos);
         //
         // - - - Configure buttons (not buttons need to be in top to bottom menu display order)

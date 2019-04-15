@@ -81,7 +81,7 @@ namespace modalAPI
     {
         public AlignHorizontal alignHorizontal;
         public Background background;                                   //what type of background to display behind menu, default "None"
-        public bool isResume;                                           //individual button toggles (default true on all, except where noted)
+        public bool isResume;                                           //individual button toggles (default true on all)
         public bool isNewGame;
         public bool isLoadGame;
         public bool isOptions;
@@ -100,11 +100,10 @@ namespace modalAPI
             isLoadGame = true;
             isOptions = true;
             isFeedback = true;
+            isCustomise = true;
+            isCredits = true;
+            isExit = true;
             isCancel = true;
-
-            isExit = false;
-            isCustomise = false;
-            isCredits = false;
         }
     }
 
