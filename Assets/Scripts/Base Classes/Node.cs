@@ -258,12 +258,12 @@ public class Node : MonoBehaviour
                 //highlight current node
                 GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
                 //Action menu data package
-                ModalPanelDetails details = new ModalPanelDetails()
+                ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                 {
                     itemID = nodeID,
                     itemName = nodeName,
                     itemDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
-                    itemPos = transform.position,
+                    menuPos = transform.position,
                     listOfButtonDetails = GameManager.instance.actorScript.GetNodeActions(nodeID),
                     menuType = ActionMenuType.Node
                 };

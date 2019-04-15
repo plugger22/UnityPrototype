@@ -97,11 +97,12 @@ public class ModalMainMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise and activate modal Main Menu
+    /// Activate modal Main Menu. Called by InitialiseMainMenu.
     /// </summary>
     /// <param name="details"></param>
-    public void SetMainMenu(ModalPanelDetails details)
+    private void SetMainMenu(ModalGenericMenuDetails details)
     {
+        //activate main menu
         modalMenuObject.SetActive(true);
         //set all states to off
         button1.gameObject.SetActive(false);
@@ -172,7 +173,7 @@ public class ModalMainMenu : MonoBehaviour
         }
 
         //No need to convert coordinates (already screen coords)
-        Vector3 screenPos = details.itemPos;
+        Vector3 screenPos = details.menuPos;
         //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
         Canvas.ForceUpdateCanvases();
         rectTransform = modalMenuObject.GetComponent<RectTransform>();
@@ -208,6 +209,162 @@ public class ModalMainMenu : MonoBehaviour
         Debug.LogFormat("[UI] ModalMainMenu.cs -> SetMainMenu{0}", "\n");
     }
 
+    /// <summary>
+    /// Initialises Main menu details and passes configuration data to SetMainMenu which then fires it up. Use this method instead of SetMainMenu to display menu (enables easy set up of buttons)
+    /// </summary>
+    /// <param name="detailsMain"></param>
+    public void InitialiseMainMenu(ModalMainMenuDetails detailsMain)
+    {
+        //menu
+        ModalGenericMenuDetails details = new ModalGenericMenuDetails();
+        details.itemName = "Main Menu";
+        details.itemDetails = "2033";
+        float horizontalPos = 0f;
+        float verticalPos = Screen.height / 2;
+        //horizontal position can vary but vertical is always centred
+        switch (detailsMain.alignHorizontal)
+        {
+            case AlignHorizontal.Left:
+                horizontalPos = Screen.width / 3;
+                break;
+            case AlignHorizontal.Centre:
+                horizontalPos = Screen.width / 2;
+                break;
+            case AlignHorizontal.Right:
+                horizontalPos = Screen.width * 0.6666f;
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised alignHorizontal \"{0}\"", detailsMain.alignHorizontal);
+                break;
+        }
+
+        details.menuPos = new Vector3(horizontalPos, verticalPos);
+        //
+        // - - - Configure buttons (not buttons need to be in top to bottom menu display order)
+        //
+        //Resume button
+        if (detailsMain.isResume == true)
+        {
+            EventButtonDetails button0 = new EventButtonDetails()
+            {
+                buttonTitle = "Resume",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button0);
+        }
+        //New Game button
+        if (detailsMain.isNewGame == true)
+        {
+            EventButtonDetails button1 = new EventButtonDetails()
+            {
+                buttonTitle = "New Game",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button1);
+        }
+        //Load Game button
+        if (detailsMain.isLoadGame == true)
+        {
+            EventButtonDetails button2 = new EventButtonDetails()
+            {
+                buttonTitle = "Load Game",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button2);
+        }
+        //Options button
+        if (detailsMain.isOptions == true)
+        {
+            EventButtonDetails button3 = new EventButtonDetails()
+            {
+                buttonTitle = "Options",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button3);
+        }
+        //Feedback button
+        if (detailsMain.isFeedback == true)
+        {
+            EventButtonDetails button4 = new EventButtonDetails()
+            {
+                buttonTitle = "Feedback",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button4);
+        }
+        //Customise button
+        if (detailsMain.isCustomise == true)
+        {
+            EventButtonDetails button5 = new EventButtonDetails()
+            {
+                buttonTitle = "Customise",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button5);
+        }
+        //Credits button
+        if (detailsMain.isCredits == true)
+        {
+            EventButtonDetails button6 = new EventButtonDetails()
+            {
+                buttonTitle = "Credits",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button6);
+        }
+        //Exit button
+        if (detailsMain.isExit == true)
+        {
+            EventButtonDetails button7 = new EventButtonDetails()
+            {
+                buttonTitle = "EXIT",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button7);
+        }
+        //Cancel button
+        if (detailsMain.isCancel == true)
+        {
+            EventButtonDetails button8 = new EventButtonDetails()
+            {
+                buttonTitle = "CANCEL",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button8);
+        }
+        //display background (default is none)
+        GameManager.instance.modalGUIScript.SetBackground(detailsMain.background);
+        //activate menu
+        SetMainMenu(details);
+    }
+
 
     /// <summary>
     /// close Main Menu
@@ -224,6 +381,8 @@ public class ModalMainMenu : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
         //set game state
         GameManager.instance.inputScript.ResetStates(modalState);
+        //close background (do so regardless as not a big overhead)
+        GameManager.instance.modalGUIScript.DisableBackground(Background.Start);
         Debug.LogFormat("[UI] ModalMainMenu.cs -> CloseMainMenu{0}", "\n");
     }
 }

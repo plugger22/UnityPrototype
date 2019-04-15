@@ -87,9 +87,9 @@ public class WidgetTopUI : MonoBehaviour
         flashRedOuter.color = tempColor;
         isFading = false;
         //dim down objective stars
-        SetStar(10f, UIPosition.Left);
-        SetStar(10f, UIPosition.Middle);
-        SetStar(10f, UIPosition.Right);
+        SetStar(10f, AlignHorizontal.Left);
+        SetStar(10f, AlignHorizontal.Centre);
+        SetStar(10f, AlignHorizontal.Right);
     }
 
     /// <summary>
@@ -119,13 +119,13 @@ public class WidgetTopUI : MonoBehaviour
                 SetFactionBar((int)Param);
                 break;
             case EventType.ChangeStarLeft:
-                SetStar((float)Param, UIPosition.Left);
+                SetStar((float)Param, AlignHorizontal.Left);
                 break;
             case EventType.ChangeStarMiddle:
-                SetStar((float)Param, UIPosition.Middle);
+                SetStar((float)Param, AlignHorizontal.Centre);
                 break;
             case EventType.ChangeStarRight:
-                SetStar((float)Param, UIPosition.Right);
+                SetStar((float)Param, AlignHorizontal.Right);
                 break;
             case EventType.StartSecurityFlash:
                 SetSecurityFlasher(true);
@@ -223,7 +223,7 @@ public class WidgetTopUI : MonoBehaviour
     /// </summary>
     /// <param name="opacity"></param>
     /// <param name="uiPosition"></param>
-    private void SetStar(float opacity, UIPosition uiPosition)
+    private void SetStar(float opacity, AlignHorizontal uiPosition)
     {
         Debug.Assert(opacity >= 0 && opacity <= 100f, string.Format("Invalid opacity \"{0}\"", opacity));
         //convert opacity to 0 to 1.0
@@ -231,17 +231,17 @@ public class WidgetTopUI : MonoBehaviour
         //change opacity of relevant star
         switch(uiPosition)
         {
-            case UIPosition.Left:
+            case AlignHorizontal.Left:
                 Color tempLeftColor = starLeft.color;
                 tempLeftColor.a = opacity;
                 starLeft.color = tempLeftColor;
                 break;
-            case UIPosition.Middle:
+            case AlignHorizontal.Centre:
                 Color tempMiddleColor = starMiddle.color;
                 tempMiddleColor.a = opacity;
                 starMiddle.color = tempMiddleColor;
                 break;
-            case UIPosition.Right:
+            case AlignHorizontal.Right:
                 Color tempRightColor = starRight.color;
                 tempRightColor.a = opacity;
                 starRight.color = tempRightColor;

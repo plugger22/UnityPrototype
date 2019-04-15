@@ -21,9 +21,9 @@ namespace modalAPI
 
 
     /// <summary>
-    /// Specific setup for Modal Action Menu
+    /// Specific setup for Generic Modal  Menu
     /// </summary>
-    public class ModalPanelDetails
+    public class ModalGenericMenuDetails
     {
         public string itemName;                                         //multipurpose node, Actor or gear name
         public string itemDetails;
@@ -31,14 +31,15 @@ namespace modalAPI
         public int modalLevel;                                          //what level modal masking do you want? default 1
         public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
-        public Vector3 itemPos;                                         //position of item in world units (transform)
+        public Vector3 menuPos;                                         //position of item in world units (transform)
         public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.) Ignore if not an Action Menu
-
-        public ModalPanelDetails()
+        
+        public ModalGenericMenuDetails()
         {
             modalLevel = 1;
             modalState = ModalState.None;
             itemID = -1;
+            
             listOfButtonDetails = new List<EventButtonDetails>();
         }
     }
@@ -70,6 +71,40 @@ namespace modalAPI
             gearID = -1;
             modalLevel = 1;
             modalState = ModalState.None;
+        }
+    }
+
+    /// <summary>
+    /// Main main configuration
+    /// </summary>
+    public class ModalMainMenuDetails
+    {
+        public AlignHorizontal alignHorizontal;
+        public Background background;                                   //what type of background to display behind menu, default "None"
+        public bool isResume;                                           //individual button toggles (default true on all, except where noted)
+        public bool isNewGame;
+        public bool isLoadGame;
+        public bool isOptions;
+        public bool isCustomise;
+        public bool isFeedback;
+        public bool isCredits;
+        public bool isExit;
+        public bool isCancel;
+
+        public ModalMainMenuDetails()
+        {
+            alignHorizontal = AlignHorizontal.Centre;
+            background = Background.None;
+            isResume = true;
+            isNewGame = true;
+            isLoadGame = true;
+            isOptions = true;
+            isFeedback = true;
+            isCancel = true;
+
+            isExit = false;
+            isCustomise = false;
+            isCredits = false;
         }
     }
 

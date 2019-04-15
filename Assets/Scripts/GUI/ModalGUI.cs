@@ -1,19 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using gameAPI;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
-/// handles all modal related gui items (modal masks are here 'cause they can't go in a prefab)
+/// handles all modal related gui items and backgrounds (modal masks are here 'cause they can't go in a prefab)
 /// </summary>
 public class ModalGUI : MonoBehaviour
 {
-
+    [Header("Modal Masks")]
     [Tooltip("Panel (1 of 2) that blocks UI input when first level gamestate.ModalUI in play. Greyed, full screen and Does NOT block raycast")]
     public GameObject modal0;
     [Tooltip("Panel (2 of 2) that blocks UI input when first level gamestate.ModalUI in play. Clear, partial screen and BLOCKS raycast")]
     public GameObject modal1;
     [Tooltip("Panel (1 of 1) that blocks UI input when second level gamestate.ModalUI in play. Clear, partial screen and BLOCKS raycast")]
     public GameObject modal2;
+
+    [Header("Backgrounds")]
+    [Tooltip("Full screen background for start")]
+    public Image backgroundStart;
+    [Tooltip("Full screen background for End")]
+    public Image backgroundEnd;
 
     private int modalLevel;             //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
 
@@ -33,6 +41,26 @@ public class ModalGUI : MonoBehaviour
         }
         return modalGUI;
     }
+
+    /// <summary>
+    /// Initialisation
+    /// </summary>
+    public void Initialise()
+    {
+        Debug.Assert(modal0 != null, "Invalid modal0 (Null)");
+        Debug.Assert(modal1 != null, "Invalid modal (Null)");
+        Debug.Assert(modal2 != null, "Invalid modal2 (Null)");
+        Debug.Assert(backgroundStart != null, "Invalid backgroundStart (Null)");
+        Debug.Assert(backgroundEnd != null, "Invalid backgroundEnd (Null)");
+        //disable all backgrounds
+        DisableBackground(Background.Start);
+        DisableBackground(Background.End);
+        
+    }
+
+    //
+    // - - - Modal levels - - -
+    //
 
     /// <summary>
     /// Sets modal masks which are (for base level) a combination of two masks to provide an all over greyed background and a partial blocking of mouse input to UI elements
@@ -85,4 +113,53 @@ public class ModalGUI : MonoBehaviour
     public int CheckModalLevel()
     { return modalLevel; }
 
+    //
+    // - - - Backgrounds - - -
+    //
+
+    /// <summary>
+    /// Display background
+    /// </summary>
+    /// <param name="background"></param>
+    public void SetBackground(Background background)
+    {
+        switch (background)
+        {
+            case Background.None:
+                //default option, needs to be here
+                break;
+            case Background.Start:
+                backgroundStart.gameObject.SetActive(true);
+                break;
+            case Background.End:
+                backgroundEnd.gameObject.SetActive(true);
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
+                break;
+        }
+    }
+
+
+    /// <summary>
+    /// Hide background
+    /// </summary>
+    /// <param name="background"></param>
+    public void DisableBackground(Background background)
+    {
+        switch (background)
+        {
+            case Background.Start:
+                backgroundStart.gameObject.SetActive(false);
+                break;
+            case Background.End:
+                backgroundEnd.gameObject.SetActive(false);
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
+                break;
+        }
+    }
+
+    //new methods above here
 }

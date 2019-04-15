@@ -1447,12 +1447,12 @@ public class NodeManager : MonoBehaviour
         //
         // - - - Action Menu
         //
-        ModalPanelDetails details = new ModalPanelDetails()
+        ModalGenericMenuDetails details = new ModalGenericMenuDetails()
         {
             itemID = nodeID,
             itemName = node.nodeName,
             itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
-            itemPos = node.transform.position,
+            menuPos = node.transform.position,
             listOfButtonDetails = tempList,
             menuType = ActionMenuType.Move
         };
@@ -1893,12 +1893,12 @@ public class NodeManager : MonoBehaviour
         //
         // - - - Action Menu
         //
-        ModalPanelDetails details = new ModalPanelDetails()
+        ModalGenericMenuDetails details = new ModalGenericMenuDetails()
         {
             itemID = nodeID,
             itemName = string.Format("{0}", node.nodeName),
             itemDetails = string.Format("{0}District Special Actions{1}", colourResistance, colourEnd),
-            itemPos = node.transform.position,
+            menuPos = node.transform.position,
             listOfButtonDetails = tempList,
             menuType = ActionMenuType.NodeGear
         };

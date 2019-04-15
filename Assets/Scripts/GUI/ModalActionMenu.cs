@@ -100,7 +100,7 @@ public class ModalActionMenu : MonoBehaviour
     /// Initialise and activate modal Action Menu
     /// </summary>
     /// <param name="details"></param>
-    public void SetActionMenu(ModalPanelDetails details)
+    public void SetActionMenu(ModalGenericMenuDetails details)
     {
         if (GameManager.instance.turnScript.CheckRemainingActions() == true)
         {
@@ -191,7 +191,7 @@ public class ModalActionMenu : MonoBehaviour
             }
 
             //convert coordinates
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(details.itemPos);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(details.menuPos);
             //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
             Canvas.ForceUpdateCanvases();
             rectTransform = modalMenuObject.GetComponent<RectTransform>();

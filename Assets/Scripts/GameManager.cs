@@ -109,8 +109,11 @@ public class GameManager : MonoBehaviour
     public bool isValidateData;
     [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isValidateSO;
+    [Tooltip("Skip startup and go straight to a level?")]
+    public bool isSkipStartup;
     [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
+
 
    
     
@@ -309,7 +312,10 @@ public class GameManager : MonoBehaviour
         if (autoRunTurns > 0)
         { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
         else
-        { InitialiseMainMenu(); }
+        {
+            if (isSkipStartup == false)
+            { InitialiseMainMenu(); }
+        }
     }
     #endregion
 
@@ -352,6 +358,10 @@ public class GameManager : MonoBehaviour
         //ItemData Manager
         startMethod.handler = GameManager.instance.itemDataScript.Initialise;
         startMethod.className = "ItemDataManager";
+        listOfStartMethods.Add(startMethod);
+        //ModalGUI
+        startMethod.handler = GameManager.instance.modalGUIScript.Initialise;
+        startMethod.className = "ModalGUI";
         listOfStartMethods.Add(startMethod);
         //Tooltip Node
         startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
@@ -640,74 +650,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseMainMenu()
     {
-        //menu
-        ModalPanelDetails details = new ModalPanelDetails();
-        details.itemName = "Main Menu";
-        details.itemDetails = "2033";
-        details.itemPos = new Vector3(Screen.width / 2, Screen.height / 2);
-
-        //first button
-        EventButtonDetails button0 = new EventButtonDetails()
-        {
-            buttonTitle = "Resume",
-            buttonTooltipHeader = "Placeholder",
-            buttonTooltipMain = "Placeholder",
-            buttonTooltipDetail = "Placeholder",
-            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+        ModalMainMenuDetails detailsMain = new ModalMainMenuDetails() {
+            alignHorizontal = AlignHorizontal.Centre,
+            background = Background.Start
         };
-        details.listOfButtonDetails.Add(button0);
-        //second button
-        EventButtonDetails button1 = new EventButtonDetails()
-        {
-            buttonTitle = "New Game",
-            buttonTooltipHeader = "Placeholder",
-            buttonTooltipMain = "Placeholder",
-            buttonTooltipDetail = "Placeholder",
-            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
-        };
-        details.listOfButtonDetails.Add(button1);
-        //third button
-        EventButtonDetails button2 = new EventButtonDetails()
-        {
-            buttonTitle = "Load Game",
-            buttonTooltipHeader = "Placeholder",
-            buttonTooltipMain = "Placeholder",
-            buttonTooltipDetail = "Placeholder",
-            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
-        };
-        details.listOfButtonDetails.Add(button2);
-        //fourth button
-        EventButtonDetails button3 = new EventButtonDetails()
-        {
-            buttonTitle = "Options",
-            buttonTooltipHeader = "Placeholder",
-            buttonTooltipMain = "Placeholder",
-            buttonTooltipDetail = "Placeholder",
-            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
-        };
-        details.listOfButtonDetails.Add(button3);
-        //fifth button
-        EventButtonDetails button4 = new EventButtonDetails()
-        {
-            buttonTitle = "Feedback",
-            buttonTooltipHeader = "Placeholder",
-            buttonTooltipMain = "Placeholder",
-            buttonTooltipDetail = "Placeholder",
-            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
-        };
-        details.listOfButtonDetails.Add(button4);
-        //sixth button
-        EventButtonDetails button5 = new EventButtonDetails()
-        {
-            buttonTitle = "CANCEL",
-            buttonTooltipHeader = "Placeholder",
-            buttonTooltipMain = "Placeholder",
-            buttonTooltipDetail = "Placeholder",
-            action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
-        };
-        details.listOfButtonDetails.Add(button5);
         //activate menu
-        GameManager.instance.mainMenuScript.SetMainMenu(details);
+        GameManager.instance.mainMenuScript.InitialiseMainMenu(detailsMain);
     }
     #endregion
 

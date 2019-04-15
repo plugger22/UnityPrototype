@@ -57,12 +57,12 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                 position.y -= 50;
                                 position = Camera.main.ScreenToWorldPoint(position);
                                 //actor
-                                ModalPanelDetails details = new ModalPanelDetails()
+                                ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                 {
                                     itemID = actor.actorSlotID,
                                     itemName = actor.actorName,
                                     itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
-                                    itemPos = position,
+                                    menuPos = position,
                                     listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(actorSlotID),
                                     menuType = ActionMenuType.Actor
                                 };

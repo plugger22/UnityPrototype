@@ -23,7 +23,8 @@
     public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo }                                                   //if ModalUI.InfoDisplay -> what type of info
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum InventoryState { None, Gear, ReservePool}
-    public enum UIPosition { None, Left, Middle, Right }
+    public enum AlignHorizontal { None, Left, Centre, Right }
+    public enum Background { None, Start, End }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {

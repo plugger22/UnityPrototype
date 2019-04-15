@@ -54,14 +54,14 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                     position.y -= 50;
                                     position = Camera.main.ScreenToWorldPoint(position);
                                     //gear
-                                    ModalPanelDetails details = new ModalPanelDetails()
+                                    ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                     {
                                         itemID = gear.gearID,
                                         itemName = gear.name,
                                         modalLevel = 2,
                                         modalState = ModalState.Inventory,
                                         itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
-                                        itemPos = position,
+                                        menuPos = position,
                                         listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),
                                         menuType = ActionMenuType.Gear
                                     };
@@ -84,14 +84,14 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                     position.y -= 50;
                                     position = Camera.main.ScreenToWorldPoint(position);
                                     //gear
-                                    ModalPanelDetails details = new ModalPanelDetails()
+                                    ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                     {
                                         itemID = actor.actorID,
                                         itemName = actor.actorName,
                                         modalLevel = 2,
                                         modalState = ModalState.Inventory,
                                         itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
-                                        itemPos = position,
+                                        menuPos = position,
                                         listOfButtonDetails = GameManager.instance.actorScript.GetReservePoolActions(actor.actorID),
                                         menuType = ActionMenuType.Reserve
                                     };
