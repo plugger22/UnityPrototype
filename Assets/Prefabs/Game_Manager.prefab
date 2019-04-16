@@ -2048,13 +2048,14 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 10234
   isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
   isSkipStartup: 1
-  autoRunTurns: 0
+  isRandomCity: 0
+  autoRunTurns: 5
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

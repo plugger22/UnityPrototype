@@ -157,16 +157,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "City Analysis"))
-            {
-                Debug.Log("[Dbg] Button -> Toggle City Analysis");
-                if (debugDisplay != 1)
-                { debugDisplay = 1; }
-                else { debugDisplay = 0; }
-            }
-
-            //sixth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actions Register"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Actions Register"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Actions Register");
                 if (debugDisplay != 15)
@@ -174,8 +165,8 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //seventh button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Ongoing Register"))
+            //sixth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Ongoing Register"))
             {
                 Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
                 if (debugDisplay != 14)
@@ -183,10 +174,19 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //eigth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Factions"))
+            //fifth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "City Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Factions");
+                Debug.Log("[Dbg] Button -> Toggle City Data");
+                if (debugDisplay != 1)
+                { debugDisplay = 1; }
+                else { debugDisplay = 0; }
+            }
+
+            //eigth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Faction Data"))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Faction Data");
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
                 else { debugDisplay = 0; }
@@ -893,7 +893,7 @@ public class DebugGUI : MonoBehaviour
                     //City / Level analysis
                     case 1:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.levelScript.GetLevelAnalysis();
+                        analysis = GameManager.instance.dataScript.DebugLevelAnalysis();
                         GUI.Box(new Rect(Screen.width - 305, 10, 300, 500), analysis, customBackground);
                         break;
                     //toggle team data
@@ -1174,7 +1174,7 @@ public class DebugGUI : MonoBehaviour
                     case 33:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.contactScript.DebugDisplayContacts();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Targets Generic
                     case 34:

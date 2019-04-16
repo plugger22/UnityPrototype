@@ -107,7 +107,7 @@ public class CityManager : MonoBehaviour
         if (loyalty == 0) { loyalty = Random.Range(2, 9); }
         CityLoyalty = loyalty;
         //initialise number of districts
-        city.SetDistrictTotals(GameManager.instance.levelScript.GetNodeTypeTotals());
+        city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
 
         //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);

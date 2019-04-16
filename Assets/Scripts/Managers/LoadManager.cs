@@ -283,15 +283,6 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
-
-        /*//
-        // - - - Scenario (not stored in a collection)
-        //
-        numArray = arrayOfScenarios.Length;
-        if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfScenarios has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Scenarios present"); }*/
-
         //
         // - - - Quality
         //

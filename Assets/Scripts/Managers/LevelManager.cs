@@ -10,7 +10,7 @@ using dijkstraAPI;
 using System.Text;
 using System.IO;
 
-public enum NodeArcTally { Current, Minimum, Count };   //used for indexing of arrayOfNodeArcTotals
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -579,11 +579,11 @@ public class LevelManager : MonoBehaviour
 
 
 
-    /// <summary>
+    /*/// <summary>
     /// Test Search that determines if the graph is connected or not
     /// </summary>
     /// <returns></returns>
-    private string TestSearch()
+    private string GraphConnectedSearch()
     {
         string searchResult = "IS Connected";
         if (graph != null)
@@ -593,7 +593,7 @@ public class LevelManager : MonoBehaviour
                 { searchResult = "Not Connected"; }
         }
         return searchResult;
-    }
+    }*/
 
     //
     // - - - Graph Related Search Methods - - -
@@ -698,6 +698,9 @@ public class LevelManager : MonoBehaviour
         //add in random additional connections
         AddRandomConnections();
     }
+
+    public Graph GetGraph()
+    { return graph; }
 
 
     /// <summary>
@@ -1135,67 +1138,14 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// returns totals of all node arcs in an array format
-    /// </summary>
-    /// <returns></returns>
-    public int[] GetNodeTypeTotals()
-    {
-        int length = arrayOfNodeArcTotals.GetLength(1);
-        int[] tempArray = new int[length];
-        for (int i = 0; i < length; i++)
-        { tempArray[i] = arrayOfNodeArcTotals[0, i]; }
-        return tempArray;
-    }
+    public int[,] GetNodeArcTotals()
+    { return arrayOfNodeArcTotals; }
 
     public List<Node> GetListOfNodes()
     { return listOfNodes; }
 
 
-    //
-    // - - - Debug - - -
-    //
 
-    /// <summary>
-    /// city analysis
-    /// </summary>
-    /// <returns></returns>
-    public string GetLevelAnalysis()
-    {
-        StringBuilder builder = new StringBuilder();
-        //City data
-        builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
-        builder.AppendFormat(" Size {0}, {1} districts ({2} rqd min #){3}", city.Arc.size.name, city.Arc.size.numOfNodes, city.Arc.size.minNum, "\n");
-        builder.AppendFormat(" Spacing {0} ({1} min distance btwn nodes){2}", city.Arc.spacing.name, city.Arc.spacing.minDistance, "\n");
-        builder.AppendFormat(" Connections {0} ({1}% chance of extra conn){2}", city.Arc.connections.name, city.Arc.connections.frequency, "\n");
-        builder.AppendFormat(" Security {0} ({1}% chance of higher Security){2}{3}", city.Arc.security.name, city.Arc.security.chance, "\n", "\n");
-        if (city.Arc.priority != null)
-        { builder.AppendFormat(" Priority NodeArc {0} (50% of remaining){1}", city.Arc.priority.name, "\n"); }
-        else { builder.AppendFormat(" Priority NONE (remaining all Random){0}", "\n"); }
-        //node analysis
-        builder.AppendFormat("{0} Node Analysis{1}{2}", "\n", "\n", "\n");
-        for (int i = 0; i < GameManager.instance.dataScript.CheckNumOfNodeArcs(); i++)
-        {
-            NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
-            builder.Append(string.Format(" {0}  {1}{2}", arc.name, arrayOfNodeArcTotals[(int)NodeArcTally.Current, i], "\n"));
-        }
-        //graph analysis
-        builder.AppendFormat("{0}{1} Graph Analysis{2}{3}", "\n", "\n", "\n", "\n");
-        //graphAPI analysis data
-        if (graph != null)
-        {
-            builder.Append(" MaxDegree:  " + Convert.ToString(graph.CalcMaxDegree()) + "\n");
-            builder.Append(" AvgDegree:  " + Convert.ToString(graph.CalcAvgDegree()) + "\n");
-            builder.Append(" SelfLoops:    " + Convert.ToString(graph.CalcSelfLoops()) + "\n\n");
-        }
-        else
-        { Debug.LogError(" Graph is Null -> no analysis available"); }
-        //base stats
-        builder.Append(" NumNodes:  " + Convert.ToString(listOfNodes.Count) + "\n");
-        builder.Append(" NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n\n");
-        builder.AppendFormat(" {0}", TestSearch());
-        return builder.ToString();
-    }
 
     
 }

@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using GraphAPI;
 using packageAPI;
 using dijkstraAPI;
 using System;
@@ -20,10 +21,13 @@ public class DataManager : MonoBehaviour
     //NOTE: some arrays are initialised by ImportManager.cs making a call to DataManager methods due to sequencing issues
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
+    private int[,] arrayOfNodeArcTotals;                                                        //array of how many of each node type there is on the map, index -> [(int)NodeArcTally, nodeArc.nodeArcID]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
     private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None->4 x Null)
     private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False)
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
+
+    private Graph graph;
 
     //Nodes
     private List<Node> listOfNodes = new List<Node>();                                          //main list of nodes used for iteration (rather than dictOfNodes)
@@ -224,11 +228,16 @@ public class DataManager : MonoBehaviour
         Debug.Assert(listOfThreeConnArcsPreferred != null, "Invalid listOfThreeConnArcsPreferred (Null)");
         Debug.Assert(listOfFourConnArcsPreferred != null, "Invalid listOfFourConnArcsPreferred (Null)");
         Debug.Assert(listOfFiveConnArcsPreferred != null, "Invalid listOfFiveConnArcsPreferred (Null)");
+        //graph
+        graph = GameManager.instance.levelScript.GetGraph();
+        //nodeArcTotals
+        arrayOfNodeArcTotals = GameManager.instance.levelScript.GetNodeArcTotals();
         //arrayOfNodes -> contains all relevant info on nodes by type
-        int[] tempArray = GameManager.instance.levelScript.GetNodeTypeTotals();
+        int[] tempArray = GetNodeTypeTotals();
         arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
         for (int i = 0; i < tempArray.Length; i++)
         { arrayOfNodes[i, 0] = tempArray[i]; }
+
         //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
         int limit = CheckNumOfNodeArcs();
         for (int i = 0; i < limit; i++)
@@ -461,6 +470,19 @@ public class DataManager : MonoBehaviour
         { return dictOfLookUpNodeArcs[nodeArcName]; }
         else { Debug.LogWarning(string.Format("Not found in Lookup NodeArcID dict \"{0}\"{1}", nodeArcName, "\n")); }
         return -1;
+    }
+
+    /// <summary>
+    /// returns totals of all node arcs in an array format
+    /// </summary>
+    /// <returns></returns>
+    public int[] GetNodeTypeTotals()
+    {
+        int length = arrayOfNodeArcTotals.GetLength(1);
+        int[] tempArray = new int[length];
+        for (int i = 0; i < length; i++)
+        { tempArray[i] = arrayOfNodeArcTotals[0, i]; }
+        return tempArray;
     }
 
 
@@ -5282,6 +5304,72 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, CityArc> GetDictOfCityArcs()
     { return dictOfCityArcs; }
+
+    //
+    // - - - Level Analysis
+    //
+
+    /// <summary>
+    /// city analysis
+    /// </summary>
+    /// <returns></returns>
+    public string DebugLevelAnalysis()
+    {
+        StringBuilder builder = new StringBuilder();
+        City city = GameManager.instance.cityScript.GetCity();
+        if (city != null)
+        {
+            //City data
+            builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
+            builder.AppendFormat(" Size {0}, {1} districts ({2} rqd min #){3}", city.Arc.size.name, city.Arc.size.numOfNodes, city.Arc.size.minNum, "\n");
+            builder.AppendFormat(" Spacing {0} ({1} min distance btwn nodes){2}", city.Arc.spacing.name, city.Arc.spacing.minDistance, "\n");
+            builder.AppendFormat(" Connections {0} ({1}% chance of extra conn){2}", city.Arc.connections.name, city.Arc.connections.frequency, "\n");
+            builder.AppendFormat(" Security {0} ({1}% chance of higher Security){2}{3}", city.Arc.security.name, city.Arc.security.chance, "\n", "\n");
+            if (city.Arc.priority != null)
+            { builder.AppendFormat(" Priority NodeArc {0} (50% of remaining){1}", city.Arc.priority.name, "\n"); }
+            else { builder.AppendFormat(" Priority NONE (remaining all Random){0}", "\n"); }
+            //node analysis
+            builder.AppendFormat("{0} Node Analysis{1}{2}", "\n", "\n", "\n");
+            for (int i = 0; i < CheckNumOfNodeArcs(); i++)
+            {
+                NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
+                builder.Append(string.Format(" {0}  {1}{2}", arc.name, arrayOfNodeArcTotals[(int)NodeArcTally.Current, i], "\n"));
+            }
+            //graph analysis
+            builder.AppendFormat("{0}{1} Graph Analysis{2}{3}", "\n", "\n", "\n", "\n");
+            //graphAPI analysis data
+            if (graph != null)
+            {
+                builder.Append(" MaxDegree:  " + Convert.ToString(graph.CalcMaxDegree()) + "\n");
+                builder.Append(" AvgDegree:  " + Convert.ToString(graph.CalcAvgDegree()) + "\n");
+                builder.Append(" SelfLoops:    " + Convert.ToString(graph.CalcSelfLoops()) + "\n\n");
+            }
+            else
+            { Debug.LogError(" Graph is Null -> no analysis available"); }
+            //base stats
+            builder.Append(" NumNodes:  " + Convert.ToString(listOfNodes.Count) + "\n");
+            builder.Append(" NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n\n");
+            builder.AppendFormat(" {0}", GraphConnectedSearch());
+        }
+        else { builder.Append("Invalid data"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Test Search that determines if the graph is connected or not
+    /// </summary>
+    /// <returns></returns>
+    private string GraphConnectedSearch()
+    {
+        string searchResult = "IS Connected";
+        if (graph != null)
+        {
+            Search search = new Search(graph, 0);
+            if (search.Count != graph.Vertices && search.Count != graph.Vertices - 1)
+            { searchResult = "Not Connected"; }
+        }
+        return searchResult;
+    }
 
     //
     // - - - Objectives - - -
