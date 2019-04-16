@@ -198,6 +198,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
     private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();                      //Key -> (int)StatType, Value -> statistic
+    private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
 
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
@@ -5617,6 +5618,15 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid StatType (None)"); }
         return statValue;
     }
+
+    //
+    // - - - Scenarios - - -
+    //
+
+    public Dictionary<int, Scenario> GetDictOfScenarios()
+    { return dictOfScenarios; }
+
+
 
     //new methods above here
 }

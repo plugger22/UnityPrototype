@@ -12,12 +12,14 @@ public class Scenario : ScriptableObject
     [TextArea] public string descriptorResistance;
     [TextArea] public string descriptorAuthority;
 
-    [Header("Side")]
+    [Header("Basics")]
     [Tooltip("Which side can it be played from? Curently indicative only (not used in-game). Authority / Resistance / Both")]
     public GlobalSide side;
-
-    [Header("City")]
+    [Tooltip("Which city?")]
     public City city;
+    [Tooltip("Seed from which city is generated from (Zero is considered a seed). Can be a whole number between - 2147483648 and 2147483647")]
+    public int seedCity;
+
 
     [Header("AI Opponents")]
     [Tooltip("RebelLeader SO")]
@@ -46,7 +48,7 @@ public class Scenario : ScriptableObject
     [Header("Number of Turns")]
     [Range(20, 100)] public int timer = 100;
 
-
+    [HideInInspector] public int scenarioID;
 
     public void OnEnable()
     {

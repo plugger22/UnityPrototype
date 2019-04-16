@@ -283,13 +283,15 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
-        //
+
+        /*//
         // - - - Scenario (not stored in a collection)
         //
         numArray = arrayOfScenarios.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfScenarios has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Scenarios present"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Scenarios present"); }*/
+
         //
         // - - - Quality
         //
@@ -1426,6 +1428,35 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Mission count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfMissions (Null) -> Import failed"); }
+        //
+        // - - - Scenarios - - -
+        //
+        Dictionary<int, Scenario> dictOfScenarios = GameManager.instance.dataScript.GetDictOfScenarios();
+        if (dictOfScenarios != null)
+        {
+            counter = 0;
+            numArray = arrayOfScenarios.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based unique ID number
+                Scenario scenario = arrayOfScenarios[i];
+                //set data
+                scenario.scenarioID = counter++;
+                //add to dictionary
+                try
+                { dictOfScenarios.Add(scenario.scenarioID, scenario); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Scenario (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Scenario (duplicate) ID \"{0}\" for \"{1}\"", counter, scenario.name)); counter--; }
+            }
+            numDict = dictOfScenarios.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfScenarios has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Scenarios have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Scenario count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfScenarios (Null) -> Import failed"); }
     }
 
     #endregion

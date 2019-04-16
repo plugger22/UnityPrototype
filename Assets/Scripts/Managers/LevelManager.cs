@@ -8,6 +8,7 @@ using GraphAPI;
 using gameAPI;
 using dijkstraAPI;
 using System.Text;
+using System.IO;
 
 public enum NodeArcTally { Current, Minimum, Count };   //used for indexing of arrayOfNodeArcTotals
 
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour
     public GameObject node;             //node prefab
     public GameObject connection;       //connection prefab
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
+
     [Header("Default City Setup")]
     [Tooltip("number of nodes (adjusted after use in InitialiseNodes() to reflect actual number). Set to CitySize 'Normal'")]
     [Range(10, 30)] public int numOfNodesDefault = 20; 
@@ -73,6 +75,7 @@ public class LevelManager : MonoBehaviour
         city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid city (Null)");
         //ProcGen level
+        InitialiseLevelRandomSeed();
         InitialiseData();
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
@@ -83,7 +86,22 @@ public class LevelManager : MonoBehaviour
         /*AssignNodeArcs();*/
         AssignSecurityLevels();
         InitialiseDistrictNames();
+        GameManager.instance.RestoreRandomDevState();
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
+    }
+
+   /// <summary>
+   /// uses Scenario seedCity to set up a level random number sequence such that and identical level can be generated each time by using the same seed
+   /// </summary>
+    private void InitialiseLevelRandomSeed()
+    {
+        //save existing random dev state
+        GameManager.instance.SaveRandomDevState();
+        //reset to level specific random seed
+        int seed = GameManager.instance.scenarioScript.scenario.seedCity;
+        Random.InitState(seed);
+        string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.name, city.country.name) + Environment.NewLine + Environment.NewLine;
+        File.AppendAllText("Seed.txt", seedInfo);
     }
 
     /// <summary>

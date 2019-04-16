@@ -72,7 +72,10 @@ public class CityManager : MonoBehaviour
         // need to initialise levels (run graphs and get node totals) and store seeds so the cities can be duplicated
         // need to initialise all relevant info in city.SO's
 
-        city = GameManager.instance.dataScript.GetRandomCity();
+        //use a random city if GameManager dev option set true, uses Scenario specified city otherwise
+        if (GameManager.instance.isRandomCity == true)
+        { city = GameManager.instance.dataScript.GetRandomCity(); }
+
         isLoyaltyCheckedThisTurn = false;
         loyaltyMinTimer = 0;
         loyaltyMaxTimer = 0;

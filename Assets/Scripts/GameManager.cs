@@ -97,8 +97,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Variables
-    [Tooltip("Leave as default 0 for random")]
-    public int seed = 0;                                            //random seed
+    [Tooltip("Leave as default 0 for random. Can be a whole number between -2147483648 and 2147483647")]
+    public int seedDev = 0;                                            //random seed for development
     [Tooltip("If true Player side set to Authority")]               //DEBUG
     public bool isAuthority;
     [Tooltip("If true AI handles both sides. OVERRIDES all other settings. Player side (at end of autoRun) is determined by 'isAuthority' setting. Switch OFF if playing normally")]
@@ -111,12 +111,14 @@ public class GameManager : MonoBehaviour
     public bool isValidateSO;
     [Tooltip("Skip startup and go straight to a level?")]
     public bool isSkipStartup;
+    [Tooltip("If true will choose a random city, otherwise will be the one specified by the Scenario")]
+    public bool isRandomCity;
     [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
 
 
-   
-    
+
+    private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private List<StartMethod> listOfStartMethods = new List<StartMethod>();         //current, all-encompassing system
 
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //start game global methods
@@ -140,13 +142,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         //random seed to facilitate replication of results
-        if (seed == 0)
-        { seed = (int)DateTime.Now.Ticks & 0x0000FFFF; }
-        Debug.Log("Seed: " + seed);
-        Random.InitState(seed);
+        if (seedDev == 0)
+        { seedDev = (int)DateTime.Now.Ticks & 0x0000FFFF; }
+        Debug.Log("Seed: " + seedDev);
+        Random.InitState(seedDev);
         //debug -> write seed to file
         DateTime date1 = DateTime.Now;
-        string seedInfo = string.Format("Seed {0} -> {1}", seed, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
+        string seedInfo = string.Format("Dev seed {0} -> {1}", seedDev, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
         //Get component references
         startScript = GetComponent<StartManager>();
@@ -684,6 +686,17 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// used to save random seedDev sequence state prior to changing the seed
+    /// </summary>
+    public void SaveRandomDevState()
+    { devState = Random.state; }
+
+    /// <summary>
+    /// used to restore random seedDev sequence after changing the seed (sequence will continue on as before)
+    /// </summary>
+    public void RestoreRandomDevState()
+    { Random.state = devState; }
 
     //place methods above here
 }
