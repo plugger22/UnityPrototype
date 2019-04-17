@@ -203,6 +203,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
     private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();                      //Key -> (int)StatType, Value -> statistic
     private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
+    private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
 
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
@@ -5713,6 +5714,13 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<int, Scenario> GetDictOfScenarios()
     { return dictOfScenarios; }
+
+    //
+    // - - - Campaigns - - -
+    //
+
+    public Dictionary<int, Campaign> GetDictOfCampaigns()
+    { return dictOfCampaigns; }
 
 
 

@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 114609542619572500}
   - component: {fileID: 114837532667670244}
   - component: {fileID: 114843761391076242}
+  - component: {fileID: 114680662969460860}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -877,8 +878,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83135a0a144c8484e9cd286353bb1239, type: 2}
   arrayOfRebelLeaders:
   - {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
-  arrayOfScenarios:
-  - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
@@ -1522,6 +1521,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c18dfa424a4646349ac6ee1fc6ddb8cf, type: 2}
   - {fileID: 11400000, guid: d342762d49376704d83814ef8888b652, type: 2}
   - {fileID: 11400000, guid: b48dee76979230d41a91637f9b6a4a8c, type: 2}
+  arrayOfScenarios:
+  - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
+  - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
+  - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
+  - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
+  arrayOfCampaigns:
+  - {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
 --- !u!114 &114395521989347528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1818,6 +1824,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544963c1e9444e144a825cd140dd4f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114680662969460860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c5f4638fef720428f1b6683d94e2f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
 --- !u!114 &114701128435362846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1991,6 +2009,7 @@ MonoBehaviour:
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
   scenarioScript: {fileID: 0}
+  campaignScript: {fileID: 0}
   newsScript: {fileID: 0}
   actorScript: {fileID: 0}
   contactScript: {fileID: 0}
@@ -2054,8 +2073,8 @@ MonoBehaviour:
   isValidateData: 0
   isValidateSO: 1
   isSkipStartup: 1
-  isRandomCity: 0
-  autoRunTurns: 5
+  isRandomCity: 1
+  autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
-  m_Name: Test Scenario
+  m_Name: Test Scenario Two
   m_EditorClassIdentifier: 
   descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
     London. Spare no effort and take no heed of collateral damage.
@@ -17,16 +17,16 @@ MonoBehaviour:
 '
   descriptorAuthority: 
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
-  seedCity: 909
+  city: {fileID: 11400000, guid: 028f2bbc2bbda2244a371c4f7237c3db, type: 2}
+  seedCity: 765
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
-  leaderAuthority: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
+  leaderAuthority: {fileID: 11400000, guid: 9768b5680a5445847b2a3e54b3577cc1, type: 2}
   approvalStartRebelHQ: 5
   approvalStartAuthorityHQ: 5
   cityStartLoyalty: 5
   missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
   missionAuthority: {fileID: 0}
-  challengeResistance: {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869,
+  challengeResistance: {fileID: 11400000, guid: f49eada5905cc6e4dbd50b2b5650dea1,
     type: 2}
   challengeAuthority: {fileID: 0}
   timer: 70

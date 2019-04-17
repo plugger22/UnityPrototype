@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
+  m_Name: Test Scenario One
+  m_EditorClassIdentifier: 
+  descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
+    London. Spare no effort and take no heed of collateral damage.
+
+'
+  descriptorAuthority: 
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
+  seedCity: 909
+  leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
+  leaderAuthority: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
+  approvalStartRebelHQ: 5
+  approvalStartAuthorityHQ: 5
+  cityStartLoyalty: 5
+  missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
+  missionAuthority: {fileID: 0}
+  challengeResistance: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b,
+    type: 2}
+  challengeAuthority: {fileID: 0}
+  timer: 70
+  scenarioID: 0

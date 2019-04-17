@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GlobalManager globalScript;              //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
+    [HideInInspector] public CampaignManager campaignScript;          //Campaign Manager
     [HideInInspector] public NewsManager newsScript;                  //News Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ContactManager contactScript;            //Contact Manager
@@ -96,6 +97,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
     #endregion
 
+
     #region Variables
     [Tooltip("Leave as default 0 for random. Can be a whole number between -2147483648 and 2147483647")]
     public int seedDev = 0;                                            //random seed for development
@@ -109,7 +111,7 @@ public class GameManager : MonoBehaviour
     public bool isValidateData;
     [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isValidateSO;
-    [Tooltip("Skip startup and go straight to a level?")]
+    [Tooltip("Skip startup and go straight to a level? NOTE: Only works if autoRun set to Zero")]
     public bool isSkipStartup;
     [Tooltip("If true will choose a random city, otherwise will be the one specified by the Scenario")]
     public bool isRandomCity;
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
     private List<StartMethod> listOfDebugMethods = new List<StartMethod>();         //Debug related methods
 
     #endregion
+
 
     #region Awake method
     /// <summary>
@@ -163,6 +166,7 @@ public class GameManager : MonoBehaviour
         guiScript = GetComponent<GUIManager>();
         globalScript = GetComponent<GlobalManager>();
         scenarioScript = GetComponent<ScenarioManager>();
+        campaignScript = GetComponent<CampaignManager>();
         actorScript = GetComponent<ActorManager>();
         contactScript = GetComponent<ContactManager>();
         actionScript = GetComponent<ActionManager>();
@@ -238,6 +242,8 @@ public class GameManager : MonoBehaviour
         Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
         Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
+        Debug.Assert(campaignScript != null, "Invalid campaignScript (Null)");
+
         Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
         Debug.Assert(contactScript != null, "Invalid contactScript (Null)");
         Debug.Assert(actionScript != null, "Invalid actionScript (Null)");
@@ -298,6 +304,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+
     #region Start method
     private void Start()
     {
@@ -337,6 +344,7 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
 
     #region StartUp Sequence
     /// <summary>

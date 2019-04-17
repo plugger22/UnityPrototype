@@ -35,8 +35,7 @@ public class LoadManager : MonoBehaviour
     public Challenge[] arrayOfChallenges;
     public Nemesis[] arrayOfNemesis;
     public RebelLeader[] arrayOfRebelLeaders;
-    public Scenario[] arrayOfScenarios;
-
+    
     [Header("InitialiseStart -> Second Half")]
     public Condition[] arrayOfConditions;
     public Cure[] arrayOfCures;
@@ -87,7 +86,8 @@ public class LoadManager : MonoBehaviour
     public Mayor[] arrayOfMayors;
     public DecisionAI[] arrayOfDecisionAI;
     public Mission[] arrayOfMissions;
-
+    public Scenario[] arrayOfScenarios;
+    public Campaign[] arrayOfCampaigns;
 
     #region InitialiseStart
     
@@ -1448,6 +1448,35 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Scenario count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfScenarios (Null) -> Import failed"); }
+        //
+        // - - - Campaigns - - -
+        //
+        Dictionary<int, Campaign> dictOfCampaigns = GameManager.instance.dataScript.GetDictOfCampaigns();
+        if (dictOfCampaigns != null)
+        {
+            counter = 0;
+            numArray = arrayOfCampaigns.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                //assign a zero based unique ID number
+                Campaign campaign = arrayOfCampaigns[i];
+                //set data
+                campaign.campaignID = counter++;
+                //add to dictionary
+                try
+                { dictOfCampaigns.Add(campaign.campaignID, campaign); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Campaign (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Campaign (duplicate) ID \"{0}\" for \"{1}\"", counter, campaign.name)); counter--; }
+            }
+            numDict = dictOfCampaigns.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfCampaigns has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Campaigns have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Campaign count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfCampaigns (Null) -> Import failed"); }
     }
 
     #endregion
