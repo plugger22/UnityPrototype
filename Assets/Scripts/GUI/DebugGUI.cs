@@ -550,7 +550,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Swap Sides"))
             {
                 Debug.Log("[Dbg] Button -> Swap sides");
-                if (GameManager.instance.inputScript.GameState == GameState.Normal)
+                if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
                 {
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                     { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideAuthority; }

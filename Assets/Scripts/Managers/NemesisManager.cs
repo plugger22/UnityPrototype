@@ -1472,7 +1472,7 @@ public class NemesisManager : MonoBehaviour
             if (isOutcomeModalNormal == false)
             {
                 outcomeDetails.modalLevel = 2;
-                outcomeDetails.modalState = ModalState.InfoDisplay;
+                outcomeDetails.modalState = ModalSubState.InfoDisplay;
             }
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NemesisManager.cs -> ProcessPlayerDamage");
         }

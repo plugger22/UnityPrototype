@@ -382,7 +382,7 @@ public class GearManager : MonoBehaviour
                         details.textBottom = builderBottom.ToString();
                         //will overlay InfoAPP so needs to handle this
                         details.modalLevel = 2;
-                        details.modalState = ModalState.InfoDisplay;
+                        details.modalState = ModalSubState.InfoDisplay;
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> CheckForCompromisedGear");
                     }
                 }

@@ -691,7 +691,7 @@ public class MainInfoUI : MonoBehaviour
             //set game state
             isRunning = true;
             ModalStateData package = new ModalStateData();
-            package.mainState = ModalState.InfoDisplay;
+            package.mainState = ModalSubState.InfoDisplay;
             package.infoState = ModalInfoSubState.MainInfo;
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] MainInfoUI.cs -> SetMainInfo{0}", "\n");
@@ -1446,7 +1446,7 @@ public class MainInfoUI : MonoBehaviour
     {
         //set game state
         ModalStateData package = new ModalStateData();
-        package.mainState = ModalState.InfoDisplay;
+        package.mainState = ModalSubState.InfoDisplay;
         package.infoState = ModalInfoSubState.MainInfo;
         GameManager.instance.inputScript.SetModalState(package);
         //alert message

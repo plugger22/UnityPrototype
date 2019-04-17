@@ -433,7 +433,7 @@ public class SideManager : MonoBehaviour
         // - - - Events of note occur during the AutoRun
         //
         //only if nobody has yet won
-        if (GameManager.instance.turnScript.winState == WinState.None)
+        if (GameManager.instance.turnScript.winStateLevel == WinState.None)
         {
             List<string> listOfEvents = GameManager.instance.dataScript.GetListOfHistoryAutoRun();
             if (listOfEvents != null)

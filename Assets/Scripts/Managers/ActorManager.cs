@@ -2200,7 +2200,7 @@ public class ActorManager : MonoBehaviour
                     gearActionDetails.side = globalResistance;
                     gearActionDetails.gearID = gear.gearID;
                     gearActionDetails.modalLevel = 2;
-                    gearActionDetails.modalState = ModalState.Inventory;
+                    gearActionDetails.modalState = ModalSubState.Inventory;
                     gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
                     EventButtonDetails gearDetails = new EventButtonDetails()
                     {
@@ -2242,7 +2242,7 @@ public class ActorManager : MonoBehaviour
                                 gearActionDetails.actorDataID = actor.actorSlotID;
                                 gearActionDetails.gearID = gear.gearID;
                                 gearActionDetails.modalLevel = 2;
-                                gearActionDetails.modalState = ModalState.Inventory;
+                                gearActionDetails.modalState = ModalSubState.Inventory;
                                 gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
                                 //get actor's preferred gear
                                 GearType preferredGear = actor.arc.preferredGear;
@@ -2384,7 +2384,7 @@ public class ActorManager : MonoBehaviour
         actorActionDetails.side = playerSide;
         actorActionDetails.actorDataID = actorID;
         actorActionDetails.modalLevel = 2;
-        actorActionDetails.modalState = ModalState.Inventory;
+        actorActionDetails.modalState = ModalSubState.Inventory;
         actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
         //actor
         Actor actor = GameManager.instance.dataScript.GetActor(actorID);

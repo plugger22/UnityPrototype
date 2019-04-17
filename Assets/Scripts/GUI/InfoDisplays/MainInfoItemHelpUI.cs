@@ -67,7 +67,7 @@ public class MainInfoItemHelpUI : MonoBehaviour, IPointerEnterHandler, IPointerE
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.instance.inputScript.GameState == GameState.ModalUI)
+        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.ModalUI)
         {
             if (listOfHelp != null)
             {

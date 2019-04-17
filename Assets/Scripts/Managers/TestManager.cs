@@ -34,6 +34,7 @@ public class TestManager : MonoBehaviour
 
     public void Initialise()
     {
+        //needed for performance monitoring
         timer = new Stopwatch();
         isTimerTallyActive = false;
     }

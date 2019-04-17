@@ -30,8 +30,8 @@ public class TurnManager : MonoBehaviour
     [Tooltip("Number of seconds to show finish splash screen for")]
     public float showSplashTimeout = 2.0f;
 
-    [HideInInspector] public WinState winState = WinState.None;          //set if somebody has won
-    [HideInInspector] public WinReason winReason = WinReason.None;  //why a win (from POV of winner)
+    [HideInInspector] public WinState winStateLevel = WinState.None;          //set if somebody has won
+    [HideInInspector] public WinReason winReasonLevel = WinReason.None;  //why a win (from POV of winner)
     [HideInInspector] public ResistanceState resistanceState;
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI). Change value ONLY here in TurnManager.cs
@@ -178,13 +178,13 @@ public class TurnManager : MonoBehaviour
             do
             {
                 ProcessNewTurn();
-                if (winState == WinState.None)
+                if (winStateLevel == WinState.None)
                 {
                     GameManager.instance.dataScript.UpdateCurrentItemData();
                     numOfTurns--;
                 }
             }
-            while (numOfTurns > 0 && winState == WinState.None);
+            while (numOfTurns > 0 && winStateLevel == WinState.None);
             isAutoRun = false;
             //in case of AI vs AI revert the player side to human control
             GameManager.instance.sideScript.RevertToHumanPlayer();
@@ -210,7 +210,7 @@ public class TurnManager : MonoBehaviour
         {
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
             //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
-            if (GameManager.instance.inputScript.GameState == GameState.Normal)
+            if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
             {
                 
                 //end the current turn
@@ -222,7 +222,7 @@ public class TurnManager : MonoBehaviour
                 StartTurnEarly();
                 StartTurnLate();
                 //Nobody has yet won
-                if (winState == WinState.None)
+                if (winStateLevel == WinState.None)
                 {
                     //only do for player
                     if (playerSide != null && currentSide.level == playerSide.level)
@@ -265,7 +265,7 @@ public class TurnManager : MonoBehaviour
     /// <param name="winState"></param>
     private void ProcessLevelOver()
     {
-        switch (winState)
+        switch (winStateLevel)
         {
             case WinState.Authority:
             case WinState.Resistance:
@@ -278,7 +278,7 @@ public class TurnManager : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "TurnManager.cs -> ProcessLevelOver");
                 break;
             default:
-                Debug.LogWarningFormat("Invalid winState \"{0}\"", winState);
+                Debug.LogWarningFormat("Invalid winState \"{0}\"", winStateLevel);
                 break;
         }
     }
@@ -833,11 +833,11 @@ public class TurnManager : MonoBehaviour
         //assign winState
         if (win != WinState.None)
         {
-            if (winState == WinState.None)
+            if (winStateLevel == WinState.None)
             {
                 //generate new win state
-                winState = win;
-                winReason = reason;
+                winStateLevel = win;
+                winReasonLevel = reason;
                 winTextTop = topText;
                 winTextBottom = bottomText;
                 winSprite = sprite;

@@ -595,8 +595,8 @@ MonoBehaviour:
   actionsAuthority: 2
   warningPeriod: 10
   showSplashTimeout: 2
-  winState: 0
-  winReason: 0
+  winStateLevel: 0
+  winReasonLevel: 0
   resistanceState: 0
   authoritySecurityState: 0
   currentSide: {fileID: 0}
@@ -2072,8 +2072,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
-  isSkipStartup: 1
-  isRandomCity: 1
+  isRandomCity: 0
   autoRunTurns: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

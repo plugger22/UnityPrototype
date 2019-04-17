@@ -19,6 +19,7 @@ public enum EventType
     CloseMainMenu,
     CreateMoveMenu,
     CreateGearNodeMenu,
+    CreateNewGame,
     //UI Windows
     CloseOutcomeWindow,
     OpenOutcomeWindow,

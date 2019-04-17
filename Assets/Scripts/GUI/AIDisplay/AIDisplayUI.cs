@@ -407,7 +407,7 @@ public class AIDisplayUI : MonoBehaviour
         GameManager.instance.alertScript.CloseAlertUI(true);
         //set game state
         ModalStateData package = new ModalStateData();
-        package.mainState = ModalState.InfoDisplay;
+        package.mainState = ModalSubState.InfoDisplay;
         package.infoState = ModalInfoSubState.AIInfo;
         GameManager.instance.inputScript.SetModalState(package);
     }

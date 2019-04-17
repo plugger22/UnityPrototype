@@ -29,7 +29,7 @@ namespace modalAPI
         public string itemDetails;
         public int itemID;                                              //multipurpose datapoint, default -1
         public int modalLevel;                                          //what level modal masking do you want? default 1
-        public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
+        public ModalSubState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         public List<EventButtonDetails> listOfButtonDetails;            //only the first five are used (Target + 1 action / actor)
         public Vector3 menuPos;                                         //position of item in world units (transform)
         public ActionMenuType menuType;                                 //what type of action menu is it? (Node / Actor / Gear, etc.) Ignore if not an Action Menu
@@ -37,7 +37,7 @@ namespace modalAPI
         public ModalGenericMenuDetails()
         {
             modalLevel = 1;
-            modalState = ModalState.None;
+            modalState = ModalSubState.None;
             itemID = -1;
             
             listOfButtonDetails = new List<EventButtonDetails>();
@@ -54,7 +54,7 @@ namespace modalAPI
         public int actorDataID;                                         //for standard actor based node actions, ignore otherwise, Could be actorSlotID or actorID
         public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
         public int modalLevel;                                          //modal level that the outcome window will be on (same as current), default 1
-        public ModalState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
+        public ModalSubState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         public ActionButtonDelegate handler;                            //method to call once button pressed, ignore if default null
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
@@ -70,7 +70,7 @@ namespace modalAPI
             gearAction = null;
             gearID = -1;
             modalLevel = 1;
-            modalState = ModalState.None;
+            modalState = ModalSubState.None;
         }
     }
 
@@ -118,14 +118,14 @@ namespace modalAPI
         public string textBottom;
         public Sprite sprite;
         public int modalLevel;              //modal level of outcome window, default 1
-        public ModalState modalState;       //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
+        public ModalSubState modalState;       //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public bool isAction;               //true if an action has been used
         public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
 
         public ModalOutcomeDetails()
         {
             modalLevel = 1;
-            modalState = ModalState.None;
+            modalState = ModalSubState.None;
             isAction = false;
             reason = "Unknown";
             side = GameManager.instance.sideScript.PlayerSide;

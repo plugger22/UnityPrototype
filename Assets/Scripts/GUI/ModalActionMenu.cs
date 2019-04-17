@@ -43,7 +43,7 @@ public class ModalActionMenu : MonoBehaviour
     private RectTransform rectTransform;
     private int offset;
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetActionMenu
-    private ModalState modalState;                          //modal state to return to if action panel closed
+    private ModalSubState modalState;                          //modal state to return to if action panel closed
 
     //colour palette
     /*private string colourEffects;
@@ -213,7 +213,7 @@ public class ModalActionMenu : MonoBehaviour
             //set new position
             modalMenuObject.transform.position = screenPos;
             //set states
-            ModalStateData package = new ModalStateData() { mainState = ModalState.ActionMenu };
+            ModalStateData package = new ModalStateData() { mainState = ModalSubState.ActionMenu };
             GameManager.instance.inputScript.SetModalState(package);
             //block raycasts to gameobjects
             GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);

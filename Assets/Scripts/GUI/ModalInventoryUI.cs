@@ -244,7 +244,7 @@ public class ModalInventoryUI : MonoBehaviour
         else
         {
             //all good, inventory window displayed
-            ModalStateData package = new ModalStateData() { mainState = ModalState.Inventory };
+            ModalStateData package = new ModalStateData() { mainState = ModalSubState.Inventory };
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
         }
@@ -365,7 +365,7 @@ public class ModalInventoryUI : MonoBehaviour
                 itemID = gear.gearID,
                 itemName = gear.name,
                 modalLevel = 2,
-                modalState = ModalState.Inventory,
+                modalState = ModalSubState.Inventory,
                 itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
                 menuPos = position,
                 listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),

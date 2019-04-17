@@ -445,7 +445,7 @@ public class GUIManager : MonoBehaviour
             {
                 //set game state
                 ModalStateData package = new ModalStateData();
-                package.mainState = ModalState.ShowMe;
+                package.mainState = ModalSubState.ShowMe;
                 GameManager.instance.inputScript.SetModalState(package);
                 //alert message
                 GameManager.instance.nodeScript.NodeShowFlag = 1;

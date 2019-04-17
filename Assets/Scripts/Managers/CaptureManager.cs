@@ -211,7 +211,7 @@ public class CaptureManager : MonoBehaviour
             if (isStartOfTurn == true)
             {
                 outcomeDetails.modalLevel = 2;
-                outcomeDetails.modalState = ModalState.InfoDisplay;
+                outcomeDetails.modalState = ModalSubState.InfoDisplay;
             }
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer");
         }

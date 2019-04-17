@@ -336,7 +336,7 @@ public class ModalGenericPicker : MonoBehaviour
             bottomText.text = details.textBottom;
             //set game state
             ModalStateData package = new ModalStateData();
-            package.mainState = ModalState.GenericPicker;
+            package.mainState = ModalSubState.GenericPicker;
             package.pickerState = details.subState;
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalGenericPicker.cs -> SetGenericPicker{0}", "\n");

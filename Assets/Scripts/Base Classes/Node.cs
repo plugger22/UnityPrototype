@@ -368,7 +368,7 @@ public class Node : MonoBehaviour
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over node
-        if (onMouseFlag == true && GameManager.instance.inputScript.GameState == GameState.Normal)
+        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.Normal)
         {
             //check modal block isn't in place
             if (GameManager.instance.guiScript.CheckIsBlocked() == false)

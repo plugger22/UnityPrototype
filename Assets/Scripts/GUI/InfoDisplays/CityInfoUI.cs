@@ -286,7 +286,7 @@ public class CityInfoUI : MonoBehaviour
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
             ModalStateData package = new ModalStateData();
-            package.mainState = ModalState.InfoDisplay;
+            package.mainState = ModalSubState.InfoDisplay;
             package.infoState = ModalInfoSubState.CityInfo;
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] CityInfoUI.cs -> SetCityInfo{0}", "\n");

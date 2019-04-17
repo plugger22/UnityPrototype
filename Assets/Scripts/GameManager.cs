@@ -111,8 +111,6 @@ public class GameManager : MonoBehaviour
     public bool isValidateData;
     [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isValidateSO;
-    [Tooltip("Skip startup and go straight to a level? NOTE: Only works if autoRun set to Zero")]
-    public bool isSkipStartup;
     [Tooltip("If true will choose a random city, otherwise will be the one specified by the Scenario")]
     public bool isRandomCity;
     [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
@@ -309,42 +307,43 @@ public class GameManager : MonoBehaviour
     #region Start method
     private void Start()
     {
-        //lock mouse to prevent mouseover events occuring prior to full initialisation
-        Cursor.lockState = CursorLockMode.Locked;
-        //need testManager in order to access performance timer
-        testScript.Initialise();
-        //start sequence with or without performance monitoring
+        //global methods
         if (isPerformanceLog == false)
         {
             InitialiseMethods(listOfGlobalMethods);
             InitialiseMethods(listOfGameMethods);
-            InitialiseMethods(listOfLevelMethods);
-            InitialiseMethods(listOfUIMethods);
-            InitialiseMethods(listOfDebugMethods);
         }
         else
         {
+            //need testManager in order to access performance timer
+            testScript.Initialise();
+            //start-up with Performance Monitoring
             InitialiseWithPerformanceMonitoring(listOfGlobalMethods);
             InitialiseWithPerformanceMonitoring(listOfGameMethods);
-            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
-            InitialiseWithPerformanceMonitoring(listOfUIMethods);
-            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
-            DisplayTotalTime();
         }
-        //do a final redraw before game start
-        nodeScript.NodeRedraw = true;
-        //free mouse for normal operations
-        Cursor.lockState = CursorLockMode.None;
-        //colour scheme
-        optionScript.ColourOption = ColourScheme.Normal;
-        //AutoRun
+        //AutoRun or Campaign
         if (autoRunTurns > 0)
-        { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
+        { InitialiseAutoRun(); }
         else
         {
-            if (isSkipStartup == false)
-            { InitialiseMainMenu(); }
+            InitialiseMainMenu();
         }
+    }
+    #endregion
+
+
+    #region Update method
+    /// <summary>
+    /// Only update in the entire code base -> handles redraws and input
+    /// </summary>
+    private void Update()
+    {
+        //redraw any Nodes where required
+        if (nodeScript.NodeRedraw == true)
+        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
+        //Handle Game Input
+        if (Input.anyKeyDown == true)
+        { inputScript.ProcessInput(); }
     }
     #endregion
 
@@ -396,10 +395,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.modalGUIScript.Initialise;
         startMethod.className = "ModalGUI";
         listOfGlobalMethods.Add(startMethod);
-        //Tooltip Node
-        startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
-        startMethod.className = "TooltipNode";
-        listOfGlobalMethods.Add(startMethod);
         //Actor Manager -> PreInitialise
         startMethod.handler = GameManager.instance.actorScript.PreInitialiseActors;
         startMethod.className = "ActorManager";
@@ -431,13 +426,17 @@ public class GameManager : MonoBehaviour
         startMethod.handler = GameManager.instance.campaignScript.Initialise;
         startMethod.className = "CampaignManager";
         listOfGameMethods.Add(startMethod);
+        //
+        // - - - Level methods - - -
+        //
         //Scenario Manager InitialiseEarly -> before level & Side Managers
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
         listOfGameMethods.Add(startMethod);
-        //
-        // - - - Level methods - - -
-        //
+        //Tooltip Node
+        startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
+        startMethod.className = "TooltipNode";
+        listOfGlobalMethods.Add(startMethod);
         //Side Manager -> after scenarioManager
         startMethod.handler = GameManager.instance.sideScript.Initialise;
         startMethod.className = "SideManager";
@@ -651,22 +650,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region Update method
-    /// <summary>
-    /// Only update in the entire code base -> handles redraws and input
-    /// </summary>
-    private void Update()
-    {
-        //redraw any Nodes where required
-        if (nodeScript.NodeRedraw == true)
-        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
-        //Handle Game Input
-        if (Input.anyKeyDown == true)
-        { inputScript.ProcessInput(); }
-    }
-    #endregion
-
-
     #region InitialiseMenu
     /// <summary>
     /// Initialise Main Menu
@@ -681,6 +664,85 @@ public class GameManager : MonoBehaviour
         mainMenuScript.InitialiseMainMenu(detailsMain);
     }
     #endregion
+
+
+    #region InitialiseAutoRun
+    /// <summary>
+    /// start an immediate autoRun that bypasses the campaign meta game and jumps straight into a level
+    /// </summary>
+    private void InitialiseAutoRun()
+    {
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+        //start sequence
+        if (isPerformanceLog == false)
+        {
+            //normal start-up
+            InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
+            InitialiseMethods(listOfDebugMethods);
+        }
+        else
+        {
+            //start-up with Performance Monitoring
+            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+            InitialiseWithPerformanceMonitoring(listOfUIMethods);
+            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
+            DisplayTotalTime();
+        }
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //colour scheme
+        optionScript.ColourOption = ColourScheme.Normal;
+        //commence autorun
+        turnScript.SetAutoRun(autoRunTurns);
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+    }
+    #endregion
+
+
+    private void StartArchive()
+    {
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+
+        //start sequence
+        if (isPerformanceLog == false)
+        {
+            //normal start-up
+            InitialiseMethods(listOfGlobalMethods);
+            InitialiseMethods(listOfGameMethods);
+            InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
+            InitialiseMethods(listOfDebugMethods);
+        }
+        else
+        {
+            //need testManager in order to access performance timer
+            testScript.Initialise();
+            //start-up with Performance Monitoring
+            InitialiseWithPerformanceMonitoring(listOfGlobalMethods);
+            InitialiseWithPerformanceMonitoring(listOfGameMethods);
+            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+            InitialiseWithPerformanceMonitoring(listOfUIMethods);
+            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
+            DisplayTotalTime();
+        }
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+        //colour scheme
+        optionScript.ColourOption = ColourScheme.Normal;
+        //AutoRun
+        if (autoRunTurns > 0)
+        { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
+        else
+        {
+            InitialiseMainMenu();
+        }
+    }
 
 
     #region Random Seed

@@ -82,7 +82,7 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
         yield return new WaitForSeconds(mouseOverDelay);
         playerSide = GameManager.instance.sideScript.PlayerSide;
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.instance.inputScript.GameState == GameState.Normal)
+        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.Normal)
         {
             //do once
             Vector3 screenPos = transform.position;

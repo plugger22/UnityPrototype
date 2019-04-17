@@ -9,7 +9,7 @@ using System.Text;
 /// </summary>
 public class ModalStateData
 {
-    public ModalState mainState;
+    public ModalSubState mainState;
     public ModalInfoSubState infoState;
     public ModalGenericPickerSubState pickerState;
 
@@ -26,27 +26,17 @@ public class ModalStateData
 public class InputManager : MonoBehaviour
 {
 
-    private GameState _gameState;                   //main game state
-    private ModalState _modalState;                 //sub state for when game state is 'ModalUI'
+    private ModalState _modalState;                   //main modal state status
+    private ModalSubState _modalSubState;                 //sub state for when game state is 'ModalUI'
     private ModalInfoSubState _modalInfoState;              //sub sub state of ModalState.InfoDisplay -> what type of info?
     private ModalGenericPickerSubState _modalGenericPickerState; // sub state of ModalState.GenericPicker -> what type of picker?
 
     public void Initialise()
     {
-        GameState = GameState.Normal;
+        ModalState = gameAPI.ModalState.Normal;
     }
 
     //needs to be updated whenever changed
-    public GameState GameState
-    {
-        get { return _gameState; }
-        private set
-        {
-            _gameState = value;
-            Debug.Log(string.Format("[Inp] InputManager: GameState now {0}{1}", _gameState, "\n"));
-        }
-    }
-
     public ModalState ModalState
     {
         get { return _modalState; }
@@ -54,6 +44,16 @@ public class InputManager : MonoBehaviour
         {
             _modalState = value;
             Debug.Log(string.Format("[Inp] InputManager: ModalState now {0}{1}", _modalState, "\n"));
+        }
+    }
+
+    public ModalSubState ModalSubState
+    {
+        get { return _modalSubState; }
+        private set
+        {
+            _modalSubState = value;
+            Debug.Log(string.Format("[Inp] InputManager: ModalSubState now {0}{1}", _modalSubState, "\n"));
         }
     }
 
@@ -85,12 +85,12 @@ public class InputManager : MonoBehaviour
     {
         if (data != null)
         {
-            if (data.mainState != ModalState.None)
-            { GameState = GameState.ModalUI; }
-            ModalState = data.mainState;
-            if (ModalState == ModalState.InfoDisplay)
+            if (data.mainState != ModalSubState.None)
+            { ModalState = gameAPI.ModalState.ModalUI; }
+            ModalSubState = data.mainState;
+            if (ModalSubState == ModalSubState.InfoDisplay)
             { ModalInfoState = data.infoState; }
-            if (ModalState == ModalState.GenericPicker)
+            if (ModalSubState == ModalSubState.GenericPicker)
             { ModalGenericPickerState = data.pickerState; }
         }
         else { Debug.LogWarning("Invalid ModalStateData (Null)"); }
@@ -102,16 +102,16 @@ public class InputManager : MonoBehaviour
     /// Will only reset gamestate back to Normal if modalLevel is '0' (internal check)
     /// </summary>
     /// <param name="modal"></param>
-    public void ResetStates(ModalState modal = ModalState.None)
+    public void ResetStates(ModalSubState modal = ModalSubState.None)
     {
-        ModalState = modal;
+        ModalSubState = modal;
         //reset gamestate only if modalLevel is 0
         if (GameManager.instance.modalGUIScript.CheckModalLevel() == 0)
         {
             //only reset back to normal if there is no longer a modal state
-            if (modal == ModalState.None)
+            if (modal == ModalSubState.None)
             {
-                GameState = GameState.Normal;
+                ModalState = gameAPI.ModalState.Normal;
                 ModalInfoState = ModalInfoSubState.None;
                 ModalGenericPickerState = ModalGenericPickerSubState.None;
             }
@@ -127,9 +127,9 @@ public class InputManager : MonoBehaviour
         float x_axis, y_axis;
 
         //Game State dependant input
-        switch (_gameState)
+        switch (_modalState)
         {
-            case GameState.Normal:
+            case gameAPI.ModalState.Normal:
                 if (Input.GetButton("ExitGame") == true)
                 {
                     //can only exit while in Normal mode -> NOTE: use Innput.inputString only for normal key presses (won't pick up non-standard keypresses)
@@ -213,11 +213,11 @@ public class InputManager : MonoBehaviour
                 }
                 break;
 
-            case GameState.ModalUI:
+            case gameAPI.ModalState.ModalUI:
                 //Hotkeys for Modal UI windows
-                switch (_modalState)
+                switch (_modalSubState)
                 {
-                    case ModalState.Outcome:
+                    case ModalSubState.Outcome:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
                             EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this, null, "InputManager.cs -> ProcessInput Cancel");
@@ -227,7 +227,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.CloseOutcomeWindow, this, null, "InputManager.cs -> ProcessInput Multipurpose");
                         }
                         break;
-                    case ModalState.Inventory:
+                    case ModalSubState.Inventory:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
                             EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessInput Cancel");
@@ -237,7 +237,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessInput Multipurpose");
                         }
                         break;
-                    case ModalState.TeamPicker:
+                    case ModalSubState.TeamPicker:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
                             EventManager.instance.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessInput Cancel");
@@ -247,7 +247,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessInput Multipurpose");
                         }
                         break;
-                    case ModalState.GenericPicker:
+                    case ModalSubState.GenericPicker:
                         switch (_modalGenericPickerState)
                         {
                             case ModalGenericPickerSubState.Normal:
@@ -275,13 +275,13 @@ public class InputManager : MonoBehaviour
                         }
                         break;
 
-                    case ModalState.ActionMenu:
+                    case ModalSubState.ActionMenu:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
                             EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "InputManager.cs -> ProcessInput Cancel");
                         }
                         break;
-                    case ModalState.InfoDisplay:
+                    case ModalSubState.InfoDisplay:
                         //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
                         if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
                         {
@@ -361,7 +361,7 @@ public class InputManager : MonoBehaviour
                             }
                         }
                         break;
-                    case ModalState.ShowMe:
+                    case ModalSubState.ShowMe:
                         //'Show Me' -> retore infoApp
                         if (Input.anyKeyDown == true)
                         { EventManager.instance.PostNotification(EventType.ShowMeRestore, this, null, "InputManager.cs -> ProcessInput ShowMe"); }
@@ -381,8 +381,8 @@ public class InputManager : MonoBehaviour
         int modalLevel = GameManager.instance.modalGUIScript.CheckModalLevel();
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
-        builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");
-        builder.AppendFormat(" ModalState -> {0}{1}", ModalState, "\n");
+        builder.AppendFormat(" GameState -> {0}{1}", ModalState, "\n");
+        builder.AppendFormat(" ModalState -> {0}{1}", ModalSubState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");
         builder.AppendFormat(" ModalInfo -> {0}{1}", ModalInfoState, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n");

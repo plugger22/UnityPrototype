@@ -372,7 +372,7 @@ public class ModalTeamPicker : MonoBehaviour
             else { Debug.LogWarning(string.Format("teamIndex \"{0}\" has exceeded limit \"{1}\"", teamIndex, limit)); }
         }
         //set states
-        ModalStateData package = new ModalStateData() { mainState = ModalState.TeamPicker };
+        ModalStateData package = new ModalStateData() { mainState = ModalSubState.TeamPicker };
         GameManager.instance.inputScript.SetModalState(package);
         Debug.LogFormat("[UI] ModalTeamPicker.cs -> SetTeamPicker{0}", "\n");
     }

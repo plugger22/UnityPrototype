@@ -42,7 +42,7 @@ public class ModalMainMenu : MonoBehaviour
     private RectTransform rectTransform;
     /*private int offset;*/
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetMainMenu
-    private ModalState modalState;                          //modal state to return to if main menu closed
+    private ModalSubState modalState;                          //modal state to return to if main menu closed
 
     //colour palette
     /*private string colourEffects;
@@ -244,7 +244,7 @@ public class ModalMainMenu : MonoBehaviour
         //set new position
         modalMenuObject.transform.position = screenPos;
         //set states
-        ModalStateData package = new ModalStateData() { mainState = ModalState.MainMenu };
+        ModalStateData package = new ModalStateData() { mainState = ModalSubState.MainMenu };
         GameManager.instance.inputScript.SetModalState(package);
         //block raycasts to gameobjects
         GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
@@ -308,7 +308,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CreateNewGame, this, null, "GameManager.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button1);
         }
@@ -417,10 +417,13 @@ public class ModalMainMenu : MonoBehaviour
     {
         modalMenuObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
-        //remove highlight from node
-        GameManager.instance.nodeScript.ToggleNodeHighlight();
-        //close Alert UI safety check (ignored if not active)
-        GameManager.instance.alertScript.CloseAlertUI();
+        
+        /*//remove highlight from node ???
+        GameManager.instance.nodeScript.ToggleNodeHighlight();*/
+
+        /*//close Alert UI safety check (ignored if not active)
+        GameManager.instance.alertScript.CloseAlertUI();*/
+
         //close Generic toolip (eg. from button)
         GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
         //set game state

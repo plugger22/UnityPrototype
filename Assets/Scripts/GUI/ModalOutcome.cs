@@ -32,7 +32,7 @@ public class ModalOutcome : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int modalLevel;                              //modal level of menu, passed in by ModalOutcomeDetails in SetModalOutcome
-    private ModalState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
+    private ModalSubState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
     private string reason;                               //reason outcome window is being used (passed on via CloseOutcomeWindow event to UseAction event for debugging
 
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
@@ -181,7 +181,7 @@ public class ModalOutcome : MonoBehaviour
                 //set position
                 modalOutcomeWindow.transform.position = screenPos;
                 //set states
-                ModalStateData package = new ModalStateData() { mainState = ModalState.Outcome };
+                ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
                 GameManager.instance.inputScript.SetModalState(package);
                 //pass through data for when the outcome window is closed
                 modalLevel = details.modalLevel;
