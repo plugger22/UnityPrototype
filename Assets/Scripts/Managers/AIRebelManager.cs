@@ -128,7 +128,7 @@ public class AIRebelManager : MonoBehaviour
 
     private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
     private bool isPlayer;                              //if true the Resistance side is also the human player side (it's AI due to an autorun)
-    private bool isWounded;
+    /*private bool isWounded;*/
     private bool isCureNeeded;                           //true if Player possesses a condition that could benefit from a cure
     private bool isCureCritical;                          //true if Player has a condition needing a cure that is on a timer, eg. Doomed condition
     private bool isPlayerStressed;                        //true only if player is stressed
@@ -167,8 +167,8 @@ public class AIRebelManager : MonoBehaviour
 
     //fast access
     private string playerName;
-    private string playerTag;                           //nickname
-    private string playerBackground;
+    /*private string playerTag;                           //nickname
+    private string playerBackground;*/
     private GlobalSide globalResistance;
     private int numOfNodes = -1;
     private int playerID = -1;
@@ -283,8 +283,8 @@ public class AIRebelManager : MonoBehaviour
         { arrayOfActorActions[i] = new List<Node>(); }
         //player (human / AI revert to human)
         playerName = GameManager.instance.playerScript.GetPlayerNameResistance();
-        playerTag = GameManager.instance.scenarioScript.scenario.leaderResistance.tag;
-        playerBackground = GameManager.instance.scenarioScript.scenario.descriptorResistance;
+        /*playerTag = GameManager.instance.scenarioScript.scenario.leaderResistance.tag;
+        playerBackground = GameManager.instance.scenarioScript.scenario.descriptorResistance;*/
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
         { isPlayer = true; }
@@ -661,7 +661,7 @@ public class AIRebelManager : MonoBehaviour
     {
         //reset all condition flags
         isPlayerStressed = false;
-        isWounded = false;
+        /*isWounded = false;*/
         stressedActorID = -1;
         questionableID = -1;
         //check for conditions
@@ -682,7 +682,7 @@ public class AIRebelManager : MonoBehaviour
                                 isPlayerStressed = true;
                                 break;
                             case "WOUNDED":
-                                isWounded = true;
+                                /*isWounded = true;*/
                                 if (actionAllowance > 1)
                                 {
                                     //Restricts actions

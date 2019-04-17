@@ -44,4 +44,16 @@ public class Campaign : ScriptableObject
         master8 = 0;
         master9 = 0;
     }
+
+    /// <summary>
+    /// returns current scenario, null if not found
+    /// </summary>
+    /// <returns></returns>
+    public Scenario GetCurrentScenario()
+    {
+        Scenario scenario = null;
+        if (currentScenario < listOfScenarios.Count)
+        { scenario = listOfScenarios[currentScenario]; }
+        return scenario;
+    }
 }

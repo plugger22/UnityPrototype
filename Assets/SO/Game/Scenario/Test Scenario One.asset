@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
   m_Name: Test Scenario One
   m_EditorClassIdentifier: 
+  tag: Cab ride to Hell
   descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
     London. Spare no effort and take no heed of collateral damage.
 

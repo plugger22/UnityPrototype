@@ -7,20 +7,20 @@ using UnityEngine;
 /// </summary>
 public class ScenarioManager : MonoBehaviour
 {
-    //NOTE: Manually assigned at present but should be autoassigned from CampaignManager.cs and be '[HideInInspector]'
-    public Scenario scenario;
+    //Auto-assigned from CampaignManager.cs and be '[HideInInspector]'
+    [HideInInspector] public Scenario scenario;
 
 
-    private string colourRebel;
+    /*private string colourRebel;
     private string colourAuthority;
     private string colourNeutral;
     private string colourNormal;
     private string colourGood;
     private string colourBad;
     private string colourGrey;
-    //private string colourAlert;
+    private string colourAlert;
     private string colourSide;
-    private string colourEnd;
+    private string colourEnd;*/
 
     /// <summary>
     /// run BEFORE LevelManager.cs
@@ -88,7 +88,7 @@ public class ScenarioManager : MonoBehaviour
         switch (eventType)
         {
             case EventType.ChangeColour:
-                SetColours();
+                /*SetColours();*/
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -96,7 +96,7 @@ public class ScenarioManager : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
     public void SetColours()
@@ -113,7 +113,7 @@ public class ScenarioManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
-    }
+    }*/
 
 
 

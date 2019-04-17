@@ -86,7 +86,7 @@ public class TargetManager : MonoBehaviour
     private string colourEnd;
 
     /// <summary>
-    /// Initial setup
+    /// Initial setup called by MissionManager.cs -> Initialise and higher up by ScenarioManager.cs -> Initialise
     /// </summary>
     public void Initialise()
     {

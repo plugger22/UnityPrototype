@@ -144,8 +144,10 @@ public class ModalMainMenu : MonoBehaviour
 
         //set up ModalActionObject
         itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
-        //tooltip at top of menu -> pass through data
-        ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();
+
+        /*//tooltip at top of menu -> pass through data
+        ModalMenuUI modal = itemDetails.GetComponent<ModalMenuUI>();*/
+
         //There can be a max of 9 buttons
         int counter = 0;
         Button tempButton;

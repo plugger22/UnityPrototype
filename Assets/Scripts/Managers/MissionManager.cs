@@ -11,7 +11,7 @@ public class MissionManager : MonoBehaviour
     [HideInInspector] public Mission mission;
 
     /// <summary>
-    /// Initialisation
+    /// Initialisation called from ScenarioManager.cs -> Initialise
     /// </summary>
     public void Initialise()
     {

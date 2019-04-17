@@ -8,7 +8,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / Scenario")]
 public class Scenario : ScriptableObject
 {
-    [Header("In-game descriptors")]
+    [Header("Descriptors")]
+    [Tooltip("Thematic name of the Scenario")]
+    public string tag;
     [TextArea] public string descriptorResistance;
     [TextArea] public string descriptorAuthority;
 
