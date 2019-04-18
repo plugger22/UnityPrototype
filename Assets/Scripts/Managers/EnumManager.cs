@@ -7,7 +7,7 @@
     //
     // - - - Game Manager - - -
     //
-    public enum GameState { None, MainMenu, StartUp, NewGame, LoadGame, PlayGame, MetaGame, ExitGame}                        //overall game state
+    public enum GameState { None, MainMenu, StartUp, Options, NewGame, LoadGame, PlayGame, MetaGame, ExitGame}                        //overall game state
     public enum WinState { None, Authority, Resistance }                                                                //none indicates nobody has yet won level
     public enum WinReason { None, CityLoyaltyMin, CityLoyaltyMax, FactionSupportMin, DoomTimerMin, MissionTimerMin, ObjectivesCompleted } //reason for Win State (from POV of winner)
     public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)
@@ -25,7 +25,7 @@
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum InventoryState { None, Gear, ReservePool}
     public enum AlignHorizontal { None, Left, Centre, Right }
-    public enum Background { None, Start, NewGame, End }             //full screen backgrounds
+    public enum Background { None, Start, NewGame, Options, End }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {

@@ -285,6 +285,8 @@ public class ModalMainMenu : MonoBehaviour
     /// <param name="detailsMain"></param>
     public void InitialiseMainMenu(ModalMainMenuDetails detailsMain)
     {
+        //game state -> save current state first
+        gameState = GameManager.instance.inputScript.GameState;
         //menu
         ModalGenericMenuDetails details = new ModalGenericMenuDetails();
         details.itemName = "Main Menu";
@@ -360,7 +362,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CreateOptions, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button3);
         }
@@ -399,7 +401,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button6);
         }
@@ -425,7 +427,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button8);
         }

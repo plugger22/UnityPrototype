@@ -183,6 +183,23 @@ public class InputManager : MonoBehaviour
                             break;
                     }
                 }
+                else if (Input.GetButton("Multipurpose") == true)
+                {
+                    switch (_gameState)
+                    {
+                        case GameState.NewGame:
+                            //close New Game background -> Debug: need to set new Game State
+                            EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, string.Format("InputManager.cs -> ProcessInput \"{0}\"", Input.inputString.ToUpper()));
+                            break;
+                        case GameState.Options:
+                            //close Options background -> Debug: need to set new Game State
+                            EventManager.instance.PostNotification(EventType.CloseOptions, this, null, string.Format("InputManager.cs -> ProcessInput \"{0}\"", Input.inputString.ToUpper()));
+                            break;
+                        default:
+                            //ignore all the rest
+                            break;
+                    }
+                }
                 else if (Input.GetButtonDown("NewTurn") == true)
                 {
                     //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up

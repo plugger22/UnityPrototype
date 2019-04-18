@@ -22,6 +22,8 @@ public class ModalGUI : MonoBehaviour
     public Image backgroundStart;
     [Tooltip("New Game option selected background")]
     public Image backgroundNewGame;
+    [Tooltip("Option screen background")]
+    public Image backgroundOptions;
     [Tooltip("Full screen background for End")]
     public Image backgroundEnd;
 
@@ -54,6 +56,7 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(modal2 != null, "Invalid modal2 (Null)");
         Debug.Assert(backgroundStart != null, "Invalid backgroundStart (Null)");
         Debug.Assert(backgroundNewGame != null, "Invalid backgroundNewGame (Null)");
+        Debug.Assert(backgroundOptions != null, "Invalid backgroundOptions (Null)");
         Debug.Assert(backgroundEnd != null, "Invalid backgroundEnd (Null)");
 
         //disable all backgrounds
@@ -138,6 +141,9 @@ public class ModalGUI : MonoBehaviour
             case Background.NewGame:
                 backgroundNewGame.gameObject.SetActive(true);
                 break;
+            case Background.Options:
+                backgroundOptions.gameObject.SetActive(true);
+                break;
             case Background.End:
                 backgroundEnd.gameObject.SetActive(true);
                 break;
@@ -161,6 +167,9 @@ public class ModalGUI : MonoBehaviour
                 break;
             case Background.NewGame:
                 backgroundNewGame.gameObject.SetActive(false);
+                break;
+            case Background.Options:
+                backgroundOptions.gameObject.SetActive(false);
                 break;
             case Background.End:
                 backgroundEnd.gameObject.SetActive(false);
