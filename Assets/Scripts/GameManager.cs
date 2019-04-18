@@ -672,6 +672,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseAutoRun()
     {
+        
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
         //start sequence

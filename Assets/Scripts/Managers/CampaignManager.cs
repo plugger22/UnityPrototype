@@ -55,7 +55,8 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
         EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessNewGame");
-
+        //change game state (allows inputManager.cs to handle relevant input)
+        GameManager.instance.inputScript.GameState = GameState.NewGame;
     }
 
     //new methods above here

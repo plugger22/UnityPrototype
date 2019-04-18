@@ -42,6 +42,7 @@ public class ModalMainMenu : MonoBehaviour
     private RectTransform rectTransform;
     /*private int offset;*/
     private int modalLevel;                                 //modal level of menu, passed in by ModalPanelDetails in SetMainMenu
+    private GameState gameState;                                //GameState to return to if main menu closed
     private ModalSubState modalState;                          //modal state to return to if main menu closed
 
     //colour palette
@@ -85,6 +86,7 @@ public class ModalMainMenu : MonoBehaviour
         /*offset = GameManager.instance.tooltipScript.tooltipOffset * 2;*/
 
         //register listener
+        EventManager.instance.AddListener(EventType.OpenMainMenu, OnEvent, "ModalMainMenu");
         EventManager.instance.AddListener(EventType.CloseMainMenu, OnEvent, "ModalMainMenu");
     }
 
@@ -114,6 +116,9 @@ public class ModalMainMenu : MonoBehaviour
         //select event type
         switch(eventType)
         {
+            case EventType.OpenMainMenu:
+                CreateDefaultMainMenu();
+                break;
             case EventType.CloseMainMenu:
                 CloseMainMenu();
                 break;
@@ -124,11 +129,32 @@ public class ModalMainMenu : MonoBehaviour
     }
 
     /// <summary>
+    /// Used to display main menu with all default options, centred, over the top of whatever, without initiating a background
+    /// NOTE: for more control ignore this event and call mainMenuScript.InitialiseMainMenu
+    /// </summary>
+    private void CreateDefaultMainMenu()
+    {
+        ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
+        {
+            alignHorizontal = AlignHorizontal.Centre,
+            background = Background.None
+        };
+        //activate menu
+        InitialiseMainMenu(detailsMain);
+    }
+
+    /// <summary>
     /// Activate modal Main Menu. Called by InitialiseMainMenu.
     /// </summary>
     /// <param name="details"></param>
     private void SetMainMenu(ModalGenericMenuDetails details)
     {
+        //game state -> save current state first
+        gameState = GameManager.instance.inputScript.GameState;
+        GameManager.instance.inputScript.GameState = GameState.MainMenu;
+        //turn off node tooltip if needs be
+        if (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == true)
+        { GameManager.instance.tooltipNodeScript.CloseTooltip("ModalMainMenu -> SetMainMenu"); }
         //activate main menu
         modalMenuObject.SetActive(true);
         //set all states to off
@@ -295,7 +321,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button0);
         }
@@ -308,7 +334,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CreateNewGame, this, null, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CreateNewGame, this, null, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button1);
         }
@@ -321,7 +347,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button2);
         }
@@ -334,7 +360,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button3);
         }
@@ -347,7 +373,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button4);
         }
@@ -360,7 +386,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button5);
         }
@@ -373,7 +399,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button6);
         }
@@ -386,7 +412,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.ExitGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button7);
         }
@@ -399,7 +425,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "GameManager.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button8);
         }
@@ -417,17 +443,13 @@ public class ModalMainMenu : MonoBehaviour
     {
         modalMenuObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
-        
-        /*//remove highlight from node ???
-        GameManager.instance.nodeScript.ToggleNodeHighlight();*/
-
-        /*//close Alert UI safety check (ignored if not active)
-        GameManager.instance.alertScript.CloseAlertUI();*/
-
         //close Generic toolip (eg. from button)
         GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
-        //set game state
+        //set modal state
         GameManager.instance.inputScript.ResetStates(modalState);
+        //revert to previous game state if necessary (menu option may have triggered a new game state already)
+        if (GameManager.instance.inputScript.GameState == GameState.MainMenu)
+        { GameManager.instance.inputScript.GameState = gameState; }
         //close background (do so regardless as not a big overhead)
         GameManager.instance.modalGUIScript.DisableBackground(Background.Start);
         Debug.LogFormat("[UI] ModalMainMenu.cs -> CloseMainMenu{0}", "\n");

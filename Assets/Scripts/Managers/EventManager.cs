@@ -17,6 +17,7 @@ public enum EventType
     //UI Menus
     CloseActionMenu,
     CloseMainMenu,
+    OpenMainMenu,
     CreateMoveMenu,
     CreateGearNodeMenu,
     CreateNewGame,

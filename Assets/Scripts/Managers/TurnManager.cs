@@ -171,6 +171,7 @@ public class TurnManager : MonoBehaviour
     public void SetAutoRun(int autoTurns)
     {
         numOfTurns = autoTurns;
+        GameManager.instance.inputScript.GameState = GameState.PlayGame;
         if (autoTurns > 0)
         {
             isAutoRun = true;
@@ -671,6 +672,9 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void Quit()
     {
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.ExitGame;
+        //switch off main info app if running
         if (myCoroutineInfoApp != null)
         { StopCoroutine(myCoroutineInfoApp); }
         //show thank you splash screen before quitting
