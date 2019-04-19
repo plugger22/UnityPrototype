@@ -1498,6 +1498,8 @@ public class LoadManager : MonoBehaviour
         if (dictOfNodes != null)
         {
             counter = 0;
+            //clear dictionary (may be a followOn level)
+            dictOfNodes.Clear();
             List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
             if (tempNodeList != null)
             {

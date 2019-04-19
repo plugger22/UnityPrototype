@@ -272,6 +272,19 @@ public class DataManager : MonoBehaviour
     }
 
     //
+    // - - - Load / Restore / FollowOn Level - - - 
+    //
+
+    /// <summary>
+    /// Clear any relevant collections prior to initialising a new level
+    /// </summary>
+    public void Reset()
+    {
+        dictOfNodeObjects.Clear();
+        dictOfConnections.Clear();
+    }
+
+    //
     // - - - Info Flow (Notifications)- - - 
     //
 

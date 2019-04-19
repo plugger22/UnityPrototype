@@ -107,14 +107,17 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// if not a new level, resets collections ready for new level
     /// </summary>
-    private void ResetData()
+    private void Reset()
     {
+        //levelManager collections
         listOfNodeObjects.Clear();
         listOfNodes.Clear();
         listOfConnections.Clear();
         listOfCoordinates.Clear();
         listOfSortedNodes.Clear();
         listOfSortedDistances.Clear();
+        //dataManager collections
+        GameManager.instance.dataScript.Reset();
     }
 
     /// <summary>
@@ -124,7 +127,7 @@ public class LevelManager : MonoBehaviour
     private void InitialiseData()
     {
         //automatically zero out all collections regardless of whether a new game or a load/restore/followOn level
-        ResetData();
+        Reset();
         //NodeArc arrays
         listOfConnArcsDefault = new List<NodeArc>[maxConnections];
         listOfConnArcsPreferred = new List<NodeArc>[maxConnections];
