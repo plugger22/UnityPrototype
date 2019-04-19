@@ -11,7 +11,7 @@ public class Node : MonoBehaviour
 {
     //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
 
-    [HideInInspector] public int nodeID;                //unique ID, sequentially derived from GameManager nodeCounter, don't skip numbers, keep it sequential, 0+
+    [HideInInspector] public int nodeID;                //unique ID, sequentially derived from NodeManager nodeCounter, don't skip numbers, keep it sequential, 0+
     [HideInInspector] public Vector3 nodePosition;      //position
     [HideInInspector] public string nodeName;           //name of node, eg. "Downtown Bronx"
     [HideInInspector] public string specialName;        //eg. name of icon, airport, harbour, town hall, etc. if node is special, ignore otherwise
@@ -539,8 +539,15 @@ public class Node : MonoBehaviour
     // - - - Neighbours
     //
 
-    public int GetNumOfNeighbours()
+    public int GetNumOfNeighbourPositions()
     { return listOfNeighbourPositions.Count; }
+
+    public int GetNumOfNeighbouringNodes()
+    { return listOfNeighbourNodes.Count; }
+
+    public int GetNumOfNearNeighbouringNodes()
+    { return listOfNearNeighbours.Count; }
+
 
     /// <summary>
     /// add neighbouring vector3 to list (can't null test a vector3)
@@ -638,6 +645,9 @@ public class Node : MonoBehaviour
         { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
         else { Debug.LogError("listOfNeighbourNodes has no records, listOfNodeID has no records -> MoveNodes not updated"); }
     }
+
+    public int GetNumOfConnections()
+    { return listOfConnections.Count; }
 
     /// <summary>
     /// Add a connection to the list of neighbouring connections

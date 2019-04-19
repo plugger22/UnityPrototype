@@ -839,7 +839,7 @@ public class AIManager : MonoBehaviour
             {
                 if (node != null)
                 {
-                    numOfConnections = node.GetNumOfNeighbours();
+                    numOfConnections = node.GetNumOfNeighbourPositions();
                     //only select nodes that have 'x' number of connections
                     if (numOfConnections >= nodeConnectionThreshold)
                     {
@@ -864,7 +864,7 @@ public class AIManager : MonoBehaviour
                     {
                         if (node != null)
                         {
-                            numOfConnections = node.GetNumOfNeighbours();
+                            numOfConnections = node.GetNumOfNeighbourPositions();
                             //only select nodes that have 'x' number of connections
                             if (numOfConnections == numSpecific)
                             {

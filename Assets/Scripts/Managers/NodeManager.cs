@@ -59,8 +59,8 @@ public class NodeManager : MonoBehaviour
     [Range(0, 3)] public int crisisSupport = 3;
 
     [HideInInspector] public int crisisPolicyModifier = 0;          //modifier to  crisisBaseChance due to Authority Policies, eg. "Curfew" 
-    [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes
-    [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections
+    [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes (reset for each new level)
+    [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections (reset for each new level)
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of human Resistance/Authority player
     [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
