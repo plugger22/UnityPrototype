@@ -18,14 +18,8 @@ public class CampaignManager : MonoBehaviour
     public void Initialise()
     {
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
-        //Assign a scenario
-        Scenario scenario = campaign.GetCurrentScenario();
-        if (scenario != null)
-        {
-            GameManager.instance.scenarioScript.scenario = scenario;
-            Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\"{1}", scenario.tag, "\n");
-        }
-        else { Debug.LogError("Invalid scenario (Null)"); }
+        Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign, ID {2}{3}", campaign.listOfScenarios.Count, campaign.tag, campaign.campaignID, "\n");
+        
         //event Listeners
         EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "CampaignManager");
@@ -36,6 +30,8 @@ public class CampaignManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "CampaignManager");
     }
+
+
 
     /// <summary>
     /// Called when an event happens
@@ -78,6 +74,10 @@ public class CampaignManager : MonoBehaviour
         }
     }
 
+    //
+    // - - - Event methods - - -
+    //
+
     /// <summary>
     /// New Game
     /// </summary>
@@ -107,7 +107,9 @@ public class CampaignManager : MonoBehaviour
     private void CloseNewGameOptions()
     {
         //create new game
-        GameManager.instance.InitialiseNewGame();
+        campaign.Reset();
+        InitialiseScenario();
+        GameManager.instance.InitialiseNewLevel();
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
         //close background
@@ -169,8 +171,10 @@ public class CampaignManager : MonoBehaviour
         //go to next scenario
         if (campaign.IncrementScenarioIndex() == true)
         {
+            //get current scenario data
+            InitialiseScenario();
             //create new game
-            GameManager.instance.InitialiseNewGame();
+            GameManager.instance.InitialiseNewLevel();
             //revert to playGame state by default
             GameManager.instance.inputScript.GameState = GameState.PlayGame;
             //close background
@@ -181,6 +185,25 @@ public class CampaignManager : MonoBehaviour
             //End of Campaign -> TO DO
             Debug.LogError("END OF CAMPAIGN (placeholder)");
         }
+    }
+
+    //
+    // - - - Initialisation - - -
+    //
+
+    /// <summary>
+    /// Get current scenario and pass to ScenarioManager.cs
+    /// </summary>
+    private void InitialiseScenario()
+    {
+        //Assign a scenario
+        Scenario scenario = campaign.GetCurrentScenario();
+        if (scenario != null)
+        {
+            GameManager.instance.scenarioScript.scenario = scenario;
+            Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n");
+        }
+        else { Debug.LogError("Invalid scenario (Null)"); }
     }
 
     //new methods above here

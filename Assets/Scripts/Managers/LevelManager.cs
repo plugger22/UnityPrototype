@@ -67,7 +67,7 @@ public class LevelManager : MonoBehaviour
     private City city;
     
     /// <summary>
-    /// Master method that drives a level
+    /// Master method that creates a level (city)
     /// </summary>
     public void Initialise()
     {
@@ -105,11 +105,26 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// if not a new level, resets collections ready for new level
+    /// </summary>
+    private void ResetData()
+    {
+        listOfNodeObjects.Clear();
+        listOfNodes.Clear();
+        listOfConnections.Clear();
+        listOfCoordinates.Clear();
+        listOfSortedNodes.Clear();
+        listOfSortedDistances.Clear();
+    }
+
+    /// <summary>
     /// populates lists of node arcs by connection number. First checks City data and, if none, uses DataManager.cs default set
     /// Also initialises level set-up data using the city first, default second approach
     /// </summary>
     private void InitialiseData()
     {
+        //automatically zero out all collections regardless of whether a new game or a load/restore/followOn level
+        ResetData();
         //NodeArc arrays
         listOfConnArcsDefault = new List<NodeArc>[maxConnections];
         listOfConnArcsPreferred = new List<NodeArc>[maxConnections];
@@ -718,7 +733,7 @@ public class LevelManager : MonoBehaviour
         List<NodeArc> tempListOfNodeArcs = new List<NodeArc>();
         /*Debug.LogFormat("LevelManager.cs -> InitialiseNodeArcs: START tempListOfNodes has {0} records{1}", tempListOfNodes.Count, "\n");*/
         //
-        // - - - MINIMIMUM FIRST
+        // - - - MINIMUM FIRST
         //
         for (int i = tempListOfNodes.Count - 1; i >= 0; i--)
         {

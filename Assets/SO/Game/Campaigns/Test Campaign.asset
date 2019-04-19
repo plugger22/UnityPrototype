@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30e33851b546764f82fb52a4bb2b10f, type: 3}
   m_Name: Test Campaign
   m_EditorClassIdentifier: 
+  tag: The French Connection
   listOfScenarios:
   - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
   campaignID: 0
-  currentScenario: 0
   master0: 0
   master1: 0
   master2: 0

@@ -9,6 +9,9 @@ using UnityEngine;
 public class Campaign : ScriptableObject
 {
 
+    [Tooltip("Name of campaign used in-game")]
+    public string tag;
+
     [Tooltip("A list of all scenarios that make up the campaign. NOTE: Scenarios are played in order from top (index 0) to bottom")]
     public List<Scenario> listOfScenarios = new List<Scenario>();
 
@@ -56,7 +59,9 @@ public class Campaign : ScriptableObject
     public bool IncrementScenarioIndex()
     {
         scenarioIndex++;
-        if (scenarioIndex < listOfScenarios.Count)
+        int count = listOfScenarios.Count;
+        Debug.LogFormat("[Cam] Campaign.SO -> IncrementScenarioIndex: scenario Index now {0} out of {1}{2}", scenarioIndex, count, "\n");
+        if (scenarioIndex < count)
         { return true; }
         return false;
     }

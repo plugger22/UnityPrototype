@@ -324,7 +324,7 @@ public class GameManager : MonoBehaviour
         //AutoRun or Campaign
         if (autoRunTurns > 0)
         {
-            InitialiseNewGame();
+            InitialiseNewLevel();
             //commence autorun
             turnScript.SetAutoRun(autoRunTurns);
         }
@@ -674,7 +674,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// start an immediate autoRun that bypasses the campaign meta game and jumps straight into a level
     /// </summary>
-    public void InitialiseNewGame()
+    public void InitialiseNewLevel()
     {
         
         //lock mouse to prevent mouseover events occuring prior to full initialisation
