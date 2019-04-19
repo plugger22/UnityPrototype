@@ -20,12 +20,16 @@ public class ModalGUI : MonoBehaviour
     [Header("Backgrounds")]
     [Tooltip("Full screen background for start")]
     public Image backgroundStart;
-    [Tooltip("New Game option selected background")]
+    [Tooltip("Create a New Game background")]
     public Image backgroundNewGame;
+    [Tooltip("New Game Options selected background")]
+    public Image backgroundNewGameOptions;
     [Tooltip("Option screen background")]
     public Image backgroundOptions;
-    [Tooltip("Full screen background for End")]
-    public Image backgroundEnd;
+    [Tooltip("End Level (summary) background")]
+    public Image backgroundEndLevel;
+    [Tooltip("MetaGame (between levels) background")]
+    public Image backgroundMetaGame;
 
     private int modalLevel;             //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
 
@@ -56,12 +60,18 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(modal2 != null, "Invalid modal2 (Null)");
         Debug.Assert(backgroundStart != null, "Invalid backgroundStart (Null)");
         Debug.Assert(backgroundNewGame != null, "Invalid backgroundNewGame (Null)");
+        Debug.Assert(backgroundNewGameOptions != null, "Invalid backgroundNewGameOptions (Null)");
         Debug.Assert(backgroundOptions != null, "Invalid backgroundOptions (Null)");
-        Debug.Assert(backgroundEnd != null, "Invalid backgroundEnd (Null)");
+        Debug.Assert(backgroundEndLevel != null, "Invalid backgroundEndLevel (Null)");
+        Debug.Assert(backgroundMetaGame != null, "Invalid backgroundMetaGame (Null)");
 
         //disable all backgrounds
         DisableBackground(Background.Start);
-        DisableBackground(Background.End);
+        DisableBackground(Background.EndLevel);
+        DisableBackground(Background.NewGame);
+        DisableBackground(Background.NewGameOptions);
+        DisableBackground(Background.Options);
+        DisableBackground(Background.MetaGame);
         
     }
 
@@ -141,11 +151,17 @@ public class ModalGUI : MonoBehaviour
             case Background.NewGame:
                 backgroundNewGame.gameObject.SetActive(true);
                 break;
+            case Background.NewGameOptions:
+                backgroundNewGameOptions.gameObject.SetActive(true);
+                break;
             case Background.Options:
                 backgroundOptions.gameObject.SetActive(true);
                 break;
-            case Background.End:
-                backgroundEnd.gameObject.SetActive(true);
+            case Background.EndLevel:
+                backgroundEndLevel.gameObject.SetActive(true);
+                break;
+            case Background.MetaGame:
+                backgroundMetaGame.gameObject.SetActive(true);
                 break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
@@ -168,11 +184,17 @@ public class ModalGUI : MonoBehaviour
             case Background.NewGame:
                 backgroundNewGame.gameObject.SetActive(false);
                 break;
+            case Background.NewGameOptions:
+                backgroundNewGameOptions.gameObject.SetActive(false);
+                break;
             case Background.Options:
                 backgroundOptions.gameObject.SetActive(false);
                 break;
-            case Background.End:
-                backgroundEnd.gameObject.SetActive(false);
+            case Background.EndLevel:
+                backgroundEndLevel.gameObject.SetActive(false);
+                break;
+            case Background.MetaGame:
+                backgroundMetaGame.gameObject.SetActive(false);
                 break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);

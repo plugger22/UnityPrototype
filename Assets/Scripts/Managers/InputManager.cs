@@ -140,28 +140,20 @@ public class InputManager : MonoBehaviour
     {
         float x_axis, y_axis;
 
-        //Game State dependant input
+        //Modal and Game State dependant input -> NOTE: use Input.inputString only for normal key presses (won't pick up non-standard keypresses)
         switch (_modalState)
         {
             //
             // - - - Normal Modal state - - -
             //
             case ModalState.Normal:
-                if (Input.GetButton("ExitGame") == true)
+                if (Input.GetButton("ExitLevel") == true)
                 {
-                    //can only exit while in Normal mode -> NOTE: use Input.inputString only for normal key presses (won't pick up non-standard keypresses)
+                    //can only exit while in Normal mode
                     switch (_gameState)
                     {
-                        case GameState.MainMenu:
-                            //close main menu
-                            EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, string.Format("InputManager.cs -> ProcessInput Exit \"{0}\"", Input.inputString.ToUpper()));
-                            break;
-                        case GameState.ExitGame:
-                            //do nothing, already exiting game
-                            break;
-                        default:
-                            //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
-                            EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, string.Format("InputManager.cs -> ProcessInput Exit \"{0}\"", Input.inputString.ToUpper()));
+                        case GameState.PlayGame:
+                            EventManager.instance.PostNotification(EventType.ExitLevel, this, null, string.Format("InputManager.cs -> ProcessInput ExitLevel \"{0}\"", Input.inputString.ToUpper()));
                             break;
                     }
                 }
@@ -172,14 +164,14 @@ public class InputManager : MonoBehaviour
                     {
                         case GameState.MainMenu:
                             //close main menu
-                            EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, string.Format("InputManager.cs -> ProcessInput Exit \"{0}\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "InputManager.cs -> ProcessInput Exit \"Cancel (ESC)\"");
                             break;
                         case GameState.ExitGame:
                             //do nothing, already exiting game
                             break;
                         default:
                             //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
-                            EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, string.Format("InputManager.cs -> ProcessInput Exit \"{0}\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessInput Exit \"Cancel (ESC)\"");
                             break;
                     }
                 }
@@ -188,12 +180,20 @@ public class InputManager : MonoBehaviour
                     switch (_gameState)
                     {
                         case GameState.NewGame:
-                            //close New Game background -> Debug: need to set new Game State
-                            EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, string.Format("InputManager.cs -> ProcessInput \"{0}\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.NewGameOptions, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            break;
+                        case GameState.NewGameOptions:
+                            EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
                             break;
                         case GameState.Options:
                             //close Options background -> Debug: need to set new Game State
-                            EventManager.instance.PostNotification(EventType.CloseOptions, this, null, string.Format("InputManager.cs -> ProcessInput \"{0}\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
+                            break;
+                        case GameState.ExitLevel:
+                            EventManager.instance.PostNotification(EventType.CreateMetaGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            break;
+                        case GameState.MetaGame:
+                            EventManager.instance.PostNotification(EventType.CloseMetaGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
                             break;
                         default:
                             //ignore all the rest

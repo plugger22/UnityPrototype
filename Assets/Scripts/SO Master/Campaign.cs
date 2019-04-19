@@ -14,7 +14,7 @@ public class Campaign : ScriptableObject
 
 
     [HideInInspector] public int campaignID;
-    [HideInInspector] public int currentScenario;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
+    
     //master variables used to progress Story elements
     [HideInInspector] public int master0;
     [HideInInspector] public int master1;
@@ -27,12 +27,15 @@ public class Campaign : ScriptableObject
     [HideInInspector] public int master8;
     [HideInInspector] public int master9;
 
+
+    private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
+
     /// <summary>
     /// Reset all relevant data for a new campaign
     /// </summary>
     public void Reset()
     {
-        currentScenario = 0;
+        scenarioIndex = 0;
         master0 = 0;
         master1 = 0;
         master2 = 0;
@@ -45,6 +48,20 @@ public class Campaign : ScriptableObject
         master9 = 0;
     }
 
+
+    /// <summary>
+    /// adds +1 to scenario index. Returns true if a valid scenario available, false if end of campaign
+    /// </summary>
+    /// <returns></returns>
+    public bool IncrementScenarioIndex()
+    {
+        scenarioIndex++;
+        if (scenarioIndex < listOfScenarios.Count)
+        { return true; }
+        return false;
+    }
+
+
     /// <summary>
     /// returns current scenario, null if not found
     /// </summary>
@@ -52,8 +69,11 @@ public class Campaign : ScriptableObject
     public Scenario GetCurrentScenario()
     {
         Scenario scenario = null;
-        if (currentScenario < listOfScenarios.Count)
-        { scenario = listOfScenarios[currentScenario]; }
+        if (scenarioIndex < listOfScenarios.Count)
+        { scenario = listOfScenarios[scenarioIndex]; }
         return scenario;
     }
+
+
+    //new methods above here
 }

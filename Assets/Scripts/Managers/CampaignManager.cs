@@ -27,10 +27,14 @@ public class CampaignManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid scenario (Null)"); }
         //event Listeners
+        EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CreateOptions, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CloseNewGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CloseOptions, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.CreateMetaGame, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "CampaignManager");
     }
 
     /// <summary>
@@ -44,17 +48,29 @@ public class CampaignManager : MonoBehaviour
         //Detect Event type
         switch (eventType)
         {
+            case EventType.NewGameOptions:
+                ProcessNewGameOptions();
+                break;
             case EventType.CreateNewGame:
                 ProcessNewGame();
                 break;
             case EventType.CloseNewGame:
-                CloseNewGame();
+                CloseNewGameOptions();
                 break;
             case EventType.CreateOptions:
                 ProcessOptions((GameState)Param);
                 break;
             case EventType.CloseOptions:
                 CloseOptions();
+                break;
+            case EventType.ExitLevel:
+                ProcessEndLevel();
+                break;
+            case EventType.CreateMetaGame:
+                ProcessMetaGame();
+                break;
+            case EventType.CloseMetaGame:
+                CloseMetaGame();
                 break;
             default:
                 Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
@@ -67,7 +83,7 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     private void ProcessNewGame()
     {
-        //open NewGame background
+        //set background
         GameManager.instance.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
         EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessNewGame");
@@ -75,15 +91,27 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = GameState.NewGame;
     }
 
+    private void ProcessNewGameOptions()
+    {
+        //open NewGame background
+        GameManager.instance.modalGUIScript.SetBackground(Background.NewGameOptions);
+        //close previous background
+        GameManager.instance.modalGUIScript.DisableBackground(Background.NewGame);
+        //change game state (allows inputManager.cs to handle relevant input)
+        GameManager.instance.inputScript.GameState = GameState.NewGameOptions;
+    }
+
     /// <summary>
     /// exit New Game screen
     /// </summary>
-    private void CloseNewGame()
+    private void CloseNewGameOptions()
     {
+        //create new game
+        GameManager.instance.InitialiseNewGame();
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
         //close background
-        GameManager.instance.modalGUIScript.DisableBackground(Background.NewGame);
+        GameManager.instance.modalGUIScript.DisableBackground(Background.NewGameOptions);
     }
 
     /// <summary>
@@ -109,6 +137,50 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = gameState;
         //close background
         GameManager.instance.modalGUIScript.DisableBackground(Background.Options);
+    }
+
+    /// <summary>
+    /// Exit level and display summary background
+    /// </summary>
+    private void ProcessEndLevel()
+    {
+        //Open end level background
+        GameManager.instance.modalGUIScript.SetBackground(Background.EndLevel);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.ExitLevel;
+    }
+
+    /// <summary>
+    /// Start Meta Game
+    /// </summary>
+    private void ProcessMetaGame()
+    {
+        //Open end level background
+        GameManager.instance.modalGUIScript.SetBackground(Background.MetaGame);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.MetaGame;
+    }
+
+    /// <summary>
+    /// Close Meta Game and start up new level (debug)
+    /// </summary>
+    private void CloseMetaGame()
+    {
+        //go to next scenario
+        if (campaign.IncrementScenarioIndex() == true)
+        {
+            //create new game
+            GameManager.instance.InitialiseNewGame();
+            //revert to playGame state by default
+            GameManager.instance.inputScript.GameState = GameState.PlayGame;
+            //close background
+            GameManager.instance.modalGUIScript.DisableBackground(Background.MetaGame);
+        }
+        else
+        {
+            //End of Campaign -> TO DO
+            Debug.LogError("END OF CAMPAIGN (placeholder)");
+        }
     }
 
     //new methods above here

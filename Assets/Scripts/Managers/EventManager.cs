@@ -11,19 +11,23 @@ public enum EventType
     //Options
     ChangeColour,
     ChangeSide,
-    ChangeLevel,
     UseAction,
+    //Game State
+    ExitLevel,
     ExitGame,
+    CreateNewGame,
+    NewGameOptions,
+    CloseNewGame,
+    CreateOptions,
+    CloseOptions,
+    CreateMetaGame,
+    CloseMetaGame,
     //UI Menus
     CloseActionMenu,
     CloseMainMenu,
     OpenMainMenu,
     CreateMoveMenu,
     CreateGearNodeMenu,
-    CreateNewGame,
-    CloseNewGame,
-    CreateOptions,
-    CloseOptions,
     //UI Windows
     CloseOutcomeWindow,
     OpenOutcomeWindow,

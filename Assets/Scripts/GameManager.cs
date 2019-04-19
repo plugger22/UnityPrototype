@@ -323,7 +323,11 @@ public class GameManager : MonoBehaviour
         }
         //AutoRun or Campaign
         if (autoRunTurns > 0)
-        { InitialiseAutoRun(); }
+        {
+            InitialiseNewGame();
+            //commence autorun
+            turnScript.SetAutoRun(autoRunTurns);
+        }
         else
         {
             InitialiseMainMenu();
@@ -666,11 +670,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region InitialiseAutoRun
+    #region InitialiseNewGame
     /// <summary>
     /// start an immediate autoRun that bypasses the campaign meta game and jumps straight into a level
     /// </summary>
-    private void InitialiseAutoRun()
+    public void InitialiseNewGame()
     {
         
         //lock mouse to prevent mouseover events occuring prior to full initialisation
@@ -695,8 +699,7 @@ public class GameManager : MonoBehaviour
         nodeScript.NodeRedraw = true;
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
-        //commence autorun
-        turnScript.SetAutoRun(autoRunTurns);
+
         //free mouse for normal operations
         Cursor.lockState = CursorLockMode.None;
     }
