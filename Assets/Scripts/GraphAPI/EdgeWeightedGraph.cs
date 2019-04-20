@@ -37,10 +37,6 @@ namespace GraphAPI
         public void AddEdge(Edge edge)
         {
             int v = edge.GetEither();
-
-            if (v == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-            { Debug.LogFormat("[Tst] EdgeWeightedGraph.cs -> AddEdge: node1 {0} added to ListOfAdj[{1}]{2}", v, v, "\n"); }
-
             //int w = edge.GetOther(v);
             //add edge to two lists, one for each node end
             listOfAdj[v].Add(edge);

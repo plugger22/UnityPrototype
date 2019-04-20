@@ -180,7 +180,7 @@ public class Node : MonoBehaviour
     /// <param name="archetype"></param>
     public void Initialise(NodeArc archetype)
     {
-        Arc = archetype;
+        Arc = archetype;        
     }
 	
 	private void Awake ()

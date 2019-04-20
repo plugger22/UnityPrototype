@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
     private Node nodeEnd;
     private Graph graph;                //used for analysis and pathing
     private EdgeWeightedGraph ewGraph;  //used to generate connection undirectional graph (with an MST foundation)
+    private LazyPrimMST msTree;
 
     private BoxCollider boxColliderStart;
     private BoxCollider boxColliderEnd;    
@@ -102,6 +103,7 @@ public class LevelManager : MonoBehaviour
         Random.InitState(seed);
         string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.name, city.country.name) + Environment.NewLine + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
+        Debug.LogFormat("[Cit] LevelManager.cs -> InitialiseLevelRandomSeed: City seed {0} -> {1}, {2}", seed, city.name, city.country.name);
     }
 
     /// <summary>
@@ -109,6 +111,21 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void Reset()
     {
+        //graphs
+        graph = null;
+        ewGraph = null;
+        msTree = null;
+        //prefab masters
+        if (nodeHolder != null)
+        {
+            foreach (Transform child in nodeHolder)
+            { Destroy(child.gameObject); }
+        }
+        if (connectionHolder != null)
+        {
+            foreach (Transform child in connectionHolder)
+            { Destroy(child.gameObject); }
+        }
         //levelManager collections
         listOfNodeObjects.Clear();
         listOfNodes.Clear();
@@ -179,7 +196,9 @@ public class LevelManager : MonoBehaviour
         int numOfTimesToCheck = 20;
         Vector3 randomPos = Vector3.zero; //default value
         bool validPos;
-        nodeHolder = new GameObject("MasterNode").transform;
+        //you only want one instance
+        if (nodeHolder == null)
+        { nodeHolder = new GameObject("MasterNode").transform; }
         Node nodeTemp;
         //array of mirror cells to grid where if true, a node exists. Used for optimising placement routine.
         bool[,] arrayOfFlags = new bool[size, size];
@@ -272,7 +291,7 @@ public class LevelManager : MonoBehaviour
                 listOfNodes.Add(nodeTemp);
                 listOfCoordinates.Add(randomPos);
 
-                if (nodeTemp.nodeID == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                if (nodeTemp.nodeID == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: nodeID {0}, position {1}  {2}  {3}{4}", nodeTemp.nodeID, randomPos.x, randomPos.y, randomPos.z, "\n"); }
 
                 //add to dictionary of Nodes
@@ -367,7 +386,7 @@ public class LevelManager : MonoBehaviour
                 subListDistances.Add(pair.Value);
             }
             //add sublists to main list 
-            if (index == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+            if (index == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
             { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseSortedDistances: nodeID {0}, there are {1} sortedNodes & {2} sortedDistances{3}", index, subListNodes.Count, subListDistances.Count, "\n"); }
             listOfSortedNodes.Add(subListNodes);
             listOfSortedDistances.Add(subListDistances);
@@ -454,8 +473,11 @@ public class LevelManager : MonoBehaviour
     private void PlaceConnection(int node1, int node2, Vector3 pos1, Vector3 pos2, ConnectionType secLvl)
     {
 
-        if (node1 == 19 || node2 == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-        { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} method invoked{2}", node1, node2, "\n"); }
+        if (node1 == 17 || node2 == 17)
+        {
+            if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+            { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} method invoked{2}", node1, node2, "\n"); }
+        }
 
         //get the mid point between the two nodes
         Vector3 connectionPosition = Vector3.Lerp(pos1, pos2, 0.50f);
@@ -483,8 +505,11 @@ public class LevelManager : MonoBehaviour
         if (GameManager.instance.dataScript.AddConnection(connectionTemp) == true)
         {
 
-            if (node1 == 19 || node2 == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-            { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} ADD CONNECTION{2}", node1, node2, "\n"); }
+            if (node1 == 17 || node2 == 17)
+            {
+                if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} ADD CONNECTION{2}", node1, node2, "\n"); }
+            }
 
             listOfConnections.Add(instanceConnection);
             //add to neighbours list
@@ -542,7 +567,7 @@ public class LevelManager : MonoBehaviour
             if (listOfIndexes.Count > 0)
             {
 
-                if (v == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: nodeID {0}, removing {1} sortedNodes & {2} sortedDistances{3}", v, listOfIndexes.Count, listOfIndexes.Count, "\n"); }
 
                 //reverse loop removing indexes
@@ -703,7 +728,9 @@ public class LevelManager : MonoBehaviour
         int idOne, idTwo;
         Vector3 vOne, vTwo;
         float weight;
-        connectionHolder = new GameObject("MasterConnection").transform;
+        //you only want one instance
+        if (connectionHolder == null)
+        { connectionHolder = new GameObject("MasterConnection").transform; }
 
         //add edges to graph
         for (int v = 0; v < numOfNodes; v++)
@@ -718,7 +745,7 @@ public class LevelManager : MonoBehaviour
                 Edge e = new Edge(v, idOne, weight);
                 ewGraph.AddEdge(e);
 
-                if (v == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeID {0}, Edge added -> NodeID {1}, weight {2}{3}", v, idOne, weight, "\n"); }
 
                 //Debug.Log("Added -> " + e.GetString());
@@ -726,9 +753,9 @@ public class LevelManager : MonoBehaviour
         }
         Debug.Log("Nodes " + numOfNodes + "  Edges " + ewGraph.E_total);
         //create MST
-        LazyPrimMST mst = new LazyPrimMST(ewGraph);
+        msTree = new LazyPrimMST(ewGraph);
         //List of Edges
-        List<Edge> tempList = mst.GetEdges();
+        List<Edge> tempList = msTree.GetEdges();
         //loop list of Edges and draw connections
         foreach(Edge edge in tempList)
         {
@@ -739,7 +766,7 @@ public class LevelManager : MonoBehaviour
             vOne = listOfCoordinates[idTwo];
             vTwo = listOfCoordinates[idOne];
 
-            if (idTwo == 19 || idOne == 19)
+            if (idTwo == 17 || idOne == 17)
             {
                 if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: node1 {0} to node2 {1} Call PlaceConnections{2}", idTwo, idOne, "\n"); }

@@ -92,7 +92,7 @@ public class DataManager : MonoBehaviour
     private List<ActorArc> authorityActorArcs = new List<ActorArc>();
     private List<ActorArc> resistanceActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
-
+    //move nodes
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
@@ -280,11 +280,27 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void Reset()
     {
+        graph = null;
+        //arrays
+        Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
+        Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
+        Array.Clear(arrayOfActorsPresent, 0, arrayOfActorsPresent.Length);
+        //lists
+        listOfNodes.Clear();
+        listOfConnections.Clear();
+        listOfNodesByType.Clear();
+        listOfMostConnectedNodes.Clear();
+        listOfDecisionNodes.Clear();
+        listOfLoiterNodes.Clear();
+        listOfCureNodes.Clear();
+        listOfCrisisNodes.Clear();
+        listOfCrisisSecurity.Clear();
+        listOfCrisisSupport.Clear();
+        listOfCrisisStability.Clear();
+        //dictionaries
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
         dictOfConnections.Clear();
-        listOfNodes.Clear();
-        listOfConnections.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
 }

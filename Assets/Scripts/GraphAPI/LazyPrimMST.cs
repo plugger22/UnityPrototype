@@ -27,6 +27,11 @@ namespace GraphAPI
         public LazyPrimMST(EdgeWeightedGraph graph)
         {
             int v, w;
+            //reset collections (in case of followOn level)
+            arrayOfMarked = null;
+            queueMST = null;
+            priorityQueue = null;
+
             this.graph = graph;
             if (graph != null)
             {
@@ -44,21 +49,28 @@ namespace GraphAPI
                     v = edge.GetEither();
                     w = edge.GetOther(v);
 
-                    if (v == 19 || w == 19)
-                        { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: node1 {0} to node2 {1} Edge present{2}", v, w, "\n"); }
+                    if (v == 17 || w == 17)
+                    {
+                        if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                        { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: nodeID {0} to nodeID {1} Edge present{2}", v, w, "\n"); }
 
+                    }
                     //skip if ineligible
                     if (arrayOfMarked[v] && arrayOfMarked[w])
                     {
-                        if (v == 19 || w == 19)
-                        { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: node1 {0} to node2 {1} SKIPPED (arrayOfmarked){2}", v, w, "\n"); }
-
+                        if (v == 17 || w == 17)
+                        {
+                            if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                            { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: nodeID {0} to nodeID {1} SKIPPED (arrayOfmarked){2}", v, w, "\n"); }
+                        }
                         continue;
                     }
 
-                    if (v == 19 || w == 19)
-                    { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: node1 {0} to node2 {1} Edge added to TREE{2}", v, w, "\n"); }
-
+                    if (v == 17 || w == 17)
+                    {
+                        if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                        { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: nodeID {0} to nodeID {1} Edge added to TREE{2}", v, w, "\n"); }
+                    }
 
                     //add edge to tree
                     queueMST.Enqueue(edge);
@@ -79,11 +91,14 @@ namespace GraphAPI
         {
             //Mark v and add to pq all edges from v to unmarked vertices
             arrayOfMarked[v] = true;
-            foreach(Edge edge in graph.GetAdjList(v))
+            foreach (Edge edge in graph.GetAdjList(v))
             {
 
-                if (v == 19)
+                if (v == 17)
+                {
+                    if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
                     { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Visit: node1 {0} Edge present in ListOfAdj{1}", v, "\n"); }
+                }
 
                 if (arrayOfMarked[edge.GetOther(v)] == false)
                 {
