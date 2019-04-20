@@ -215,7 +215,7 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Stuff that is done after level Manager.SetUp
+    /// Stuff that is done after level Manager.SetUp. Called by GameManager.cs -> LEVEL startup sequenc
     /// </summary>
     public void InitialiseLate()
     {

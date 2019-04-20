@@ -27,10 +27,11 @@ namespace GraphAPI
         public LazyPrimMST(EdgeWeightedGraph graph)
         {
             int v, w;
-            //reset collections (in case of followOn level)
+
+            /*//reset collections (in case of followOn level)
             arrayOfMarked = null;
             queueMST = null;
-            priorityQueue = null;
+            priorityQueue = null;*/
 
             this.graph = graph;
             if (graph != null)

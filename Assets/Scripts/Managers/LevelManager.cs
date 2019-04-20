@@ -115,7 +115,7 @@ public class LevelManager : MonoBehaviour
         graph = null;
         ewGraph = null;
         msTree = null;
-        //prefab masters
+        //prefab masters, destroy parent along with children
         if (nodeHolder != null)
         {
             foreach (Transform child in nodeHolder)
@@ -126,6 +126,11 @@ public class LevelManager : MonoBehaviour
             foreach (Transform child in connectionHolder)
             { Destroy(child.gameObject); }
         }
+        /*if (connectionHolder != null)
+        {
+            foreach (GameObject child in connectionHolder)
+            { Destroy(child.gameObject); }
+        }*/
         //levelManager collections
         listOfNodeObjects.Clear();
         listOfNodes.Clear();
@@ -728,6 +733,9 @@ public class LevelManager : MonoBehaviour
         int idOne, idTwo;
         Vector3 vOne, vTwo;
         float weight;
+
+        Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeHolder has {0} children{1}", nodeHolder.childCount, "\n");
+
         //you only want one instance
         if (connectionHolder == null)
         { connectionHolder = new GameObject("MasterConnection").transform; }
