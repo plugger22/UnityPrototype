@@ -115,37 +115,26 @@ public class LevelManager : MonoBehaviour
         graph = null;
         ewGraph = null;
         msTree = null;
-        //prefab masters, destroy parent along with children
-        /*if (nodeHolder != null)
+        //remove any prefab node and connection clones from previous level
+        if (nodeHolder != null)
         {
-            if (nodeHolder.childCount > 0)
-            { StartCoroutine("DestroyClones"); }
-        }*/
-
-        //NOTE: I'm destroying the compoent or the object?
-        if (listOfNodes.Count > 0)
-            foreach (Node node in listOfNodes)
-            { node.DestroyNode(); }
-        foreach (GameObject conn in listOfConnections)
-        { conn.GetComponent<Connection>().DestroyConnection(); }
-        /*if (nodeHolder != null)
-        {
-            foreach (Transform child in nodeHolder)
-            { Destroy(child.gameObject); }
+            if (nodeHolder.childCount > 0 && listOfNodes.Count > 0)
+            {
+                for (int i = listOfNodes.Count - 1; i >= 0; i--)
+                { GameManager.instance.SafeDestroy(listOfNodes[i].gameObject); }
+            }
         }
         if (connectionHolder != null)
         {
-            foreach (Transform child in connectionHolder)
-            { Destroy(child.gameObject); }
-        }*/
+            if (connectionHolder.childCount > 0 && listOfConnections.Count > 0)
+            {
+                for (int i = listOfConnections.Count - 1; i >= 0; i--)
+                { GameManager.instance.SafeDestroy(listOfConnections[i]); }
+            }
+        }
 
-        /*if (connectionHolder != null)
-        {
-            foreach (GameObject child in connectionHolder)
-            { Destroy(child.gameObject); }
-        }*/
 
-        //need to pause to allow the clones to be destroyed (kicks in after next update cycle)
+        /*//need to pause to allow the clones to be destroyed (kicks in after next update cycle)
         int escapeCounter = 0;
         if (nodeHolder != null && connectionHolder != null)
         {
@@ -159,7 +148,7 @@ public class LevelManager : MonoBehaviour
                 }
             }
             while (nodeHolder.childCount > 0 && connectionHolder.childCount > 0);
-        }
+        }*/
 
         instanceNode = null;
         instanceConnection = null;
@@ -179,23 +168,6 @@ public class LevelManager : MonoBehaviour
         GameManager.instance.nodeScript.connCounter = 0;
 
     }
-
-    /// <summary>
-    /// Coroutine to destroy node and connection clones in the event of a followOn level
-    /// </summary>
-    /// <returns></returns>
-    /*IEnumerator DestroyClones()
-    {
-        //Node clones
-        foreach (Transform child in nodeHolder)
-        { Destroy(child.gameObject); }
-        //Connection clones
-        foreach (Transform child in connectionHolder)
-        { Destroy(child.gameObject); }
-        Debug.LogFormat("[Tst] LevelManager.cs -> DestroyClones: nodeHolder has {0} clones, connectionHolder has {1} clones{2}", nodeHolder.childCount, connectionHolder.childCount, "\n");
-        //need to wait in order for destroy to work
-        yield return new WaitForEndOfFrame();
-    }*/
 
     /// <summary>
     /// populates lists of node arcs by connection number. First checks City data and, if none, uses DataManager.cs default set

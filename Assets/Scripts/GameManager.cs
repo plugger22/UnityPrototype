@@ -763,5 +763,19 @@ public class GameManager : MonoBehaviour
     { Random.state = devState; }
     #endregion
 
+    #region Safe Destroy
+    /// <summary>
+    /// Destory a prefab clone safely
+    /// </summary>
+    /// <param name="obj"></param>
+    public void SafeDestroy(GameObject obj)
+    {
+        obj.transform.parent = null;
+        obj.name = "$disposed";
+        Destroy(obj);
+        obj.SetActive(false);
+    }
+    #endregion
+
     //place methods above here
 }
