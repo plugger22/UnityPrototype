@@ -19,7 +19,7 @@ MonoBehaviour:
   descriptorAuthority: 
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   city: {fileID: 11400000, guid: 028f2bbc2bbda2244a371c4f7237c3db, type: 2}
-  seedCity: 765
+  seedCity: 7652
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
   leaderAuthority: {fileID: 11400000, guid: 9768b5680a5445847b2a3e54b3577cc1, type: 2}
   approvalStartRebelHQ: 5

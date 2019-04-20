@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Priority_Queue;
 using System.Linq;
+using gameAPI;
 
 namespace GraphAPI
 {
@@ -42,9 +43,23 @@ namespace GraphAPI
                     //edge from pq
                     v = edge.GetEither();
                     w = edge.GetOther(v);
+
+                    if (v == 19 || w == 19)
+                        { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: node1 {0} to node2 {1} Edge present{2}", v, w, "\n"); }
+
                     //skip if ineligible
-                    if(arrayOfMarked[v] && arrayOfMarked[w])
-                    { continue; }
+                    if (arrayOfMarked[v] && arrayOfMarked[w])
+                    {
+                        if (v == 19 || w == 19)
+                        { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: node1 {0} to node2 {1} SKIPPED (arrayOfmarked){2}", v, w, "\n"); }
+
+                        continue;
+                    }
+
+                    if (v == 19 || w == 19)
+                    { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Constructor: node1 {0} to node2 {1} Edge added to TREE{2}", v, w, "\n"); }
+
+
                     //add edge to tree
                     queueMST.Enqueue(edge);
                     //add vertex to tree, either v or w
@@ -66,6 +81,10 @@ namespace GraphAPI
             arrayOfMarked[v] = true;
             foreach(Edge edge in graph.GetAdjList(v))
             {
+
+                if (v == 19)
+                    { Debug.LogFormat("[Tst] LazyPrimMST.cs -> Visit: node1 {0} Edge present in ListOfAdj{1}", v, "\n"); }
+
                 if (arrayOfMarked[edge.GetOther(v)] == false)
                 {
                     priorityQueue.Enqueue(edge, edge.GetWeight());

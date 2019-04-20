@@ -281,8 +281,13 @@ public class DataManager : MonoBehaviour
     public void Reset()
     {
         dictOfNodeObjects.Clear();
+        dictOfNodes.Clear();
         dictOfConnections.Clear();
-    }
+        listOfNodes.Clear();
+        listOfConnections.Clear();
+        dictOfNodeDUnweighted.Clear();
+        dictOfNodeDWeighted.Clear();
+}
 
     //
     // - - - Info Flow (Notifications)- - - 

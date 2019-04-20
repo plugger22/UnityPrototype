@@ -453,6 +453,10 @@ public class LevelManager : MonoBehaviour
     /// <param name="rotation"></param>
     private void PlaceConnection(int node1, int node2, Vector3 pos1, Vector3 pos2, ConnectionType secLvl)
     {
+
+        if (node1 == 19 || node2 == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+        { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} method invoked{2}", node1, node2, "\n"); }
+
         //get the mid point between the two nodes
         Vector3 connectionPosition = Vector3.Lerp(pos1, pos2, 0.50f);
         //get the distance between the two nodes (cylinders are two units high and one unit wide, hence, if laid on side, need to divide distance by 2 to get actual scale y_length)
@@ -478,6 +482,10 @@ public class LevelManager : MonoBehaviour
         //add to collections
         if (GameManager.instance.dataScript.AddConnection(connectionTemp) == true)
         {
+
+            if (node1 == 19 || node2 == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+            { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} ADD CONNECTION{2}", node1, node2, "\n"); }
+
             listOfConnections.Add(instanceConnection);
             //add to neighbours list
             nodeStart = listOfNodeObjects[node1].GetComponent<Node>();
@@ -533,8 +541,10 @@ public class LevelManager : MonoBehaviour
             //check if any records need removing
             if (listOfIndexes.Count > 0)
             {
+
                 if (v == 19 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: nodeID {0}, removing {1} sortedNodes & {2} sortedDistances{3}", v, listOfIndexes.Count, listOfIndexes.Count, "\n"); }
+
                 //reverse loop removing indexes
                 for (int i = listOfIndexes.Count - 1; i >= 0; i--)
                 {
@@ -728,6 +738,13 @@ public class LevelManager : MonoBehaviour
             //get the two node positions
             vOne = listOfCoordinates[idTwo];
             vTwo = listOfCoordinates[idOne];
+
+            if (idTwo == 19 || idOne == 19)
+            {
+                if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: node1 {0} to node2 {1} Call PlaceConnections{2}", idTwo, idOne, "\n"); }
+            }
+
             //draw connection
             PlaceConnection(idTwo, idOne, vOne, vTwo, ConnectionType.LOW);
         }
