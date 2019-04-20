@@ -1438,5 +1438,11 @@ public class Node : MonoBehaviour
         return difference;
     }
 
+    /// <summary>
+    /// Called to destroy node instance (clone of prefab)
+    /// </summary>
+    public void DestroyNode()
+    { Destroy(this.gameObject); }
+
     //place methods above here
 }

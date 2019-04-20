@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
     private int connectionFrequency;
     private int connectionSecurity;
 
-    private GameObject instance;
+    private GameObject instanceNode;
     private GameObject instanceConnection;
     private Transform nodeHolder;
     private Transform connectionHolder;
@@ -116,7 +116,19 @@ public class LevelManager : MonoBehaviour
         ewGraph = null;
         msTree = null;
         //prefab masters, destroy parent along with children
-        if (nodeHolder != null)
+        /*if (nodeHolder != null)
+        {
+            if (nodeHolder.childCount > 0)
+            { StartCoroutine("DestroyClones"); }
+        }*/
+
+        //NOTE: I'm destroying the compoent or the object?
+        if (listOfNodes.Count > 0)
+            foreach (Node node in listOfNodes)
+            { node.DestroyNode(); }
+        foreach (GameObject conn in listOfConnections)
+        { conn.GetComponent<Connection>().DestroyConnection(); }
+        /*if (nodeHolder != null)
         {
             foreach (Transform child in nodeHolder)
             { Destroy(child.gameObject); }
@@ -125,12 +137,34 @@ public class LevelManager : MonoBehaviour
         {
             foreach (Transform child in connectionHolder)
             { Destroy(child.gameObject); }
-        }
+        }*/
+
         /*if (connectionHolder != null)
         {
             foreach (GameObject child in connectionHolder)
             { Destroy(child.gameObject); }
         }*/
+
+        //need to pause to allow the clones to be destroyed (kicks in after next update cycle)
+        int escapeCounter = 0;
+        if (nodeHolder != null && connectionHolder != null)
+        {
+            do
+            {
+                escapeCounter++;
+                if (escapeCounter > 50000)
+                {
+                    Debug.LogFormat("[Tst] LevelManager.cs -> Reset: ESCAPE COUNTER activated{0}", "\n");
+                    break;
+                }
+            }
+            while (nodeHolder.childCount > 0 && connectionHolder.childCount > 0);
+        }
+
+        instanceNode = null;
+        instanceConnection = null;
+        nodeStart = null;
+        nodeEnd = null;
         //levelManager collections
         listOfNodeObjects.Clear();
         listOfNodes.Clear();
@@ -143,7 +177,25 @@ public class LevelManager : MonoBehaviour
         //reset node & connection ID counters
         GameManager.instance.nodeScript.nodeCounter = 0;
         GameManager.instance.nodeScript.connCounter = 0;
+
     }
+
+    /// <summary>
+    /// Coroutine to destroy node and connection clones in the event of a followOn level
+    /// </summary>
+    /// <returns></returns>
+    /*IEnumerator DestroyClones()
+    {
+        //Node clones
+        foreach (Transform child in nodeHolder)
+        { Destroy(child.gameObject); }
+        //Connection clones
+        foreach (Transform child in connectionHolder)
+        { Destroy(child.gameObject); }
+        Debug.LogFormat("[Tst] LevelManager.cs -> DestroyClones: nodeHolder has {0} clones, connectionHolder has {1} clones{2}", nodeHolder.childCount, connectionHolder.childCount, "\n");
+        //need to wait in order for destroy to work
+        yield return new WaitForEndOfFrame();
+    }*/
 
     /// <summary>
     /// populates lists of node arcs by connection number. First checks City data and, if none, uses DataManager.cs default set
@@ -286,13 +338,13 @@ public class LevelManager : MonoBehaviour
                 //update array if required
                 arrayOfFlags[random_x, random_z] = true;
                 //create node from prefab
-                instance = Instantiate(node, randomPos, Quaternion.identity) as GameObject;
-                instance.transform.SetParent(nodeHolder);
+                instanceNode = Instantiate(node, randomPos, Quaternion.identity) as GameObject;
+                instanceNode.transform.SetParent(nodeHolder);
                 //assign nodeID
-                nodeTemp = instance.GetComponent<Node>();
+                nodeTemp = instanceNode.GetComponent<Node>();
                 nodeTemp.nodeID = GameManager.instance.nodeScript.nodeCounter++;
                 //add to node list & add to coord list for lookups
-                listOfNodeObjects.Add(instance);
+                listOfNodeObjects.Add(instanceNode);
                 listOfNodes.Add(nodeTemp);
                 listOfCoordinates.Add(randomPos);
 
@@ -300,7 +352,7 @@ public class LevelManager : MonoBehaviour
                 { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: nodeID {0}, position {1}  {2}  {3}{4}", nodeTemp.nodeID, randomPos.x, randomPos.y, randomPos.z, "\n"); }
 
                 //add to dictionary of Nodes
-                GameManager.instance.dataScript.AddNodeObject(nodeTemp.nodeID, instance);
+                GameManager.instance.dataScript.AddNodeObject(nodeTemp.nodeID, instanceNode);
             }
         }
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
@@ -733,12 +785,11 @@ public class LevelManager : MonoBehaviour
         int idOne, idTwo;
         Vector3 vOne, vTwo;
         float weight;
-
-        Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeHolder has {0} children{1}", nodeHolder.childCount, "\n");
-
         //you only want one instance
         if (connectionHolder == null)
         { connectionHolder = new GameObject("MasterConnection").transform; }
+
+        Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeHolder has {0} clones, connectionHolder has {1} clones{2}", nodeHolder.childCount, connectionHolder.childCount, "\n");
 
         //add edges to graph
         for (int v = 0; v < numOfNodes; v++)

@@ -475,4 +475,14 @@ public class Connection : MonoBehaviour
             }
         }
     }
+
+
+    /// <summary>
+    /// Called to destroy connection instance (clone of prefab)
+    /// </summary>
+    public void DestroyConnection()
+    { Destroy(this.gameObject); }
+
+
+    //new methods above here
 }
