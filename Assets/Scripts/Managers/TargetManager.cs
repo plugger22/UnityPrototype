@@ -104,6 +104,8 @@ public class TargetManager : MonoBehaviour
         Debug.Assert(activateMedLimit > 0, "Invalid activateMedimit (Zero or Less");
         Debug.Assert(activateHighLimit > 0, "Invalid activateHighLimit (Zero or Less");
         Debug.Assert(activateExtremeLimit > 0, "Invalid activateExtremeLimit (Zero or Less");
+        //set up generic target array
+        InitialiseGenericTargetArray();
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
         foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
         { listOfFactors.Add((TargetFactors)factor); }
@@ -123,6 +125,50 @@ public class TargetManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericTargetInfo, OnEvent, "TargetManager");
     }
 
+
+    /// <summary>
+    /// initialise Generic target array
+    /// </summary>
+    private void InitialiseGenericTargetArray()
+    {
+        int index;
+        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        if (dictOfTargets != null)
+        {
+            GameManager.instance.dataScript.InitialiseArrayOfGenericTargets();
+            List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+            if (arrayOfGenericTargets != null)
+            {
+                //assign targets to pools
+                foreach (var target in dictOfTargets)
+                {
+                    if (target.Value.targetType != null)
+                    {
+                        switch (target.Value.targetType.name)
+                        {
+                            case "Generic":
+                                if (target.Value.nodeArc != null)
+                                {
+                                    //only level one targets placed in array
+                                    if (target.Value.targetLevel == 1)
+                                    {
+                                        index = target.Value.nodeArc.nodeArcID;
+                                        arrayOfGenericTargets[index].Add(target.Value.targetID);
+                                        /*Debug.LogFormat("[Tst] LoadManager.cs -> InitialiseEarly: Target \"{0}\", nodeArcID {1}, added to arrayOfGenericTargets[{2}]{3}", target.Value.name,
+                                            target.Value.nodeArc.nodeArcID, index, "\n");*/
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid nodeArc for Generic target {0}", target.Value.name); }
+                                break;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid TargetType (Null) for target \"{0}\"", target.Value.name); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfTargets (Null)"); }
+    }
 
     /// <summary>
     /// Event handler

@@ -525,7 +525,7 @@ public class LoadManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly()
     {
-        int numArray, numDict, counter, index;
+        int numArray, numDict, counter;
         GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
         GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
         //
@@ -772,7 +772,8 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict == counter, "Mismatch on count");
             Debug.Assert(numDict > 0, "No Targets have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Targets count, array {0}, dict {1}", numArray, numDict));
-            //initialise Generic target array
+
+            /*//initialise Generic target array -> EDIT: moved to TargetManager.cs -> Initialise -> InitialiseGenericTargetArray
             GameManager.instance.dataScript.InitialiseArrayOfGenericTargets();
             List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
             if (arrayOfGenericTargets != null)
@@ -792,8 +793,6 @@ public class LoadManager : MonoBehaviour
                                     {
                                         index = target.Value.nodeArc.nodeArcID;
                                         arrayOfGenericTargets[index].Add(target.Value.targetID);
-                                        /*Debug.LogFormat("[Tst] LoadManager.cs -> InitialiseEarly: Target \"{0}\", nodeArcID {1}, added to arrayOfGenericTargets[{2}]{3}", target.Value.name,
-                                            target.Value.nodeArc.nodeArcID, index, "\n");*/
                                     }
                                 }
                                 else { Debug.LogWarningFormat("Invalid nodeArc for Generic target {0}", target.Value.name); }
@@ -804,7 +803,8 @@ public class LoadManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid TargetType (Null) for target \"{0}\"", target.Value.name); }
                 }
             }
-            else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
+            else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }*/
+
         }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
         //
@@ -1533,24 +1533,28 @@ public class LoadManager : MonoBehaviour
         // - - - Help - - -
         //
         Dictionary<string, HelpData> dictOfHelp = GameManager.instance.dataScript.GetDictOfHelpData();
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.CreateItemDataHelp();
-        int count = listOfHelp.Count;
-        if (count > 0)
+        //load only if not already present
+        if (dictOfHelp.Count == 0)
         {
-            counter = 0;
-            for (int index = 0; index < count; index++)
+            List<HelpData> listOfHelp = GameManager.instance.helpScript.CreateItemDataHelp();
+            int count = listOfHelp.Count;
+            if (count > 0)
             {
-                //add to dictionary
-                try { dictOfHelp.Add(listOfHelp[index].tag, listOfHelp[index]); counter++; }
-                catch (ArgumentNullException)
-                { Debug.LogErrorFormat("Invalid HelpData (Null) for listOfHelp[{0}]", index); }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid HelpData (duplicate) tag \"{0}\" for listOfHelp[\"{1}\"]", listOfHelp[index].tag, index); }
+                counter = 0;
+                for (int index = 0; index < count; index++)
+                {
+                    //add to dictionary
+                    try { dictOfHelp.Add(listOfHelp[index].tag, listOfHelp[index]); counter++; }
+                    catch (ArgumentNullException)
+                    { Debug.LogErrorFormat("Invalid HelpData (Null) for listOfHelp[{0}]", index); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid HelpData (duplicate) tag \"{0}\" for listOfHelp[\"{1}\"]", listOfHelp[index].tag, index); }
+                }
+                Debug.Assert(dictOfHelp.Count == count, "Mismatch on count between dictOfHelp and listOfHelp");
+                Debug.LogFormat("[Loa] InitialiseLate -> listOfHelp has {0} entries{1}", counter, "\n");
             }
-            Debug.Assert(dictOfHelp.Count == count, "Mismatch on count between dictOfHelp and listOfHelp");
-            Debug.LogFormat("[Loa] InitialiseLate -> listOfHelp has {0} entries{1}", counter, "\n");
+            else { Debug.LogError("Invalid listOfHelp (Empty)"); }
         }
-        else { Debug.LogError("Invalid listOfHelp (Empty)"); }
     }
 
     #endregion

@@ -201,7 +201,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
-    private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();                      //Key -> (int)StatType, Value -> statistic
+    private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();            //Key -> (int)StatType, Value -> statistic
     private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
 
@@ -285,6 +285,8 @@ public class DataManager : MonoBehaviour
         Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
         Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
         Array.Clear(arrayOfActorsPresent, 0, arrayOfActorsPresent.Length);
+        if (arrayOfGenericTargets != null)
+        { Array.Clear(arrayOfGenericTargets, 0, arrayOfGenericTargets.Length); }
         //lists
         listOfNodes.Clear();
         listOfConnections.Clear();
@@ -297,12 +299,23 @@ public class DataManager : MonoBehaviour
         listOfCrisisSecurity.Clear();
         listOfCrisisSupport.Clear();
         listOfCrisisStability.Clear();
+        targetPoolActive.Clear();
+        targetPoolLive.Clear();
+        targetPoolOutstanding.Clear();
+        targetPoolDone.Clear();
+        listOfNodesWithTargets.Clear();
         //dictionaries
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
         dictOfConnections.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
+        dictOfStatistics.Clear();
+        dictOfNodeDUnweighted.Clear();
+        dictOfNodeDWeighted.Clear();
+        dictOfDijkstraUnweighted.Clear();
+        dictOfDijkstraWeighted.Clear();
+        dictOfTargets.Clear();
 }
 
     //
@@ -5741,6 +5754,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid StatType (None)"); }
         return statValue;
     }
+
 
     //
     // - - - Scenarios - - -
