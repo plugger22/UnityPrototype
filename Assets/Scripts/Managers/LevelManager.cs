@@ -132,24 +132,6 @@ public class LevelManager : MonoBehaviour
                 { GameManager.instance.SafeDestroy(listOfConnections[i]); }
             }
         }
-
-
-        /*//need to pause to allow the clones to be destroyed (kicks in after next update cycle)
-        int escapeCounter = 0;
-        if (nodeHolder != null && connectionHolder != null)
-        {
-            do
-            {
-                escapeCounter++;
-                if (escapeCounter > 50000)
-                {
-                    Debug.LogFormat("[Tst] LevelManager.cs -> Reset: ESCAPE COUNTER activated{0}", "\n");
-                    break;
-                }
-            }
-            while (nodeHolder.childCount > 0 && connectionHolder.childCount > 0);
-        }*/
-
         instanceNode = null;
         instanceConnection = null;
         nodeStart = null;
@@ -166,7 +148,9 @@ public class LevelManager : MonoBehaviour
         //reset node & connection ID counters
         GameManager.instance.nodeScript.nodeCounter = 0;
         GameManager.instance.nodeScript.connCounter = 0;
-
+        //UI elements
+        GameManager.instance.cityInfoScript.cityInfoObject.SetActive(false);
+        GameManager.instance.aiDisplayScript.aiDisplayObject.SetActive(false);
     }
 
     /// <summary>
