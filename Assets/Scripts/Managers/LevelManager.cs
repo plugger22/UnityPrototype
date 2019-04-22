@@ -320,8 +320,8 @@ public class LevelManager : MonoBehaviour
                 listOfNodes.Add(nodeTemp);
                 listOfCoordinates.Add(randomPos);
 
-                if (nodeTemp.nodeID == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: nodeID {0}, position {1}  {2}  {3}{4}", nodeTemp.nodeID, randomPos.x, randomPos.y, randomPos.z, "\n"); }
+                /*if (nodeTemp.nodeID == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: nodeID {0}, position {1}  {2}  {3}{4}", nodeTemp.nodeID, randomPos.x, randomPos.y, randomPos.z, "\n"); }*/
 
                 //add to dictionary of Nodes
                 GameManager.instance.dataScript.AddNodeObject(nodeTemp.nodeID, instanceNode);
@@ -415,11 +415,15 @@ public class LevelManager : MonoBehaviour
                 subListDistances.Add(pair.Value);
             }
             //add sublists to main list 
-            if (index == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-            { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseSortedDistances: nodeID {0}, there are {1} sortedNodes & {2} sortedDistances{3}", index, subListNodes.Count, subListDistances.Count, "\n"); }
+            
+            /*if (index == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+            { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseSortedDistances: nodeID {0}, there are {1} sortedNodes & {2} sortedDistances{3}", index, subListNodes.Count, subListDistances.Count, "\n"); }*/
+
             listOfSortedNodes.Add(subListNodes);
             listOfSortedDistances.Add(subListDistances);
+
             //Debug.Log("ListOfSortedDistance -> Index " + index + " added " + subList.Count + " entries -> " + subList[0] + ", " + subList[1] + ", " + subList[2] + ", " + subList[3] + ", " + subList[4]);
+            
             //clear collections
             tempDict.Clear();
         }
@@ -502,11 +506,11 @@ public class LevelManager : MonoBehaviour
     private void PlaceConnection(int node1, int node2, Vector3 pos1, Vector3 pos2, ConnectionType secLvl)
     {
 
-        if (node1 == 17 || node2 == 17)
+        /*if (node1 == 17 || node2 == 17)
         {
             if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
             { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} method invoked{2}", node1, node2, "\n"); }
-        }
+        }*/
 
         //get the mid point between the two nodes
         Vector3 connectionPosition = Vector3.Lerp(pos1, pos2, 0.50f);
@@ -534,11 +538,11 @@ public class LevelManager : MonoBehaviour
         if (GameManager.instance.dataScript.AddConnection(connectionTemp) == true)
         {
 
-            if (node1 == 17 || node2 == 17)
+            /*if (node1 == 17 || node2 == 17)
             {
                 if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} ADD CONNECTION{2}", node1, node2, "\n"); }
-            }
+            }*/
 
             listOfConnections.Add(instanceConnection);
             //add to neighbours list
@@ -596,8 +600,8 @@ public class LevelManager : MonoBehaviour
             if (listOfIndexes.Count > 0)
             {
 
-                if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-                { Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: nodeID {0}, removing {1} sortedNodes & {2} sortedDistances{3}", v, listOfIndexes.Count, listOfIndexes.Count, "\n"); }
+                /*if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                { Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: nodeID {0}, removing {1} sortedNodes & {2} sortedDistances{3}", v, listOfIndexes.Count, listOfIndexes.Count, "\n"); }*/
 
                 //reverse loop removing indexes
                 for (int i = listOfIndexes.Count - 1; i >= 0; i--)
@@ -761,13 +765,13 @@ public class LevelManager : MonoBehaviour
         if (connectionHolder == null)
         { connectionHolder = new GameObject("MasterConnection").transform; }
 
-        Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeHolder has {0} clones, connectionHolder has {1} clones{2}", nodeHolder.childCount, connectionHolder.childCount, "\n");
+        /*Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeHolder has {0} clones, connectionHolder has {1} clones{2}", nodeHolder.childCount, connectionHolder.childCount, "\n");*/
 
         //add edges to graph
         for (int v = 0; v < numOfNodes; v++)
         {
-            if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
-            { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeID {0}, there are {1} sortedNodes{2}", v, listOfSortedNodes[v].Count, "\n"); }
+            /*if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+            { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeID {0}, there are {1} sortedNodes{2}", v, listOfSortedNodes[v].Count, "\n"); }*/
 
             for (int w = 0; w < listOfSortedNodes[v].Count; w++)
             {
@@ -776,8 +780,8 @@ public class LevelManager : MonoBehaviour
                 Edge e = new Edge(v, idOne, weight);
                 ewGraph.AddEdge(e);
 
-                if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeID {0}, Edge added -> NodeID {1}, weight {2}{3}", v, idOne, weight, "\n"); }
+                /*if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeID {0}, Edge added -> NodeID {1}, weight {2}{3}", v, idOne, weight, "\n"); }*/
 
                 //Debug.Log("Added -> " + e.GetString());
             }
@@ -797,11 +801,11 @@ public class LevelManager : MonoBehaviour
             vOne = listOfCoordinates[idTwo];
             vTwo = listOfCoordinates[idOne];
 
-            if (idTwo == 17 || idOne == 17)
+            /*if (idTwo == 17 || idOne == 17)
             {
                 if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: node1 {0} to node2 {1} Call PlaceConnections{2}", idTwo, idOne, "\n"); }
-            }
+            }*/
 
             //draw connection
             PlaceConnection(idTwo, idOne, vOne, vTwo, ConnectionType.LOW);
@@ -838,11 +842,13 @@ public class LevelManager : MonoBehaviour
             {
                 numConnections = node.GetNumOfNeighbourPositions();
                 numConnections = Mathf.Min(5, numConnections) - 1;
-                if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+                
+                /*if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 {
                     Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodeArc: nodeID {0} has {1} Neighbours, {2} Near Neighbours, {3} Positions & {4} Connections{5}", node.nodeID, node.GetNumOfNeighbouringNodes(),
                         node.GetNumOfNearNeighbouringNodes(), node.GetNumOfNeighbourPositions(), node.GetNumOfConnections(), "\n");
-                }
+                }*/
+
                 //get list of NodeArcs for this number of connections (Preferred)
                 tempListOfNodeArcs = listOfConnArcsPreferred[numConnections];
                 //loop list looking for unassigned nodeArcs
