@@ -363,238 +363,242 @@ public class GameManager : MonoBehaviour
         // - - - Global Methods
         //
         //PreLoad Manager 
-        startMethod.handler = GameManager.instance.preloadScript.Initialise;
+        startMethod.handler = preloadScript.Initialise;
         startMethod.className = "PreLoadManager";
         listOfGlobalMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
-        startMethod.handler = GameManager.instance.loadScript.InitialiseStart;
+        startMethod.handler = loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
         listOfGlobalMethods.Add(startMethod);
 #if (UNITY_EDITOR)
         //SO Checker (After LoadManager.cs / Optional)
         if (isValidateSO == true)
         {
-            startMethod.handler = GameManager.instance.validateScript.ValidateSO;
+            startMethod.handler = validateScript.ValidateSO;
             startMethod.className = "ValidationManager (SO)";
             listOfGlobalMethods.Add(startMethod);
         }
 #endif
         //Global Manager -> immediately after dataScript.InitialiseStart and before dataScript.InitialiseEarly 
-        startMethod.handler = GameManager.instance.globalScript.Initialise;
+        startMethod.handler = globalScript.Initialise;
         startMethod.className = "GlobalManager";
         listOfGlobalMethods.Add(startMethod);
         //Colour Manager
-        startMethod.handler = GameManager.instance.colourScript.Initialise;
+        startMethod.handler = colourScript.Initialise;
         startMethod.className = "ColourManager";
         listOfGlobalMethods.Add(startMethod);
         //Message Manager -> after globalScript and before a lot of other stuff (pre-start messages need to be initialised for side)
-        startMethod.handler = GameManager.instance.messageScript.InitialiseEarly;
+        startMethod.handler = messageScript.InitialiseEarly;
         startMethod.className = "MessageManager";
         listOfGlobalMethods.Add(startMethod);
         //ItemData Manager
-        startMethod.handler = GameManager.instance.itemDataScript.Initialise;
+        startMethod.handler = itemDataScript.Initialise;
         startMethod.className = "ItemDataManager";
         listOfGlobalMethods.Add(startMethod);
         //ModalGUI
-        startMethod.handler = GameManager.instance.modalGUIScript.Initialise;
+        startMethod.handler = modalGUIScript.Initialise;
         startMethod.className = "ModalGUI";
         listOfGlobalMethods.Add(startMethod);
         //Actor Manager -> PreInitialise
-        startMethod.handler = GameManager.instance.actorScript.PreInitialiseActors;
+        startMethod.handler = actorScript.PreInitialiseActors;
         startMethod.className = "ActorManager";
         listOfGlobalMethods.Add(startMethod);
         //Load Manager -> InitialiseEarly
-        startMethod.handler = GameManager.instance.loadScript.InitialiseEarly;
+        startMethod.handler = loadScript.InitialiseEarly;
         startMethod.className = "LoadManager";
         listOfGlobalMethods.Add(startMethod);
         //GUI Manager -> before any actor scripts (actorScript.PreInitialiseActors is O.K to be earlier)
-        startMethod.handler = GameManager.instance.guiScript.Initialise;
+        startMethod.handler = guiScript.Initialise;
         startMethod.className = "GUIManager";
         listOfGlobalMethods.Add(startMethod);
         //Help Manager -> before LoadManager.cs InitialiseLate
-        startMethod.handler = GameManager.instance.helpScript.Initialise;
+        startMethod.handler = helpScript.Initialise;
         startMethod.className = "HelpManager";
         listOfGlobalMethods.Add(startMethod);
         //Input Manager
-        startMethod.handler = GameManager.instance.inputScript.Initialise;
+        startMethod.handler = inputScript.Initialise;
         startMethod.className = "InputManager";
         listOfGlobalMethods.Add(startMethod);
         //
         // - - - Game methods - - -
         //
         //Meta Manager
-        startMethod.handler = GameManager.instance.metaScript.Initialise;
+        startMethod.handler = metaScript.Initialise;
         startMethod.className = "MetaManager";
         listOfGameMethods.Add(startMethod);
         //Campaign Manager
-        startMethod.handler = GameManager.instance.campaignScript.Initialise;
+        startMethod.handler = campaignScript.Initialise;
         startMethod.className = "CampaignManager";
         listOfGameMethods.Add(startMethod);
         //
         // - - - Level methods - - -
         //
+        //Reset Data prior to new level
+        startMethod.handler = ResetLevelData;
+        startMethod.className = "Reset Level Data";
+        listOfLevelMethods.Add(startMethod);
         //Scenario Manager InitialiseEarly -> before level & Side Managers
-        startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
+        startMethod.handler = scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
         listOfLevelMethods.Add(startMethod);
         //Tooltip Node
-        startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
+        startMethod.handler = tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
         listOfLevelMethods.Add(startMethod);
         //Side Manager -> after scenarioManager
-        startMethod.handler = GameManager.instance.sideScript.Initialise;
+        startMethod.handler = sideScript.Initialise;
         startMethod.className = "SideManager";
         listOfLevelMethods.Add(startMethod);
         //Objective Manager
-        startMethod.handler = GameManager.instance.objectiveScript.Initialise;
+        startMethod.handler = objectiveScript.Initialise;
         startMethod.className = "ObjectiveManager";
         listOfLevelMethods.Add(startMethod);
         //Actor Panel UI -> before actorScript.Initialise
-        startMethod.handler = GameManager.instance.actorPanelScript.Initialise;
+        startMethod.handler = actorPanelScript.Initialise;
         startMethod.className = "ActorPanelUI";
         listOfLevelMethods.Add(startMethod);
         //Base Panel UI -> before CityInfo.InitialiseLate
-        startMethod.handler = GameManager.instance.basePanelScript.Initialise;
+        startMethod.handler = basePanelScript.Initialise;
         startMethod.className = "BasePanelUI";
         listOfLevelMethods.Add(startMethod);
         //Actor Manager -> before DataManager.cs & NodeManager.cs
-        startMethod.handler = GameManager.instance.actorScript.Initialise;
+        startMethod.handler = actorScript.Initialise;
         startMethod.className = "ActorManager";
         listOfLevelMethods.Add(startMethod);
         //Level Manager
-        startMethod.handler = GameManager.instance.levelScript.Initialise;
+        startMethod.handler = levelScript.Initialise;
         startMethod.className = "LevelManager";
         listOfLevelMethods.Add(startMethod);
         //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
-        startMethod.handler = GameManager.instance.loadScript.InitialiseLate;
+        startMethod.handler = loadScript.InitialiseLate;
         startMethod.className = "LoadManager";
         listOfLevelMethods.Add(startMethod);
         //Data Manager -> InitialiseLate -> immediately after LoadScript.Initialise
-        startMethod.handler = GameManager.instance.dataScript.InitialiseLate;
+        startMethod.handler = dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfLevelMethods.Add(startMethod);
         //Statistic Manager -> Initialise -> after DataManager
-        startMethod.handler = GameManager.instance.statScript.Initialise;
+        startMethod.handler = statScript.Initialise;
         startMethod.className = "StatisticManager";
         listOfLevelMethods.Add(startMethod);
         //Dijkstra Manager -> Initialise -> after dataScript & LevelScript
-        startMethod.handler = GameManager.instance.dijkstraScript.Initialise;
+        startMethod.handler = dijkstraScript.Initialise;
         startMethod.className = "DijkstraManager";
         listOfLevelMethods.Add(startMethod);
         //Faction Manager
-        startMethod.handler = GameManager.instance.factionScript.Initialise;
+        startMethod.handler = factionScript.Initialise;
         startMethod.className = "FactionManager";
         listOfLevelMethods.Add(startMethod);
         //AI Manager -> after factionScript, before ScenarioManager -> InitialiseLate
-        startMethod.handler = GameManager.instance.aiScript.Initialise;
+        startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";
         listOfLevelMethods.Add(startMethod);
         //Scenario Manager -> InitialiseLate -> after levelScript.Initialise
-        startMethod.handler = GameManager.instance.scenarioScript.InitialiseLate;
+        startMethod.handler = scenarioScript.InitialiseLate;
         startMethod.className = "ScenarioManager Late";
         listOfLevelMethods.Add(startMethod);
         //Message Manager -> InitialseLate -> after ScenarioManager
-        startMethod.handler = GameManager.instance.messageScript.InitialiseLate;
+        startMethod.handler = messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
         listOfLevelMethods.Add(startMethod);
         //Secret Manager -> after dataScript and before playerScript
-        startMethod.handler = GameManager.instance.secretScript.Initialise;
+        startMethod.handler = secretScript.Initialise;
         startMethod.className = "SecretManager";
         listOfLevelMethods.Add(startMethod);
         //Contact Manager -> before ActorManager.cs InitialiseLate
-        startMethod.handler = GameManager.instance.contactScript.Initialise;
+        startMethod.handler = contactScript.Initialise;
         startMethod.className = "ContactManager";
         listOfLevelMethods.Add(startMethod);
         //Actor Manager -> after DataManager.cs & before NodeManager.cs
-        startMethod.handler = GameManager.instance.actorScript.InitialiseLate;
+        startMethod.handler = actorScript.InitialiseLate;
         startMethod.className = "ActorManager";
         listOfLevelMethods.Add(startMethod);
         //Action Manager
-        startMethod.handler = GameManager.instance.actionScript.Initialise;
+        startMethod.handler = actionScript.Initialise;
         startMethod.className = "ActionManager";
         listOfLevelMethods.Add(startMethod);
         //Node Manager
-        startMethod.handler = GameManager.instance.nodeScript.Initialise;
+        startMethod.handler = nodeScript.Initialise;
         startMethod.className = "NodeManager";
         listOfLevelMethods.Add(startMethod);
         //Effect Manager -> after nodeScript
-        startMethod.handler = GameManager.instance.effectScript.Initialise;
+        startMethod.handler = effectScript.Initialise;
         startMethod.className = "EffectManager";
         listOfLevelMethods.Add(startMethod);
         //Team Manager
-        startMethod.handler = GameManager.instance.teamScript.Initialise;
+        startMethod.handler = teamScript.Initialise;
         startMethod.className = "TeamManager";
         listOfLevelMethods.Add(startMethod);
         //Turn Manager
-        startMethod.handler = GameManager.instance.turnScript.Initialise;
+        startMethod.handler = turnScript.Initialise;
         startMethod.className = "TurnManager";
         listOfLevelMethods.Add(startMethod);
         //Gear Manager
-        startMethod.handler = GameManager.instance.gearScript.Initialise;
+        startMethod.handler = gearScript.Initialise;
         startMethod.className = "GearManager";
         listOfLevelMethods.Add(startMethod);
         //Team Picker
-        startMethod.handler = GameManager.instance.teamPickerScript.Initialise;
+        startMethod.handler = teamPickerScript.Initialise;
         startMethod.className = "TeamPickerUI";
         listOfLevelMethods.Add(startMethod);
         //Capture Manager
-        startMethod.handler = GameManager.instance.captureScript.Initialise;
+        startMethod.handler = captureScript.Initialise;
         startMethod.className = "CaptureManager";
         listOfLevelMethods.Add(startMethod);
         //Authority Manager
-        startMethod.handler = GameManager.instance.authorityScript.Initialise;
+        startMethod.handler = authorityScript.Initialise;
         startMethod.className = "AuthorityManager";
         listOfLevelMethods.Add(startMethod);
         //Player Manager
-        startMethod.handler = GameManager.instance.playerScript.Initialise;
+        startMethod.handler = playerScript.Initialise;
         startMethod.className = "PlayerManager";
         listOfLevelMethods.Add(startMethod);
         //Rebel AI Manager -> after Player Manager
-        startMethod.handler = GameManager.instance.aiRebelScript.Initialise;
+        startMethod.handler = aiRebelScript.Initialise;
         startMethod.className = "AIRebelManager";
         listOfLevelMethods.Add(startMethod);
         //Trait Manager
-        startMethod.handler = GameManager.instance.traitScript.Initialise;
+        startMethod.handler = traitScript.Initialise;
         startMethod.className = "TraitManager";
         listOfLevelMethods.Add(startMethod);
         //Connection Manager
-        startMethod.handler = GameManager.instance.connScript.Initialise;
+        startMethod.handler = connScript.Initialise;
         startMethod.className = "ConnectionManager";
         listOfLevelMethods.Add(startMethod);
         //
         // - - - UI methods - - -
         //
         //City Info UI
-        startMethod.handler = GameManager.instance.cityInfoScript.Initialise;
+        startMethod.handler = cityInfoScript.Initialise;
         startMethod.className = "CityInfoUI";
         listOfUIMethods.Add(startMethod);
         //Main Info UI
-        startMethod.handler = GameManager.instance.mainInfoScript.Initialise;
+        startMethod.handler = mainInfoScript.Initialise;
         startMethod.className = "MainInfoUI";
         listOfUIMethods.Add(startMethod);
         //AI Display UI 
-        startMethod.handler = GameManager.instance.aiDisplayScript.Initialise;
+        startMethod.handler = aiDisplayScript.Initialise;
         startMethod.className = "AIDisplayUI";
         listOfUIMethods.Add(startMethod);
         //AI SideTab UI -> after AI Display UI
-        startMethod.handler = GameManager.instance.aiSideTabScript.Initialise;
+        startMethod.handler = aiSideTabScript.Initialise;
         startMethod.className = "AISideTabUI";
         listOfUIMethods.Add(startMethod);
         //Widget Top UI
-        startMethod.handler = GameManager.instance.widgetTopScript.Initialise;
+        startMethod.handler = widgetTopScript.Initialise;
         startMethod.className = "WidgetTopUI";
         listOfUIMethods.Add(startMethod);
         //
         // - - - Debug methods - - -
         //
         //Debug Graphics Manager
-        startMethod.handler = GameManager.instance.debugGraphicsScript.Initialise;
+        startMethod.handler = debugGraphicsScript.Initialise;
         startMethod.className = "DebugGraphicManager";
         listOfDebugMethods.Add(startMethod);
         //data Validation (Last / Optional)
         if (isValidateData == true)
         {
-            startMethod.handler = GameManager.instance.validateScript.Initialise;
+            startMethod.handler = validateScript.Initialise;
             startMethod.className = "ValidationManager (Content)";
             listOfDebugMethods.Add(startMethod);
         }
@@ -749,6 +753,21 @@ public class GameManager : MonoBehaviour
     }
 
 
+    #region ResetLevelData
+    /// <summary>
+    /// reset all relevant data prior to a new level
+    /// </summary>
+    private void ResetLevelData()
+    {
+        levelScript.Reset();
+        dataScript.Reset();
+        nodeScript.Reset();
+        actorScript.Reset();
+        contactScript.Reset();
+    }
+    #endregion
+
+
     #region Random Seed
     /// <summary>
     /// used to save random seedDev sequence state prior to changing the seed
@@ -762,6 +781,7 @@ public class GameManager : MonoBehaviour
     public void RestoreRandomDevState()
     { Random.state = devState; }
     #endregion
+
 
     #region Safe Destroy
     /// <summary>

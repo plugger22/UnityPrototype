@@ -215,8 +215,10 @@ public class EventManager : MonoBehaviour
         //New item to be added. Check for existing event type key. If one exists, add to list
         if (dictOfListeners.TryGetValue(eventType, out ListenList))
         {
-            //List exists, so add new item
-            ListenList.Add(Listener);
+            //List exists, so add new item (if not already present -> prevents duplicates in the case of a followOn level)
+            if (ListenList.Exists(x => x == Listener) == false)
+            { ListenList.Add(Listener); }
+            /*else { Debug.LogFormat("[Tst] EventManager.cs -> AddListeners: {0} NOT added (duplicate){1}", eventType, "\n"); }*/
         }
         else
         {

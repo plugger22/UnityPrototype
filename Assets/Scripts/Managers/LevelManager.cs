@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// if not a new level, resets collections ready for new level
     /// </summary>
-    private void Reset()
+    public void Reset()
     {
         //graphs
         graph = null;
@@ -143,14 +143,10 @@ public class LevelManager : MonoBehaviour
         listOfCoordinates.Clear();
         listOfSortedNodes.Clear();
         listOfSortedDistances.Clear();
-        //dataManager collections
-        GameManager.instance.dataScript.Reset();
-        //reset node & connection ID counters
-        GameManager.instance.nodeScript.nodeCounter = 0;
-        GameManager.instance.nodeScript.connCounter = 0;
-        //UI elements
+
+        /*//UI elements
         GameManager.instance.cityInfoScript.cityInfoObject.SetActive(false);
-        GameManager.instance.aiDisplayScript.aiDisplayObject.SetActive(false);
+        GameManager.instance.aiDisplayScript.aiDisplayObject.SetActive(false);*/
     }
 
     /// <summary>

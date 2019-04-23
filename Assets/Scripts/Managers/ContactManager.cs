@@ -99,6 +99,14 @@ public class ContactManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Reset data prior to a new level
+    /// </summary>
+    public void Reset()
+    {
+        contactIDCounter = 0;
+    }
+
+    /// <summary>
     /// create new Resistance contacts and place them dictionary, unassigned
     /// </summary>
     public void CreateContacts(int numOfContacts)

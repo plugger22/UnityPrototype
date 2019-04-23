@@ -287,7 +287,7 @@ public class DataManager : MonoBehaviour
         Array.Clear(arrayOfActorsPresent, 0, arrayOfActorsPresent.Length);
         if (arrayOfGenericTargets != null)
         { Array.Clear(arrayOfGenericTargets, 0, arrayOfGenericTargets.Length); }
-        //lists
+        //Node lists
         listOfNodes.Clear();
         listOfConnections.Clear();
         listOfNodesByType.Clear();
@@ -299,6 +299,24 @@ public class DataManager : MonoBehaviour
         listOfCrisisSecurity.Clear();
         listOfCrisisSupport.Clear();
         listOfCrisisStability.Clear();
+        //actor lists
+        authorityActorPoolLevelOne.Clear();
+        authorityActorPoolLevelTwo.Clear();
+        authorityActorPoolLevelThree.Clear();
+        authorityActorReserve.Clear();
+        authorityActorDismissed.Clear();
+        authorityActorPromoted.Clear();
+        authorityActorDisposedOf.Clear();
+        authorityActorResigned.Clear();
+        resistanceActorPoolLevelOne.Clear();
+        resistanceActorPoolLevelTwo.Clear();
+        resistanceActorPoolLevelThree.Clear();
+        resistanceActorReserve.Clear();
+        resistanceActorDismissed.Clear();
+        resistanceActorPromoted.Clear();
+        resistanceActorDisposedOf.Clear();
+        resistanceActorResigned.Clear();
+        //target lists
         targetPoolActive.Clear();
         targetPoolLive.Clear();
         targetPoolOutstanding.Clear();
@@ -315,6 +333,13 @@ public class DataManager : MonoBehaviour
         dictOfNodeDWeighted.Clear();
         dictOfDijkstraUnweighted.Clear();
         dictOfDijkstraWeighted.Clear();
+        dictOfActors.Clear();
+        dictOfContacts.Clear();
+        dictOfActorContacts.Clear();
+        dictOfNodeContactsResistance.Clear();
+        dictOfNodeContactsAuthority.Clear();
+        dictOfContactsByNodeResistance.Clear();
+
         //dictOfTargets -> leave
 }
 
@@ -3369,7 +3394,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         switch (side.name)
         {
             case "Authority":
@@ -3404,7 +3429,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         switch (side.name)
         {
             case "Authority":
@@ -3437,7 +3462,7 @@ public class DataManager : MonoBehaviour
     public bool AddActorToReserve(int actorID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         bool successFlag = true;
         switch (side.name)
         {
@@ -3470,7 +3495,7 @@ public class DataManager : MonoBehaviour
     public bool AddActorToDismissed(int actorID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         bool successFlag = true;
         switch (side.name)
         {
@@ -3497,7 +3522,7 @@ public class DataManager : MonoBehaviour
     public bool AddActorToPromoted(int actorID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         bool successFlag = true;
         switch (side.name)
         {
@@ -3524,7 +3549,7 @@ public class DataManager : MonoBehaviour
     public bool AddActorToDisposedOf(int actorID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         bool successFlag = true;
         switch (side.name)
         {
@@ -3546,7 +3571,7 @@ public class DataManager : MonoBehaviour
     public bool AddActorToResigned(int actorID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, "Invalid actorID");
+        Debug.Assert(actorID > -1, "Invalid actorID");
         bool successFlag = true;
         switch (side.name)
         {
@@ -3683,7 +3708,7 @@ public class DataManager : MonoBehaviour
 
     public Actor GetActor(int actorID)
     {
-        Debug.Assert(actorID > -1 && actorID < dictOfActors.Count, string.Format("Invalid actorID {0}", actorID));
+        Debug.Assert(actorID > -1, string.Format("Invalid actorID {0}", actorID));
         if (dictOfActors.ContainsKey(actorID))
         { return dictOfActors[actorID]; }
         else { Debug.LogWarning(string.Format("Not found in actorID {0}, in dictOfActors", actorID)); }

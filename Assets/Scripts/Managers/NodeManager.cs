@@ -128,7 +128,11 @@ public class NodeManager : MonoBehaviour
     public int NodeShowFlag
     {
         get { return _nodeShowFlag; }
-        set { _nodeShowFlag = value; /*Debug.Log(string.Format("NodeShowFlag -> {0}{1}", value, "\n"));*/ }
+        set
+        {
+            _nodeShowFlag = value;
+            /*Debug.LogFormat("[Tst] NodeManager.cs -> NodeShowFlag: {0}{1}", value, "\n");*/
+        }
     }
 
     public bool NodeRedraw
@@ -401,6 +405,16 @@ public class NodeManager : MonoBehaviour
     public void OnDisable()
     {
         EventManager.instance.RemoveEvent(EventType.ShowTargetNodes);
+    }
+
+    /// <summary>
+    /// reset data ready for a new level
+    /// </summary>
+    public void Reset()
+    {
+        //reset node & connection ID counters
+        nodeCounter = 0;
+        connCounter = 0;
     }
 
     /// <summary>

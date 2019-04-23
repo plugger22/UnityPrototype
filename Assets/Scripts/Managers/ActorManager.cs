@@ -457,7 +457,13 @@ public class ActorManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
-
+    /// <summary>
+    /// Reset data prior to a new level
+    /// </summary>
+    public void Reset()
+    {
+        actorIDCounter = 0;
+    }
 
     /// <summary>
     /// Set up number of required actors (minions supporting play)
@@ -499,6 +505,7 @@ public class ActorManager : MonoBehaviour
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
                 { GameManager.instance.contactScript.SetActorContacts(actor); }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }

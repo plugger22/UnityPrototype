@@ -203,7 +203,7 @@ public class AIDisplayUI : MonoBehaviour
     private void SetAllStatus(bool status)
     {
         //switch gui elements on/off
-        aiDisplayObject.gameObject.SetActive(status);
+        aiDisplayObject.SetActive(false);
         mainPanel.gameObject.SetActive(status);
         backgroundImage.gameObject.SetActive(status);
         innerPanel.gameObject.SetActive(status);
@@ -400,7 +400,7 @@ public class AIDisplayUI : MonoBehaviour
             renownPanel.gameObject.SetActive(true);
         }
         //switch on display
-        aiDisplayObject.gameObject.SetActive(true);
+        aiDisplayObject.SetActive(true);
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
         //turn off any alert message
@@ -445,7 +445,7 @@ public class AIDisplayUI : MonoBehaviour
     private void CloseAIDisplay()
     {
         GameManager.instance.tooltipGenericScript.CloseTooltip("AIDisplayUI.cs -> CloseAIDisplay");
-        aiDisplayObject.gameObject.SetActive(false);
+        aiDisplayObject.SetActive(false);
         GameManager.instance.guiScript.SetIsBlocked(false);
         //switch off flashers
         detectedFlasher.gameObject.SetActive(false);

@@ -104,6 +104,8 @@ public class TargetManager : MonoBehaviour
         Debug.Assert(activateMedLimit > 0, "Invalid activateMedimit (Zero or Less");
         Debug.Assert(activateHighLimit > 0, "Invalid activateHighLimit (Zero or Less");
         Debug.Assert(activateExtremeLimit > 0, "Invalid activateExtremeLimit (Zero or Less");
+        //reset all targets (caters for followOn levels)
+        ResetAllTargets();
         //set up generic target array
         InitialiseGenericTargetArray();
         //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
@@ -225,6 +227,24 @@ public class TargetManager : MonoBehaviour
     private void StartTurnEarly()
     {
         CheckTargets();
+    }
+
+    /// <summary>
+    /// Set all targets back to default values
+    /// </summary>
+    private void ResetAllTargets()
+    {
+        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        if (dictOfTargets != null)
+        {
+            foreach (var target in dictOfTargets)
+            {
+                target.Value.Reset();
+                target.Value.nodeID = -1;
+                target.Value.targetStatus = Status.Dormant;
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTargets (Null)"); }
     }
 
     /// <summary>
