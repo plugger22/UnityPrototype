@@ -39,7 +39,8 @@ public class ScenarioManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid City (Null) for scenario"); }
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ScenarioManager");
+
+        /*EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ScenarioManager");*/
     }
 
     /// <summary>
@@ -76,7 +77,7 @@ public class ScenarioManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// Event Handler
     /// </summary>
     /// <param name="eventType"></param>
@@ -88,13 +89,13 @@ public class ScenarioManager : MonoBehaviour
         switch (eventType)
         {
             case EventType.ChangeColour:
-                /*SetColours();*/
+                SetColours();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
-    }
+    }*/
 
     /*/// <summary>
     /// set colour palette for modal Outcome Window

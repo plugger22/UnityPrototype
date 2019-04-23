@@ -175,7 +175,7 @@ public class CityInfoUI : MonoBehaviour
     /// </summary>
     private void SetAllToActive()
     {
-        cityInfoObject.gameObject.SetActive(true);
+        cityInfoObject.SetActive(false);
         backgroundPanel.gameObject.SetActive(true);
         cityImage.gameObject.SetActive(true);
         cityName.gameObject.SetActive(true);

@@ -91,8 +91,13 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = GameState.NewGame;
     }
 
+    /// <summary>
+    /// New game options
+    /// </summary>
     private void ProcessNewGameOptions()
     {
+        //modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //open NewGame background
         GameManager.instance.modalGUIScript.SetBackground(Background.NewGameOptions);
         //close previous background
@@ -114,6 +119,8 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
         //close background
         GameManager.instance.modalGUIScript.DisableBackground(Background.NewGameOptions);
+        //toggle of modal block
+        GameManager.instance.guiScript.SetIsBlocked(false);
     }
 
     /// <summary>
@@ -121,6 +128,8 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     private void ProcessOptions(GameState state)
     {
+        //modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //open Options background
         GameManager.instance.modalGUIScript.SetBackground(Background.Options);
         //close MainMenu
@@ -139,6 +148,8 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = gameState;
         //close background
         GameManager.instance.modalGUIScript.DisableBackground(Background.Options);
+        //toggle of modal block
+        GameManager.instance.guiScript.SetIsBlocked(false);
     }
 
     /// <summary>
@@ -146,6 +157,8 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     private void ProcessEndLevel()
     {
+        //modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //Open end level background
         GameManager.instance.modalGUIScript.SetBackground(Background.EndLevel);
         //change game state
@@ -157,8 +170,12 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     private void ProcessMetaGame()
     {
+        //modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //Open end level background
         GameManager.instance.modalGUIScript.SetBackground(Background.MetaGame);
+        //disable end level background
+        GameManager.instance.modalGUIScript.DisableBackground(Background.EndLevel);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.MetaGame;
     }
@@ -179,6 +196,8 @@ public class CampaignManager : MonoBehaviour
             GameManager.instance.inputScript.GameState = GameState.PlayGame;
             //close background
             GameManager.instance.modalGUIScript.DisableBackground(Background.MetaGame);
+            //toggle of modal block
+            GameManager.instance.guiScript.SetIsBlocked(false);
         }
         else
         {

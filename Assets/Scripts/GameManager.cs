@@ -436,11 +436,11 @@ public class GameManager : MonoBehaviour
         //Scenario Manager InitialiseEarly -> before level & Side Managers
         startMethod.handler = GameManager.instance.scenarioScript.InitialiseEarly;
         startMethod.className = "ScenarioManager Early";
-        listOfGameMethods.Add(startMethod);
+        listOfLevelMethods.Add(startMethod);
         //Tooltip Node
         startMethod.handler = GameManager.instance.tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
-        listOfGlobalMethods.Add(startMethod);
+        listOfLevelMethods.Add(startMethod);
         //Side Manager -> after scenarioManager
         startMethod.handler = GameManager.instance.sideScript.Initialise;
         startMethod.className = "SideManager";
