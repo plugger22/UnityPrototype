@@ -322,6 +322,8 @@ public class DataManager : MonoBehaviour
         targetPoolOutstanding.Clear();
         targetPoolDone.Clear();
         listOfNodesWithTargets.Clear();
+        //contact lists
+        contactPool.Clear();
         //dictionaries
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
