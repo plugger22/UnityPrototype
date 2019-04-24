@@ -111,9 +111,12 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     private void CloseNewGameOptions()
     {
+        //revert to playGame state by default
+        GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
         //create new game
         campaign.Reset();
         InitialiseScenario();
+        //set up new level
         GameManager.instance.InitialiseNewLevel();
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
@@ -190,6 +193,8 @@ public class CampaignManager : MonoBehaviour
         //go to next scenario
         if (campaign.IncrementScenarioIndex() == true)
         {
+            //change game state
+            GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
             //get current scenario data
             InitialiseScenario();
             //create new game

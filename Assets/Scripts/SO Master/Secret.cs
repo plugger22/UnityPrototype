@@ -51,6 +51,17 @@ public class Secret : ScriptableObject
     }
 
     /// <summary>
+    /// Reset secret data, when required, prior to the start of a FollowOn level
+    /// </summary>
+    public void ResetFollowOnLevel()
+    {
+        revealedWho = -1;
+        revealedWhen = -1;
+        deletedWhen = -1;
+        listOfActors.Clear();
+    }
+
+    /// <summary>
     /// Add the actorID of an actor who has learned of the secret. Checks if already present (doesn't add, warning)
     /// </summary>
     /// <param name="actorID"></param>

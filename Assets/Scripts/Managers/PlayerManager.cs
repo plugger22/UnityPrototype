@@ -164,13 +164,24 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
         //place Player in a random start location (Sprawl node)
         InitialisePlayerStartNode();
-        //set stats
-        Renown = 0;
+        //set stats      
         Invisibility = 3;
         numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
-        //give the player a random secret (PLACEHOLDER -> should be player choice)
-        GetRandomStartSecret();
+        //first level in a game session
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+                Renown = 0;
+                //give the player a random secret (PLACEHOLDER -> should be player choice)
+                GetRandomStartSecret();
+                break;
+            case GameState.FollowOnInitialisation:
+                //empty out gear list
+                listOfGear.Clear();
+                break;
+        }
+        
         //register event listeners
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
     }

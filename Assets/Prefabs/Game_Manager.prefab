@@ -262,6 +262,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f6e7cce33899234387606982c90b0f0, type: 2}
   listOfTeamPrioritiesLow:
   - {fileID: 11400000, guid: d59514a9341d2ee4f9fa3c75e39a50f0, type: 2}
+  teamCounter: 0
 --- !u!114 &114184360560951246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1598,10 +1599,9 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: 1
-  conditionWhoResistance: 0
-  conditionResistance: {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84,
-    type: 2}
+  conditionTurnResistance: -1
+  conditionWhoResistance: 999
+  conditionResistance: {fileID: 0}
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2068,7 +2068,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seedDev: 10234
-  isAuthority: 0
+  isAuthority: 1
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

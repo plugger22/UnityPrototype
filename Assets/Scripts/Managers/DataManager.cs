@@ -328,6 +328,12 @@ public class DataManager : MonoBehaviour
         teamPoolInTransit.Clear();
         //contact lists
         contactPool.Clear();
+        //gear lists
+        listOfCommonGear.Clear();
+        listOfRareGear.Clear();
+        listOfUniqueGear.Clear();
+        listOfLostGear.Clear();
+        listOfCurrentGear.Clear();
         //dictionaries
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
