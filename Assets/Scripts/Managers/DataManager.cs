@@ -322,6 +322,10 @@ public class DataManager : MonoBehaviour
         targetPoolOutstanding.Clear();
         targetPoolDone.Clear();
         listOfNodesWithTargets.Clear();
+        //team lists
+        teamPoolReserve.Clear();
+        teamPoolOnMap.Clear();
+        teamPoolInTransit.Clear();
         //contact lists
         contactPool.Clear();
         //dictionaries
@@ -336,6 +340,7 @@ public class DataManager : MonoBehaviour
         dictOfDijkstraUnweighted.Clear();
         dictOfDijkstraWeighted.Clear();
         dictOfActors.Clear();
+        dictOfTeams.Clear();
         dictOfContacts.Clear();
         dictOfActorContacts.Clear();
         dictOfNodeContactsResistance.Clear();
@@ -943,7 +948,7 @@ public class DataManager : MonoBehaviour
     public List<Node> GetListOfActorContactNodes(int slotID)
     {
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
-        List<Node> listOfNodes = new List<Node>();
+        List<Node> listOfActorContactNodes = new List<Node>();
         //get actor
         Actor actor = GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
         if (actor != null)
@@ -960,7 +965,7 @@ public class DataManager : MonoBehaviour
                         if (node != null)
                         {
                             //add node to return list
-                            listOfNodes.Add(node);
+                            listOfActorContactNodes.Add(node);
                         }
                         else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodeID[i]); }
                     }
@@ -969,7 +974,7 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
-        return listOfNodes;
+        return listOfActorContactNodes;
     }
 
     /// <summary>
@@ -979,7 +984,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetListOfActorContacts(int actorID)
     {
-        List<Node> listOfNodes = new List<Node>();
+        List<Node> listOfActorContactNodes = new List<Node>();
         bool isActiveContact;
         if (dictOfActorContacts.ContainsKey(actorID) == true)
         {
@@ -1020,7 +1025,7 @@ public class DataManager : MonoBehaviour
                         if (node != null)
                         {
                             //add node to return list
-                            listOfNodes.Add(node);
+                            listOfActorContactNodes.Add(node);
                         }
                         else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", listOfNodeID[i]); }
                     }
@@ -1028,7 +1033,7 @@ public class DataManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid listOfNodeID (null) for actorID {0}", actorID); }
         }
-        return listOfNodes;
+        return listOfActorContactNodes;
     }
 
     /// <summary>
@@ -1127,16 +1132,16 @@ public class DataManager : MonoBehaviour
     {
         if (dictOfActorContacts.ContainsKey(actorID) == true)
         {
-            List<int> listOfNodes = dictOfActorContacts[actorID];
-            if (listOfNodes != null)
+            List<int> listOfActorContactNodes = dictOfActorContacts[actorID];
+            if (listOfActorContactNodes != null)
             {
-                if (listOfNodes.Exists(x => x == nodeID) == true)
+                if (listOfActorContactNodes.Exists(x => x == nodeID) == true)
                 { return true; }
                 else { return false; }
             }
             else
             {
-                Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actorID);
+                Debug.LogWarningFormat("Invalid listOfActorContactNodes (Null) for actorID {0}", actorID);
                 return false;
             }
         }
@@ -1231,8 +1236,8 @@ public class DataManager : MonoBehaviour
         if (dictOfActorContacts.ContainsKey(actorID) == true)
         {
             //delete actorID from all relevant entries in dictOfNodeContacts
-            List<int> listOfNodes = new List<int>(dictOfActorContacts[actorID]);
-            int numOfNodes = listOfNodes.Count;
+            List<int> listOfActorContactNodes = new List<int>(dictOfActorContacts[actorID]);
+            int numOfNodes = listOfActorContactNodes.Count;
             int nodeID;
             Actor actor = GetActor(actorID);
             if (actor != null)
@@ -1243,7 +1248,7 @@ public class DataManager : MonoBehaviour
                     //loop nodes and remove actorID from each node contact list
                     for (int i = 0; i < numOfNodes; i++)
                     {
-                        nodeID = listOfNodes[i];
+                        nodeID = listOfActorContactNodes[i];
                         //find node entry in dictOfNodeContacts
                         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                         {
@@ -1268,7 +1273,7 @@ public class DataManager : MonoBehaviour
                         else { Debug.LogWarningFormat("Node not found in dictOfContacts, nodeID {0}", nodeID); successFlag = false; }
                     }
                 }
-                else { Debug.LogWarningFormat("invalid listOfNodes (Empty) for actorID {0}", actorID); successFlag = false; }
+                else { Debug.LogWarningFormat("invalid listOfActorContactNodes (Empty) for actorID {0}", actorID); successFlag = false; }
             }
             else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
             //update node contacts
@@ -1415,13 +1420,13 @@ public class DataManager : MonoBehaviour
             //check actor has no existing contact at node
             if (dictOfActorContacts.ContainsKey(actorID) == true)
             {
-                List<int> listOfNodes = dictOfActorContacts[actorID];
-                if (listOfNodes != null)
+                List<int> listOfActorContactNodes = dictOfActorContacts[actorID];
+                if (listOfActorContactNodes != null)
                 {
-                    if (listOfNodes.Exists(id => id == nodeID) == false)
+                    if (listOfActorContactNodes.Exists(id => id == nodeID) == false)
                     {
                         //all O.K, add contact to dictionaries
-                        listOfNodes.Add(nodeID);
+                        listOfActorContactNodes.Add(nodeID);
                         Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts(isCurrentSide);
                         if (dictOfNodeContacts != null)
                         {
@@ -1457,7 +1462,7 @@ public class DataManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("ActorID {0} has existing contact at nodeID {1}", actorID, nodeID); isSuccess = false; }
                 }
-                else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actorID); isSuccess = false; }
+                else { Debug.LogWarningFormat("Invalid listOfActorContactNodes (Null) for actorID {0}", actorID); isSuccess = false; }
             }
             else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
         }
@@ -1517,13 +1522,13 @@ public class DataManager : MonoBehaviour
             //check actor has no existing contact at node
             if (dictOfActorContacts.ContainsKey(actorID) == true)
             {
-                List<int> listOfNodes = dictOfActorContacts[actorID];
-                if (listOfNodes != null)
+                List<int> listOfActorContactNodes = dictOfActorContacts[actorID];
+                if (listOfActorContactNodes != null)
                 {
-                    if (listOfNodes.Exists(id => id == nodeID) == true)
+                    if (listOfActorContactNodes.Exists(id => id == nodeID) == true)
                     {
                         //remove nodeID from node list
-                        if (listOfNodes.Remove(nodeID) == true)
+                        if (listOfActorContactNodes.Remove(nodeID) == true)
                         {
                             //get appropriate node dictionary
                             Dictionary<int, List<int>> dictOfNodeContacts = GetDictOfNodeContacts(isCurrentSide);
@@ -1555,7 +1560,7 @@ public class DataManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("ActorID {0} has NO Contact at nodeID {1}", actorID, nodeID); isSuccess = false; }
                 }
-                else { Debug.LogWarningFormat("Invalid listOfNodes (Null) for actorID {0}", actorID); isSuccess = false; }
+                else { Debug.LogWarningFormat("Invalid listOfActorContactNodes (Null) for actorID {0}", actorID); isSuccess = false; }
             }
             else { Debug.LogWarningFormat("Record not found in dictOfActorContacts for actorID {0}", actorID); isSuccess = false; }
         }
@@ -3242,8 +3247,8 @@ public class DataManager : MonoBehaviour
             actor.actorSlotID = slotID;
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
-            //update contacts (not for game start -> sequencing issues)
-            if (GameManager.instance.turnScript.Turn > 0)
+            //update contacts (not for game or level start -> sequencing issues)
+            if (GameManager.instance.turnScript.Turn > 0 && GameManager.instance.inputScript.GameState == GameState.PlayGame)
             { GameManager.instance.contactScript.SetActorContacts(actor); }
             //update actor GUI display
             GameManager.instance.actorPanelScript.UpdateActorPanel();

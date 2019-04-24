@@ -157,6 +157,8 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     private void ProcessEndLevel()
     {
+        //close any Node tooltip
+        GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
         //modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
         //Open end level background
@@ -201,8 +203,12 @@ public class CampaignManager : MonoBehaviour
         }
         else
         {
-            //End of Campaign -> TO DO
-            Debug.LogError("END OF CAMPAIGN (placeholder)");
+            //End of Campaign -> open background
+            GameManager.instance.modalGUIScript.SetBackground(Background.EndCampaign);
+            //disable end level background
+            GameManager.instance.modalGUIScript.DisableBackground(Background.MetaGame);
+            //change game state
+            GameManager.instance.inputScript.GameState = GameState.ExitCampaign;
         }
     }
 

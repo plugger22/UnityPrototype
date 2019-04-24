@@ -1519,7 +1519,7 @@ public class LoadManager : MonoBehaviour
                 //create List Of Nodes for iteration purposes
                 if (listOfNodes != null)
                 {
-                    listOfNodes.Clear();
+                    /*listOfNodes.Clear();*/
                     listOfNodes.AddRange(dictOfNodes.Values.ToList());
                     Debug.LogFormat("[Loa] InitialiseLate -> listOfNodes has {0} entries{1}", listOfNodes.Count, "\n");
                     Debug.Assert(dictOfNodes.Count == listOfNodes.Count, "Mismatch on count between dictOfNodes and listOfNodes");

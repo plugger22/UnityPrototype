@@ -195,6 +195,9 @@ public class InputManager : MonoBehaviour
                         case GameState.MetaGame:
                             EventManager.instance.PostNotification(EventType.CloseMetaGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
                             break;
+                        case GameState.ExitCampaign:
+                            EventManager.instance.PostNotification(EventType.ExitGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            break;
                         default:
                             //ignore all the rest
                             break;
@@ -277,7 +280,7 @@ public class InputManager : MonoBehaviour
                 }
                 break;
 
-            case gameAPI.ModalState.ModalUI:
+            case ModalState.ModalUI:
                 //Hotkeys for Modal UI windows
                 switch (_modalSubState)
                 {

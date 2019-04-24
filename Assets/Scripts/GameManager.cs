@@ -618,7 +618,10 @@ public class GameManager : MonoBehaviour
             foreach (StartMethod method in listOfMethods)
             {
                 if (method.handler != null)
-                { method.handler(); }
+                {
+                    method.handler();
+                    Debug.LogFormat("[Per] GameManager.cs -> InitialiseMethods: {0}, {1}{2}", method.className, method.handler.Method.Name, "\n");
+                }
                 else { Debug.LogErrorFormat("Invalid startMethod handler for {0}", method.className); }
             }
         }
@@ -674,7 +677,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region InitialiseNewGame
+    #region InitialiseNewLevel
     /// <summary>
     /// start an immediate autoRun that bypasses the campaign meta game and jumps straight into a level
     /// </summary>
@@ -764,6 +767,7 @@ public class GameManager : MonoBehaviour
         nodeScript.Reset();
         actorScript.Reset();
         contactScript.Reset();
+        teamScript.Reset();
     }
     #endregion
 

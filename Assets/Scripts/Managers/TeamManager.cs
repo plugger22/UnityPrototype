@@ -50,6 +50,8 @@ public class TeamManager : MonoBehaviour
     private string colourBad;
     private string colourEnd;
 
+    public int teamCounter = 0;                     //provides unique ID to teams (reset at start of new level)
+
     /// <summary>
     /// Set up at start
     /// </summary>
@@ -143,6 +145,14 @@ public class TeamManager : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+
+    /// <summary>
+    /// reset data prior to new level
+    /// </summary>
+    public void Reset()
+    {
+        teamCounter = 0;
     }
 
     /// <summary>

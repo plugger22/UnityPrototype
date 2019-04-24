@@ -278,6 +278,10 @@ public class ActorManager : MonoBehaviour
         InitialisePoolActors();
     }
 
+
+    /// <summary>
+    /// Late initialisation done after DataManager.cs -> InitialiseLate
+    /// </summary>
     public void InitialiseLate()
     {
         //initialise actor contacts
@@ -481,10 +485,10 @@ public class ActorManager : MonoBehaviour
                 Actor actor = CreateActor(side, tempActorArcs[i].ActorArcID, 1, ActorStatus.Active, i);
                 if (actor != null)
                 {
-                    Debug.Log(string.Format("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
+                    Debug.LogFormat("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
                         GameManager.instance.dataScript.GetQuality(side, 0), actor.datapoint0,
                         GameManager.instance.dataScript.GetQuality(side, 1), actor.datapoint1,
-                        GameManager.instance.dataScript.GetQuality(side, 2), actor.datapoint2, actor.level, "\n"));
+                        GameManager.instance.dataScript.GetQuality(side, 2), actor.datapoint2, actor.level, "\n");
                 }
                 else { Debug.LogWarning("Actor not created"); }
             }

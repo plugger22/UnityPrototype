@@ -15,6 +15,7 @@ public enum EventType
     //Game State
     ExitLevel,
     ExitGame,
+    ExitCampaign,
     CreateNewGame,
     NewGameOptions,
     CloseNewGame,

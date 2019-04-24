@@ -30,6 +30,10 @@ public class ModalGUI : MonoBehaviour
     public Image backgroundEndLevel;
     [Tooltip("MetaGame (between levels) background")]
     public Image backgroundMetaGame;
+    [Tooltip("Commence new Campaign")]
+    public Image backgroundNewCampaign;
+    [Tooltip("End of Campaign (no more scenarios available)")]
+    public Image backgroundEndCampaign;
 
     private int modalLevel;             //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
 
@@ -64,7 +68,8 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(backgroundOptions != null, "Invalid backgroundOptions (Null)");
         Debug.Assert(backgroundEndLevel != null, "Invalid backgroundEndLevel (Null)");
         Debug.Assert(backgroundMetaGame != null, "Invalid backgroundMetaGame (Null)");
-
+        Debug.Assert(backgroundNewCampaign != null, "Invalid backgroundNewCampaign (Null)");
+        Debug.Assert(backgroundEndCampaign != null, "Invalid backgroundEndCampaign (Null)");
         //disable all backgrounds
         DisableBackground(Background.Start);
         DisableBackground(Background.EndLevel);
@@ -72,7 +77,9 @@ public class ModalGUI : MonoBehaviour
         DisableBackground(Background.NewGameOptions);
         DisableBackground(Background.Options);
         DisableBackground(Background.MetaGame);
-        
+        DisableBackground(Background.NewCampaign);
+        DisableBackground(Background.EndCampaign);
+
     }
 
     //
@@ -163,6 +170,12 @@ public class ModalGUI : MonoBehaviour
             case Background.MetaGame:
                 backgroundMetaGame.gameObject.SetActive(true);
                 break;
+            case Background.NewCampaign:
+                backgroundNewCampaign.gameObject.SetActive(true);
+                break;
+            case Background.EndCampaign:
+                backgroundEndCampaign.gameObject.SetActive(true);
+                break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
                 break;
@@ -195,6 +208,12 @@ public class ModalGUI : MonoBehaviour
                 break;
             case Background.MetaGame:
                 backgroundMetaGame.gameObject.SetActive(false);
+                break;
+            case Background.NewCampaign:
+                backgroundNewCampaign.gameObject.SetActive(false);
+                break;
+            case Background.EndCampaign:
+                backgroundEndCampaign.gameObject.SetActive(false);
                 break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);

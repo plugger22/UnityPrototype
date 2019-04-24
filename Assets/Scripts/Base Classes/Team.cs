@@ -11,7 +11,7 @@ namespace gameAPI
         [HideInInspector] public int teamID;
         [HideInInspector] public string teamName;
 
-        private static int teamCounter = 0;
+        
 
         [HideInInspector] public TeamPool pool;
         [HideInInspector] public TeamArc arc;
@@ -34,8 +34,8 @@ namespace gameAPI
                 TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    teamID = teamCounter++;
-                    this.arc = teamArc;
+                    teamID = GameManager.instance.teamScript.teamCounter++;
+                    arc = teamArc;
                     InitialiseTeamData(count);
                     AddToCollections(this);
                 }
@@ -58,7 +58,7 @@ namespace gameAPI
                 TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    teamID = teamCounter++;
+                    teamID = GameManager.instance.teamScript.teamCounter++;
                     this.arc = teamArc;
                     InitialiseTeamData(natoCount);
                     AddToCollections(this);

@@ -28,7 +28,7 @@ public class TurnManager : MonoBehaviour
 
     [Header("Assorted")]
     [Tooltip("Number of seconds to show finish splash screen for")]
-    public float showSplashTimeout = 2.0f;
+    public float showSplashTimeout = 1.0f;
 
     [HideInInspector] public WinState winStateLevel = WinState.None;          //set if somebody has won
     [HideInInspector] public WinReason winReasonLevel = WinReason.None;  //why a win (from POV of winner)
