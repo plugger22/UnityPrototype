@@ -23,6 +23,7 @@ public struct StartMethod
 [Serializable]
 public class GameManager : MonoBehaviour
 {
+
     #region Components
     public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
     [HideInInspector] public StartManager startScript;                //Start Manager
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
     [HideInInspector] public CampaignManager campaignScript;          //Campaign Manager
+    [HideInInspector] public FileManager fileScript;                  //File Manager
     [HideInInspector] public NewsManager newsScript;                  //News Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
     [HideInInspector] public ContactManager contactScript;            //Contact Manager
@@ -119,7 +121,8 @@ public class GameManager : MonoBehaviour
 
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
-    private long totalTime;                                                      //used for Performance monitoring on start up
+    private long totalTime;                                                         //used for Performance monitoring on start up
+    private bool isSession;                                                         //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
 
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods
@@ -166,6 +169,7 @@ public class GameManager : MonoBehaviour
         globalScript = GetComponent<GlobalManager>();
         scenarioScript = GetComponent<ScenarioManager>();
         campaignScript = GetComponent<CampaignManager>();
+        fileScript = GetComponent<FileManager>();
         actorScript = GetComponent<ActorManager>();
         contactScript = GetComponent<ContactManager>();
         actionScript = GetComponent<ActionManager>();
@@ -242,7 +246,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
         Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
         Debug.Assert(campaignScript != null, "Invalid campaignScript (Null)");
-
+        Debug.Assert(fileScript != null, "Invalid fileScript (Null)");
         Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
         Debug.Assert(contactScript != null, "Invalid contactScript (Null)");
         Debug.Assert(actionScript != null, "Invalid actionScript (Null)");
@@ -702,6 +706,8 @@ public class GameManager : MonoBehaviour
             InitialiseWithPerformanceMonitoring(listOfDebugMethods);
             DisplayTotalTime();
         }
+        //set session flag
+        isSession = true;
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
         //colour scheme
@@ -712,9 +718,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-
+    // EDIT: No longer in use
     private void StartArchive()
     {
+        
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
 

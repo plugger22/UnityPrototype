@@ -29,6 +29,7 @@ public class ModalMainMenu : MonoBehaviour
     public Button button7;
     public Button button8;
     public Button button9;
+    public Button button10;
     public TextMeshProUGUI button1Text;
     public TextMeshProUGUI button2Text;
     public TextMeshProUGUI button3Text;
@@ -38,6 +39,7 @@ public class ModalMainMenu : MonoBehaviour
     public TextMeshProUGUI button7Text;
     public TextMeshProUGUI button8Text;
     public TextMeshProUGUI button9Text;
+    public TextMeshProUGUI button10Text;
 
     private RectTransform rectTransform;
     /*private int offset;*/
@@ -67,6 +69,7 @@ public class ModalMainMenu : MonoBehaviour
         Debug.Assert(button7 != null, "Invalid button7 (Null)");
         Debug.Assert(button8 != null, "Invalid button8 (Null)");
         Debug.Assert(button9 != null, "Invalid button9 (Null)");
+        Debug.Assert(button10 != null, "Invalid button9 (Null)");
         Debug.Assert(button1Text != null, "Invalid button1Text (Null)");
         Debug.Assert(button2Text != null, "Invalid button2Text (Null)");
         Debug.Assert(button3Text != null, "Invalid button3Text (Null)");
@@ -76,6 +79,7 @@ public class ModalMainMenu : MonoBehaviour
         Debug.Assert(button7Text != null, "Invalid button7Text (Null)");
         Debug.Assert(button8Text != null, "Invalid button8Text (Null)");
         Debug.Assert(button9Text != null, "Invalid button9Text (Null)");
+        Debug.Assert(button10Text != null, "Invalid button10Text (Null)");
     }
 
     /// <summary>
@@ -167,7 +171,7 @@ public class ModalMainMenu : MonoBehaviour
         button7.gameObject.SetActive(false);
         button8.gameObject.SetActive(false);
         button9.gameObject.SetActive(false);
-
+        button10.gameObject.SetActive(false);
         //set up ModalActionObject
         itemDetails.text = string.Format("{0}{1}{2}", details.itemName, "\n", details.itemDetails);
 
@@ -221,6 +225,10 @@ public class ModalMainMenu : MonoBehaviour
                 case 9:
                     tempButton = button9;
                     title = button9Text;
+                    break;
+                case 10:
+                    tempButton = button10;
+                    title = button10Text;
                     break;
                 default:
                     Debug.LogWarning("To many EventButtonDetails in list!\n");
@@ -323,7 +331,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.ResumeGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button0);
         }
@@ -349,14 +357,27 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.LoadGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button2);
+        }
+        //Save Game button
+        if (detailsMain.isLoadGame == true)
+        {
+            EventButtonDetails button3 = new EventButtonDetails()
+            {
+                buttonTitle = "Save Game",
+                buttonTooltipHeader = "Placeholder",
+                buttonTooltipMain = "Placeholder",
+                buttonTooltipDetail = "Placeholder",
+                action = () => { EventManager.instance.PostNotification(EventType.SaveGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+            };
+            details.listOfButtonDetails.Add(button3);
         }
         //Options button
         if (detailsMain.isOptions == true)
         {
-            EventButtonDetails button3 = new EventButtonDetails()
+            EventButtonDetails button4 = new EventButtonDetails()
             {
                 buttonTitle = "Options",
                 buttonTooltipHeader = "Placeholder",
@@ -364,12 +385,12 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipDetail = "Placeholder",
                 action = () => { EventManager.instance.PostNotification(EventType.CreateOptions, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button3);
+            details.listOfButtonDetails.Add(button4);
         }
         //Feedback button
         if (detailsMain.isFeedback == true)
         {
-            EventButtonDetails button4 = new EventButtonDetails()
+            EventButtonDetails button5 = new EventButtonDetails()
             {
                 buttonTitle = "Feedback",
                 buttonTooltipHeader = "Placeholder",
@@ -377,12 +398,12 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipDetail = "Placeholder",
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button4);
+            details.listOfButtonDetails.Add(button5);
         }
         //Customise button
         if (detailsMain.isCustomise == true)
         {
-            EventButtonDetails button5 = new EventButtonDetails()
+            EventButtonDetails button6 = new EventButtonDetails()
             {
                 buttonTitle = "Customise",
                 buttonTooltipHeader = "Placeholder",
@@ -390,12 +411,12 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipDetail = "Placeholder",
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button5);
+            details.listOfButtonDetails.Add(button6);
         }
         //Credits button
         if (detailsMain.isCredits == true)
         {
-            EventButtonDetails button6 = new EventButtonDetails()
+            EventButtonDetails button7 = new EventButtonDetails()
             {
                 buttonTitle = "Credits",
                 buttonTooltipHeader = "Placeholder",
@@ -403,12 +424,12 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipDetail = "Placeholder",
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button6);
+            details.listOfButtonDetails.Add(button7);
         }
         //Exit button
         if (detailsMain.isExit == true)
         {
-            EventButtonDetails button7 = new EventButtonDetails()
+            EventButtonDetails button8 = new EventButtonDetails()
             {
                 buttonTitle = "EXIT",
                 buttonTooltipHeader = "Placeholder",
@@ -416,12 +437,12 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipDetail = "Placeholder",
                 action = () => { EventManager.instance.PostNotification(EventType.ExitGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button7);
+            details.listOfButtonDetails.Add(button8);
         }
         //Cancel button
         if (detailsMain.isCancel == true)
         {
-            EventButtonDetails button8 = new EventButtonDetails()
+            EventButtonDetails button9 = new EventButtonDetails()
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = "Placeholder",
@@ -429,7 +450,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipDetail = "Placeholder",
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button8);
+            details.listOfButtonDetails.Add(button9);
         }
         //display background (default is none)
         GameManager.instance.modalGUIScript.SetBackground(detailsMain.background);

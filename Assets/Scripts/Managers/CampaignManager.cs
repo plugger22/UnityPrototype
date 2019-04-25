@@ -29,6 +29,9 @@ public class CampaignManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateMetaGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.ResumeGame, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.LoadGame, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.SaveGame, OnEvent, "CampaignManager");
     }
 
 
@@ -44,6 +47,15 @@ public class CampaignManager : MonoBehaviour
         //Detect Event type
         switch (eventType)
         {
+            case EventType.ResumeGame:
+                ProcessResumeGame();
+                break;
+            case EventType.LoadGame:
+                ProcessLoadGame();
+                break;
+            case EventType.SaveGame:
+                ProcessSaveGame();
+                break;
             case EventType.NewGameOptions:
                 ProcessNewGameOptions();
                 break;
@@ -215,6 +227,32 @@ public class CampaignManager : MonoBehaviour
             //change game state
             GameManager.instance.inputScript.GameState = GameState.ExitCampaign;
         }
+    }
+
+    /// <summary>
+    /// Load the most recent save
+    /// </summary>
+    private void ProcessResumeGame()
+    {
+        Debug.LogFormat("[Cam] FileManager.cs -> ProcessResumeGame: RESUME game option selected{0}", "\n");
+
+    }
+
+    /// <summary>
+    /// Load a saved game
+    /// </summary>
+    private void ProcessLoadGame()
+    {
+        Debug.LogFormat("[Cam] FileManager.cs -> ProcessLoadGame: LOAD game option selected{0}", "\n");
+
+    }
+
+    /// <summary>
+    /// Save the current game
+    /// </summary>
+    private void ProcessSaveGame()
+    {
+        Debug.LogFormat("[Cam] FileManager.cs -> ProcessSaveGame: SAVE game option selected{0}", "\n");
     }
 
     //

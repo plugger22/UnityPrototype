@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 114837532667670244}
   - component: {fileID: 114843761391076242}
   - component: {fileID: 114680662969460860}
+  - component: {fileID: 114258654278774664}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -443,6 +444,17 @@ MonoBehaviour:
   minSpacingDefault: 1
   connectionFrequencyDefault: 50
   connectionSecurityDefault: 25
+--- !u!114 &114258654278774664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d9c4b64d29454244b61798b51f5c01e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114264557644407700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -595,7 +607,7 @@ MonoBehaviour:
   actionsResistance: 2
   actionsAuthority: 2
   warningPeriod: 10
-  showSplashTimeout: 2
+  showSplashTimeout: 1
   winStateLevel: 0
   winReasonLevel: 0
   resistanceState: 0
@@ -2010,6 +2022,7 @@ MonoBehaviour:
   tooltipScript: {fileID: 0}
   scenarioScript: {fileID: 0}
   campaignScript: {fileID: 0}
+  fileScript: {fileID: 0}
   newsScript: {fileID: 0}
   actorScript: {fileID: 0}
   contactScript: {fileID: 0}

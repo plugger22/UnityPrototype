@@ -141,7 +141,7 @@ public class GearManager : MonoBehaviour
         {
             foreach (GearType gearType in listOfGearType)
             {
-                //pick out and assign the ones required for fast acess, ignore the rest. 
+                //pick out and assign the ones required for fast access, ignore the rest. 
                 switch (gearType.name)
                 {
                     case "Hacking":
