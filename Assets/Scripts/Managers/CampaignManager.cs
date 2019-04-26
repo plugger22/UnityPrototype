@@ -12,14 +12,12 @@ public class CampaignManager : MonoBehaviour
     [Tooltip("Current Campaign (this is the default campaign at game start)")]
     public Campaign campaign;
 
-
     private GameState gameState;                    //stores current game state prior to change to enable a revert after change
 
     public void Initialise()
     {
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
         Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign, ID {2}{3}", campaign.listOfScenarios.Count, campaign.tag, campaign.campaignID, "\n");
-
         //event Listeners
         EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "CampaignManager");
@@ -141,6 +139,8 @@ public class CampaignManager : MonoBehaviour
         //toggle of modal block
         GameManager.instance.guiScript.SetIsBlocked(false);
     }
+
+
 
     /// <summary>
     /// Options
@@ -298,6 +298,9 @@ public class CampaignManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid scenario (Null)"); }
     }
+
+
+
 
     //new methods above here
 }

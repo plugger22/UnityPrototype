@@ -31,11 +31,15 @@ public class ObjectiveManager : MonoBehaviour
 
     public void Initialise()
     {
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //event listeners
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
+        }
         //Get objectives -> Placeholder
         listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(maxNumOfObjectives));
         objectivesTotal = maxNumOfObjectives;
-        //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
     }
 
 

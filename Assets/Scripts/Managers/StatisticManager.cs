@@ -12,22 +12,25 @@ public class StatisticManager : MonoBehaviour
 
     public void Initialise()
     {
-        //player
-        GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerBreakdown);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerLieLow);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerCaptured);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerBetrayed);
-        //actors
-        GameManager.instance.dataScript.StatisticAddNew(StatType.actorsResignedAuthority);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.actorsResignedResistance);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.actorResistanceTraitors);
-        //stress leave
-        GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveAuthority);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveResistance);
-        //targets
-        GameManager.instance.dataScript.StatisticAddNew(StatType.TargetAttempts);
-        GameManager.instance.dataScript.StatisticAddNew(StatType.TargetSuccesses);
-
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //player
+            GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerBreakdown);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerLieLow);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerCaptured);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.PlayerBetrayed);
+            //actors
+            GameManager.instance.dataScript.StatisticAddNew(StatType.actorsResignedAuthority);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.actorsResignedResistance);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.actorResistanceTraitors);
+            //stress leave
+            GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveAuthority);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.StressLeaveResistance);
+            //targets
+            GameManager.instance.dataScript.StatisticAddNew(StatType.TargetAttempts);
+            GameManager.instance.dataScript.StatisticAddNew(StatType.TargetSuccesses);
+        }
     }
 
 

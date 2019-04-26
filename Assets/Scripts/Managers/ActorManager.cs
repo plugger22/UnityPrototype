@@ -180,97 +180,101 @@ public class ActorManager : MonoBehaviour
 
 
     public void Initialise()
-    {      
-        //recruit actors cached fields
-        resistancePlayerTurn = -1;
-        resistanceActorTurn = -1;
-        authorityTurn = -1;
-        cachedResistancePlayerDetails = null;
-        cachedResistanceActorDetails = null;
-        cachedAuthorityDetails = null;
-        isNewActionResistancePlayer = true;
-        isNewActionResistanceActor = true;
-        isNewActionAuthority = true;
-        //fast acess fields
-        numOfQualities = GameManager.instance.preloadScript.numOfQualities;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
-        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
-        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
-        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
-        actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
-        secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
-        maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
-        gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
-        gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
-        gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
-        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
-        Debug.Assert(numOfQualities > 0, "Invalid numOfQualities (zero or less)");
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
-        Debug.Assert(conditionBlackmailer != null, "Invalid conditionBlackmailer (Null)");
-        Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
-        Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
-        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
-        Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
-        Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
-        Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
-        Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
-        Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
-        Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
-        Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
-        Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
-        //cached TraitEffects
-        actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
-        actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
-        actorBreakdownChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceNone");
-        actorNoActionsDuringSecurityMeasures = GameManager.instance.dataScript.GetTraitEffectID("ActorNoActionsSecurity");
-        actorSecretChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceHigh");
-        actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
-        actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
-        actorAppeaseNone = GameManager.instance.dataScript.GetTraitEffectID("ActorAppeaseNone");
-        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
-        actorConflictNoGoodOptions = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictGoodNone");
-        actorConflictNone = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictNone");
-        actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
-        actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
-        actorResignHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorResignHigh");
-        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
-        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
-        actorReserveActionNone = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionNone");
-        actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
-        actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
-        actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
-        Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
-        Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
-        Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
-        Debug.Assert(actorNoActionsDuringSecurityMeasures > -1, "Invalid actorNoActionsDuringSecurityMeasures (-1)");
-        Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
-        Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
-        Debug.Assert(actorAppeaseNone > -1, "Invalid actorAppeaseNone (-1)");
-        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
-        Debug.Assert(actorConflictNoGoodOptions > -1, "Invalid actorConflictNoGoodOptions (-1)");
-        Debug.Assert(actorConflictNone > -1, "Invalid actorConflictNone (-1)");
-        Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
-        Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
-        Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
-        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1)");
-        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1)");
-        Debug.Assert(actorReserveActionNone > -1, "Invalid actorReserveActionNone (-1)");
-        Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
-        Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
-        //event listener is registered in InitialiseActors() due to GameManager sequence.
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.RecruitAction, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent, "ActorManager");
-        EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent, "ActorManager");
+    {
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //recruit actors cached fields
+            resistancePlayerTurn = -1;
+            resistanceActorTurn = -1;
+            authorityTurn = -1;
+            cachedResistancePlayerDetails = null;
+            cachedResistanceActorDetails = null;
+            cachedAuthorityDetails = null;
+            isNewActionResistancePlayer = true;
+            isNewActionResistanceActor = true;
+            isNewActionAuthority = true;
+            //fast acess fields
+            numOfQualities = GameManager.instance.preloadScript.numOfQualities;
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+            conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+            conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
+            conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+            conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+            conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
+            actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
+            secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
+            maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
+            gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
+            gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
+            gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
+            maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
+            Debug.Assert(numOfQualities > 0, "Invalid numOfQualities (zero or less)");
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+            Debug.Assert(conditionBlackmailer != null, "Invalid conditionBlackmailer (Null)");
+            Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
+            Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
+            Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+            Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+            Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
+            Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
+            Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
+            Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
+            Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
+            Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
+            Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
+            //cached TraitEffects
+            actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
+            actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
+            actorBreakdownChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceNone");
+            actorNoActionsDuringSecurityMeasures = GameManager.instance.dataScript.GetTraitEffectID("ActorNoActionsSecurity");
+            actorSecretChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceHigh");
+            actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
+            actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
+            actorAppeaseNone = GameManager.instance.dataScript.GetTraitEffectID("ActorAppeaseNone");
+            actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
+            actorConflictNoGoodOptions = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictGoodNone");
+            actorConflictNone = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictNone");
+            actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
+            actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
+            actorResignHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorResignHigh");
+            actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
+            actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
+            actorReserveActionNone = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionNone");
+            actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
+            actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
+            actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
+            Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
+            Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
+            Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
+            Debug.Assert(actorNoActionsDuringSecurityMeasures > -1, "Invalid actorNoActionsDuringSecurityMeasures (-1)");
+            Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
+            Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
+            Debug.Assert(actorAppeaseNone > -1, "Invalid actorAppeaseNone (-1)");
+            Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
+            Debug.Assert(actorConflictNoGoodOptions > -1, "Invalid actorConflictNoGoodOptions (-1)");
+            Debug.Assert(actorConflictNone > -1, "Invalid actorConflictNone (-1)");
+            Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
+            Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
+            Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
+            Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1)");
+            Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1)");
+            Debug.Assert(actorReserveActionNone > -1, "Invalid actorReserveActionNone (-1)");
+            Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
+            Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
+            //event listener is registered in InitialiseActors() due to GameManager sequence.
+            EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "ActorManager");
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActorManager");
+            EventManager.instance.AddListener(EventType.RecruitAction, OnEvent, "ActorManager");
+            EventManager.instance.AddListener(EventType.RecruitDecision, OnEvent, "ActorManager");
+            EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent, "ActorManager");
+            EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent, "ActorManager");
+            EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent, "ActorManager");
+        }
         //create active, OnMap actors
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);

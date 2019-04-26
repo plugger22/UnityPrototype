@@ -95,15 +95,18 @@ public class SideManager : MonoBehaviour
 
     public void Initialise()
     {
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
-
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
+        }
         /*//if autoRun then bothSidesAI automatically true
         if (GameManager.instance.autoRunTurns > 0) { GameManager.instance.isBothAI = true; } else { GameManager.instance.isBothAI = false; }*/
 
-        //both sides AI
+        //AUTORUN
         if (GameManager.instance.autoRunTurns > 0)
         {
             //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)

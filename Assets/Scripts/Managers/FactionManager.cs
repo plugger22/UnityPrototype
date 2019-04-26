@@ -77,12 +77,21 @@ public class FactionManager : MonoBehaviour
 
     public void Initialise()
     {
-        //fast access
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //fast access
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            //update colours for AI Display tooltip data
+            SetColours();
+            //register listener
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
+            EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
+            EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "FactionManager");
+        }
         //Authority faction 
         factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
@@ -101,13 +110,6 @@ public class FactionManager : MonoBehaviour
         ApprovalResistance = approval;
         Debug.LogFormat("[Fac] FactionManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
             factionResistance, ApprovalResistance, factionAuthority, ApprovalAuthority, "\n");
-
-        //update colours for AI Display tooltip data
-        SetColours();
-        //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
-        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "FactionManager");
     }
 
     /// <summary>

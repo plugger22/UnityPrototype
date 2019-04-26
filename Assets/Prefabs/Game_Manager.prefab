@@ -2081,7 +2081,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   seedDev: 10234
-  isAuthority: 1
+  isAuthority: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

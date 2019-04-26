@@ -24,6 +24,5 @@ public class PreLoadManager : MonoBehaviour
     [Range(2, 4)] public int numOfQualities = 3;
 
 
-    public void Initialise()
-    { }
+
 }

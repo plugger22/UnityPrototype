@@ -97,58 +97,63 @@ public class ActorPanelUI : MonoBehaviour
 
     public void Initialise()
     {
-        //assign actorSlotID's to all Actor components
-        Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
-        Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
-        Actor2.GetComponent<ActorHighlightUI>().actorSlotID = 2;
-        Actor3.GetComponent<ActorHighlightUI>().actorSlotID = 3;
-        picture0.GetComponent<ActorClickUI>().actorSlotID = 0;
-        picture1.GetComponent<ActorClickUI>().actorSlotID = 1;
-        picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
-        picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
-        type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
-        type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
-        type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
-        type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
-        //populate lists
-        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
-        if (listOfActorTypes != null)
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
-            listOfActorTypes.Add(type0);
-            listOfActorTypes.Add(type1);
-            listOfActorTypes.Add(type2);
-            listOfActorTypes.Add(type3);
+            //assign actorSlotID's to all Actor components
+            Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
+            Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
+            Actor2.GetComponent<ActorHighlightUI>().actorSlotID = 2;
+            Actor3.GetComponent<ActorHighlightUI>().actorSlotID = 3;
+            picture0.GetComponent<ActorClickUI>().actorSlotID = 0;
+            picture1.GetComponent<ActorClickUI>().actorSlotID = 1;
+            picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
+            picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
+            type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
+            type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
+            type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
+            type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
+            //populate lists
+            List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
+            if (listOfActorTypes != null)
+            {
+                listOfActorTypes.Add(type0);
+                listOfActorTypes.Add(type1);
+                listOfActorTypes.Add(type2);
+                listOfActorTypes.Add(type3);
+            }
+            else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
+            List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+            if (listOfActorPortraits != null)
+            {
+                listOfActorPortraits.Add(picture0);
+                listOfActorPortraits.Add(picture1);
+                listOfActorPortraits.Add(picture2);
+                listOfActorPortraits.Add(picture3);
+            }
+            else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
+            //fast access
+            vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
+            vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
+            Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
+            Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+            //player
+            typePlayer.text = "PLAYER";
+            if (GameManager.instance.playerScript.sprite != null)
+            { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
+            else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
+            //initialse listOfRenownCircles
+            arrayOfRenownCircles[0] = renownCircle0;
+            arrayOfRenownCircles[1] = renownCircle1;
+            arrayOfRenownCircles[2] = renownCircle2;
+            arrayOfRenownCircles[3] = renownCircle3;
+            //event listener
+            EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
         }
-        else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
-        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
-        if (listOfActorPortraits != null)
-        {
-            listOfActorPortraits.Add(picture0);
-            listOfActorPortraits.Add(picture1);
-            listOfActorPortraits.Add(picture2);
-            listOfActorPortraits.Add(picture3);
-        }
-        else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
-        //fast access
-        vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
-        vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
-        Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
-        Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
-        //player
-        typePlayer.text = "PLAYER";
-        if (GameManager.instance.playerScript.sprite != null)
-        { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
-        else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
-        //initialse listOfRenownCircles
-        arrayOfRenownCircles[0] = renownCircle0;
-        arrayOfRenownCircles[1] = renownCircle1;
-        arrayOfRenownCircles[2] = renownCircle2;
-        arrayOfRenownCircles[3] = renownCircle3;
         //initialise starting line up
         UpdateActorPanel();
         SetActorRenownUI(true);
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+
     }
 
 
@@ -213,7 +218,6 @@ public class ActorPanelUI : MonoBehaviour
                                         Debug.LogError(string.Format("Invalid side.level \"{0}\" {1}", side.name, side.level));
                                         break;
                                 }
-
                             }
                         }
                         //Update Renown indicators (switches off for Vacant actors)

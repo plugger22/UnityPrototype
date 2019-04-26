@@ -81,15 +81,18 @@ public class TooltipNode : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        //fast access fields
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
-        minStatValue = GameManager.instance.nodeScript.minNodeValue;
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
-        Debug.Assert(minStatValue > -1, "Invalid minStatValue (-1)");
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //fast access fields
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
+            minStatValue = GameManager.instance.nodeScript.minNodeValue;
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
+            Debug.Assert(minStatValue > -1, "Invalid minStatValue (-1)");
+        }
     }
 
     /// <summary>

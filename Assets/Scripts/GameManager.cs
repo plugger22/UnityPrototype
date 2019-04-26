@@ -328,6 +328,7 @@ public class GameManager : MonoBehaviour
         //AutoRun or Campaign
         if (autoRunTurns > 0)
         {
+            inputScript.GameState = GameState.NewInitialisation;
             InitialiseNewLevel();
             //commence autorun
             turnScript.SetAutoRun(autoRunTurns);
@@ -366,10 +367,6 @@ public class GameManager : MonoBehaviour
         //
         // - - - Global Methods
         //
-        //PreLoad Manager 
-        startMethod.handler = preloadScript.Initialise;
-        startMethod.className = "PreLoadManager";
-        listOfGlobalMethods.Add(startMethod);
         //Load Manager -> InitialiseStart
         startMethod.handler = loadScript.InitialiseStart;
         startMethod.className = "LoadManager";
