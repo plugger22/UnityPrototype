@@ -450,171 +450,177 @@ public class AIManager : MonoBehaviour
 
     public void Initialise()
     {
-        //collections
-        arrayOfAITaskTypes = new int[(int)AITaskType.Count];
-        playerID = GameManager.instance.preloadScript.playerActorID;
-        Debug.Assert(playerID > -1, "Invalid playerID (-1)");
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //collections
+            arrayOfAITaskTypes = new int[(int)AITaskType.Count];
+            playerID = GameManager.instance.preloadScript.playerActorID;
+            Debug.Assert(playerID > -1, "Invalid playerID (-1)");
+            //decision data
+            numOfUnsuccessfulResourceRequests = 0;
+            numOfSuccessfulResourceRequests = 0;
+            numOfCrisis = 0;
+            isInsufficientResources = false;
+            //autoRun test
+            if (GameManager.instance.testScript.condtionAuthority != null && GameManager.instance.testScript.conditionTurnAuthority > -1)
+            {
+                isAutoRunTest = true;
+                turnForCondition = GameManager.instance.testScript.conditionTurnAuthority;
+                conditionAutoRunTest = GameManager.instance.testScript.condtionAuthority;
+            }
+            else { isAutoRunTest = false; }
+            //decision ID's
+            int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
+            decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
+            decisionConnSec = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
+            decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
+            decisionSecAlert = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
+            decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
+            decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("TraceBack");
+            decisionTraceBack = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Screamer");
+            decisionScreamer = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Offline");
+            decisionOffline = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Protocol");
+            decisionProtocol = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Censorship");
+            decisionCensorship = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Ban Protests");
+            decisionBanProtests = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Martial Law");
+            decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Curfew");
+            decisionCurfew = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Robo Cops");
+            decisionRoboCop = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Drone Warfare");
+            decisionDrones = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Christmas Hampers");
+            decisionHamper = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Austerity Payment");
+            decisionAusterity = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Medical Care");
+            decisionMedical = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Blind Eye");
+            decisionBlindEye = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Holiday");
+            decisionHoliday = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Stress Leave");
+            decisionStressLeave = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Lobby HQ");
+            decisionLobbyHQ = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+            Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
+            Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
+            Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
+            Debug.Assert(decisionSecAlert != null, "Invalid decisionSecAlert (Null)");
+            Debug.Assert(decisionCrackdown != null, "Invalid decisionCrackdown (Null)");
+            Debug.Assert(decisionResources != null, "Invalid decisionResources (Null)");
+            Debug.Assert(decisionTraceBack != null, "Invalid decisionTraceBack (Null)");
+            Debug.Assert(decisionScreamer != null, "Invalid decisionScreamer (Null)");
+            Debug.Assert(decisionOffline != null, "Invalid decisionOffline (Null)");
+            Debug.Assert(decisionProtocol != null, "Invalid decisionProtocol (Null)");
+            Debug.Assert(decisionCensorship != null, "Invalid decisionCensorWeb (Null)");
+            Debug.Assert(decisionBanProtests != null, "Invalid decisionBanProtests (Null)");
+            Debug.Assert(decisionMartialLaw != null, "Invalid decisionMartialLaw (Null)");
+            Debug.Assert(decisionCurfew != null, "Invalid decisionCurfew (Null)");
+            Debug.Assert(decisionRoboCop != null, "Invalid decisionRoboCops (Null)");
+            Debug.Assert(decisionDrones != null, "Invalid decisionDrones (Null)");
+            Debug.Assert(decisionHamper != null, "Invalid decisionHamper (Null)");
+            Debug.Assert(decisionAusterity != null, "Invalid decisionAusterity (Null)");
+            Debug.Assert(decisionMedical != null, "Invalid decisionMedical (Null)");
+            Debug.Assert(decisionBlindEye != null, "Invalid decisionBlindEye (Null)");
+            Debug.Assert(decisionHoliday != null, "Invalid decisionHoliday (Null)");
+            Debug.Assert(decisionStressLeave != null, "Invalid decisionStressLeave (Null)");
+            Debug.Assert(decisionLobbyHQ != null, "Invalid decisionLobbyHQ (Null)");
+            //sides
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+            //cached TraitEffects
+            aiDetectionChanceHigher = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceHigher");
+            aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
+            aiCounterMeasurePriorityRaise = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasurePriorityRaise");
+            aiCounterMeasureTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasureTimerDoubled");
+            aiPolicyTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyTimerDoubled");
+            aiPolicyCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostLower");
+            aiPolicyCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostHigher");
+            aiHandoutCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostLower");
+            aiHandoutCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostHigher");
+            Debug.Assert(aiDetectionChanceHigher > -1, "Invalid aiDetectionChanceHigher (-1)");
+            Debug.Assert(aiDetectionChanceLower > -1, "Invalid aiDetectionChanceLower (-1)");
+            Debug.Assert(aiCounterMeasurePriorityRaise > -1, "Invalid aiCounterMeasurePriorityRaise (-1)");
+            Debug.Assert(aiCounterMeasureTimerDoubled > -1, "Invalid aiCounterMeasuresTimerDoubled (-1)");
+            //fast access
+            teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
+            teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
+            teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
+            teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
+            teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
+            teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
+            teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+            maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
+            Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
+            Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
+            Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
+            Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe");
+            Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
+            Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
+            Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
+            Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
+            //text strings (uncoloured)
+            traceBackFormattedText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>TRACEBACK</size></cspace></font>";
+            screamerFormattedText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>SCREAMER</size></cspace></font>";
+            traceBackEffectText = "TraceBack Mask";
+            screamerEffectText = "Screamer Mask";
+            cheapHackingEffectText = "Cheap Hacking";
+            freeHackingEffectText = "Free Hacking";
+            invisibileHackingEffectText = "Invisible Hacking";
+            lowerDetectionEffectText = "Lower Detection";
+            //Hacking
+            hackingAttemptsTotal = 0;
+            hackingAttemptsReboot = 0;
+            hackingAttemptsDetected = 0;
+            hackingCurrentCost = hackingBaseCost;
+            aiAlertStatus = Priority.Low;
+            aiSecurityProtocolLevel = 0;
+            isRebooting = false;
+            rebootTimer = 0;
+            isOffline = false;
+            isTraceBack = false;
+            isScreamer = false;
+            isPolicy = false;
+            timerTraceBack = -1;
+            timerScreamer = -1;
+            timerOffline = -1;
+            timerPolicy = -1;
+            timerHandout = 0;
+            //event listeners
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
+            EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "AIManager");
+        }
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
-        numOfUnsuccessfulResourceRequests = 0;
-        numOfSuccessfulResourceRequests = 0;
-        numOfCrisis = 0;
-        isInsufficientResources = false;
-        //autoRun test
-        if (GameManager.instance.testScript.condtionAuthority != null && GameManager.instance.testScript.conditionTurnAuthority > -1)
-        {
-            isAutoRunTest = true;
-            turnForCondition = GameManager.instance.testScript.conditionTurnAuthority;
-            conditionAutoRunTest = GameManager.instance.testScript.condtionAuthority;
-        }
-        else { isAutoRunTest = false; }
-        //decision ID's
-        int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
-        decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
-        decisionConnSec = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
-        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
-        decisionSecAlert = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
-        decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
-        decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("TraceBack");
-        decisionTraceBack = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Screamer");
-        decisionScreamer = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Offline");
-        decisionOffline = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Protocol");
-        decisionProtocol = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Censorship");
-        decisionCensorship = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Ban Protests");
-        decisionBanProtests = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Martial Law");
-        decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Curfew");
-        decisionCurfew = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Robo Cops");
-        decisionRoboCop = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Drone Warfare");
-        decisionDrones = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Christmas Hampers");
-        decisionHamper = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Austerity Payment");
-        decisionAusterity = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Medical Care");
-        decisionMedical = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Blind Eye");
-        decisionBlindEye = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Holiday");
-        decisionHoliday = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Stress Leave");
-        decisionStressLeave = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Lobby HQ");
-        decisionLobbyHQ = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
-        Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
-        Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
-        Debug.Assert(decisionSecAlert != null, "Invalid decisionSecAlert (Null)");
-        Debug.Assert(decisionCrackdown != null, "Invalid decisionCrackdown (Null)");
-        Debug.Assert(decisionResources != null, "Invalid decisionResources (Null)");
-        Debug.Assert(decisionTraceBack != null, "Invalid decisionTraceBack (Null)");
-        Debug.Assert(decisionScreamer != null, "Invalid decisionScreamer (Null)");
-        Debug.Assert(decisionOffline != null, "Invalid decisionOffline (Null)");
-        Debug.Assert(decisionProtocol != null, "Invalid decisionProtocol (Null)");
-        Debug.Assert(decisionCensorship != null, "Invalid decisionCensorWeb (Null)");
-        Debug.Assert(decisionBanProtests != null, "Invalid decisionBanProtests (Null)");
-        Debug.Assert(decisionMartialLaw != null, "Invalid decisionMartialLaw (Null)");
-        Debug.Assert(decisionCurfew != null, "Invalid decisionCurfew (Null)");
-        Debug.Assert(decisionRoboCop != null, "Invalid decisionRoboCops (Null)");
-        Debug.Assert(decisionDrones != null, "Invalid decisionDrones (Null)");
-        Debug.Assert(decisionHamper != null, "Invalid decisionHamper (Null)");
-        Debug.Assert(decisionAusterity != null, "Invalid decisionAusterity (Null)");
-        Debug.Assert(decisionMedical != null, "Invalid decisionMedical (Null)");
-        Debug.Assert(decisionBlindEye != null, "Invalid decisionBlindEye (Null)");
-        Debug.Assert(decisionHoliday != null, "Invalid decisionHoliday (Null)");
-        Debug.Assert(decisionStressLeave != null, "Invalid decisionStressLeave (Null)");
-        Debug.Assert(decisionLobbyHQ != null, "Invalid decisionLobbyHQ (Null)");
-        //sides
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        
+        //city
         city = GameManager.instance.cityScript.GetCity();
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(city != null, "Invalid City (Null)");
         //set AI resource levels
         GameManager.instance.dataScript.SetAIResources(globalAuthority, GameManager.instance.scenarioScript.scenario.leaderAuthority.resourcesStarting);
-        //cached TraitEffects
-        aiDetectionChanceHigher = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceHigher");
-        aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
-        aiCounterMeasurePriorityRaise = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasurePriorityRaise");
-        aiCounterMeasureTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasureTimerDoubled");
-        aiPolicyTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyTimerDoubled");
-        aiPolicyCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostLower");
-        aiPolicyCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostHigher");
-        aiHandoutCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostLower");
-        aiHandoutCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostHigher");
-        Debug.Assert(aiDetectionChanceHigher > -1, "Invalid aiDetectionChanceHigher (-1)");
-        Debug.Assert(aiDetectionChanceLower > -1, "Invalid aiDetectionChanceLower (-1)");
-        Debug.Assert(aiCounterMeasurePriorityRaise > -1, "Invalid aiCounterMeasurePriorityRaise (-1)");
-        Debug.Assert(aiCounterMeasureTimerDoubled > -1, "Invalid aiCounterMeasuresTimerDoubled (-1)");
         //get names of node arcs (name or null, if none)
         if (city.mayor.preferredArc != null) { authorityPreferredArc = city.mayor.preferredArc.name; }
         actionsPerTurn = city.mayor.actionsPerTurn;
         Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
-        //fast access
-        teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
-        teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
-        teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
-        teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
-        teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
-        teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
-        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
-        
-        Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
-        Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
-        Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
-        Debug.Assert(teamArcProbe > -1, "Invalid teamArcProbe");
-        Debug.Assert(teamArcSpider > -1, "Invalid teamArcSpider");
-        Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage");
-        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure");
-        Debug.Assert(maxTeamsAtNode > -1, "Invalid maxTeamsAtNode");
-        
-        //text strings (uncoloured)
-        traceBackFormattedText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>TRACEBACK</size></cspace></font>";
-        screamerFormattedText = "<font=\"Bangers SDF\"><cspace=1em><size=120%>SCREAMER</size></cspace></font>";
-        traceBackEffectText = "TraceBack Mask";
-        screamerEffectText = "Screamer Mask";
-        cheapHackingEffectText = "Cheap Hacking";
-        freeHackingEffectText = "Free Hacking";
-        invisibileHackingEffectText = "Invisible Hacking";
-        lowerDetectionEffectText = "Lower Detection";
-        //Hacking
-        hackingAttemptsTotal = 0;
-        hackingAttemptsReboot = 0;
-        hackingAttemptsDetected = 0;
-        hackingCurrentCost = hackingBaseCost;
-        aiAlertStatus = Priority.Low;
-        aiSecurityProtocolLevel = 0;
-        isRebooting = false;
-        rebootTimer = 0;
-        isOffline = false;
-        isTraceBack = false;
-        isScreamer = false;
-        isPolicy = false;
-        timerTraceBack = -1;
-        timerScreamer = -1;
-        timerOffline = -1;
-        timerPolicy = -1;
-        timerHandout = 0;
         //set up list of most connected Nodes
         SetConnectedNodes();
         SetPreferredNodes();
@@ -622,9 +628,6 @@ public class AIManager : MonoBehaviour
         SetDecisionNodes();
         SetNearNeighbours();
         SetColours();
-        //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "AIManager");
     }
 
     /// <summary>
