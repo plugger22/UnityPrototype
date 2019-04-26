@@ -185,6 +185,9 @@ public class InputManager : MonoBehaviour
                         case GameState.NewGameOptions:
                             EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
                             break;
+                        case GameState.LoadGame:
+                            EventManager.instance.PostNotification(EventType.CloseLoadGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            break;
                         case GameState.Options:
                             //close Options background -> Debug: need to set new Game State
                             EventManager.instance.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");

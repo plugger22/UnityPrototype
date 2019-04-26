@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using gameAPI;
 using UnityEngine;
@@ -34,8 +35,11 @@ public class ModalGUI : MonoBehaviour
     public Image backgroundNewCampaign;
     [Tooltip("End of Campaign (no more scenarios available)")]
     public Image backgroundEndCampaign;
+    [Tooltip("Resume or Load a save game")]
+    public Image backgroundLoadGame;
 
-    private int modalLevel;             //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
+    
+    private int modalLevel;                                                 //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
 
     private static ModalGUI modalGUI;
 
@@ -62,6 +66,7 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(modal0 != null, "Invalid modal0 (Null)");
         Debug.Assert(modal1 != null, "Invalid modal (Null)");
         Debug.Assert(modal2 != null, "Invalid modal2 (Null)");
+        //backgrounds
         Debug.Assert(backgroundStart != null, "Invalid backgroundStart (Null)");
         Debug.Assert(backgroundNewGame != null, "Invalid backgroundNewGame (Null)");
         Debug.Assert(backgroundNewGameOptions != null, "Invalid backgroundNewGameOptions (Null)");
@@ -70,16 +75,9 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(backgroundMetaGame != null, "Invalid backgroundMetaGame (Null)");
         Debug.Assert(backgroundNewCampaign != null, "Invalid backgroundNewCampaign (Null)");
         Debug.Assert(backgroundEndCampaign != null, "Invalid backgroundEndCampaign (Null)");
+        Debug.Assert(backgroundLoadGame != null, "Invalid backgroundLoadGame (Null)");
         //disable all backgrounds
-        DisableBackground(Background.Start);
-        DisableBackground(Background.EndLevel);
-        DisableBackground(Background.NewGame);
-        DisableBackground(Background.NewGameOptions);
-        DisableBackground(Background.Options);
-        DisableBackground(Background.MetaGame);
-        DisableBackground(Background.NewCampaign);
-        DisableBackground(Background.EndCampaign);
-
+        CloseBackgrounds();
     }
 
     //
@@ -176,6 +174,9 @@ public class ModalGUI : MonoBehaviour
             case Background.EndCampaign:
                 backgroundEndCampaign.gameObject.SetActive(true);
                 break;
+            case Background.LoadGame:
+                backgroundLoadGame.gameObject.SetActive(true);
+                break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
                 break;
@@ -184,42 +185,55 @@ public class ModalGUI : MonoBehaviour
 
 
     /// <summary>
-    /// Hide background
+    /// closes all backgrounds except the specified exclusion (default no exclusion, disable all)
     /// </summary>
-    /// <param name="background"></param>
-    public void DisableBackground(Background background)
+    /// <param name="excludeBackground"></param>
+    public void CloseBackgrounds(Background excludeBackground = Background.None)
     {
-        switch (background)
+        foreach(Background background in Enum.GetValues(typeof(Background)))
         {
-            case Background.Start:
-                backgroundStart.gameObject.SetActive(false);
-                break;
-            case Background.NewGame:
-                backgroundNewGame.gameObject.SetActive(false);
-                break;
-            case Background.NewGameOptions:
-                backgroundNewGameOptions.gameObject.SetActive(false);
-                break;
-            case Background.Options:
-                backgroundOptions.gameObject.SetActive(false);
-                break;
-            case Background.EndLevel:
-                backgroundEndLevel.gameObject.SetActive(false);
-                break;
-            case Background.MetaGame:
-                backgroundMetaGame.gameObject.SetActive(false);
-                break;
-            case Background.NewCampaign:
-                backgroundNewCampaign.gameObject.SetActive(false);
-                break;
-            case Background.EndCampaign:
-                backgroundEndCampaign.gameObject.SetActive(false);
-                break;
-            default:
-                Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
-                break;
+            if (background != excludeBackground)
+            {
+                switch (background)
+                {
+                    case Background.Start:
+                        backgroundStart.gameObject.SetActive(false);
+                        break;
+                    case Background.NewGame:
+                        backgroundNewGame.gameObject.SetActive(false);
+                        break;
+                    case Background.NewGameOptions:
+                        backgroundNewGameOptions.gameObject.SetActive(false);
+                        break;
+                    case Background.Options:
+                        backgroundOptions.gameObject.SetActive(false);
+                        break;
+                    case Background.EndLevel:
+                        backgroundEndLevel.gameObject.SetActive(false);
+                        break;
+                    case Background.MetaGame:
+                        backgroundMetaGame.gameObject.SetActive(false);
+                        break;
+                    case Background.NewCampaign:
+                        backgroundNewCampaign.gameObject.SetActive(false);
+                        break;
+                    case Background.EndCampaign:
+                        backgroundEndCampaign.gameObject.SetActive(false);
+                        break;
+                    case Background.LoadGame:
+                        backgroundLoadGame.gameObject.SetActive(false);
+                        break;
+                    case Background.None:
+                        //do nothing
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
+                        break;
+                }
+            }
         }
     }
+
 
     //new methods above here
 }

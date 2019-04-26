@@ -473,8 +473,8 @@ public class ModalMainMenu : MonoBehaviour
         //revert to previous game state if necessary (menu option may have triggered a new game state already)
         if (GameManager.instance.inputScript.GameState == GameState.MainMenu)
         { GameManager.instance.inputScript.GameState = gameState; }
-        //close background (do so regardless as not a big overhead)
-        GameManager.instance.modalGUIScript.DisableBackground(Background.Start);
+/*        //close background (do so regardless as not a big overhead)
+        GameManager.instance.modalGUIScript.DisableBackground(Background.Start);*/
         Debug.LogFormat("[UI] ModalMainMenu.cs -> CloseMainMenu{0}", "\n");
     }
 }

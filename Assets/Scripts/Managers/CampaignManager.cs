@@ -19,7 +19,7 @@ public class CampaignManager : MonoBehaviour
     {
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
         Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign, ID {2}{3}", campaign.listOfScenarios.Count, campaign.tag, campaign.campaignID, "\n");
-        
+
         //event Listeners
         EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "CampaignManager");
@@ -32,6 +32,7 @@ public class CampaignManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.ResumeGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.LoadGame, OnEvent, "CampaignManager");
         EventManager.instance.AddListener(EventType.SaveGame, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.CloseLoadGame, OnEvent, "CampaignManager");
     }
 
 
@@ -64,6 +65,9 @@ public class CampaignManager : MonoBehaviour
                 break;
             case EventType.CloseNewGame:
                 CloseNewGameOptions();
+                break;
+            case EventType.CloseLoadGame:
+                CloseLoadGame();
                 break;
             case EventType.CreateOptions:
                 ProcessOptions((GameState)Param);
@@ -113,7 +117,7 @@ public class CampaignManager : MonoBehaviour
         //open NewGame background
         GameManager.instance.modalGUIScript.SetBackground(Background.NewGameOptions);
         //close previous background
-        GameManager.instance.modalGUIScript.DisableBackground(Background.NewGame);
+        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.NewGameOptions);
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.instance.inputScript.GameState = GameState.NewGameOptions;
     }
@@ -133,7 +137,7 @@ public class CampaignManager : MonoBehaviour
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
         //close background
-        GameManager.instance.modalGUIScript.DisableBackground(Background.NewGameOptions);
+        GameManager.instance.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
         GameManager.instance.guiScript.SetIsBlocked(false);
     }
@@ -162,7 +166,7 @@ public class CampaignManager : MonoBehaviour
         //revert to original game screen prior to Options being chosen
         GameManager.instance.inputScript.GameState = gameState;
         //close background
-        GameManager.instance.modalGUIScript.DisableBackground(Background.Options);
+        GameManager.instance.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
         GameManager.instance.guiScript.SetIsBlocked(false);
     }
@@ -192,7 +196,7 @@ public class CampaignManager : MonoBehaviour
         //Open end level background
         GameManager.instance.modalGUIScript.SetBackground(Background.MetaGame);
         //disable end level background
-        GameManager.instance.modalGUIScript.DisableBackground(Background.EndLevel);
+        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.MetaGame);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.MetaGame;
     }
@@ -214,7 +218,7 @@ public class CampaignManager : MonoBehaviour
             //revert to playGame state by default
             GameManager.instance.inputScript.GameState = GameState.PlayGame;
             //close background
-            GameManager.instance.modalGUIScript.DisableBackground(Background.MetaGame);
+            GameManager.instance.modalGUIScript.CloseBackgrounds();
             //toggle of modal block
             GameManager.instance.guiScript.SetIsBlocked(false);
         }
@@ -223,7 +227,7 @@ public class CampaignManager : MonoBehaviour
             //End of Campaign -> open background
             GameManager.instance.modalGUIScript.SetBackground(Background.EndCampaign);
             //disable end level background
-            GameManager.instance.modalGUIScript.DisableBackground(Background.MetaGame);
+            GameManager.instance.modalGUIScript.CloseBackgrounds(Background.EndCampaign);
             //change game state
             GameManager.instance.inputScript.GameState = GameState.ExitCampaign;
         }
@@ -235,7 +239,12 @@ public class CampaignManager : MonoBehaviour
     private void ProcessResumeGame()
     {
         Debug.LogFormat("[Cam] FileManager.cs -> ProcessResumeGame: RESUME game option selected{0}", "\n");
-
+        //Load Game -> open background
+        GameManager.instance.modalGUIScript.SetBackground(Background.LoadGame);
+        //Close any open background
+        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.LoadGame;
     }
 
     /// <summary>
@@ -244,7 +253,23 @@ public class CampaignManager : MonoBehaviour
     private void ProcessLoadGame()
     {
         Debug.LogFormat("[Cam] FileManager.cs -> ProcessLoadGame: LOAD game option selected{0}", "\n");
+        //Load Game -> open background
+        GameManager.instance.modalGUIScript.SetBackground(Background.LoadGame);
+        //Close any open background
+        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.LoadGame;
+    }
 
+    /// <summary>
+    /// Close load game screen
+    /// </summary>
+    private void CloseLoadGame()
+    {
+        //Close any open background
+        GameManager.instance.modalGUIScript.CloseBackgrounds();
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.PlayGame;
     }
 
     /// <summary>

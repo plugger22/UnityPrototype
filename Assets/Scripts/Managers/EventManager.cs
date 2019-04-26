@@ -24,6 +24,7 @@ public enum EventType
     CreateMetaGame,
     CloseMetaGame,
     LoadGame,
+    CloseLoadGame,
     ResumeGame,
     SaveGame,
     //UI Menus
