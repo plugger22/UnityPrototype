@@ -490,6 +490,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = factionScript.Initialise;
         startMethod.className = "FactionManager";
         listOfLevelMethods.Add(startMethod);
+        
+        //up to here
+        
+        
         //AI Manager -> after factionScript, before ScenarioManager -> InitialiseLate
         startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";
