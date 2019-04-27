@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
 
     public void Initialise()
     {
-        GameState = GameState.StartUp;
+        /*GameState = GameState.StartUp;*/
         ModalState = ModalState.Normal;
     }
 

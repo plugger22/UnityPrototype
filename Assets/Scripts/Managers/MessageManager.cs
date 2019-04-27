@@ -23,6 +23,7 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly()
     {
+        //Run in GameManager.cs -> listOfGlobalMethods with GameState.StartUp so doesn't need check for GameState.NewInitialisation
         playerActorID = GameManager.instance.playerScript.actorID;
         playerSprite = GameManager.instance.playerScript.sprite;
         Debug.Assert(playerActorID > -1, "Invalid playerActorID (-1)");

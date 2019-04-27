@@ -1038,3 +1038,88 @@ City seed 765 -> New York, America
 Dev seed 10234 -> Saturday, 27 April 2019 8:59 AM
 City seed 5678 -> London, United Kingdom
 
+Dev seed 10234 -> Saturday, 27 April 2019 1:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 2:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 2:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 2:19 PM
+Dev seed 10234 -> Saturday, 27 April 2019 2:23 PM
+Dev seed 10234 -> Saturday, 27 April 2019 2:24 PM
+Dev seed 10234 -> Saturday, 27 April 2019 2:24 PM
+Dev seed 10234 -> Saturday, 27 April 2019 2:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 2:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 2:59 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:28 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:50 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 234 -> Sydney, Australia
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 3:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 4:07 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+
+Dev seed 10234 -> Saturday, 27 April 2019 4:08 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+
+Dev seed 10234 -> Saturday, 27 April 2019 4:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10234 -> Saturday, 27 April 2019 4:23 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+
+City seed 234 -> Sydney, Australia
+
+Dev seed 10234 -> Saturday, 27 April 2019 4:27 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 765 -> New York, America
+

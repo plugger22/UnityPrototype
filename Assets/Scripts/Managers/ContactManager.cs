@@ -54,18 +54,23 @@ public class ContactManager : MonoBehaviour
         arrayOfActors = new Actor[numOfOnMapActors];
         //seed contact pool
         CreateContacts(numOfPoolContacts);
-        //fast acess fields
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        actorContactEffectHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectHigh");
-        actorContactEffectLow = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectLow");
-        //check O.K
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
-        Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
-        //event Listeners
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");
+
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //fast acess fields
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            actorContactEffectHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectHigh");
+            actorContactEffectLow = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectLow");
+            //check O.K
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
+            Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
+            //event Listeners
+            EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");
+        }
     }
 
     /// <summary>

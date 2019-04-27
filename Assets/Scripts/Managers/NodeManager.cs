@@ -157,122 +157,127 @@ public class NodeManager : MonoBehaviour
         //Set node contact flags (player side & non-player side)
         GameManager.instance.contactScript.UpdateNodeContacts();
         GameManager.instance.contactScript.UpdateNodeContacts(false);
-        //fast access
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        //find specific SO's and assign to outcome fields
-        EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
-        if (arrayOfEffectOutcome != null)
+
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
-            for (int i = 0; i < arrayOfEffectOutcome.Length; i++)
+            //fast access
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            //find specific SO's and assign to outcome fields
+            EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
+            if (arrayOfEffectOutcome != null)
             {
-                //get SO
-                EffectOutcome outcomeObject = arrayOfEffectOutcome[i];
-                if (outcomeObject != null)
+                for (int i = 0; i < arrayOfEffectOutcome.Length; i++)
                 {
-                    //pick out and assign the ones required for node fast acess, ignore the rest
-                    switch (outcomeObject.name)
+                    //get SO
+                    EffectOutcome outcomeObject = arrayOfEffectOutcome[i];
+                    if (outcomeObject != null)
                     {
-                        case "NodeSecurity":
-                            outcomeNodeSecurity = outcomeObject;
-                            break;
-                        case "NodeStability":
-                            outcomeNodeStability = outcomeObject;
-                            break;
-                        case "NodeSupport":
-                            outcomeNodeSupport = outcomeObject;
-                            break;
-                        case "StatusSpiders":
-                            outcomeStatusSpiders = outcomeObject;
-                            break;
-                        case "StatusTracers":
-                            outcomeStatusTracers = outcomeObject;
-                            break;
-                        case "StatusContacts":
-                            outcomeStatusContacts = outcomeObject;
-                            break;
-                        case "StatusTeams":
-                            outcomeStatusTeams = outcomeObject;
-                            break;
+                        //pick out and assign the ones required for node fast acess, ignore the rest
+                        switch (outcomeObject.name)
+                        {
+                            case "NodeSecurity":
+                                outcomeNodeSecurity = outcomeObject;
+                                break;
+                            case "NodeStability":
+                                outcomeNodeStability = outcomeObject;
+                                break;
+                            case "NodeSupport":
+                                outcomeNodeSupport = outcomeObject;
+                                break;
+                            case "StatusSpiders":
+                                outcomeStatusSpiders = outcomeObject;
+                                break;
+                            case "StatusTracers":
+                                outcomeStatusTracers = outcomeObject;
+                                break;
+                            case "StatusContacts":
+                                outcomeStatusContacts = outcomeObject;
+                                break;
+                            case "StatusTeams":
+                                outcomeStatusTeams = outcomeObject;
+                                break;
+                        }
                     }
                 }
             }
+            else { Debug.LogWarning("Invalid arrayOfEffectOutcome (Null)"); }
+            //check all found and assigned
+            if (outcomeNodeSecurity == null) { Debug.LogError("Invalid outcomeNodeSecurity (Null)"); }
+            if (outcomeNodeStability == null) { Debug.LogError("Invalid outcomeNodeStability (Null)"); }
+            if (outcomeNodeSupport == null) { Debug.LogError("Invalid outcomeNodeSupport (Null)"); }
+            if (outcomeStatusSpiders == null) { Debug.LogError("Invalid outcomeStatusSpiders (Null)"); }
+            if (outcomeStatusTracers == null) { Debug.LogError("Invalid outcomeStatusTracers (Null)"); }
+            if (outcomeStatusContacts == null) { Debug.LogError("Invalid outcomeStatusContacts (Null)"); }
+            if (outcomeStatusTeams == null) { Debug.LogError("Invalid outcomeStatusTeams (Null)"); }
+            //gear node Action Quick Reference -> Kinetic
+            int actionID = GameManager.instance.dataScript.GetActionID("gearKinetic");
+            if (actionID > -1)
+            {
+                actionKinetic = GameManager.instance.dataScript.GetAction(actionID);
+                if (actionKinetic == null) { Debug.LogError("Invalid actionKinetic (Null)"); }
+            }
+            else { Debug.LogError("Invalid gearKinetic actionID (not found)"); }
+            //gear node Action Quick Reference -> Hacking
+            actionID = GameManager.instance.dataScript.GetActionID("gearHacking");
+            if (actionID > -1)
+            {
+                actionHacking = GameManager.instance.dataScript.GetAction(actionID);
+                if (actionHacking == null) { Debug.LogError("Invalid actionHacking (Null)"); }
+            }
+            else { Debug.LogError("Invalid gearHacking actionID (not found)"); }
+            //gear node Action Quick Reference -> Persuasion
+            actionID = GameManager.instance.dataScript.GetActionID("gearPersuasion");
+            if (actionID > -1)
+            {
+                actionPersuasion = GameManager.instance.dataScript.GetAction(actionID);
+                if (actionPersuasion == null) { Debug.LogError("Invalid actionPersuasion (Null)"); }
+            }
+            else { Debug.LogError("Invalid gearPersuasion actionID (not found)"); }
+            //DEBUG
+            /*DebugRandomActivityValues();*/
+            //fast access
+            materialNormal = GetNodeMaterial(NodeType.Normal);
+            materialHighlight = GetNodeMaterial(NodeType.Highlight);
+            materialActive = GetNodeMaterial(NodeType.Active);
+            materialPlayer = GetNodeMaterial(NodeType.Player);
+            materialNemesis = GetNodeMaterial(NodeType.Nemesis);
+            crisisBaseChanceDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceDoubled");
+            crisisBaseChanceHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceHalved");
+            crisisTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerHigh");
+            crisisTimerLow = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerLow");
+            crisisWaitTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisWaitTimerDoubled");
+            crisisWaitTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisWaitTimerHalved");
+            Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
+            Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
+            Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
+            Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
+            Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
+            Debug.Assert(crisisBaseChanceDoubled > -1, "Invalid crisisBaseChanceDoubled (-1)");
+            Debug.Assert(crisisBaseChanceHalved > -1, "Invalid crisisBaseChanceHalved (-1)");
+            Debug.Assert(crisisTimerHigh > -1, "Invalid crisisTimerHigh (-1)");
+            Debug.Assert(crisisTimerLow > -1, "Invalid crisisTimerLow (-1)");
+            Debug.Assert(crisisWaitTimerDoubled > -1, "Invalid crisisWaitTimerDoubled (-1)");
+            Debug.Assert(crisisWaitTimerHalved > -1, "Invalid crisisWaitTimerHalved (-1)");
+            //flash
+            flashNodeTime = GameManager.instance.guiScript.flashNodeTime;
+            Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");
+            //register listener
+            EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
+            /*EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");*/
+            /*EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "NodeManager");*/
+            EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
+            EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
         }
-        else { Debug.LogWarning("Invalid arrayOfEffectOutcome (Null)"); }
-        //check all found and assigned
-        if (outcomeNodeSecurity == null) { Debug.LogError("Invalid outcomeNodeSecurity (Null)"); }
-        if (outcomeNodeStability == null) { Debug.LogError("Invalid outcomeNodeStability (Null)"); }
-        if (outcomeNodeSupport == null) { Debug.LogError("Invalid outcomeNodeSupport (Null)"); }
-        if (outcomeStatusSpiders == null) { Debug.LogError("Invalid outcomeStatusSpiders (Null)"); }
-        if (outcomeStatusTracers == null) { Debug.LogError("Invalid outcomeStatusTracers (Null)"); }
-        if (outcomeStatusContacts == null) { Debug.LogError("Invalid outcomeStatusContacts (Null)"); }
-        if (outcomeStatusTeams == null) { Debug.LogError("Invalid outcomeStatusTeams (Null)"); }
-        //gear node Action Quick Reference -> Kinetic
-        int actionID = GameManager.instance.dataScript.GetActionID("gearKinetic");
-        if (actionID > -1)
-        {
-            actionKinetic = GameManager.instance.dataScript.GetAction(actionID);
-            if (actionKinetic == null) { Debug.LogError("Invalid actionKinetic (Null)"); }
-        }
-        else { Debug.LogError("Invalid gearKinetic actionID (not found)"); }
-        //gear node Action Quick Reference -> Hacking
-        actionID = GameManager.instance.dataScript.GetActionID("gearHacking");
-        if (actionID > -1)
-        {
-            actionHacking = GameManager.instance.dataScript.GetAction(actionID);
-            if (actionHacking == null) { Debug.LogError("Invalid actionHacking (Null)"); }
-        }
-        else { Debug.LogError("Invalid gearHacking actionID (not found)"); }
-        //gear node Action Quick Reference -> Persuasion
-        actionID = GameManager.instance.dataScript.GetActionID("gearPersuasion");
-        if (actionID > -1)
-        {
-            actionPersuasion = GameManager.instance.dataScript.GetAction(actionID);
-            if (actionPersuasion == null) { Debug.LogError("Invalid actionPersuasion (Null)"); }
-        }
-        else { Debug.LogError("Invalid gearPersuasion actionID (not found)"); }
-        //DEBUG
-        /*DebugRandomActivityValues();*/
-        //fast access
-        materialNormal = GetNodeMaterial(NodeType.Normal);
-        materialHighlight = GetNodeMaterial(NodeType.Highlight);
-        materialActive = GetNodeMaterial(NodeType.Active);
-        materialPlayer = GetNodeMaterial(NodeType.Player);
-        materialNemesis = GetNodeMaterial(NodeType.Nemesis);
-        crisisBaseChanceDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceDoubled");
-        crisisBaseChanceHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceHalved");
-        crisisTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerHigh");
-        crisisTimerLow = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerLow");
-        crisisWaitTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisWaitTimerDoubled");
-        crisisWaitTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisWaitTimerHalved");
-        Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
-        Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
-        Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
-        Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
-        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
-        Debug.Assert(crisisBaseChanceDoubled > -1, "Invalid crisisBaseChanceDoubled (-1)");
-        Debug.Assert(crisisBaseChanceHalved > -1, "Invalid crisisBaseChanceHalved (-1)");
-        Debug.Assert(crisisTimerHigh > -1, "Invalid crisisTimerHigh (-1)");
-        Debug.Assert(crisisTimerLow > -1, "Invalid crisisTimerLow (-1)");
-        Debug.Assert(crisisWaitTimerDoubled > -1, "Invalid crisisWaitTimerDoubled (-1)");
-        Debug.Assert(crisisWaitTimerHalved > -1, "Invalid crisisWaitTimerHalved (-1)");
-        //flash
-        flashNodeTime = GameManager.instance.guiScript.flashNodeTime;
-        Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");
-        //register listener
-        EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
-        /*EventManager.instance.AddListener(EventType.DiceReturnMove, OnEvent, "NodeManager");*/
-        /*EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "NodeManager");*/
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
     }
 
 

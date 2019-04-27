@@ -340,7 +340,6 @@ public class DataManager : MonoBehaviour
         dictOfConnections.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
-        dictOfStatistics.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
         dictOfDijkstraUnweighted.Clear();
@@ -354,6 +353,7 @@ public class DataManager : MonoBehaviour
         dictOfContactsByNodeResistance.Clear();
 
         //dictOfTargets -> leave
+        //dictOfStatistics -> leave
 }
 
     //
@@ -5791,6 +5791,23 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid StatType (None)"); }
         return statValue;
+    }
+
+    /// <summary>
+    /// reset all level based stats to zero (ProcesMetaGame reset)
+    /// </summary>
+    public void StatisticReset()
+    {
+        //loop enums as you can't directly loop dictionary and change values
+        foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+        {
+            if (statType != StatType.None)
+            {
+                if (dictOfStatistics.ContainsKey(statType) == true)
+                { dictOfStatistics[statType] = 0; }
+                else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
+            }
+        }
     }
 
 

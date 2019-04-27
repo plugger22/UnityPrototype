@@ -18,17 +18,9 @@ public class Campaign : ScriptableObject
 
     [HideInInspector] public int campaignID;
     
-    //master variables used to progress Story elements
-    [HideInInspector] public int master0;
-    [HideInInspector] public int master1;
-    [HideInInspector] public int master2;
-    [HideInInspector] public int master3;
-    [HideInInspector] public int master4;
-    [HideInInspector] public int master5;
-    [HideInInspector] public int master6;
-    [HideInInspector] public int master7;
-    [HideInInspector] public int master8;
-    [HideInInspector] public int master9;
+    //master flags used to progress Story elements
+    [HideInInspector] public int[] arrayOfFlags = new int[10];
+
 
 
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
@@ -39,16 +31,8 @@ public class Campaign : ScriptableObject
     public void Reset()
     {
         scenarioIndex = 0;
-        master0 = 0;
-        master1 = 0;
-        master2 = 0;
-        master3 = 0;
-        master4 = 0;
-        master5 = 0;
-        master6 = 0;
-        master7 = 0;
-        master8 = 0;
-        master9 = 0;
+        for (int i = 0; i < arrayOfFlags.Length; i++)
+        { arrayOfFlags[i] = 0; }
     }
 
 

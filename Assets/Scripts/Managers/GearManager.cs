@@ -83,101 +83,6 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        listOfCompromisedGear = new List<string>();
-        //initialise fast access variables -> rarity
-        List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
-        if (listOfGearRarity != null)
-        {
-            foreach(GearRarity rarity in listOfGearRarity)
-            {
-                //pick out and assign the ones required for fast access, ignore the rest. 
-                //Also dynamically assign gearRarity.level values (0/1/2). Do so here as lots of gear calc's depend on these and they need to be correct
-                switch (rarity.name)
-                {
-                    case "Common":
-                        gearCommon = rarity;
-                        rarity.level = 0;
-                        break;
-                    case "Rare":
-                        gearRare = rarity;
-                        rarity.level = 1;
-                        break;
-                    case "Unique":
-                        gearUnique = rarity;
-                        rarity.level = 2;
-                        break;
-                }
-            }
-            //error check
-            if (gearCommon == null) { Debug.LogError("Invalid gearCommon (Null)"); }
-            if (gearRare == null) { Debug.LogError("Invalid gearRare (Null)"); }
-            if (gearUnique == null) { Debug.LogError("Invalid gearUnique (Null)"); }
-        }
-        else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
-        //gear save cost
-        gearSaveCurrentCost = gearSaveBaseCost;
-        //cached
-        selectionPlayerTurn = -1;
-        selectionActorTurn = -1;
-        cachedPlayerDetails = null;
-        cachedActorDetails = null;
-        isNewActionPlayer = true;
-        isNewActionActor = true;
-        //initialise fast access variables -> type
-        List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
-        Debug.Assert(listOfGearType != null, "Invalid listOfGearType (Null)");
-        //fast access
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        actorLoseGearHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearHigh");
-        actorLoseGearNone = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearNone");
-        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(actorLoseGearHigh > -1, "Invalid actorLoseGearHigh (-1)");
-        Debug.Assert(actorLoseGearNone > -1, "Invalid actorLoseGearNone (-1)");
-        Debug.Assert(maxGenericOptions != -1, "Invalid maxGenericOptions (-1)");
-        if (listOfGearType != null)
-        {
-            foreach (GearType gearType in listOfGearType)
-            {
-                //pick out and assign the ones required for fast access, ignore the rest. 
-                switch (gearType.name)
-                {
-                    case "Hacking":
-                        typeHacking = gearType;
-                        break;
-                    case "Infiltration":
-                        typeInfiltration = gearType;
-                        break;
-                    case "Invisibility":
-                        typeInvisibility = gearType;
-                        break;
-                    case "Kinetic":
-                        typeKinetic = gearType;
-                        break;
-                    case "Movement":
-                        typeMovement = gearType;
-                        break;
-                    case "Recovery":
-                        typeRecovery = gearType;
-                        break;
-                    case "Persuasion":
-                        typePersuasion = gearType;
-                        break;
-                }
-            }
-            //error check
-            if (typeHacking == null) { Debug.LogError("Invalid typeHacking (Null)"); }
-            if (typeInfiltration == null) { Debug.LogError("Invalid typeInfiltration (Null)"); }
-            if (typeInvisibility == null) { Debug.LogError("Invalid typeInvisibility (Null)"); }
-            if (typeKinetic == null) { Debug.LogError("Invalid typeKinetic (Null)"); }
-            if (typeMovement == null) { Debug.LogError("Invalid typeMovement (Null)"); }
-            if (typeRecovery == null) { Debug.LogError("Invalid typeRecovery (Null)"); }
-            if (typePersuasion == null) { Debug.LogError("Invalid typePersuasion (Null)"); }
-        }
-        else { Debug.LogError("Invalid listOfGearType (Null)"); }
-
         //initialise gear lists
         Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
@@ -210,14 +115,113 @@ public class GearManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfGear (Null) -> Gear not initialised"); }
-        //event Listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "GearManager");
-        
+
+
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            listOfCompromisedGear = new List<string>();
+            //initialise fast access variables -> rarity
+            List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
+            if (listOfGearRarity != null)
+            {
+                foreach (GearRarity rarity in listOfGearRarity)
+                {
+                    //pick out and assign the ones required for fast access, ignore the rest. 
+                    //Also dynamically assign gearRarity.level values (0/1/2). Do so here as lots of gear calc's depend on these and they need to be correct
+                    switch (rarity.name)
+                    {
+                        case "Common":
+                            gearCommon = rarity;
+                            rarity.level = 0;
+                            break;
+                        case "Rare":
+                            gearRare = rarity;
+                            rarity.level = 1;
+                            break;
+                        case "Unique":
+                            gearUnique = rarity;
+                            rarity.level = 2;
+                            break;
+                    }
+                }
+                //error check
+                if (gearCommon == null) { Debug.LogError("Invalid gearCommon (Null)"); }
+                if (gearRare == null) { Debug.LogError("Invalid gearRare (Null)"); }
+                if (gearUnique == null) { Debug.LogError("Invalid gearUnique (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
+            //gear save cost
+            gearSaveCurrentCost = gearSaveBaseCost;
+            //cached
+            selectionPlayerTurn = -1;
+            selectionActorTurn = -1;
+            cachedPlayerDetails = null;
+            cachedActorDetails = null;
+            isNewActionPlayer = true;
+            isNewActionActor = true;
+            //initialise fast access variables -> type
+            List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
+            Debug.Assert(listOfGearType != null, "Invalid listOfGearType (Null)");
+            //fast access
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            actorLoseGearHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearHigh");
+            actorLoseGearNone = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearNone");
+            maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(actorLoseGearHigh > -1, "Invalid actorLoseGearHigh (-1)");
+            Debug.Assert(actorLoseGearNone > -1, "Invalid actorLoseGearNone (-1)");
+            Debug.Assert(maxGenericOptions != -1, "Invalid maxGenericOptions (-1)");
+            if (listOfGearType != null)
+            {
+                foreach (GearType gearType in listOfGearType)
+                {
+                    //pick out and assign the ones required for fast access, ignore the rest. 
+                    switch (gearType.name)
+                    {
+                        case "Hacking":
+                            typeHacking = gearType;
+                            break;
+                        case "Infiltration":
+                            typeInfiltration = gearType;
+                            break;
+                        case "Invisibility":
+                            typeInvisibility = gearType;
+                            break;
+                        case "Kinetic":
+                            typeKinetic = gearType;
+                            break;
+                        case "Movement":
+                            typeMovement = gearType;
+                            break;
+                        case "Recovery":
+                            typeRecovery = gearType;
+                            break;
+                        case "Persuasion":
+                            typePersuasion = gearType;
+                            break;
+                    }
+                }
+                //error check
+                if (typeHacking == null) { Debug.LogError("Invalid typeHacking (Null)"); }
+                if (typeInfiltration == null) { Debug.LogError("Invalid typeInfiltration (Null)"); }
+                if (typeInvisibility == null) { Debug.LogError("Invalid typeInvisibility (Null)"); }
+                if (typeKinetic == null) { Debug.LogError("Invalid typeKinetic (Null)"); }
+                if (typeMovement == null) { Debug.LogError("Invalid typeMovement (Null)"); }
+                if (typeRecovery == null) { Debug.LogError("Invalid typeRecovery (Null)"); }
+                if (typePersuasion == null) { Debug.LogError("Invalid typePersuasion (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfGearType (Null)"); }
+            //event Listeners
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GearManager");
+            EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
+            EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
+            EventManager.instance.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
+            EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
+            EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "GearManager");
+        }
     }
 
 

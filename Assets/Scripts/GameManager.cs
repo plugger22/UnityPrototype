@@ -311,6 +311,7 @@ public class GameManager : MonoBehaviour
     #region Start method
     private void Start()
     {
+        inputScript.GameState = GameState.StartUp;
         //global methods
         if (isPerformanceLog == false)
         {
@@ -329,6 +330,8 @@ public class GameManager : MonoBehaviour
         if (autoRunTurns > 0)
         {
             inputScript.GameState = GameState.NewInitialisation;
+            //debug -> set to campaign start
+            campaignScript.campaign.Reset();
             InitialiseNewLevel();
             //commence autorun
             turnScript.SetAutoRun(autoRunTurns);
@@ -490,10 +493,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = factionScript.Initialise;
         startMethod.className = "FactionManager";
         listOfLevelMethods.Add(startMethod);
-        
-        //up to here
-        
-        
         //AI Manager -> after factionScript, before ScenarioManager -> InitialiseLate
         startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";
@@ -526,6 +525,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = nodeScript.Initialise;
         startMethod.className = "NodeManager";
         listOfLevelMethods.Add(startMethod);
+
         //Effect Manager -> after nodeScript
         startMethod.handler = effectScript.Initialise;
         startMethod.className = "EffectManager";

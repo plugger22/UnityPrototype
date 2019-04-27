@@ -199,6 +199,8 @@ public class CampaignManager : MonoBehaviour
         GameManager.instance.modalGUIScript.CloseBackgrounds(Background.MetaGame);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.MetaGame;
+        //run metaGame
+        GameManager.instance.metaScript.ProcessMetaGame();
     }
 
     /// <summary>

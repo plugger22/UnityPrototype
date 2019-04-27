@@ -90,13 +90,6 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        //fast access
-        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        scenarioTimer = GameManager.instance.scenarioScript.scenario.timer;
-        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
-        Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
-        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         //actions
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
         //states
@@ -104,12 +97,25 @@ public class TurnManager : MonoBehaviour
         authoritySecurityState = AuthoritySecurityState.Normal;
         //current side
         currentSide = GameManager.instance.sideScript.PlayerSide;
-        //event Listeners
-        EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
+
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //fast access
+            teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+            scenarioTimer = GameManager.instance.scenarioScript.scenario.timer;
+            conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+            Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
+            Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
+            Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+
+            //event Listeners
+            EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
+            EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
+            EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
+            EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "TurnManager");
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
+        }
     }
 
 
