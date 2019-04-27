@@ -542,10 +542,9 @@ public class GameManager : MonoBehaviour
         startMethod.handler = gearScript.Initialise;
         startMethod.className = "GearManager";
         listOfLevelMethods.Add(startMethod);
-        //Team Picker
-        startMethod.handler = teamPickerScript.Initialise;
-        startMethod.className = "TeamPickerUI";
-        listOfLevelMethods.Add(startMethod);
+
+        //team picker
+
         //Capture Manager
         startMethod.handler = captureScript.Initialise;
         startMethod.className = "CaptureManager";
@@ -573,6 +572,10 @@ public class GameManager : MonoBehaviour
         //
         // - - - UI methods - - -
         //
+        //Team Picker
+        startMethod.handler = teamPickerScript.Initialise;
+        startMethod.className = "TeamPickerUI";
+        listOfLevelMethods.Add(startMethod);
         //City Info UI
         startMethod.handler = cityInfoScript.Initialise;
         startMethod.className = "CityInfoUI";

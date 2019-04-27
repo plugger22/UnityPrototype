@@ -40,17 +40,21 @@ public class CaptureManager : MonoBehaviour
 
     public void Initialise()
     {
-        //fast access
-        teamErasureID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        Debug.Assert(teamErasureID > -1, "Invalid teamErasureID");
-        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
-        //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //fast access
+            teamErasureID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+            conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+            Debug.Assert(teamErasureID > -1, "Invalid teamErasureID");
+            Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+            //register listener
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
+            EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
+            EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");
+            EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
+            EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
+        }
     }
 
     /// <summary>

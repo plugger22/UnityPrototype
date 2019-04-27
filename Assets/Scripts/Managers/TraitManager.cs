@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +8,7 @@ using UnityEngine;
 /// </summary>
 public class TraitManager : MonoBehaviour
 {
-
-
+    //colours
     private string colourNeutral;
     private string colourGood;
     private string colourBad;
@@ -48,26 +48,27 @@ public class TraitManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Initialise
+    /// </summary>
     public void Initialise()
     {
-        SetColours();
-        //initialise trait formatted field
-        Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
-        if (dictOfTraits != null)
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
-            foreach(var trait in dictOfTraits)
+            SetColours();
+            //initialise trait formatted field
+            Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
+            if (dictOfTraits != null)
             {
-                if (trait.Value != null)
+                foreach (var trait in dictOfTraits)
                 {
-                    GlobalType traitType = trait.Value.typeOfTrait;
-                    if ( traitType != null)
+                    if (trait.Value != null)
                     {
-
-                        /*//traitType is from POV of Resistance
-                        if (GameManager.instance.sideScript.PlayerSide.level == 2)
+                        GlobalType traitType = trait.Value.typeOfTrait;
+                        if (traitType != null)
                         {
-                            //Resistance Side
+                            //traitType is as is, NOT from the POV of anybody. If it says bad, then it's bad regardless
                             switch (traitType.name)
                             {
                                 case "Good":
@@ -83,52 +84,16 @@ public class TraitManager : MonoBehaviour
                                     Debug.LogErrorFormat("Invalid trait.traitType \"{0}\" for trait \"{1}\"", traitType.name, trait.Value.name);
                                     break;
                             }
-                        }
-                        else if (GameManager.instance.sideScript.PlayerSide.level == 1)
-                        {
-                            //Authority Side
-                            switch (traitType.name)
-                            {
-                                case "Good":
-                                    trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourBad, trait.Value.tag, colourEnd);
-                                    break;
-                                case "Neutral":
-                                    trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourNeutral, trait.Value.tag, colourEnd);
-                                    break;
-                                case "Bad":
-                                    trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourGood, trait.Value.tag, colourEnd);
-                                    break;
-                                default:
-                                    Debug.LogErrorFormat("Invalid trait.traitType \"{0}\" for trait \"{1}\"", traitType.name, trait.Value.name);
-                                    break;
-                            }
-                        }*/
 
-                        //traitType is as is, NOT from the POV of anybody. If it says bad, then it's bad regardless
-                        switch (traitType.name)
-                        {
-                            case "Good":
-                                trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourGood, trait.Value.tag, colourEnd);
-                                break;
-                            case "Neutral":
-                                trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourNeutral, trait.Value.tag, colourEnd);
-                                break;
-                            case "Bad":
-                                trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourBad, trait.Value.tag, colourEnd);
-                                break;
-                            default:
-                                Debug.LogErrorFormat("Invalid trait.traitType \"{0}\" for trait \"{1}\"", traitType.name, trait.Value.name);
-                                break;
                         }
-
+                        else { Debug.LogErrorFormat("Invalid typeOfTrait for trait \"{0}\"", trait.Value.name); }
                     }
-                    else { Debug.LogErrorFormat("Invalid typeOfTrait for trait \"{0}\"", trait.Value.name); }
+                    else { Debug.LogError("Invalid trait (Null)"); }
                 }
-                else { Debug.LogError("Invalid trait (Null)"); }
             }
+            else { Debug.LogError("Invalid dictOfTraits (Null)"); }
+            //register listener
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TraitManager");
         }
-        else { Debug.LogError("Invalid dictOfTraits (Null)"); }
-        //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TraitManager");
     }
 }

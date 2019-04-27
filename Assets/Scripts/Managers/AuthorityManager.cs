@@ -17,18 +17,22 @@ public class AuthorityManager : MonoBehaviour
 
     public void Initialise()
     {
-        //fast acess fields
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalBoth = GameManager.instance.globalScript.sideBoth;
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
-        //decisions
-        securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
-        securityAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
-        securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
-        Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
-        Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
-        Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //fast access fields
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalBoth = GameManager.instance.globalScript.sideBoth;
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
+            //decisions
+            securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
+            securityAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
+            securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
+            Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
+            Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
+            Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
+        }
     }
 
     /// <summary>

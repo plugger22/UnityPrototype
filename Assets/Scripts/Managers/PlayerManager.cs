@@ -135,39 +135,49 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        actorID = GameManager.instance.preloadScript.playerActorID;
-        //gear check
-        isEndOfTurnGearCheck = false;
-        //fast access fields (BEFORE set stats below)
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        hackingGear = GameManager.instance.gearScript.typeHacking.name;
-        maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-        secretStatusActive = GameManager.instance.secretScript.secretStatusActive;
-        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
-        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
-        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
-        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-        conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
-        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
-        Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
-        Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
-        Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
-        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
-        Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
-        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
-        Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
-        Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            actorID = GameManager.instance.preloadScript.playerActorID;
+            //gear check
+            isEndOfTurnGearCheck = false;
+            //fast access fields (BEFORE set stats below)
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            hackingGear = GameManager.instance.gearScript.typeHacking.name;
+            maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
+            secretStatusActive = GameManager.instance.secretScript.secretStatusActive;
+            conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
+            conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
+            conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+            conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
+            conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+            conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
+            conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
+            Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
+            Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
+            Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
+            Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+            Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
+            Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+            Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
+            Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+            //set stats      
+            Invisibility = 3;
+            numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
+            Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
+            //register event listeners
+            EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
+        }
+
+        //AFTER session specific initialisation
+
         //place Player in a random start location (Sprawl node)
         InitialisePlayerStartNode();
-        //set stats      
-        Invisibility = 3;
-        numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
         //first level in a game session
         switch (GameManager.instance.inputScript.GameState)
         {
@@ -181,9 +191,6 @@ public class PlayerManager : MonoBehaviour
                 listOfGear.Clear();
                 break;
         }
-        
-        //register event listeners
-        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
     }
 
 

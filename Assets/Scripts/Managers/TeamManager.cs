@@ -81,7 +81,7 @@ public class TeamManager : MonoBehaviour
             Debug.Assert(listOfTeamPrioritiesLow.Count > 0, "listOfTeamPrioritiesLow has no records");
             teamArcCount += listOfTeamPrioritiesHigh.Count + listOfTeamPrioritiesMedium.Count + listOfTeamPrioritiesLow.Count;
             Debug.Assert(teamArcCount == GameManager.instance.dataScript.CheckNumOfTeamArcs(), "Mismatched count of team Priority Arcs (should be same # as num of unique Team Arcs");
-            InitialiseTeams();
+            
             /*SeedTeamsOnMap();     //DEBUG*/
             //event Listeners
             EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
@@ -92,6 +92,8 @@ public class TeamManager : MonoBehaviour
             EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
             EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent, "TeamManager");
         }
+        //needs to be after session specific initialisation
+        InitialiseTeams();
     }
 
 

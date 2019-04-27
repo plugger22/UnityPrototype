@@ -24,20 +24,28 @@ public class ConnectionManager : MonoBehaviour
     //fast access
     private float flashConnectionTime;
 
+    /// <summary>
+    /// Initialisation
+    /// </summary>
     public void Initialise()
     {
-        //flash
-        flashConnectionTime = GameManager.instance.guiScript.flashNodeTime;
-        Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
-        //Data Collections
         InitialiseListOfConnections();
-        listOfSecLevels = new List<ConnectionType>();
-        listOfFlashConnections = new List<Connection>();
-        //register listener
-        EventManager.instance.AddListener(EventType.FlashSingleConnectionStart, OnEvent, "ConnectionManager");
-        EventManager.instance.AddListener(EventType.FlashSingleConnectionStop, OnEvent, "ConnectionManager");
-        EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStart, OnEvent, "ConnectionManager");
-        EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStop, OnEvent, "ConnectionManager");
+
+        //session specific (once only)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //flash
+            flashConnectionTime = GameManager.instance.guiScript.flashNodeTime;
+            Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
+            //Data Collections
+            listOfSecLevels = new List<ConnectionType>();
+            listOfFlashConnections = new List<Connection>();
+            //register listener
+            EventManager.instance.AddListener(EventType.FlashSingleConnectionStart, OnEvent, "ConnectionManager");
+            EventManager.instance.AddListener(EventType.FlashSingleConnectionStop, OnEvent, "ConnectionManager");
+            EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStart, OnEvent, "ConnectionManager");
+            EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStop, OnEvent, "ConnectionManager");
+        }
     }
 
     /// <summary>
