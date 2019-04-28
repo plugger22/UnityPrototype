@@ -339,14 +339,17 @@ public class CaptureManager : MonoBehaviour
                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                 //update map
                 GameManager.instance.nodeScript.NodeRedraw = true;
-                //player released outcome window
+                //player released outcome window 
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                 {
                     textTop = text,
                     textBottom = builder.ToString(),
                     sprite = GameManager.instance.guiScript.errorSprite,
                     isAction = false,
-                    side = GameManager.instance.globalScript.sideResistance
+                    side = GameManager.instance.globalScript.sideResistance,
+                    //modal 2 as will be generated over the top of the infoApp
+                    modalLevel = 2,
+                    modalState = ModalSubState.InfoDisplay
                 };
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleasePlayer");
             }
