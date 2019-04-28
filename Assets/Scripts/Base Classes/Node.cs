@@ -1180,8 +1180,12 @@ public class Node : MonoBehaviour
                         }
                         else
                         {
-                            isTracerKnown = true;
-                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TRACER inserted{3}", nodeName, Arc.name, nodeID, "\n");
+                            //reveal tracer only if tracer present
+                            if (isTracer == true)
+                            {
+                                isTracerKnown = true;
+                                Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TRACER inserted{3}", nodeName, Arc.name, nodeID, "\n");
+                            }
                         }
                         break;
                     case "StatusSpiders":
@@ -1192,8 +1196,12 @@ public class Node : MonoBehaviour
                         }
                         else
                         {
-                            isSpiderKnown = true;
-                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, SPIDER inserted{3}", nodeName, Arc.name, nodeID, "\n");
+                            //reveal spider only if a spider is present
+                            if (isSpider == true)
+                            {
+                                isSpiderKnown = true;
+                                Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, SPIDER inserted{3}", nodeName, Arc.name, nodeID, "\n");
+                            }
                         }
                         break;
                     case "StatusTeams":
@@ -1204,8 +1212,12 @@ public class Node : MonoBehaviour
                         }
                         else
                         {
-                            isTeamKnown = true;
-                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TEAM info is available{3}", nodeName, Arc.name, nodeID, "\n");
+                            //reveal teams only if a team is present
+                            if (listOfTeams.Count > 0)
+                            {
+                                isTeamKnown = true;
+                                Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, TEAM info is available{3}", nodeName, Arc.name, nodeID, "\n");
+                            }
                         }
                         break;
                     case "StatusContacts":
@@ -1216,8 +1228,12 @@ public class Node : MonoBehaviour
                         }
                         else
                         {
-                            isContactKnown = true;
-                            Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info is available{3}", nodeName, Arc.name, nodeID, "\n");
+                            //reveal contacts only if a contact is present. NOTE: currently RESISTANCE contacts only
+                            if (isContactResistance == true)
+                            {
+                                isContactKnown = true;
+                                Debug.LogFormat("[Nod] -> ProcessNodeEffect: {0} {1}, ID {2}, CONTACT info is available{3}", nodeName, Arc.name, nodeID, "\n");
+                            }
                         }
                         break;
                     default:
