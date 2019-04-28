@@ -741,6 +741,9 @@ public class AIRebelManager : MonoBehaviour
                 if (listOfNodes[i].isSpiderKnown == true)
                 { listOfSpiderNodes.Add(listOfNodes[i].nodeID); }
             }
+
+            Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSpiderData: {0} records in listOfSpiders{1}", listOfSpiderNodes.Count, "\n");
+
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }

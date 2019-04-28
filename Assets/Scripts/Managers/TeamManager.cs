@@ -752,7 +752,7 @@ public class TeamManager : MonoBehaviour
                         //confirmation
                         Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeamAI: {0} {1}, ID {2}, moved to {3}{4}", team.arc.name, team.teamName, team.teamID, destinationPool, "\n");
                     }
-                    else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
+                    else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); successFlag = false; }
                     break;
                 case TeamPool.OnMap:
                     if (node != null)
@@ -780,7 +780,7 @@ public class TeamManager : MonoBehaviour
                                     //message (internal only)
                                     GameManager.instance.messageScript.TeamDeploy(text, node, team);
                                 }
-                                else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from Reserve pool", team.arc.name, team.teamID); }
+                                else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from Reserve pool", team.arc.name, team.teamID); successFlag = false; }
                             }
                             else
                             {
@@ -828,12 +828,12 @@ public class TeamManager : MonoBehaviour
                     successFlag = false;
                     break;
             }
-            if (successFlag == false)
-            { return false; }
+            /*if (successFlag == false)
+            { return false; }*/
         }
         else
-        { Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID)); return false; }
-        return true;
+        { Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID)); successFlag = false; }
+        return successFlag;
     }
 
     /// <summary>

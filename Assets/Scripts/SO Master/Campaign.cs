@@ -52,6 +52,18 @@ public class Campaign : ScriptableObject
 
 
     /// <summary>
+    /// returns true if it's the first scenario in a campaign
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsFirstScenario()
+    {
+        if (scenarioIndex == 0)
+        { return true; }
+        return false;
+    }
+
+
+    /// <summary>
     /// returns current scenario, null if not found
     /// </summary>
     /// <returns></returns>

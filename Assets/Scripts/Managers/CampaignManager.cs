@@ -236,17 +236,14 @@ public class CampaignManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Load the most recent save
+    /// Return to the game
     /// </summary>
     private void ProcessResumeGame()
     {
+        //if anything other than play Game then set a modal block (it cancels otherwise due to Main Menu closing)
+        if (GameManager.instance.inputScript.GameState != GameState.PlayGame)
+        { GameManager.instance.guiScript.SetIsBlocked(true); }
         Debug.LogFormat("[Cam] FileManager.cs -> ProcessResumeGame: RESUME game option selected{0}", "\n");
-        //Load Game -> open background
-        GameManager.instance.modalGUIScript.SetBackground(Background.LoadGame);
-        //Close any open background
-        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
-        //change game state
-        GameManager.instance.inputScript.GameState = GameState.LoadGame;
     }
 
     /// <summary>
