@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using gameAPI;
 using packageAPI;
 using System.Text;
 using modalAPI;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -113,7 +113,6 @@ public class TurnManager : MonoBehaviour
             EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
             EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
             EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
-            EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "TurnManager");
             EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
         }
     }
@@ -132,9 +131,6 @@ public class TurnManager : MonoBehaviour
         {
             case EventType.NewTurn:
                 ProcessNewTurn();
-                break;
-            case EventType.ExitGame:
-                Quit();
                 break;
             case EventType.UseAction:
                 UseAction((string)Param);
@@ -673,48 +669,9 @@ public class TurnManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /// <summary>
-    /// Quit 
-    /// </summary>
-    private void Quit()
-    {
-        //set game state
-        GameManager.instance.inputScript.GameState = GameState.ExitGame;
-        //switch off main info app if running
-        if (myCoroutineInfoApp != null)
-        { StopCoroutine(myCoroutineInfoApp); }
-        //show thank you splash screen before quitting
-        if (SceneManager.GetActiveScene().name != "End_Game")
-        { StartCoroutine("DelayedQuit"); }
-        if (allowQuitting == false)
-        {
-            Debug.LogFormat("TurnManager: Quit selected but not allowed as allowQuitting is false{0}", "\n");
-            //Application.CancelQuit();
-        }
-    }
 
 
-    /// <summary>
-    /// display splash screen for a short while before quitting
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator DelayedQuit()
-    {
-        SceneManager.LoadScene(1);
-        yield return new WaitForSeconds(showSplashTimeout);
-        allowQuitting = true;
-        //editor quit or application quit
-        #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
-    }
 
-    public void OnDisable()
-    {
-        EventManager.instance.RemoveEvent(EventType.ExitGame);
-    }
 
     /// <summary>
     /// debug method to change game states
@@ -895,6 +852,45 @@ public class TurnManager : MonoBehaviour
             string warning = "You will LOSE if you do not complete your Objectives in time";
             GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
         }
+    }
+
+
+    /// <summary>
+    /// Quit 
+    /// </summary>
+    public void Quit()
+    {
+        //set game state
+        GameManager.instance.inputScript.GameState = GameState.ExitGame;
+        //switch off main info app if running
+        if (myCoroutineInfoApp != null)
+        { StopCoroutine(myCoroutineInfoApp); }
+        //show thank you splash screen before quitting
+        if (SceneManager.GetActiveScene().name != "End_Game")
+        { StartCoroutine("DelayedQuit"); }
+        if (allowQuitting == false)
+        {
+            Debug.LogFormat("TurnManager: Quit selected but not allowed as allowQuitting is false{0}", "\n");
+            //Application.CancelQuit();
+        }
+    }
+
+
+    /// <summary>
+    /// display splash screen for a short while before quitting
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator DelayedQuit()
+    {
+        SceneManager.LoadScene(1);
+        yield return new WaitForSeconds(showSplashTimeout);
+        allowQuitting = true;
+        //editor quit or application quit
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
     }
 
 

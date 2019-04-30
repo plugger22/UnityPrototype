@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
     [HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
     [HideInInspector] public CampaignManager campaignScript;          //Campaign Manager
+    [HideInInspector] public ControlManager controlScript;            //Control Manager
     [HideInInspector] public FileManager fileScript;                  //File Manager
     [HideInInspector] public NewsManager newsScript;                  //News Manager
     [HideInInspector] public ActorManager actorScript;                //Actor Manager 
@@ -122,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
-    private bool isSession;                                                         //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
+    [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
 
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods
@@ -169,6 +170,7 @@ public class GameManager : MonoBehaviour
         globalScript = GetComponent<GlobalManager>();
         scenarioScript = GetComponent<ScenarioManager>();
         campaignScript = GetComponent<CampaignManager>();
+        controlScript = GetComponent<ControlManager>();
         fileScript = GetComponent<FileManager>();
         actorScript = GetComponent<ActorManager>();
         contactScript = GetComponent<ContactManager>();
@@ -246,6 +248,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
         Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
         Debug.Assert(campaignScript != null, "Invalid campaignScript (Null)");
+        Debug.Assert(controlScript != null, "Invalid controlScript (Null)");
         Debug.Assert(fileScript != null, "Invalid fileScript (Null)");
         Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
         Debug.Assert(contactScript != null, "Invalid contactScript (Null)");
@@ -422,6 +425,14 @@ public class GameManager : MonoBehaviour
         //Input Manager
         startMethod.handler = inputScript.Initialise;
         startMethod.className = "InputManager";
+        listOfGlobalMethods.Add(startMethod);
+        //Control Manager
+        startMethod.handler = controlScript.Initialise;
+        startMethod.className = "ControlManager";
+        listOfGlobalMethods.Add(startMethod);
+        //File Manager
+        startMethod.handler = fileScript.Initialise;
+        startMethod.className = "FileManager";
         listOfGlobalMethods.Add(startMethod);
         //
         // - - - Game methods - - -
