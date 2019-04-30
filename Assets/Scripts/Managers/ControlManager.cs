@@ -125,9 +125,9 @@ public class ControlManager : MonoBehaviour
     {
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
-        //create new game
+        //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.instance.campaignScript.campaign.Reset();
-        InitialiseScenario();
+        GameManager.instance.campaignScript.InitialiseScenario();
         //set up new level
         GameManager.instance.InitialiseNewLevel();
         //revert to playGame state by default
@@ -213,7 +213,7 @@ public class ControlManager : MonoBehaviour
             //change game state
             GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
             //get current scenario data
-            InitialiseScenario();
+            GameManager.instance.campaignScript.InitialiseScenario();
             //create new game
             GameManager.instance.InitialiseNewLevel();
             //revert to playGame state by default
@@ -277,6 +277,8 @@ public class ControlManager : MonoBehaviour
     private void ProcessSaveGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: SAVE game option selected{0}", "\n");
+        GameManager.instance.fileScript.CreateSaveData();
+        GameManager.instance.fileScript.SaveGame();
     }
 
 
@@ -286,23 +288,8 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.turnScript.Quit();
     }
 
-    //
-    // - - - Initialisation - - -
-    //
 
-    /// <summary>
-    /// Get current scenario and pass to ScenarioManager.cs
-    /// </summary>
-    private void InitialiseScenario()
-    {
-        //Assign a scenario
-        Scenario scenario = GameManager.instance.campaignScript.campaign.GetCurrentScenario();
-        if (scenario != null)
-        {
-            GameManager.instance.scenarioScript.scenario = scenario;
-            Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n");
-        }
-        else { Debug.LogError("Invalid scenario (Null)"); }
-    }
 
+
+    //new methods above here
 }

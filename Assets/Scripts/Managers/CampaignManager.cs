@@ -21,8 +21,21 @@ public class CampaignManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Get current scenario and pass to ScenarioManager.cs
+    /// </summary>
+    public void InitialiseScenario()
+    {
+        //Assign a scenario
+        Scenario scenario = campaign.GetCurrentScenario();
+        if (scenario != null)
+        {
+            GameManager.instance.scenarioScript.scenario = scenario;
+            Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n");
+        }
+        else { Debug.LogError("Invalid scenario (Null)"); }
+    }
 
-   
 
 
 
