@@ -259,7 +259,7 @@ public class ControlManager : MonoBehaviour
         //change game state
         GameManager.instance.inputScript.GameState = GameState.LoadGame;
         //read data from file
-        GameManager.instance.fileScript.ReadGame();
+        GameManager.instance.fileScript.ReadGameData();
         //load data into game
         GameManager.instance.fileScript.LoadSaveData();
     }
@@ -281,7 +281,7 @@ public class ControlManager : MonoBehaviour
     private void ProcessSaveGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: SAVE game option selected{0}", "\n");
-        GameManager.instance.fileScript.CreateSaveData();
+        GameManager.instance.fileScript.WriteGameData();
         GameManager.instance.fileScript.SaveGame();
     }
 

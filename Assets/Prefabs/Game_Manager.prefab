@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 114843761391076242}
   - component: {fileID: 114680662969460860}
   - component: {fileID: 114258654278774664}
+  - component: {fileID: 114183753687402266}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -264,6 +265,17 @@ MonoBehaviour:
   listOfTeamPrioritiesLow:
   - {fileID: 11400000, guid: d59514a9341d2ee4f9fa3c75e39a50f0, type: 2}
   teamCounter: 0
+--- !u!114 &114183753687402266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc787db872b70b54c8d8234b63c3500b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114184360560951246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2022,6 +2034,7 @@ MonoBehaviour:
   tooltipScript: {fileID: 0}
   scenarioScript: {fileID: 0}
   campaignScript: {fileID: 0}
+  controlScript: {fileID: 0}
   fileScript: {fileID: 0}
   newsScript: {fileID: 0}
   actorScript: {fileID: 0}
@@ -2086,7 +2099,8 @@ MonoBehaviour:
   isValidateData: 0
   isValidateSO: 1
   isRandomCity: 0
-  autoRunTurns: 8
+  autoRunTurns: 0
+  isSession: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
   m_ObjectHideFlags: 1

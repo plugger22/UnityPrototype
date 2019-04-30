@@ -10,11 +10,12 @@ public class FileManager : MonoBehaviour
 {
 
     private static readonly string SAVE_FILE = "savefile.json";
-    private Save saveData;
-    private Save readData;
+    private Save write;
+    private Save read;
     private string filename;
     private string json;
     private string jsonFromFile;
+
 
     /// <summary>
     /// Initialisation
@@ -24,15 +25,18 @@ public class FileManager : MonoBehaviour
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
     }
 
+    //
+    // - - - Master Methods - - -
+    //
+
     /// <summary>
     /// copy inGame data to saveData
     /// </summary>
-    public void CreateSaveData()
+    public void WriteGameData()
     {
-        saveData = new Save();
-        saveData.playerRenown = GameManager.instance.playerScript.Renown;
-        saveData.playerStatus = GameManager.instance.playerScript.status;
-        saveData.listOfPlayerGear = GameManager.instance.playerScript.GetListOfGear();
+        write = new Save();
+        //Sequentially write data
+        WritePlayerData();
     }
 
     /// <summary>
@@ -40,16 +44,16 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void SaveGame()
     {
-        if (saveData != null)
+        if (write != null)
         {
             //convert to Json
-            json = JsonUtility.ToJson(saveData);
+            json = JsonUtility.ToJson(write);
             //file present? If so delete
             if (File.Exists(filename) == true)
             { File.Delete(filename); }
             //create new file
             File.WriteAllText(filename, json);
-            Debug.LogFormat("[Ctrl] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}",filename, "\n");
+            Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
         }
         else { Debug.LogError("Invalid saveData (Null)"); }
     }
@@ -57,16 +61,15 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// Read game method
     /// </summary>
-    public void ReadGame()
+    public void ReadGameData()
     {
         if (File.Exists(filename) == true)
         {
             jsonFromFile = File.ReadAllText(filename);
-            /*Debug.LogFormat("[Ctrl] FileManager.cs -> ReadGame: Save Game READ from file{0}", "\n");*/
             //read data from File
             jsonFromFile = File.ReadAllText(filename);
             //read to Save file
-            readData = JsonUtility.FromJson<Save>(jsonFromFile);
+            read = JsonUtility.FromJson<Save>(jsonFromFile);
         }
         else { Debug.LogErrorFormat("File \"{0}\" not found", filename); }
     }
@@ -76,15 +79,42 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void LoadSaveData()
     {
-        if (readData != null)
+        if (read != null)
         {
-            GameManager.instance.playerScript.Renown = readData.playerRenown;
-            GameManager.instance.playerScript.status = readData.playerStatus;
-            List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
-            listOfGear.Clear();
-            listOfGear.AddRange(readData.listOfPlayerGear);
-            Debug.LogFormat("[Ctrl] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
+            //Sequentially read data back into game
+            ReadPlayerData();
+            Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
         }
+    }
+
+    //
+    // - - - Write - - -
+    //
+
+    /// <summary>
+    /// Player Data
+    /// </summary>
+    private void WritePlayerData()
+    {
+        write.playerData.renown = GameManager.instance.playerScript.Renown;
+        write.playerData.status = GameManager.instance.playerScript.status;
+        write.playerData.listOfGear = GameManager.instance.playerScript.GetListOfGear();
+    }
+
+    //
+    // - - - Read - - -
+    //
+
+    /// <summary>
+    /// Player Data
+    /// </summary>
+    private void ReadPlayerData()
+    {
+        GameManager.instance.playerScript.Renown = read.playerData.renown;
+        GameManager.instance.playerScript.status = read.playerData.status;
+        List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        listOfGear.Clear();
+        listOfGear.AddRange(read.playerData.listOfGear);
     }
 
     //new methods above here
