@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,18 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
+    public int playerRenown;
+    public ActorStatus playerStatus;
+    public List<int> listOfPlayerGear;
 
+    /// <summary>
+    /// default constructor
+    /// </summary>
+    public Save()
+    {
+        playerRenown = 0;
+        playerStatus = ActorStatus.Active;
+        listOfPlayerGear = new List<int>();
+    }
 
 }

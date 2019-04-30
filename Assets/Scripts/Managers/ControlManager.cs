@@ -258,6 +258,10 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.LoadGame;
+        //read data from file
+        GameManager.instance.fileScript.ReadGame();
+        //load data into game
+        GameManager.instance.fileScript.LoadSaveData();
     }
 
     /// <summary>
