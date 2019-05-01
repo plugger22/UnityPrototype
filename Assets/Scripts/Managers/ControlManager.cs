@@ -259,9 +259,11 @@ public class ControlManager : MonoBehaviour
         //change game state
         GameManager.instance.inputScript.GameState = GameState.LoadGame;
         //read data from file
-        GameManager.instance.fileScript.ReadGameData();
-        //load data into game
-        GameManager.instance.fileScript.LoadSaveData();
+        if (GameManager.instance.fileScript.ReadGameData() == true)
+        {
+            //load data into game
+            GameManager.instance.fileScript.LoadSaveData();
+        }
     }
 
     /// <summary>

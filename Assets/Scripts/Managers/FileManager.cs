@@ -6,7 +6,7 @@ using System.IO;
 /// <summary>
 /// Handles all Save / Load functionality
 /// </summary>
-public class FileManager : MonoBehaviour
+public class FileManager
 {
 
     private static readonly string SAVE_FILE = "savefile.json";
@@ -48,30 +48,50 @@ public class FileManager : MonoBehaviour
         {
             //convert to Json
             json = JsonUtility.ToJson(write);
+
             //file present? If so delete
             if (File.Exists(filename) == true)
             { File.Delete(filename); }
-            //create new file
-            File.WriteAllText(filename, json);
-            Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
+
+            if (GameManager.instance.isEncrypted == false)
+            {
+                //create new file
+                File.WriteAllText(filename, json);
+                Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
+            }
+            else
+            {
+                //encrypt save file
+                Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: Encrypted GAME SAVED to \"{0}\"{1}", filename, "\n");
+            }
         }
         else { Debug.LogError("Invalid saveData (Null)"); }
     }
 
     /// <summary>
-    /// Read game method
+    /// Read game method, returns true if successful, false otherise
     /// </summary>
-    public void ReadGameData()
+    public bool ReadGameData()
     {
         if (File.Exists(filename) == true)
         {
-            jsonFromFile = File.ReadAllText(filename);
-            //read data from File
-            jsonFromFile = File.ReadAllText(filename);
-            //read to Save file
-            read = JsonUtility.FromJson<Save>(jsonFromFile);
+            if (GameManager.instance.isEncrypted == false)
+            {
+                jsonFromFile = File.ReadAllText(filename);
+                //read data from File
+                jsonFromFile = File.ReadAllText(filename);
+                //read to Save file
+                read = JsonUtility.FromJson<Save>(jsonFromFile);
+                return true;
+            }
+            else
+            {
+                //encrypted file
+                return true;
+            }
         }
         else { Debug.LogErrorFormat("File \"{0}\" not found", filename); }
+        return false;
     }
 
     /// <summary>

@@ -106,9 +106,11 @@ public class GameManager : MonoBehaviour
     public int seedDev = 0;                                            //random seed for development
     [Tooltip("If true Player side set to Authority")]               //DEBUG
     public bool isAuthority;
-    [Tooltip("If true AI handles both sides. OVERRIDES all other settings. Player side (at end of autoRun) is determined by 'isAuthority' setting. Switch OFF if playing normally")]
-    /*public bool isBothAI;
-    [Tooltip("Switch ON to get a performance log of initialisation ")]*/
+    [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
+    public int autoRunTurns = 0;
+
+    [Header("Debug Options")]
+    [Tooltip("Switch ON to get a performance log of initialisation ")]
     public bool isPerformanceLog;
     [Tooltip("Runs ValidationManager.cs to check data at game start")]
     public bool isValidateData;
@@ -116,10 +118,8 @@ public class GameManager : MonoBehaviour
     public bool isValidateSO;
     [Tooltip("If true will choose a random city, otherwise will be the one specified by the Scenario")]
     public bool isRandomCity;
-    [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
-    public int autoRunTurns = 0;
-
-
+    [Tooltip("If true then save files are encrypted")]
+    public bool isEncrypted;
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
