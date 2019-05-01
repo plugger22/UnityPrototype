@@ -29,9 +29,11 @@ public class SavePlayerData
 {
     public int renown;
     public ActorStatus status;
-    public List<int> listOfGear;
+    public ActorTooltip tooltipStatus;
+    public ActorInactive inactiveStatus;
+    public List<int> listOfGear = new List<int>();
 
-    /// <summary>
+    /*/// <summary>
     /// default constructor
     /// </summary>
     public SavePlayerData()
@@ -39,7 +41,7 @@ public class SavePlayerData
         renown = 0;
         status = ActorStatus.Active;
         listOfGear = new List<int>();
-    }
+    }*/
 }
 
 
