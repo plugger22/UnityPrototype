@@ -50,6 +50,7 @@ public class FileManager : MonoBehaviour
         write = new Save();
         //Sequentially write data
         WritePlayerData();
+        WriteSideData();
     }
 
     /// <summary>
@@ -139,6 +140,7 @@ public class FileManager : MonoBehaviour
             //Sequentially read data back into game
 
             //side (player) at start
+            ReadSideData();
 
             //secrets before player
 
@@ -153,7 +155,7 @@ public class FileManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Player Data
+    /// PlayerManager.cs Data write to file
     /// </summary>
     private void WritePlayerData()
     {
@@ -192,12 +194,25 @@ public class FileManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// SideManager.cs data write to file
+    /// </summary>
+    private void WriteSideData()
+    {
+        write.sideData.resistanceCurrent = GameManager.instance.sideScript.resistanceCurrent;
+        write.sideData.authorityCurrent = GameManager.instance.sideScript.authorityCurrent;
+        write.sideData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
+        write.sideData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
+        write.sideData.playerSide = GameManager.instance.sideScript.PlayerSide;
+    }
+
+
     //
     // - - - Read - - -
     //
 
     /// <summary>
-    /// Player Data
+    /// PlayerManager.cs Data
     /// </summary>
     private void ReadPlayerData()
     {
@@ -243,12 +258,24 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.SetConditions(listOfConditions, globalAuthority);
     }
 
+    /// <summary>
+    /// SideManager.cs data
+    /// </summary>
+    private void ReadSideData()
+    {
+        GameManager.instance.sideScript.resistanceCurrent = read.sideData.resistanceCurrent;
+        GameManager.instance.sideScript.authorityCurrent = read.sideData.authorityCurrent;
+        GameManager.instance.sideScript.resistanceOverall = read.sideData.resistanceOverall;
+        GameManager.instance.sideScript.authorityOverall = read.sideData.authorityOverall;
+        GameManager.instance.sideScript.PlayerSide = read.sideData.playerSide;
+    }
+
     //
     // - - -  Validate - - -
     //
 
     /// <summary>
-    /// Validate player data (logic checks) and Initialise gfx's where needed
+    /// Validate PlayerManager.cs data (logic checks) and Initialise gfx's where needed
     /// </summary>
     private void ValidatePlayerData()
     {
@@ -287,6 +314,8 @@ public class FileManager : MonoBehaviour
             }
         }
     }
+
+
 
     //new methods above here
 }

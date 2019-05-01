@@ -33,10 +33,12 @@ public class SideManager : MonoBehaviour
     public Sprite button_highlight_Resistance;
     public Sprite button_Click;
 
+    #region save data compatible
     [HideInInspector] public SideState resistanceCurrent;               //who's currently in charge, AI or player?
     [HideInInspector] public SideState authorityCurrent;
     [HideInInspector] public SideState resistanceOverall;                 //who's in charge overall (flows through throughout, constant)
     [HideInInspector] public SideState authorityOverall;
+    #endregion
 
     //fast access
     GlobalSide globalAuthority;

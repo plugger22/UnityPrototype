@@ -1872,7 +1872,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: e7cc3aa6b3bdc6a43951687e10335e03, type: 3}
-  numOfRecruits: 0
   actorID: 999
   status: 0
   tooltipStatus: 0
@@ -2093,14 +2092,14 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seedDev: 236543
+  seedDev: 78594
   isAuthority: 0
   autoRunTurns: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
   isRandomCity: 0
-  isEncrypted: 1
+  isEncrypted: 0
   isSession: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

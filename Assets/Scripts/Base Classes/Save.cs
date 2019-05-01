@@ -11,18 +11,13 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
-    public SavePlayerData playerData;
-
-    ///
-    public Save()
-    {
-        playerData = new SavePlayerData();
-    }
+    public SavePlayerData playerData = new SavePlayerData();
+    public SaveSideData sideData = new SaveSideData();
 
 }
 
 /// <summary>
-/// Player data
+/// PlayerManager.cs data
 /// </summary>
 [System.Serializable]
 public class SavePlayerData
@@ -39,8 +34,21 @@ public class SavePlayerData
     public List<int> listOfGear = new List<int>();
     public List<int> listOfSecrets = new List<int>();
     public List<string> listOfConditionsResistance = new List<string>();
-    public List<string> listOfConditionsAuthority = new List<string>();
-    
+    public List<string> listOfConditionsAuthority = new List<string>();   
+}
+
+
+/// <summary>
+/// SideManager.cs data
+/// </summary>
+[System.Serializable]
+public class SaveSideData
+{
+    public SideState resistanceCurrent;
+    public SideState authorityCurrent;
+    public SideState resistanceOverall;
+    public SideState authorityOverall;
+    public GlobalSide playerSide;
 }
 
 
