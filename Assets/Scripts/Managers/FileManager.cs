@@ -6,16 +6,20 @@ using System.IO;
 /// <summary>
 /// Handles all Save / Load functionality
 /// </summary>
-public class FileManager
+public class FileManager : MonoBehaviour
 {
 
     private static readonly string SAVE_FILE = "savefile.json";
     private Save write;
     private Save read;
     private string filename;
-    private string json;
-    private string jsonFromFile;
+    private string jsonWrite;
+    private string jsonRead;
+    private byte[] soupWrite;               //encryption out
+    private byte[] soupRead;                //encryption in
 
+    private string cipherKey;
+    /*private Rijndael crypto;*/
 
     /// <summary>
     /// Initialisation
@@ -23,6 +27,8 @@ public class FileManager
     public void Initialise()
     {
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
+        cipherKey = "#kJ83DAlowjkf39(#($%0_+[]:#dDA'a";
+        /*crypto = new Rijndael();*/
     }
 
     //
@@ -47,7 +53,7 @@ public class FileManager
         if (write != null)
         {
             //convert to Json
-            json = JsonUtility.ToJson(write);
+            jsonWrite = JsonUtility.ToJson(write);
 
             //file present? If so delete
             if (File.Exists(filename) == true)
@@ -56,12 +62,15 @@ public class FileManager
             if (GameManager.instance.isEncrypted == false)
             {
                 //create new file
-                File.WriteAllText(filename, json);
+                File.WriteAllText(filename, jsonWrite);
                 Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
             }
             else
             {
                 //encrypt save file
+                Rijndael crypto = new Rijndael();
+                soupWrite = crypto.Encrypt(jsonWrite, cipherKey);
+                File.WriteAllBytes(filename, soupWrite);
                 Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: Encrypted GAME SAVED to \"{0}\"{1}", filename, "\n");
             }
         }
@@ -77,16 +86,22 @@ public class FileManager
         {
             if (GameManager.instance.isEncrypted == false)
             {
-                jsonFromFile = File.ReadAllText(filename);
+                jsonRead = File.ReadAllText(filename);
                 //read data from File
-                jsonFromFile = File.ReadAllText(filename);
+                jsonRead = File.ReadAllText(filename);
                 //read to Save file
-                read = JsonUtility.FromJson<Save>(jsonFromFile);
+                read = JsonUtility.FromJson<Save>(jsonRead);
                 return true;
             }
             else
             {
                 //encrypted file
+                /*Rijndael crypto = new Rijndael();*/
+                Rijndael crypto = new Rijndael();
+                soupRead = File.ReadAllBytes(filename);
+                jsonRead = crypto.Decrypt(soupRead, cipherKey);
+                //read to Save file
+                read = JsonUtility.FromJson<Save>(jsonRead);
                 return true;
             }
         }
