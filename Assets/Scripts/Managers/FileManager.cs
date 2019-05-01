@@ -138,6 +138,8 @@ public class FileManager : MonoBehaviour
         {
             //Sequentially read data back into game
 
+            //side (player) at start
+
             //secrets before player
 
             ReadPlayerData();

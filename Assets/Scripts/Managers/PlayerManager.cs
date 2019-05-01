@@ -13,6 +13,8 @@ public class PlayerManager : MonoBehaviour
 
     //[HideInInspector] public int numOfRecruits;
     //[HideInInspector] public int Invisibility;
+
+    #region save data compatibile
     [HideInInspector] public int actorID;
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorTooltip tooltipStatus;                            //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
@@ -26,6 +28,7 @@ public class PlayerManager : MonoBehaviour
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
     private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
+    #endregion
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
