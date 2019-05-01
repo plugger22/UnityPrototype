@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 {
     public Sprite sprite;
 
-    [HideInInspector] public int numOfRecruits;
+    //[HideInInspector] public int numOfRecruits;
     //[HideInInspector] public int Invisibility;
     [HideInInspector] public int actorID;
     [HideInInspector] public ActorStatus status;
@@ -168,8 +168,10 @@ public class PlayerManager : MonoBehaviour
             Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
             //set stats      
             Invisibility = 3;
-            numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
-            Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");
+
+            /*numOfRecruits = GameManager.instance.actorScript.maxNumOfOnMapActors;
+            Debug.Assert(numOfRecruits > -1, "Invalid numOfRecruits (-1)");*/
+
             //register event listeners
             EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
         }
@@ -601,6 +603,32 @@ public class PlayerManager : MonoBehaviour
     //
 
     /// <summary>
+    /// Initialise the listOfConditions (overwrites existing list). Used for load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetConditions(List<Condition> listOfConditions, GlobalSide side)
+    {
+        if (listOfConditions != null)
+        {
+            switch (side.level)
+            {
+                case 1:
+                    listOfConditionsAuthority.Clear();
+                    listOfConditionsAuthority.AddRange(listOfConditions);
+                    break;
+                case 2:
+                    listOfConditionsResistance.Clear();
+                    listOfConditionsResistance.AddRange(listOfConditions);
+                    break;
+                default:
+                    Debug.LogError("Invalid side \"{0}\"", side);
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
+    }
+
+    /// <summary>
     /// Add a new condition to list provided it isn't already present, ignored if it is. Reason is a short self-contained sentence
     /// </summary>
     /// <param name="condition"></param>
@@ -828,6 +856,21 @@ public class PlayerManager : MonoBehaviour
     public int CheckNumOfSecrets()
     { return listOfSecrets.Count; }
 
+
+    /// <summary>
+    /// Initialise the listOfSecrets (overwrites existing list). Used for load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetSecrets(List<Secret> listOfSecrets)
+    {
+        if (listOfSecrets != null)
+        {
+            this.listOfSecrets.Clear();
+            this.listOfSecrets.AddRange(listOfSecrets);
+        }
+        else { Debug.LogError("Invalid listOfSecrets (Null)"); }
+    }
+
     /// <summary>
     /// Add a new secret, checks for duplicates and won't add if one found (warning msg)
     /// </summary>
@@ -1013,7 +1056,7 @@ public class PlayerManager : MonoBehaviour
         builder.Append(string.Format(" resistanceState {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));
         builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n"));
         builder.Append(string.Format("{0} -Reserve Pool{1}", "\n", "\n"));
-        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", numOfRecruits, GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
+        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", GameManager.instance.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
         if (playerSide.level == globalResistance.level)
         {
             //gear

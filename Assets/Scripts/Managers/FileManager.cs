@@ -22,13 +22,20 @@ public class FileManager : MonoBehaviour
 
     private string cipherKey;
 
+    //fast access
+    GlobalSide globalAuthority;
+    GlobalSide globalResistance;
+
     /// <summary>
     /// Initialisation
     /// </summary>
     public void Initialise()
     {
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
-        cipherKey = "#kJ83DAlowjkf39(#($%0_+[]:#dDA'a";
+        cipherKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a";
+        //fast access
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
     }
 
     //
@@ -130,6 +137,9 @@ public class FileManager : MonoBehaviour
         if (read != null)
         {
             //Sequentially read data back into game
+
+            //secrets before player
+
             ReadPlayerData();
             ValidatePlayerData();
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
@@ -147,9 +157,37 @@ public class FileManager : MonoBehaviour
     {
         write.playerData.renown = GameManager.instance.playerScript.Renown;
         write.playerData.status = GameManager.instance.playerScript.status;
+        write.playerData.Invisibility = GameManager.instance.playerScript.Invisibility;
         write.playerData.tooltipStatus = GameManager.instance.playerScript.tooltipStatus;
         write.playerData.inactiveStatus = GameManager.instance.playerScript.inactiveStatus;
         write.playerData.listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        write.playerData.isBreakdown = GameManager.instance.playerScript.isBreakdown;
+        write.playerData.isEndOfTurnGearCheck = GameManager.instance.playerScript.isEndOfTurnGearCheck;
+        write.playerData.isLieLowFirstturn = GameManager.instance.playerScript.isLieLowFirstturn;
+        write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
+        //secrets
+        List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+        foreach (Secret secret in listOfSecrets)
+        {
+            if (secret != null)
+            { write.playerData.listOfSecrets.Add(secret.secretID); }
+            else { Debug.LogWarning("Invalid secret (Null)"); }
+        }
+        //conditions
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        foreach(Condition condition in listOfConditions)
+        {
+            if (condition != null)
+            { write.playerData.listOfConditionsResistance.Add(condition.name); }
+            else { Debug.LogWarning("Invalid Resistance condition (Null)"); }
+        }
+        listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalAuthority);
+        foreach (Condition condition in listOfConditions)
+        {
+            if (condition != null)
+            { write.playerData.listOfConditionsAuthority.Add(condition.name); }
+            else { Debug.LogWarning("Invalid Authority condition (Null)"); }
+        }
     }
 
     //
@@ -162,16 +200,53 @@ public class FileManager : MonoBehaviour
     private void ReadPlayerData()
     {
         GameManager.instance.playerScript.Renown = read.playerData.renown;
+        GameManager.instance.playerScript.Invisibility = read.playerData.Invisibility;
         GameManager.instance.playerScript.status = read.playerData.status;
         GameManager.instance.playerScript.tooltipStatus = read.playerData.tooltipStatus;
         GameManager.instance.playerScript.inactiveStatus = read.playerData.inactiveStatus;
+        GameManager.instance.playerScript.isBreakdown = read.playerData.isBreakdown;
+        GameManager.instance.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
+        GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
+        GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
+        //gear
         List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         listOfGear.Clear();
         listOfGear.AddRange(read.playerData.listOfGear);
+        //secrets
+        List<Secret> listOfSecrets = new List<Secret>();
+        for (int i = 0; i < read.playerData.listOfSecrets.Count; i++)
+        {
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.playerData.listOfSecrets[i]);
+            if (secret != null)
+            { listOfSecrets.Add(secret); }
+        }
+        GameManager.instance.playerScript.SetSecrets(listOfSecrets);
+        //conditions -> Resistance
+        List<Condition> listOfConditions = new List<Condition>();
+        for (int i = 0; i < read.playerData.listOfConditionsResistance.Count; i++)
+        {
+            Condition condition = GameManager.instance.dataScript.GetCondition(read.playerData.listOfConditionsResistance[i]);
+            if (condition != null)
+            { listOfConditions.Add(condition); }
+        }
+        GameManager.instance.playerScript.SetConditions(listOfConditions, globalResistance);
+        //conditions -> Authority
+        listOfConditions = new List<Condition>();
+        for (int i = 0; i < read.playerData.listOfConditionsAuthority.Count; i++)
+        {
+            Condition condition = GameManager.instance.dataScript.GetCondition(read.playerData.listOfConditionsAuthority[i]);
+            if (condition != null)
+            { listOfConditions.Add(condition); }
+        }
+        GameManager.instance.playerScript.SetConditions(listOfConditions, globalAuthority);
     }
 
+    //
+    // - - -  Validate - - -
+    //
+
     /// <summary>
-    /// Validate player data (logic checks)
+    /// Validate player data (logic checks) and Initialise gfx's where needed
     /// </summary>
     private void ValidatePlayerData()
     {
@@ -202,6 +277,11 @@ public class FileManager : MonoBehaviour
                 GameManager.instance.playerScript.status = ActorStatus.Active;
                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                 GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+            }
+            else
+            {
+                //change alpha of player to indicate inactive status
+                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
             }
         }
     }
