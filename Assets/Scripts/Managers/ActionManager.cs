@@ -1229,7 +1229,7 @@ public class ActionManager : MonoBehaviour
                         outcomeDetails.reason = reason;
                         outcomeDetails.isAction = true;
                         outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
-                        outcomeDetails.textTop = string.Format("{0} has cured your {1}{2}{3} condition", cure.cureName, colourBad, cure.condition.name, colourEnd);
+                        outcomeDetails.textTop = string.Format("{0} has cured your {1}{2}{3} condition", cure.cureName, colourBad, cure.condition.tag, colourEnd);
                         outcomeDetails.textBottom = string.Format("{0}{1}{2}", colourNormal, cure.outcomeText, colourEnd);
                     }
                     else { Debug.LogWarning("Condition Not Removed"); }

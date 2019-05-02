@@ -1835,7 +1835,7 @@ public class NodeManager : MonoBehaviour
                     {
                         buttonTitle = node.cure.cureName,
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "Cure Condition", colourEnd),
-                        buttonTooltipMain = string.Format("Remove {0}{1}{2} condition", colourBad, node.cure.condition.name, colourEnd),
+                        buttonTooltipMain = string.Format("Remove {0}{1}{2} condition", colourBad, node.cure.condition.tag, colourEnd),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, node.cure.tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.CurePlayerAction, this, cureActionDetails, "NodeManager.cs -> CreateGearMenu"); }

@@ -438,11 +438,11 @@ public class ItemDataManager : MonoBehaviour
                 default: colourCondition = colourNeutral; break;
             }
         }
-        else { Debug.LogFormat("Invalid condition.type (Null) for condition \"{0}\"", condition.name); }
+        else { Debug.LogFormat("Invalid condition.type (Null) for condition \"{0}\"", condition.tag); }
         if (isGained == true)
-        { builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}gains condition {5}<b>{6}</b>{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourCondition, condition.name, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}gains condition {5}<b>{6}</b>{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourCondition, condition.tag, colourEnd, "\n", "\n"); }
         else
-        { builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}loses condition {5}<b>{6}</b>{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourCondition, condition.name, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}loses condition {5}<b>{6}</b>{7}{8}{9}", genericActorName, colourAlert, genericActorArc, colourEnd, "\n", colourCondition, condition.tag, colourEnd, "\n", "\n"); }
         if (string.IsNullOrEmpty(reason) == false)
         { builder.AppendFormat("{0}<b>{1}</b>{2}", colourNeutral, reason, colourEnd); }
         return builder.ToString();

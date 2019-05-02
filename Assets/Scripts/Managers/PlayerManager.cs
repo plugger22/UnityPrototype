@@ -655,7 +655,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     listOfConditions.Add(condition);
                     //special conditions
-                    switch (condition.name)
+                    switch (condition.tag)
                     {
                         case "DOOMED":
                             GameManager.instance.actorScript.SetDoomTimer();
@@ -671,11 +671,11 @@ public class PlayerManager : MonoBehaviour
                             GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
                             break;
                     }               
-                    Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.name, "\n");
+                    Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                     {
                         //message
-                        string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.name);
+                        string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.tag);
                         GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
                     }
                 }
@@ -702,7 +702,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     foreach (Condition checkCondition in listOfConditions)
                     {
-                        if (checkCondition.name.Equals(condition.name) == true)
+                        if (checkCondition.tag.Equals(condition.tag) == true)
                         { return true; }
                     }
                 }
@@ -739,18 +739,18 @@ public class PlayerManager : MonoBehaviour
                     //reverse loop -> delete and return if found
                     for (int i = listOfConditions.Count - 1; i >= 0; i--)
                     {
-                        if (listOfConditions[i].name.Equals(condition.name) == true)
+                        if (listOfConditions[i].name.Equals(condition.tag) == true)
                         {
                             listOfConditions.RemoveAt(i);
-                            Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.name, "\n");
+                            Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.tag, "\n");
                             if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                             {
                                 //message
-                                string msgText = string.Format("{0} Player, {1}, condition \"{2}\" removed", side.name, GetPlayerName(side), condition.name);
+                                string msgText = string.Format("{0} Player, {1}, condition \"{2}\" removed", side.name, GetPlayerName(side), condition.tag);
                                 GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason, isResistance);
                             }
                             //special conditions
-                            switch (condition.name)
+                            switch (condition.tag)
                             {
                                 case "DOOMED":
                                     GameManager.instance.actorScript.StopDoomTimer();
@@ -808,11 +808,11 @@ public class PlayerManager : MonoBehaviour
             {
                 foreach (Condition condition in listOfConditions)
                 {
-                    if (checkCorrupt == true && condition.name.Equals(conditionCorrupt.name) == true)
+                    if (checkCorrupt == true && condition.tag.Equals(conditionCorrupt.name) == true)
                     { tempList.Add(conditionCorrupt); checkCorrupt = false; }
-                    if (checkIncompetent == true && condition.name.Equals(conditionIncompetent.name) == true)
+                    if (checkIncompetent == true && condition.tag.Equals(conditionIncompetent.name) == true)
                     { tempList.Add(conditionIncompetent); checkIncompetent = false; }
-                    if (checkQuestionable == true && condition.name.Equals(conditionQuestionable.name) == true)
+                    if (checkQuestionable == true && condition.tag.Equals(conditionQuestionable.name) == true)
                     { tempList.Add(conditionQuestionable); checkQuestionable = false; }
                 }
             }

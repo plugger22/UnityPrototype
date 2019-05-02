@@ -313,7 +313,7 @@ namespace gameAPI
                     Debug.LogWarning("Invalid reason (Null or Empty)");
                 }
                 //Checks (traits and other)
-                switch (condition.name)
+                switch (condition.tag)
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
@@ -353,7 +353,7 @@ namespace gameAPI
                     {
                         listOfConditions.Add(condition);
                         //special conditions
-                        switch (condition.name)
+                        switch (condition.tag)
                         {
                             case "BLACKMAILER":
                                 //actor is threatening player
@@ -375,11 +375,11 @@ namespace gameAPI
                                 blackmailTimer = timer;
                                 break;
                         }
-                        Debug.LogFormat("[Con] Actor.cs -> AddCondition: {0}, {1} gained {2} condition{3}", actorName, arc.name, condition.name, "\n");
+                        Debug.LogFormat("[Con] Actor.cs -> AddCondition: {0}, {1} gained {2} condition{3}", actorName, arc.name, condition.tag, "\n");
                         //message
                         if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                         {
-                            string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.name);
+                            string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.tag);
                             GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
                         }
                     }
@@ -402,7 +402,7 @@ namespace gameAPI
                 {
                     foreach (Condition checkCondition in listOfConditions)
                     {
-                        if (checkCondition.name.Equals(condition.name) == true)
+                        if (checkCondition.tag.Equals(condition.tag) == true)
                         { return true; }
                     }
                 }
@@ -431,10 +431,10 @@ namespace gameAPI
                     //reverse loop -> delete and return if found
                     for (int i = listOfConditions.Count - 1; i >= 0; i--)
                     {
-                        if (listOfConditions[i].name.Equals(condition.name) == true)
+                        if (listOfConditions[i].name.Equals(condition.tag) == true)
                         {
                             //special cases
-                            switch(condition.name)
+                            switch(condition.tag)
                             {
                                 case "BLACKMAILER":
                                     blackmailTimer = 0;
@@ -442,11 +442,11 @@ namespace gameAPI
                                     break;
                             }
                             listOfConditions.RemoveAt(i);
-                            Debug.LogFormat("[Con] Actor.cs -> RemoveCondition: {0}, {1} lost {2} condition{3}", actorName, arc.name, condition.name, "\n");
+                            Debug.LogFormat("[Con] Actor.cs -> RemoveCondition: {0}, {1} lost {2} condition{3}", actorName, arc.name, condition.tag, "\n");
                             if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                             {
                                 //message
-                                string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.name);
+                                string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.tag);
                                 GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
                             }
                             return true;

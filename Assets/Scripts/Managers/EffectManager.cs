@@ -2483,7 +2483,7 @@ public class EffectManager : MonoBehaviour
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
                                 {
                                     GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
-                                    effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.name, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.tag, colourEnd);
                                 }
                                 break;
                             case "Subtract":
@@ -2491,7 +2491,7 @@ public class EffectManager : MonoBehaviour
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                                 {
                                     GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
-                                    effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.name, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.tag, colourEnd);
                                 }
                                 break;
                             default:
@@ -2512,7 +2512,7 @@ public class EffectManager : MonoBehaviour
                                     if (actor.CheckConditionPresent(condition) == false)
                                     {
                                         actor.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
-                                        effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.name, colourEnd);
+                                        effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.tag, colourEnd);
                                     }
                                     break;
                                 case "Subtract":
@@ -2520,7 +2520,7 @@ public class EffectManager : MonoBehaviour
                                     if (actor.CheckConditionPresent(condition) == true)
                                     {
                                         actor.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
-                                        effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.name, colourEnd);
+                                        effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.tag, colourEnd);
                                     }
                                     break;
                                 default:
@@ -2775,8 +2775,8 @@ public class EffectManager : MonoBehaviour
                             //loop listOfConditions and remove any identical entries in the temp dict
                             foreach(Condition condition in listOfConditions)
                             {
-                                if (dictOfConditionsByType.ContainsKey(condition.name))
-                                { dictOfConditionsByType.Remove(condition.name); }
+                                if (dictOfConditionsByType.ContainsKey(condition.tag))
+                                { dictOfConditionsByType.Remove(condition.tag); }
                             }
                             //place remaining conditions (in temp dict) in a list
                             if (dictOfConditionsByType.Count > 0)

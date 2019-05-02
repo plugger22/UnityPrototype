@@ -9,6 +9,8 @@ using UnityEngine;
 public class Condition : ScriptableObject
 {
     public string descriptor;
+    [Tooltip("Used by code as an ID, instead of condition.name. DO NOT CHANGE. Identical to name, eg. CAPS")]
+    public string tag;
     [Tooltip("Used for when actor resigns over Player having a bad condition. Format -> [actor] Resigns (due to Player's '....'). Ignore if not applicable")]
     public string resignTag;
     [Tooltip("Used for InfoApp details top Text in format '[Actor] ...', keep short")]
@@ -27,4 +29,13 @@ public class Condition : ScriptableObject
     public Cure cure;
     [Tooltip("[Actor] is now 'a' STAR, -> the 'a' is included if True, ignored otherwise")]
     public bool isNowA;
+
+
+    /// <summary>
+    /// Initialisation
+    /// </summary>
+    public void OnEnable()
+    {
+        Debug.Assert(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty)");
+    }
 }

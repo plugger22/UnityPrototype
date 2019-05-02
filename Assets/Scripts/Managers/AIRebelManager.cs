@@ -686,7 +686,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     if (condition != null)
                     {
-                        switch (condition.name)
+                        switch (condition.tag)
                         {
                             case "STRESSED":
                                 //Player has priority for stress leave
@@ -716,7 +716,7 @@ public class AIRebelManager : MonoBehaviour
                                 //All of the above dealt with (if appropriate) in ActorManager.cs -> CheckPlayerResistanceAI
                                 break;
                             default:
-                                Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.name);
+                                Debug.LogWarningFormat("Unrecognised Condition \"{0}\"", condition.tag);
                                 break;
                         }
                     }
@@ -3519,11 +3519,11 @@ public class AIRebelManager : MonoBehaviour
                     Condition condition = nodePlayer.cure.condition;
                     if (condition != null)
                     {
-                        reason = string.Format("cure {0} condition", condition.name);
+                        reason = string.Format("cure {0} condition", condition.tag);
                         if (GameManager.instance.playerScript.RemoveCondition(condition, globalResistance, reason) == true)
                         {
                             isSuccess = true;
-                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} condition CURED by {1} at {2}, {3}, ID {4}{5}", condition.name, condition.cure.cureName,
+                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} condition CURED by {1} at {2}, {3}, ID {4}{5}", condition.tag, condition.cure.cureName,
                                 nodePlayer.nodeName, nodePlayer.Arc.name, nodePlayer.nodeID, "\n");
                             //at designated cure node. Reset flags to prevent a possible wasted second cure action. If still remaining conditions to cure then they will be picked up next turn.
                             if (cureNodeID == nodePlayer.nodeID)

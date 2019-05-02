@@ -1623,9 +1623,10 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: -1
+  conditionTurnResistance: 5
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 0}
+  conditionResistance: {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d,
+    type: 2}
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2092,7 +2093,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seedDev: 78594
+  seedDev: 7854444
   isAuthority: 0
   autoRunTurns: 0
   isPerformanceLog: 1

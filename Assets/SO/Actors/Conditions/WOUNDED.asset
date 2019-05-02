@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: WOUNDED
   m_EditorClassIdentifier: 
   descriptor: Player is wounded
+  tag: WOUNDED
   resignTag: 
   topText: has suffered a <b>CRIPPLING</b> wound. You are severely restricted in what
     you can do

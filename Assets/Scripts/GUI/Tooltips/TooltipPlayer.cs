@@ -180,13 +180,13 @@ public class TooltipPlayer : MonoBehaviour
                     switch (condition.type.name)
                     {
                         case "Good":
-                            builderCondition.AppendFormat("{0}{1}{2}", colourGood, condition.name, colourEnd);
+                            builderCondition.AppendFormat("{0}{1}{2}", colourGood, condition.tag, colourEnd);
                             break;
                         case "Bad":
-                            builderCondition.AppendFormat("{0}{1}{2}", colourBad, condition.name, colourEnd);
+                            builderCondition.AppendFormat("{0}{1}{2}", colourBad, condition.tag, colourEnd);
                             break;
                         case "Neutral":
-                            builderCondition.AppendFormat("{0}{1}{2}", colourNeutral, condition.name, colourEnd);
+                            builderCondition.AppendFormat("{0}{1}{2}", colourNeutral, condition.tag, colourEnd);
                             break;
                         default:
                             Debug.LogError(string.Format("Invalid condition.type.name \"{0}\"", condition.type.name));

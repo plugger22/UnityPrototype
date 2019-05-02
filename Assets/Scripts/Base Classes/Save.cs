@@ -11,10 +11,29 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
+    public SaveDataData dataData = new SaveDataData();
     public SavePlayerData playerData = new SavePlayerData();
     public SaveSideData sideData = new SaveSideData();
 
 }
+
+//
+// - - - Managers - - -
+//
+
+/// <summary>
+/// DataManager.cs data
+/// </summary>
+[System.Serializable]
+public class SaveDataData
+{
+    //secrets
+    public List<int> listOfPlayerSecrets = new List<int>();
+    public List<int> listOfRevealedSecrets = new List<int>();
+    public List<int> listOfDeletedSecrets = new List<int>();
+    public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
+}
+
 
 /// <summary>
 /// PlayerManager.cs data
@@ -49,6 +68,25 @@ public class SaveSideData
     public SideState resistanceOverall;
     public SideState authorityOverall;
     public GlobalSide playerSide;
+}
+
+//
+// - - - SO's - - -
+//
+
+/// <summary>
+/// Secret.S0 dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveSecret
+{
+    public int secretID;
+    public int gainedWhen;
+    public int revealedWho;
+    public int revealedWhen;
+    public int deleteWhen;
+    public SecretStatus status;
+    public List<int> listOfActors = new List<int>();
 }
 
 

@@ -3915,9 +3915,9 @@ public class ActorManager : MonoBehaviour
         {
             //add condition
             GameManager.instance.playerScript.AddCondition(condition, side, "Debug action");
-            text = string.Format("Condition {0} added to Player", condition.name);
+            text = string.Format("Condition {0} added to Player", condition.tag);
         }
-        else { text = string.Format("Player already has Condition {0}", condition.name); }
+        else { text = string.Format("Player already has Condition {0}", condition.tag); }
         return string.Format("{0}{1}Press ESC to Exit", text, "\n");
     }
 
@@ -3936,9 +3936,9 @@ public class ActorManager : MonoBehaviour
         {
             //remove condition
             GameManager.instance.playerScript.RemoveCondition(condition, side, "Debug action");
-            text = string.Format("Condition {0} removed from Player", condition.name);
+            text = string.Format("Condition {0} removed from Player", condition.tag);
         }
-        else { text = string.Format("Player DOES NOT already have Condition {0}", condition.name); }
+        else { text = string.Format("Player DOES NOT already have Condition {0}", condition.tag); }
         return string.Format("{0}{1}Press ESC to Exit", text, "\n");
     }
 
@@ -3965,10 +3965,10 @@ public class ActorManager : MonoBehaviour
                 {
                     //add condition
                     if (actor.RemoveCondition(condition, "Debug Action") == true)
-                    { text = string.Format("Condition {0} removed from {1}, {2}", condition.name, actor.arc.name, actor.actorName); }
-                    else { text = string.Format("Condition {0} NOT removed", condition.name); }
+                    { text = string.Format("Condition {0} removed from {1}, {2}", condition.tag, actor.arc.name, actor.actorName); }
+                    else { text = string.Format("Condition {0} NOT removed", condition.tag); }
                 }
-                else { text = string.Format("{0} DOES NOT already have Condition {1}", actor.arc.name, condition.name); }
+                else { text = string.Format("{0} DOES NOT already have Condition {1}", actor.arc.name, condition.tag); }
             }
             else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
         }
@@ -3999,10 +3999,10 @@ public class ActorManager : MonoBehaviour
                 {
                     //add condition
                     if (actor.AddCondition(condition, "Debug Action") == true)
-                    { text = string.Format("Condition {0} added to {1}, {2}", condition.name, actor.arc.name, actor.actorName); }
-                    else { text = string.Format("Condition {0} NOT added", condition.name); }
+                    { text = string.Format("Condition {0} added to {1}, {2}", condition.tag, actor.arc.name, actor.actorName); }
+                    else { text = string.Format("Condition {0} NOT added", condition.tag); }
                 }
-                else { text = string.Format("{0} already has Condition {1}", actor.arc.name, condition.name); }
+                else { text = string.Format("{0} already has Condition {1}", actor.arc.name, condition.tag); }
             }
             else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
         }
@@ -4370,7 +4370,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (condition != null)
                                         {
-                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.tag);
                                             topText = "Condition present";
                                             switch (condition.type.level)
                                             {
@@ -4524,7 +4524,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             if (condition != null)
                                             {
-                                                text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                                text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.tag);
                                                 topText = "Condition present";
                                                 switch (condition.type.level)
                                                 {
@@ -4637,7 +4637,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (condition != null)
                                         {
-                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.tag);
                                             topText = "Condition present";
                                             switch (condition.type.level)
                                             {
@@ -4748,7 +4748,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             if (condition != null)
                                             {
-                                                text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.name);
+                                                text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.tag);
                                                 topText = "Condition present";
                                                 switch (condition.type.level)
                                                 {
@@ -4798,10 +4798,10 @@ public class ActorManager : MonoBehaviour
             foreach (Condition condition in listOfBadConditions)
             {
                 //check for questionable condition
-                if (condition.name.Equals(conditionQuestionable.name) == true)
+                if (condition.tag.Equals(conditionQuestionable.name) == true)
                 { isQuestionable = true; }
                 if (builder.Length > 0) { builder.Append(", "); }
-                builder.Append(condition.name);
+                builder.Append(condition.tag);
             }
             //warning message
             string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
@@ -5603,7 +5603,7 @@ public class ActorManager : MonoBehaviour
             {
                 if (condition != null)
                 {
-                    text = string.Format("{0}, PLAYER, has the {1} condition", playerName, condition.name);
+                    text = string.Format("{0}, PLAYER, has the {1} condition", playerName, condition.tag);
                     topText = "Condition present";
                     switch (condition.type.level)
                     {

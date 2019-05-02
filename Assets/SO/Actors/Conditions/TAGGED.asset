@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: TAGGED
   m_EditorClassIdentifier: 
   descriptor: Player has been tagged
+  tag: TAGGED
   resignTag: 
   topText: has been microchipped subdermally with a powerful electronic <b>TRACKER</b>
   bottomTextActor: 

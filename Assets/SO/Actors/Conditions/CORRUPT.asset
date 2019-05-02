@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: CORRUPT
   m_EditorClassIdentifier: 
   descriptor: Actor is corrupt
+  tag: CORRUPT
   resignTag: Corruption
   topText: has been caught with their fingers in the honey jar
   bottomTextActor: Can be <b>DISPOSED OF</b> at no cost (Manage Menu)
@@ -21,4 +22,5 @@ MonoBehaviour:
     type: 2}
   bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
+  cure: {fileID: 0}
   isNowA: 0

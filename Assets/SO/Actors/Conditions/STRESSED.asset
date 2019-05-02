@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: STRESSED
   m_EditorClassIdentifier: 
   descriptor: Actor is stressed and liable to break down
+  tag: STRESSED
   resignTag: 
   topText: is suffering mental stress and strain
   bottomTextActor: Chance of suffering a <b>BREAKDOWN</b> each turn
@@ -21,4 +22,5 @@ MonoBehaviour:
     type: 2}
   bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
+  cure: {fileID: 0}
   isNowA: 0

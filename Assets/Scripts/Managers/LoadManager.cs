@@ -342,11 +342,11 @@ public class LoadManager : MonoBehaviour
                 Condition condition = arrayOfConditions[i];
                 //add to dictionary
                 try
-                { dictOfConditions.Add(condition.name, condition); }
+                { dictOfConditions.Add(condition.tag, condition); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Condition (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.name)); }
+                { Debug.LogError(string.Format("Invalid Condition (duplicate) \"{0}\"", condition.tag)); }
             }
             numDict = dictOfConditions.Count;
             Debug.LogFormat("[Loa] InitialiseStart -> dictOfConditions has {0} entries{1}", numDict, "\n");

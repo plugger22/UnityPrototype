@@ -772,8 +772,8 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             if (isGained == true)
-            { data.itemText = string.Format("{0}, {1}, is now {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.name); }
-            else { data.itemText = string.Format("{0}, {1}, is no longer {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.name); }
+            { data.itemText = string.Format("{0}, {1}, is now {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
+            else { data.itemText = string.Format("{0}, {1}, is no longer {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
             data.topText = "Condition Change";
             if (condition != null)
             { data.bottomText = GameManager.instance.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason); }
@@ -791,7 +791,7 @@ public class MessageManager : MonoBehaviour
             if (condition != null)
             {
                 //tooltip
-                switch (condition.name)
+                switch (condition.tag)
                 {
                     case "QUESTIONABLE":
                         data.tag0 = "questionable_0";

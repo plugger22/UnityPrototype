@@ -49,6 +49,7 @@ public class FileManager : MonoBehaviour
     {
         write = new Save();
         //Sequentially write data
+        WriteDataData();
         WritePlayerData();
         WriteSideData();
     }
@@ -141,7 +142,7 @@ public class FileManager : MonoBehaviour
 
             //side (player) at start
             ReadSideData();
-
+            ReadDataData();
             //secrets before player
 
             ReadPlayerData();
@@ -182,14 +183,14 @@ public class FileManager : MonoBehaviour
         foreach(Condition condition in listOfConditions)
         {
             if (condition != null)
-            { write.playerData.listOfConditionsResistance.Add(condition.name); }
+            { write.playerData.listOfConditionsResistance.Add(condition.tag); }
             else { Debug.LogWarning("Invalid Resistance condition (Null)"); }
         }
         listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalAuthority);
         foreach (Condition condition in listOfConditions)
         {
             if (condition != null)
-            { write.playerData.listOfConditionsAuthority.Add(condition.name); }
+            { write.playerData.listOfConditionsAuthority.Add(condition.tag); }
             else { Debug.LogWarning("Invalid Authority condition (Null)"); }
         }
     }
@@ -204,6 +205,61 @@ public class FileManager : MonoBehaviour
         write.sideData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
         write.sideData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
         write.sideData.playerSide = GameManager.instance.sideScript.PlayerSide;
+    }
+
+    /// <summary>
+    /// DataManager.cs data write to file
+    /// </summary>
+    private void WriteDataData()
+    {
+        //individual secret SO dynamic data for Secrets in dictOfSecrets
+        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        if (dictOfSecrets != null)
+        {
+            foreach(var secret in dictOfSecrets)
+            {
+                if (secret.Value != null)
+                {
+                    //create a new SaveSecret & pass across dynamic data
+                    SaveSecret saveSecret = new SaveSecret();
+                    saveSecret.secretID = secret.Key;
+                    saveSecret.gainedWhen = secret.Value.gainedWhen;
+                    saveSecret.revealedWho = secret.Value.revealedWho;
+                    saveSecret.revealedWhen = secret.Value.revealedWhen;
+                    saveSecret.deleteWhen = secret.Value.deletedWhen;
+                    saveSecret.status = secret.Value.status;
+                    saveSecret.listOfActors.AddRange(secret.Value.GetListOfActors());
+                    //add to listOfSecretsChanges
+                    write.dataData.listOfSecretChanges.Add(saveSecret);
+                }
+                else { Debug.LogError("Invalid secret (Null) in dictOfSecrets"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfSecrets (Null)"); }
+        //secret list -> PlayerSecrets
+        List<Secret> listOfSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        if (listOfSecrets != null)
+        {
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            { write.dataData.listOfPlayerSecrets.Add(listOfSecrets[i].secretID); }
+        }
+        else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
+        //secret list -> RevealSecrets
+        listOfSecrets = GameManager.instance.dataScript.GetListOfRevealedSecrets();
+        if (listOfSecrets != null)
+        {
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            { write.dataData.listOfRevealedSecrets.Add(listOfSecrets[i].secretID); }
+        }
+        else { Debug.LogError("Invalid listOfRevealedSecrets (Null)"); }
+        //secret list -> DeletedSecrets
+        listOfSecrets = GameManager.instance.dataScript.GetListOfDeletedSecrets();
+        if (listOfSecrets != null)
+        {
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            { write.dataData.listOfDeletedSecrets.Add(listOfSecrets[i].secretID); }
+        }
+        else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
     }
 
 
@@ -268,6 +324,69 @@ public class FileManager : MonoBehaviour
         GameManager.instance.sideScript.resistanceOverall = read.sideData.resistanceOverall;
         GameManager.instance.sideScript.authorityOverall = read.sideData.authorityOverall;
         GameManager.instance.sideScript.PlayerSide = read.sideData.playerSide;
+    }
+
+    /// <summary>
+    /// DataManager.cs data
+    /// </summary>
+    private void ReadDataData()
+    {
+        //Copy any dynamic data into dictOfSecrets
+        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        if (dictOfSecrets != null)
+        {
+            //loop saved list of secret changes
+            for (int i = 0; i < read.dataData.listOfSecretChanges.Count; i++)
+            {
+                SaveSecret secretData = read.dataData.listOfSecretChanges[i];
+                if (secretData != null)
+                {
+                    //find record in dict
+                    Secret secret = dictOfSecrets[secretData.secretID];
+                    if (secret != null)
+                    {
+                        //copy data across
+                        secret.status = secretData.status;
+                        secret.gainedWhen = secretData.gainedWhen;
+                        secret.revealedWho = secretData.revealedWho;
+                        secret.revealedWhen = secretData.revealedWhen;
+                        secret.deletedWhen = secretData.deleteWhen;
+                        secret.SetListOfActors(secretData.listOfActors);
+                    }
+                    else { Debug.LogErrorFormat("Invalid secret (Null) for secretID {0}", secretData.secretID); }
+                }
+                else { Debug.LogErrorFormat("Invalid SaveSecret (Null) for listOfSecretChanges[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfSecrets (Null)"); }
+
+        //Secrets List -> PlayerSecrets
+        List<Secret> listOfSecrets = new List<Secret>();
+        for (int i = 0; i < read.dataData.listOfPlayerSecrets.Count; i++)
+        {
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfPlayerSecrets[i]);
+            if (secret != null)
+            { listOfSecrets.Add(secret); }
+        }
+        GameManager.instance.dataScript.SetListOfPlayerSecrets(listOfSecrets);
+        //Secrets List -> RevealedSecrets
+        listOfSecrets = new List<Secret>();
+        for (int i = 0; i < read.dataData.listOfRevealedSecrets.Count; i++)
+        {
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfRevealedSecrets[i]);
+            if (secret != null)
+            { listOfSecrets.Add(secret); }
+        }
+        GameManager.instance.dataScript.SetListOfRevealedSecrets(listOfSecrets);
+        //Secrets List -> DeletedSecrets
+        listOfSecrets = new List<Secret>();
+        for (int i = 0; i < read.dataData.listOfDeletedSecrets.Count; i++)
+        {
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfDeletedSecrets[i]);
+            if (secret != null)
+            { listOfSecrets.Add(secret); }
+        }
+        GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
     }
 
     //

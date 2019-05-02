@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: IMAGED
   m_EditorClassIdentifier: 
   descriptor: Player has been Imaged
+  tag: IMAGED
   resignTag: 
   topText: has had their facial likeness obtained by the Authority. You are now a
     <b>KNOWN QUANTITY</b>

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: BLACKMAILER
   m_EditorClassIdentifier: 
   descriptor: Actor is blackmailing Player (threatening to reveal secrets)
+  tag: BLACKMAILER
   resignTag: 
   topText: is threatening to <b>REVEAL</b> one of your secrets
   bottomTextActor: Will reveal your <b>SECRET</b> once timer runs out. Cannot be sent
@@ -21,4 +22,5 @@ MonoBehaviour:
   bottomTextTypeActor: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
   bottomTextTypePlayer: {fileID: 0}
+  cure: {fileID: 0}
   isNowA: 1

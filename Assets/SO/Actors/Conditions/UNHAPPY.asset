@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: UNHAPPY
   m_EditorClassIdentifier: 
   descriptor: Actor is unhappy with being in RESERVES
+  tag: UNHAPPY
   resignTag: 
   topText: is unhappy at being left in the reserve pool
   bottomTextActor: <b>Motivation</b> will drop to <b>ZERO</b> and will then take Action
@@ -21,4 +22,5 @@ MonoBehaviour:
   bottomTextTypeActor: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
   bottomTextTypePlayer: {fileID: 0}
+  cure: {fileID: 0}
   isNowA: 0

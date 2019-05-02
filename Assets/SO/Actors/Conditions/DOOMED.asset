@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: DOOMED
   m_EditorClassIdentifier: 
   descriptor: Player is Doomed to die
+  tag: DOOMED
   resignTag: 
   topText: has been injected with a slow acting <b>LETHAL</b> gene tailored virus.
     Your days are numbered.

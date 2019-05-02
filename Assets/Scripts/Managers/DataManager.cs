@@ -206,7 +206,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
 
     //global SO's (enum equivalents)
-    private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.name, Value -> Condition
+    private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.tag, Value -> Condition
     private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                          //Key -> Cure.name, Value -> Cure
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
 
@@ -4111,6 +4111,48 @@ public class DataManager : MonoBehaviour
 
     public List<Secret> GetListOfDeletedSecrets()
     { return listOfDeletedSecrets; }
+
+    /// <summary>
+    /// Resets Player Secrets list to new data. Used for Load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetListOfPlayerSecrets(List<Secret> listOfSecrets)
+    {
+        if (listOfSecrets != null)
+        {
+            listOfPlayerSecrets.Clear();
+            listOfPlayerSecrets.AddRange(listOfSecrets);
+        }
+        else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
+    }
+
+    /// <summary>
+    /// Resets Revealed Secrets list to new data. Used for Load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetListOfRevealedSecrets(List<Secret> listOfSecrets)
+    {
+        if (listOfSecrets != null)
+        {
+            listOfRevealedSecrets.Clear();
+            listOfRevealedSecrets.AddRange(listOfSecrets);
+        }
+        else { Debug.LogError("Invalid listOfRevealedSecrets (Null)"); }
+    }
+
+    /// <summary>
+    /// Resets Deleted Secrets list to new data. Used for Load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetListOfDeletedSecrets(List<Secret> listOfSecrets)
+    {
+        if (listOfSecrets != null)
+        {
+            listOfDeletedSecrets.Clear();
+            listOfDeletedSecrets.AddRange(listOfSecrets);
+        }
+        else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
+    }
 
     /// <summary>
     /// returns a secret, null if not fond

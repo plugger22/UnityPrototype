@@ -21,6 +21,7 @@ public class Secret : ScriptableObject
     [Tooltip("What category does the secret belong to")]
     public SecretType type;
 
+    #region Save Data Compatible
     [HideInInspector] public SecretStatus status;           //SO enum -> Inactive 0, Active 1, Revealed 2, Deleted 3
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
     [HideInInspector] public int gainedWhen;                //turn player gains secret
@@ -29,6 +30,7 @@ public class Secret : ScriptableObject
     [HideInInspector] public int deletedWhen;               //turn deleted (removed from game without being revealed)
 
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
+    #endregion
 
     /// <summary>
     /// called by SecretManager.cs -> need to reset data back to default settings otherwise will carry over between sessions
@@ -103,6 +105,20 @@ public class Secret : ScriptableObject
     /// <returns></returns>
     public bool CheckActorPresent(int actorID)
     { return listOfActors.Exists(x => x == actorID); }
+
+    public List<int> GetListOfActors()
+    { return listOfActors; }
+
+    
+    /// <summary>
+    /// Copies a full list of Actors across. Used for loading save games.
+    /// </summary>
+    /// <param name="listOfNewActors"></param>
+    public void SetListOfActors(List<int> listOfNewActors)
+    {
+        listOfActors.Clear();
+        listOfActors.AddRange(listOfNewActors);
+    }
 
 
 
