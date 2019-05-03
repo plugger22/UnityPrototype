@@ -654,7 +654,7 @@ public class ActorManager : MonoBehaviour
                 }
                 else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
-                //OnMap actor (only stored in dictionary if they are part of the game)
+                //OnMap actor (pool actors already in dictionary)
                 if (slotID > -1)
                 {
                     actor.Renown = 0;

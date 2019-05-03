@@ -2093,7 +2093,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seedDev: 7854444
+  seedDev: 400004
   isAuthority: 0
   autoRunTurns: 0
   isPerformanceLog: 1

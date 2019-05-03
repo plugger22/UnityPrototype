@@ -3717,7 +3717,11 @@ public class DataManager : MonoBehaviour
         return tempArray;
     }
 
-
+    /// <summary>
+    /// Find actor in dictOfActors, returns null if a problem
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
     public Actor GetActor(int actorID)
     {
         Debug.Assert(actorID > -1, string.Format("Invalid actorID {0}", actorID));
