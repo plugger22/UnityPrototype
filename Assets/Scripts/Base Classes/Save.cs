@@ -14,6 +14,7 @@ public class Save
     public SaveDataData dataData = new SaveDataData();
     public SavePlayerData playerData = new SavePlayerData();
     public SaveSideData sideData = new SaveSideData();
+    public SaveActorData actorData = new SaveActorData();
 
 }
 
@@ -70,6 +71,15 @@ public class SaveSideData
     public GlobalSide playerSide;
 }
 
+/// <summary>
+/// ActorManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveActorData
+{
+    public List<SaveActor> listOfDictActors = new List<SaveActor>();
+}
+
 //
 // - - - SO's - - -
 //
@@ -89,6 +99,55 @@ public class SaveSecret
     public List<int> listOfActors = new List<int>();
 }
 
+//
+// - - - Base Classes - - -
+//
 
 
-
+/// <summary>
+/// Actor.cs full data set
+/// </summary>
+[System.Serializable]
+public class SaveActor
+{
+    public ActorStatus status;
+    public int actorID;
+    public int datapoint0;
+    public int datapoint1;
+    public int datapoint2;
+    public GlobalSide side;
+    public int actorSlotID;
+    public int level;
+    public int nodeCaptured;
+    public int unhappyTimer;
+    public int blackmailTimer;
+    public int captureTimer;
+    public int numOfTimesBullied;
+    public int numOfTimesCaptured;
+    public int departedNumOfSecrets;
+    public bool isPromised;
+    public bool isNewRecruit;
+    public bool isReassured;
+    public bool isThreatening;
+    public bool isComplaining;
+    public bool isBreakdown;
+    public bool isLieLowFirstturn;
+    public bool isStressLeave;
+    public bool isTraitor;
+    public string actorName;
+    public int arcID;
+    public ActorTooltip tooltipStatus;
+    public ActorInactive inactiveStatus;
+    public Trait trait;
+    public int Renown;
+    //gear
+    public int gearID;
+    public int gearTimer;
+    public int gearTimesTaken;
+    //collections
+    List<int> listOfTeams = new List<int>();
+    List<int> listOfSecrets = new List<int>();
+    List<int> listOfTraitEffects = new List<int>();
+    List<int> listOfContactNodes = new List<int>();
+    List<int> listOfContacts = new List<int>();
+}

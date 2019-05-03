@@ -41,7 +41,8 @@ namespace gameAPI
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
 
-
+        //trait
+        private Trait trait;
 
         //gear
         private int gearID;                                     //can only have one piece of gear at a time, default -1
@@ -57,7 +58,7 @@ namespace gameAPI
         private int actorBlackmailTimerLow;
         private int maxNumOfSecrets = -1;
 
-        private Trait trait;
+        //collections
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
         private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor

@@ -3950,13 +3950,16 @@ public class DataManager : MonoBehaviour
         return numOfActors;
     }
 
+    
+    public Dictionary<int, Actor> GetDictOfActors()
+    { return dictOfActors; }
 
 
     /// <summary>
     /// debug method to show contents of both sides reserve lists
     /// </summary>
     /// <returns></returns>
-    public string DisplayActorLists()
+    public string DebugDisplayActorLists()
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor Lists{0}{1}", "\n", "\n"));
@@ -3982,6 +3985,21 @@ public class DataManager : MonoBehaviour
         builder.Append(GetActorList(resistanceActorDisposedOf));
         builder.Append(string.Format("{0} - Resistance Resigned List{1}", "\n", "\n"));
         builder.Append(GetActorList(resistanceActorResigned));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// debug method to display contents of dictOfActors
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorDict()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Actor Dictionary{0}{1}", "\n", "\n"));
+        List<int> listOfActors = dictOfActors.Keys.ToList();
+        if (listOfActors != null)
+        { builder.Append(GetActorList(listOfActors)); }
+        else { builder.Append("Invalid listOfActors"); }
         return builder.ToString();
     }
 

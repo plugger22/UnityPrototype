@@ -19,6 +19,7 @@ public class DebugGUI : MonoBehaviour
     private MessageCategory msgStatus;
     private AIDebugData aiStatus;
     private TeamDebug teamStatus;
+    private ActorDebugData actorStatus;
     private bool showGUI = false;
     private bool doOnceFlag = false;                            //used to prevent continual repeats of input / output sequences
     private int debugDisplay = 0;
@@ -130,21 +131,24 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Lists"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Actor Lists");
-                if (debugDisplay != 7)
-                { debugDisplay = 7; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Toggle Actor Data");
+                //toggles sequentially through actor displays and then switches off
+                switch (actorStatus)
+                {
+                    case ActorDebugData.None: debugDisplay = 7; actorStatus = ActorDebugData.Pools; break;
+                    case ActorDebugData.Pools: debugDisplay = 6; actorStatus = ActorDebugData.Dict; break;
+                    case ActorDebugData.Dict: debugDisplay = 54; actorStatus = ActorDebugData.Lists; break;
+                    case ActorDebugData.Lists: debugDisplay = 0; actorStatus = ActorDebugData.None; break;
+                }
             }
 
             //third button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Actor Pools"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), ""))
             {
-                Debug.Log("[Dbg] Button -> Toggle Actor Pools");
-                if (debugDisplay != 6)
-                { debugDisplay = 6; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Unused");
+
             }
 
             //fourth button
@@ -933,13 +937,13 @@ public class DebugGUI : MonoBehaviour
                     case 6:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.actorScript.DisplayPools();
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 900), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 900), analysis, customBackground);
                         break;
                     //actor Lists
                     case 7:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayActorLists();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 450), analysis, customBackground);
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorLists();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 500), analysis, customBackground);
                         break;
                     //Player stats
                     case 8:
@@ -1353,6 +1357,11 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
+                        break;
+                    case 54:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorDict();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }

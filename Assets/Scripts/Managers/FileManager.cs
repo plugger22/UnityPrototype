@@ -52,6 +52,7 @@ public class FileManager : MonoBehaviour
         WriteDataData();
         WritePlayerData();
         WriteSideData();
+        WriteActorData();
     }
 
     /// <summary>
@@ -262,6 +263,84 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
     }
 
+    /// <summary>
+    /// Actor.cs (dict and lists) full data set write to file
+    /// </summary>
+    private void WriteActorData()
+    {
+        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+         
+        if (dictOfActors != null)
+        {
+            //loop dictOfActors
+            foreach(var actor in dictOfActors)
+            {
+                if (actor.Value != null)
+                {
+                    SaveActor saveActor = WriteIndividualActor(actor.Value);
+                    if (saveActor != null)
+                    { write.actorData.listOfDictActors.Add(saveActor); }
+                }
+                else { Debug.LogWarning("Invalid actor (Null) in dictOfActors"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfActors (Null)"); }
+    }
+
+    /// <summary>
+    /// subMethod for WriteActorData to handle serializing an individual actor. Returns null if a problem
+    /// Note: actor checked for null by parent method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private SaveActor WriteIndividualActor(Actor actor)
+    {
+        bool isSuccess = true;
+        SaveActor saveActor = new SaveActor();
+        //base data
+        saveActor.status = actor.Status;
+        saveActor.actorID = actor.actorID;
+        saveActor.datapoint0 = actor.datapoint0;
+        saveActor.datapoint1 = actor.datapoint1;
+        saveActor.datapoint2 = actor.datapoint2;
+        saveActor.side = actor.side;
+        saveActor.actorSlotID = actor.actorSlotID;
+        saveActor.level = actor.level;
+        saveActor.nodeCaptured = actor.nodeCaptured;
+        saveActor.unhappyTimer = actor.unhappyTimer;
+        saveActor.blackmailTimer = actor.blackmailTimer;
+        saveActor.captureTimer = actor.captureTimer;
+        saveActor.numOfTimesBullied = actor.numOfTimesBullied;
+        saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
+        saveActor.departedNumOfSecrets = actor.departedNumOfSecrets;
+        saveActor.isPromised = actor.isPromised;
+        saveActor.isNewRecruit = actor.isNewRecruit;
+        saveActor.isReassured = actor.isReassured;
+        saveActor.isThreatening = actor.isThreatening;
+        saveActor.isComplaining = actor.isComplaining;
+        saveActor.isBreakdown = actor.isBreakdown;
+        saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
+        saveActor.isStressLeave = actor.isStressLeave;
+        saveActor.isTraitor = actor.isTraitor;
+        saveActor.actorName = actor.actorName;
+        saveActor.arcID = actor.arc.ActorArcID;
+        saveActor.tooltipStatus = actor.tooltipStatus;
+        saveActor.inactiveStatus = actor.inactiveStatus;
+        saveActor.trait = actor.GetTrait();
+        saveActor.gearID = actor.GetGearID();
+        saveActor.gearTimer = actor.GetGearTimer();
+        saveActor.gearTimesTaken = actor.GetGearTimesTaken();
+        
+        //Collections
+
+        //check if serialization had an issue
+        if (isSuccess == false)
+        {
+            saveActor = null;
+            Debug.LogWarningFormat("Failed to serialize {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
+        }
+        return saveActor;
+    }
 
     //
     // - - - Read - - -

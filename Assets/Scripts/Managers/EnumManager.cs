@@ -83,6 +83,7 @@
     public enum ActorInactive { None, LieLow, Breakdown, StressLeave}                             //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
+    public enum ActorDebugData { None, Pools, Lists, Dict }                             //used for toggling debugGUI.cs  AI data
 
     //
     // - - - Gear - - -
