@@ -252,18 +252,25 @@ public class ControlManager : MonoBehaviour
     private void ProcessLoadGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessLoadGame: LOAD game option selected{0}", "\n");
+        //toggle on modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
         //Load Game -> open background
         GameManager.instance.modalGUIScript.SetBackground(Background.LoadGame);
         //Close any open background
         GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.LoadGame;
+        //Debug -> time load game process
+        GameManager.instance.testScript.StartTimer();
         //read data from file
         if (GameManager.instance.fileScript.ReadGameData() == true)
         {
             //load data into game
             GameManager.instance.fileScript.LoadSaveData();
         }
+        //how long did it take?
+        long timeElapsed = GameManager.instance.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessLoadGame: LOAD GAME took {0} ms", timeElapsed);
     }
 
     /// <summary>
@@ -273,8 +280,11 @@ public class ControlManager : MonoBehaviour
     {
         //Close any open background
         GameManager.instance.modalGUIScript.CloseBackgrounds();
+        //toggle of modal block
+        GameManager.instance.guiScript.SetIsBlocked(false);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
+
     }
 
     /// <summary>
@@ -283,8 +293,13 @@ public class ControlManager : MonoBehaviour
     private void ProcessSaveGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: SAVE game option selected{0}", "\n");
+        //Debug -> time load game process
+        GameManager.instance.testScript.StartTimer();
         GameManager.instance.fileScript.WriteGameData();
         GameManager.instance.fileScript.SaveGame();
+        //how long did it take?
+        long timeElapsed = GameManager.instance.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
     }
 
 

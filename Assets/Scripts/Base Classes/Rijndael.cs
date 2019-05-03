@@ -22,8 +22,8 @@ public class Rijndael
 
         try
         {
-            byte[] iv = Encoding.ASCII.GetBytes("1234567890123456");
-            byte[] keyBytes = Encoding.ASCII.GetBytes(key);
+            byte[] iv = Encoding.ASCII.GetBytes("1__456?#@012-;%6");        //needs to be 16 chars and identical to Encrypt iv
+            byte[] keyBytes = Encoding.ASCII.GetBytes(key);                 //needs to be 32 chars and identical to Encrypt key
 
             using (RijndaelManaged myRijndael = new RijndaelManaged())
             {
@@ -42,7 +42,7 @@ public class Rijndael
     }
 
     /// <summary>
-    /// Encrypt
+    /// Encrypt, returns null if a problem
     /// </summary>
     /// <param name="original"></param>
     /// <param name="key"></param>
@@ -53,7 +53,7 @@ public class Rijndael
 
         try
         {
-            byte[] iv = Encoding.ASCII.GetBytes("1234567890123456");
+            byte[] iv = Encoding.ASCII.GetBytes("1__456?#@012-;%6");
             byte[] keyBytes = Encoding.ASCII.GetBytes(key);
 
             using (RijndaelManaged myRijndael = new RijndaelManaged())
@@ -67,7 +67,7 @@ public class Rijndael
         }
         catch (Exception e)
         {
-            Debug.LogFormat("Error: {0}", e.Message);
+            Debug.LogWarningFormat("Error: {0}", e.Message);
         }
 
         return encrypted;

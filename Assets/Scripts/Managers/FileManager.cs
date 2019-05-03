@@ -32,7 +32,7 @@ public class FileManager : MonoBehaviour
     public void Initialise()
     {
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
-        cipherKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a";
+        cipherKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -342,18 +342,22 @@ public class FileManager : MonoBehaviour
                 if (secretData != null)
                 {
                     //find record in dict
-                    Secret secret = dictOfSecrets[secretData.secretID];
-                    if (secret != null)
+                    if (dictOfSecrets.ContainsKey(secretData.secretID) == true)
                     {
-                        //copy data across
-                        secret.status = secretData.status;
-                        secret.gainedWhen = secretData.gainedWhen;
-                        secret.revealedWho = secretData.revealedWho;
-                        secret.revealedWhen = secretData.revealedWhen;
-                        secret.deletedWhen = secretData.deleteWhen;
-                        secret.SetListOfActors(secretData.listOfActors);
+                        Secret secret = dictOfSecrets[secretData.secretID];
+                        if (secret != null)
+                        {
+                            //copy data across
+                            secret.status = secretData.status;
+                            secret.gainedWhen = secretData.gainedWhen;
+                            secret.revealedWho = secretData.revealedWho;
+                            secret.revealedWhen = secretData.revealedWhen;
+                            secret.deletedWhen = secretData.deleteWhen;
+                            secret.SetListOfActors(secretData.listOfActors);
+                        }
+                        else { Debug.LogErrorFormat("Invalid secret (Null) for secretID {0}", secretData.secretID); }
                     }
-                    else { Debug.LogErrorFormat("Invalid secret (Null) for secretID {0}", secretData.secretID); }
+                    else { Debug.LogWarningFormat("Secret ID {0} not found in dictionary, record not updated for dynamic data", secretData.secretID); }
                 }
                 else { Debug.LogErrorFormat("Invalid SaveSecret (Null) for listOfSecretChanges[{0}]", i); }
             }
