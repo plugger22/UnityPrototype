@@ -110,6 +110,7 @@ public class SaveSecret
 [System.Serializable]
 public class SaveActor
 {
+    //data needed for all actors
     public ActorStatus status;
     public int actorID;
     public int datapoint0;
@@ -119,6 +120,14 @@ public class SaveActor
     public int slotID;
     public int level;
     public int nodeCaptured;
+    public int gearID;
+    public bool isMale;
+    public string actorName;
+    public string firstName;
+    public int arcID;
+    public Trait trait;
+
+    //data that can be ignored if actor is in Recruit Pool
     public int unhappyTimer;
     public int blackmailTimer;
     public int captureTimer;
@@ -134,25 +143,17 @@ public class SaveActor
     public bool isLieLowFirstturn;
     public bool isStressLeave;
     public bool isTraitor;
-    public bool isMale;
-    public string actorName;
-    public string firstName;
-    public int arcID;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
-    public Trait trait;
     public int Renown;
-    //gear
-    public int gearID;
     public int gearTimer;
     public int gearTimesTaken;
     //collections
     public List<int> listOfTeams = new List<int>();
     public List<int> listOfSecrets = new List<int>();
-    public List<string> listOfConditions = new List<string>();
-    
+    public List<string> listOfConditions = new List<string>();   
     public List<int> listOfContactNodes = new List<int>();
     public List<int> listOfContacts = new List<int>();
-    //trait effects generated dynamically when loading trait
-    /*public List<int> listOfTraitEffects = new List<int>();*/
+    
+    /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
 }

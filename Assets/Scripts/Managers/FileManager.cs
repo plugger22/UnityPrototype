@@ -310,37 +310,40 @@ public class FileManager : MonoBehaviour
         saveActor.slotID = actor.slotID;
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;
-        saveActor.unhappyTimer = actor.unhappyTimer;
-        saveActor.blackmailTimer = actor.blackmailTimer;
-        saveActor.captureTimer = actor.captureTimer;
-        saveActor.numOfTimesBullied = actor.numOfTimesBullied;
-        saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
-        saveActor.departedNumOfSecrets = actor.departedNumOfSecrets;
-        saveActor.isPromised = actor.isPromised;
-        saveActor.isNewRecruit = actor.isNewRecruit;
-        saveActor.isReassured = actor.isReassured;
-        saveActor.isThreatening = actor.isThreatening;
-        saveActor.isComplaining = actor.isComplaining;
-        saveActor.isBreakdown = actor.isBreakdown;
-        saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
-        saveActor.isStressLeave = actor.isStressLeave;
-        saveActor.isTraitor = actor.isTraitor;
+        saveActor.gearID = actor.GetGearID();
         saveActor.isMale = actor.isMale;
         saveActor.actorName = actor.actorName;
         saveActor.firstName = actor.firstName;
         saveActor.arcID = actor.arc.ActorArcID;
-        saveActor.tooltipStatus = actor.tooltipStatus;
-        saveActor.inactiveStatus = actor.inactiveStatus;
         saveActor.trait = actor.GetTrait();
-        saveActor.gearID = actor.GetGearID();
-        saveActor.gearTimer = actor.GetGearTimer();
-        saveActor.gearTimesTaken = actor.GetGearTimesTaken();
-        //
-        // - - - Collections
-        //
-        //ignore collections for pool actors (excluding trait effects as generated dynamically upon loading trait)
+
+        //data which can be ignored (default values O.K) if actor is in the recruit pool
         if (actor.Status != ActorStatus.RecruitPool)
         {
+            saveActor.unhappyTimer = actor.unhappyTimer;
+            saveActor.blackmailTimer = actor.blackmailTimer;
+            saveActor.captureTimer = actor.captureTimer;
+            saveActor.numOfTimesBullied = actor.numOfTimesBullied;
+            saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
+            saveActor.departedNumOfSecrets = actor.departedNumOfSecrets;
+            saveActor.isPromised = actor.isPromised;
+            saveActor.isNewRecruit = actor.isNewRecruit;
+            saveActor.isReassured = actor.isReassured;
+            saveActor.isThreatening = actor.isThreatening;
+            saveActor.isComplaining = actor.isComplaining;
+            saveActor.isBreakdown = actor.isBreakdown;
+            saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
+            saveActor.isStressLeave = actor.isStressLeave;
+            saveActor.isTraitor = actor.isTraitor;
+            saveActor.tooltipStatus = actor.tooltipStatus;
+            saveActor.inactiveStatus = actor.inactiveStatus;
+            saveActor.gearTimer = actor.GetGearTimer();
+            saveActor.gearTimesTaken = actor.GetGearTimesTaken();
+
+            //
+            // - - - Collections
+            //
+
             //teams
             saveActor.listOfTeams.AddRange(actor.GetListOfTeams());
             //secrets
@@ -384,7 +387,6 @@ public class FileManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid dictOfContacts (Null)"); }
-
         }
         //
         // - - - Success check
@@ -550,7 +552,7 @@ public class FileManager : MonoBehaviour
                     Actor actor = new Actor();
                     SaveActor readActor = read.actorData.listOfDictActors[i];
                     //copy over data from saveActor
-                    actor.Status = readActor.status;
+
                     actor.actorID = readActor.actorID;
                     actor.datapoint0 = readActor.datapoint0;
                     actor.datapoint1 = readActor.datapoint1;
@@ -559,34 +561,36 @@ public class FileManager : MonoBehaviour
                     actor.slotID = readActor.slotID;
                     actor.level = readActor.level;
                     actor.nodeCaptured = readActor.nodeCaptured;
-                    actor.unhappyTimer = readActor.unhappyTimer;
-                    actor.blackmailTimer = readActor.blackmailTimer;
-                    actor.captureTimer = readActor.captureTimer;
-                    actor.numOfTimesBullied = readActor.numOfTimesBullied;
-                    actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
-                    actor.departedNumOfSecrets = readActor.departedNumOfSecrets;
-                    actor.isPromised = readActor.isPromised;
-                    actor.isNewRecruit = readActor.isNewRecruit;
-                    actor.isReassured = readActor.isReassured;
-                    actor.isThreatening = readActor.isThreatening;
-                    actor.isComplaining = readActor.isComplaining;
-                    actor.isBreakdown = readActor.isBreakdown;
-                    actor.isLieLowFirstturn = readActor.isLieLowFirstturn;
-                    actor.isStressLeave = readActor.isStressLeave;
-                    actor.isTraitor = readActor.isTraitor;
+                    actor.SetGear(readActor.gearID);
                     actor.isMale = readActor.isMale;
                     actor.actorName = readActor.actorName;
                     actor.firstName = readActor.firstName;
-                    actor.tooltipStatus = readActor.tooltipStatus;
-                    actor.inactiveStatus = readActor.inactiveStatus;
                     actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcID);
                     actor.AddTrait(readActor.trait);
-                    actor.SetGear(readActor.gearID);
-                    actor.SetGearTimer(readActor.gearTimer);
-                    actor.SetGearTimesTaken(readActor.gearTimesTaken);
-                    //collections only if not in recruit pool (as will all be empty in this case
+                    actor.Status = readActor.status; //needs to be after SetGear
+
+                    //data which can be ignored (default values O.K) if actor is in the Recruit Pool
                     if (actor.Status != ActorStatus.RecruitPool)
                     {
+                        actor.unhappyTimer = readActor.unhappyTimer;
+                        actor.blackmailTimer = readActor.blackmailTimer;
+                        actor.captureTimer = readActor.captureTimer;
+                        actor.numOfTimesBullied = readActor.numOfTimesBullied;
+                        actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
+                        actor.departedNumOfSecrets = readActor.departedNumOfSecrets;
+                        actor.isPromised = readActor.isPromised;
+                        actor.isNewRecruit = readActor.isNewRecruit;
+                        actor.isReassured = readActor.isReassured;
+                        actor.isThreatening = readActor.isThreatening;
+                        actor.isComplaining = readActor.isComplaining;
+                        actor.isBreakdown = readActor.isBreakdown;
+                        actor.isLieLowFirstturn = readActor.isLieLowFirstturn;
+                        actor.isStressLeave = readActor.isStressLeave;
+                        actor.isTraitor = readActor.isTraitor;
+                        actor.tooltipStatus = readActor.tooltipStatus;
+                        actor.inactiveStatus = readActor.inactiveStatus;
+                        actor.SetGearTimer(readActor.gearTimer);
+                        actor.SetGearTimesTaken(readActor.gearTimesTaken);
                         //teams
                         List<int> listOfTeams = actor.GetListOfTeams();
                         if (listOfTeams != null)

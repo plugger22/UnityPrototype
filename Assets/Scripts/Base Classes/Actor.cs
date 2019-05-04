@@ -102,28 +102,33 @@ namespace gameAPI
         /// </summary>
         public Actor()
         {
-            nodeCaptured = -1;
-            Renown = 0;
-            gearID = -1;
-            gearTimer = 0;
-            gearTimesTaken = 0;
-            blackmailTimer = 0;
-            numOfTimesBullied = 0;
-            //fast access & cached
-            actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
-            actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
-            actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
-            actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
-            actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
-            actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
-            maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-            Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
-            Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
-            Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
-            Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
-            Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
-            Debug.Assert(actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
-            Debug.Assert(actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
+            //call only if a new session
+            if (GameManager.instance.isSession == false)
+            {
+                Debug.LogFormat("[Tst] actor {0} CONSTRUCTOR called{1}", actorName, "\n");
+                nodeCaptured = -1;
+                Renown = 0;
+                gearID = -1;
+                gearTimer = 0;
+                gearTimesTaken = 0;
+                blackmailTimer = 0;
+                numOfTimesBullied = 0;
+                //fast access & cached
+                actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
+                actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
+                actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
+                actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
+                actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
+                actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
+                maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
+                Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
+                Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
+                Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
+                Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
+                Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
+                Debug.Assert(actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
+                Debug.Assert(actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
+            }
         }
 
         /// <summary>

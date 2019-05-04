@@ -20,6 +20,7 @@ public class DebugGUI : MonoBehaviour
     private AIDebugData aiStatus;
     private TeamDebug teamStatus;
     private ActorDebugData actorStatus;
+    private DebugRegister registerStatus;
     private bool showGUI = false;
     private bool doOnceFlag = false;                            //used to prevent continual repeats of input / output sequences
     private int debugDisplay = 0;
@@ -139,36 +140,32 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-
-
             //third button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), ""))
             {
                 Debug.Log("[Dbg] Button -> Unused");
-
             }
 
-
-
-            // button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Ongoing Register"))
+            // fourth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), ""))
             {
-                Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
-                if (debugDisplay != 14)
-                { debugDisplay = 14; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Unused");
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Actions Register"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Register Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Actions Register");
-                if (debugDisplay != 15)
-                { debugDisplay = 15; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Toggle Register Data");
+                //toggles sequentially through register data displays and then switches off
+                switch (registerStatus)
+                {
+                    case DebugRegister.None: debugDisplay = 14; registerStatus = DebugRegister.Ongoing; break;
+                    case DebugRegister.Ongoing: debugDisplay = 15; registerStatus = DebugRegister.Actions; break;
+                    case DebugRegister.Actions: debugDisplay = 0; registerStatus = DebugRegister.None; break;
+                }
             }
 
-            //second button
+            //sixth button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actor Data"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Actor Data");
@@ -182,7 +179,7 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-            //fifth button
+            //seventh button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "City Data"))
             {
                 Debug.Log("[Dbg] Button -> Toggle City Data");
