@@ -544,7 +544,9 @@ public class FileManager : MonoBehaviour
                 //loop list of saved actors
                 for (int i = 0; i < read.actorData.listOfDictActors.Count; i++)
                 {
-                    //recreate actor
+                    //
+                    // - - - Recreate actor
+                    //
                     Actor actor = new Actor();
                     SaveActor readActor = read.actorData.listOfDictActors[i];
                     //copy over data from saveActor
@@ -582,9 +584,56 @@ public class FileManager : MonoBehaviour
                     actor.SetGear(readActor.gearID);
                     actor.SetGearTimer(readActor.gearTimer);
                     actor.SetGearTimesTaken(readActor.gearTimesTaken);
+                    //collections only if not in recruit pool (as will all be empty in this case
+                    if (actor.Status != ActorStatus.RecruitPool)
+                    {
+                        //teams
+                        List<int> listOfTeams = actor.GetListOfTeams();
+                        if (listOfTeams != null)
+                        {
+                            listOfTeams.Clear();
+                            listOfTeams.AddRange(readActor.listOfTeams);
+                        }
+                        else { Debug.LogError("Invalid listOfTeams (Null)"); }
+                        //secrets
+                        List<Secret> listOfSecrets = actor.GetListOfSecrets();
+                        listOfSecrets.Clear();
+                        if (listOfSecrets != null)
+                        {
+                            for (int j = 0; j < readActor.listOfSecrets.Count; j++)
+                            {
+                                Secret secret = GameManager.instance.dataScript.GetSecret(readActor.listOfSecrets[j]);
+                                if (secret != null)
+                                { listOfSecrets.Add(secret); }
+                                else { Debug.LogWarningFormat("Invalid secret in readActor.listOfSecrets[{0}]", j); }
+                            }
+                        }
+                        else { Debug.LogError("Invalid listOfSecrets (Null)"); }
+                        //contacts
+                        Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+                        if (dictOfContacts != null)
+                        {
+                            dictOfContacts.Clear();
+                            for (int j = 0; j < readActor.listOfContactNodes.Count; j++)
+                            {
+                                Contact contact = GameManager.instance.dataScript.GetContact(readActor.listOfContacts[j]);
+                                if (contact != null)
+                                {
+                                    //add to dictionary
+                                    try
+                                    { dictOfContacts.Add(readActor.listOfContactNodes[j], contact); }
+                                    catch (ArgumentException)
+                                    { Debug.LogErrorFormat("Duplicate contact, ID \"{0}\"{1}", contact.contactID, "\n"); }
 
-
-                    //add to dictionary
+                                }
+                                else { Debug.LogWarningFormat("Invalid contact (Null) for readActor.listOfContacts[{0}]", j); }
+                            }
+                        }
+                        else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+                    }
+                    //
+                    // - - - Add to dictionary
+                    //
                     try
                     { dictOfActors.Add(actor.actorID, actor); }
                     catch (ArgumentException)
