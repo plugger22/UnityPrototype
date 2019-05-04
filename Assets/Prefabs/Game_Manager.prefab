@@ -1009,6 +1009,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95a039f25c71f764e936bbf1866e4664, type: 2}
   - {fileID: 11400000, guid: bb4f6eac5824b5c4089e8760e0adbdb4, type: 2}
   - {fileID: 11400000, guid: 463372ee7b93a9049bbad149f7e86736, type: 2}
+  - {fileID: 11400000, guid: 5e773013e85413b4a92b2b0e3ae8bbd6, type: 2}
+  - {fileID: 11400000, guid: a327bf59db3a9dc4eaeb1af048fd8ad6, type: 2}
+  - {fileID: 11400000, guid: b0d728b0e9b31ff4998871d75b527eff, type: 2}
+  - {fileID: 11400000, guid: 211dd1f05b704d549912316f2c962d78, type: 2}
+  - {fileID: 11400000, guid: d995c6a5fe22cc146bcce492702ade40, type: 2}
+  - {fileID: 11400000, guid: e77d94ef459ce1d4e82d4577d9571fb1, type: 2}
   arrayOfDistrictTextLists:
   - {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   - {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
@@ -2093,9 +2099,9 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
-  seedDev: 400004
+  seedDev: 0
   isAuthority: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

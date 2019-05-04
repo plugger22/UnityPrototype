@@ -3249,7 +3249,7 @@ public class DataManager : MonoBehaviour
             //ensure position is set to 'Filled'
             arrayOfActorsPresent[side.level, slotID] = true;
             //update actor
-            actor.actorSlotID = slotID;
+            actor.slotID = slotID;
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
             //update contacts (not for game or level start -> sequencing issues)
@@ -3332,8 +3332,8 @@ public class DataManager : MonoBehaviour
     private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status)
     {
         //update actor arrays
-        arrayOfActors[side.level, actor.actorSlotID] = null;
-        arrayOfActorsPresent[side.level, actor.actorSlotID] = false;
+        arrayOfActors[side.level, actor.slotID] = null;
+        arrayOfActorsPresent[side.level, actor.slotID] = false;
         actor.Status = status;
         //update node contacts
         RemoveContactsActor(actor.actorID);
@@ -3817,7 +3817,7 @@ public class DataManager : MonoBehaviour
             {
                 Actor actor = arrayOfActors[side.level, i];
                 if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
-                { return actor.actorSlotID; }
+                { return actor.slotID; }
             }
         }
         return slotID;
@@ -3999,7 +3999,7 @@ public class DataManager : MonoBehaviour
     public string DebugDisplayActorDict()
     {
         StringBuilder builder = new StringBuilder();
-        builder.Append(string.Format(" Actor Dictionary{0}{1}", "\n", "\n"));
+        builder.Append(string.Format(" Actor Dictionary{0}", "\n"));
         List<int> listOfActors = dictOfActors.Keys.ToList();
         if (listOfActors != null)
         { builder.Append(GetActorList(listOfActors)); }
@@ -4031,6 +4031,8 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfActors (Null)"); }
         return builder.ToString();
     }
+
+
 
     //
     // - - - Actor Nodes & Qualities - - -

@@ -276,7 +276,7 @@ public class CaptureManager : MonoBehaviour
             builder.Append(string.Format("{0}{1} has been Captured{2}{3}{4}", colourBad, details.actor.arc.name, colourEnd, "\n", "\n"));
             builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
             //reduce actor alpha to show inactive (sprite and text)
-            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(details.actor.slotID, GameManager.instance.guiScript.alphaInactive);
             //actor captured outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
@@ -423,7 +423,7 @@ public class CaptureManager : MonoBehaviour
                     if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
                     {
                         //update actor alpha
-                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                         //actor released outcome window
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                         {

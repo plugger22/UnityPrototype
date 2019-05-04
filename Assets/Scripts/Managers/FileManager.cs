@@ -62,8 +62,8 @@ public class FileManager : MonoBehaviour
     {
         if (write != null)
         {
-            //convert to Json
-            jsonWrite = JsonUtility.ToJson(write);
+            //convert to Json (NOTE: second, optional, parameter gives pretty output for debugging purposes)
+            jsonWrite = JsonUtility.ToJson(write, true);
 
             //file present? If so delete
             if (File.Exists(filename) == true)
@@ -144,8 +144,9 @@ public class FileManager : MonoBehaviour
             //side (player) at start
             ReadSideData();
             ReadDataData();
-            //secrets before player
 
+            //secrets before player
+            ReadActorData();
             ReadPlayerData();
             ValidatePlayerData();
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
@@ -297,14 +298,16 @@ public class FileManager : MonoBehaviour
     {
         bool isSuccess = true;
         SaveActor saveActor = new SaveActor();
-        //base data
+        //
+        // - - - base data
+        //
         saveActor.status = actor.Status;
         saveActor.actorID = actor.actorID;
         saveActor.datapoint0 = actor.datapoint0;
         saveActor.datapoint1 = actor.datapoint1;
         saveActor.datapoint2 = actor.datapoint2;
         saveActor.side = actor.side;
-        saveActor.actorSlotID = actor.actorSlotID;
+        saveActor.slotID = actor.slotID;
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;
         saveActor.unhappyTimer = actor.unhappyTimer;
@@ -322,7 +325,9 @@ public class FileManager : MonoBehaviour
         saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
         saveActor.isStressLeave = actor.isStressLeave;
         saveActor.isTraitor = actor.isTraitor;
+        saveActor.isMale = actor.isMale;
         saveActor.actorName = actor.actorName;
+        saveActor.firstName = actor.firstName;
         saveActor.arcID = actor.arc.ActorArcID;
         saveActor.tooltipStatus = actor.tooltipStatus;
         saveActor.inactiveStatus = actor.inactiveStatus;
@@ -330,10 +335,60 @@ public class FileManager : MonoBehaviour
         saveActor.gearID = actor.GetGearID();
         saveActor.gearTimer = actor.GetGearTimer();
         saveActor.gearTimesTaken = actor.GetGearTimesTaken();
-        
-        //Collections
+        //
+        // - - - Collections
+        //
+        //ignore collections for pool actors (excluding trait effects as generated dynamically upon loading trait)
+        if (actor.Status != ActorStatus.RecruitPool)
+        {
+            //teams
+            saveActor.listOfTeams.AddRange(actor.GetListOfTeams());
+            //secrets
+            List<Secret> listOfSecrets = actor.GetListOfSecrets();
+            if (listOfSecrets != null)
+            {
+                for (int i = 0; i < listOfSecrets.Count; i++)
+                {
+                    Secret secret = listOfSecrets[i];
+                    if (secret != null)
+                    { saveActor.listOfSecrets.Add(secret.secretID); }
+                    else { Debug.LogWarningFormat("Invalid secret in listOfSecrets[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfSecrets (Null)"); }
+            //conditions
+            List<Condition> listOfConditions = actor.GetListOfConditions();
+            if (listOfConditions != null)
+            {
+                for (int i = 0; i < listOfConditions.Count; i++)
+                {
+                    Condition condition = listOfConditions[i];
+                    if (condition != null)
+                    { saveActor.listOfConditions.Add(condition.tag); }
+                    else { Debug.LogWarningFormat("Invalid listOfConditons[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfCondtions (Null)"); }
+            //contacts
+            Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+            if (dictOfContacts != null)
+            {
+                foreach (var record in dictOfContacts)
+                {
+                    if (record.Value != null)
+                    {
+                        saveActor.listOfContactNodes.Add(record.Key);
+                        saveActor.listOfContacts.Add(record.Value.contactID);
+                    }
+                    else { Debug.LogWarning("Invalid contact (Null) in dictOfContacts"); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfContacts (Null)"); }
 
-        //check if serialization had an issue
+        }
+        //
+        // - - - Success check
+        //
         if (isSuccess == false)
         {
             saveActor = null;
@@ -471,6 +526,76 @@ public class FileManager : MonoBehaviour
         }
         GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
     }
+
+    /// <summary>
+    /// Actor datasets for DataManager.cs collections
+    /// </summary>
+    private void ReadActorData()
+    {
+        //load actor dictionary first
+        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+
+        if (dictOfActors != null)
+        {
+            if (read.actorData.listOfDictActors != null)
+            {
+                //clear dictionary
+                dictOfActors.Clear();
+                //loop list of saved actors
+                for (int i = 0; i < read.actorData.listOfDictActors.Count; i++)
+                {
+                    //recreate actor
+                    Actor actor = new Actor();
+                    SaveActor readActor = read.actorData.listOfDictActors[i];
+                    //copy over data from saveActor
+                    actor.Status = readActor.status;
+                    actor.actorID = readActor.actorID;
+                    actor.datapoint0 = readActor.datapoint0;
+                    actor.datapoint1 = readActor.datapoint1;
+                    actor.datapoint2 = readActor.datapoint2;
+                    actor.side = readActor.side;
+                    actor.slotID = readActor.slotID;
+                    actor.level = readActor.level;
+                    actor.nodeCaptured = readActor.nodeCaptured;
+                    actor.unhappyTimer = readActor.unhappyTimer;
+                    actor.blackmailTimer = readActor.blackmailTimer;
+                    actor.captureTimer = readActor.captureTimer;
+                    actor.numOfTimesBullied = readActor.numOfTimesBullied;
+                    actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
+                    actor.departedNumOfSecrets = readActor.departedNumOfSecrets;
+                    actor.isPromised = readActor.isPromised;
+                    actor.isNewRecruit = readActor.isNewRecruit;
+                    actor.isReassured = readActor.isReassured;
+                    actor.isThreatening = readActor.isThreatening;
+                    actor.isComplaining = readActor.isComplaining;
+                    actor.isBreakdown = readActor.isBreakdown;
+                    actor.isLieLowFirstturn = readActor.isLieLowFirstturn;
+                    actor.isStressLeave = readActor.isStressLeave;
+                    actor.isTraitor = readActor.isTraitor;
+                    actor.isMale = readActor.isMale;
+                    actor.actorName = readActor.actorName;
+                    actor.firstName = readActor.firstName;
+                    actor.tooltipStatus = readActor.tooltipStatus;
+                    actor.inactiveStatus = readActor.inactiveStatus;
+                    actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcID);
+                    actor.AddTrait(readActor.trait);
+                    actor.SetGear(readActor.gearID);
+                    actor.SetGearTimer(readActor.gearTimer);
+                    actor.SetGearTimesTaken(readActor.gearTimesTaken);
+
+
+                    //add to dictionary
+                    try
+                    { dictOfActors.Add(actor.actorID, actor); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate actor, ID \"{0}\"{1}", actor.actorID, "\n"); }
+                }
+            }
+            else { Debug.LogError("Invalid saveData.listOfDictActors (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfActors (Null)"); }
+    }
+
 
     //
     // - - -  Validate - - -

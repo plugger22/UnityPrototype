@@ -588,7 +588,7 @@ public class TeamManager : MonoBehaviour
                                                     actor.AddTeam(team.teamID);
                                                     //update team stats
                                                     team.nodeID = node.nodeID;
-                                                    team.actorSlotID = actor.actorSlotID;
+                                                    team.actorSlotID = actor.slotID;
                                                     team.timer = deployTime;
                                                     team.turnDeployed = GameManager.instance.turnScript.Turn;
                                                     //confirmation
@@ -899,7 +899,7 @@ public class TeamManager : MonoBehaviour
                 builder.Append(string.Format("{0}  Ability {1}", actor.arc.name, actor.datapoint2));
                 builder.AppendLine();
                 listOfTeams.Clear();
-                listOfTeams.AddRange(actor.GetTeams());
+                listOfTeams.AddRange(actor.GetListOfTeams());
                 if (listOfTeams.Count > 0)
                 {
                     //loop teams
@@ -1456,7 +1456,7 @@ public class TeamManager : MonoBehaviour
         bool isProceed = true;
         if (actor != null)
         {
-            List<int> listOfTeams = actor.GetTeams();
+            List<int> listOfTeams = actor.GetListOfTeams();
             if (listOfTeams.Count > 0)
             {
                 //loop teams and remove all active traces
@@ -1555,7 +1555,7 @@ public class TeamManager : MonoBehaviour
                                 //one entry per actor for each spare team slot they have available
                                 availableTeamSlots = actor.datapoint2 - actor.CheckNumOfTeams();
                                 for(int j = 0; j < availableTeamSlots; j++)
-                                { listOfActorSlots.Add(actor.actorSlotID); }
+                                { listOfActorSlots.Add(actor.slotID); }
                             }
                         }
                     }

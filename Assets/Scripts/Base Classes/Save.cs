@@ -116,7 +116,7 @@ public class SaveActor
     public int datapoint1;
     public int datapoint2;
     public GlobalSide side;
-    public int actorSlotID;
+    public int slotID;
     public int level;
     public int nodeCaptured;
     public int unhappyTimer;
@@ -134,7 +134,9 @@ public class SaveActor
     public bool isLieLowFirstturn;
     public bool isStressLeave;
     public bool isTraitor;
+    public bool isMale;
     public string actorName;
+    public string firstName;
     public int arcID;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
@@ -145,9 +147,12 @@ public class SaveActor
     public int gearTimer;
     public int gearTimesTaken;
     //collections
-    List<int> listOfTeams = new List<int>();
-    List<int> listOfSecrets = new List<int>();
-    List<int> listOfTraitEffects = new List<int>();
-    List<int> listOfContactNodes = new List<int>();
-    List<int> listOfContacts = new List<int>();
+    public List<int> listOfTeams = new List<int>();
+    public List<int> listOfSecrets = new List<int>();
+    public List<string> listOfConditions = new List<string>();
+    
+    public List<int> listOfContactNodes = new List<int>();
+    public List<int> listOfContacts = new List<int>();
+    //trait effects generated dynamically when loading trait
+    /*public List<int> listOfTraitEffects = new List<int>();*/
 }

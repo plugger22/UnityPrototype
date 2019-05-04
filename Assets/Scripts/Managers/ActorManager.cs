@@ -102,6 +102,8 @@ public class ActorManager : MonoBehaviour
 
     [HideInInspector] public bool isGearCheckRequired;                          //GearManager.cs -> used to flag that actors need to reset their gear
 
+    [HideInInspector] NameSet nameSet;                                          //used for naming actors. Takes nameSet from city
+
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection
     private int resistanceActorTurn;                                            //turn number of last choice for an resistance Actor Recruit selection
@@ -275,6 +277,10 @@ public class ActorManager : MonoBehaviour
             EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent, "ActorManager");
             EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent, "ActorManager");
         }
+        //Name set
+        nameSet = GameManager.instance.cityScript.GetNameSet();
+        if (nameSet == null)
+        { Debug.LogError("Invalid nameSet (Null)"); }
         //create active, OnMap actors
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
@@ -620,14 +626,25 @@ public class ActorManager : MonoBehaviour
                 Actor actor = new Actor();
                 //data
                 actor.actorID = actorIDCounter++;
-                actor.actorSlotID = slotID;                
+                actor.slotID = slotID;                
                 actor.level = level;
                 actor.side = side;
                 actor.arc = arc;
-                actor.actorName = arc.actorName;
                 actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory, side));
                 actor.Status = status;
                 Debug.Assert(actor.GetTrait() != null, "Invalid actor.trait (Null)");
+                //name
+                if (Random.Range(0, 100) < 50)
+                {
+                    actor.isMale = true;
+                    actor.firstName = nameSet.firstMaleNames.GetRandomRecord();
+                }
+                else
+                {
+                    actor.isMale = false;
+                    actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
+                }
+                actor.actorName = string.Format("{0} {1}", actor.firstName, nameSet.lastNames.GetRandomRecord());
                 //level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
@@ -912,7 +929,7 @@ public class ActorManager : MonoBehaviour
 
                                                 actionDetails.side = globalResistance;
                                                 actionDetails.nodeID = nodeID;
-                                                actionDetails.actorDataID = actor.actorSlotID;
+                                                actionDetails.actorDataID = actor.slotID;
                                                 //pass all relevant details to ModalActionMenu via Node.OnClick()
                                                 if (actor.arc.nodeAction.special == null)
                                                 {
@@ -1119,7 +1136,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 nodeID = nodeID,
                                                 teamArcID = teamArcID,
-                                                actorSlotID = actor.actorSlotID,
+                                                actorSlotID = actor.slotID,
                                                 listOfCriteria = effect.listOfCriteria
                                             };
                                             effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
@@ -1188,7 +1205,7 @@ public class ActorManager : MonoBehaviour
                                         ModalActionDetails actionDetails = new ModalActionDetails() { };
                                         actionDetails.side = globalAuthority;
                                         actionDetails.nodeID = nodeID;
-                                        actionDetails.actorDataID = actor.actorSlotID;
+                                        actionDetails.actorDataID = actor.slotID;
                                         //Node action is standard but other actions are possible
                                         UnityAction clickAction = null;
                                         //Team action
@@ -1211,7 +1228,7 @@ public class ActorManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.actorSlotID));
+                                    Debug.LogError(string.Format("{0}, slotID {1} has no valid action", actor.arc.name, actor.slotID));
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                     infoBuilder.AppendFormat("{0} is having a bad day", actor.arc.name);
                                 }
@@ -1317,7 +1334,7 @@ public class ActorManager : MonoBehaviour
                     //
                     ModalActionDetails manageActionDetails = new ModalActionDetails() { };
                     manageActionDetails.side = playerSide;
-                    manageActionDetails.actorDataID = actor.actorSlotID;
+                    manageActionDetails.actorDataID = actor.slotID;
                     tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
@@ -1349,7 +1366,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                                     lielowActionDetails.side = playerSide;
-                                    lielowActionDetails.actorDataID = actor.actorSlotID;
+                                    lielowActionDetails.actorDataID = actor.slotID;
                                     if (actor.isLieLowFirstturn == true)
                                     { numOfTurns = 4 - actor.datapoint2; }
                                     else { numOfTurns = 3 - actor.datapoint2; }
@@ -1456,7 +1473,7 @@ public class ActorManager : MonoBehaviour
                                             StringBuilder builderTooltip = new StringBuilder();
                                             ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                             gearActionDetails.side = playerSide;
-                                            gearActionDetails.actorDataID = actor.actorSlotID;
+                                            gearActionDetails.actorDataID = actor.slotID;
                                             gearActionDetails.gearID = gear.gearID;
                                             //get actor's preferred gear
                                             GearType preferredGear = actor.arc.preferredGear;
@@ -1552,7 +1569,7 @@ public class ActorManager : MonoBehaviour
                                             //data package
                                             ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                             gearActionDetails.side = playerSide;
-                                            gearActionDetails.actorDataID = actor.actorSlotID;
+                                            gearActionDetails.actorDataID = actor.slotID;
                                             gearActionDetails.gearID = gearActor.gearID;
                                             //get actor's preferred gear
                                             GearType preferredGear = actor.arc.preferredGear;
@@ -1691,7 +1708,7 @@ public class ActorManager : MonoBehaviour
                             //
                             ModalActionDetails activateActionDetails = new ModalActionDetails() { };
                             activateActionDetails.side = playerSide;
-                            activateActionDetails.actorDataID = actor.actorSlotID;
+                            activateActionDetails.actorDataID = actor.slotID;
                             if (actor.isLieLowFirstturn == true)
                             { numOfTurns = 4 - actor.datapoint2; }
                             else { numOfTurns = 3 - actor.datapoint2; }
@@ -2254,7 +2271,7 @@ public class ActorManager : MonoBehaviour
                                 StringBuilder builderTooltip = new StringBuilder();
                                 ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                 gearActionDetails.side = globalResistance;
-                                gearActionDetails.actorDataID = actor.actorSlotID;
+                                gearActionDetails.actorDataID = actor.slotID;
                                 gearActionDetails.gearID = gear.gearID;
                                 gearActionDetails.modalLevel = 2;
                                 gearActionDetails.modalState = ModalSubState.Inventory;
@@ -3531,7 +3548,7 @@ public class ActorManager : MonoBehaviour
                                         break;
                                     case 1:
                                         //actor
-                                        criteriaData.actorSlotID = actor.actorSlotID;
+                                        criteriaData.actorSlotID = actor.slotID;
                                         break;
                                     default:
                                         Debug.LogWarningFormat("Invalid conflict.who \"{0}\"", conflict.Value.who);
@@ -3799,7 +3816,7 @@ public class ActorManager : MonoBehaviour
     /// Debug method to display actor pools (both sides)
     /// </summary>
     /// <returns></returns>
-    public string DisplayPools()
+    public string DebugDisplayPools()
     {
         StringBuilder builder = new StringBuilder();
         //Resistance
@@ -3827,7 +3844,7 @@ public class ActorManager : MonoBehaviour
         for (int i = 0; i < listOfActors.Count; i++)
         {
             Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
-            subBuilder.AppendFormat(" actID {0}, {1}, L{2}, {3}-{4}-{5}{6}", actor.actorID, actor.arc.name.ToLower(), actor.level,
+            subBuilder.AppendFormat(" {0}, ID {1}, {2}, L{3}, {4}-{5}-{6}{7}", actor.actorName, actor.actorID, actor.arc.name, actor.level,
                 actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n");
         }
         subBuilder.AppendLine();
@@ -4089,7 +4106,7 @@ public class ActorManager : MonoBehaviour
                                             actor.Status = ActorStatus.Active;
                                             actor.inactiveStatus = ActorInactive.None;
                                             actor.tooltipStatus = ActorTooltip.None;
-                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                             //message -> status change
                                             text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
@@ -4110,7 +4127,7 @@ public class ActorManager : MonoBehaviour
                                         actor.Status = ActorStatus.Active;
                                         actor.inactiveStatus = ActorInactive.None;
                                         actor.tooltipStatus = ActorTooltip.None;
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                         text = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                         GameManager.instance.messageScript.ActorStatus(text, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalResistance);
                                         break;
@@ -4121,7 +4138,7 @@ public class ActorManager : MonoBehaviour
                                             actor.Status = ActorStatus.Active;
                                             actor.inactiveStatus = ActorInactive.None;
                                             actor.tooltipStatus = ActorTooltip.None;
-                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                             text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
                                             GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalResistance);
                                             actor.RemoveCondition(conditionStressed, "due to Stress Leave");
@@ -4228,7 +4245,7 @@ public class ActorManager : MonoBehaviour
                                             //check if actor has stressed condition
                                             if (actor.CheckConditionPresent(conditionStressed) == true)
                                             { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
-                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
 
                                             /*//update contacts
                                             GameManager.instance.contactScript.UpdateNodeContacts();*/
@@ -4248,7 +4265,7 @@ public class ActorManager : MonoBehaviour
                                         }
                                         Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
                                             actor.arc.name, actor.actorID, "\n");
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                         break;
                                 }
                                 break;
@@ -4847,7 +4864,7 @@ public class ActorManager : MonoBehaviour
                                         string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                         GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
                                     }
-                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                     Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveAuthorityActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
                                         actor.arc.name, actor.actorID, "\n");
                                     break;
@@ -5295,7 +5312,7 @@ public class ActorManager : MonoBehaviour
                                     actor.Status = ActorStatus.Active;
                                     actor.inactiveStatus = ActorInactive.None;
                                     actor.tooltipStatus = ActorTooltip.None;
-                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                    GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                     text = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
                                     GameManager.instance.messageScript.ActorStatus(text, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
                                     break;
@@ -5306,7 +5323,7 @@ public class ActorManager : MonoBehaviour
                                         actor.Status = ActorStatus.Active;
                                         actor.inactiveStatus = ActorInactive.None;
                                         actor.tooltipStatus = ActorTooltip.None;
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaActive);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                         text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
                                         GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalAuthority);
                                         actor.RemoveCondition(conditionStressed, "due to Stress Leave");
@@ -5336,7 +5353,7 @@ public class ActorManager : MonoBehaviour
             actor.tooltipStatus = ActorTooltip.Breakdown;
             actor.isBreakdown = true;
             //change alpha of actor to indicate inactive status
-            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+            GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaInactive);
             //message (public)
             string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
             string itemText = "has suffered a Breakdown";

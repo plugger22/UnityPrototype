@@ -477,5 +477,12 @@ public class CityManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// returns name set for the country that the city is in. Null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public NameSet GetNameSet()
+    { return city.country.nameSet; }
+
     //new methods above here
 }

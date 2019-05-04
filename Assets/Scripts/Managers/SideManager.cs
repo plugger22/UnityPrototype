@@ -296,12 +296,12 @@ public class SideManager : MonoBehaviour
                                 {
                                     case ActorInactive.Breakdown:
                                         //change actor alpha to show inactive (sprite and text)
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                         actor.tooltipStatus = ActorTooltip.Breakdown;
                                         break;
                                     case ActorInactive.None:
                                         //change actor alpha to show active (sprite and text)
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, activeAlpha);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
                                         actor.tooltipStatus = ActorTooltip.None;
                                         break;
                                 }
@@ -387,7 +387,7 @@ public class SideManager : MonoBehaviour
                                         break;
                                     case ActorStatus.Captured:
                                         //change actor alpha to show inactive (sprite and text)
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                         actor.tooltipStatus = ActorTooltip.Captured;
                                         break;
                                     case ActorStatus.Inactive:
@@ -395,16 +395,16 @@ public class SideManager : MonoBehaviour
                                         {
                                             case ActorInactive.Breakdown:
                                                 //change actor alpha to show inactive (sprite and text)
-                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                                 actor.tooltipStatus = ActorTooltip.Breakdown;
                                                 break;
                                             case ActorInactive.LieLow:
-                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, inactiveAlpha);
+                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                                 actor.tooltipStatus = ActorTooltip.LieLow;
                                                 break;
                                             case ActorInactive.None:
                                                 //change actor alpha to show active (sprite and text)
-                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, activeAlpha);
+                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
                                                 actor.tooltipStatus = ActorTooltip.None;
                                                 break;
                                         }

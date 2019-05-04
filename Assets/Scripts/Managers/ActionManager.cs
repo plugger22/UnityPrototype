@@ -577,7 +577,7 @@ public class ActionManager : MonoBehaviour
                         {
                             CriteriaDataInput criteriaInput = new CriteriaDataInput()
                             {
-                                actorSlotID = actor.actorSlotID,
+                                actorSlotID = actor.slotID,
                                 listOfCriteria = manageAction.listOfCriteria
                             };
                             criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
@@ -708,7 +708,7 @@ public class ActionManager : MonoBehaviour
                         {
                             CriteriaDataInput criteriaInput = new CriteriaDataInput()
                             {
-                                actorSlotID = actor.actorSlotID,
+                                actorSlotID = actor.slotID,
                                 listOfCriteria = manageAction.listOfCriteria
                             };
                             criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
@@ -848,7 +848,7 @@ public class ActionManager : MonoBehaviour
                         {
                             CriteriaDataInput criteriaInput = new CriteriaDataInput()
                             {
-                                actorSlotID = actor.actorSlotID,
+                                actorSlotID = actor.slotID,
                                 listOfCriteria = manageAction.listOfCriteria
                             };
                             criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
@@ -990,7 +990,7 @@ public class ActionManager : MonoBehaviour
                         {
                             CriteriaDataInput criteriaInput = new CriteriaDataInput()
                             {
-                                actorSlotID = actor.actorSlotID,
+                                actorSlotID = actor.slotID,
                                 listOfCriteria = manageAction.listOfCriteria
                             };
                             criteriaText = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
@@ -1407,7 +1407,7 @@ public class ActionManager : MonoBehaviour
                 }
                 GameManager.instance.playerScript.Renown = renown;
                 //change alpha of actor to indicate inactive status
-                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.actorSlotID, GameManager.instance.guiScript.alphaInactive);
+                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaInactive);
                 GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(renown);
                 //message (public)
                 string text = string.Format("{0}, {1}, has gone on Stress Leave", actor.actorName, actor.arc.name);

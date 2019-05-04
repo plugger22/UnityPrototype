@@ -1539,7 +1539,7 @@ public class EffectManager : MonoBehaviour
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                     //insert team
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);
@@ -1549,7 +1549,7 @@ public class EffectManager : MonoBehaviour
                 case "ControlTeam":
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);
@@ -1558,7 +1558,7 @@ public class EffectManager : MonoBehaviour
                 case "DamageTeam":
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);
@@ -1567,7 +1567,7 @@ public class EffectManager : MonoBehaviour
                 case "ErasureTeam":
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);
@@ -1576,7 +1576,7 @@ public class EffectManager : MonoBehaviour
                 case "MediaTeam":
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);
@@ -1585,7 +1585,7 @@ public class EffectManager : MonoBehaviour
                 case "ProbeTeam":
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("PROBE");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);
@@ -1594,7 +1594,7 @@ public class EffectManager : MonoBehaviour
                 case "SpiderTeam":
                     teamArcID = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
                     teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.actorSlotID, node);
+                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                     //return texts
                     effectReturn.topText = SetTopTeamText(teamID);
                     effectReturn.bottomText = SetBottomTeamText(actor);

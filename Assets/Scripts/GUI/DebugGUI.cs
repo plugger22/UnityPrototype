@@ -131,18 +131,15 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Actor Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Game State"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Actor Data");
-                //toggles sequentially through actor displays and then switches off
-                switch (actorStatus)
-                {
-                    case ActorDebugData.None: debugDisplay = 7; actorStatus = ActorDebugData.Pools; break;
-                    case ActorDebugData.Pools: debugDisplay = 6; actorStatus = ActorDebugData.Dict; break;
-                    case ActorDebugData.Dict: debugDisplay = 54; actorStatus = ActorDebugData.Lists; break;
-                    case ActorDebugData.Lists: debugDisplay = 0; actorStatus = ActorDebugData.None; break;
-                }
+                Debug.Log("[Dbg] Button -> Toggle Game State");
+                if (debugDisplay != 5)
+                { debugDisplay = 5; }
+                else { debugDisplay = 0; }
             }
+
+
 
             //third button
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), ""))
@@ -151,12 +148,14 @@ public class DebugGUI : MonoBehaviour
 
             }
 
-            //fourth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Game State"))
+
+
+            // button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Ongoing Register"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Game State");
-                if (debugDisplay != 5)
-                { debugDisplay = 5; }
+                Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
+                if (debugDisplay != 14)
+                { debugDisplay = 14; }
                 else { debugDisplay = 0; }
             }
 
@@ -169,13 +168,18 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
-            //sixth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Ongoing Register"))
+            //second button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actor Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle OngoingID Register");
-                if (debugDisplay != 14)
-                { debugDisplay = 14; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Toggle Actor Data");
+                //toggles sequentially through actor displays and then switches off
+                switch (actorStatus)
+                {
+                    case ActorDebugData.None: debugDisplay = 7; actorStatus = ActorDebugData.Pools; break;
+                    case ActorDebugData.Pools: debugDisplay = 6; actorStatus = ActorDebugData.Dict; break;
+                    case ActorDebugData.Dict: debugDisplay = 54; actorStatus = ActorDebugData.Lists; break;
+                    case ActorDebugData.Lists: debugDisplay = 0; actorStatus = ActorDebugData.None; break;
+                }
             }
 
             //fifth button
@@ -936,8 +940,8 @@ public class DebugGUI : MonoBehaviour
                     //actor Pools
                     case 6:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.actorScript.DisplayPools();
-                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 900), analysis, customBackground);
+                        analysis = GameManager.instance.actorScript.DebugDisplayPools();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 900), analysis, customBackground);
                         break;
                     //actor Lists
                     case 7:
@@ -1361,7 +1365,7 @@ public class DebugGUI : MonoBehaviour
                     case 54:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayActorDict();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
                         break;
                 }
             }

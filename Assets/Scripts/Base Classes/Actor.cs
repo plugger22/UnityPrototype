@@ -13,11 +13,13 @@ namespace gameAPI
     /// </summary>
     public class Actor
     {
+
+        #region Save Data compatible
         [HideInInspector] public int datapoint0;               //higher the number (1 to 3), see DM: arrayOfStats for string tags
         [HideInInspector] public int datapoint1;               //higher the better (1 to 3)
         [HideInInspector] public int datapoint2;               //higher the better (1 to 3)
         [HideInInspector] public GlobalSide side;
-        [HideInInspector] public int actorSlotID;                    //actor slot ID (eg, 0 to 3)
+        [HideInInspector] public int slotID;                    //actor slot ID (eg, 0 to 3)
         [HideInInspector] public int actorID;
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
@@ -36,18 +38,26 @@ namespace gameAPI
         [HideInInspector] public bool isLieLowFirstturn;        //set true when lie low action, prevents invis incrementing on first turn
         [HideInInspector] public bool isStressLeave;            //set true to ensure actor spends one turn inactive on stress leave
         [HideInInspector] public bool isTraitor;                //set true to be a traitor (determined at time of release from captivity)
-        [HideInInspector] public string actorName;
+        [HideInInspector] public bool isMale;                   //set true if actor is a male
+        [HideInInspector] public string actorName;              //complete name
+        [HideInInspector] public string firstName;              //first name
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
 
         //trait
         private Trait trait;
-
         //gear
         private int gearID;                                     //can only have one piece of gear at a time, default -1
         private int gearTimer;                                  //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
         private int gearTimesTaken;                             //tally of how many times player has taken gear from actor (harder to do so each time) NO GAME EFFECT AT PRESENT
+        //collections
+        private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
+        private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
+        private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
+        private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+        private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();  //key -> nodeID where contact is, Value -> contact
+        #endregion
 
         //cached trait effects
         private int actorStressNone;
@@ -57,13 +67,6 @@ namespace gameAPI
         private int actorBlackmailTimerHigh;
         private int actorBlackmailTimerLow;
         private int maxNumOfSecrets = -1;
-
-        //collections
-        private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
-        private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
-        private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
-        private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
-        private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();  //key -> nodeID where contact is, Value -> contact
 
         //private backing field
         private ActorStatus _status;
@@ -90,7 +93,7 @@ namespace gameAPI
                 //need this here to prevent UpdateActorRenownUI choking on a negative renown
                 _renown = Mathf.Max(0, _renown);
                 //update renownUI regardless of whether it is on or off
-                GameManager.instance.actorPanelScript.UpdateActorRenownUI(actorSlotID, _renown);
+                GameManager.instance.actorPanelScript.UpdateActorRenownUI(slotID, _renown);
             }
         }
 
@@ -159,7 +162,7 @@ namespace gameAPI
         public int CheckNumOfTeams()
         { return listOfTeams.Count; }
 
-        public List<int> GetTeams()
+        public List<int> GetListOfTeams()
         { return listOfTeams; }
 
         //
@@ -624,6 +627,9 @@ namespace gameAPI
         public Trait GetTrait()
         { return trait; }
 
+        public List<int> GetListOfTraitEffects()
+        { return listOfTraitEffects; }
+
         /// <summary>
         /// Replaces any existing trait and overwrites listofTraitEffects with new data. Max one trait at a time.
         /// </summary>
@@ -747,6 +753,19 @@ namespace gameAPI
         { return gearID; }
 
         /// <summary>
+        /// used only by FileManager.cs to load in save game data
+        /// </summary>
+        /// <param name="gearID"></param>
+        public void SetGear(int gearID)
+        { this.gearID = gearID; }
+
+        public void SetGearTimer(int gearTimer)
+        { this.gearTimer = gearTimer; }
+
+        public void SetGearTimesTaken(int timesTaken)
+        { gearTimesTaken = timesTaken; }
+
+        /// <summary>
         /// Resets gear (single item) at start of turn (ActorManager.cs -> CheckActiveResistanceActorsHuman)
         /// NOTE: Gear checked for Null by calling method
         /// </summary>
@@ -777,12 +796,12 @@ namespace gameAPI
             ActorTooltipData data = new ActorTooltipData()
             {
                 tooltipPos = position,
-                actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
-                action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
+                actor = GameManager.instance.dataScript.GetCurrentActor(slotID, side),
+                action = GameManager.instance.dataScript.GetActorAction(slotID, side),
                 gear = gear,
                 listOfSecrets = GetSecretsTooltipList(),
                 arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
-                arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
+                arrayOfStats = GameManager.instance.dataScript.GetActorStats(slotID, side)
             };
             return data;
         }

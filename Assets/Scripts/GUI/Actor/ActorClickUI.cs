@@ -59,7 +59,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                 //actor
                                 ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                 {
-                                    itemID = actor.actorSlotID,
+                                    itemID = actor.slotID,
                                     itemName = actor.actorName,
                                     itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
                                     menuPos = position,
