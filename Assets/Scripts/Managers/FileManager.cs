@@ -301,10 +301,10 @@ public class FileManager : MonoBehaviour
         Debug.Assert(arrayOfActors.GetUpperBound(1) + 1 == actorNum, "Invalid arrayOfActors dimension [ ,x]");
         if (arrayOfActors != null)
         {
-            for (int i = 0; i < arrayOfActors.GetUpperBound(0); i++)
+            for (int i = 0; i < arrayOfActors.GetUpperBound(0) + 1; i++)
             {
                 write.actorData.arrayOfActorsSide[i] = i;
-                for (int j = 0; j < arrayOfActors.GetUpperBound(1); j++)
+                for (int j = 0; j < arrayOfActors.GetUpperBound(1) + 1; j++)
                 {
                     Actor actor = arrayOfActors[i, j];
                     //array has lots of null actors for sides other than Authority and Resistance
@@ -317,10 +317,10 @@ public class FileManager : MonoBehaviour
         bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
         if (arrayOfActorsPresent != null)
         {
-            for (int i = 0; i < arrayOfActorsPresent.GetUpperBound(0); i++)
+            for (int i = 0; i < arrayOfActorsPresent.GetUpperBound(0) + 1; i++)
             {
                 write.actorData.arrayOfActorsPresentSide[i] = true; //could be either, just an index
-                for (int j = 0; j < arrayOfActorsPresent.GetUpperBound(1); j++)
+                for (int j = 0; j < arrayOfActorsPresent.GetUpperBound(1) + 1; j++)
                 { write.actorData.arrayOfActorsPresentActor[j] = arrayOfActorsPresent[i, j]; }
             }
         }
