@@ -77,7 +77,21 @@ public class SaveSideData
 [System.Serializable]
 public class SaveActorData
 {
+    //dataManager.cs collections
     public List<SaveActor> listOfDictActors = new List<SaveActor>();
+    public int[] arrayOfActorsSide;
+    public int[] arrayOfActorsActor;
+    public bool[] arrayOfActorsPresentSide;
+    public bool[] arrayOfActorsPresentActor;
+
+    //fast access fields for actor.cs
+    public int actorStressNone;
+    public int actorCorruptNone;
+    public int actorUnhappyNone;
+    public int actorBlackmailNone;
+    public int actorBlackmailTimerHigh;
+    public int actorBlackmailTimerLow;
+    public int maxNumOfSecrets;     
 }
 
 //

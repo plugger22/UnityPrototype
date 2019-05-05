@@ -182,7 +182,7 @@ public class FileManager : MonoBehaviour
         }
         //conditions
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
-        foreach(Condition condition in listOfConditions)
+        foreach (Condition condition in listOfConditions)
         {
             if (condition != null)
             { write.playerData.listOfConditionsResistance.Add(condition.tag); }
@@ -218,7 +218,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
-            foreach(var secret in dictOfSecrets)
+            foreach (var secret in dictOfSecrets)
             {
                 if (secret.Value != null)
                 {
@@ -269,12 +269,12 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteActorData()
     {
+        //main dictionary
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
-         
         if (dictOfActors != null)
         {
             //loop dictOfActors
-            foreach(var actor in dictOfActors)
+            foreach (var actor in dictOfActors)
             {
                 if (actor.Value != null)
                 {
@@ -286,6 +286,62 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        //actor arrays -> initialise arrays
+        int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
+        int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        Debug.Assert(sideNum > 0, "Invalid sideNum (Zero or less)");
+        Debug.Assert(actorNum > 0, "Invalid actorNum (Zero or less)");
+        write.actorData.arrayOfActorsSide = new int[sideNum];
+        write.actorData.arrayOfActorsActor = new int[actorNum];
+        write.actorData.arrayOfActorsPresentSide = new bool[sideNum];
+        write.actorData.arrayOfActorsPresentActor = new bool[actorNum];
+        //write data to arrays (not multidimensional arrays split into single arrays for serialization)
+        Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
+        Debug.Assert(arrayOfActors.GetUpperBound(0) + 1 == sideNum, "Invalid arrayOfActors dimension [x, ]");
+        Debug.Assert(arrayOfActors.GetUpperBound(1) + 1 == actorNum, "Invalid arrayOfActors dimension [ ,x]");
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.GetUpperBound(0); i++)
+            {
+                write.actorData.arrayOfActorsSide[i] = i;
+                for (int j = 0; j < arrayOfActors.GetUpperBound(1); j++)
+                {
+                    Actor actor = arrayOfActors[i, j];
+                    //array has lots of null actors for sides other than Authority and Resistance
+                    if (actor != null)
+                    { write.actorData.arrayOfActorsActor[j] = arrayOfActors[i, j].actorID; }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
+        if (arrayOfActorsPresent != null)
+        {
+            for (int i = 0; i < arrayOfActorsPresent.GetUpperBound(0); i++)
+            {
+                write.actorData.arrayOfActorsPresentSide[i] = true; //could be either, just an index
+                for (int j = 0; j < arrayOfActorsPresent.GetUpperBound(1); j++)
+                { write.actorData.arrayOfActorsPresentActor[j] = arrayOfActorsPresent[i, j]; }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
+
+
+        //actor fast access fields
+        write.actorData.actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
+        write.actorData.actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
+        write.actorData.actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
+        write.actorData.actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
+        write.actorData.actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
+        write.actorData.actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
+        write.actorData.maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
+        Debug.Assert(write.actorData.actorStressNone > -1, "Invalid actorStressNone (-1)");
+        Debug.Assert(write.actorData.actorStressNone > -1, "Invalid actorCorruptNone (-1)");
+        Debug.Assert(write.actorData.actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
+        Debug.Assert(write.actorData.actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
+        Debug.Assert(write.actorData.actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
+        Debug.Assert(write.actorData.actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
+        Debug.Assert(write.actorData.maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
     }
 
     /// <summary>
@@ -568,6 +624,15 @@ public class FileManager : MonoBehaviour
                     actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcID);
                     actor.AddTrait(readActor.trait);
                     actor.Status = readActor.status; //needs to be after SetGear
+
+                    //fast access
+                    actor.actorStressNone = read.actorData.actorStressNone;
+                    actor.actorCorruptNone = read.actorData.actorCorruptNone;
+                    actor.actorUnhappyNone = read.actorData.actorUnhappyNone;
+                    actor.actorBlackmailNone = read.actorData.actorBlackmailNone;
+                    actor.actorBlackmailTimerHigh = read.actorData.actorBlackmailTimerHigh;
+                    actor.actorBlackmailTimerLow = read.actorData.actorBlackmailTimerLow;
+                    actor.maxNumOfSecrets = read.actorData.maxNumOfSecrets;
 
                     //data which can be ignored (default values O.K) if actor is in the Recruit Pool
                     if (actor.Status != ActorStatus.RecruitPool)

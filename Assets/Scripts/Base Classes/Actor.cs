@@ -59,14 +59,14 @@ namespace gameAPI
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();  //key -> nodeID where contact is, Value -> contact
         #endregion
 
-        //cached trait effects
-        private int actorStressNone;
-        private int actorCorruptNone;
-        private int actorUnhappyNone;
-        private int actorBlackmailNone;
-        private int actorBlackmailTimerHigh;
-        private int actorBlackmailTimerLow;
-        private int maxNumOfSecrets = -1;
+        //cached trait effects (public for serialization reasons)
+        [HideInInspector] public int actorStressNone;
+        [HideInInspector] public int actorCorruptNone;
+        [HideInInspector] public int actorUnhappyNone;
+        [HideInInspector] public int actorBlackmailNone;
+        [HideInInspector] public int actorBlackmailTimerHigh;
+        [HideInInspector] public int actorBlackmailTimerLow;
+        [HideInInspector] public int maxNumOfSecrets = -1;
 
         //private backing field
         private ActorStatus _status;
@@ -98,14 +98,14 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// default constructor
+        /// default constructor (called anytime an actor is created, even if it is assigned another actor's reference)
         /// </summary>
         public Actor()
         {
             //call only if a new session
             if (GameManager.instance.isSession == false)
             {
-                Debug.LogFormat("[Tst] actor {0} CONSTRUCTOR called{1}", actorName, "\n");
+                /*Debug.LogFormat("[Tst] actor {0} CONSTRUCTOR called{1}", actorName, "\n");*/
                 nodeCaptured = -1;
                 Renown = 0;
                 gearID = -1;
