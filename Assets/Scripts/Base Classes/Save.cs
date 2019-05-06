@@ -79,10 +79,8 @@ public class SaveActorData
 {
     //dataManager.cs collections
     public List<SaveActor> listOfDictActors = new List<SaveActor>();
-    public int[] arrayOfActorsSide;
-    public int[] arrayOfActorsActor;
-    public bool[] arrayOfActorsPresentSide;
-    public bool[] arrayOfActorsPresentActor;
+    public List<int> listOfActors = new List<int>();
+    public List<bool> listOfActorsPresent = new List<bool>();
 
     //fast access fields for actor.cs
     public int actorStressNone;
@@ -142,6 +140,7 @@ public class SaveActor
     public Trait trait;
 
     //data that can be ignored if actor is in Recruit Pool
+    public int Renown;
     public int unhappyTimer;
     public int blackmailTimer;
     public int captureTimer;
@@ -159,7 +158,6 @@ public class SaveActor
     public bool isTraitor;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
-    public int Renown;
     public int gearTimer;
     public int gearTimesTaken;
     //collections

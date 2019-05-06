@@ -25,6 +25,8 @@ public class FileManager : MonoBehaviour
     //fast access
     GlobalSide globalAuthority;
     GlobalSide globalResistance;
+    float alphaActive = -1;
+    float alphaInactive = -1;
 
     /// <summary>
     /// Initialisation
@@ -36,6 +38,12 @@ public class FileManager : MonoBehaviour
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
+        alphaActive = GameManager.instance.guiScript.alphaActive;
+        alphaInactive = GameManager.instance.guiScript.alphaInactive;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(alphaActive > -1, "Invalid alphaActive (-1)");
+        Debug.Assert(alphaInactive > -1, "Invalid alphaInactive (-1)");
     }
 
     //
@@ -147,6 +155,7 @@ public class FileManager : MonoBehaviour
 
             //secrets before player
             ReadActorData();
+            ValidateActorData();
             ReadPlayerData();
             ValidatePlayerData();
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
@@ -291,10 +300,6 @@ public class FileManager : MonoBehaviour
         int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(sideNum > 0, "Invalid sideNum (Zero or less)");
         Debug.Assert(actorNum > 0, "Invalid actorNum (Zero or less)");
-        write.actorData.arrayOfActorsSide = new int[sideNum];
-        write.actorData.arrayOfActorsActor = new int[actorNum];
-        write.actorData.arrayOfActorsPresentSide = new bool[sideNum];
-        write.actorData.arrayOfActorsPresentActor = new bool[actorNum];
         //write data to arrays (not multidimensional arrays split into single arrays for serialization)
         Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
         Debug.Assert(arrayOfActors.GetUpperBound(0) + 1 == sideNum, "Invalid arrayOfActors dimension [x, ]");
@@ -303,13 +308,13 @@ public class FileManager : MonoBehaviour
         {
             for (int i = 0; i < arrayOfActors.GetUpperBound(0) + 1; i++)
             {
-                write.actorData.arrayOfActorsSide[i] = i;
                 for (int j = 0; j < arrayOfActors.GetUpperBound(1) + 1; j++)
                 {
                     Actor actor = arrayOfActors[i, j];
                     //array has lots of null actors for sides other than Authority and Resistance
                     if (actor != null)
-                    { write.actorData.arrayOfActorsActor[j] = arrayOfActors[i, j].actorID; }
+                    { write.actorData.listOfActors.Add(arrayOfActors[i, j].actorID); }
+                    else { write.actorData.listOfActors.Add(-1); }
                 }
             }
         }
@@ -319,14 +324,11 @@ public class FileManager : MonoBehaviour
         {
             for (int i = 0; i < arrayOfActorsPresent.GetUpperBound(0) + 1; i++)
             {
-                write.actorData.arrayOfActorsPresentSide[i] = true; //could be either, just an index
                 for (int j = 0; j < arrayOfActorsPresent.GetUpperBound(1) + 1; j++)
-                { write.actorData.arrayOfActorsPresentActor[j] = arrayOfActorsPresent[i, j]; }
+                { write.actorData.listOfActorsPresent.Add(arrayOfActorsPresent[i, j]); }
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
-
-
         //actor fast access fields
         write.actorData.actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
         write.actorData.actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
@@ -376,6 +378,7 @@ public class FileManager : MonoBehaviour
         //data which can be ignored (default values O.K) if actor is in the recruit pool
         if (actor.Status != ActorStatus.RecruitPool)
         {
+            saveActor.Renown = actor.Renown;
             saveActor.unhappyTimer = actor.unhappyTimer;
             saveActor.blackmailTimer = actor.blackmailTimer;
             saveActor.captureTimer = actor.captureTimer;
@@ -590,9 +593,10 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadActorData()
     {
-        //load actor dictionary first
+        //
+        // - - - dictOfActors (load first)
+        // 
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
-
         if (dictOfActors != null)
         {
             if (read.actorData.listOfDictActors != null)
@@ -637,6 +641,7 @@ public class FileManager : MonoBehaviour
                     //data which can be ignored (default values O.K) if actor is in the Recruit Pool
                     if (actor.Status != ActorStatus.RecruitPool)
                     {
+                        actor.Renown = readActor.Renown;
                         actor.unhappyTimer = readActor.unhappyTimer;
                         actor.blackmailTimer = readActor.blackmailTimer;
                         actor.captureTimer = readActor.captureTimer;
@@ -712,6 +717,64 @@ public class FileManager : MonoBehaviour
             else { Debug.LogError("Invalid saveData.listOfDictActors (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        //
+        // - - - Actor arrays
+        //
+        int index;
+        int maxIndex;
+        int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
+        int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        if (read.actorData.listOfActors != null)
+        {
+            //arrayOfActors
+            Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
+            if (arrayOfActors != null)
+            {
+                maxIndex = arrayOfActors.Length;
+                //empty out array
+                Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
+                int actorID;
+                Actor actor;
+                //repopulate with save data
+                for (int i = 0; i < sideNum; i++)
+                {
+                    for (int j = 0; j < actorNum; j++)
+                    {
+                        index = (i * sideNum) + j;
+                        Debug.Assert(index < maxIndex, string.Format("Index {0} >= maxIndex {1}", index, maxIndex));
+                        actorID = read.actorData.listOfActors[index];
+                        if (actorID == -1)
+                        { actor = null; }
+                        else
+                        {
+                            actor = GameManager.instance.dataScript.GetActor(actorID);
+                            if (actor == null)
+                            { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                        }
+                        //add to array
+                        arrayOfActors[i, j] = actor;
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        }
+        else { Debug.LogError("Invalid read.actorData.listOfActorsActor (Nul)"); }
+        //arrayOfActorsPresent
+        bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
+        if (arrayOfActorsPresent != null)
+        {
+            //empty out array
+            Array.Clear(arrayOfActorsPresent, 0, arrayOfActorsPresent.Length);
+            for (int i = 0; i < sideNum; i++)
+            {
+                for (int j = 0; j < actorNum; j++)
+                {
+                    index = (i * sideNum) + j;
+                    arrayOfActorsPresent[i, j] = read.actorData.listOfActorsPresent[index];
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
     }
 
 
@@ -758,6 +821,46 @@ public class FileManager : MonoBehaviour
                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
             }
         }
+    }
+
+    /// <summary>
+    /// Validate Actor related data and update UI gfx
+    /// </summary>
+    private void ValidateActorData()
+    {
+        //update actor UI Panel
+        GameManager.instance.actorPanelScript.UpdateActorPanel();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //loop each OnMap actor and update alpha and renown
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //update alpha
+                        if (actor.Status == ActorStatus.Active)
+                        { GameManager.instance.actorPanelScript.UpdateActorAlpha(i, alphaActive); }
+                        else
+                        { GameManager.instance.actorPanelScript.UpdateActorAlpha(i, alphaInactive); }
+                        //update renown
+                        GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown);
+                    }
+                }
+                else
+                {
+                    //actor not present in slot, reset renown to 0
+                    GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, 0);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+
     }
 
 
