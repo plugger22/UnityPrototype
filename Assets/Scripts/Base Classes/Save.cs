@@ -195,7 +195,7 @@ public class SaveActor
 //
 // - - - Class Wrappers
 //
-
+[System.Serializable]
 public class SaveContactLists
 {
     public List<List<int>> listOfActorContactsValue = new List<List<int>>();
