@@ -36,7 +36,12 @@ public class SaveDataData
     //contacts
     public List<int> listOfContactPool = new List<int>();
     public List<Contact> listOfContacts = new List<Contact>();
-    public SaveContactLists contactLists = new SaveContactLists();
+
+    public List<IntListWrapper> listOfActorContactsValue = new List<IntListWrapper>();
+    public List<int> listOfActorContactsKey = new List<int>();
+    public List<IntListWrapper> listOfNodeContactsByResistance = new List<IntListWrapper>();
+    public List<IntListWrapper> listOfNodeContactsByAuthority = new List<IntListWrapper>();
+    public List<ContactListWrapper> listOfContactsByNodeResistance = new List<ContactListWrapper>();
 }
 
 
@@ -193,14 +198,21 @@ public class SaveActor
 
 
 //
-// - - - Class Wrappers
+// - - - List Wrappers (for nested Lists)
 //
+
+/// <summary>
+/// Template list wrapper class for serializing lists within lists. Use -> List<IntListWrapper> tempList = new List<IntListWrapper>()
+/// </summary>
+/// <typeparam name="T"></typeparam>
 [System.Serializable]
-public class SaveContactLists
+public class ListWrapper<T>
 {
-    public List<List<int>> listOfActorContactsValue = new List<List<int>>();
-    public List<int> listOfActorContactsKey = new List<int>();
-    public List<List<int>> listOfNodeContactsByResistance = new List<List<int>>();
-    public List<List<int>> listOfNodeContactsByAuthority = new List<List<int>>();
-    public List<List<Contact>> listOfContactsByNodeResistance = new List<List<Contact>>();
+    public List<T> myList;
 }
+
+[System.Serializable]
+public class IntListWrapper : ListWrapper<int> { }
+
+[System.Serializable]
+public class ContactListWrapper : ListWrapper<Contact> { }

@@ -299,10 +299,10 @@ public class FileManager : MonoBehaviour
         {
             foreach(var contactList in dictOfActorContacts)
             {
-                List<int> listOfContacts = contactList.Value;
+                IntListWrapper listOfContacts = new IntListWrapper(contactList.Value);
                 if (listOfContacts != null)
                 {
-                    write.dataData.contactLists.listOfActorContactsValue.Add(listOfContacts);
+                    write.dataData.listOfActorContactsValue.Add(listOfContacts);
                     write.dataData.contactLists.listOfActorContactsKey.Add(contactList.Key);
                 }
                 else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for actorID {0}", contactList.Key); }
