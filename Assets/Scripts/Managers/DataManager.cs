@@ -3467,6 +3467,22 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns actor reserve pool for specified side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetListOfReserveActors(GlobalSide side)
+    {
+        List<int> tempList = null;
+        switch (side.level)
+        {
+            case 1: tempList = authorityActorReserve; break;
+            case 2: tempList = resistanceActorReserve; break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
     /// add an actor to the reserve pool for that side. Returns true if successful (checks if pool is full)
     /// </summary>
     /// <param name="actorID"></param>

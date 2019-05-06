@@ -278,7 +278,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteActorData()
     {
-        //main dictionary
+        //
+        // - - - Main dictionary
+        //
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
@@ -295,7 +297,8 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
-        //actor arrays -> initialise arrays
+        //
+        // - - - Actor arrays
         int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
         int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(sideNum > 0, "Invalid sideNum (Zero or less)");
@@ -329,7 +332,18 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
-        //actor fast access fields
+        //
+        // - - - Pool lists
+        //
+        write.actorData.authorityActorPoolLevelOne.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority));
+        write.actorData.authorityActorPoolLevelTwo.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority));
+        write.actorData.authorityActorPoolLevelThree.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority));
+        write.actorData.resistanceActorPoolLevelOne.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance));
+        write.actorData.resistanceActorPoolLevelTwo.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance));
+        write.actorData.resistanceActorPoolLevelThree.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance));
+        //
+        // - - - Actor.cs fast access fields
+        //
         write.actorData.actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
         write.actorData.actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
         write.actorData.actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");

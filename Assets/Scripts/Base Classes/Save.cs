@@ -81,6 +81,23 @@ public class SaveActorData
     public List<SaveActor> listOfDictActors = new List<SaveActor>();
     public List<int> listOfActors = new List<int>();
     public List<bool> listOfActorsPresent = new List<bool>();
+    public List<int> authorityActorPoolLevelOne = new List<int>();
+    public List<int> authorityActorPoolLevelTwo = new List<int>();
+    public List<int> authorityActorPoolLevelThree = new List<int>();
+    public List<int> authorityActorReserve = new List<int>();
+    public List<int> authorityActorDismissed = new List<int>();
+    public List<int> authorityActorPromoted = new List<int>();
+    public List<int> authorityActorDisposedOf = new List<int>();
+    public List<int> authorityActorResigned = new List<int>();
+    public List<int> resistanceActorPoolLevelOne = new List<int>();
+    public List<int> resistanceActorPoolLevelTwo = new List<int>();
+    public List<int> resistanceActorPoolLevelThree = new List<int>();
+    public List<int> resistanceActorReserve = new List<int>();
+    public List<int> resistanceActorDismissed = new List<int>();
+    public List<int> resistanceActorPromoted = new List<int>();
+    public List<int> resistanceActorDisposedOf = new List<int>();
+    public List<int> resistanceActorResigned = new List<int>();
+
 
     //fast access fields for actor.cs
     public int actorStressNone;
