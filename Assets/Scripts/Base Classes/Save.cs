@@ -36,6 +36,7 @@ public class SaveDataData
     //contacts
     public List<int> listOfContactPool = new List<int>();
     public List<Contact> listOfContacts = new List<Contact>();
+    public SaveContactLists contactLists = new SaveContactLists();
 }
 
 
@@ -188,4 +189,18 @@ public class SaveActor
     public List<int> listOfContacts = new List<int>();
     
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
+}
+
+
+//
+// - - - Class Wrappers
+//
+
+public class SaveContactLists
+{
+    public List<List<int>> listOfActorContactsValue = new List<List<int>>();
+    public List<int> listOfActorContactsKey = new List<int>();
+    public List<List<int>> listOfNodeContactsByResistance = new List<List<int>>();
+    public List<List<int>> listOfNodeContactsByAuthority = new List<List<int>>();
+    public List<List<Contact>> listOfContactsByNodeResistance = new List<List<Contact>>();
 }

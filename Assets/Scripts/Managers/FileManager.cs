@@ -293,7 +293,24 @@ public class FileManager : MonoBehaviour
         if (listOfContactPool != null)
         { write.dataData.listOfContactPool.AddRange(listOfContactPool); }
         else { Debug.LogError("Invalid listOfContactPool (Null)"); }
+        //contact dict's of lists -> dictOfActorContacts
+        Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+        if (dictOfActorContacts != null)
+        {
+            foreach(var contactList in dictOfActorContacts)
+            {
+                List<int> listOfContacts = contactList.Value;
+                if (listOfContacts != null)
+                {
+                    write.dataData.contactLists.listOfActorContactsValue.Add(listOfContacts);
+                    write.dataData.contactLists.listOfActorContactsKey.Add(contactList.Key);
+                }
+                else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for actorID {0}", contactList.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
     }
+
 
     /// <summary>
     /// Actor.cs (dict and lists) full data set write to file
