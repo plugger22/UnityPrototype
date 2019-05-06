@@ -223,6 +223,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteDataData()
     {
+        //
+        // - - - Secrets
+        //
         //individual secret SO dynamic data for Secrets in dictOfSecrets
         Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
@@ -271,6 +274,25 @@ public class FileManager : MonoBehaviour
             { write.dataData.listOfDeletedSecrets.Add(listOfSecrets[i].secretID); }
         }
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
+        //
+        // - - - Contacts
+        //
+        //main contact dictionary (do first)
+        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        if (dictOfContacts != null)
+        {
+            foreach(var contact in dictOfContacts)
+            {
+                if (contact.Value != null)
+                { write.dataData.listOfContacts.Add(contact.Value); }
+                else { Debug.LogWarningFormat("Invalid contact (Null) in dictOfContacts for contactID {0}", contact.Key); }
+            }
+        }
+        //contact pool
+        List<int> listOfContactPool = GameManager.instance.dataScript.GetContactPool();
+        if (listOfContactPool != null)
+        { write.dataData.listOfContactPool.AddRange(listOfContactPool); }
+        else { Debug.LogError("Invalid listOfContactPool (Null)"); }
     }
 
     /// <summary>
@@ -341,6 +363,19 @@ public class FileManager : MonoBehaviour
         write.actorData.resistanceActorPoolLevelOne.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance));
         write.actorData.resistanceActorPoolLevelTwo.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance));
         write.actorData.resistanceActorPoolLevelThree.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance));
+       
+        write.actorData.authorityActorReserve.AddRange(GameManager.instance.dataScript.GetListOfReserveActors(globalAuthority));
+        write.actorData.authorityActorDismissed.AddRange(GameManager.instance.dataScript.GetListOfDismissedActors(globalAuthority));
+        write.actorData.authorityActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalAuthority));
+        write.actorData.authorityActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalAuthority));
+        write.actorData.authorityActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalAuthority));
+        
+        write.actorData.resistanceActorReserve.AddRange(GameManager.instance.dataScript.GetListOfReserveActors(globalResistance));
+        write.actorData.resistanceActorDismissed.AddRange(GameManager.instance.dataScript.GetListOfDismissedActors(globalResistance));
+        write.actorData.resistanceActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance));
+        write.actorData.resistanceActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance));
+        write.actorData.resistanceActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalResistance));
+
         //
         // - - - Actor.cs fast access fields
         //
@@ -540,6 +575,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadDataData()
     {
+        //
+        // - - - Secrets
+        //
         //Copy any dynamic data into dictOfSecrets
         Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
@@ -600,6 +638,38 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
+        //
+        // - - - Contacts
+        //
+        //main contact dictionary (do first)
+        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        if (dictOfContacts != null)
+        {
+            //clear dictionary
+            dictOfContacts.Clear();
+            //copy saved data across
+            for (int i = 0; i < read.dataData.listOfContacts.Count; i++)
+            {
+                Contact contact = read.dataData.listOfContacts[i];
+                if (contact != null)
+                {
+                    try
+                    { dictOfContacts.Add(contact.contactID, contact); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate contactID {0} in dictOfContacts", contact.contactID); }
+                }
+                else { Debug.LogWarning("Invalid contact (Null) in read.dataData.listOfContacts"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+        //contact Pool
+        List<int> listOfContactPool = GameManager.instance.dataScript.GetContactPool();
+        if (listOfContactPool != null)
+        {
+            listOfContactPool.Clear();
+            listOfContactPool.AddRange(read.dataData.listOfContactPool);
+        }
+        else { Debug.LogError("Invalid listOfContactPool (Null)"); }
     }
 
     /// <summary>
@@ -789,6 +859,77 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
+        //
+        // - - - Actor Lists
+        //
+        List<int> authorityActorPoolLevelOne = GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority);
+        List<int> authorityActorPoolLevelTwo = GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority);
+        List<int> authorityActorPoolLevelThree = GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority);
+        List<int> resistanceActorPoolLevelOne = GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance);
+        List<int> resistanceActorPoolLevelTwo = GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance);
+        List<int> resistanceActorPoolLevelThree = GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance);
+        List<int> authorityActorReserve = GameManager.instance.dataScript.GetListOfReserveActors(globalAuthority);
+        List<int> authorityActorDismissed = GameManager.instance.dataScript.GetListOfDismissedActors(globalAuthority);
+        List<int> authorityActorPromoted = GameManager.instance.dataScript.GetListOfPromotedActors(globalAuthority);
+        List<int> authorityActorDisposedOf = GameManager.instance.dataScript.GetListOfDisposedOfActors(globalAuthority);
+        List<int> authorityActorResigned = GameManager.instance.dataScript.GetListOfResignedActors(globalAuthority);
+        List<int> resistanceActorReserve = GameManager.instance.dataScript.GetListOfReserveActors(globalResistance);
+        List<int> resistanceActorDismissed = GameManager.instance.dataScript.GetListOfDismissedActors(globalResistance);
+        List<int> resistanceActorPromoted = GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance);
+        List<int> resistanceActorDisposedOf = GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance);
+        List<int> resistanceActorResigned = GameManager.instance.dataScript.GetListOfResignedActors(globalResistance);
+        //null checks
+        if (authorityActorPoolLevelOne == null) { Debug.LogError("Invalid authorityActorPoolLevelOne (Null)"); }
+        if (authorityActorPoolLevelTwo == null) { Debug.LogError("Invalid authorityActorPoolLevelTwo (Null)"); }
+        if (authorityActorPoolLevelThree == null) { Debug.LogError("Invalid authorityActorPoolLevelThree (Null)"); }
+        if (resistanceActorPoolLevelOne == null) { Debug.LogError("Invalid resistanceActorPoolLevelOne (Null)"); }
+        if (resistanceActorPoolLevelTwo == null) { Debug.LogError("Invalid resistanceActorPoolLevelTwo (Null)"); }
+        if (resistanceActorPoolLevelThree == null) { Debug.LogError("Invalid resistanceActorPoolLevelThree (Null)"); }
+        if (authorityActorReserve == null) { Debug.LogError("Invalid authorityActorReserve (Null)"); }
+        if (authorityActorDismissed == null) { Debug.LogError("Invalid authorityActorDismissed (Null)"); }
+        if (authorityActorPromoted == null) { Debug.LogError("Invalid authorityActorPromoted (Null)"); }
+        if (authorityActorDisposedOf == null) { Debug.LogError("Invalid authorityActorDsposedOf (Null)"); }
+        if (authorityActorResigned == null) { Debug.LogError("Invalid authorityActorResigned (Null)"); }
+        if (resistanceActorReserve == null) { Debug.LogError("Invalid resistanceActorReserve (Null)"); }
+        if (resistanceActorDismissed == null) { Debug.LogError("Invalid resistanceActorDismissed (Null)"); }
+        if (resistanceActorPromoted == null) { Debug.LogError("Invalid resistanceActorPromoted (Null)"); }
+        if (resistanceActorDisposedOf == null) { Debug.LogError("Invalid resistanceActorDsposedOf (Null)"); }
+        if (resistanceActorResigned == null) { Debug.LogError("Invalid resistanceActorResigned (Null)"); }
+        //clear lists
+        authorityActorPoolLevelOne.Clear();
+        authorityActorPoolLevelTwo.Clear();
+        authorityActorPoolLevelThree.Clear();
+        resistanceActorPoolLevelOne.Clear();
+        resistanceActorPoolLevelTwo.Clear();
+        resistanceActorPoolLevelThree.Clear();
+        authorityActorReserve.Clear();
+        authorityActorDismissed.Clear();
+        authorityActorPromoted.Clear();
+        authorityActorDisposedOf.Clear();
+        authorityActorResigned.Clear();
+        resistanceActorReserve.Clear();
+        resistanceActorDismissed.Clear();
+        resistanceActorPromoted.Clear();
+        resistanceActorDisposedOf.Clear();
+        resistanceActorResigned.Clear();
+        //add saved data
+        authorityActorPoolLevelOne.AddRange(read.actorData.authorityActorPoolLevelOne);
+        authorityActorPoolLevelTwo.AddRange(read.actorData.authorityActorPoolLevelTwo);
+        authorityActorPoolLevelThree.AddRange(read.actorData.authorityActorPoolLevelThree);
+        resistanceActorPoolLevelOne.AddRange(read.actorData.resistanceActorPoolLevelOne);
+        resistanceActorPoolLevelTwo.AddRange(read.actorData.resistanceActorPoolLevelTwo);
+        resistanceActorPoolLevelThree.AddRange(read.actorData.resistanceActorPoolLevelThree);
+        authorityActorReserve.AddRange(read.actorData.authorityActorReserve);
+        authorityActorDismissed.AddRange(read.actorData.authorityActorDismissed);
+        authorityActorPromoted.AddRange(read.actorData.authorityActorPromoted);
+        authorityActorDisposedOf.AddRange(read.actorData.authorityActorDisposedOf);
+        authorityActorResigned.AddRange(read.actorData.authorityActorResigned);
+        resistanceActorReserve.AddRange(read.actorData.resistanceActorReserve);
+        resistanceActorDismissed.AddRange(read.actorData.resistanceActorDismissed);
+        resistanceActorPromoted.AddRange(read.actorData.resistanceActorPromoted);
+        resistanceActorDisposedOf.AddRange(read.actorData.resistanceActorDisposedOf);
+        resistanceActorResigned.AddRange(read.actorData.resistanceActorResigned);
+
     }
 
 

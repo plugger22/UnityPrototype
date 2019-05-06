@@ -609,8 +609,8 @@ public class TeamManager : MonoBehaviour
                                         }
                                         else
                                         {
-                                            /*Debug.LogWarning(string.Format("Unable to deploy {0} {1} to {2} as Actor {3}, slotID {4}, has insufficient ability{5}",
-                                                team.arc.name, team.teamName, destinationPool, actor.arc.name, actorSlotID, "\n"));*/
+                                            Debug.LogWarning(string.Format("Unable to deploy {0} {1} to {2} as Actor {3}, slotID {4}, has insufficient ability{5}",
+                                                team.arc.name, team.teamName, destinationPool, actor.arc.name, actorSlotID, "\n"));
                                             successFlag = false;
                                         }
                                     }

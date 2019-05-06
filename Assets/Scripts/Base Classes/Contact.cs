@@ -5,9 +5,12 @@ using UnityEngine;
 
 /// <summary>
 /// Resistance Contact, non-Unity data class
+/// NOTE: Class is serialized directly
 /// </summary>
+[System.Serializable]
 public class Contact
 {
+    #region Save Compatabile data
     public int contactID;
     public string nameFirst;
     public string nameLast;
@@ -27,5 +30,6 @@ public class Contact
     [HideInInspector] public int statsRumours;     //number of target rumours learnt
     [HideInInspector] public int statsNemesis;     //number of times spotted Nemesis
     [HideInInspector] public int statsTeams;       //number of times spotted Erasure Teams
+    #endregion
 
 }

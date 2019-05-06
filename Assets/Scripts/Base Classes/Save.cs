@@ -33,6 +33,9 @@ public class SaveDataData
     public List<int> listOfRevealedSecrets = new List<int>();
     public List<int> listOfDeletedSecrets = new List<int>();
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
+    //contacts
+    public List<int> listOfContactPool = new List<int>();
+    public List<Contact> listOfContacts = new List<Contact>();
 }
 
 

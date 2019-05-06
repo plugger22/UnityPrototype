@@ -819,8 +819,10 @@ public class Node : MonoBehaviour
                         if (teamExisting.arc.TeamArcID == nodeArcID)
                         {
                             //already a similar team present -> no go
-                            Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
-                                team.arc.name, nodeName, nodeID, "\n"));
+
+                            /*Debug.LogWarning(string.Format("{0} Team NOT added to node {1}, ID {2} as already a similar team present{3}", 
+                                team.arc.name, nodeName, nodeID, "\n"));*/
+
                             return false;
                         }
                     }

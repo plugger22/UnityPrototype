@@ -3467,7 +3467,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns actor reserve pool for specified side, null if a problem
+    /// Returns actors reserve list for specified side, null if a problem
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
@@ -3478,6 +3478,75 @@ public class DataManager : MonoBehaviour
         {
             case 1: tempList = authorityActorReserve; break;
             case 2: tempList = resistanceActorReserve; break;
+            default: Debug.LogErrorFormat("Invalid {0}", side); break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// Returns actors dismissed list for specified side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetListOfDismissedActors(GlobalSide side)
+    {
+        List<int> tempList = null;
+        switch (side.level)
+        {
+            case 1: tempList = authorityActorDismissed; break;
+            case 2: tempList = resistanceActorDismissed; break;
+            default: Debug.LogErrorFormat("Invalid {0}", side); break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// Returns actors promoted list for specified side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetListOfPromotedActors(GlobalSide side)
+    {
+        List<int> tempList = null;
+        switch (side.level)
+        {
+            case 1: tempList = authorityActorPromoted; break;
+            case 2: tempList = resistanceActorPromoted; break;
+            default: Debug.LogErrorFormat("Invalid {0}", side); break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// Returns actors disposed list for specified side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetListOfDisposedOfActors(GlobalSide side)
+    {
+        List<int> tempList = null;
+        switch (side.level)
+        {
+            case 1: tempList = authorityActorDisposedOf; break;
+            case 2: tempList = resistanceActorDisposedOf; break;
+            default: Debug.LogErrorFormat("Invalid {0}", side); break;
+        }
+        return tempList;
+    }
+
+    /// <summary>
+    /// Returns actors Resigned list for specified side, null if a problem
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<int> GetListOfResignedActors(GlobalSide side)
+    {
+        List<int> tempList = null;
+        switch (side.level)
+        {
+            case 1: tempList = authorityActorResigned; break;
+            case 2: tempList = resistanceActorResigned; break;
+            default: Debug.LogErrorFormat("Invalid {0}", side); break;
         }
         return tempList;
     }
