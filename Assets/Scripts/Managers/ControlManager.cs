@@ -214,7 +214,7 @@ public class ControlManager : MonoBehaviour
             GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
             //get current scenario data
             GameManager.instance.campaignScript.InitialiseScenario();
-            //create new game
+            //create new level
             GameManager.instance.InitialiseNewLevel();
             //revert to playGame state by default
             GameManager.instance.inputScript.GameState = GameState.PlayGame;

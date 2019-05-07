@@ -698,7 +698,7 @@ public class GameManager : MonoBehaviour
 
     #region InitialiseNewLevel
     /// <summary>
-    /// start an immediate autoRun that bypasses the campaign meta game and jumps straight into a level
+    /// Create new level (session start or followOn level
     /// </summary>
     public void InitialiseNewLevel()
     {
