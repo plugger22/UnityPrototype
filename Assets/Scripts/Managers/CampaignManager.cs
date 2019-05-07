@@ -17,7 +17,7 @@ public class CampaignManager : MonoBehaviour
 
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
 
-    private Scenario scenario;
+    [HideInInspector] public Scenario scenario;
 
 
     public void InitialiseGame()
@@ -132,39 +132,7 @@ public class CampaignManager : MonoBehaviour
         return scenario;
     }
 
-    /// <summary>
-    /// Obtain the starting resources for a side according to the scenario. Default '0'
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public int GetStartingResources(GlobalSide side)
-    {
-        int resources = 0;
-        switch (side.level)
-        {
-            case 1: resources = scenario.leaderAuthority.resourcesStarting; break;
-            case 2: resources = scenario.leaderResistance.resourcesStarting; break;
-            default: Debug.LogErrorFormat("Unrecognised {0}", side); break;
-        }
-        return resources;
-    }
 
-    /// <summary>
-    /// Obtain name of leader of a side according to the scenario. Default "Unknown"
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public string GetLeaderName(GlobalSide side)
-    {
-        string name = "Unknown";
-        switch (side.level)
-        {
-            case 1: name = scenario.leaderAuthority.name; break;
-            case 2: name = scenario.leaderResistance.name; break;
-            default: Debug.LogErrorFormat("Unrecognised {0}", side); break;
-        }
-        return name;
-    }
 
     //new methods above here
 }

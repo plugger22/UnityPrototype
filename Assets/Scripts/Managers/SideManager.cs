@@ -117,13 +117,13 @@ public class SideManager : MonoBehaviour
                 PlayerSide = globalAuthority;
                 //reverts to Human authority player
                 GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.GetLeaderName(globalResistance));
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
             }
             else
             {
                 PlayerSide = globalResistance;
                 //reverts to Human resistance player
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.GetLeaderName(globalAuthority));
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.name);
                 GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
             }
             Debug.Log("[Start] Player set to AI for both sides");
