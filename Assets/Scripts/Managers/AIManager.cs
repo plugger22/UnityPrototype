@@ -616,7 +616,7 @@ public class AIManager : MonoBehaviour
         city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid City (Null)");
         //set AI resource levels
-        GameManager.instance.dataScript.SetAIResources(globalAuthority, GameManager.instance.scenarioScript.scenario.leaderAuthority.resourcesStarting);
+        GameManager.instance.dataScript.SetAIResources(globalAuthority, GameManager.instance.campaignScript.scenario.leaderAuthority.resourcesStarting);
         //get names of node arcs (name or null, if none)
         if (city.mayor.preferredArc != null) { authorityPreferredArc = city.mayor.preferredArc.name; }
         actionsPerTurn = city.mayor.actionsPerTurn;

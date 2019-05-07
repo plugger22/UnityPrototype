@@ -126,7 +126,7 @@ public class ControlManager : MonoBehaviour
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
-        GameManager.instance.campaignScript.campaign.Reset();
+        GameManager.instance.campaignScript.Reset();
         GameManager.instance.campaignScript.InitialiseScenario();
         //set up new level
         GameManager.instance.InitialiseNewLevel();
@@ -208,7 +208,7 @@ public class ControlManager : MonoBehaviour
     private void CloseMetaGame()
     {
         //go to next scenario
-        if (GameManager.instance.campaignScript.campaign.IncrementScenarioIndex() == true)
+        if (GameManager.instance.campaignScript.IncrementScenarioIndex() == true)
         {
             //change game state
             GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;

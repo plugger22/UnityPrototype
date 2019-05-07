@@ -147,9 +147,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             // fourth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Campaign Data"))
             {
-                Debug.Log("[Dbg] Button -> Unused");
+                Debug.Log("[Dbg] Button -> Toggle Campaign Data");
             }
 
             //fifth button

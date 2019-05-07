@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GUIManager guiScript;                    //GUI Manager
     [HideInInspector] public GlobalManager globalScript;              //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
-    [HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
+    //[HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
     [HideInInspector] public CampaignManager campaignScript;          //Campaign Manager
     [HideInInspector] public ControlManager controlScript;            //Control Manager
     [HideInInspector] public FileManager fileScript;                  //File Manager
@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
         globalScript = GetComponent<GlobalManager>();
-        scenarioScript = GetComponent<ScenarioManager>();
+        //scenarioScript = GetComponent<ScenarioManager>();
         campaignScript = GetComponent<CampaignManager>();
         controlScript = GetComponent<ControlManager>();
         fileScript = GetComponent<FileManager>();
@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(dataScript != null, "Invalid dataScript (Null)");
         Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
-        Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
+        //Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
         Debug.Assert(campaignScript != null, "Invalid campaignScript (Null)");
         Debug.Assert(controlScript != null, "Invalid controlScript (Null)");
         Debug.Assert(fileScript != null, "Invalid fileScript (Null)");
@@ -334,7 +334,7 @@ public class GameManager : MonoBehaviour
         {
             inputScript.GameState = GameState.NewInitialisation;
             //debug -> set to campaign start
-            campaignScript.campaign.Reset();
+            campaignScript.Reset();
             InitialiseNewLevel();
             //commence autorun
             turnScript.SetAutoRun(autoRunTurns);
@@ -442,8 +442,8 @@ public class GameManager : MonoBehaviour
         startMethod.className = "MetaManager";
         listOfGameMethods.Add(startMethod);
         //Campaign Manager
-        startMethod.handler = campaignScript.Initialise;
-        startMethod.className = "CampaignManager";
+        startMethod.handler = campaignScript.InitialiseGame;
+        startMethod.className = "CampaignManager Game";
         listOfGameMethods.Add(startMethod);
         //
         // - - - Level methods - - -
@@ -452,9 +452,9 @@ public class GameManager : MonoBehaviour
         startMethod.handler = ResetLevelData;
         startMethod.className = "Reset Level Data";
         listOfLevelMethods.Add(startMethod);
-        //Scenario Manager InitialiseEarly -> before level & Side Managers
-        startMethod.handler = scenarioScript.InitialiseEarly;
-        startMethod.className = "ScenarioManager Early";
+        //Campaign Manager InitialiseEarly -> before level & Side Managers
+        startMethod.handler = campaignScript.InitialiseEarly;
+        startMethod.className = "CampaignManager Early";
         listOfLevelMethods.Add(startMethod);
         //Tooltip Node
         startMethod.handler = tooltipNodeScript.Initialise;
@@ -508,9 +508,9 @@ public class GameManager : MonoBehaviour
         startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";
         listOfLevelMethods.Add(startMethod);
-        //Scenario Manager -> InitialiseLate -> after levelScript.Initialise
-        startMethod.handler = scenarioScript.InitialiseLate;
-        startMethod.className = "ScenarioManager Late";
+        //Campaign Manager -> InitialiseLate -> after levelScript.Initialise
+        startMethod.handler = campaignScript.InitialiseLate;
+        startMethod.className = "CampaignManager Late";
         listOfLevelMethods.Add(startMethod);
         //Message Manager -> InitialseLate -> after ScenarioManager
         startMethod.handler = messageScript.InitialiseLate;

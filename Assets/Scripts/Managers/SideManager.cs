@@ -109,7 +109,7 @@ public class SideManager : MonoBehaviour
         if (GameManager.instance.autoRunTurns > 0) { GameManager.instance.isBothAI = true; } else { GameManager.instance.isBothAI = false; }*/
 
         //AUTORUN (first scenario in a campaign only)
-        if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.campaign.CheckIsFirstScenario() == true)
+        if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.CheckIsFirstScenario() == true)
         {
             //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
             if (GameManager.instance.isAuthority == true)

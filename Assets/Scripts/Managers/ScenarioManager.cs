@@ -22,59 +22,9 @@ public class ScenarioManager : MonoBehaviour
     private string colourSide;
     private string colourEnd;*/
 
-    /// <summary>
-    /// run BEFORE LevelManager.cs
-    /// </summary>
-    public void InitialiseEarly()
-    {
-        Debug.Assert(scenario != null, "Invalid scenario (Null)");
-        //
-        // - - - City (Early) - - -
-        //
-        if (scenario.city != null)
-        {
-            GameManager.instance.cityScript.SetCity(scenario.city);
-            //NOTE: currently chooses a random city (overrides scenario.city). Need to sort out. DEBUG
-            GameManager.instance.cityScript.InitialiseEarly(scenario.leaderAuthority);
-        }
-        else { Debug.LogError("Invalid City (Null) for scenario"); }
-        //register listener
 
-        /*EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ScenarioManager");*/
-    }
 
-    /// <summary>
-    /// run AFTER LevelManager.cs
-    /// </summary>
-    public void InitialiseLate()
-    {
-        //
-        // - - - City (Late) - - -
-        //
-        GameManager.instance.cityScript.InitialiseLate();
-        if (scenario.challengeResistance != null)
-        {
-            //
-            // - - - Mission - - - 
-            //
-            if (scenario.missionResistance != null)
-            {
-                GameManager.instance.missionScript.mission = scenario.missionResistance;
-                GameManager.instance.missionScript.Initialise();
-            }
-            else { Debug.LogError("Invalid mission (Null) for scenario"); }
-            //
-            // - - - Nemesis -> may or may not be present - - - 
-            //
-            if (scenario.challengeResistance.nemesisFirst != null)
-            {
-                GameManager.instance.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
-                GameManager.instance.nemesisScript.Initialise();
-            }
-            else { Debug.LogFormat("[Nem] ScenarioManager.cs -> InitialiseLate: No Nemesis present in Scenario{0}", "\n"); }
-        }
-        else { Debug.LogError("Invalid scenario Challenge (Null)"); }
-    }
+
 
 
     /*/// <summary>
