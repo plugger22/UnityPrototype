@@ -299,16 +299,68 @@ public class FileManager : MonoBehaviour
         {
             foreach(var contactList in dictOfActorContacts)
             {
-                IntListWrapper listOfContacts = new IntListWrapper(contactList.Value);
-                if (listOfContacts != null)
+                IntListWrapper listOfContacts = new IntListWrapper();
+                listOfContacts.myList.AddRange(contactList.Value);
+                if (listOfContacts.myList != null)
                 {
                     write.dataData.listOfActorContactsValue.Add(listOfContacts);
-                    write.dataData.contactLists.listOfActorContactsKey.Add(contactList.Key);
+                    write.dataData.listOfActorContactsKey.Add(contactList.Key);
                 }
                 else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for actorID {0}", contactList.Key); }
             }
         }
         else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
+        //dictOfNodeContactsResistance
+        Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.instance.dataScript.GetDictOfNodeContacts(globalResistance);
+        if (dictOfNodeContactsResistance != null)
+        {
+            foreach (var actorList in dictOfNodeContactsResistance)
+            {
+                IntListWrapper listOfActors = new IntListWrapper();
+                listOfActors.myList.AddRange(actorList.Value);
+                if (listOfActors.myList != null)
+                {
+                    write.dataData.listOfNodeContactsByResistanceValue.Add(listOfActors);
+                    write.dataData.listOfNodeContactsByResistanceKey.Add(actorList.Key);
+                }
+                else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", actorList.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
+        //dictOfNodeContactsAuthority
+        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.instance.dataScript.GetDictOfNodeContacts(globalAuthority);
+        if (dictOfNodeContactsAuthority != null)
+        {
+            foreach (var actorList in dictOfNodeContactsAuthority)
+            {
+                IntListWrapper listOfActors = new IntListWrapper();
+                listOfActors.myList.AddRange(actorList.Value);
+                if (listOfActors.myList != null)
+                {
+                    write.dataData.listOfNodeContactsByAuthorityValue.Add(listOfActors);
+                    write.dataData.listOfNodeContactsByAuthorityKey.Add(actorList.Key);
+                }
+                else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", actorList.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeContactsAuthority (Null)"); }
+        //dictOfNodeContactsResistance
+        Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+        if (dictOfContactsByNodeResistance != null)
+        {
+            foreach (var contactList in dictOfContactsByNodeResistance)
+            {
+                ContactListWrapper listOfContacts = new ContactListWrapper();
+                listOfContacts.myList.AddRange(contactList.Value);
+                if (listOfContacts.myList != null)
+                {
+                    write.dataData.listOfContactsByNodeResistanceValue.Add(listOfContacts);
+                    write.dataData.listOfContactsByNodeResistanceKey.Add(contactList.Key);
+                }
+                else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for nodeID {0}", contactList.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
     }
 
 
@@ -687,6 +739,90 @@ public class FileManager : MonoBehaviour
             listOfContactPool.AddRange(read.dataData.listOfContactPool);
         }
         else { Debug.LogError("Invalid listOfContactPool (Null)"); }
+        //dictOfActorContacts
+        Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+        if (dictOfActorContacts != null)
+        {
+            //clear dictionary
+            dictOfActorContacts.Clear();
+            //copy saved data across
+            for (int i = 0; i < read.dataData.listOfActorContactsKey.Count; i++)
+            {
+                List<int> contactList = read.dataData.listOfActorContactsValue[i].myList;
+                if (contactList != null)
+                {
+                    try
+                    { dictOfActorContacts.Add(read.dataData.listOfActorContactsKey[i], contactList); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate actorID {0} in read.dataData.listOfActorContactsKey", i); }
+                }
+                else { Debug.LogWarningFormat("Invalid contactList (Null) for actorID {0}", read.dataData.listOfActorContactsKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
+        //dictOfNodeContactsResistance
+        Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.instance.dataScript.GetDictOfNodeContacts(globalResistance);
+        if (dictOfNodeContactsResistance != null)
+        {
+            //clear dictionary
+            dictOfNodeContactsResistance.Clear();
+            //copy saved data across
+            for (int i = 0; i < read.dataData.listOfNodeContactsByResistanceKey.Count; i++)
+            {
+                List<int> listOfActors = read.dataData.listOfNodeContactsByResistanceValue[i].myList;
+                if (listOfActors != null)
+                {
+                    try
+                    { dictOfNodeContactsResistance.Add(read.dataData.listOfNodeContactsByResistanceKey[i], listOfActors); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate nodeID {0} in read.dataData.listOfNodeContactsByResistanceKey", read.dataData.listOfNodeContactsByResistanceKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for nodeID {0}", read.dataData.listOfNodeContactsByResistanceKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
+        //dictOfNodeContactsAuthority
+        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.instance.dataScript.GetDictOfNodeContacts(globalAuthority);
+        if (dictOfNodeContactsAuthority != null)
+        {
+            //clear dictionary
+            dictOfNodeContactsAuthority.Clear();
+            //copy saved data across
+            for (int i = 0; i < read.dataData.listOfNodeContactsByAuthorityKey.Count; i++)
+            {
+                List<int> listOfActors = read.dataData.listOfNodeContactsByAuthorityValue[i].myList;
+                if (listOfActors != null)
+                {
+                    try
+                    { dictOfNodeContactsAuthority.Add(read.dataData.listOfNodeContactsByAuthorityKey[i], listOfActors); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate nodeID {0} in read.dataData.listOfNodeContactsByAuthorityKey", read.dataData.listOfNodeContactsByAuthorityKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for nodeID {0}", read.dataData.listOfNodeContactsByAuthorityKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeContactsAuthority (Null)"); }
+        //dictOfNodeContactsResistance
+        Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+        if (dictOfContactsByNodeResistance != null)
+        {
+            //clear dictionary
+            dictOfContactsByNodeResistance.Clear();
+            //copy save data across
+            for (int i = 0; i < read.dataData.listOfContactsByNodeResistanceKey.Count; i++)
+            {
+                List<Contact> listOfContacts = read.dataData.listOfContactsByNodeResistanceValue[i].myList;
+                if (listOfContacts != null)
+                {
+                    try
+                    { dictOfContactsByNodeResistance.Add(read.dataData.listOfContactsByNodeResistanceKey[i], listOfContacts); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate nodeID {0} in read.dataData.listOfContactsByNodeResistanceKey", read.dataData.listOfContactsByNodeResistanceKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfContacts (Null) for nodeID {0}", read.dataData.listOfContactsByNodeResistanceKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
     }
 
     /// <summary>

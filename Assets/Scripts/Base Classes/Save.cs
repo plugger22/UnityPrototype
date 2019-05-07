@@ -39,9 +39,12 @@ public class SaveDataData
 
     public List<IntListWrapper> listOfActorContactsValue = new List<IntListWrapper>();
     public List<int> listOfActorContactsKey = new List<int>();
-    public List<IntListWrapper> listOfNodeContactsByResistance = new List<IntListWrapper>();
-    public List<IntListWrapper> listOfNodeContactsByAuthority = new List<IntListWrapper>();
-    public List<ContactListWrapper> listOfContactsByNodeResistance = new List<ContactListWrapper>();
+    public List<IntListWrapper> listOfNodeContactsByResistanceValue = new List<IntListWrapper>();
+    public List<int> listOfNodeContactsByResistanceKey = new List<int>();
+    public List<IntListWrapper> listOfNodeContactsByAuthorityValue = new List<IntListWrapper>();
+    public List<int> listOfNodeContactsByAuthorityKey = new List<int>();
+    public List<ContactListWrapper> listOfContactsByNodeResistanceValue = new List<ContactListWrapper>();
+    public List<int> listOfContactsByNodeResistanceKey = new List<int>();
 }
 
 
@@ -202,13 +205,16 @@ public class SaveActor
 //
 
 /// <summary>
-/// Template list wrapper class for serializing lists within lists. Use -> List<IntListWrapper> tempList = new List<IntListWrapper>()
+/// Generic list wrapper class for serializing lists within lists. Use -> List<IntListWrapper> tempList = new List<IntListWrapper>()
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [System.Serializable]
 public class ListWrapper<T>
 {
     public List<T> myList;
+
+    public ListWrapper()
+    { myList = new List<T>(); }
 }
 
 [System.Serializable]
