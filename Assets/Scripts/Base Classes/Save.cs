@@ -28,7 +28,9 @@ public class Save
 [System.Serializable]
 public class SaveCampaignData
 {
-
+    public int campaignID;
+    public int scenarioIndex;
+    public int[] arrayOfStoryStatus;
 }
 
 

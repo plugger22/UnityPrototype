@@ -65,7 +65,6 @@ GameObject:
   - component: {fileID: 114395521989347528}
   - component: {fileID: 114584680957149894}
   - component: {fileID: 114609542619572500}
-  - component: {fileID: 114837532667670244}
   - component: {fileID: 114843761391076242}
   - component: {fileID: 114680662969460860}
   - component: {fileID: 114258654278774664}
@@ -1867,6 +1866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
+  arrayOfFlags: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114701128435362846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2101,7 +2101,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   seedDev: 0
   isAuthority: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
@@ -2187,18 +2187,6 @@ MonoBehaviour:
   maxNumOfObjectives: 3
   objectivesTotal: 0
   objectivesCurrent: 0
---- !u!114 &114837532667670244
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1289370855557188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed8a8f750e783646bb957eb54a86402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scenario: {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
 --- !u!114 &114843761391076242
 MonoBehaviour:
   m_ObjectHideFlags: 1

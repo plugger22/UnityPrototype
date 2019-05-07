@@ -103,7 +103,7 @@ public class TurnManager : MonoBehaviour
         {
             //fast access
             teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-            scenarioTimer = GameManager.instance.scenarioScript.scenario.timer;
+            scenarioTimer = GameManager.instance.campaignScript.scenario.timer;
             conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
             Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
             Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
@@ -824,7 +824,7 @@ public class TurnManager : MonoBehaviour
         {
             topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
             //win state achieved
-            switch (GameManager.instance.scenarioScript.scenario.missionResistance.side.level)
+            switch (GameManager.instance.campaignScript.scenario.missionResistance.side.level)
             {
                 case 1:
                     //Authority mission, timer expired so Resistance wins
@@ -837,7 +837,7 @@ public class TurnManager : MonoBehaviour
                     SetWinState(WinState.Authority, WinReason.MissionTimerMin, topText, bottomText);
                     break;
                 default:
-                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.scenarioScript.scenario.missionResistance.side.name);
+                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.campaignScript.scenario.missionResistance.side.name);
                     break;
             }
         }

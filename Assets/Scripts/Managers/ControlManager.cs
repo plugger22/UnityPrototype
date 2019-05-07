@@ -127,7 +127,6 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.instance.campaignScript.Reset();
-        GameManager.instance.campaignScript.InitialiseScenario();
         //set up new level
         GameManager.instance.InitialiseNewLevel();
         //revert to playGame state by default
@@ -212,8 +211,6 @@ public class ControlManager : MonoBehaviour
         {
             //change game state
             GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
-            //get current scenario data
-            GameManager.instance.campaignScript.InitialiseScenario();
             //create new level
             GameManager.instance.InitialiseNewLevel();
             //revert to playGame state by default

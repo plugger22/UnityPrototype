@@ -11,6 +11,8 @@ public class Mayor : ScriptableObject
     [Header("Assorted")]
     /*[Tooltip("Faction that the Mayor belongs to. If Mayor in a city this is will be the faction of the city")]
     public Faction faction;*/
+    [Tooltip("Name used in game")]
+    public string leaderName;
     [Tooltip("Motto of Mayor in 6 words or less")]
     public string motto;
     [Tooltip("Portrait sprite (152 x 160 png)")]

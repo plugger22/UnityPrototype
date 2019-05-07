@@ -101,10 +101,10 @@ public class FactionManager : MonoBehaviour
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
 
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
-        int approval = GameManager.instance.scenarioScript.scenario.approvalStartAuthorityHQ;
+        int approval = GameManager.instance.campaignScript.scenario.approvalStartAuthorityHQ;
         if (approval == 0) { approval = Random.Range(2, 9); }
         ApprovalAuthority = approval;
-        approval = GameManager.instance.scenarioScript.scenario.approvalStartRebelHQ;
+        approval = GameManager.instance.campaignScript.scenario.approvalStartRebelHQ;
         if (approval == 0)
         { approval = Random.Range(2, 9); }
         ApprovalResistance = approval;

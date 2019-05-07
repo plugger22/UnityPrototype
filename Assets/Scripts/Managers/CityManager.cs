@@ -84,7 +84,7 @@ public class CityManager : MonoBehaviour
         city.mayor = mayor;
         if (city.mayor != null)
         {
-            Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.name, city.mayor.name, city.mayor.trait.tag, "\n");
+            Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.name, city.mayor.leaderName, city.mayor.trait.tag, "\n");
             
             /*city.faction = city.mayor.faction;
             //initialise authority faction (determined by mayor's faction
@@ -103,7 +103,7 @@ public class CityManager : MonoBehaviour
     public void InitialiseLate()
     {
         //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
-        int loyalty = GameManager.instance.scenarioScript.scenario.cityStartLoyalty;
+        int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
         if (loyalty == 0) { loyalty = Random.Range(2, 9); }
         CityLoyalty = loyalty;
         //initialise number of districts
@@ -294,7 +294,7 @@ public class CityManager : MonoBehaviour
     public string GetMayorNameFormatted()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<size=115%><b>{1}</size></b>{2}", colourSide, city.mayor.name, colourEnd);
+        builder.AppendFormat("{0}<size=115%><b>{1}</size></b>{2}", colourSide, city.mayor.leaderName, colourEnd);
         if (string.IsNullOrEmpty(city.mayor.motto) == false)
         { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.motto, colourEnd); }
         return builder.ToString();
@@ -305,7 +305,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetMayorName()
-    { return city.mayor.name; }
+    { return city.mayor.leaderName; }
 
     /// <summary>
     /// returns a colour formatted string of Mayor's faction alignment. Used by cityInfoUI mayor tooltip

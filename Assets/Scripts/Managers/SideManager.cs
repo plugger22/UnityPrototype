@@ -146,7 +146,7 @@ public class SideManager : MonoBehaviour
                 authorityCurrent = SideState.AI;
                 //names
                 GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.GetLeaderName(globalAuthority));
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.leaderName);
             }
             else
             {
@@ -158,7 +158,7 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.AI;
                 authorityCurrent = SideState.Human;
                 //names
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.GetLeaderName(globalResistance));
+                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
                 GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
             }
         }

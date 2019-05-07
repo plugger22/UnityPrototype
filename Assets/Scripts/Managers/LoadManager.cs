@@ -1337,7 +1337,7 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Mayor (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.leaderName)); counter--; }
             }
             numDict = dictOfMayors.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfMayors has {0} entries{1}", numDict, "\n");

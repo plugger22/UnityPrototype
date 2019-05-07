@@ -3483,7 +3483,7 @@ public class AIManager : MonoBehaviour
         if (city.mayor.CheckTraitEffect(aiPolicyTimerDoubled) == true)
         {
             timerPolicy *= 2;
-            Debug.LogFormat("[Trt] {0} uses {1} trait, timerPolicy now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, timerPolicy, "\n");
+            Debug.LogFormat("[Trt] {0} uses {1} trait, timerPolicy now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, timerPolicy, "\n");
         }
         //trait -> Expert
         else if (city.mayor.CheckTraitEffect(aiPolicyCostLower) == true)
@@ -3492,7 +3492,7 @@ public class AIManager : MonoBehaviour
             int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
             resources += 1;
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
-            Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+            Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, resources, "\n");
         }
         //trait -> Sloppy
         else if (city.mayor.CheckTraitEffect(aiPolicyCostHigher) == true)
@@ -3502,7 +3502,7 @@ public class AIManager : MonoBehaviour
             resources -= 1;
             resources = Mathf.Max(0, resources);
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
-            Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+            Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, resources, "\n");
         }
         string policyDescription = "Unknown";
         DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.data2);
@@ -3559,7 +3559,7 @@ public class AIManager : MonoBehaviour
             int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
             resources += 1;
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
-            Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+            Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, resources, "\n");
         }
         //trait -> Penny Pincher
         else if (city.mayor.CheckTraitEffect(aiHandoutCostHigher) == true)
@@ -3569,7 +3569,7 @@ public class AIManager : MonoBehaviour
             resources -= 1;
             resources = Mathf.Max(0, resources);
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
-            Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.name, city.mayor.GetTrait().tag, resources, "\n");
+            Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, resources, "\n");
         }
         string handoutDescription = "Unknown";
         DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.data2);
@@ -4804,7 +4804,7 @@ public class AIManager : MonoBehaviour
         //Task lists
         builder.AppendFormat("Authority AI Status (Tasks){0}{1}", "\n", "\n");
         builder.AppendFormat("- Task Allowances{0}", "\n");
-        builder.AppendFormat(" {0} Authority Actions per turn ({1}){2}{3}", actionsPerTurn, city.mayor.name, "\n", "\n");
+        builder.AppendFormat(" {0} Authority Actions per turn ({1}){2}{3}", actionsPerTurn, city.mayor.leaderName, "\n", "\n");
         builder.AppendFormat("- Resource Pools{0}", "\n");
         builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
         builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");

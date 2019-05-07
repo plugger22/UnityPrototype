@@ -247,7 +247,7 @@ public class CityInfoUI : MonoBehaviour
             //centre panel -> mayor / faction / organisation
             if (city.mayor != null)
             {
-                mayorName.text = city.mayor.name;
+                mayorName.text = city.mayor.leaderName;
                 if (city.mayor.GetTrait() != null)
                 { mayorTrait.text = city.mayor.GetTrait().tagFormatted; }
                 else { mayorTrait.text = "Unknown"; }

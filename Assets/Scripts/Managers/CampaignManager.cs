@@ -11,9 +11,11 @@ public class CampaignManager : MonoBehaviour
 
     [Tooltip("Current Campaign (this is the default campaign at game start)")]
     public Campaign campaign;
+    [Tooltip("Number of story status flags used to track stuff story developments across a multi-scenario campaign (size of the array)")]
+    public int numOfFlags = 10;
 
     //master flags used to progress Story elements
-    [HideInInspector] public int[] arrayOfFlags = new int[10];
+    [HideInInspector] public int[] arrayOfStoryStatus;
 
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
 
@@ -23,6 +25,8 @@ public class CampaignManager : MonoBehaviour
     public void InitialiseGame()
     {
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
+        //collections
+        arrayOfStoryStatus = new int[numOfFlags];
         Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign, ID {2}{3}", campaign.listOfScenarios.Count, campaign.tag, campaign.campaignID, "\n");
     }
 
@@ -31,7 +35,11 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly()
     {
-        Debug.Assert(scenario != null, "Invalid scenario (Null)");
+        //Assign a scenario
+        scenario = GetCurrentScenario();
+        if (scenario != null)
+        { Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n"); }
+        else { Debug.LogError("Invalid scenario (Null)"); }
         // City (Early)
         if (scenario.city != null)
         {
@@ -69,17 +77,6 @@ public class CampaignManager : MonoBehaviour
         else { Debug.LogError("Invalid scenario Challenge (Null)"); }
     }
 
-    /// <summary>
-    /// Get current scenario and pass to ScenarioManager.cs
-    /// </summary>
-    public void InitialiseScenario()
-    {
-        //Assign a scenario
-        scenario = GetCurrentScenario();
-        if (scenario != null)
-        { Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n"); }
-        else { Debug.LogError("Invalid scenario (Null)"); }
-    }
 
 
     /// <summary>

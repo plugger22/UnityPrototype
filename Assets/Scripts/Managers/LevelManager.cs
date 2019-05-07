@@ -99,7 +99,7 @@ public class LevelManager : MonoBehaviour
         //save existing random dev state
         GameManager.instance.SaveRandomDevState();
         //reset to level specific random seed
-        int seed = GameManager.instance.scenarioScript.scenario.seedCity;
+        int seed = GameManager.instance.campaignScript.scenario.seedCity;
         Random.InitState(seed);
         string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.name, city.country.name) + Environment.NewLine + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);

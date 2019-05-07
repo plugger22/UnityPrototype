@@ -139,7 +139,7 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid node (Null)"); }
         //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationDelay = GameManager.instance.scenarioScript.scenario.challengeResistance.gracePeriodSecond;
+        durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
         if (durationDelay > 0)
         {
             //grace period, start inactive
@@ -1045,12 +1045,12 @@ public class NemesisManager : MonoBehaviour
                 {
                     //get second nemesis
                     isFirstNemesis = false;
-                    nemesis = GameManager.instance.scenarioScript.scenario.challengeResistance.nemesisSecond;
+                    nemesis = GameManager.instance.campaignScript.scenario.challengeResistance.nemesisSecond;
                     if (nemesis != null)
                     {
                         //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
                         SetNemesisMode(NemesisMode.Inactive);
-                        durationDelay = durationDamageOffLine + GameManager.instance.scenarioScript.scenario.challengeResistance.gracePeriodSecond;
+                        durationDelay = durationDamageOffLine + GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
                         string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationDelay, "\n");
                         if (durationDelay > 0)
                         {
