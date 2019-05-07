@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// handles all campaign related data
+/// NOTE: retain all dynamic data in CampaignManager.cs and leave static data here in the SO
 /// </summary>
 [CreateAssetMenu(menuName = "Game / Campaign")]
 public class Campaign : ScriptableObject
@@ -18,63 +19,7 @@ public class Campaign : ScriptableObject
 
     [HideInInspector] public int campaignID;
     
-    //master flags used to progress Story elements
-    [HideInInspector] public int[] arrayOfFlags = new int[10];
-
-
-
-    private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
-
-    /// <summary>
-    /// Reset all relevant data for a new campaign
-    /// </summary>
-    public void Reset()
-    {
-        scenarioIndex = 0;
-        for (int i = 0; i < arrayOfFlags.Length; i++)
-        { arrayOfFlags[i] = 0; }
-    }
-
-
-    /// <summary>
-    /// adds +1 to scenario index. Returns true if a valid scenario available, false if end of campaign
-    /// </summary>
-    /// <returns></returns>
-    public bool IncrementScenarioIndex()
-    {
-        scenarioIndex++;
-        int count = listOfScenarios.Count;
-        Debug.LogFormat("[Cam] Campaign.SO -> IncrementScenarioIndex: scenario Index now {0} out of {1}{2}", scenarioIndex, count, "\n");
-        if (scenarioIndex < count)
-        { return true; }
-        return false;
-    }
-
-
-    /// <summary>
-    /// returns true if it's the first scenario in a campaign
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckIsFirstScenario()
-    {
-        if (scenarioIndex == 0)
-        { return true; }
-        return false;
-    }
-
-
-    /// <summary>
-    /// returns current scenario, null if not found
-    /// </summary>
-    /// <returns></returns>
-    public Scenario GetCurrentScenario()
-    {
-        Scenario scenario = null;
-        if (scenarioIndex < listOfScenarios.Count)
-        { scenario = listOfScenarios[scenarioIndex]; }
-        return scenario;
-    }
-
+    
 
     //new methods above here
 }

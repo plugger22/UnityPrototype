@@ -23,6 +23,16 @@ public class Save
 //
 
 /// <summary>
+/// CampaignManager.cs data
+/// </summary>
+[System.Serializable]
+public class SaveCampaignData
+{
+
+}
+
+
+/// <summary>
 /// DataManager.cs data
 /// </summary>
 [System.Serializable]
