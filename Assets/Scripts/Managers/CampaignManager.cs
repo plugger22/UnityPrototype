@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using gameAPI;
 using UnityEngine;
@@ -85,8 +86,7 @@ public class CampaignManager : MonoBehaviour
     public void Reset()
     {
         scenarioIndex = 0;
-        for (int i = 0; i < arrayOfFlags.Length; i++)
-        { arrayOfFlags[i] = 0; }
+        Array.Clear(arrayOfStoryStatus, 0, arrayOfStoryStatus.Length);
     }
 
 
@@ -126,10 +126,50 @@ public class CampaignManager : MonoBehaviour
         Scenario scenario = null;
         if (scenarioIndex < campaign.listOfScenarios.Count)
         { scenario = campaign.listOfScenarios[scenarioIndex]; }
+        else { Debug.LogWarningFormat("Invalid scenarioIndex {0} (out of bounds)", scenarioIndex); }
         return scenario;
     }
 
+    /// <summary>
+    /// returns a scenario based on the supplied scenarioIndex
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public Scenario GetScenario(int index)
+    {
+        Scenario scenario = null;
+        if (scenarioIndex < campaign.listOfScenarios.Count)
+        { scenario = campaign.listOfScenarios[scenarioIndex]; }
+        else { Debug.LogWarningFormat("Invalid scenarioIndex {0} (out of bounds)", index); }
+        return scenario;
+    }
 
+    public int GetScenarioIndex()
+    { return scenarioIndex; }
+
+    public int[] GetArrayOfStoryStatus()
+    { return arrayOfStoryStatus; }
+
+    /// <summary>
+    /// Sets the current scenario and the scenario index according to the supplied parameter
+    /// </summary>
+    /// <param name="scenarioIndex"></param>
+    public void SetScenario(int index)
+    {
+        scenarioIndex = index;
+        scenario = GetScenario(index);
+        if (scenario == null)
+        { Debug.LogErrorFormat("Invalid scenario (Null) for scenarioIndex {0}", index); }
+    }
+
+
+    public void SetArrayOfStoryStatus(int[] storyArray)
+    {
+        if (storyArray != null)
+        {
+
+        }
+    }
 
     //new methods above here
 }

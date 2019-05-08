@@ -58,6 +58,7 @@ public class FileManager : MonoBehaviour
         write = new Save();
         //Sequentially write data
         WriteDataData();
+        WriteCampaignData();
         WritePlayerData();
         WriteSideData();
         WriteActorData();
@@ -152,7 +153,7 @@ public class FileManager : MonoBehaviour
             //side (player) at start
             ReadSideData();
             ReadDataData();
-
+            ReadCampaignData();
             //secrets before player
             ReadActorData();
             ValidateActorData();
@@ -165,6 +166,17 @@ public class FileManager : MonoBehaviour
     //
     // - - - Write - - -
     //
+
+    /// <summary>
+    /// CampaignManager.cs data write to file
+    /// </summary>
+    private void WriteCampaignData()
+    {
+        write.campaignData.campaignID = GameManager.instance.campaignScript.campaign.campaignID;
+        write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
+        write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
+    }
+
 
     /// <summary>
     /// PlayerManager.cs Data write to file
@@ -579,6 +591,22 @@ public class FileManager : MonoBehaviour
     //
     // - - - Read - - -
     //
+
+    /// <summary>
+    /// CampaignManager.cs Data
+    /// </summary>
+    private void ReadCampaignData()
+    {
+        //campaign
+        Campaign campaign = GameManager.instance.dataScript.GetCampaign(read.campaignData.campaignID);
+        if (campaign != null)
+        { GameManager.instance.campaignScript.campaign = campaign; }
+        else { Debug.LogErrorFormat("Invalid campaign (Null) for campaignID {0}", read.campaignData.campaignID); }
+        //scenario
+        GameManager.instance.campaignScript.SetScenario(read.campaignData.scenarioIndex);
+        //arrayOfStoryStatus
+        GameManager.instance.campaignScript
+    }
 
     /// <summary>
     /// PlayerManager.cs Data

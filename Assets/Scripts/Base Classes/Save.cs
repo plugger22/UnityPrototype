@@ -11,6 +11,7 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
+    public SaveCampaignData campaignData = new SaveCampaignData();
     public SaveDataData dataData = new SaveDataData();
     public SavePlayerData playerData = new SavePlayerData();
     public SaveSideData sideData = new SaveSideData();

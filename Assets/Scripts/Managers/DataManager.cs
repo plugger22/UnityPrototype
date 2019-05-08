@@ -5975,7 +5975,18 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Campaign> GetDictOfCampaigns()
     { return dictOfCampaigns; }
 
-
+    /// <summary>
+    /// returns campaign for a given campaignID, null if a problem
+    /// </summary>
+    /// <param name="campaignID"></param>
+    /// <returns></returns>
+    public Campaign GetCampaign(int campaignID)
+    {
+        Campaign campaign = null;
+        if (dictOfCampaigns.ContainsKey(campaignID) == true)
+        { campaign = dictOfCampaigns[campaignID]; }
+        return campaign;
+    }
 
     //new methods above here
 }
