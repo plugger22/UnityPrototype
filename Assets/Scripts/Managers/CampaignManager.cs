@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using gameAPI;
 using UnityEngine;
 
@@ -162,13 +163,51 @@ public class CampaignManager : MonoBehaviour
         { Debug.LogErrorFormat("Invalid scenario (Null) for scenarioIndex {0}", index); }
     }
 
-
+    /// <summary>
+    /// assign data from a save game storyArray. Overwrites existing data.
+    /// </summary>
+    /// <param name="storyArray"></param>
     public void SetArrayOfStoryStatus(int[] storyArray)
     {
         if (storyArray != null)
         {
-
+            //clear existing array
+            Array.Clear(arrayOfStoryStatus, 0, arrayOfStoryStatus.Length);
+            //check both are same length
+            Debug.AssertFormat(storyArray.Length == arrayOfStoryStatus.Length, "Mismatch on size of storyArray {0} and arrayOfStoryStatus {1} (should be the same)", storyArray.Length, arrayOfStoryStatus.Length);
+            //copy data across
+            Array.Copy(storyArray, arrayOfStoryStatus, storyArray.Length);
         }
+        else { Debug.LogError("Invalid storyArray parameter (Null)"); }
+    }
+
+
+    /// <summary>
+    /// Debug display
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayCampaignData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- CampaignData{0}{1}", "\n", "\n");
+        builder.AppendFormat(" campaign: ID {0}, \"{1}\"{2}", campaign.campaignID, campaign.tag, "\n");
+        builder.AppendFormat(" current scenario: index {0}, \"{1}\"{2}", scenarioIndex, scenario.tag, "\n");
+        //campaign scenario list in order
+        builder.AppendFormat("{0} ListOfScenarios{1}", "\n", "\n");
+        int count = campaign.listOfScenarios.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            { builder.AppendFormat(" {0}: \"{1}\", ID {2}, {3}, seed {4}{5}", i, campaign.listOfScenarios[i].tag, campaign.listOfScenarios[i].scenarioID, campaign.listOfScenarios[i].city.name, 
+                campaign.listOfScenarios[i].seedCity, "\n"); }
+        }
+        else
+        { builder.AppendFormat(" No scenarios found{0}", "\n"); }
+        //story Status array
+        builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
+        for (int i = 0; i < arrayOfStoryStatus.Length; i++)
+        { builder.AppendFormat(" {0} status: {1}{2}", i, arrayOfStoryStatus[i], "\n"); }
+        return builder.ToString();
     }
 
     //new methods above here

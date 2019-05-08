@@ -150,6 +150,9 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Campaign Data"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Campaign Data");
+                if (debugDisplay != 55)
+                { debugDisplay = 55; }
+                else { debugDisplay = 0; }
             }
 
             //fifth button
@@ -1363,6 +1366,11 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayActorDict();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
+                        break;
+                    case 55:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.campaignScript.DebugDisplayCampaignData();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }

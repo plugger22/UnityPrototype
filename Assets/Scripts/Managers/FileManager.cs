@@ -605,7 +605,7 @@ public class FileManager : MonoBehaviour
         //scenario
         GameManager.instance.campaignScript.SetScenario(read.campaignData.scenarioIndex);
         //arrayOfStoryStatus
-        GameManager.instance.campaignScript
+        GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
     }
 
     /// <summary>
