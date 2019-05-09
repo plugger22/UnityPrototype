@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -147,6 +148,8 @@ public class SaveNodeData
     public int nodePlayer;
     public int nodeNemesis;
     public int nodeCaptured;
+    //node.cs data
+    public List<SaveNode> listOfNodes = new List<SaveNode>();
 }
 
 /// <summary>
@@ -234,6 +237,53 @@ public class SaveActor
     public List<int> listOfContacts = new List<int>();
     
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
+}
+
+/// <summary>
+/// Node.cs
+/// </summary>
+[System.Serializable]
+public class SaveNode
+{
+    public bool isTracer;
+    public bool isSpider;
+    public bool isContactResistance;
+    public bool isContactAuthority;
+    public bool isPreferredAuthority;
+    public bool isPreferredResistance;
+    public bool isCentreNode;
+    public bool isLoiterNode;
+    public bool isConnectedNode;
+    public bool isChokepointNode;
+
+    public int targetID;
+
+    public int spiderTimer;
+    public int tracerTimer;
+    public int activityCount;
+    public int activityTime;
+
+    public bool isStabilityTeam;
+    public bool isSecurityTeam;
+    public bool isSupportTeam;
+    public bool isProbeTeam;
+    public bool isSpiderTeam;
+    public bool isDamageTeam;
+    public bool isErasureTeam;
+
+    public int crisisTimer;
+    public int waitTimer;
+    public NodeCrisis crisis = null;
+
+    public LoiterData loiter;
+    public Cure cure = null;
+
+    List<Vector3> listOfNeighbourPositions;  
+    List<Node> listOfNeighbourNodes;         
+    List<Node> listOfNearNeighbours;         
+    List<Connection> listOfConnections;      
+    List<Team> listOfTeams;                  
+    List<EffectDataOngoing> listOfOngoingEffects;
 }
 
 

@@ -333,11 +333,14 @@ namespace packageAPI
     /// <summary>
     /// Nemesis specific data stored by each node on the map at game start to enable nemesis to quickly move to the nearest loiter node without the need for calculations
     /// </summary>
+    [System.Serializable]
     public class LoiterData
     {
+        #region Save Data Compatible
         public int nodeID = -1;                  //nodeID of nearest loiter node, if same as host node then is a loiter node
         public int distance = -1;                //distance to nearest loiter node, if '0' then is a loiter node
         public int neighbourID = -1;             //neighbouring nodeID that forms the shortest route (unweighted) to the nearest loiter node, if same as host node then is a loiter node
+        #endregion
     }
 
     /// <summary>

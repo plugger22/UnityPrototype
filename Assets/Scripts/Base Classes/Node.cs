@@ -9,7 +9,8 @@ using Random = UnityEngine.Random;
 
 public class Node : MonoBehaviour
 {
-    //NOTE -> LevelManager.arrayOfActiveNodes stores access data, eg. which nodes are active for which actor?
+    public Material _Material { get; private set; }    //material renderer uses to draw node
+    public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
 
     [HideInInspector] public int nodeID;                //unique ID, sequentially derived from NodeManager nodeCounter, don't skip numbers, keep it sequential, 0+
     [HideInInspector] public Vector3 nodePosition;      //position
@@ -18,8 +19,8 @@ public class Node : MonoBehaviour
     [HideInInspector] public NodeArc Arc;               //archetype type
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
 
+    #region Save Data Compatible
     [HideInInspector] public bool isTracer;             //has resistance tracer?
-    /*[HideInInspector] public bool isTracerActive;       //within a tracer coverage (inclusive) of neighbouring nodes*/
     [HideInInspector] public bool isSpider;             //has authority spider?
     [HideInInspector] public bool isContactResistance;  //true if any Resistance Actor has a connection at the node (ignores contact status)
     [HideInInspector] public bool isContactAuthority;   //true if any Authority Actor has a connection at the nodes (ignores contact status)
@@ -52,33 +53,31 @@ public class Node : MonoBehaviour
     [HideInInspector] public LoiterData loiter;         //pre-configured data at game start to aid nemesis moving to the nearest loiter node
     [HideInInspector] public Cure cure = null;          //cure node (condition). Null if none.
 
-
-    private Coroutine myCoroutine;
-
-    //fast access fields
-    private int stabilityTeamEffect = 999;
-    private int securityTeamEffect = 999;
-    private int supportTeamEffect = 999;
-    private int crisisCityLoyalty = 999;
-
-    public Material _Material { get; private set; }    //material renderer uses to draw node
-    public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
-
-    [HideInInspector] public TextMesh faceText;        //textmesh component of faceObject (cached in Awake)
-
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
     private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
     private List<Node> listOfNearNeighbours;            //list of all nodes within a 2 connection radius (includes immediate neighbours)
     private List<Connection> listOfConnections;         //list of neighbouring connections
     private List<Team> listOfTeams;                     //Authority teams present at the node
     private List <EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
+    #endregion
+
+    private Coroutine myCoroutine;
+
+    [HideInInspector] public TextMesh faceText;        //textmesh component of faceObject (cached in Awake)
+
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
     /*private float fadeInTime;                           //tooltip*/
 
+    //fast access fields
     private int maxValue;                               //max and min node datapoint values (derive from NodeManager.cs)
     private int minValue;
+   
+    private int stabilityTeamEffect = 999;
+    private int securityTeamEffect = 999;
+    private int supportTeamEffect = 999;
+    private int crisisCityLoyalty = 999;
 
     //private backing fields
     private int _stability;
