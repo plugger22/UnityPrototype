@@ -7,7 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
-public struct NemesisSaveStruct
+public class NemesisSaveClass
 {
     public bool hasMoved;
     public bool hasActed;
@@ -150,44 +150,47 @@ public class NemesisManager : MonoBehaviour
     public void Initialise()
     {
         resistancePlayer = GameManager.instance.sideScript.resistanceOverall;
-        //fast access
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        //Debug (FOW OFF)
-        isShown = true;
-        isFirstNemesis = true;
-        //assign nemesis to a starting node
-        int nemesisNodeID = -1;
-        //Nemesis always starts at city Centre
-        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.cityScript.cityHallDistrictID);
-        if (node != null)
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
-            nemesisNodeID = node.nodeID;
-            nemesisNode = node;
-            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
-            //assign node
-            GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
-        }
-        else { Debug.LogError("Invalid node (Null)"); }
-        //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
-        if (durationDelay > 0)
-        {
-            //grace period, start inactive
-            SetNemesisMode(NemesisMode.Inactive);
-        }
-        else
-        {
-            //NO grace period, start in normal mode, waiting for signs of player
-            SetNemesisMode(NemesisMode.NORMAL);
+            //fast access
+            globalAuthority = GameManager.instance.globalScript.sideAuthority;
+            globalResistance = GameManager.instance.globalScript.sideResistance;
+            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+            //Debug (FOW OFF)
+            isShown = true;
+            isFirstNemesis = true;
+            //assign nemesis to a starting node
+            int nemesisNodeID = -1;
+            //Nemesis always starts at city Centre
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.cityScript.cityHallDistrictID);
+            if (node != null)
+            {
+                nemesisNodeID = node.nodeID;
+                nemesisNode = node;
+                Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+                //assign node
+                GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
+            }
+            else { Debug.LogError("Invalid node (Null)"); }
+            //Nemesis AI -> nemesis does nothing for 'x' turns at game start
+            durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
+            if (durationDelay > 0)
+            {
+                //grace period, start inactive
+                SetNemesisMode(NemesisMode.Inactive);
+            }
+            else
+            {
+                //NO grace period, start in normal mode, waiting for signs of player
+                SetNemesisMode(NemesisMode.NORMAL);
+            }
+            //event listeners
+            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
         }
         //Set up datafor Nemesis
         SetLoiterNodes();
         SetLoiterData();
-        //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
     }
 
     /// <summary>
@@ -1889,67 +1892,66 @@ public class NemesisManager : MonoBehaviour
     //
 
     /// <summary>
-    /// populates Save data structure and returns the same
+    /// populates Save data class and returns the same
     /// </summary>
     /// <returns></returns>
-    public NemesisSaveStruct WriteSaveData()
+    public NemesisSaveClass WriteSaveData()
     {
-        NemesisSaveStruct saveStruct = new NemesisSaveStruct();
+        NemesisSaveClass writeData = new NemesisSaveClass();
         //copy data over
-        saveStruct.hasMoved = hasMoved;
-        saveStruct.hasActed = hasActed;
-        saveStruct.hasWarning = hasWarning;
-        saveStruct.isFirstNemesis = isFirstNemesis;
-
-        saveStruct.mode = mode;
-        saveStruct.goal = goal;
-        saveStruct.durationGoal = durationGoal;
-        saveStruct.durationDelay = durationDelay;
-        saveStruct.nemesisNodeID = nemesisNode.nodeID;
-        saveStruct.trackerDebug = trackerDebug;
-
-        saveStruct.targetNodeID = targetNodeID;
-        saveStruct.moveToNodeID = moveToNodeID;
-        saveStruct.targetDistance = targetDistance;
-        saveStruct.isImmediate = isImmediate;
-        saveStruct.isPlayerControl = isPlayerControl;
-        saveStruct.controlNodeID = controlNodeID;
-        saveStruct.controlTimer = controlTimer;
-        saveStruct.controlCooldownTimer = controlCooldownTimer;
-        saveStruct.controlGoal = controlGoal;
-
-        return saveStruct;
+        writeData.hasMoved = hasMoved;
+        writeData.hasActed = hasActed;
+        writeData.hasWarning = hasWarning;
+        writeData.isFirstNemesis = isFirstNemesis;
+        writeData.mode = mode;
+        writeData.goal = goal;
+        writeData.durationGoal = durationGoal;
+        writeData.durationDelay = durationDelay;
+        writeData.nemesisNodeID = nemesisNode.nodeID;
+        writeData.trackerDebug = trackerDebug;
+        writeData.targetNodeID = targetNodeID;
+        writeData.moveToNodeID = moveToNodeID;
+        writeData.targetDistance = targetDistance;
+        writeData.isImmediate = isImmediate;
+        writeData.isPlayerControl = isPlayerControl;
+        writeData.controlNodeID = controlNodeID;
+        writeData.controlTimer = controlTimer;
+        writeData.controlCooldownTimer = controlCooldownTimer;
+        writeData.controlGoal = controlGoal;
+        return writeData;
     }
 
     /// <summary>
     /// update nemesisManager.cs with loaded save file data
     /// </summary>
-    /// <param name="saveStruct"></param>
-    public void ReadSaveData(NemesisSaveStruct saveStruct)
+    /// <param name="readData"></param>
+    public void ReadSaveData(NemesisSaveClass readData)
     {
-        //copy data into NemesisManager.cs
-        saveStruct.hasMoved = hasMoved;
-        saveStruct.hasActed = hasActed;
-        saveStruct.hasWarning = hasWarning;
-        saveStruct.isFirstNemesis = isFirstNemesis;
-
-        saveStruct.mode = mode;
-        saveStruct.goal = goal;
-        saveStruct.durationGoal = durationGoal;
-        saveStruct.durationDelay = durationDelay;
-        saveStruct.nemesisNodeID = nemesisNode.nodeID;
-        saveStruct.trackerDebug = trackerDebug;
-
-        saveStruct.targetNodeID = targetNodeID;
-        saveStruct.moveToNodeID = moveToNodeID;
-        saveStruct.targetDistance = targetDistance;
-        saveStruct.isImmediate = isImmediate;
-        saveStruct.isPlayerControl = isPlayerControl;
-        saveStruct.controlNodeID = controlNodeID;
-        saveStruct.controlTimer = controlTimer;
-        saveStruct.controlCooldownTimer = controlCooldownTimer;
-        saveStruct.controlGoal = controlGoal;
-
+        if (readData != null)
+        {
+            //copy data into NemesisManager.cs
+            hasMoved = readData.hasMoved;
+            hasActed = readData.hasActed;
+            hasWarning = readData.hasWarning;
+            isFirstNemesis = readData.isFirstNemesis;
+            mode = readData.mode;
+            goal = readData.goal;
+            durationGoal = readData.durationGoal;
+            durationDelay = readData.durationDelay;
+            nemesisNode = GameManager.instance.dataScript.GetNode(readData.nemesisNodeID);
+            Debug.Assert(nemesisNode != null, "Invalid nemesisNode (Null)");
+            trackerDebug = readData.trackerDebug;
+            targetNodeID = readData.targetNodeID;
+            moveToNodeID = readData.moveToNodeID;
+            targetDistance = readData.targetDistance;
+            isImmediate = readData.isImmediate;
+            isPlayerControl = readData.isPlayerControl;
+            controlNodeID = readData.controlNodeID;
+            controlTimer = readData.controlTimer;
+            controlCooldownTimer = readData.controlCooldownTimer;
+            controlGoal = readData.controlGoal;
+        }
+        else { Debug.LogError("Invalid NemesisSaveClass (Null)"); }
     }
 
 

@@ -60,6 +60,7 @@ public class FileManager : MonoBehaviour
         WriteDataData();
         WriteCampaignData();
         WritePlayerData();
+        WriteNemesisData();
         WriteSideData();
         WriteActorData();
         WriteNodeData();
@@ -158,7 +159,7 @@ public class FileManager : MonoBehaviour
             //set up level based on loaded current scenario seed
             GameManager.instance.InitialiseLoadGame(read.sideData.playerSide.level);
             ReadNodeData();
-
+            ReadNemesisData();
             //secrets before player
 
             ReadActorData();
@@ -183,6 +184,15 @@ public class FileManager : MonoBehaviour
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
     }
 
+
+    /// <summary>
+    /// NemesisManager.cs data write to file
+    /// </summary>
+    private void WriteNemesisData()
+    {
+        write.nemesisData.saveData = GameManager.instance.nemesisScript.WriteSaveData();
+        Debug.Assert(write.nemesisData.saveData != null, "Invalid Nemesis saveData (Null)");
+    }
 
     /// <summary>
     /// PlayerManager.cs Data write to file
@@ -1147,6 +1157,15 @@ public class FileManager : MonoBehaviour
         GameManager.instance.nodeScript.nodeCaptured = read.nodeData.nodeCaptured;
     }
 
+    /// <summary>
+    /// NemesisManager.cs data to game
+    /// </summary>
+    private void ReadNemesisData()
+    {
+        if (read.nemesisData.saveData != null)
+        { GameManager.instance.nemesisScript.ReadSaveData(read.nemesisData.saveData); }
+        else { Debug.LogError("Invalid read.nemesisData.saveData (Null)"); }
+    }
 
     //
     // - - -  Validate - - -

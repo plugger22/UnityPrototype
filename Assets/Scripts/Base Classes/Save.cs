@@ -17,6 +17,7 @@ public class Save
     public SaveSideData sideData = new SaveSideData();
     public SaveActorData actorData = new SaveActorData();
     public SaveNodeData nodeData = new SaveNodeData();
+    public SaveNemesisData nemesisData = new SaveNemesisData();
 
 }
 
@@ -154,7 +155,7 @@ public class SaveNodeData
 [System.Serializable]
 public class SaveNemesisData
 {
-    public NemesisSaveStruct saveStruct;
+    public NemesisSaveClass saveData;
 }
 
 //
