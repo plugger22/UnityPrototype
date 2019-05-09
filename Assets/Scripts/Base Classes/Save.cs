@@ -16,6 +16,7 @@ public class Save
     public SavePlayerData playerData = new SavePlayerData();
     public SaveSideData sideData = new SaveSideData();
     public SaveActorData actorData = new SaveActorData();
+    public SaveNodeData nodeData = new SaveNodeData();
 
 }
 
@@ -122,8 +123,6 @@ public class SaveActorData
     public List<int> resistanceActorPromoted = new List<int>();
     public List<int> resistanceActorDisposedOf = new List<int>();
     public List<int> resistanceActorResigned = new List<int>();
-
-
     //fast access fields for actor.cs
     public int actorStressNone;
     public int actorCorruptNone;
@@ -132,6 +131,30 @@ public class SaveActorData
     public int actorBlackmailTimerHigh;
     public int actorBlackmailTimerLow;
     public int maxNumOfSecrets;     
+}
+
+/// <summary>
+/// NodeManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveNodeData
+{
+    public int crisisPolicyModifier;
+    public int nodeCounter;
+    public int connCounter;
+    public int nodeHighlight;
+    public int nodePlayer;
+    public int nodeNemesis;
+    public int nodeCaptured;
+}
+
+/// <summary>
+/// NemesisManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveNemesisData
+{
+    public NemesisSaveStruct saveStruct;
 }
 
 //

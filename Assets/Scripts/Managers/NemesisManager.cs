@@ -6,6 +6,39 @@ using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public struct NemesisSaveStruct
+{
+    public bool hasMoved;
+    public bool hasActed;
+    public bool hasWarning;
+    public bool isFirstNemesis;
+
+    //Resistance Player
+    public SideState resistancePlayer;
+
+    //Nemesis AI
+    public NemesisMode mode;
+    public NemesisGoal goal;
+    public int durationGoal;
+    public int durationDelay;
+    public int nemesisNodeID;
+    public AITracker trackerDebug;
+
+    //player tracking info
+    public int targetNodeID;
+    public int moveToNodeID;
+    public int targetDistance;
+    public bool isImmediate;
+
+    //Authority player control
+    public bool isPlayerControl;
+    public int controlNodeID;
+    public int controlTimer;
+    public int controlCooldownTimer;
+    public NemesisGoal controlGoal;
+}
+
 /// <summary>
 /// Handles all nemesis related matters
 /// </summary>
@@ -1850,6 +1883,76 @@ public class NemesisManager : MonoBehaviour
     /// <returns></returns>
     public int GetDurationMode()
     { return durationDelay; }
+
+    //
+    // - - - Save / Load
+    //
+
+    /// <summary>
+    /// populates Save data structure and returns the same
+    /// </summary>
+    /// <returns></returns>
+    public NemesisSaveStruct WriteSaveData()
+    {
+        NemesisSaveStruct saveStruct = new NemesisSaveStruct();
+        //copy data over
+        saveStruct.hasMoved = hasMoved;
+        saveStruct.hasActed = hasActed;
+        saveStruct.hasWarning = hasWarning;
+        saveStruct.isFirstNemesis = isFirstNemesis;
+
+        saveStruct.mode = mode;
+        saveStruct.goal = goal;
+        saveStruct.durationGoal = durationGoal;
+        saveStruct.durationDelay = durationDelay;
+        saveStruct.nemesisNodeID = nemesisNode.nodeID;
+        saveStruct.trackerDebug = trackerDebug;
+
+        saveStruct.targetNodeID = targetNodeID;
+        saveStruct.moveToNodeID = moveToNodeID;
+        saveStruct.targetDistance = targetDistance;
+        saveStruct.isImmediate = isImmediate;
+        saveStruct.isPlayerControl = isPlayerControl;
+        saveStruct.controlNodeID = controlNodeID;
+        saveStruct.controlTimer = controlTimer;
+        saveStruct.controlCooldownTimer = controlCooldownTimer;
+        saveStruct.controlGoal = controlGoal;
+
+        return saveStruct;
+    }
+
+    /// <summary>
+    /// update nemesisManager.cs with loaded save file data
+    /// </summary>
+    /// <param name="saveStruct"></param>
+    public void ReadSaveData(NemesisSaveStruct saveStruct)
+    {
+        //copy data into NemesisManager.cs
+        saveStruct.hasMoved = hasMoved;
+        saveStruct.hasActed = hasActed;
+        saveStruct.hasWarning = hasWarning;
+        saveStruct.isFirstNemesis = isFirstNemesis;
+
+        saveStruct.mode = mode;
+        saveStruct.goal = goal;
+        saveStruct.durationGoal = durationGoal;
+        saveStruct.durationDelay = durationDelay;
+        saveStruct.nemesisNodeID = nemesisNode.nodeID;
+        saveStruct.trackerDebug = trackerDebug;
+
+        saveStruct.targetNodeID = targetNodeID;
+        saveStruct.moveToNodeID = moveToNodeID;
+        saveStruct.targetDistance = targetDistance;
+        saveStruct.isImmediate = isImmediate;
+        saveStruct.isPlayerControl = isPlayerControl;
+        saveStruct.controlNodeID = controlNodeID;
+        saveStruct.controlTimer = controlTimer;
+        saveStruct.controlCooldownTimer = controlCooldownTimer;
+        saveStruct.controlGoal = controlGoal;
+
+    }
+
+
 
     //new methods above here
 }

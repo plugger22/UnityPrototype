@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114558055555623972}
   - component: {fileID: 114339811107641630}
   - component: {fileID: 114379107075524332}
+  - component: {fileID: 114680662969460860}
   - component: {fileID: 114256465635010494}
   - component: {fileID: 114709307672004698}
   - component: {fileID: 114200138194279740}
@@ -66,7 +67,6 @@ GameObject:
   - component: {fileID: 114584680957149894}
   - component: {fileID: 114609542619572500}
   - component: {fileID: 114843761391076242}
-  - component: {fileID: 114680662969460860}
   - component: {fileID: 114258654278774664}
   - component: {fileID: 114183753687402266}
   m_Layer: 0
@@ -1557,6 +1557,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
   arrayOfCampaigns:
+  - {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   - {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
 --- !u!114 &114395521989347528
 MonoBehaviour:
@@ -1630,8 +1631,7 @@ MonoBehaviour:
   condtionAuthority: {fileID: 0}
   conditionTurnResistance: 5
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d,
-    type: 2}
+  conditionResistance: {fileID: 0}
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1865,8 +1865,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c5f4638fef720428f1b6683d94e2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  arrayOfFlags: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
+  numOfFlags: 10
+  arrayOfStoryStatus: 
+  scenario: {fileID: 0}
 --- !u!114 &114701128435362846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2038,7 +2040,6 @@ MonoBehaviour:
   guiScript: {fileID: 0}
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
-  scenarioScript: {fileID: 0}
   campaignScript: {fileID: 0}
   controlScript: {fileID: 0}
   fileScript: {fileID: 0}

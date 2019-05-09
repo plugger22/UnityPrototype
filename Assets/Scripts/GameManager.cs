@@ -130,6 +130,8 @@ public class GameManager : MonoBehaviour
     private List<StartMethod> listOfLevelMethods = new List<StartMethod>();         //level related methods
     private List<StartMethod> listOfUIMethods = new List<StartMethod>();            //UI related methods
     private List<StartMethod> listOfDebugMethods = new List<StartMethod>();         //Debug related methods
+    private List<StartMethod> listOfLoadMethodsAuthority = new List<StartMethod>(); //Load a saved game methods (used to regenerate the loaded level). For Authority Player (initialises Resistance AI only)
+    private List<StartMethod> listOfLoadMethodsResistance = new List<StartMethod>();//Load a saved game methods for Resistance Player (initialises Authority AI only)
 
     #endregion
 
@@ -452,10 +454,14 @@ public class GameManager : MonoBehaviour
         startMethod.handler = ResetLevelData;
         startMethod.className = "Reset Level Data";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Campaign Manager InitialiseEarly -> before level & Side Managers
         startMethod.handler = campaignScript.InitialiseEarly;
         startMethod.className = "CampaignManager Early";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Tooltip Node
         startMethod.handler = tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
@@ -468,6 +474,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = objectiveScript.Initialise;
         startMethod.className = "ObjectiveManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Actor Panel UI -> before actorScript.Initialise
         startMethod.handler = actorPanelScript.Initialise;
         startMethod.className = "ActorPanelUI";
@@ -484,14 +492,20 @@ public class GameManager : MonoBehaviour
         startMethod.handler = levelScript.Initialise;
         startMethod.className = "LevelManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
         startMethod.handler = loadScript.InitialiseLate;
         startMethod.className = "LoadManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Data Manager -> InitialiseLate -> immediately after LoadScript.Initialise
         startMethod.handler = dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Statistic Manager -> Initialise -> after DataManager
         startMethod.handler = statScript.Initialise;
         startMethod.className = "StatisticManager";
@@ -500,6 +514,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = dijkstraScript.Initialise;
         startMethod.className = "DijkstraManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Faction Manager
         startMethod.handler = factionScript.Initialise;
         startMethod.className = "FactionManager";
@@ -508,10 +524,13 @@ public class GameManager : MonoBehaviour
         startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Campaign Manager -> InitialiseLate -> after levelScript.Initialise
         startMethod.handler = campaignScript.InitialiseLate;
         startMethod.className = "CampaignManager Late";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Message Manager -> InitialseLate -> after ScenarioManager
         startMethod.handler = messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
@@ -536,7 +555,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = nodeScript.Initialise;
         startMethod.className = "NodeManager";
         listOfLevelMethods.Add(startMethod);
-
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //Effect Manager -> after nodeScript
         startMethod.handler = effectScript.Initialise;
         startMethod.className = "EffectManager";
@@ -553,9 +573,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = gearScript.Initialise;
         startMethod.className = "GearManager";
         listOfLevelMethods.Add(startMethod);
-
-        //team picker
-
         //Capture Manager
         startMethod.handler = captureScript.Initialise;
         startMethod.className = "CaptureManager";
@@ -572,6 +589,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = aiRebelScript.Initialise;
         startMethod.className = "AIRebelManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
         //Trait Manager
         startMethod.handler = traitScript.Initialise;
         startMethod.className = "TraitManager";
@@ -580,6 +598,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = connScript.Initialise;
         startMethod.className = "ConnectionManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsResistance.Add(startMethod);
         //
         // - - - UI methods - - -
         //
@@ -727,55 +747,37 @@ public class GameManager : MonoBehaviour
         nodeScript.NodeRedraw = true;
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
-
         //free mouse for normal operations
         Cursor.lockState = CursorLockMode.None;
     }
     #endregion
 
-    // EDIT: No longer in use
-    private void StartArchive()
+
+    #region InitialiseLoadGame
+    /// <summary>
+    /// Load a save game, methods required to generate the new level based on the loaded scenario seed. Input playerSide.level so the appropriate AI initialisation can be done
+    /// </summary>
+    public void InitialiseLoadGame(int playerSide)
     {
-        
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
-
-        //start sequence
-        if (isPerformanceLog == false)
+        //allows for selective loading of AI/AIRebel Managers (no point loading one if not needed and there is some overhead attached to both so best to only load the one that is required)
+        switch (playerSide)
         {
-            //normal start-up
-            InitialiseMethods(listOfGlobalMethods);
-            InitialiseMethods(listOfGameMethods);
-            InitialiseMethods(listOfLevelMethods);
-            InitialiseMethods(listOfUIMethods);
-            InitialiseMethods(listOfDebugMethods);
+            case 1: InitialiseMethods(listOfLoadMethodsAuthority); break;
+            case 2: InitialiseMethods(listOfLoadMethodsResistance); break;
+            default: Debug.LogErrorFormat("Unrecognised playerSide.level {0}", playerSide); break;
         }
-        else
-        {
-            //need testManager in order to access performance timer
-            testScript.Initialise();
-            //start-up with Performance Monitoring
-            InitialiseWithPerformanceMonitoring(listOfGlobalMethods);
-            InitialiseWithPerformanceMonitoring(listOfGameMethods);
-            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
-            InitialiseWithPerformanceMonitoring(listOfUIMethods);
-            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
-            DisplayTotalTime();
-        }
+        //set session flag
+        isSession = true;
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
-        //free mouse for normal operations
-        Cursor.lockState = CursorLockMode.None;
         //colour scheme
         optionScript.ColourOption = ColourScheme.Normal;
-        //AutoRun
-        if (autoRunTurns > 0)
-        { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
-        else
-        {
-            InitialiseMainMenu();
-        }
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
     }
+    #endregion
 
 
     #region ResetLevelData
@@ -822,6 +824,51 @@ public class GameManager : MonoBehaviour
         obj.SetActive(false);
     }
     #endregion
+
+
+    // EDIT: No longer in use
+    private void StartArchive()
+    {
+        
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+
+        //start sequence
+        if (isPerformanceLog == false)
+        {
+            //normal start-up
+            InitialiseMethods(listOfGlobalMethods);
+            InitialiseMethods(listOfGameMethods);
+            InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
+            InitialiseMethods(listOfDebugMethods);
+        }
+        else
+        {
+            //need testManager in order to access performance timer
+            testScript.Initialise();
+            //start-up with Performance Monitoring
+            InitialiseWithPerformanceMonitoring(listOfGlobalMethods);
+            InitialiseWithPerformanceMonitoring(listOfGameMethods);
+            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+            InitialiseWithPerformanceMonitoring(listOfUIMethods);
+            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
+            DisplayTotalTime();
+        }
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+        //colour scheme
+        optionScript.ColourOption = ColourScheme.Normal;
+        //AutoRun
+        if (autoRunTurns > 0)
+        { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
+        else
+        {
+            InitialiseMainMenu();
+        }
+    }
 
     //place methods above here
 }

@@ -62,6 +62,7 @@ public class FileManager : MonoBehaviour
         WritePlayerData();
         WriteSideData();
         WriteActorData();
+        WriteNodeData();
     }
 
     /// <summary>
@@ -154,7 +155,12 @@ public class FileManager : MonoBehaviour
             ReadSideData();
             ReadDataData();
             ReadCampaignData();
+            //set up level based on loaded current scenario seed
+            GameManager.instance.InitialiseLoadGame(read.sideData.playerSide.level);
+            ReadNodeData();
+
             //secrets before player
+
             ReadActorData();
             ValidateActorData();
             ReadPlayerData();
@@ -586,6 +592,20 @@ public class FileManager : MonoBehaviour
             Debug.LogWarningFormat("Failed to serialize {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
         }
         return saveActor;
+    }
+
+    /// <summary>
+    /// NodeManager.cs data to file
+    /// </summary>
+    private void WriteNodeData()
+    {
+        write.nodeData.crisisPolicyModifier = GameManager.instance.nodeScript.crisisPolicyModifier;
+        write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeCounter;
+        write.nodeData.connCounter = GameManager.instance.nodeScript.connCounter;
+        write.nodeData.nodeHighlight = GameManager.instance.nodeScript.nodeHighlight;
+        write.nodeData.nodePlayer = GameManager.instance.nodeScript.nodePlayer;
+        write.nodeData.nodeNemesis = GameManager.instance.nodeScript.nodeNemesis;
+        write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeCaptured;
     }
 
     //
@@ -1111,6 +1131,20 @@ public class FileManager : MonoBehaviour
         resistanceActorDisposedOf.AddRange(read.actorData.resistanceActorDisposedOf);
         resistanceActorResigned.AddRange(read.actorData.resistanceActorResigned);
 
+    }
+
+    /// <summary>
+    /// NodeManager.cs data to game
+    /// </summary>
+    private void ReadNodeData()
+    {
+        GameManager.instance.nodeScript.crisisPolicyModifier = read.nodeData.crisisPolicyModifier;
+        GameManager.instance.nodeScript.nodeCounter = read.nodeData.nodeCounter;
+        GameManager.instance.nodeScript.connCounter = read.nodeData.connCounter;
+        GameManager.instance.nodeScript.nodeHighlight = read.nodeData.nodeHighlight;
+        GameManager.instance.nodeScript.nodePlayer = read.nodeData.nodePlayer;
+        GameManager.instance.nodeScript.nodeNemesis = read.nodeData.nodeNemesis;
+        GameManager.instance.nodeScript.nodeCaptured = read.nodeData.nodeCaptured;
     }
 
 

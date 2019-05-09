@@ -58,6 +58,7 @@ public class NodeManager : MonoBehaviour
     [Tooltip("Level, at or Above, where Node support (for resistance) reaches the danger point")]
     [Range(0, 3)] public int crisisSupport = 3;
 
+    #region Save Data Compatible
     [HideInInspector] public int crisisPolicyModifier = 0;          //modifier to  crisisBaseChance due to Authority Policies, eg. "Curfew" 
     [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes (reset for each new level)
     [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections (reset for each new level)
@@ -65,10 +66,12 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of human Resistance/Authority player
     [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
-
+    #endregion
 
     private bool isFlashOn = false;                                 //used for flashing Node coroutine
-    private bool showPlayerNode = true;         
+    private bool showPlayerNode = true;                             //switched off if player node needs to be flashed
+
+
     private Coroutine myCoroutine;
 
     //fast access -> outcomes

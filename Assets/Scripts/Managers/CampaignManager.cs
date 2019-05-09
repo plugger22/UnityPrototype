@@ -16,10 +16,14 @@ public class CampaignManager : MonoBehaviour
     [Tooltip("Number of story status flags used to track stuff story developments across a multi-scenario campaign (size of the array)")]
     public int numOfFlags = 10;
 
+
+
+    #region Save Data Compatible
     //master flags used to progress Story elements
     [HideInInspector] public int[] arrayOfStoryStatus;
 
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
+    #endregion
 
     [HideInInspector] public Scenario scenario;
 

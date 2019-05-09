@@ -43,6 +43,7 @@ public class AITask
 /// <summary>
 /// extracted data from AI messages (at time of AI becoming aware of them)
 /// </summary>
+[System.Serializable]
 public class AITracker
 {
     public int data0;                       //node or connectionID
