@@ -18,10 +18,16 @@ namespace gameAPI
         [HideInInspector] public int turnDeployed;          //if deployed OnMap, turn number of when it first happened.
 
         /// <summary>
-        /// Creates a new team of a particular TeamArcType, eg. "Security"
+        /// default constructor used for Loading saved teams back into dictionary
+        /// </summary>
+        public Team()
+        { }
+
+        /// <summary>
+        /// Creates a new team of a particular TeamArcType, eg. "Security". natoCount is used to determine Nato nomlecture, eg. 'Alpha/Bravo/Charlie'
         /// </summary>
         /// <param name="arcType"></param>
-        public Team(string arcType, int count)
+        public Team(string arcType, int natoCount)
         {
             //valid arcType
             int teamArcID = GameManager.instance.dataScript.GetTeamArcID(arcType);
@@ -33,7 +39,7 @@ namespace gameAPI
                 {
                     teamID = GameManager.instance.teamScript.teamCounter++;
                     arc = teamArc;
-                    InitialiseTeamData(count);
+                    InitialiseTeamData(natoCount);
                     AddToCollections(this);
                 }
                 else Debug.LogError(string.Format("TeamArc type \"{0}\", ID {1}, not found in dictionary -> Team not created{2}", arcType, teamArcID, "\n"));
@@ -43,7 +49,7 @@ namespace gameAPI
 
 
         /// <summary>
-        /// Creates a new team of a particular teamArcID. Count is used to determine Nato nomlecture, eg. 'Alpha/Bravo/Charlie'
+        /// Creates a new team of a particular teamArcID. natoCount is used to determine Nato nomlecture, eg. 'Alpha/Bravo/Charlie'
         /// </summary>
         /// <param name="arcType"></param>
         public Team(int teamArcID, int natoCount)

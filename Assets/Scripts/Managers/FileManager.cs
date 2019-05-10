@@ -390,6 +390,31 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
+        //teams
+        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        if (dictOfTeams != null)
+        {
+            foreach(var record in dictOfTeams)
+            {
+                if (record.Value != null)
+                {
+                    //create SaveTeam and copy data across
+                    SaveTeam saveTeam = new SaveTeam();
+                    saveTeam.teamID = record.Value.teamID;
+                    saveTeam.teamName = record.Value.teamName;
+                    saveTeam.pool = record.Value.pool;
+                    saveTeam.arcID = record.Value.arc.TeamArcID;
+                    saveTeam.actorSlotID = record.Value.actorSlotID;
+                    saveTeam.nodeID = record.Value.nodeID;
+                    saveTeam.timer = record.Value.timer;
+                    saveTeam.turnDeployed = record.Value.turnDeployed;
+                    //add to list
+                    write.dataData.listOfTeams.Add(saveTeam);
+                }
+                else { Debug.LogWarningFormat("Invalid team (Null) for teamID {0}", record.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTeams (Null)"); }
     }
 
 
@@ -968,6 +993,42 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
+        //
+        // - - - Teams
+        //
+        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        if (dictOfTeams != null)
+        {
+            //clear dict
+            dictOfTeams.Clear();
+            for (int i = 0; i < read.dataData.listOfTeams.Count; i++)
+            {
+                SaveTeam saveTeam = read.dataData.listOfTeams[i];
+                if (saveTeam != null)
+                {
+                    Team team = new Team();
+                    team.teamID = saveTeam.teamID;
+                    team.teamName = saveTeam.teamName;
+                    team.pool = saveTeam.pool;
+                    team.actorSlotID = saveTeam.actorSlotID;
+                    team.nodeID = saveTeam.nodeID;
+                    team.timer = saveTeam.timer;
+                    team.turnDeployed = saveTeam.turnDeployed;
+                    //team arc
+                    TeamArc arc = GameManager.instance.dataScript.GetTeamArc(saveTeam.arcID);
+                    if (arc != null)
+                    { team.arc = arc; }
+                    else { Debug.LogErrorFormat("Invalid teamArc (Null) for arcID {0}", saveTeam.arcID); }
+                    //add to dictionary
+                    try
+                    { dictOfTeams.Add(team.teamID, team); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate team entry for teamID {0}", team.teamID); }
+                }
+                else { Debug.LogWarningFormat("Invalid SaveTeam (Null) in read.dataData.listOfTeams[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTeams (Null)"); }
     }
 
     /// <summary>

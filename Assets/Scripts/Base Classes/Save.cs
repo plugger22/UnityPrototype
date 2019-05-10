@@ -52,7 +52,6 @@ public class SaveDataData
     //contacts
     public List<int> listOfContactPool = new List<int>();
     public List<Contact> listOfContacts = new List<Contact>();
-
     public List<IntListWrapper> listOfActorContactsValue = new List<IntListWrapper>();
     public List<int> listOfActorContactsKey = new List<int>();
     public List<IntListWrapper> listOfNodeContactsByResistanceValue = new List<IntListWrapper>();
@@ -61,6 +60,8 @@ public class SaveDataData
     public List<int> listOfNodeContactsByAuthorityKey = new List<int>();
     public List<ContactListWrapper> listOfContactsByNodeResistanceValue = new List<ContactListWrapper>();
     public List<int> listOfContactsByNodeResistanceKey = new List<int>();
+    //teams
+    public List<SaveTeam> listOfTeams = new List<SaveTeam>();
 }
 
 
@@ -290,6 +291,22 @@ public class SaveNode
   
     public List<int> listOfTeams = new List<int>();                  
     public List<int> listOfOngoingEffects = new List<int>();
+}
+
+/// <summary>
+/// Team.cs
+/// </summary>
+[System.Serializable]
+public class SaveTeam
+{
+    public int teamID;
+    public string teamName;
+    public TeamPool pool;
+    public int arcID;
+    public int actorSlotID;
+    public int nodeID;
+    public int timer;
+    public int turnDeployed;
 }
 
 
