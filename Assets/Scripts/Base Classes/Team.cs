@@ -9,10 +9,7 @@ namespace gameAPI
     public class Team
     {
         [HideInInspector] public int teamID;
-        [HideInInspector] public string teamName;
-
-        
-
+        [HideInInspector] public string teamName;      
         [HideInInspector] public TeamPool pool;
         [HideInInspector] public TeamArc arc;
         [HideInInspector] public int actorSlotID;                //which actor has deployed the team, '-1' if none

@@ -288,8 +288,8 @@ public class SaveNode
     public LoiterData loiter;
     public int cureID;
   
-    List<int> listOfTeams;                  
-    List<int> listOfOngoingEffects;
+    public List<int> listOfTeams = new List<int>();                  
+    public List<int> listOfOngoingEffects = new List<int>();
 }
 
 

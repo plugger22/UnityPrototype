@@ -211,7 +211,7 @@ public class ModalTeamPicker : MonoBehaviour
             //teams at node
             if (numTeams > 0)
             {
-                List<Team> listOfTeams = node.GetTeams();
+                List<Team> listOfTeams = node.GetListOfTeams();
                 if (listOfTeams != null)
                 {
                     if (listOfTeams.Count > 0)

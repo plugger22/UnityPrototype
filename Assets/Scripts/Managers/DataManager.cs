@@ -3190,7 +3190,7 @@ public class DataManager : MonoBehaviour
 
         if (node != null)
         {
-            List<Team> listOfTeams = node.GetTeams();
+            List<Team> listOfTeams = node.GetListOfTeams();
             if (listOfTeams.Count > 0)
             {
                 for (int i = 0; i < listOfTeams.Count; i++)
@@ -5135,6 +5135,19 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid Ongoing effect (Null)"); }
+    }
+
+    /// <summary>
+    /// Returns null if not found
+    /// </summary>
+    /// <param name="ongoingID"></param>
+    /// <returns></returns>
+    public EffectDataOngoing GetOngoingEffect(int ongoingID)
+    {
+        EffectDataOngoing ongoingEffect = null;
+        if (dictOfOngoingID.ContainsKey(ongoingID) == true)
+        { return dictOfOngoingID[ongoingID]; }
+        return ongoingEffect;
     }
 
     /// <summary>

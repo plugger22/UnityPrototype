@@ -406,7 +406,7 @@ public class Node : MonoBehaviour
                             contactListOther = GameManager.instance.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
                             break;
                     }
-                    List<EffectDataTooltip> effectsList = GetOngoingEffects();
+                    List<EffectDataTooltip> effectsList = GetListOfOngoingEffectTooltips();
                     List<string> teamList = new List<string>();
                     if (listOfTeams.Count > 0)
                     {
@@ -698,7 +698,7 @@ public class Node : MonoBehaviour
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none
     /// </summary>
     /// <returns></returns>
-    public List<EffectDataTooltip> GetOngoingEffects()
+    public List<EffectDataTooltip> GetListOfOngoingEffectTooltips()
     {
         List<EffectDataTooltip> tempList = new List<EffectDataTooltip>();
         if (listOfOngoingEffects.Count > 0)
@@ -713,6 +713,10 @@ public class Node : MonoBehaviour
         }
         return tempList;
     }
+
+
+    public List<EffectDataOngoing> GetListOfOngoingEffects()
+    { return listOfOngoingEffects; }
 
 
     public void SetMaterial(Material newMaterial)
@@ -805,7 +809,7 @@ public class Node : MonoBehaviour
     /// Max cap on number of teams at node.
     /// </summary>
     /// <param name="team"></param>
-    public bool AddTeam(Team team, int actorID)
+    public bool AddTeam(Team team, int actorSlotID)
     {
         if (team != null)
         {
@@ -844,7 +848,7 @@ public class Node : MonoBehaviour
                 }
                 //initialise Team data
                 team.nodeID = nodeID;
-                team.actorSlotID = actorID;
+                team.actorSlotID = actorSlotID;
                 team.pool = TeamPool.OnMap;
                 team.timer = GameManager.instance.teamScript.deployTime;
                 /*Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, nodeName, nodeID, "\n"));*/
@@ -855,6 +859,14 @@ public class Node : MonoBehaviour
         else { Debug.LogError(string.Format("Invalid team (null) for Node {0}, ID {1}{2}", nodeName, nodeID, "\n")); }
         return false;
     }
+
+    /// <summary>
+    /// Load saved file method to drop a team straight into the listOfTeams. 
+    /// NOTE: Team checked for Null by the calling method
+    /// </summary>
+    /// <param name="team"></param>
+    public void LoadAddTeam(Team team)
+    { listOfTeams.Add(team); }
 
     /// <summary>
     /// Remove a team with the matching teamID from the listOfTeams and adjust team status. Returns true if successful, false otherwise.
@@ -989,7 +1001,7 @@ public class Node : MonoBehaviour
     /// returns empty list if none
     /// </summary>
     /// <returns></returns>
-    public List<Team> GetTeams()
+    public List<Team> GetListOfTeams()
     { return listOfTeams; }
 
     /// <summary>
@@ -1065,6 +1077,13 @@ public class Node : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Load saved file to game specific method to add an ongoing effect straight to list 
+    /// NOTE: ongoing effect is checked for Null by the calling method
+    /// </summary>
+    /// <param name="ongoing"></param>
+    public void LoadAddOngoingEffect(EffectDataOngoing ongoing)
+    { listOfOngoingEffects.Add(ongoing); }
 
     /// <summary>
     /// Returns tally of ongoing effects for the specified node datapoint, '0' if none

@@ -962,7 +962,7 @@ public class TeamManager : MonoBehaviour
         if (node != null)
         {
             //double check to see if there are teams present at the node
-            List<Team> listOfTeams = node.GetTeams();
+            List<Team> listOfTeams = node.GetListOfTeams();
             if (listOfTeams != null && listOfTeams.Count > 0)
             {
                 genericDetails.returnEvent = EventType.GenericTeamRecall;
@@ -1061,7 +1061,7 @@ public class TeamManager : MonoBehaviour
         if (node != null)
         {
             //double check to see if there are teams present at the node
-            List<Team> listOfTeams = node.GetTeams();
+            List<Team> listOfTeams = node.GetListOfTeams();
             if (listOfTeams != null && listOfTeams.Count > 0)
             {
                 genericDetails.returnEvent = EventType.GenericNeutraliseTeam;

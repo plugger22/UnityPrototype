@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// Handles all Save / Load functionality
@@ -663,9 +664,37 @@ public class FileManager : MonoBehaviour
                     saveNode.crisisTimer = record.Value.crisisTimer;
                     saveNode.waitTimer = record.Value.waitTimer;
                     saveNode.crisis = record.Value.crisis;
+                    //cure
                     if (record.Value.cure == null)
                     { saveNode.cureID = -1; }
                     else { saveNode.cureID = record.Value.cure.cureID; }
+                    saveNode.loiter = record.Value.loiter;
+                    //teams
+                    List<Team> listOfTeams = record.Value.GetListOfTeams();
+                    if (listOfTeams != null)
+                    {
+                        for (int i = 0; i < listOfTeams.Count; i++)
+                        {
+                            Team team = listOfTeams[i];
+                            if (team != null)
+                            { saveNode.listOfTeams.Add(team.teamID); }
+                            else { Debug.LogWarningFormat("Invalid team (Null) in listOfTeams[{0}]", i); }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfTeams (Null) for nodeID {0}", record.Key); }
+                    //ongoing effects
+                    List<EffectDataOngoing> listOfOngoing = record.Value.GetListOfOngoingEffects();
+                    if (listOfOngoing != null)
+                    {
+                        for (int i = 0; i < listOfOngoing.Count; i++)
+                        {
+                            EffectDataOngoing effectOngoing = listOfOngoing[i];
+                            if (effectOngoing != null)
+                            { saveNode.listOfOngoingEffects.Add(effectOngoing.ongoingID); }
+                            else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoing[{0}]", i); }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfOngoingEffects (Null) for nodeID {0}", record.Key); }
                     //add to list
                     write.nodeData.listOfNodes.Add(saveNode);
                     
@@ -1258,6 +1287,7 @@ public class FileManager : MonoBehaviour
                     node.crisisTimer = saveNode.crisisTimer;
                     node.waitTimer = saveNode.waitTimer;
                     node.crisis = saveNode.crisis;
+                    //cure
                     if (saveNode.cureID == -1)
                     { node.cure = null; }
                     else
@@ -1268,7 +1298,34 @@ public class FileManager : MonoBehaviour
                         { node.cure = cure; }
                         else { Debug.LogWarningFormat("Invalid cure for cureID {0}", saveNode.cureID); }
                     }
-                }
+                    node.loiter = saveNode.loiter;
+                    //teams
+                    int count = saveNode.listOfTeams.Count;
+                    node.GetListOfTeams().Clear();
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            Team team = GameManager.instance.dataScript.GetTeam(saveNode.listOfTeams[j]);
+                            if (team != null)
+                            { node.LoadAddTeam(team); }
+                            else { Debug.LogWarningFormat("Invalid team (Null) for listOfTeams[{0}]", j); }
+                        }
+                    }
+                    //ongoing effects
+                    count = saveNode.listOfOngoingEffects.Count;
+                    node.GetListOfOngoingEffects().Clear();
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            EffectDataOngoing effectOngoing = GameManager.instance.dataScript.GetOngoingEffect(saveNode.listOfOngoingEffects[j]);
+                            if (effectOngoing != null)
+                            { node.LoadAddOngoingEffect(effectOngoing); }
+                            else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoingEffects[{0}]", j); }
+                        }
+                    }
+                 }
                 else { Debug.LogWarningFormat("Invalid node (Null) for saveNode.nodeID {0}", saveNode.nodeID); }
             }
             else { Debug.LogWarningFormat("Invalid saveNode in read.nodeData.listOfNodes[{0}]", i); }

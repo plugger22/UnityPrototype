@@ -1056,7 +1056,7 @@ public class ActorManager : MonoBehaviour
                 if (node.CheckNumOfTeams() > 0)
                 {
                     //get list of teams
-                    List<Team> listOfTeams = node.GetTeams();
+                    List<Team> listOfTeams = node.GetListOfTeams();
                     if (listOfTeams != null)
                     {
                         StringBuilder builder = new StringBuilder();

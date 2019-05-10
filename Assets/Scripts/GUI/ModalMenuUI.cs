@@ -133,10 +133,10 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                                 break;
                         }
                         /*List<string> activeList = node.GetNodeContacts();*/
-                        List<EffectDataTooltip> effectsList = node.GetOngoingEffects();
+                        List<EffectDataTooltip> effectsList = node.GetListOfOngoingEffectTooltips();
                         List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetID, node.isTargetKnown);
                         List<string> teamList = new List<string>();
-                        List<Team> listOfTeams = node.GetTeams();
+                        List<Team> listOfTeams = node.GetListOfTeams();
                         if (listOfTeams.Count > 0)
                         {
                             foreach (Team team in listOfTeams)
