@@ -451,7 +451,7 @@ public class GameManager : MonoBehaviour
         // - - - Level methods - - -
         //
         //Reset Data prior to new level
-        startMethod.handler = ResetLevelData;
+        startMethod.handler = ResetNewLevelData;
         startMethod.className = "Reset Level Data";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethodsAuthority.Add(startMethod);
@@ -780,14 +780,15 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region ResetLevelData
+    #region ResetNewLevelData
     /// <summary>
     /// reset all relevant data prior to a new level
     /// </summary>
-    private void ResetLevelData()
+    private void ResetNewLevelData()
     {
         levelScript.Reset();
-        dataScript.Reset();
+        if (inputScript.GameState != GameState.LoadGame)
+        { dataScript.Reset(); }
         nodeScript.Reset();
         actorScript.Reset();
         contactScript.Reset();

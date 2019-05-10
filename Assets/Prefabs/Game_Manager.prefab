@@ -1865,7 +1865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c5f4638fef720428f1b6683d94e2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
+  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   numOfFlags: 10
   arrayOfStoryStatus: 
   scenario: {fileID: 0}
