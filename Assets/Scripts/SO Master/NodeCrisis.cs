@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Node / NodeCrisis")]
 public class NodeCrisis : ScriptableObject
 {
+    #region Save Data Compatible
     [HideInInspector] public int nodeCrisisID;               //unique #, zero based, assigned automatically by DataManager.Initialise
 
     public NodeDatapoint datapoint;
@@ -15,5 +16,6 @@ public class NodeCrisis : ScriptableObject
     public string tag;
     [Tooltip("Used for fuller description")]
     [TextArea] public string description;
-    
+    #endregion
+
 }

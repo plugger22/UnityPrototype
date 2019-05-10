@@ -166,7 +166,7 @@ namespace packageAPI
         public string gearName;                                           //originating gear (used for InfoApp, use only if effect is gear based)
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?
-        public int gearID;                                                //gearID (used for InfoApp, use only if effect is gear based), default -1
+        public int gearID = -1;                                                //gearID (used for InfoApp, use only if effect is gear based), default -1
         public Node node;                                                 //originating node (used for InfoApp, use only if effect is node based)
         public EffectOutcome outcome;
         public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
@@ -175,7 +175,6 @@ namespace packageAPI
 
         public EffectDataOngoing()
         {
-            gearID = -1;
             timer = GameManager.instance.effectScript.ongoingEffectTimer;
         }
     }

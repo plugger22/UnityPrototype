@@ -245,6 +245,16 @@ public class SaveActor
 [System.Serializable]
 public class SaveNode
 {
+    public int nodeID;
+    public int security;
+    public int stability;
+    public int support;
+    public bool isTracerKnown;
+    public bool isSpiderKnown;
+    public bool isContactKnown;
+    public bool isTeamKnown;
+    public bool isTargetKnown;
+
     public bool isTracer;
     public bool isSpider;
     public bool isContactResistance;
@@ -273,17 +283,13 @@ public class SaveNode
 
     public int crisisTimer;
     public int waitTimer;
-    public NodeCrisis crisis = null;
+    public NodeCrisis crisis;
 
     public LoiterData loiter;
-    public Cure cure = null;
-
-    List<Vector3> listOfNeighbourPositions;  
-    List<Node> listOfNeighbourNodes;         
-    List<Node> listOfNearNeighbours;         
-    List<Connection> listOfConnections;      
-    List<Team> listOfTeams;                  
-    List<EffectDataOngoing> listOfOngoingEffects;
+    public int cureID;
+  
+    List<int> listOfTeams;                  
+    List<int> listOfOngoingEffects;
 }
 
 

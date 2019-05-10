@@ -616,6 +616,64 @@ public class FileManager : MonoBehaviour
         write.nodeData.nodePlayer = GameManager.instance.nodeScript.nodePlayer;
         write.nodeData.nodeNemesis = GameManager.instance.nodeScript.nodeNemesis;
         write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeCaptured;
+        //
+        // - - - Node.cs
+        //
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        if (dictOfNodes != null)
+        {
+            foreach (var record in dictOfNodes)
+            {
+                if (record.Value != null)
+                {
+                    //create new SaveNode
+                    SaveNode saveNode = new SaveNode();
+                    //copy across dynamic node data
+                    saveNode.nodeID = record.Value.nodeID;
+                    saveNode.security = record.Value.Security;
+                    saveNode.stability = record.Value.Stability;
+                    saveNode.support = record.Value.Support;
+                    saveNode.isTracerKnown = record.Value.isTracerKnown;
+                    saveNode.isSpiderKnown = record.Value.isSpiderKnown;
+                    saveNode.isContactKnown = record.Value.isContactKnown;
+                    saveNode.isTeamKnown = record.Value.isTeamKnown;
+                    saveNode.isTargetKnown = record.Value.isTargetKnown;
+                    saveNode.isTracer = record.Value.isTracer;
+                    saveNode.isSpider = record.Value.isSpider;
+                    saveNode.isContactResistance = record.Value.isContactResistance;
+                    saveNode.isContactAuthority = record.Value.isContactAuthority;
+                    saveNode.isPreferredAuthority = record.Value.isPreferredAuthority;
+                    saveNode.isPreferredResistance = record.Value.isPreferredResistance;
+                    saveNode.isCentreNode = record.Value.isCentreNode;
+                    saveNode.isLoiterNode = record.Value.isLoiterNode;
+                    saveNode.isConnectedNode = record.Value.isConnectedNode;
+                    saveNode.isChokepointNode = record.Value.isChokepointNode;
+                    saveNode.targetID = record.Value.targetID;
+                    saveNode.spiderTimer = record.Value.spiderTimer;
+                    saveNode.tracerTimer = record.Value.tracerTimer;
+                    saveNode.activityCount = record.Value.activityCount;
+                    saveNode.activityTime = record.Value.activityTime;
+                    saveNode.isStabilityTeam = record.Value.isStabilityTeam;
+                    saveNode.isSecurityTeam = record.Value.isSecurityTeam;
+                    saveNode.isSupportTeam = record.Value.isSupportTeam;
+                    saveNode.isProbeTeam = record.Value.isProbeTeam;
+                    saveNode.isSpiderTeam = record.Value.isSpiderTeam;
+                    saveNode.isDamageTeam = record.Value.isDamageTeam;
+                    saveNode.isErasureTeam = record.Value.isErasureTeam;
+                    saveNode.crisisTimer = record.Value.crisisTimer;
+                    saveNode.waitTimer = record.Value.waitTimer;
+                    saveNode.crisis = record.Value.crisis;
+                    if (record.Value.cure == null)
+                    { saveNode.cureID = -1; }
+                    else { saveNode.cureID = record.Value.cure.cureID; }
+                    //add to list
+                    write.nodeData.listOfNodes.Add(saveNode);
+                    
+                }
+                else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0} in dictOfNodes", record.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
     //
@@ -1148,6 +1206,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadNodeData()
     {
+        //NodeManager.cs dynamic data
         GameManager.instance.nodeScript.crisisPolicyModifier = read.nodeData.crisisPolicyModifier;
         GameManager.instance.nodeScript.nodeCounter = read.nodeData.nodeCounter;
         GameManager.instance.nodeScript.connCounter = read.nodeData.connCounter;
@@ -1155,6 +1214,65 @@ public class FileManager : MonoBehaviour
         GameManager.instance.nodeScript.nodePlayer = read.nodeData.nodePlayer;
         GameManager.instance.nodeScript.nodeNemesis = read.nodeData.nodeNemesis;
         GameManager.instance.nodeScript.nodeCaptured = read.nodeData.nodeCaptured;
+        //update node data
+        for (int i = 0; i < read.nodeData.listOfNodes.Count; i++)
+        {
+            SaveNode saveNode = read.nodeData.listOfNodes[i];
+            if (saveNode != null)
+            {
+                //find equivalent inGame node
+                Node node = GameManager.instance.dataScript.GetNode(saveNode.nodeID);
+                if (node != null)
+                {
+                    //copy save data over to node
+                    node.Security = saveNode.security;
+                    node.Stability = saveNode.stability;
+                    node.Support = saveNode.support;
+                    node.isTracerKnown = saveNode.isTracerKnown;
+                    node.isSpiderKnown = saveNode.isSpiderKnown;
+                    node.isContactKnown = saveNode.isContactKnown;
+                    node.isTeamKnown = saveNode.isTeamKnown;
+                    node.isTargetKnown = saveNode.isTargetKnown;
+                    node.isTracer = saveNode.isTracer;
+                    node.isSpider = saveNode.isSpider;
+                    node.isContactResistance = saveNode.isContactResistance;
+                    node.isContactAuthority = saveNode.isContactAuthority;
+                    node.isPreferredAuthority = saveNode.isPreferredAuthority;
+                    node.isPreferredResistance = saveNode.isPreferredResistance;
+                    node.isCentreNode = saveNode.isCentreNode;
+                    node.isLoiterNode = saveNode.isLoiterNode;
+                    node.isConnectedNode = saveNode.isConnectedNode;
+                    node.isChokepointNode = saveNode.isChokepointNode;
+                    node.targetID = saveNode.targetID;
+                    node.spiderTimer = saveNode.spiderTimer;
+                    node.tracerTimer = saveNode.tracerTimer;
+                    node.activityCount = saveNode.activityCount;
+                    node.activityTime = saveNode.activityTime;
+                    node.isStabilityTeam = saveNode.isStabilityTeam;
+                    node.isSecurityTeam = saveNode.isSecurityTeam;
+                    node.isSupportTeam = saveNode.isSupportTeam;
+                    node.isProbeTeam = saveNode.isProbeTeam;
+                    node.isSpiderTeam = saveNode.isSpiderTeam;
+                    node.isDamageTeam = saveNode.isDamageTeam;
+                    node.isErasureTeam = saveNode.isErasureTeam;
+                    node.crisisTimer = saveNode.crisisTimer;
+                    node.waitTimer = saveNode.waitTimer;
+                    node.crisis = saveNode.crisis;
+                    if (saveNode.cureID == -1)
+                    { node.cure = null; }
+                    else
+                    {
+                        //get cure from dictionary
+                        Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureID);
+                        if (cure != null)
+                        { node.cure = cure; }
+                        else { Debug.LogWarningFormat("Invalid cure for cureID {0}", saveNode.cureID); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid node (Null) for saveNode.nodeID {0}", saveNode.nodeID); }
+            }
+            else { Debug.LogWarningFormat("Invalid saveNode in read.nodeData.listOfNodes[{0}]", i); }
+        }
     }
 
     /// <summary>

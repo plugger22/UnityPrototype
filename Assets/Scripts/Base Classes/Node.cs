@@ -52,16 +52,31 @@ public class Node : MonoBehaviour
 
     [HideInInspector] public LoiterData loiter;         //pre-configured data at game start to aid nemesis moving to the nearest loiter node
     [HideInInspector] public Cure cure = null;          //cure node (condition). Null if none.
-
-    private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
-    private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
-    private List<Node> listOfNearNeighbours;            //list of all nodes within a 2 connection radius (includes immediate neighbours)
-    private List<Connection> listOfConnections;         //list of neighbouring connections
+    //save collections
     private List<Team> listOfTeams;                     //Authority teams present at the node
     private List <EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
+
+    //private backing fields
+    private int _stability;
+    private int _support;                               //support for resistance
+    private int _security;
+    private int _stabilityStart;                        //values at game start (base line)
+    private int _supportStart;
+    private int _securityStart;
+    private bool _isTracerKnown;                        //true if Authority knows of tracer coverage for this node
+    private bool _isSpiderKnown;                        //does Resistance know of spider?
+    private bool _isContactKnown;                         //true if Authority knows of Actor contacts
+    private bool _isTeamKnown;                          //true if Resistance knows of teams (additional means other than tracer coverage or connections)
+    private bool _isTargetKnown;                        //true if Authority knows of Active or Live target (if present)
     #endregion
 
     private Coroutine myCoroutine;
+
+    //generated collections
+    private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
+    private List<Node> listOfNeighbourNodes;            //list of neighbouring nodes that this node is connected to 
+    private List<Node> listOfNearNeighbours;            //list of all nodes within a 2 connection radius (includes immediate neighbours) -> Initialised by AIManager.cs -> Initialise -> SetNearNeighbours
+    private List<Connection> listOfConnections;         //list of neighbouring connections
 
     [HideInInspector] public TextMesh faceText;        //textmesh component of faceObject (cached in Awake)
 
@@ -79,18 +94,6 @@ public class Node : MonoBehaviour
     private int supportTeamEffect = 999;
     private int crisisCityLoyalty = 999;
 
-    //private backing fields
-    private int _stability;
-    private int _support;                               //support for resistance
-    private int _security;
-    private int _stabilityStart;                        //values at game start (base line)
-    private int _supportStart;
-    private int _securityStart;
-    private bool _isTracerKnown;                        //true if Authority knows of tracer coverage for this node
-    private bool _isSpiderKnown;                        //does Resistance know of spider?
-    private bool _isContactKnown;                         //true if Authority knows of Actor contacts
-    private bool _isTeamKnown;                          //true if Resistance knows of teams (additional means other than tracer coverage or connections)
-    private bool _isTargetKnown;                        //true if Authority knows of Active or Live target (if present)
 
     //Properties for backing fields
     public int Security

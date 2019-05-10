@@ -360,7 +360,7 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfCures.Length;
         if (numArray > 0)
         {
-            Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
+            Dictionary<int, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
             for (int i = 0; i < numArray; i++)
             {
                 //assign a zero based unique ID number
@@ -371,7 +371,7 @@ public class LoadManager : MonoBehaviour
                     cure.cureID = counter++;
                     //add to dictionary
                     try
-                    { dictOfCures.Add(cure.name, cure); }
+                    { dictOfCures.Add(cure.cureID, cure); }
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Cure (duplicate) \"{0}\"", cure.name)); }
                 }

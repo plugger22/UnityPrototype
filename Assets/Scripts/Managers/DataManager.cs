@@ -204,10 +204,10 @@ public class DataManager : MonoBehaviour
     private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();            //Key -> (int)StatType, Value -> statistic
     private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
-
+    private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                         //Key -> cureID, Value -> Cure
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.tag, Value -> Condition
-    private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                          //Key -> Cure.name, Value -> Cure
+
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
 
     //
@@ -5449,9 +5449,28 @@ public class DataManager : MonoBehaviour
         return dictOfConditionsByType;
     }
 
+    //
+    // - - - Cures - - -
+    //
 
-    public Dictionary<string, Cure> GetDictOfCures()
+    public Dictionary<int, Cure> GetDictOfCures()
     { return dictOfCures; }
+
+    /// <summary>
+    /// Get Cure from dictionary, returns Null if a problem
+    /// </summary>
+    /// <param name="cureID"></param>
+    /// <returns></returns>
+    public Cure GetCure(int cureID)
+    {
+        if (dictOfCures.ContainsKey(cureID))
+        { return dictOfCures[cureID]; }
+        else { return null; }
+    }
+
+    //
+    // - - - ManageActions - - -
+    //
 
     /// <summary>
     /// Returns ManageAction SO, Null if not found in dictionary
