@@ -278,7 +278,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Clear any relevant collections prior to initialising a new level
     /// </summary>
-    public void Reset()
+    public void ResetNewLevel()
     {
         graph = null;
         //arrays
@@ -354,7 +354,22 @@ public class DataManager : MonoBehaviour
 
         //dictOfTargets -> leave
         //dictOfStatistics -> leave
-}
+    }
+
+    /// <summary>
+    /// Clear any relevant data collections AFTER loading a save game file
+    /// </summary>
+    public void ResetLoadGame()
+    {
+        //dictionaries
+        dictOfConnections.Clear();
+        dictOfNodeDUnweighted.Clear();
+        dictOfNodeDWeighted.Clear();
+        dictOfNodeDUnweighted.Clear();
+        dictOfNodeDWeighted.Clear();
+        dictOfDijkstraUnweighted.Clear();
+        dictOfDijkstraWeighted.Clear();
+    }
 
     //
     // - - - Info Flow (Notifications)- - - 

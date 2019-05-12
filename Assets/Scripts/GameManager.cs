@@ -788,7 +788,8 @@ public class GameManager : MonoBehaviour
     {
         levelScript.Reset();
         if (inputScript.GameState != GameState.LoadGame)
-        { dataScript.Reset(); }
+        { dataScript.ResetNewLevel(); }
+        else { dataScript.ResetLoadGame(); }
         nodeScript.Reset();
         actorScript.Reset();
         contactScript.Reset();
