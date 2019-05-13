@@ -27,6 +27,7 @@ public enum EventType
     CloseLoadGame,
     ResumeGame,
     SaveGame,
+    CloseSaveGame,
     //UI Menus
     CloseActionMenu,
     CloseMainMenu,

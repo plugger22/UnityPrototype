@@ -59,6 +59,7 @@ public class FileManager : MonoBehaviour
         //Sequentially write data
         WriteDataData();
         WriteCampaignData();
+        WriteOptionData();
         WritePlayerData();
         WriteNemesisData();
         WriteSideData();
@@ -151,7 +152,8 @@ public class FileManager : MonoBehaviour
         if (read != null)
         {
             //side (player) at start
-            ReadSideData();
+            ReadOptionData();
+            ReadSideData();          
             ReadDataData();
             ReadCampaignData();
             //set up level based on loaded current scenario seed
@@ -182,6 +184,21 @@ public class FileManager : MonoBehaviour
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
     }
 
+    /// <summary>
+    /// OptionManager.cs data write to file
+    /// </summary>
+    private void WriteOptionData()
+    {
+        write.optionData.autoGearResolution = GameManager.instance.optionScript.autoGearResolution;
+        write.optionData.fogOfWar = GameManager.instance.optionScript.fogOfWar;
+        write.optionData.debugData = GameManager.instance.optionScript.debugData;
+        write.optionData.noAI = GameManager.instance.optionScript.noAI;
+        write.optionData.showContacts = GameManager.instance.optionScript.showContacts;
+        write.optionData.showRenown = GameManager.instance.optionScript.showRenown;
+        write.optionData.connectorTooltips = GameManager.instance.optionScript.connectorTooltips;
+        write.optionData.colourScheme = GameManager.instance.optionScript.ColourOption;
+    }
+
 
     /// <summary>
     /// NemesisManager.cs data write to file
@@ -192,6 +209,7 @@ public class FileManager : MonoBehaviour
         Debug.Assert(write.nemesisData.saveData != null, "Invalid Nemesis saveData (Null)");
     }
 
+    #region Write Player data
     /// <summary>
     /// PlayerManager.cs Data write to file
     /// </summary>
@@ -231,6 +249,7 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarning("Invalid Authority condition (Null)"); }
         }
     }
+    #endregion
 
     /// <summary>
     /// SideManager.cs data write to file
@@ -456,7 +475,7 @@ public class FileManager : MonoBehaviour
         #endregion
     }
 
-
+    #region Write Actor data
     /// <summary>
     /// Actor.cs (dict and lists) full data set write to file
     /// </summary>
@@ -668,7 +687,10 @@ public class FileManager : MonoBehaviour
         }
         return saveActor;
     }
+    #endregion
 
+
+    #region Write Node data
     /// <summary>
     /// NodeManager.cs data to file
     /// </summary>
@@ -768,6 +790,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
+    #endregion
 
     //
     // - - - Read - - -
@@ -789,6 +812,22 @@ public class FileManager : MonoBehaviour
         GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
     }
 
+    /// <summary>
+    /// OptionManager.cs Data
+    /// </summary>
+    private void ReadOptionData()
+    {
+        GameManager.instance.optionScript.autoGearResolution = read.optionData.autoGearResolution;
+        GameManager.instance.optionScript.fogOfWar = read.optionData.fogOfWar;
+        GameManager.instance.optionScript.debugData = read.optionData.debugData;
+        GameManager.instance.optionScript.noAI = read.optionData.noAI;
+        GameManager.instance.optionScript.showContacts = read.optionData.showContacts;
+        GameManager.instance.optionScript.showRenown = read.optionData.showRenown;
+        GameManager.instance.optionScript.connectorTooltips = read.optionData.connectorTooltips;
+        GameManager.instance.optionScript.ColourOption = read.optionData.colourScheme;
+    }
+
+    #region Read Player Data
     /// <summary>
     /// PlayerManager.cs Data
     /// </summary>
@@ -835,6 +874,8 @@ public class FileManager : MonoBehaviour
         }
         GameManager.instance.playerScript.SetConditions(listOfConditions, globalAuthority);
     }
+    #endregion
+
 
     /// <summary>
     /// SideManager.cs data
@@ -1126,6 +1167,7 @@ public class FileManager : MonoBehaviour
         #endregion
     }
 
+    #region Read Actor Data
     /// <summary>
     /// Actor datasets for DataManager.cs collections
     /// </summary>
@@ -1385,7 +1427,10 @@ public class FileManager : MonoBehaviour
         resistanceActorResigned.AddRange(read.actorData.resistanceActorResigned);
 
     }
+    #endregion
 
+
+    #region Read Node Data
     /// <summary>
     /// NodeManager.cs data to game
     /// </summary>
@@ -1487,6 +1532,7 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid saveNode in read.nodeData.listOfNodes[{0}]", i); }
         }
     }
+    #endregion
 
     /// <summary>
     /// NemesisManager.cs data to game

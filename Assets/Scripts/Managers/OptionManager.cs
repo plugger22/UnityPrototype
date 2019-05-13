@@ -9,6 +9,7 @@ using System.Text;
 /// </summary>
 public class OptionManager : MonoBehaviour
 {
+    #region Save Data Compatible
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
@@ -24,8 +25,8 @@ public class OptionManager : MonoBehaviour
 
     //Backing fields (use underscore)
     private ColourScheme _colourOption;
+    #endregion
 
-    
 
     //ColourManager.cs ColourScheme enum (eg. 0 -> normal, 1 -> colourblind)
     public ColourScheme ColourOption                             

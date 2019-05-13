@@ -7,7 +7,7 @@
     //
     // - - - Game Manager - - -
     //
-    public enum GameState { None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, LoadGame, PlayGame, MetaGame, ExitLevel, ExitCampaign, ExitGame}  //overall game state
+    public enum GameState { None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, LoadGame, PlayGame, MetaGame, ExitLevel, ExitCampaign, ExitGame}  //overall game state
     public enum WinState { None, Authority, Resistance }                                                                //none indicates nobody has yet won level
     public enum WinReason { None, CityLoyaltyMin, CityLoyaltyMax, FactionSupportMin, DoomTimerMin, MissionTimerMin, ObjectivesCompleted } //reason for Win State (from POV of winner)
     public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)
@@ -25,12 +25,13 @@
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum InventoryState { None, Gear, ReservePool}
     public enum AlignHorizontal { None, Left, Centre, Right }
-    public enum Background { None, Start, NewGame, NewGameOptions, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
+    public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     public enum DebugRegister { None, Ongoing, Actions }
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,
+        MainMenuUnavailable,
         SomethingWrong,
         PlayerStatus, SideStatus, ActorStatus,
         DebugAI, DebugPlayer,
@@ -112,6 +113,32 @@
     //
     public enum DiceOutcome { None, Ignore, Auto, Roll }
     public enum DiceType { None, Move, Gear}                                //reason dice is being rolled
+
+    //
+    // - - - Teams - - -
+    //
+    public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count }           //DataManager arrayOfTeams  index
+    public enum TeamPool { Reserve, OnMap, InTransit, Count }                  //Different pools that teams move between
+    public enum TeamDebug { None, Pools, Roster, Actors }
+    public enum NATO
+    {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
+        Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike,
+        November, Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey, Xray, Yankee, Zulu,
+        Count
+    }
+
+    //
+    // - - - Statistics - - - 
+    //
+    public enum StatType
+    {
+        None,
+        StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
+        PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
+        TargetAttempts, TargetSuccesses,
+        actorsResignedAuthority, actorsResignedResistance, actorResistanceTraitors
+
+    }
 
     //
     // - - - Messages - - -
@@ -210,31 +237,7 @@
 
     }
 
-    //
-    // - - - Teams - - -
-    //
-    public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count }           //DataManager arrayOfTeams  index
-    public enum TeamPool { Reserve, OnMap, InTransit, Count }                  //Different pools that teams move between
-    public enum TeamDebug { None, Pools, Roster, Actors}
-    public enum NATO
-    {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
-        Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike,
-        November, Oscar, Papa, Quebec, Romeo, Sierra, Tango, Uniform, Victor, Whiskey, Xray, Yankee, Zulu,
-        Count
-    }
 
-    //
-    // - - - Statistics - - - 
-    //
-    public enum StatType
-    {
-        None,
-        StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
-        PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
-        TargetAttempts, TargetSuccesses,
-        actorsResignedAuthority, actorsResignedResistance, actorResistanceTraitors
-        
-    }
 
 
 }

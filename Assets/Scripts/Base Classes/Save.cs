@@ -14,6 +14,7 @@ public class Save
 {
     public SaveCampaignData campaignData = new SaveCampaignData();
     public SaveDataData dataData = new SaveDataData();
+    public SaveOptionData optionData = new SaveOptionData();
     public SavePlayerData playerData = new SavePlayerData();
     public SaveSideData sideData = new SaveSideData();
     public SaveActorData actorData = new SaveActorData();
@@ -35,6 +36,23 @@ public class SaveCampaignData
     public int campaignID;
     public int scenarioIndex;
     public int[] arrayOfStoryStatus;
+}
+
+
+/// <summary>
+/// OptionManager.cs data
+/// </summary>
+[System.Serializable]
+public class SaveOptionData
+{
+    public bool autoGearResolution;
+    public bool fogOfWar;
+    public bool debugData;
+    public bool noAI;
+    public bool showContacts;
+    public bool showRenown;
+    public bool connectorTooltips;
+    public ColourScheme colourScheme;
 }
 
 

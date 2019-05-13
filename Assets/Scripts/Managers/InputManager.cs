@@ -180,26 +180,29 @@ public class InputManager : MonoBehaviour
                     switch (_gameState)
                     {
                         case GameState.NewGame:
-                            EventManager.instance.PostNotification(EventType.NewGameOptions, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.NewGameOptions, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.NewGameOptions:
-                            EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.LoadGame:
-                            EventManager.instance.PostNotification(EventType.CloseLoadGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.CloseLoadGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
+                            break;
+                        case GameState.SaveGame:
+                            EventManager.instance.PostNotification(EventType.CloseSaveGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.Options:
                             //close Options background -> Debug: need to set new Game State
                             EventManager.instance.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.ExitLevel:
-                            EventManager.instance.PostNotification(EventType.CreateMetaGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.CreateMetaGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.MetaGame:
-                            EventManager.instance.PostNotification(EventType.CloseMetaGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.CloseMetaGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.ExitCampaign:
-                            EventManager.instance.PostNotification(EventType.ExitGame, this, null, string.Format("InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"", Input.inputString.ToUpper()));
+                            EventManager.instance.PostNotification(EventType.ExitGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         default:
                             //ignore all the rest

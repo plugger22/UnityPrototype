@@ -37,6 +37,8 @@ public class ModalGUI : MonoBehaviour
     public Image backgroundEndCampaign;
     [Tooltip("Resume or Load a save game")]
     public Image backgroundLoadGame;
+    [Tooltip("Save Game")]
+    public Image backgroundSaveGame;
 
     
     private int modalLevel;                                                 //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
@@ -76,6 +78,7 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(backgroundNewCampaign != null, "Invalid backgroundNewCampaign (Null)");
         Debug.Assert(backgroundEndCampaign != null, "Invalid backgroundEndCampaign (Null)");
         Debug.Assert(backgroundLoadGame != null, "Invalid backgroundLoadGame (Null)");
+        Debug.Assert(backgroundSaveGame != null, "Invalid backgroundSaveGame (Null)");
         //disable all backgrounds
         CloseBackgrounds();
     }
@@ -177,6 +180,9 @@ public class ModalGUI : MonoBehaviour
             case Background.LoadGame:
                 backgroundLoadGame.gameObject.SetActive(true);
                 break;
+            case Background.SaveGame:
+                backgroundSaveGame.gameObject.SetActive(true);
+                break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
                 break;
@@ -222,6 +228,9 @@ public class ModalGUI : MonoBehaviour
                         break;
                     case Background.LoadGame:
                         backgroundLoadGame.gameObject.SetActive(false);
+                        break;
+                    case Background.SaveGame:
+                        backgroundSaveGame.gameObject.SetActive(false);
                         break;
                     case Background.None:
                         //do nothing

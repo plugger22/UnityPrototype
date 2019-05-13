@@ -235,6 +235,11 @@ public class GUIManager : MonoBehaviour
                 details.textTop = string.Format("{0}Something has gone horribly wrong{1}", colourBad, colourEnd);
                 details.textBottom = "We aren't sure what but we've got our best man on it";
                 break;
+            case AlertType.MainMenuUnavailable:
+                //generic fault message
+                details.textTop = string.Format("{0}Main Menu is unavailable{1}", colourBad, colourEnd);
+                details.textBottom = string.Format("If you are {0}Lying Low{1} or have been {2}Captured{3} your options are limited", colourAlert, colourEnd, colourAlert, colourEnd);
+                break;
             case AlertType.PlayerStatus:
                 switch (GameManager.instance.playerScript.status)
                 {

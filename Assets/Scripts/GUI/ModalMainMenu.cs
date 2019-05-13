@@ -138,13 +138,22 @@ public class ModalMainMenu : MonoBehaviour
     /// </summary>
     private void CreateDefaultMainMenu()
     {
-        ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
+        //menu only accessible if player is active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
-            alignHorizontal = AlignHorizontal.Centre,
-            background = Background.None
-        };
-        //activate menu
-        InitialiseMainMenu(detailsMain);
+            ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
+            {
+                alignHorizontal = AlignHorizontal.Centre,
+                background = Background.None
+            };
+            //activate menu
+            InitialiseMainMenu(detailsMain);
+        }
+        else
+        {
+            //display a pop-up info window
+            GameManager.instance.guiScript.SetAlertMessage(AlertType.MainMenuUnavailable);
+        }
     }
 
     /// <summary>

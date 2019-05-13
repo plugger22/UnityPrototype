@@ -13,19 +13,20 @@ public class ControlManager : MonoBehaviour
     public void Initialise()
     {
         //event Listeners
-        EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CreateOptions, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CloseNewGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CloseOptions, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CreateMetaGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.ResumeGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.LoadGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.SaveGame, OnEvent, "CampaignManager");
-        EventManager.instance.AddListener(EventType.CloseLoadGame, OnEvent, "CampaignManager");
+        EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CreateOptions, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CloseNewGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CloseOptions, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CreateMetaGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.ResumeGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.LoadGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.CloseSaveGame, OnEvent, "CampaignManager");
     }
 
 
@@ -61,6 +62,9 @@ public class ControlManager : MonoBehaviour
                 break;
             case EventType.CloseLoadGame:
                 CloseLoadGame();
+                break;
+            case EventType.CloseSaveGame:
+                CloseSaveGame();
                 break;
             case EventType.CreateOptions:
                 ProcessOptions((GameState)Param);
@@ -281,7 +285,6 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
-
     }
 
     /// <summary>
@@ -290,6 +293,14 @@ public class ControlManager : MonoBehaviour
     private void ProcessSaveGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: SAVE game option selected{0}", "\n");
+        //toggle on modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
+        //Load Game -> open background
+        GameManager.instance.modalGUIScript.SetBackground(Background.SaveGame);
+        //Close any open background
+        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.SaveGame);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.SaveGame;
         //Debug -> time load game process
         GameManager.instance.testScript.StartTimer();
         GameManager.instance.fileScript.WriteGameData();
@@ -297,6 +308,20 @@ public class ControlManager : MonoBehaviour
         //how long did it take?
         long timeElapsed = GameManager.instance.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
+    }
+
+
+    /// <summary>
+    /// Close save game screen
+    /// </summary>
+    private void CloseSaveGame()
+    {
+        //Close any open background
+        GameManager.instance.modalGUIScript.CloseBackgrounds();
+        //toggle of modal block
+        GameManager.instance.guiScript.SetIsBlocked(false);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.PlayGame;
     }
 
 
