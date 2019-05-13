@@ -332,7 +332,7 @@ public class HelpManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat(" Keyboard Commands{0},{1}", "\n", "\n");
         builder.AppendFormat(" End Turn -> Enter{0}", "\n");
-        builder.AppendFormat(" Exit     -> X{0}{1}", "\n", "\n");
+        builder.AppendFormat(" End Level -> X{0}{1}", "\n", "\n");
         builder.AppendFormat(" Reserves -> R{0}", "\n");
         builder.AppendFormat(" Gear -> G{0}{1}", "\n", "\n");
         builder.AppendFormat(" Targets -> T{0}", "\n");

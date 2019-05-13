@@ -354,14 +354,49 @@ public class DataManager : MonoBehaviour
 
         //dictOfTargets -> leave
         //dictOfStatistics -> leave
+        //dictOfSecrets -> leave
     }
 
     /// <summary>
-    /// Clear any relevant data collections AFTER loading a save game file
+    /// Clear any relevant data collections AFTER loading a save game file (excludes collections that have already been dealt with in FileManager.cs -> ReadDataData or later Read.... methods)
     /// </summary>
     public void ResetLoadGame()
     {
+        graph = null;
+        //arrays
+        if (arrayOfGenericTargets != null)
+        { Array.Clear(arrayOfGenericTargets, 0, arrayOfGenericTargets.Length); }
+        //Node lists
+        listOfNodes.Clear();
+        listOfConnections.Clear();
+        listOfNodesByType.Clear();
+        listOfMostConnectedNodes.Clear();
+        listOfDecisionNodes.Clear();
+        listOfLoiterNodes.Clear();
+        listOfCureNodes.Clear();
+        listOfCrisisNodes.Clear();
+        listOfCrisisSecurity.Clear();
+        listOfCrisisSupport.Clear();
+        listOfCrisisStability.Clear();
+        //target lists
+        targetPoolActive.Clear();
+        targetPoolLive.Clear();
+        targetPoolOutstanding.Clear();
+        targetPoolDone.Clear();
+        listOfNodesWithTargets.Clear();
+        //team lists
+        teamPoolReserve.Clear();
+        teamPoolOnMap.Clear();
+        teamPoolInTransit.Clear();
+        //gear lists
+        listOfCommonGear.Clear();
+        listOfRareGear.Clear();
+        listOfUniqueGear.Clear();
+        listOfLostGear.Clear();
+        listOfCurrentGear.Clear();
         //dictionaries
+        dictOfNodeObjects.Clear();
+        dictOfNodes.Clear();
         dictOfConnections.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
@@ -2997,6 +3032,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, int> GetDictOfLookUpTeamArcs()
     { return dictOfLookUpTeamArcs; }
+
+    public int[,] GetArrayOfTeams()
+    { return arrayOfTeams; }
 
     /// <summary>
     /// called from ImportManager.cs

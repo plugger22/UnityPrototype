@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
-using System;
-using gameAPI;
+﻿using gameAPI;
 using packageAPI;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 /// <summary>
 /// Handles all Save / Load functionality
@@ -151,8 +150,6 @@ public class FileManager : MonoBehaviour
     {
         if (read != null)
         {
-            //Sequentially read data back into game
-
             //side (player) at start
             ReadSideData();
             ReadDataData();
@@ -252,6 +249,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteDataData()
     {
+        #region secrets
         //
         // - - - Secrets
         //
@@ -303,6 +301,8 @@ public class FileManager : MonoBehaviour
             { write.dataData.listOfDeletedSecrets.Add(listOfSecrets[i].secretID); }
         }
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
+        #endregion
+        #region contacts
         //
         // - - - Contacts
         //
@@ -390,7 +390,11 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
-        //teams
+        #endregion
+        #region teams
+        //
+        // - - - Teams
+        //
         Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
@@ -415,6 +419,41 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTeams (Null)"); }
+        //arrayOfTeams
+        int[,] arrayOfTeams = GameManager.instance.dataScript.GetArrayOfTeams();
+        if (arrayOfTeams != null)
+        {
+            //check array dimensions (similar check on load)
+            int numOfArcs = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+            int numOfInfo = (int)TeamInfo.Count;
+            int size0 = arrayOfTeams.GetUpperBound(0) + 1;
+            int size1 = arrayOfTeams.GetUpperBound(1) + 1;
+            Debug.AssertFormat(numOfArcs == size0, "Mismatch on array size, rank 0 (Arcs) should be {0}, is {1}", numOfArcs, size0);
+            Debug.AssertFormat(numOfInfo == size1, "Mismatch on arraySize, rank 1 (TeamInfo) should be {0}, is {1}", numOfInfo, size1);
+            //write data
+            for (int i = 0; i < size0; i++)
+            {
+                for (int j = 0; j < size1; j++)
+                { write.dataData.listOfArrayOfTeams.Add(arrayOfTeams[i, j]);  }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTeams (Null)"); }
+        //list -> reserves
+        List<int> tempList = GameManager.instance.dataScript.GetTeamPool(TeamPool.Reserve);
+        if (tempList != null)
+        { write.dataData.listOfTeamPoolReserve.AddRange(tempList); }
+        else { Debug.LogError("Invalid teamPoolReserve list (Null)"); }
+        //list -> OnMap
+        tempList = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+        if (tempList != null)
+        { write.dataData.listOfTeamPoolOnMap.AddRange(tempList); }
+        else { Debug.LogError("Invalid teamPoolOnMap list (Null)"); }
+        //list -> InTransit
+        tempList = GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit);
+        if (tempList != null)
+        { write.dataData.listOfTeamPoolInTransit.AddRange(tempList); }
+        else { Debug.LogError("Invalid teamPoolInTransit list (Null)"); }
+        #endregion
     }
 
 
@@ -448,7 +487,7 @@ public class FileManager : MonoBehaviour
         int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(sideNum > 0, "Invalid sideNum (Zero or less)");
         Debug.Assert(actorNum > 0, "Invalid actorNum (Zero or less)");
-        //write data to arrays (not multidimensional arrays split into single arrays for serialization)
+        //write data to lists (not multidimensional arrays split into single lists for serialization)
         Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
         Debug.Assert(arrayOfActors.GetUpperBound(0) + 1 == sideNum, "Invalid arrayOfActors dimension [x, ]");
         Debug.Assert(arrayOfActors.GetUpperBound(1) + 1 == actorNum, "Invalid arrayOfActors dimension [ ,x]");
@@ -810,10 +849,12 @@ public class FileManager : MonoBehaviour
     }
 
     /// <summary>
-    /// DataManager.cs data
+    /// DataManager.cs data (need to clear collections prior to adding to them)
+    /// NOTE: happens BEFORE Datamanager.cs -> ResetLoadGame so make sure any collections here are not in that method otherwise they'll be updated here and then cleared there.
     /// </summary>
     private void ReadDataData()
     {
+        #region secrets
         //
         // - - - Secrets
         //
@@ -877,6 +918,8 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
+        #endregion
+        #region contacts
         //
         // - - - Contacts
         //
@@ -972,7 +1015,7 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfNodeContactsAuthority (Null)"); }
-        //dictOfNodeContactsResistance
+        //dictOfContactsByNodeResistance
         Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
         if (dictOfContactsByNodeResistance != null)
         {
@@ -993,6 +1036,8 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
+        #endregion
+        #region teams
         //
         // - - - Teams
         //
@@ -1029,6 +1074,59 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTeams (Null)"); }
+        //arrayOfTeams
+        int[,] arrayOfTeams = GameManager.instance.dataScript.GetArrayOfTeams();
+        if (arrayOfTeams != null)
+        {
+            //check bounds match are the same as the ones the save data used
+            int index;
+            int numOfArcs = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+            int numOfInfo = (int)TeamInfo.Count;
+            int size0 = arrayOfTeams.GetUpperBound(0) + 1;
+            int size1 = arrayOfTeams.GetUpperBound(1) + 1;
+            Debug.AssertFormat(numOfArcs == size0, "Mismatch on array size, rank 0 (Arcs) should be {0}, is {1}", numOfArcs, size0);
+            Debug.AssertFormat(numOfInfo == size1, "Mismatch on arraySize, rank 1 (TeamInfo) should be {0}, is {1}", numOfInfo, size1);
+            //clear array
+            Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
+            //copy saved data into array
+            for (int i = 0; i < numOfArcs; i++)
+            {
+                for (int j = 0; j < numOfInfo; j++)
+                {
+                    index = (i * numOfArcs) + j;
+                    arrayOfTeams[i, j] = read.dataData.listOfArrayOfTeams[index];
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTeams (Null)"); }
+        //list -> Reserves
+        List<int> teamPoolReserve = GameManager.instance.dataScript.GetTeamPool(TeamPool.Reserve);
+        if (teamPoolReserve != null)
+        {
+            //clear list and copy across data
+            teamPoolReserve.Clear();
+            teamPoolReserve.AddRange(read.dataData.listOfTeamPoolReserve);
+        }
+        else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
+        //list -> OnMap
+        List<int> teamPoolOnMap = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+        if (teamPoolOnMap != null)
+        {
+            //clear list and copy across data
+            teamPoolOnMap.Clear();
+            teamPoolOnMap.AddRange(read.dataData.listOfTeamPoolOnMap);
+        }
+        else { Debug.LogError("Invalid teampPoolOnMap list (Null)"); }
+        //list -> InTransit
+        List<int> teamPoolInTransit = GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit);
+        if (teamPoolInTransit != null)
+        {
+            //clear list and copy across data
+            teamPoolInTransit.Clear();
+            teamPoolInTransit.AddRange(read.dataData.listOfTeamPoolInTransit);
+        }
+        else { Debug.LogError("Invalid teampPoolInTransit list (Null)"); }
+        #endregion
     }
 
     /// <summary>

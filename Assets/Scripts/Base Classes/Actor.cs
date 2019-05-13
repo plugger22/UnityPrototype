@@ -80,7 +80,10 @@ namespace gameAPI
                 _status = value;
                 //remove gear
                 if (_status != ActorStatus.Active && _status != ActorStatus.Inactive)
-                { RemoveGear(GearRemoved.Lost); }
+                {
+                    if (gearID > -1)
+                    { RemoveGear(GearRemoved.Lost); }
+                }
             }
         }
 
@@ -103,17 +106,16 @@ namespace gameAPI
         /// </summary>
         public Actor()
         {
+            nodeCaptured = -1;
+            Renown = 0;
+            gearID = -1;
+            gearTimer = 0;
+            gearTimesTaken = 0;
+            blackmailTimer = 0;
+            numOfTimesBullied = 0;
             //call only if a new session
             if (GameManager.instance.isSession == false)
             {
-                /*Debug.LogFormat("[Tst] actor {0} CONSTRUCTOR called{1}", actorName, "\n");*/
-                nodeCaptured = -1;
-                Renown = 0;
-                gearID = -1;
-                gearTimer = 0;
-                gearTimesTaken = 0;
-                blackmailTimer = 0;
-                numOfTimesBullied = 0;
                 //fast access & cached
                 actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
                 actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");

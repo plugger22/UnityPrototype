@@ -62,6 +62,11 @@ public class SaveDataData
     public List<int> listOfContactsByNodeResistanceKey = new List<int>();
     //teams
     public List<SaveTeam> listOfTeams = new List<SaveTeam>();
+    public List<int> listOfArrayOfTeams = new List<int>();
+    public List<int> listOfTeamPoolReserve = new List<int>();
+    public List<int> listOfTeamPoolOnMap = new List<int>();
+    public List<int> listOfTeamPoolInTransit = new List<int>();
+
 }
 
 
