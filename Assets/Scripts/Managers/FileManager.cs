@@ -825,6 +825,19 @@ public class FileManager : MonoBehaviour
         GameManager.instance.optionScript.showRenown = read.optionData.showRenown;
         GameManager.instance.optionScript.connectorTooltips = read.optionData.connectorTooltips;
         GameManager.instance.optionScript.ColourOption = read.optionData.colourScheme;
+        //Debug button texts
+        if (read.optionData.autoGearResolution == true)
+        { GameManager.instance.debugScript.optionAutoGear = "Auto Gear OFF"; }
+        if (read.optionData.fogOfWar == true)
+        { GameManager.instance.debugScript.optionFogOfWar = "Fog Of War OFF"; }
+        if (read.optionData.connectorTooltips == true)
+        { GameManager.instance.debugScript.optionConnectorTooltips = "Conn tooltips OFF"; }
+        if (read.optionData.debugData  == true)
+        { GameManager.instance.debugScript.optionDebugData = "Debug Data OFF"; }
+        if (read.optionData.showRenown == false)
+        { GameManager.instance.debugScript.optionRenownUI = "Renown UI ON"; }
+        if (read.optionData.showContacts == true)
+        { GameManager.instance.debugScript.optionContacts = "Contacts OFF"; }
     }
 
     #region Read Player Data
@@ -889,6 +902,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.sideScript.PlayerSide = read.sideData.playerSide;
     }
 
+    #region Read Data Data
     /// <summary>
     /// DataManager.cs data (need to clear collections prior to adding to them)
     /// NOTE: happens BEFORE Datamanager.cs -> ResetLoadGame so make sure any collections here are not in that method otherwise they'll be updated here and then cleared there.
@@ -1166,6 +1180,8 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         #endregion
     }
+    #endregion
+
 
     #region Read Actor Data
     /// <summary>

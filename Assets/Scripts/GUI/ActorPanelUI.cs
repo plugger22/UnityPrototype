@@ -150,9 +150,13 @@ public class ActorPanelUI : MonoBehaviour
             //event listener
             EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
         }
+        //renown UI (default true)
+        if (GameManager.instance.optionScript.showRenown == true)
+        { SetActorRenownUI(true); }
+        else { SetActorRenownUI(false); }
         //initialise starting line up
         UpdateActorPanel();
-        SetActorRenownUI(true);
+        
 
     }
 
@@ -221,7 +225,9 @@ public class ActorPanelUI : MonoBehaviour
                             }
                         }
                         //Update Renown indicators (switches off for Vacant actors)
-                        SetActorRenownUI(true);
+                        if (GameManager.instance.optionScript.showRenown == true)
+                        { SetActorRenownUI(true); }
+                        else { SetActorRenownUI(false); }
                     }
                     else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
                 }

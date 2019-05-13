@@ -48,17 +48,17 @@ public class DebugGUI : MonoBehaviour
     private string textInput_1 = "who";
     private string analysis = "Unknown";
     private string textOutput;
-    private string optionAutoGear;
-    private string optionFogOfWar;
-    private string optionConnectorTooltips;
-    private string optionDebugData;
+    public string optionAutoGear;
+    public string optionFogOfWar;
+    public string optionConnectorTooltips;
+    public string optionDebugData;
     private string optionNoAI;
     private string optionAIOffline;
     private string optionAITraceback;
     private string optionAIScreamer;
-    private string optionRenownUI;
+    public string optionRenownUI;
     private string optionPath;
-    private string optionContacts;
+    public string optionContacts;
 
     private void Awake()
     {

@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ActorPanelUI actorPanelScript;           //Actor Panel UI
     [HideInInspector] public BasePanelUI basePanelScript;             //Base Panel UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
+    [HideInInspector] public DebugGUI debugScript;                    //Debug GUI
     #endregion
 
 
@@ -210,6 +211,7 @@ public class GameManager : MonoBehaviour
         nemesisScript = GetComponent<NemesisManager>();
         rebelScript = GetComponent<ResistanceManager>();
         authorityScript = GetComponent<AuthorityManager>();
+        debugScript = GetComponent<DebugGUI>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipConnScript = TooltipConnection.Instance();
@@ -233,7 +235,7 @@ public class GameManager : MonoBehaviour
         alertScript = AlertUI.Instance();
         actorPanelScript = ActorPanelUI.Instance();
         basePanelScript = BasePanelUI.Instance();
-        debugGraphicsScript = DebugGraphics.Instance();
+        debugGraphicsScript = DebugGraphics.Instance();       
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
@@ -287,6 +289,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(nemesisScript != null, "Invalid nemesisScript (Null)");
         Debug.Assert(rebelScript != null, "Invalid rebelScript (Null)");
         Debug.Assert(authorityScript != null, "Invalid authorityScript (Null)");
+        Debug.Assert(debugScript != null, "Invalid debugScript (Null)");
         //singletons
         Debug.Assert(tooltipNodeScript != null, "Invalid tooltipNodeScript (Null)");
         Debug.Assert(tooltipConnScript != null, "Invalid tooltipConnScript (Null)");
