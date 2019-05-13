@@ -840,7 +840,7 @@ public class TeamManager : MonoBehaviour
     /// Debug function to display a breakdown of the team pools
     /// </summary>
     /// <returns></returns>
-    public string DisplayTeamAnalysis()
+    public string DebugDisplayTeamAnalysis()
     {
         StringBuilder builder = new StringBuilder();
         //get dictionary of team arcs

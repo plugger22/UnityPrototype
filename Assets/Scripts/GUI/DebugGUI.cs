@@ -912,7 +912,7 @@ public class DebugGUI : MonoBehaviour
                         switch (teamStatus)
                         {
                             case TeamDebug.Pools:
-                                analysis = GameManager.instance.teamScript.DisplayTeamAnalysis();
+                                analysis = GameManager.instance.teamScript.DebugDisplayTeamAnalysis();
                                 GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                                 break;
                             case TeamDebug.Roster:

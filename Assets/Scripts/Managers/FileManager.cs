@@ -1093,39 +1093,36 @@ public class FileManager : MonoBehaviour
             {
                 for (int j = 0; j < numOfInfo; j++)
                 {
-                    index = (i * numOfArcs) + j;
+                    index = (i * numOfInfo) + j;
                     arrayOfTeams[i, j] = read.dataData.listOfArrayOfTeams[index];
                 }
             }
         }
         else { Debug.LogError("Invalid arrayOfTeams (Null)"); }
         //list -> Reserves
-        List<int> teamPoolReserve = GameManager.instance.dataScript.GetTeamPool(TeamPool.Reserve);
-        if (teamPoolReserve != null)
+        List<int> teamPool = read.dataData.listOfTeamPoolReserve;
+        if (teamPool != null)
         {
             //clear list and copy across data
-            teamPoolReserve.Clear();
-            teamPoolReserve.AddRange(read.dataData.listOfTeamPoolReserve);
+            GameManager.instance.dataScript.SetTeamPool(TeamPool.Reserve, teamPool);
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         //list -> OnMap
-        List<int> teamPoolOnMap = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
-        if (teamPoolOnMap != null)
+        teamPool = read.dataData.listOfTeamPoolOnMap;
+        if (teamPool != null)
         {
             //clear list and copy across data
-            teamPoolOnMap.Clear();
-            teamPoolOnMap.AddRange(read.dataData.listOfTeamPoolOnMap);
+            GameManager.instance.dataScript.SetTeamPool(TeamPool.OnMap, teamPool);
         }
-        else { Debug.LogError("Invalid teampPoolOnMap list (Null)"); }
+        else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         //list -> InTransit
-        List<int> teamPoolInTransit = GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit);
-        if (teamPoolInTransit != null)
+        teamPool = read.dataData.listOfTeamPoolInTransit;
+        if (teamPool != null)
         {
             //clear list and copy across data
-            teamPoolInTransit.Clear();
-            teamPoolInTransit.AddRange(read.dataData.listOfTeamPoolInTransit);
+            GameManager.instance.dataScript.SetTeamPool(TeamPool.InTransit, teamPool);
         }
-        else { Debug.LogError("Invalid teampPoolInTransit list (Null)"); }
+        else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         #endregion
     }
 
@@ -1281,7 +1278,7 @@ public class FileManager : MonoBehaviour
                 {
                     for (int j = 0; j < actorNum; j++)
                     {
-                        index = (i * sideNum) + j;
+                        index = (i * actorNum) + j;
                         Debug.Assert(index < maxIndex, string.Format("Index {0} >= maxIndex {1}", index, maxIndex));
                         actorID = read.actorData.listOfActors[index];
                         if (actorID == -1)
@@ -1310,7 +1307,7 @@ public class FileManager : MonoBehaviour
             {
                 for (int j = 0; j < actorNum; j++)
                 {
-                    index = (i * sideNum) + j;
+                    index = (i * actorNum) + j;
                     arrayOfActorsPresent[i, j] = read.actorData.listOfActorsPresent[index];
                 }
             }

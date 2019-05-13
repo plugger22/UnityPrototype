@@ -384,10 +384,6 @@ public class DataManager : MonoBehaviour
         targetPoolOutstanding.Clear();
         targetPoolDone.Clear();
         listOfNodesWithTargets.Clear();
-        //team lists
-        teamPoolReserve.Clear();
-        teamPoolOnMap.Clear();
-        teamPoolInTransit.Clear();
         //gear lists
         listOfCommonGear.Clear();
         listOfRareGear.Clear();
@@ -3187,6 +3183,37 @@ public class DataManager : MonoBehaviour
         }
         //failed search
         return -1;
+    }
+
+    /// <summary>
+    /// clears teamPool list and copies new data in
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <param name="listOfTeamID"></param>
+    public void SetTeamPool(TeamPool pool, List<int> listOfTeamID)
+    {
+        if (listOfTeamID != null)
+        {
+            switch (pool)
+            {
+                case TeamPool.Reserve:
+                    teamPoolReserve.Clear();
+                    teamPoolReserve.AddRange(listOfTeamID);
+                    break;
+                case TeamPool.OnMap:
+                    teamPoolOnMap.Clear();
+                    teamPoolOnMap.AddRange(listOfTeamID);
+                    break;
+                case TeamPool.InTransit:
+                    teamPoolInTransit.Clear();
+                    teamPoolInTransit.AddRange(listOfTeamID);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid team pool \"{0}\"", pool));
+                    break;
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid listOfTeamID (Null) for TeamPool \"{0}\"", pool); }
     }
 
     /// <summary>
