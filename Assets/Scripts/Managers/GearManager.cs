@@ -65,7 +65,6 @@ public class GearManager : MonoBehaviour
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
     
-
     private string colourGood;
     private string colourNeutral;
     private string colourBad;

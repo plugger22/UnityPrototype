@@ -16,7 +16,7 @@ public class Gear : ScriptableObject
     public GearRarity rarity;       //common / rare / unique
     public GearType type;
 
-    [Tooltip("Multipurpose datapoint that depends on gear category")]
+    [Tooltip("Multipurpose static datapoint that depends on gear category")]
     public int data;               
 
     public Sprite sprite;
@@ -28,12 +28,12 @@ public class Gear : ScriptableObject
     public Effect aiHackingEffect;
 
     [HideInInspector] public int gearID;
+
+    #region Save Data Compatible
     [HideInInspector] public int timesUsed;                     //# of times used in any given turn (reset to zero each turn)
     [HideInInspector] public bool isCompromised;                //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
     [HideInInspector] public string reasonUsed;                 //tag showing reason gear used (reset each turn), set by GearManager.cs -> SetGearUsed
     [HideInInspector] public int chanceOfCompromise;            //set at time of use, cleared with a new turn
-
-    //stats
     [HideInInspector] public int statTurnObtained;              //turn gear was first obtained
     [HideInInspector] public int statTurnLost;                  //turn gear was lost
     [HideInInspector] public int statTimesUsed;                 //times used (total)
@@ -41,7 +41,7 @@ public class Gear : ScriptableObject
     [HideInInspector] public int statTimesCompromised;          //times compromised
     [HideInInspector] public int statTimesSaved;                //times compromised gear is Saved
     [HideInInspector] public int statRenownSpent;               //total renown spent on gear
-
+    #endregion
 
     /// <summary>
     /// called by GearManager.cs -> Initialise to zero all values as SO's carry values over between sessions

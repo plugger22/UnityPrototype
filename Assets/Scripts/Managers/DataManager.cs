@@ -377,7 +377,6 @@ public class DataManager : MonoBehaviour
         listOfMostConnectedNodes.Clear();
         listOfDecisionNodes.Clear();
         listOfLoiterNodes.Clear();
-        listOfCureNodes.Clear();
         listOfCrisisNodes.Clear();
         //target lists
         targetPoolActive.Clear();

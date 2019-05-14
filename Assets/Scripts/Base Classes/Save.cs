@@ -20,9 +20,11 @@ public class Save
     public SaveActorData actorData = new SaveActorData();
     public SaveNodeData nodeData = new SaveNodeData();
     public SaveNemesisData nemesisData = new SaveNemesisData();
+    public SaveGearData gearData = new SaveGearData();
 
 }
 
+#region Managers
 //
 // - - - Managers - - -
 //
@@ -84,9 +86,8 @@ public class SaveDataData
     public List<int> listOfTeamPoolReserve = new List<int>();
     public List<int> listOfTeamPoolOnMap = new List<int>();
     public List<int> listOfTeamPoolInTransit = new List<int>();
-    //statistics
+    //various
     public List<int> listOfStatistics = new List<int>();
-
 }
 
 
@@ -177,6 +178,18 @@ public class SaveNodeData
     //node.cs data
     public List<SaveNode> listOfNodes = new List<SaveNode>();
     public List<int> listOfCrisisNodes = new List<int>();
+    public List<int> listOfCureNodes = new List<int>();
+}
+
+/// <summary>
+/// GearManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveGearData
+{
+
+    //gear.cs data
+    public List<SaveGear> listOfGear = new List<SaveGear>();
 }
 
 /// <summary>
@@ -187,7 +200,9 @@ public class SaveNemesisData
 {
     public NemesisSaveClass saveData;
 }
+#endregion
 
+#region SO's
 //
 // - - - SO's - - -
 //
@@ -207,10 +222,31 @@ public class SaveSecret
     public List<int> listOfActors = new List<int>();
 }
 
+/// <summary>
+/// Gear.SO dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveGear
+{
+    public int gearID;
+    public int timesUsed;
+    public bool isCompromised;
+    public string reasonUsed;
+    public int chanceOfCompromise;
+    public int statTurnObtained;
+    public int statTurnLost;
+    public int statTimesUsed;
+    public int statTimesGiven;
+    public int statTimesCompromised;
+    public int statTimesSaved;
+    public int statRenownSpent;
+}
+#endregion
+
+#region Base Classes
 //
 // - - - Base Classes - - -
 //
-
 
 /// <summary>
 /// Actor.cs full data set
@@ -334,8 +370,9 @@ public class SaveTeam
     public int timer;
     public int turnDeployed;
 }
+#endregion 
 
-
+#region List Wrappers
 //
 // - - - List Wrappers (for nested Lists)
 //
@@ -358,3 +395,4 @@ public class IntListWrapper : ListWrapper<int> { }
 
 [System.Serializable]
 public class ContactListWrapper : ListWrapper<Contact> { }
+#endregion

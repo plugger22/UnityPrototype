@@ -28,6 +28,7 @@ public class FileManager : MonoBehaviour
     float alphaActive = -1;
     float alphaInactive = -1;
 
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -45,11 +46,13 @@ public class FileManager : MonoBehaviour
         Debug.Assert(alphaActive > -1, "Invalid alphaActive (-1)");
         Debug.Assert(alphaInactive > -1, "Invalid alphaInactive (-1)");
     }
+    #endregion
 
     //
     // - - - Master Methods - - -
     //
 
+    #region Write Game Data
     /// <summary>
     /// copy inGame data to saveData
     /// </summary>
@@ -65,7 +68,9 @@ public class FileManager : MonoBehaviour
         WriteSideData();
         WriteActorData();
         WriteNodeData();
+        WriteGearData();
     }
+    #endregion
 
     #region SaveGame
     /// <summary>
@@ -149,7 +154,7 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
-
+    #region Load Save Data
     /// <summary>
     /// Load data from Save file back into game
     /// </summary>
@@ -166,8 +171,7 @@ public class FileManager : MonoBehaviour
             GameManager.instance.InitialiseLoadGame(read.sideData.playerSide.level);
             ReadNodeData();
             ReadNemesisData();
-            //secrets before player
-
+            ReadGearData();
             ReadActorData();
             ValidateActorData();
             ReadPlayerData();
@@ -175,6 +179,7 @@ public class FileManager : MonoBehaviour
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
         }
     }
+    #endregion
 
     //
     // - - - Write - - -
@@ -837,6 +842,59 @@ public class FileManager : MonoBehaviour
                 }
         }
         else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
+        //
+        // - - - Cure Nodes
+        //
+        List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
+        if (listOfCureNodes != null)
+        {
+            //save nodeID's
+            for (int i = 0; i < listOfCureNodes.Count; i++)
+            {
+                Node node = listOfCureNodes[i];
+                if (node != null)
+                { write.nodeData.listOfCureNodes.Add(node.nodeID); }
+                else { Debug.LogWarningFormat("Invalid node (Null) in listOfCureNodes[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
+    }
+    #endregion
+
+    #region Write Gear Data
+    /// <summary>
+    /// GearManager.cs data to file
+    /// </summary>
+    private void WriteGearData()
+    {
+        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        if (dictOfGear != null)
+        {
+            foreach(var gear in dictOfGear)
+            {
+                if (gear.Value != null)
+                {
+                    //create new SaveGear object and copy across all dynamic data
+                    SaveGear saveGear = new SaveGear();
+                    saveGear.gearID = gear.Value.gearID;
+                    saveGear.timesUsed = gear.Value.timesUsed;
+                    saveGear.isCompromised = gear.Value.isCompromised;
+                    saveGear.reasonUsed = gear.Value.reasonUsed;
+                    saveGear.chanceOfCompromise = gear.Value.chanceOfCompromise;
+                    saveGear.statTurnObtained = gear.Value.statTurnObtained;
+                    saveGear.statTurnLost = gear.Value.statTurnLost;
+                    saveGear.statTimesUsed = gear.Value.statTimesUsed;
+                    saveGear.statTimesGiven = gear.Value.statTimesGiven;
+                    saveGear.statTimesCompromised = gear.Value.statTimesCompromised;
+                    saveGear.statTimesSaved = gear.Value.statTimesSaved;
+                    saveGear.statRenownSpent = gear.Value.statRenownSpent;
+                    //add to list
+                    write.gearData.listOfGear.Add(saveGear);
+                }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gear.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfGear (Null)"); }
     }
     #endregion
 
@@ -970,16 +1028,29 @@ public class FileManager : MonoBehaviour
         Dictionary<StatType, int> dictOfStatistics = GameManager.instance.dataScript.GetDictOfStatistics();
         if (dictOfStatistics != null)
         {
+            
             int count = read.dataData.listOfStatistics.Count;
-            Debug.AssertFormat(count == dictOfStatistics.Count, "Mismatch on read.dataData.listOfStatistics {0}, dicOfStatistcis {1}", count, dictOfStatistics.Count);
-            //clear out dictionary (easier to rebuild)
-            dictOfStatistics.Clear();
+            Debug.AssertFormat(count == dictOfStatistics.Count, "Mismatch on count (should be list {0}, is dict {1}", count, dictOfStatistics.Count);
+            StatType statType;
             for (int i = 0; i < count; i++)
             {
-                try
+                /*try
                 { dictOfStatistics.Add((StatType)i, read.dataData.listOfStatistics[i]); }
                 catch (ArgumentException)
-                { Debug.LogWarningFormat("Duplicate stat type \"{0}\" in dictOfStatistics", (StatType)i); }
+                { Debug.LogWarningFormat("Duplicate stat type \"{0}\" in dictOfStatistics", (StatType)i); }*/
+
+                //update dictionary 
+                statType = (StatType)i;
+                if (dictOfStatistics.ContainsKey(statType) == true)
+                { dictOfStatistics[statType] = read.dataData.listOfStatistics[i]; }
+                else
+                {
+                    //StatType not present, add to dictionary
+                    try
+                    { dictOfStatistics.Add(statType, read.dataData.listOfStatistics[i]); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate StatType \"{0\", entry not added", statType); }
+                }
             }
         }
         else { Debug.LogError("Invalid dictOfStatistics (Null)"); }
@@ -1646,9 +1717,75 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
+        //
+        // - - - Cure Nodes
+        //
+        List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
+        if (listOfCureNodes != null)
+        {
+            //clear list
+            listOfCureNodes.Clear();
+            int count = read.nodeData.listOfCureNodes.Count;
+            if (count > 0)
+            {
+                //repopulate list with save data
+                for (int i = 0; i < count; i++)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(read.nodeData.listOfCureNodes[i]);
+                    if (node != null)
+                    { listOfCureNodes.Add(node); }
+                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", read.nodeData.listOfCureNodes[i]); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
     }
     #endregion
 
+
+    #region ReadGearData
+    /// <summary>
+    /// GearManager.cs & gear.cs dynamic data
+    /// </summary>
+    private void ReadGearData()
+    {
+        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        if (dictOfGear != null)
+        {
+            for (int i = 0; i < read.gearData.listOfGear.Count; i++)
+            {
+                SaveGear saveGear = read.gearData.listOfGear[i];
+                if (saveGear != null)
+                {
+                    //find in dictionary
+                    if (dictOfGear.ContainsKey(saveGear.gearID) == true)
+                    {
+                        Gear gear = dictOfGear[saveGear.gearID];
+                        if (gear != null)
+                        {
+                            //copy over dynamic data
+                            gear.timesUsed = saveGear.timesUsed;
+                            gear.isCompromised = saveGear.isCompromised;
+                            gear.reasonUsed = saveGear.reasonUsed;
+                            gear.chanceOfCompromise = saveGear.chanceOfCompromise;
+                            gear.statTurnObtained = saveGear.statTurnObtained;
+                            gear.statTurnLost = saveGear.statTurnLost;
+                            gear.statTimesUsed = saveGear.statTimesUsed;
+                            gear.statTimesGiven = saveGear.statTimesGiven;
+                            gear.statTimesCompromised = saveGear.statTimesCompromised;
+                            gear.statTimesSaved = saveGear.statTimesSaved;
+                            gear.statRenownSpent = saveGear.statRenownSpent;
+                        }
+                        else { Debug.LogWarningFormat("Invalid gear (Null) in dict for gearID {0}", saveGear.gearID); }
+                    }
+                    else { Debug.LogWarningFormat("Gear not found in dictionary for gearID {0}", saveGear.gearID); }
+                }
+                else { Debug.LogWarningFormat("Invalid saveGear (Null) for read.gearData.listOfGear[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfGear (Null)"); }
+    }
+    #endregion
 
     #region Read Nemesis Data
     /// <summary>
