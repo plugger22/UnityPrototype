@@ -1107,7 +1107,7 @@ public class DebugGUI : MonoBehaviour
                     //Gear Info Display
                     case 24:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayGearData();
+                        analysis = GameManager.instance.dataScript.DebugDisplayGearData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
                     //Secret Info Display

@@ -384,12 +384,6 @@ public class DataManager : MonoBehaviour
         targetPoolOutstanding.Clear();
         targetPoolDone.Clear();
         listOfNodesWithTargets.Clear();
-        //gear lists
-        listOfCommonGear.Clear();
-        listOfRareGear.Clear();
-        listOfUniqueGear.Clear();
-        listOfLostGear.Clear();
-        listOfCurrentGear.Clear();
         //dictionaries
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
@@ -4450,7 +4444,7 @@ public class DataManager : MonoBehaviour
 
 
     /// <summary>
-    /// Initialise lists of gear that are available in the current level
+    /// Initialise lists of gear that are available in the current level (clears first)
     /// </summary>
     /// <param name="listOfGearID"></param>
     /// <param name="rarity"></param>
@@ -4458,29 +4452,60 @@ public class DataManager : MonoBehaviour
     {
         if (listOfGearID != null)
         {
-            if (listOfGearID.Count > 0)
+            /*if (listOfGearID.Count > 0)
+            {*/
+            switch (rarity.level)
             {
-                switch (rarity.level)
-                {
-                    case 0:
-                        //common
-                        listOfCommonGear.AddRange(listOfGearID);
-                        break;
-                    case 1:
-                        //rare
-                        listOfRareGear.AddRange(listOfGearID);
-                        break;
-                    case 2:
-                        //unique
-                        listOfUniqueGear.AddRange(listOfGearID);
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid rarity \"{0}\", level {1}", rarity.name, rarity.level));
-                        break;
-                }
-                Debug.Log(string.Format("DataManager -> SetGearList {0} records for GearLevel \"{1}\"{2}", listOfGearID.Count, rarity.name, "\n"));
+                case 0:
+                    //common
+                    listOfCommonGear.Clear();
+                    listOfCommonGear.AddRange(listOfGearID);
+                    break;
+                case 1:
+                    //rare
+                    listOfRareGear.Clear();
+                    listOfRareGear.AddRange(listOfGearID);
+                    break;
+                case 2:
+                    //unique
+                    listOfUniqueGear.Clear();
+                    listOfUniqueGear.AddRange(listOfGearID);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Invalid rarity \"{0}\", level {1}", rarity.name, rarity.level));
+                    break;
             }
-            else { Debug.LogError("Empty listOfGearID"); }
+            Debug.Log(string.Format("DataManager -> SetGearList {0} records for GearLevel \"{1}\"{2}", listOfGearID.Count, rarity.name, "\n"));
+            /*}
+            else { Debug.LogError("Empty listOfGearID"); }*/
+        }
+        else { Debug.LogError("Invalid listOfGearID (Null)"); }
+    }
+
+    /// <summary>
+    /// Clears and then adds list of data to Current Gear
+    /// </summary>
+    /// <param name="listOfGearID"></param>
+    public void SetListOfGearCurrent(List<int> listOfGearID)
+    {
+        if (listOfGearID != null)
+        {
+            listOfCurrentGear.Clear();
+            listOfCurrentGear.AddRange(listOfGearID);
+        }
+        else { Debug.LogError("Invalid listOfGearID (Null)"); }
+    }
+
+    /// <summary>
+    /// Clears and then adds list of data to Lost Gear
+    /// </summary>
+    /// <param name="listOfGearID"></param>
+    public void SetListOfGearLost(List<int> listOfGearID)
+    {
+        if (listOfGearID != null)
+        {
+            listOfLostGear.Clear();
+            listOfLostGear.AddRange(listOfGearID);
         }
         else { Debug.LogError("Invalid listOfGearID (Null)"); }
     }
@@ -4517,6 +4542,9 @@ public class DataManager : MonoBehaviour
 
     public List<int> GetListOfCurrentGear()
     { return listOfCurrentGear; }
+
+    public List<int> GetListOfLostGear()
+    { return listOfLostGear; }
 
     /// <summary>
     /// will remove a piece of gear that's been lost (for any reason) from the current gear list and add to the list Of Lost Gear
@@ -4600,6 +4628,7 @@ public class DataManager : MonoBehaviour
     public void UpdateGearLostOnRevert(int gearUsed)
     {
         int count, index, gearID;
+        int turn = GameManager.instance.turnScript.Turn;
         Gear gear;
         bool isSuccess;
         int chanceOfRareGear = GameManager.instance.gearScript.chanceOfRareGear;
@@ -4625,7 +4654,12 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        {
+                            gear.statTurnObtained = Random.Range(0, turn);
+                            gear.statTurnLost = turn;
+                            gear.statTimesUsed = Random.Range(0, 3);
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                        }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4650,7 +4684,12 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        {
+                            gear.statTurnObtained = Random.Range(0, turn);
+                            gear.statTurnLost = turn;
+                            gear.statTimesUsed = Random.Range(0, 3);
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                        }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4673,6 +4712,7 @@ public class DataManager : MonoBehaviour
     public void UpdateGearCurrentOnRevert(int gearPoints)
     {
         int count, index, gearID;
+        int turn = GameManager.instance.turnScript.Turn;
         Gear gear;
         bool isSuccess;
         int chanceOfRareGear = GameManager.instance.gearScript.chanceOfRareGear;
@@ -4701,7 +4741,11 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        {
+                            gear.statTurnObtained = Random.Range(0, turn);
+                            gear.statTimesUsed = Random.Range(0, 3);
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                        }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4728,7 +4772,11 @@ public class DataManager : MonoBehaviour
                         //message
                         gear = GetGear(gearID);
                         if (gear != null)
-                        { Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n"); }
+                        {
+                            gear.statTurnObtained = Random.Range(0, turn);
+                            gear.statTimesUsed = Random.Range(0, 3);
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                        }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
                     }
@@ -4748,20 +4796,20 @@ public class DataManager : MonoBehaviour
     /// Debug display method for all gear lists
     /// </summary>
     /// <returns></returns>
-    public string DisplayGearData()
+    public string DebugDisplayGearData()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat(" Gear Data {0}{1}", "\n", "\n");
         builder.AppendFormat("- Current Gear{0}", "\n");
-        builder.Append(DisplayGearList(listOfCurrentGear));
+        builder.Append(DebugDisplayGearList(listOfCurrentGear));
         builder.AppendFormat("{0}- Lost Gear{1}", "\n", "\n");
-        builder.Append(DisplayGearList(listOfLostGear));
+        builder.Append(DebugDisplayGearList(listOfLostGear));
         builder.AppendFormat("{0}- Common Gear{1}", "\n", "\n");
-        builder.Append(DisplayGearList(listOfCommonGear));
+        builder.Append(DebugDisplayGearList(listOfCommonGear));
         builder.AppendFormat("{0}- Rare Gear{1}", "\n", "\n");
-        builder.Append(DisplayGearList(listOfRareGear));
+        builder.Append(DebugDisplayGearList(listOfRareGear));
         builder.AppendFormat("{0}- Unique Gear{1}", "\n", "\n");
-        builder.Append(DisplayGearList(listOfUniqueGear));
+        builder.Append(DebugDisplayGearList(listOfUniqueGear));
         return builder.ToString();
     }
 
@@ -4770,7 +4818,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="listOfGear"></param>
     /// <returns></returns>
-    private string DisplayGearList(List<int> listOfGear)
+    private string DebugDisplayGearList(List<int> listOfGear)
     {
         StringBuilder builder = new StringBuilder();
         if (listOfGear != null)

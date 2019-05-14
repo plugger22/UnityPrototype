@@ -187,9 +187,16 @@ public class SaveNodeData
 [System.Serializable]
 public class SaveGearData
 {
+    //gearManager.cs
 
     //gear.cs data
     public List<SaveGear> listOfGear = new List<SaveGear>();
+    //dataManager collections
+    public List<int> listOfCommonGear = new List<int>();
+    public List<int> listOfRareGear = new List<int>();
+    public List<int> listOfUniqueGear = new List<int>();
+    public List<int> listOfLostGear = new List<int>();
+    public List<int> listOfCurrentGear = new List<int>();
 }
 
 /// <summary>

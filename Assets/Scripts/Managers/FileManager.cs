@@ -895,6 +895,31 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfGear (Null)"); }
+        //list -> listOfCommonGear
+        List<int> tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon);
+        if (tempList != null)
+        { write.gearData.listOfCommonGear.AddRange(tempList); }
+        else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
+        //list -> listOfRareGear
+        tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearRare);
+        if (tempList != null)
+        { write.gearData.listOfRareGear.AddRange(tempList); }
+        else { Debug.LogError("Invalid listOfRareGear (Null)"); }
+        //list -> listOfUniqueGear
+        tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearUnique);
+        if (tempList != null)
+        { write.gearData.listOfUniqueGear.AddRange(tempList); }
+        else { Debug.LogError("Invalid listOfUniqueGear (Null)"); }
+        //list -> listOfLostGear
+        tempList = GameManager.instance.dataScript.GetListOfLostGear();
+        if (tempList != null)
+        { write.gearData.listOfLostGear.AddRange(tempList); }
+        else { Debug.LogError("Invalid listOfLostGear (Null)"); }
+        //list -> listOfCurrentGear
+        tempList = GameManager.instance.dataScript.GetListOfCurrentGear();
+        if (tempList != null)
+        { write.gearData.listOfCurrentGear.AddRange(tempList); }
+        else { Debug.LogError("Invalid listOfCurrentGear (Null)"); }
     }
     #endregion
 
@@ -1784,6 +1809,34 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfGear (Null)"); }
+        //list -> Common gear
+        GearRarity rarity = GameManager.instance.gearScript.gearCommon;
+        List<int> tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        if (tempList != null)
+        { GameManager.instance.dataScript.SetGearList(read.gearData.listOfCommonGear, rarity); }
+        else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
+        //list -> Rare gear
+         rarity = GameManager.instance.gearScript.gearRare;
+        tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        if (tempList != null)
+        { GameManager.instance.dataScript.SetGearList(read.gearData.listOfRareGear, rarity); }
+        else { Debug.LogError("Invalid listOfRareGear (Null)"); }
+        //list -> Unique gear
+        rarity = GameManager.instance.gearScript.gearUnique;
+        tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        if (tempList != null)
+        { GameManager.instance.dataScript.SetGearList(read.gearData.listOfUniqueGear, rarity); }
+        else { Debug.LogError("Invalid listOfUniqueGear (Null)"); }
+        //list -> Current gear
+        tempList = GameManager.instance.dataScript.GetListOfCurrentGear();
+        if (tempList != null)
+        { GameManager.instance.dataScript.SetListOfGearCurrent(read.gearData.listOfCurrentGear); }
+        else { Debug.LogError("Invalid listOfCurrentGear (Null)"); }
+        //list -> Lost gear
+        tempList = GameManager.instance.dataScript.GetListOfLostGear();
+        if (tempList != null)
+        { GameManager.instance.dataScript.SetListOfGearLost(read.gearData.listOfLostGear); }
+        else { Debug.LogError("Invalid listOfLostGear (Null)"); }
     }
     #endregion
 
