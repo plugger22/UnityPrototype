@@ -73,12 +73,6 @@
     public enum Activation { Low, Medium, High }                                     //chance of becoming 'Live' once 'Active'
 
     //
-    // - - - ItemData - - -
-    //
-    public enum ItemPriority { Low, Medium, High, Count }                                    //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
-    public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count}            //PackageManager.cs -> MainInfoData array keyed off this
-
-    //
     // - - - Actors - - -
     //
     public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned }
@@ -130,15 +124,20 @@
     //
     // - - - Statistics - - - 
     //
-    public enum StatType
+    public enum StatType                                //NOTE -> No 'None' or 'Count' (code loops enum and can't handle either)
     {
-        None,
         StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
         PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
         TargetAttempts, TargetSuccesses,
-        actorsResignedAuthority, actorsResignedResistance, actorResistanceTraitors
-
+        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors,
+        NodeCrisis
     }
+
+    //
+    // - - - ItemData - - -
+    //
+    public enum ItemPriority { Low, Medium, High, Count }                                    //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
+    public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }            //PackageManager.cs -> MainInfoData array keyed off this
 
     //
     // - - - Messages - - -

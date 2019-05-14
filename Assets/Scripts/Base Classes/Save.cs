@@ -84,6 +84,8 @@ public class SaveDataData
     public List<int> listOfTeamPoolReserve = new List<int>();
     public List<int> listOfTeamPoolOnMap = new List<int>();
     public List<int> listOfTeamPoolInTransit = new List<int>();
+    //statistics
+    public List<int> listOfStatistics = new List<int>();
 
 }
 
@@ -174,6 +176,7 @@ public class SaveNodeData
     public int nodeCaptured;
     //node.cs data
     public List<SaveNode> listOfNodes = new List<SaveNode>();
+    public List<int> listOfCrisisNodes = new List<int>();
 }
 
 /// <summary>

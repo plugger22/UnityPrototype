@@ -1119,7 +1119,7 @@ public class DebugGUI : MonoBehaviour
                     //Node Crisis Data Display
                     case 26:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayCrisisNodes();
+                        analysis = GameManager.instance.dataScript.DebugDisplayCrisisNodes();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 400), analysis, customBackground);
                         break;
                     //Add Contact to Actor

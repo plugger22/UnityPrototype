@@ -57,6 +57,8 @@ public class NodeManager : MonoBehaviour
     [Range(0, 3)] public int crisisStability = 0;
     [Tooltip("Level, at or Above, where Node support (for resistance) reaches the danger point")]
     [Range(0, 3)] public int crisisSupport = 3;
+    [Tooltip("Number of smoke particles emitted per frame")]
+    [Range(1, 100)] public int numOfSmokeParticles = 30;
 
     #region Save Data Compatible
     [HideInInspector] public int crisisPolicyModifier = 0;          //modifier to  crisisBaseChance due to Authority Policies, eg. "Curfew" 
@@ -2347,7 +2349,7 @@ public class NodeManager : MonoBehaviour
                                     node.crisisTimer--;
                                     if (node.crisisTimer > 0)
                                     {
-                                        node.launcher.StartSmoke(30);
+                                        node.launcher.StartSmoke(numOfSmokeParticles);
                                         //add to list of crisis nodes
                                         tempList.Add(node);
                                         //warning message
@@ -2410,11 +2412,12 @@ public class NodeManager : MonoBehaviour
                                         //CRISIS COMMENCES -> set crisisTimer
                                         node.crisisTimer = nodeTimer;
                                         node.waitTimer = 0;
-                                        node.launcher.StartSmoke(30);
+                                        node.launcher.StartSmoke(numOfSmokeParticles);
                                         //add to list of crisis nodes
                                         tempList.Add(node);
                                         //track number of crisis for AI decision making
                                         GameManager.instance.aiScript.numOfCrisis++;
+                                        GameManager.instance.dataScript.StatisticIncrement(StatType.NodeCrisis);
                                         //Get crisis type
                                         NodeDatapoint datapoint;
                                         int numOfDatapoints = listOfDatapoints.Count;
@@ -2474,6 +2477,29 @@ public class NodeManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfCrisisNodes (Null) -> Crisis checks cancelled"); }
         }
         else { Debug.LogWarning("Invalid listOfNodes (Null) -> Crisis checks cancelled"); }
+    }
+
+    /// <summary>
+    /// start up smoke emitters on crisis nodes when Loading saved game data
+    /// </summary>
+    public void ProcessLoadNodeCrisis()
+    {
+        List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
+        if (listOfCrisisNodes != null)
+        {
+            for (int i = 0; i < listOfCrisisNodes.Count; i++)
+            {
+                Node node = listOfCrisisNodes[i];
+                if (node != null)
+                {
+                    if (node.crisisTimer > 0)
+                    { node.launcher.StartSmoke(numOfSmokeParticles); }
+                    else { Debug.LogWarningFormat("Invalid nodeCrisisTimer {0} for nodeID {1} (should be > 0)", node.crisisTimer, node.nodeID); }
+                }
+                else { Debug.LogWarningFormat("Invalid node (Null) for listOfCrisisNodes[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
     }
 
     /// <summary>

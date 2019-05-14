@@ -67,6 +67,7 @@ public class FileManager : MonoBehaviour
         WriteNodeData();
     }
 
+    #region SaveGame
     /// <summary>
     /// Save game method
     /// </summary>
@@ -103,7 +104,10 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid saveData (Null)"); }
     }
+    #endregion
 
+
+    #region Read Game Data
     /// <summary>
     /// Read game method, returns true if successful, false otherise
     /// </summary>
@@ -143,6 +147,8 @@ public class FileManager : MonoBehaviour
         else { Debug.LogErrorFormat("File \"{0}\" not found", filename); }
         return false;
     }
+    #endregion
+
 
     /// <summary>
     /// Load data from Save file back into game
@@ -174,6 +180,7 @@ public class FileManager : MonoBehaviour
     // - - - Write - - -
     //
 
+    #region Write Campaign Data
     /// <summary>
     /// CampaignManager.cs data write to file
     /// </summary>
@@ -183,7 +190,10 @@ public class FileManager : MonoBehaviour
         write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
     }
+    #endregion
 
+
+    #region Write Option Data
     /// <summary>
     /// OptionManager.cs data write to file
     /// </summary>
@@ -198,8 +208,10 @@ public class FileManager : MonoBehaviour
         write.optionData.connectorTooltips = GameManager.instance.optionScript.connectorTooltips;
         write.optionData.colourScheme = GameManager.instance.optionScript.ColourOption;
     }
+    #endregion
 
 
+    #region Write Nemesis Data
     /// <summary>
     /// NemesisManager.cs data write to file
     /// </summary>
@@ -208,6 +220,8 @@ public class FileManager : MonoBehaviour
         write.nemesisData.saveData = GameManager.instance.nemesisScript.WriteSaveData();
         Debug.Assert(write.nemesisData.saveData != null, "Invalid Nemesis saveData (Null)");
     }
+    #endregion
+
 
     #region Write Player data
     /// <summary>
@@ -251,6 +265,8 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+
+    #region Write Side Data
     /// <summary>
     /// SideManager.cs data write to file
     /// </summary>
@@ -262,12 +278,16 @@ public class FileManager : MonoBehaviour
         write.sideData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
         write.sideData.playerSide = GameManager.instance.sideScript.PlayerSide;
     }
+    #endregion
 
+
+    #region Write Data Data
     /// <summary>
     /// DataManager.cs data write to file
     /// </summary>
     private void WriteDataData()
     {
+
         #region secrets
         //
         // - - - Secrets
@@ -473,7 +493,19 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfTeamPoolInTransit.AddRange(tempList); }
         else { Debug.LogError("Invalid teamPoolInTransit list (Null)"); }
         #endregion
+        #region statistics
+        Dictionary<StatType, int> dictOfStatistics = GameManager.instance.dataScript.GetDictOfStatistics();
+        if (dictOfStatistics != null)
+        {
+            //only need to save stats as StatType Key's are sequentially numbered enums
+            foreach(var stat in dictOfStatistics)
+            { write.dataData.listOfStatistics.Add(stat.Value); }
+        }
+        else { Debug.LogError("Invalid dictOfStatistics (Null)"); }
+        #endregion
     }
+    #endregion
+
 
     #region Write Actor data
     /// <summary>
@@ -789,6 +821,22 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        //
+        // - - - Crisis Nodes
+        //
+        List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
+        if (listOfCrisisNodes != null)
+        {
+                //save nodeID's
+                for (int i = 0; i < listOfCrisisNodes.Count; i++)
+                {
+                    Node node = listOfCrisisNodes[i];
+                    if (node != null)
+                    { write.nodeData.listOfCrisisNodes.Add(node.nodeID); }
+                    else { Debug.LogWarningFormat("Invalid node (Null) in listOfCrisisNodes[{0}]", i); }
+                }
+        }
+        else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
     }
     #endregion
 
@@ -796,6 +844,7 @@ public class FileManager : MonoBehaviour
     // - - - Read - - -
     //
 
+    #region Read Campaign Data
     /// <summary>
     /// CampaignManager.cs Data
     /// </summary>
@@ -811,7 +860,10 @@ public class FileManager : MonoBehaviour
         //arrayOfStoryStatus
         GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
     }
+    #endregion
 
+
+    #region Read Option Data
     /// <summary>
     /// OptionManager.cs Data
     /// </summary>
@@ -839,6 +891,8 @@ public class FileManager : MonoBehaviour
         if (read.optionData.showContacts == true)
         { GameManager.instance.debugScript.optionContacts = "Contacts OFF"; }
     }
+    #endregion
+
 
     #region Read Player Data
     /// <summary>
@@ -890,6 +944,7 @@ public class FileManager : MonoBehaviour
     #endregion
 
 
+    #region Read Side Data
     /// <summary>
     /// SideManager.cs data
     /// </summary>
@@ -901,6 +956,8 @@ public class FileManager : MonoBehaviour
         GameManager.instance.sideScript.authorityOverall = read.sideData.authorityOverall;
         GameManager.instance.sideScript.PlayerSide = read.sideData.playerSide;
     }
+    #endregion
+
 
     #region Read Data Data
     /// <summary>
@@ -909,6 +966,24 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadDataData()
     {
+        #region statistics
+        Dictionary<StatType, int> dictOfStatistics = GameManager.instance.dataScript.GetDictOfStatistics();
+        if (dictOfStatistics != null)
+        {
+            int count = read.dataData.listOfStatistics.Count;
+            Debug.AssertFormat(count == dictOfStatistics.Count, "Mismatch on read.dataData.listOfStatistics {0}, dicOfStatistcis {1}", count, dictOfStatistics.Count);
+            //clear out dictionary (easier to rebuild)
+            dictOfStatistics.Clear();
+            for (int i = 0; i < count; i++)
+            {
+                try
+                { dictOfStatistics.Add((StatType)i, read.dataData.listOfStatistics[i]); }
+                catch (ArgumentException)
+                { Debug.LogWarningFormat("Duplicate stat type \"{0}\" in dictOfStatistics", (StatType)i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfStatistics (Null)"); }
+        #endregion
         #region secrets
         //
         // - - - Secrets
@@ -1547,9 +1622,35 @@ public class FileManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid saveNode in read.nodeData.listOfNodes[{0}]", i); }
         }
+        //
+        // - - - Crisis Nodes
+        //
+        List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
+        if (listOfCrisisNodes != null)
+        {
+            //clear list
+            listOfCrisisNodes.Clear();
+            int count = read.nodeData.listOfCrisisNodes.Count;
+            if (count > 0)
+            {
+                //repopulate list with save data
+                for (int i = 0; i < count; i++)
+                {
+                    Node node = GameManager.instance.dataScript.GetNode(read.nodeData.listOfCrisisNodes[i]);
+                    if (node != null)
+                    { listOfCrisisNodes.Add(node); }
+                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", read.nodeData.listOfCrisisNodes[i]); }
+                }
+                //activate smoke
+                GameManager.instance.nodeScript.ProcessLoadNodeCrisis();
+            }
+        }
+        else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
     }
     #endregion
 
+
+    #region Read Nemesis Data
     /// <summary>
     /// NemesisManager.cs data to game
     /// </summary>
@@ -1559,11 +1660,13 @@ public class FileManager : MonoBehaviour
         { GameManager.instance.nemesisScript.ReadSaveData(read.nemesisData.saveData); }
         else { Debug.LogError("Invalid read.nemesisData.saveData (Null)"); }
     }
+    #endregion
 
     //
     // - - -  Validate - - -
     //
 
+    #region Validate Player Data
     /// <summary>
     /// Validate PlayerManager.cs data (logic checks) and Initialise gfx's where needed
     /// </summary>
@@ -1604,7 +1707,10 @@ public class FileManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+
+    #region Validate Actor Data
     /// <summary>
     /// Validate Actor related data and update UI gfx
     /// </summary>
@@ -1644,6 +1750,7 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
 
     }
+    #endregion
 
 
 

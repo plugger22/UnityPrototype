@@ -37,7 +37,7 @@ public class DataManager : MonoBehaviour
     private List<Node> listOfLoiterNodes = new List<Node>();                                    //nodes where the nemesis can go to and wait until something happens
     private List<Node> listOfCureNodes = new List<Node>();
     private List<Node> listOfCrisisNodes = new List<Node>();
-    private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();
+    private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();                     //pick lists set up at start of session
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisStability = new List<NodeCrisis>();
 
@@ -219,6 +219,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
+
         Debug.Assert(listOfOneConnArcsDefault != null, "Invalid listOfOneConnArcsDefault (Null)");
         Debug.Assert(listOfTwoConnArcsDefault != null, "Invalid listOfTwoConnArcsDefault (Null)");
         Debug.Assert(listOfThreeConnArcsDefault != null, "Invalid listOfThreeConnArcsDefault (Null)");
@@ -249,25 +250,31 @@ public class DataManager : MonoBehaviour
         //Populate List of lists -> place node in the correct list
         foreach (var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
-        //Node Crisis placed into pick lists
-        if (dictOfNodeCrisis != null)
+        //
+        // - - - Start of Session only
+        //
+        if (GameManager.instance.isSession == false)
         {
-            foreach (var crisis in dictOfNodeCrisis)
+            //Node Crisis placed into pick lists
+            if (dictOfNodeCrisis != null)
             {
-                if (crisis.Value != null)
-                { AddNodeCrisisToList(crisis.Value); }
-                else { Debug.LogWarningFormat("Invalid nodeCrisis \"{0}\" (Null)", crisis.Key); }
+                foreach (var crisis in dictOfNodeCrisis)
+                {
+                    if (crisis.Value != null)
+                    { AddNodeCrisisToList(crisis.Value); }
+                    else { Debug.LogWarningFormat("Invalid nodeCrisis \"{0}\" (Null)", crisis.Key); }
+                }
+                Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
+                Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
+                Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
             }
-            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
-            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
-            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
-        }
-        else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
-        //array Of ItemData
-        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
-        {
-            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
-            { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
+            else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
+            //array Of ItemData
+            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+            {
+                for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+                { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
+            }
         }
     }
 
@@ -296,9 +303,6 @@ public class DataManager : MonoBehaviour
         listOfLoiterNodes.Clear();
         listOfCureNodes.Clear();
         listOfCrisisNodes.Clear();
-        listOfCrisisSecurity.Clear();
-        listOfCrisisSupport.Clear();
-        listOfCrisisStability.Clear();
         //actor lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();
@@ -375,9 +379,6 @@ public class DataManager : MonoBehaviour
         listOfLoiterNodes.Clear();
         listOfCureNodes.Clear();
         listOfCrisisNodes.Clear();
-        listOfCrisisSecurity.Clear();
-        listOfCrisisSupport.Clear();
-        listOfCrisisStability.Clear();
         //target lists
         targetPoolActive.Clear();
         targetPoolLive.Clear();
@@ -2264,7 +2265,7 @@ public class DataManager : MonoBehaviour
     /// Debug method to display crisis nodes
     /// </summary>
     /// <returns></returns>
-    public string DisplayCrisisNodes()
+    public string DebugDisplayCrisisNodes()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- listOfCrisisNodes{0}", "\n");
@@ -6013,14 +6014,11 @@ public class DataManager : MonoBehaviour
     /// <param name="statValue"></param>
     public void StatisticAddNew(StatType statType, int statValue = 0)
     {
-        if (statType != StatType.None)
-        {
-            try
-            { dictOfStatistics.Add(statType, statValue); }
-            catch (ArgumentException)
-            { Debug.LogErrorFormat("Invalid statType \"{0}\" (duplicate exists)", statType); }
-        }
-        else { Debug.LogError("Invalid StatType (None)"); }
+
+        try
+        { dictOfStatistics.Add(statType, statValue); }
+        catch (ArgumentException)
+        { Debug.LogErrorFormat("Invalid statType \"{0}\" (duplicate exists)", statType); }
     }
 
     /// <summary>
@@ -6029,13 +6027,9 @@ public class DataManager : MonoBehaviour
     /// <param name="statType"></param>
     public void StatisticIncrement(StatType statType, int amount = 1)
     {
-        if (statType != StatType.None)
-        {
-            if (dictOfStatistics.ContainsKey(statType) == true)
-            { dictOfStatistics[statType] += amount; }
-            else { Debug.LogWarningFormat("StatType \"{0}\" not found in dictOfStatistics", statType); }
-        }
-        else { Debug.LogError("Invalid StatType (None)"); }
+        if (dictOfStatistics.ContainsKey(statType) == true)
+        { dictOfStatistics[statType] += amount; }
+        else { Debug.LogWarningFormat("StatType \"{0}\" not found in dictOfStatistics", statType); }
     }
 
     /// <summary>
@@ -6046,12 +6040,8 @@ public class DataManager : MonoBehaviour
     public int StatisticGet(StatType statType)
     {
         int statValue = -1;
-        if (statType != StatType.None)
-        {
             if (dictOfStatistics.ContainsKey(statType) == true)
             { statValue = dictOfStatistics[statType]; }
-        }
-        else { Debug.LogError("Invalid StatType (None)"); }
         return statValue;
     }
 
@@ -6063,14 +6053,15 @@ public class DataManager : MonoBehaviour
         //loop enums as you can't directly loop dictionary and change values
         foreach (StatType statType in Enum.GetValues(typeof(StatType)))
         {
-            if (statType != StatType.None)
-            {
                 if (dictOfStatistics.ContainsKey(statType) == true)
                 { dictOfStatistics[statType] = 0; }
                 else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
-            }
         }
     }
+
+
+    public Dictionary<StatType, int> GetDictOfStatistics()
+    { return dictOfStatistics; }
 
 
     //

@@ -405,7 +405,7 @@ public class CaptureManager : MonoBehaviour
                     if (rndNum < chance)
                     {
                         actor.isTraitor = true;
-                        GameManager.instance.dataScript.StatisticIncrement(StatType.actorResistanceTraitors);
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.ActorResistanceTraitors);
                         Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, becomes a TRAITOR (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n");
                     }
                     else { Debug.LogFormat("[Rnd] CaptureManager.cs -> ReleaseActor: {0}, {1}, does NOT become a Traitor (need {2}, rolled {3}){4}", actor.actorName, actor.arc.name, chance, rndNum, "\n"); }

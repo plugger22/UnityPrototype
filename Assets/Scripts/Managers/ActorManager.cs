@@ -5222,8 +5222,8 @@ public class ActorManager : MonoBehaviour
                             }
                             //statistics
                             if (side.level == globalResistance.level)
-                            { GameManager.instance.dataScript.StatisticIncrement(StatType.actorsResignedResistance); }
-                            else { GameManager.instance.dataScript.StatisticIncrement(StatType.actorsResignedAuthority); }
+                            { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsResignedResistance); }
+                            else { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsResignedAuthority); }
                         }
                         //message
                         if (String.IsNullOrEmpty(msgText) == false)
