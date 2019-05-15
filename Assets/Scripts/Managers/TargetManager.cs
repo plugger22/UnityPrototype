@@ -978,7 +978,7 @@ public class TargetManager : MonoBehaviour
         else
         {
             //No effects present
-            builder.AppendLine("None");
+            builder.AppendFormat("{0}None", "\n");
         }
         return builder.ToString();
     }

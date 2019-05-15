@@ -86,8 +86,12 @@ public class SaveDataData
     public List<int> listOfTeamPoolReserve = new List<int>();
     public List<int> listOfTeamPoolOnMap = new List<int>();
     public List<int> listOfTeamPoolInTransit = new List<int>();
-    //various
+    //statistics
     public List<int> listOfStatistics = new List<int>();
+    //AI
+    public List<int> listOfArrayOfAIResources = new List<int>();
+    public List<AITracker> listOfRecentNodes = new List<AITracker>();
+    public List<AITracker> listOfRecentConnections = new List<AITracker>();
 }
 
 
@@ -188,7 +192,8 @@ public class SaveNodeData
 public class SaveGearData
 {
     //gearManager.cs
-
+    public int gearSaveCurrentCost;
+    public List<string> listOfCompromisedGear = new List<string>();
     //gear.cs data
     public List<SaveGear> listOfGear = new List<SaveGear>();
     //dataManager collections

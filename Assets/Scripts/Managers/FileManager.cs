@@ -3,6 +3,7 @@ using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -508,6 +509,23 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfStatistics (Null)"); }
         #endregion
+        #region AI
+        //array -> AI Resources
+        int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
+        if (arrayOfAIResources != null)
+        { write.dataData.listOfArrayOfAIResources.AddRange(arrayOfAIResources.ToList()); }
+        else { Debug.LogError("Invalid arrayOfAIResources (Null)"); }
+        //queue -> recentNodes
+        Queue<AITracker> queueOfRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        if (queueOfRecentNodes != null)
+        { write.dataData.listOfRecentNodes.AddRange(queueOfRecentNodes.ToList()); }
+        else { Debug.LogError("Invalid queueOfRecentNodes (Null)"); }
+        //queue -> recentConnections
+        Queue<AITracker> queueOfRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        if (queueOfRecentConnections != null)
+        { write.dataData.listOfRecentConnections.AddRange(queueOfRecentConnections.ToList()); }
+        else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -861,6 +879,7 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+
     #region Write Gear Data
     /// <summary>
     /// GearManager.cs data to file
@@ -920,6 +939,9 @@ public class FileManager : MonoBehaviour
         if (tempList != null)
         { write.gearData.listOfCurrentGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfCurrentGear (Null)"); }
+        //GearManager fields
+        write.gearData.gearSaveCurrentCost = GameManager.instance.gearScript.GetGearSaveCurrentCost();
+        write.gearData.listOfCompromisedGear.AddRange(GameManager.instance.gearScript.GetListOfCompromisedGear());
     }
     #endregion
 
@@ -1837,8 +1859,12 @@ public class FileManager : MonoBehaviour
         if (tempList != null)
         { GameManager.instance.dataScript.SetListOfGearLost(read.gearData.listOfLostGear); }
         else { Debug.LogError("Invalid listOfLostGear (Null)"); }
+        //GearManager.cs fields
+        GameManager.instance.gearScript.SetGearSaveCurrentCost(read.gearData.gearSaveCurrentCost);
+        GameManager.instance.gearScript.SetListOfCompromisedGear(read.gearData.listOfCompromisedGear);
     }
     #endregion
+
 
     #region Read Nemesis Data
     /// <summary>

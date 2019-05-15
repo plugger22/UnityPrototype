@@ -1359,7 +1359,7 @@ public class NodeManager : MonoBehaviour
                                     {
                                         //gear falls short of security level
                                         adjustInvisibility = -1;
-                                        if (GameManager.instance.playerScript.Invisibility <= 1)
+                                        if (GameManager.instance.playerScript.Invisibility <= 0)
                                         {
                                             //invisibility will be zero, or less, if move. Immediate notification
                                             builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",

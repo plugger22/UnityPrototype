@@ -54,9 +54,14 @@ public class GearManager : MonoBehaviour
     private GenericPickerDetails cachedActorDetails;                          //last actor gear selection this action
     private bool isNewActionPlayer;                                           //set to true after player makes a gear choice at own node
     private bool isNewActionActor;                                            //set to true after player makes a gear choice at an actor contact's node
+
+    #region Save Data Compatible
     //compromised gear
     private int gearSaveCurrentCost;                                          //how much renown to save a compromised item of gear (increments +1 each time option used)
     private List<string> listOfCompromisedGear;                               //list cleared each turn that contains names of compromised gear (used for outcome dialogues)
+    #endregion
+
+    //fast access
     private int maxGenericOptions = -1;
     //fast access -> traits
     private int actorLoseGearHigh = -1;
@@ -1373,6 +1378,7 @@ public class GearManager : MonoBehaviour
         return details;
     }
 
+
     /// <summary>
     /// returns a data package of 3 formatted strings. Null if a problem. For gear that has been used but Not Compromised
     /// </summary>
@@ -1412,6 +1418,30 @@ public class GearManager : MonoBehaviour
             details.textDetails = builderDetails.ToString();
         }
         return details;
+    }
+
+
+    public int GetGearSaveCurrentCost()
+    { return gearSaveCurrentCost; }
+
+    public void SetGearSaveCurrentCost(int cost)
+    { gearSaveCurrentCost = cost; }
+
+    public List<string> GetListOfCompromisedGear()
+    { return listOfCompromisedGear; }
+
+    /// <summary>
+    /// clear and copy new data to listOfCompromisedGear (for Load saved game)
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfCompromisedGear(List<string> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfCompromisedGear.Clear();
+            listOfCompromisedGear.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
     }
 
     //new methods above here

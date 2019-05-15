@@ -381,6 +381,12 @@ MonoBehaviour:
   box_width: 130
   box_height: 400
   gap_y: 20
+  optionAutoGear: 
+  optionFogOfWar: 
+  optionConnectorTooltips: 
+  optionDebugData: 
+  optionRenownUI: 
+  optionContacts: 
 --- !u!114 &114230505564311274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -660,6 +666,7 @@ MonoBehaviour:
   crisisSecurity: 0
   crisisStability: 0
   crisisSupport: 3
+  numOfSmokeParticles: 30
   crisisPolicyModifier: 0
   nodeCounter: 0
   connCounter: 0
@@ -2100,6 +2107,7 @@ MonoBehaviour:
   actorPanelScript: {fileID: 0}
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
+  debugScript: {fileID: 0}
   seedDev: 0
   isAuthority: 0
   autoRunTurns: 10

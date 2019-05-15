@@ -4810,6 +4810,19 @@ public class DataManager : MonoBehaviour
         builder.Append(DebugDisplayGearList(listOfRareGear));
         builder.AppendFormat("{0}- Unique Gear{1}", "\n", "\n");
         builder.Append(DebugDisplayGearList(listOfUniqueGear));
+        builder.AppendFormat("{0}- Compromised Gear{1}", "\n", "\n");
+        List<string> tempList = GameManager.instance.gearScript.GetListOfCompromisedGear();
+        if (tempList != null)
+        {
+            int count = tempList.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { builder.AppendFormat(" {0}{1}", tempList[i], "\n"); }
+            }
+            else { builder.Append(" No records"); }
+        }
+        else { Debug.LogError("Invalid listOfCompromisedGear (Null)"); }
         return builder.ToString();
     }
 
@@ -5400,6 +5413,10 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         arrayOfAIResources[side.level] = amount;
     }
+
+
+    public int[] GetArrayOfAIResources()
+    { return arrayOfAIResources; }
 
 
     public Dictionary<int, DecisionAI> GetDictOfAIDecisions()
