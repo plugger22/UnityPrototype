@@ -46,10 +46,10 @@ public class ControlManager : MonoBehaviour
                 ProcessResumeGame();
                 break;
             case EventType.LoadGame:
-                ProcessLoadGame();
+                ProcessLoadGame((GameState)Param);
                 break;
             case EventType.SaveGame:
-                ProcessSaveGame();
+                ProcessSaveGame((GameState)Param);
                 break;
             case EventType.NewGameOptions:
                 ProcessNewGameOptions();
@@ -99,6 +99,8 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessNewGame()
     {
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //set background
         GameManager.instance.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
@@ -112,6 +114,8 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessNewGameOptions()
     {
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
         //open NewGame background
@@ -127,6 +131,8 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void CloseNewGameOptions()
     {
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
@@ -177,7 +183,9 @@ public class ControlManager : MonoBehaviour
     /// Exit level and display summary background
     /// </summary>
     private void ProcessEndLevel()
-    {      
+    {
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //close any Node tooltip
         GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
         //modal block
@@ -193,6 +201,8 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessMetaGame()
     {
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
         //Open end level background
@@ -209,7 +219,9 @@ public class ControlManager : MonoBehaviour
     /// Close Meta Game and start up new level (debug)
     /// </summary>
     private void CloseMetaGame()
-    {
+    { 
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //go to next scenario
         if (GameManager.instance.campaignScript.IncrementScenarioIndex() == true)
         {
@@ -241,6 +253,8 @@ public class ControlManager : MonoBehaviour
     private void ProcessResumeGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: RESUME game option selected{0}", "\n");
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
         //if anything other than play Game then set a modal block (it cancels otherwise due to Main Menu closing)
         if (GameManager.instance.inputScript.GameState != GameState.PlayGame)
         { GameManager.instance.guiScript.SetIsBlocked(true); }
@@ -250,9 +264,11 @@ public class ControlManager : MonoBehaviour
     /// <summary>
     /// Load a saved game
     /// </summary>
-    private void ProcessLoadGame()
+    private void ProcessLoadGame(GameState state)
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessLoadGame: LOAD game option selected{0}", "\n");
+        //save existing game state
+        gameState = state;
         //toggle on modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
         //Load Game -> open background
@@ -290,9 +306,11 @@ public class ControlManager : MonoBehaviour
     /// <summary>
     /// Save the current game
     /// </summary>
-    private void ProcessSaveGame()
+    private void ProcessSaveGame(GameState state)
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: SAVE game option selected{0}", "\n");
+        //save existing game state
+        gameState = state;
         //toggle on modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
         //Load Game -> open background
@@ -328,10 +346,18 @@ public class ControlManager : MonoBehaviour
     private void CloseGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: QUIT game option selected{0}", "\n");
+        //save existing game state
+        gameState = GameManager.instance.inputScript.GameState;
+        //quit game
         GameManager.instance.turnScript.Quit();
     }
 
-
+    /// <summary>
+    /// returns game state at time player opted for the selected option
+    /// </summary>
+    /// <returns></returns>
+    public GameState GetExistingGameState()
+    { return gameState; }
 
 
     //new methods above here

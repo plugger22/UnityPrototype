@@ -366,7 +366,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.LoadGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.LoadGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button2);
         }
@@ -379,7 +379,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = "Placeholder",
                 buttonTooltipMain = "Placeholder",
                 buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.SaveGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.instance.PostNotification(EventType.SaveGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button3);
         }
@@ -486,6 +486,13 @@ public class ModalMainMenu : MonoBehaviour
         GameManager.instance.modalGUIScript.DisableBackground(Background.Start);*/
         Debug.LogFormat("[UI] ModalMainMenu.cs -> CloseMainMenu{0}", "\n");
     }
+
+    /// <summary>
+    /// returns GameState at time of player selecting the Main Menu
+    /// </summary>
+    /// <returns></returns>
+    public GameState GetExistingGameState()
+    { return gameState; }
 }
 
 

@@ -21,6 +21,7 @@ public class Save
     public SaveNodeData nodeData = new SaveNodeData();
     public SaveNemesisData nemesisData = new SaveNemesisData();
     public SaveGearData gearData = new SaveGearData();
+    public SaveAIData aiData = new SaveAIData();
 
 }
 
@@ -212,6 +213,18 @@ public class SaveNemesisData
 {
     public NemesisSaveClass saveData;
 }
+
+/// <summary>
+/// AIManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveAIData
+{
+    public List<AITask> listOfTasksFinal = new List<AITask>();
+    public List<string> listOfPlayerEffects = new List<string>();
+    public List<string> listOfPlayerEffectDescriptors = new List<string>();
+}
+
 #endregion
 
 #region SO's

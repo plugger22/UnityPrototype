@@ -248,6 +248,10 @@ public class ModalGUI : MonoBehaviour
         }
     }
 
+
+    public void CloseSaveGameBackground()
+    { backgroundSaveGame.gameObject.SetActive(false); }
+
     /// <summary>
     /// debug display of backgrounds for game state
     /// </summary>

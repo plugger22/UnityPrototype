@@ -20,7 +20,7 @@ public struct StartMethod
 /// <summary>
 /// Main game controller
 /// </summary>
-[Serializable]
+/*[Serializable]*/
 public class GameManager : MonoBehaviour
 {
 

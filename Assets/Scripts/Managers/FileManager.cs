@@ -70,6 +70,7 @@ public class FileManager : MonoBehaviour
         WriteActorData();
         WriteNodeData();
         WriteGearData();
+        WriteAIData();
     }
     #endregion
 
@@ -173,6 +174,7 @@ public class FileManager : MonoBehaviour
             ReadNodeData();
             ReadNemesisData();
             ReadGearData();
+            ReadAIData();
             ReadActorData();
             ValidateActorData();
             ReadPlayerData();
@@ -942,6 +944,31 @@ public class FileManager : MonoBehaviour
         //GearManager fields
         write.gearData.gearSaveCurrentCost = GameManager.instance.gearScript.GetGearSaveCurrentCost();
         write.gearData.listOfCompromisedGear.AddRange(GameManager.instance.gearScript.GetListOfCompromisedGear());
+    }
+    #endregion
+
+
+    #region Write AI Data
+    /// <summary>
+    /// AIManager.cs write data to file
+    /// </summary>
+    private void WriteAIData()
+    {
+        //list -> tasks final
+        List<AITask> listOfTasksFinal = GameManager.instance.aiScript.GetListOfTasksFinal();
+        if (listOfTasksFinal != null)
+        { write.aiData.listOfTasksFinal.AddRange(listOfTasksFinal); }
+        else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
+        //list -> player effects
+        List<string> listOfPlayerEffects = GameManager.instance.aiScript.GetListOfPlayerEffects();
+        if (listOfPlayerEffects != null)
+        { write.aiData.listOfPlayerEffects.AddRange(listOfPlayerEffects); }
+        else { Debug.LogError("Invalid listOfPlayerEffects (Null)"); }
+        //list -> player effect descriptors
+        List<string> listOfPlayerEffectDescriptors = GameManager.instance.aiScript.GetListOfPlayerEffectDescriptors();
+        if (listOfPlayerEffectDescriptors != null)
+        { write.aiData.listOfPlayerEffectDescriptors.AddRange(listOfPlayerEffectDescriptors); }
+        else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
     }
     #endregion
 
@@ -1909,6 +1936,22 @@ public class FileManager : MonoBehaviour
         if (read.nemesisData.saveData != null)
         { GameManager.instance.nemesisScript.ReadSaveData(read.nemesisData.saveData); }
         else { Debug.LogError("Invalid read.nemesisData.saveData (Null)"); }
+    }
+    #endregion
+
+    #region Read AI Data
+    private void ReadAIData()
+    {
+
+        //update displays -> load game could have been called from a hot key or the main menu
+        GameState controlState = GameManager.instance.controlScript.GetExistingGameState();
+        if (controlState == GameState.PlayGame)
+        { 
+            GameManager.instance.aiScript.UpdateTaskDisplayData();
+            GameManager.instance.aiScript.UpdateSideTabData();
+            GameManager.instance.aiScript.UpdateBottomTabData();
+        }
+
     }
     #endregion
 

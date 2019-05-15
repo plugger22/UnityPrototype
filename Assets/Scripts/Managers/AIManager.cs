@@ -24,6 +24,7 @@ public class AINodeData
 /// <summary>
 /// AI data package detailing an Authority task that is ready to be executed next turn
 /// </summary>
+[System.Serializable]
 public class AITask
 {
     public int taskID;                     //automatically assigned
@@ -2901,7 +2902,7 @@ public class AIManager : MonoBehaviour
     /// <summary>
     /// takes listOfPotentialTasks and packages up data for AIDisplayUI. Returns package even if all data is blanked
     /// </summary>
-    private void UpdateTaskDisplayData()
+    public void UpdateTaskDisplayData()
     {
         AIDisplayData data = new AIDisplayData();
         int count = listOfTasksFinal.Count;
@@ -5196,6 +5197,14 @@ public class AIManager : MonoBehaviour
         }
     }
 
+    public List<AITask> GetListOfTasksFinal()
+    { return listOfTasksFinal; }
+
+    public List<string> GetListOfPlayerEffects()
+    { return listOfPlayerEffects; }
+
+    public List<string> GetListOfPlayerEffectDescriptors()
+    { return listOfPlayerEffectDescriptors; }
 
     //new methods above here
 }
