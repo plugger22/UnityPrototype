@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using gameAPI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -179,9 +180,11 @@ public class ModalGUI : MonoBehaviour
                 break;
             case Background.LoadGame:
                 backgroundLoadGame.gameObject.SetActive(true);
+                backgroundLoadGame.enabled = true;
                 break;
             case Background.SaveGame:
                 backgroundSaveGame.gameObject.SetActive(true);
+                backgroundSaveGame.enabled = true;
                 break;
             default:
                 Debug.LogErrorFormat("Unrecognised background \"{0}\"", background);
@@ -228,9 +231,11 @@ public class ModalGUI : MonoBehaviour
                         break;
                     case Background.LoadGame:
                         backgroundLoadGame.gameObject.SetActive(false);
+                        backgroundLoadGame.enabled = false;
                         break;
                     case Background.SaveGame:
                         backgroundSaveGame.gameObject.SetActive(false);
+                        backgroundSaveGame.enabled = false;
                         break;
                     case Background.None:
                         //do nothing
@@ -243,6 +248,26 @@ public class ModalGUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// debug display of backgrounds for game state
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayBackgrounds()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat(" - Backgrounds{0}", "\n");
+        builder.AppendFormat(" Start: {0}{1}", backgroundStart.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" NewGame: {0}{1}", backgroundNewGame.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" NewGameOptions: {0}{1}", backgroundNewGameOptions.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" Options: {0}{1}", backgroundOptions.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" EndLevel: {0}{1}", backgroundEndLevel.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" MetaGame: {0}{1}", backgroundMetaGame.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" NewCampaign: {0}{1}", backgroundNewCampaign.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" EndCampaign: {0}{1}", backgroundEndCampaign.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" LoadGame: {0}{1}", backgroundLoadGame.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" SaveGame: {0}{1}", backgroundSaveGame.gameObject.activeSelf, "\n");
+        return builder.ToString();
+    }
 
     //new methods above here
 }

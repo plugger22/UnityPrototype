@@ -1372,6 +1372,40 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         #endregion
+        #region AI
+        //array -> AI Resources
+        int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
+        if (arrayOfAIResources != null)
+        {
+            int lengthOfArray = arrayOfAIResources.Length;
+            //clear array & copy data across
+            Array.Clear(arrayOfAIResources, 0, lengthOfArray);
+            Debug.AssertFormat(lengthOfArray == read.dataData.listOfArrayOfAIResources.Count, "Mismatch on size, array {0}, list {1}", lengthOfArray, read.dataData.listOfArrayOfAIResources.Count);
+            for (int i = 0;  i < lengthOfArray;  i++)
+            { arrayOfAIResources[i] = read.dataData.listOfArrayOfAIResources[i]; }
+        }
+        else { Debug.LogError("Invalid arrayOfAIResources (Null)"); }
+        //queue -> recentNodes
+        Queue<AITracker> queueOfRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        if (queueOfRecentNodes != null)
+        {
+            //clear queue and copy data across
+            queueOfRecentNodes.Clear();
+            for (int i = 0; i < read.dataData.listOfRecentNodes.Count; i++)
+            { queueOfRecentNodes.Enqueue(read.dataData.listOfRecentNodes[i]); }
+        }
+        else { Debug.LogError("Invalid queueOfRecentNodes (Null)"); }
+        //queue -> recentConnections
+        Queue<AITracker> queueOfRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        if (queueOfRecentConnections != null)
+        {
+            //clear queue and copy data across
+            queueOfRecentConnections.Clear();
+            for (int i = 0; i < read.dataData.listOfRecentConnections.Count; i++)
+            { queueOfRecentConnections.Enqueue(read.dataData.listOfRecentConnections[i]); }
+        }
+        else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
+        #endregion
     }
     #endregion
 

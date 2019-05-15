@@ -132,9 +132,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Game State"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Game State Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Game State");
+                Debug.Log("[Dbg] Button -> Toggle Game State Data");
                 if (debugDisplay != 5)
                 { debugDisplay = 5; }
                 else { debugDisplay = 0; }
@@ -935,7 +935,7 @@ public class DebugGUI : MonoBehaviour
                     case 5:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.inputScript.DebugDisplayGameState();
-                        GUI.Box(new Rect(Screen.width - 255, 10, 250, 450), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 255, 10, 250, 650), analysis, customBackground);
                         break;
                     //actor Pools
                     case 6:

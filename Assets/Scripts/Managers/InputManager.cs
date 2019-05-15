@@ -477,6 +477,10 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" Resistance Player -> {0}{1}{2}", GameManager.instance.playerScript.GetPlayerNameResistance(), "\n", "\n");
         builder.AppendFormat(" HQ Approval Authority -> {0}{1}", GameManager.instance.factionScript.ApprovalAuthority, "\n");
         builder.AppendFormat(" HQ Approval Resistance -> {0}{1}", GameManager.instance.factionScript.ApprovalResistance, "\n");
+        //backgrounds
+        builder.AppendLine();
+        builder.AppendLine();
+        builder.Append(GameManager.instance.modalGUIScript.DebugDisplayBackgrounds());
         return builder.ToString();
     }
     #endregion

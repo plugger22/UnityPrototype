@@ -29,3 +29,67 @@ City seed 890 -> Arles, France
 
 City seed 5678 -> London, United Kingdom
 
+Dev seed 23787 -> Wednesday, 15 May 2019 2:04 PM
+City seed 890 -> Arles, France
+
+Dev seed 4035 -> Wednesday, 15 May 2019 2:09 PM
+City seed 890 -> Arles, France
+
+Dev seed 32702 -> Wednesday, 15 May 2019 2:11 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 890 -> Arles, France
+
+Dev seed 28738 -> Wednesday, 15 May 2019 2:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47259 -> Wednesday, 15 May 2019 2:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54459 -> Wednesday, 15 May 2019 2:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31962 -> Wednesday, 15 May 2019 2:47 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 5678 -> London, United Kingdom
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63263 -> Wednesday, 15 May 2019 2:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61152 -> Wednesday, 15 May 2019 3:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58460 -> Wednesday, 15 May 2019 3:03 PM
+Dev seed 4657 -> Wednesday, 15 May 2019 3:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36323 -> Wednesday, 15 May 2019 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26980 -> Wednesday, 15 May 2019 3:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23238 -> Wednesday, 15 May 2019 3:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13339 -> Wednesday, 15 May 2019 3:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36489 -> Wednesday, 15 May 2019 3:21 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27251 -> Wednesday, 15 May 2019 3:22 PM
+City seed 5678 -> London, United Kingdom
+
+City seed 5678 -> London, United Kingdom
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6751 -> Wednesday, 15 May 2019 3:23 PM
+City seed 5678 -> London, United Kingdom
+
