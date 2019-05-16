@@ -8,6 +8,7 @@ namespace gameAPI
     /// <summary>
     /// Internal Messaging system handles 'Messages'
     /// </summary>
+    [System.Serializable]
     public class Message
     {
         public string text;
@@ -26,14 +27,13 @@ namespace gameAPI
         public MessageType type;            //main category
         public MessageSubType subType;      //sub type of main category
 
-        private static int messageCounter = 0;
 
         /// <summary>
         /// Constructor (not a Unity class)
         /// </summary>
         public Message()
         {
-            msgID = messageCounter++;
+            msgID = GameManager.instance.messageScript.messageCounter++;
             turnCreated = GameManager.instance.turnScript.Turn;
             //default values
             data0 = -1;

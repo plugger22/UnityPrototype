@@ -530,6 +530,40 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfRecentConnections.AddRange(queueOfRecentConnections.ToList()); }
         else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
         #endregion
+        #region messages
+        //archive
+        Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
+        if (dictOfArchiveMessages != null)
+        {
+            write.dataData.listOfArchiveMessagesKey.AddRange(dictOfArchiveMessages.Keys.ToList());
+            write.dataData.listOfArchiveMessagesValue.AddRange(dictOfArchiveMessages.Values.ToList());
+        }
+        else { Debug.LogError("Invalid dictOfArchiveMessages (Null)"); }
+        //pending
+        Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
+        if (dictOfPendingMessages != null)
+        {
+            write.dataData.listOfPendingMessagesKey.AddRange(dictOfPendingMessages.Keys.ToList());
+            write.dataData.listOfPendingMessagesValue.AddRange(dictOfPendingMessages.Values.ToList());
+        }
+        else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
+        //current
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        if (dictOfCurrentMessages != null)
+        {
+            write.dataData.listOfCurrentMessagesKey.AddRange(dictOfCurrentMessages.Keys.ToList());
+            write.dataData.listOfCurrentMessagesValue.AddRange(dictOfCurrentMessages.Values.ToList());
+        }
+        else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
+        //ai
+        Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
+        if (dictOfAIMessages != null)
+        {
+            write.dataData.listOfAIMessagesKey.AddRange(dictOfAIMessages.Keys.ToList());
+            write.dataData.listOfAIMessagesValue.AddRange(dictOfAIMessages.Values.ToList());
+        }
+        else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -952,7 +986,7 @@ public class FileManager : MonoBehaviour
 
     #region Write AI Data
     /// <summary>
-    /// AIManager.cs write data to file
+    /// AI/Rebel Manager.cs write data to file
     /// </summary>
     private void WriteAIData()
     {
@@ -971,6 +1005,10 @@ public class FileManager : MonoBehaviour
         if (listOfPlayerEffectDescriptors != null)
         { write.aiData.listOfPlayerEffectDescriptors.AddRange(listOfPlayerEffectDescriptors); }
         else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
+        //AIRebelManager.cs
+        write.aiData.saveRebel = GameManager.instance.aiRebelScript.WriteSaveData();
+        if (write.aiData.saveRebel == null)
+        { Debug.LogError("Invalid AIRebelManager.cs saveRebel data (Null)"); }
     }
     #endregion
 
@@ -1436,6 +1474,100 @@ public class FileManager : MonoBehaviour
             { queueOfRecentConnections.Enqueue(read.dataData.listOfRecentConnections[i]); }
         }
         else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
+        #endregion
+        #region messages
+        //archive
+        Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
+        if (dictOfArchiveMessages != null)
+        {
+            //clear dict and copy across data
+            dictOfArchiveMessages.Clear();
+            int countKey = read.dataData.listOfArchiveMessagesKey.Count;
+            int countValue = read.dataData.listOfArchiveMessagesValue.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for Archive Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                Message message = read.dataData.listOfArchiveMessagesValue[i];
+                if (message != null)
+                {
+                    //add to dictionary
+                    try { dictOfArchiveMessages.Add(read.dataData.listOfArchiveMessagesKey[i], message); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate message key exists for messageID {0}", read.dataData.listOfArchiveMessagesKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", read.dataData.listOfArchiveMessagesKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfArchiveMessages (Null)"); }
+        //pending
+        Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
+        if (dictOfPendingMessages != null)
+        {
+            //clear dict and copy across data
+            dictOfPendingMessages.Clear();
+            int countKey = read.dataData.listOfPendingMessagesKey.Count;
+            int countValue = read.dataData.listOfPendingMessagesValue.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for Pending Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                Message message = read.dataData.listOfPendingMessagesValue[i];
+                if (message != null)
+                {
+                    //add to dictionary
+                    try { dictOfPendingMessages.Add(read.dataData.listOfPendingMessagesKey[i], message); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate message key exists for messageID {0}", read.dataData.listOfPendingMessagesKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", read.dataData.listOfPendingMessagesKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
+        //current
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        if (dictOfCurrentMessages != null)
+        {
+            //clear dict and copy across data
+            dictOfCurrentMessages.Clear();
+            int countKey = read.dataData.listOfCurrentMessagesKey.Count;
+            int countValue = read.dataData.listOfCurrentMessagesValue.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for Current Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                Message message = read.dataData.listOfCurrentMessagesValue[i];
+                if (message != null)
+                {
+                    //add to dictionary
+                    try { dictOfCurrentMessages.Add(read.dataData.listOfCurrentMessagesKey[i], message); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate message key exists for messageID {0}", read.dataData.listOfCurrentMessagesKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", read.dataData.listOfCurrentMessagesKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
+        //ai
+        Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
+        if (dictOfAIMessages != null)
+        {
+            //clear dict and copy across data
+            dictOfAIMessages.Clear();
+            int countKey = read.dataData.listOfAIMessagesKey.Count;
+            int countValue = read.dataData.listOfAIMessagesValue.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for AI Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                Message message = read.dataData.listOfAIMessagesValue[i];
+                if (message != null)
+                {
+                    //add to dictionary
+                    try { dictOfAIMessages.Add(read.dataData.listOfAIMessagesKey[i], message); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate message key exists for messageID {0}", read.dataData.listOfAIMessagesKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid message (Null) for messageID {0}", read.dataData.listOfAIMessagesKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         #endregion
     }
     #endregion
@@ -1943,7 +2075,11 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+
     #region Read AI Data
+    /// <summary>
+    /// read AI/Rebel Manager.cs
+    /// </summary>
     private void ReadAIData()
     {
         //list -> tasks final
@@ -1976,13 +2112,15 @@ public class FileManager : MonoBehaviour
         // - - - update displays -> load game could have been called from a hot key or the main menu
         //
         GameState controlState = GameManager.instance.controlScript.GetExistingGameState();
-        if (controlState == GameState.PlayGame)
+        //resistance player only
+        if (controlState == GameState.PlayGame && GameManager.instance.sideScript.PlayerSide.level == 2)
         { 
             GameManager.instance.aiScript.UpdateTaskDisplayData();
             GameManager.instance.aiScript.UpdateSideTabData();
             GameManager.instance.aiScript.UpdateBottomTabData();
         }
-
+        //AIRebelManager.cs
+        GameManager.instance.aiRebelScript.ReadSaveData(read.aiData.saveRebel);
     }
     #endregion
 

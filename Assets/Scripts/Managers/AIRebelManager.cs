@@ -20,6 +20,30 @@ public class SightingData
     public Priority priority;
 }
 
+/// <summary>
+/// used to save private fields holding dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveAIRebelClass
+{
+    public int actionAllowance;
+    public int actionsUsed;
+    public int gearPool;
+    public int gearPointsUsed;
+    public int targetIntel;
+    public int targetIntelUsed;
+    public int targetNodeID;
+    public int cureNodeID;
+    public int aiPlayerStartNodeID;
+    public bool isConnectionsChanged;
+    public bool isPlayer;
+    public bool isCureNeeded;
+    public bool isCureCritical;
+    public bool isPlayerStressed;
+    public int stressedActorID;
+    public int questionableID;
+}
+
 
 /// <summary>
 /// handles all Resistance AI
@@ -111,29 +135,24 @@ public class AIRebelManager : MonoBehaviour
     [HideInInspector] public ActorInactive inactiveStatus;
     [HideInInspector] public bool isBreakdown;          //true if suffering from nervous, stress induced, breakdown
 
-   
+    #region Save Data Compatible
     private int actionAllowance;                        //number of actions per turn (normal allowance + extras)
-    /*private int actionsExtra;                           //bonus actions for this turn*/
     private int actionsUsed;                            //tally of actions used this turn
-
     private int gearPool;                               //number of gear points in pool
     private int gearPointsUsed;                         //number of gear points expended by AI
-
     private int targetIntel;                            //number of target intel points (gained by Planner and used for target attempts)
     private int targetIntelUsed;                        //number of intel points expended by AI
-
     private int targetNodeID;                           //goal to move towards (Target)
     private int cureNodeID;                             //goal to move towards (Cure)
     private int aiPlayerStartNodeID;                    //reference only, node AI Player commences at
-
     private bool isConnectionsChanged;                  //if true connections have been changed due to sighting data and need to be restore once all calculations are done
     private bool isPlayer;                              //if true the Resistance side is also the human player side (it's AI due to an autorun)
-    /*private bool isWounded;*/
     private bool isCureNeeded;                           //true if Player possesses a condition that could benefit from a cure
     private bool isCureCritical;                          //true if Player has a condition needing a cure that is on a timer, eg. Doomed condition
     private bool isPlayerStressed;                        //true only if player is stressed
     private int stressedActorID;                          //player or actorID that is chosen to have go on stress leave (player has priority)
     private int questionableID;                           //randomly chosen actor who has the questionable trait
+    #endregion
 
     //rebel Player profile
     private int survivalMove;                           //The % chance of AI player moving away when they are at a Bad Node
@@ -160,6 +179,7 @@ public class AIRebelManager : MonoBehaviour
     private Priority priorityFactionApproval;
     private Priority priorityReserveActors;
     private Priority priorityQuestionableActor;
+
     //autoRun testing
     private bool isAutoRunTest;
     private int turnForCondition;
@@ -219,14 +239,11 @@ public class AIRebelManager : MonoBehaviour
     //targets
     private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();   //key -> target, Value -> Distance (weighted and adjusted for threats)
 
-
     public void Initialise()
     {
         //session specific (once only)
         if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
-            
-
             //fast access     
             numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
             playerID = GameManager.instance.playerScript.actorID;
@@ -248,6 +265,8 @@ public class AIRebelManager : MonoBehaviour
             arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
             actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
             actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
+            gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
+            gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
             Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
             Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
             Debug.Assert(playerID > -1, "Invalid playerId (-1)");
@@ -279,58 +298,16 @@ public class AIRebelManager : MonoBehaviour
             else
             { isPlayer = true; }
             //Rebel leader
-            survivalMove = GameManager.instance.campaignScript.scenario.leaderResistance.moveChance;
-            playerAction = GameManager.instance.campaignScript.scenario.leaderResistance.playerChance;
-            targetAttemptMinOdds = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
-            targetAttemptPlayerChance = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptPlayerChance;
-            targetAttemptActorChance = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptActorChance;
-            dismissChance = GameManager.instance.actorScript.dismissQuestionableChance;
-            gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
-            gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
-            priorityStressLeavePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.stressLeavePlayer);
-            priorityStressLeaveActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.stressLeaveActor);
-            priorityMovePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.movePriority);
-            priorityIdlePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.idlePriority);
-            priorityAnarchistTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskAnarchist);
-            priorityBloggerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskBlogger);
-            priorityFixerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskFixer);
-            priorityHackerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskHacker);
-            priorityHeavyTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskHeavy);
-            priorityObserverTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskObserver);
-            priorityOperatorTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskOperator);
-            priorityPlannerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskPlanner);
-            priorityRecruiterTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskRecruiter);
-            priorityTargetPlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.targetPlayer);
-            priorityTargetActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.targetActor);
-            priorityFactionApproval = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.approvalPriority);
-            priorityReserveActors = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.manageReserve);
-            priorityQuestionableActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.manageQuestionable);
-            Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
-            Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
-            Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
-            Debug.Assert(priorityIdlePlayer != Priority.None, "Invalid priorityIdlePlayer (None)");
-            Debug.Assert(priorityAnarchistTask != Priority.None, "Invalid priorityAnarchistTask (None)");
-            Debug.Assert(priorityBloggerTask != Priority.None, "Invalid priorityBloggerTask (None)");
-            Debug.Assert(priorityFixerTask != Priority.None, "Invalid priorityFixerTask (None)");
-            Debug.Assert(priorityHackerTask != Priority.None, "Invalid priorityHackerTask (None)");
-            Debug.Assert(priorityHeavyTask != Priority.None, "Invalid priorityHeavyTask (None)");
-            Debug.Assert(priorityObserverTask != Priority.None, "Invalid priorityObserverTask (None)");
-            Debug.Assert(priorityOperatorTask != Priority.None, "Invalid priorityOperatorTask (None)");
-            Debug.Assert(priorityPlannerTask != Priority.None, "Invalid priorityPlannerTask (None)");
-            Debug.Assert(priorityRecruiterTask != Priority.None, "Invalid priorityRecruiterTask (None)");
-            Debug.Assert(targetAttemptMinOdds > 0, "Invalid targetAttemptMinOdds (Zero or less)");
-            Debug.Assert(targetAttemptPlayerChance > 0, "Invalid targetAttemptPlayerChance (Zero or less)");
-            Debug.Assert(targetAttemptActorChance > 0, "Invalid targetAttemptActorChance (Zero or less)");
-            Debug.Assert(dismissChance > 0, "Invalid dismissChance (Zero or less)");
-            Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (None)");
-            Debug.Assert(priorityReserveActors != Priority.None, "Invalid priorityReserveActors (None)");
-            Debug.Assert(priorityQuestionableActor != Priority.None, "invalid priorityQuestionableActor (None)");
+            InitialiseRebelLeader();
         }
+        //Load game
+        if (GameManager.instance.inputScript.GameState == GameState.LoadGame)
+        { InitialiseRebelLeader(); }
 
-        //AFTER session specific initialisation
+            //AFTER session specific initialisation
 
-        //set initial move node to start position (will trigger a new targetNodeID)
-        targetNodeID = GameManager.instance.nodeScript.nodePlayer;
+            //set initial move node to start position (will trigger a new targetNodeID)
+            targetNodeID = GameManager.instance.nodeScript.nodePlayer;
         aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
@@ -345,6 +322,57 @@ public class AIRebelManager : MonoBehaviour
             conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
         }
         else { isAutoRunTest = false; }
+    }
+
+    /// <summary>
+    /// subMethod to initlalise Rebel Leader specific datas
+    /// </summary>
+    private void InitialiseRebelLeader()
+    {
+        survivalMove = GameManager.instance.campaignScript.scenario.leaderResistance.moveChance;
+        playerAction = GameManager.instance.campaignScript.scenario.leaderResistance.playerChance;
+        targetAttemptMinOdds = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
+        targetAttemptPlayerChance = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptPlayerChance;
+        targetAttemptActorChance = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptActorChance;
+        dismissChance = GameManager.instance.actorScript.dismissQuestionableChance;
+        priorityStressLeavePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.stressLeavePlayer);
+        priorityStressLeaveActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.stressLeaveActor);
+        priorityMovePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.movePriority);
+        priorityIdlePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.idlePriority);
+        priorityAnarchistTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskAnarchist);
+        priorityBloggerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskBlogger);
+        priorityFixerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskFixer);
+        priorityHackerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskHacker);
+        priorityHeavyTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskHeavy);
+        priorityObserverTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskObserver);
+        priorityOperatorTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskOperator);
+        priorityPlannerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskPlanner);
+        priorityRecruiterTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskRecruiter);
+        priorityTargetPlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.targetPlayer);
+        priorityTargetActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.targetActor);
+        priorityFactionApproval = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.approvalPriority);
+        priorityReserveActors = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.manageReserve);
+        priorityQuestionableActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.manageQuestionable);
+        Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
+        Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
+        Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
+        Debug.Assert(priorityIdlePlayer != Priority.None, "Invalid priorityIdlePlayer (None)");
+        Debug.Assert(priorityAnarchistTask != Priority.None, "Invalid priorityAnarchistTask (None)");
+        Debug.Assert(priorityBloggerTask != Priority.None, "Invalid priorityBloggerTask (None)");
+        Debug.Assert(priorityFixerTask != Priority.None, "Invalid priorityFixerTask (None)");
+        Debug.Assert(priorityHackerTask != Priority.None, "Invalid priorityHackerTask (None)");
+        Debug.Assert(priorityHeavyTask != Priority.None, "Invalid priorityHeavyTask (None)");
+        Debug.Assert(priorityObserverTask != Priority.None, "Invalid priorityObserverTask (None)");
+        Debug.Assert(priorityOperatorTask != Priority.None, "Invalid priorityOperatorTask (None)");
+        Debug.Assert(priorityPlannerTask != Priority.None, "Invalid priorityPlannerTask (None)");
+        Debug.Assert(priorityRecruiterTask != Priority.None, "Invalid priorityRecruiterTask (None)");
+        Debug.Assert(targetAttemptMinOdds > 0, "Invalid targetAttemptMinOdds (Zero or less)");
+        Debug.Assert(targetAttemptPlayerChance > 0, "Invalid targetAttemptPlayerChance (Zero or less)");
+        Debug.Assert(targetAttemptActorChance > 0, "Invalid targetAttemptActorChance (Zero or less)");
+        Debug.Assert(dismissChance > 0, "Invalid dismissChance (Zero or less)");
+        Debug.Assert(priorityFactionApproval != Priority.None, "Invalid priorityFactionApproval (None)");
+        Debug.Assert(priorityReserveActors != Priority.None, "Invalid priorityReserveActors (None)");
+        Debug.Assert(priorityQuestionableActor != Priority.None, "invalid priorityQuestionableActor (None)");
     }
 
     /// <summary>
@@ -4596,9 +4624,67 @@ public class AIRebelManager : MonoBehaviour
     }
 
     //
-    // - - -  Debug - - -
+    // - - - Serialization - - -
     //
 
+    /// <summary>
+    /// write private fields to serialization class
+    /// </summary>
+    /// <returns></returns>
+    public SaveAIRebelClass WriteSaveData()
+    {
+        SaveAIRebelClass saveData = new SaveAIRebelClass();
+        saveData.actionAllowance = actionAllowance;
+        saveData.actionsUsed = actionsUsed;
+        saveData.gearPool = gearPool;
+        saveData.gearPointsUsed = gearPointsUsed;
+        saveData.targetIntel = targetIntel;
+        saveData.targetIntelUsed = targetIntelUsed;
+        saveData.targetNodeID = targetNodeID;
+        saveData.cureNodeID = cureNodeID;
+        saveData.aiPlayerStartNodeID = aiPlayerStartNodeID;
+        saveData.isConnectionsChanged = isConnectionsChanged;
+        saveData.isPlayer = isPlayer;
+        saveData.isCureNeeded = isCureNeeded;
+        saveData.isCureCritical = isCureCritical;
+        saveData.isPlayerStressed = isPlayerStressed;
+        saveData.stressedActorID = stressedActorID;
+        saveData.questionableID = questionableID;
+        //return class to fileManager.cs for serialization
+        return saveData;
+    }
+
+    /// <summary>
+    /// copy data over from serialization class to private fields
+    /// </summary>
+    /// <param name="readData"></param>
+    public void ReadSaveData(SaveAIRebelClass readData)
+    {
+        if (readData != null)
+        {
+            actionAllowance = readData.actionAllowance;
+            actionsUsed = readData.actionsUsed;
+            gearPool = readData.gearPool;
+            gearPointsUsed = readData.gearPointsUsed;
+            targetIntel = readData.targetIntel;
+            targetIntelUsed = readData.targetIntelUsed;
+            targetNodeID = readData.targetNodeID;
+            cureNodeID = readData.cureNodeID;
+            aiPlayerStartNodeID = readData.aiPlayerStartNodeID;
+            isConnectionsChanged = readData.isConnectionsChanged;
+            isPlayer = readData.isPlayer;
+            isCureNeeded = readData.isCureNeeded;
+            isCureCritical = readData.isCureCritical;
+            isPlayerStressed = readData.isPlayerStressed;
+            stressedActorID = readData.stressedActorID;
+            questionableID = readData.questionableID;
+        }
+        else { Debug.LogError("Invalid SaveAIRebelClass readData (Null)"); }
+    }
+
+    //
+    // - - -  Debug - - -
+    //
 
     public int GetStartPlayerNode()
     { return aiPlayerStartNodeID; }
@@ -4814,6 +4900,9 @@ public class AIRebelManager : MonoBehaviour
         }
         return builder.ToString();
     }
+
+
+
 
     //new methods above here
 }

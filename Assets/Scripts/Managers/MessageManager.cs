@@ -18,6 +18,8 @@ public class MessageManager : MonoBehaviour
     private Sprite playerSprite;
     private Mayor mayor;
 
+    public int messageCounter = 0;                                          //messageID counter
+
     /// <summary>
     /// Set up at start
     /// </summary>

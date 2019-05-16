@@ -94,6 +94,15 @@ public class SaveDataData
     public List<int> listOfArrayOfAIResources = new List<int>();
     public List<AITracker> listOfRecentNodes = new List<AITracker>();
     public List<AITracker> listOfRecentConnections = new List<AITracker>();
+    //Messages
+    public List<int> listOfArchiveMessagesKey = new List<int>();
+    public List<Message> listOfArchiveMessagesValue = new List<Message>();
+    public List<int> listOfPendingMessagesKey = new List<int>();
+    public List<Message> listOfPendingMessagesValue = new List<Message>();
+    public List<int> listOfCurrentMessagesKey = new List<int>();
+    public List<Message> listOfCurrentMessagesValue = new List<Message>();
+    public List<int> listOfAIMessagesKey = new List<int>();
+    public List<Message> listOfAIMessagesValue = new List<Message>();
 }
 
 
@@ -216,14 +225,17 @@ public class SaveNemesisData
 }
 
 /// <summary>
-/// AIManager.cs
+/// AIManager.cs and AIRebelManager.cs
 /// </summary>
 [System.Serializable]
 public class SaveAIData
 {
+    //AIManager.cs
     public List<AITask> listOfTasksFinal = new List<AITask>();
     public List<string> listOfPlayerEffects = new List<string>();
     public List<string> listOfPlayerEffectDescriptors = new List<string>();
+    //AIRebelManager.cs
+    public SaveAIRebelClass saveRebel;
 }
 
 #endregion
