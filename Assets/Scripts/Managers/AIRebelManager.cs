@@ -843,7 +843,7 @@ public class AIRebelManager : MonoBehaviour
             //get nodeID of highest priority sighting (top of sorted list)
             if (count > 1)
             {
-                //check for situation where two equal priority sightings at top of list, take the highest turn number first then highest moveNumber (nemeis may have moved twice in the same turn)
+                //check for situation where two equal priority sightings at top of list, take the highest turn number first then highest moveNumber (nemesis may have moved twice in the same turn)
                 if (listOfNemesisSightData[0].priority == listOfNemesisSightData[1].priority)
                 {
                     if (listOfNemesisSightData[0].turn > listOfNemesisSightData[1].turn)
@@ -4680,6 +4680,41 @@ public class AIRebelManager : MonoBehaviour
             questionableID = readData.questionableID;
         }
         else { Debug.LogError("Invalid SaveAIRebelClass readData (Null)"); }
+    }
+
+
+    public List<AITracker> GetListOfNemesisReports()
+    { return listOfNemesisReports; }
+
+    public List<AITracker> GetListOfErasureReports()
+    { return listOfErasureReports; }
+
+    /// <summary>
+    /// clears and copies across save game data to listOfNemesisReports
+    /// </summary>
+    /// <param name="listOfReports"></param>
+    public void SetListOfNemesisReports(List<AITracker> listOfReports)
+    {
+        if (listOfReports != null)
+        {
+            listOfNemesisReports.Clear();
+            listOfNemesisReports.AddRange(listOfReports);
+        }
+        else { Debug.LogError("Invalid listOfReports (Null)"); }
+    }
+
+    /// <summary>
+    /// clears and copies across save game data to listOfErasureReports
+    /// </summary>
+    /// <param name="listOfReports"></param>
+    public void SetListOfErasureReports(List<AITracker> listOfReports)
+    {
+        if (listOfReports != null)
+        {
+            listOfErasureReports.Clear();
+            listOfErasureReports.AddRange(listOfReports);
+        }
+        else { Debug.LogError("Invalid listOfReports (Null)"); }
     }
 
     //

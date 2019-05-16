@@ -236,6 +236,8 @@ public class SaveAIData
     public List<string> listOfPlayerEffectDescriptors = new List<string>();
     //AIRebelManager.cs
     public SaveAIRebelClass saveRebel;
+    public List<AITracker> listOfNemesisReports = new List<AITracker>();
+    public List<AITracker> listOfErasureReports = new List<AITracker>();
 }
 
 #endregion

@@ -1005,10 +1005,20 @@ public class FileManager : MonoBehaviour
         if (listOfPlayerEffectDescriptors != null)
         { write.aiData.listOfPlayerEffectDescriptors.AddRange(listOfPlayerEffectDescriptors); }
         else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
-        //AIRebelManager.cs
+        //AIRebelManager.cs private fields
         write.aiData.saveRebel = GameManager.instance.aiRebelScript.WriteSaveData();
         if (write.aiData.saveRebel == null)
         { Debug.LogError("Invalid AIRebelManager.cs saveRebel data (Null)"); }
+        //AIRebelManager -> Nemesis Reports
+        List<AITracker> tempListNemesis = GameManager.instance.aiRebelScript.GetListOfNemesisReports();
+        if (tempListNemesis != null)
+        { write.aiData.listOfNemesisReports.AddRange(tempListNemesis);}
+        else { Debug.LogError("Invalid listOfNemesisReports (Null)"); }
+        //AIRebelManager -> Erasure Reports
+        List<AITracker> tempListErasure = GameManager.instance.aiRebelScript.GetListOfErasureReports();
+        if (tempListErasure != null)
+        { write.aiData.listOfErasureReports.AddRange(tempListErasure); }
+        else { Debug.LogError("Invalid listOfErasureReports (Null)"); }
     }
     #endregion
 
@@ -2119,8 +2129,12 @@ public class FileManager : MonoBehaviour
             GameManager.instance.aiScript.UpdateSideTabData();
             GameManager.instance.aiScript.UpdateBottomTabData();
         }
-        //AIRebelManager.cs
+        //AIRebelManager.cs -> private fields
         GameManager.instance.aiRebelScript.ReadSaveData(read.aiData.saveRebel);
+        //AIRebelManager -> Nemesis Reports
+        GameManager.instance.aiRebelScript.SetListOfNemesisReports(read.aiData.listOfNemesisReports);
+        //AIRebelManager -> Erasure Reports
+        GameManager.instance.aiRebelScript.SetListOfErasureReports(read.aiData.listOfErasureReports);
     }
     #endregion
 
