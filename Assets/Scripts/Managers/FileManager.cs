@@ -500,6 +500,8 @@ public class FileManager : MonoBehaviour
         if (tempList != null)
         { write.dataData.listOfTeamPoolInTransit.AddRange(tempList); }
         else { Debug.LogError("Invalid teamPoolInTransit list (Null)"); }
+        //counter
+        write.dataData.teamCounter = GameManager.instance.teamScript.teamCounter;
         #endregion
         #region statistics
         Dictionary<StatType, int> dictOfStatistics = GameManager.instance.dataScript.GetDictOfStatistics();
@@ -1398,6 +1400,8 @@ public class FileManager : MonoBehaviour
             GameManager.instance.dataScript.SetTeamPool(TeamPool.InTransit, teamPool);
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
+        //team counter
+        GameManager.instance.teamScript.teamCounter = read.dataData.teamCounter;
         #endregion
         #region AI
         //array -> AI Resources
@@ -1942,8 +1946,35 @@ public class FileManager : MonoBehaviour
     #region Read AI Data
     private void ReadAIData()
     {
+        //list -> tasks final
+        List<AITask> listOfTasksFinal = GameManager.instance.aiScript.GetListOfTasksFinal();
+        if (listOfTasksFinal != null)
+        {
+            listOfTasksFinal.Clear();
+            listOfTasksFinal.AddRange(read.aiData.listOfTasksFinal);
+        }
+        else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
+        //list -> player effects
+        List<string> listOfPlayerEffects = GameManager.instance.aiScript.GetListOfPlayerEffects();
+        if (listOfPlayerEffects != null)
+        {
 
-        //update displays -> load game could have been called from a hot key or the main menu
+            listOfPlayerEffects.Clear();
+            listOfPlayerEffects.AddRange(read.aiData.listOfPlayerEffects);
+        }
+        else { Debug.LogError("Invalid listOfPlayerEffects (Null)"); }
+        //list -> player effects description
+        List<string> listOfPlayerEffectDescriptors = GameManager.instance.aiScript.GetListOfPlayerEffectDescriptors();
+        if (listOfPlayerEffectDescriptors != null)
+        {
+
+            listOfPlayerEffectDescriptors.Clear();
+            listOfPlayerEffectDescriptors.AddRange(read.aiData.listOfPlayerEffectDescriptors);
+        }
+        else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
+        //
+        // - - - update displays -> load game could have been called from a hot key or the main menu
+        //
         GameState controlState = GameManager.instance.controlScript.GetExistingGameState();
         if (controlState == GameState.PlayGame)
         { 

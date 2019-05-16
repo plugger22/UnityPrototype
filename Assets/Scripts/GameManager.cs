@@ -131,8 +131,7 @@ public class GameManager : MonoBehaviour
     private List<StartMethod> listOfLevelMethods = new List<StartMethod>();         //level related methods
     private List<StartMethod> listOfUIMethods = new List<StartMethod>();            //UI related methods
     private List<StartMethod> listOfDebugMethods = new List<StartMethod>();         //Debug related methods
-    private List<StartMethod> listOfLoadMethodsAuthority = new List<StartMethod>(); //Load a saved game methods (used to regenerate the loaded level). For Authority Player (initialises Resistance AI only)
-    private List<StartMethod> listOfLoadMethodsResistance = new List<StartMethod>();//Load a saved game methods for Resistance Player (initialises Authority AI only)
+    private List<StartMethod> listOfLoadMethodsAI = new List<StartMethod>();        //Load a saved game methods (used to regenerate the loaded level). For AI (both sides) Player
 
     #endregion
 
@@ -457,14 +456,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = ResetNewLevelData;
         startMethod.className = "Reset Level Data";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Campaign Manager InitialiseEarly -> before level & Side Managers
         startMethod.handler = campaignScript.InitialiseEarly;
         startMethod.className = "CampaignManager Early";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Tooltip Node
         startMethod.handler = tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
@@ -477,8 +474,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = objectiveScript.Initialise;
         startMethod.className = "ObjectiveManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Actor Panel UI -> before actorScript.Initialise
         startMethod.handler = actorPanelScript.Initialise;
         startMethod.className = "ActorPanelUI";
@@ -495,20 +491,17 @@ public class GameManager : MonoBehaviour
         startMethod.handler = levelScript.Initialise;
         startMethod.className = "LevelManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Load Manager -> InitialiseLate -> immediately after levelScript.Initialise
         startMethod.handler = loadScript.InitialiseLate;
         startMethod.className = "LoadManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Data Manager -> InitialiseLate -> immediately after LoadScript.Initialise
         startMethod.handler = dataScript.InitialiseLate;
         startMethod.className = "DataManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Statistic Manager -> Initialise -> after DataManager
         startMethod.handler = statScript.Initialise;
         startMethod.className = "StatisticManager";
@@ -517,8 +510,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = dijkstraScript.Initialise;
         startMethod.className = "DijkstraManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Faction Manager
         startMethod.handler = factionScript.Initialise;
         startMethod.className = "FactionManager";
@@ -527,13 +519,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
-        //Campaign Manager -> InitialiseLate -> after levelScript.Initialise
+        listOfLoadMethodsAI.Add(startMethod);
+        //Campaign Manager -> InitialiseLate (includes NemesisManager.Initialise) -> after levelScript.Initialise
         startMethod.handler = campaignScript.InitialiseLate;
         startMethod.className = "CampaignManager Late";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Message Manager -> InitialseLate -> after ScenarioManager
         startMethod.handler = messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
@@ -558,8 +549,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = nodeScript.Initialise;
         startMethod.className = "NodeManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Effect Manager -> after nodeScript
         startMethod.handler = effectScript.Initialise;
         startMethod.className = "EffectManager";
@@ -592,7 +582,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = aiRebelScript.Initialise;
         startMethod.className = "AIRebelManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Trait Manager
         startMethod.handler = traitScript.Initialise;
         startMethod.className = "TraitManager";
@@ -601,8 +591,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = connScript.Initialise;
         startMethod.className = "ConnectionManager";
         listOfLevelMethods.Add(startMethod);
-        listOfLoadMethodsAuthority.Add(startMethod);
-        listOfLoadMethodsResistance.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //
         // - - - UI methods - - -
         //
@@ -764,13 +753,8 @@ public class GameManager : MonoBehaviour
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
-        //allows for selective loading of AI/AIRebel Managers (no point loading one if not needed and there is some overhead attached to both so best to only load the one that is required)
-        switch (playerSide)
-        {
-            case 1: InitialiseMethods(listOfLoadMethodsAuthority); break;
-            case 2: InitialiseMethods(listOfLoadMethodsResistance); break;
-            default: Debug.LogErrorFormat("Unrecognised playerSide.level {0}", playerSide); break;
-        }
+        //initialises both AI sides regardless as some Authority AI data collections are required for the others
+        InitialiseMethods(listOfLoadMethodsAI);
         //set session flag
         isSession = true;
         //do a final redraw before game start
@@ -791,12 +775,21 @@ public class GameManager : MonoBehaviour
     {
         levelScript.Reset();
         if (inputScript.GameState != GameState.LoadGame)
-        { dataScript.ResetNewLevel(); }
-        else { dataScript.ResetLoadGame(); }
-        nodeScript.Reset();
-        actorScript.Reset();
-        contactScript.Reset();
-        teamScript.Reset();
+        {
+            dataScript.ResetNewLevel();
+            nodeScript.Reset();
+            actorScript.Reset();
+            contactScript.Reset();
+            teamScript.Reset();
+        }
+        else
+        {
+            dataScript.ResetLoadGame();
+            nodeScript.Reset();
+            actorScript.Reset();
+            contactScript.Reset();
+        }
+
     }
     #endregion
 

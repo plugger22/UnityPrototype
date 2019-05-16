@@ -50,7 +50,9 @@ public class TeamManager : MonoBehaviour
     private string colourBad;
     private string colourEnd;
 
+    #region Save Data Compatible
     public int teamCounter = 0;                     //provides unique ID to teams (reset at start of new level)
+    #endregion
 
     /// <summary>
     /// Set up at start

@@ -145,7 +145,7 @@ public class NemesisManager : MonoBehaviour
 
 
     /// <summary>
-    /// Initialise data ready for Nemesis
+    /// Initialise data ready for Nemesis -> Called from CampaignManager.cs -> InitialiseLate
     /// </summary>
     public void Initialise()
     {

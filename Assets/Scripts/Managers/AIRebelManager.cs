@@ -222,9 +222,6 @@ public class AIRebelManager : MonoBehaviour
 
     public void Initialise()
     {
-
-
-
         //session specific (once only)
         if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {

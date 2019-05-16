@@ -82,6 +82,7 @@ public class SaveDataData
     public List<ContactListWrapper> listOfContactsByNodeResistanceValue = new List<ContactListWrapper>();
     public List<int> listOfContactsByNodeResistanceKey = new List<int>();
     //teams
+    public int teamCounter;
     public List<SaveTeam> listOfTeams = new List<SaveTeam>();
     public List<int> listOfArrayOfTeams = new List<int>();
     public List<int> listOfTeamPoolReserve = new List<int>();
