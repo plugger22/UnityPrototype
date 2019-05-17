@@ -241,11 +241,13 @@ public class AIRebelManager : MonoBehaviour
 
     public void Initialise()
     {
+        //always (data could change in both situations)
+        numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
+        Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
         //session specific (once only)
         if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
             //fast access     
-            numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
             playerID = GameManager.instance.playerScript.actorID;
             globalResistance = GameManager.instance.globalScript.sideResistance;
             failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
@@ -267,8 +269,7 @@ public class AIRebelManager : MonoBehaviour
             actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
             gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
             gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
-            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-            Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
+            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");            
             Debug.Assert(playerID > -1, "Invalid playerId (-1)");
             Debug.Assert(failedTargetChance > -1, "Invalid failedTargetChance (-1)");
             Debug.Assert(priorityHigh > -1, "Invalid priorityHigh (-1)");

@@ -16,7 +16,7 @@ public class Save
     public SaveDataData dataData = new SaveDataData();
     public SaveOptionData optionData = new SaveOptionData();
     public SavePlayerData playerData = new SavePlayerData();
-    public SaveSideData sideData = new SaveSideData();
+    public SaveGameData gameData = new SaveGameData();
     public SaveActorData actorData = new SaveActorData();
     public SaveNodeData nodeData = new SaveNodeData();
     public SaveNemesisData nemesisData = new SaveNemesisData();
@@ -71,6 +71,7 @@ public class SaveDataData
     public List<int> listOfDeletedSecrets = new List<int>();
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
     //contacts
+    public int contactCounter;
     public List<int> listOfContactPool = new List<int>();
     public List<Contact> listOfContacts = new List<Contact>();
     public List<IntListWrapper> listOfActorContactsValue = new List<IntListWrapper>();
@@ -95,6 +96,7 @@ public class SaveDataData
     public List<AITracker> listOfRecentNodes = new List<AITracker>();
     public List<AITracker> listOfRecentConnections = new List<AITracker>();
     //Messages
+    public int messageCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();
     public List<Message> listOfArchiveMessagesValue = new List<Message>();
     public List<int> listOfPendingMessagesKey = new List<int>();
@@ -114,6 +116,7 @@ public class SavePlayerData
 {
     public int renown;
     public int Invisibility;
+    
     public ActorStatus status;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
@@ -129,16 +132,24 @@ public class SavePlayerData
 
 
 /// <summary>
-/// SideManager.cs data
+/// Assorted important game related data
 /// </summary>
 [System.Serializable]
-public class SaveSideData
+public class SaveGameData
 {
+    //sideManager.cs
     public SideState resistanceCurrent;
     public SideState authorityCurrent;
     public SideState resistanceOverall;
     public SideState authorityOverall;
     public GlobalSide playerSide;
+    //turnManager.cs
+    public int turn;
+    public int actionPoints;
+    public int cityLoyalty;
+    public int factionSupportAuthority;
+    public int factionSupportResistance;
+    public bool isSecurityFlash;
 }
 
 /// <summary>
@@ -436,3 +447,4 @@ public class IntListWrapper : ListWrapper<int> { }
 [System.Serializable]
 public class ContactListWrapper : ListWrapper<Contact> { }
 #endregion
+

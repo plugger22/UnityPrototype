@@ -562,6 +562,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = turnScript.Initialise;
         startMethod.className = "TurnManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethodsAI.Add(startMethod);
         //Gear Manager
         startMethod.handler = gearScript.Initialise;
         startMethod.className = "GearManager";
@@ -777,10 +778,12 @@ public class GameManager : MonoBehaviour
         if (inputScript.GameState != GameState.LoadGame)
         {
             dataScript.ResetNewLevel();
+            turnScript.ResetTurn();
+            messageScript.ResetCounter();
             nodeScript.Reset();
             actorScript.Reset();
             contactScript.Reset();
-            teamScript.Reset();
+            teamScript.ResetCounter();
         }
         else
         {

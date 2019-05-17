@@ -156,12 +156,10 @@ public class TeamManager : MonoBehaviour
     }
 
     /// <summary>
-    /// reset data prior to new level
+    /// reset team ID counter prior to new level
     /// </summary>
-    public void Reset()
-    {
-        teamCounter = 0;
-    }
+    public void ResetCounter()
+    { teamCounter = 0; }
 
     /// <summary>
     /// End turn activity -> Event driven, decrement all timers in OnMap pool

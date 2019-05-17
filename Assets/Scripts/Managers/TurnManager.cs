@@ -86,18 +86,27 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
+    /// new Level
+    /// </summary>
+    public void ResetTurn()
+    { _turn = 0; }
+
+    /// <summary>
     /// Initialisation
     /// </summary>
     public void Initialise()
     {
         //actions
         UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
-        //states
-        resistanceState = ResistanceState.Normal;
-        authoritySecurityState = AuthoritySecurityState.Normal;
-        //current side
-        currentSide = GameManager.instance.sideScript.PlayerSide;
-
+        //if NOT Load game
+        if (GameManager.instance.inputScript.GameState != GameState.LoadGame)
+        {
+            //states
+            resistanceState = ResistanceState.Normal;
+            authoritySecurityState = AuthoritySecurityState.Normal;
+            //current side
+            currentSide = GameManager.instance.sideScript.PlayerSide;
+        }
         //session specific (once only)
         if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {

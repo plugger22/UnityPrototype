@@ -26,6 +26,7 @@ public class WidgetTopUI : MonoBehaviour
     private RectTransform transformCity;
     private RectTransform transformFaction;
     private bool isFading;                                  //flashing red security measure indicator, if true then opacity fading, otherwise increasing
+    private bool isSecurityFlash;                           //true if security flash is on
     private Coroutine myCoroutine;
     private float flashRedTime;
     private Color innerColour;
@@ -110,7 +111,7 @@ public class WidgetTopUI : MonoBehaviour
                 SetTurn((int)Param);
                 break;
             case EventType.ChangeSide:
-                ChangeSides((GlobalSide)Param);
+                SetSides((GlobalSide)Param);
                 break;
             case EventType.ChangeCityBar:
                 SetCityBar((int)Param);
@@ -144,7 +145,7 @@ public class WidgetTopUI : MonoBehaviour
     /// Set city loyalty bar colour for the appropriate side
     /// </summary>
     /// <param name="side"></param>
-    private void ChangeSides(GlobalSide side)
+    private void SetSides(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         SetCityBar(GameManager.instance.cityScript.CityLoyalty);
@@ -264,7 +265,10 @@ public class WidgetTopUI : MonoBehaviour
         {
             case true:
                 if (myCoroutine == null)
-                { myCoroutine = StartCoroutine("ShowFlashRed"); }
+                {
+                    myCoroutine = StartCoroutine("ShowFlashRed");
+                    isSecurityFlash = true;
+                }
                 break;
             case false:
                 if (myCoroutine != null)
@@ -272,6 +276,7 @@ public class WidgetTopUI : MonoBehaviour
                     StopCoroutine(myCoroutine);
                     myCoroutine = null;
                     isFading = false;
+                    isSecurityFlash = false;
                     //reset opacity back to zero -> inner
                     Color tempColor = flashRedInner.color;
                     tempColor.a = 0.0f;
@@ -317,6 +322,32 @@ public class WidgetTopUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// returns true if security flash ON, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckSecurityFlash()
+    { return isSecurityFlash; }
+
+    /// <summary>
+    /// directly updates top widget UI with loaded saved game data (bypasses multiple event calls)
+    /// </summary>
+    /// <param name="data"></param>
+    public void LoadSavedData(TopWidgetData data)
+    {
+        if (data != null)
+        {
+            SetSides(data.side);
+            SetTurn(data.turn);
+            SetActionPoints(data.actionPoints);
+            SetCityBar(data.cityLoyalty);
+            SetFactionBar(data.factionSupport);
+            SetSecurityFlasher(data.isSecurityFlash);
+
+            //Objectives -> TO DO
+        }
+        else { Debug.LogError("Invalid data (Null)"); }
+    }
 
     //new methods above here
 }

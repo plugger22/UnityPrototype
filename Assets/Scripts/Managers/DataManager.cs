@@ -288,6 +288,7 @@ public class DataManager : MonoBehaviour
     public void ResetNewLevel()
     {
         graph = null;
+        
         //arrays
         Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
         Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
@@ -338,7 +339,7 @@ public class DataManager : MonoBehaviour
         listOfUniqueGear.Clear();
         listOfLostGear.Clear();
         listOfCurrentGear.Clear();
-        //dictionaries
+        //nodes
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
         dictOfConnections.Clear();
@@ -346,15 +347,24 @@ public class DataManager : MonoBehaviour
         dictOfNodeDWeighted.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
+        //dijkstra
         dictOfDijkstraUnweighted.Clear();
         dictOfDijkstraWeighted.Clear();
+        //actors
         dictOfActors.Clear();
+        //teams
         dictOfTeams.Clear();
+        //contacts
         dictOfContacts.Clear();
         dictOfActorContacts.Clear();
         dictOfNodeContactsResistance.Clear();
         dictOfNodeContactsAuthority.Clear();
         dictOfContactsByNodeResistance.Clear();
+        ///messages
+        dictOfArchiveMessages.Clear();
+        dictOfPendingMessages.Clear();
+        dictOfCurrentMessages.Clear();
+        dictOfAIMessages.Clear();
 
         //dictOfTargets -> leave
         //dictOfStatistics -> leave

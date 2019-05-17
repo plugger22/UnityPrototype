@@ -5206,5 +5206,47 @@ public class AIManager : MonoBehaviour
     public List<string> GetListOfPlayerEffectDescriptors()
     { return listOfPlayerEffectDescriptors; }
 
+    /// <summary>
+    /// clear and copy saved data across to listOfTasksFinal
+    /// </summary>
+    /// <param name="listOfTasks"></param>
+    public void SetListOfTasksFinal(List<AITask> listOfTasks)
+    {
+        if (listOfTasks != null)
+        {
+            listOfTasksFinal.Clear();
+            listOfTasksFinal.AddRange(listOfTasks);
+        }
+        else { Debug.LogError("Invalid listOfTasks (Null)"); }
+    }
+
+    /// <summary>
+    /// clear and copy saved data across to listOfPlayerEffects
+    /// </summary>
+    /// <param name="listOfEffects"></param>
+    public void SetListOfPlayerEffects(List<string> listOfEffects)
+    {
+        if (listOfEffects != null)
+        {
+            listOfPlayerEffects.Clear();
+            listOfPlayerEffects.AddRange(listOfEffects);
+        }
+        else { Debug.LogError("Invalid listOfEffects (Null)"); }
+    }
+
+    /// <summary>
+    /// clear and copy saved data across to listOfPlayerEffectDescriptors
+    /// </summary>
+    /// <param name="listOfEffects"></param>
+    public void SetListOfPlayerEffectDescriptors(List<string> listOfEffects)
+    {
+        if (listOfEffects != null)
+        {
+            listOfPlayerEffectDescriptors.Clear();
+            listOfPlayerEffectDescriptors.AddRange(listOfEffects);
+        }
+        else { Debug.LogError("Invalid listOfEffects (Null)"); }
+    }
+
     //new methods above here
 }

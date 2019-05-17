@@ -7,6 +7,22 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
+/// data class to pass onto topWidget to update with saved data
+/// </summary>
+public class TopWidgetData
+{
+    public GlobalSide side;
+    public int turn;
+    public int actionPoints;
+    public int cityLoyalty;
+    public int factionSupport;
+    public float objectiveOne;
+    public float objectiveTwo;
+    public float objectiveThree;
+    public bool isSecurityFlash;
+}
+
+/// <summary>
 /// Handles all Save / Load functionality
 /// </summary>
 public class FileManager : MonoBehaviour
@@ -57,7 +73,7 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// copy inGame data to saveData
     /// </summary>
-    public void WriteGameData()
+    public void WriteSaveData()
     {
         write = new Save();
         //Sequentially write data
@@ -66,7 +82,7 @@ public class FileManager : MonoBehaviour
         WriteOptionData();
         WritePlayerData();
         WriteNemesisData();
-        WriteSideData();
+        WriteGameData();
         WriteActorData();
         WriteNodeData();
         WriteGearData();
@@ -114,11 +130,11 @@ public class FileManager : MonoBehaviour
     #endregion
 
 
-    #region Read Game Data
+    #region Read Save Data
     /// <summary>
-    /// Read game method, returns true if successful, false otherise
+    /// Read Save method, returns true if successful, false otherise
     /// </summary>
-    public bool ReadGameData()
+    public bool ReadSaveData()
     {
         bool isSuccess = false;
         if (File.Exists(filename) == true)
@@ -166,11 +182,11 @@ public class FileManager : MonoBehaviour
         {
             //side (player) at start
             ReadOptionData();
-            ReadSideData();          
+            ReadGameData();          
             ReadDataData();
             ReadCampaignData();
             //set up level based on loaded current scenario seed
-            GameManager.instance.InitialiseLoadGame(read.sideData.playerSide.level);
+            GameManager.instance.InitialiseLoadGame(read.gameData.playerSide.level);
             ReadNodeData();
             ReadNemesisData();
             ReadGearData();
@@ -179,6 +195,7 @@ public class FileManager : MonoBehaviour
             ValidateActorData();
             ReadPlayerData();
             ValidatePlayerData();
+            UpdateGUI();
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
         }
     }
@@ -274,17 +291,28 @@ public class FileManager : MonoBehaviour
     #endregion
 
 
-    #region Write Side Data
+    #region Write Game Data
     /// <summary>
-    /// SideManager.cs data write to file
+    /// Important Game data write to file
     /// </summary>
-    private void WriteSideData()
+    private void WriteGameData()
     {
-        write.sideData.resistanceCurrent = GameManager.instance.sideScript.resistanceCurrent;
-        write.sideData.authorityCurrent = GameManager.instance.sideScript.authorityCurrent;
-        write.sideData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
-        write.sideData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
-        write.sideData.playerSide = GameManager.instance.sideScript.PlayerSide;
+        //sideManager.cs
+        write.gameData.resistanceCurrent = GameManager.instance.sideScript.resistanceCurrent;
+        write.gameData.authorityCurrent = GameManager.instance.sideScript.authorityCurrent;
+        write.gameData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
+        write.gameData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
+        write.gameData.playerSide = GameManager.instance.sideScript.PlayerSide;
+        //turnManager.cs
+        write.gameData.turn = GameManager.instance.turnScript.Turn;
+        write.gameData.actionPoints = GameManager.instance.turnScript.GetActionsAvailable();
+        //cityManager.cs
+        write.gameData.cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        //factionManager.cs
+        write.gameData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
+        write.gameData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
+        //top widget
+        write.gameData.isSecurityFlash = GameManager.instance.widgetTopScript.CheckSecurityFlash();
     }
     #endregion
 
@@ -563,6 +591,8 @@ public class FileManager : MonoBehaviour
             write.dataData.listOfAIMessagesValue.AddRange(dictOfAIMessages.Values.ToList());
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
+        //id counter
+        write.dataData.messageCounter = GameManager.instance.messageScript.messageCounter;
         #endregion
     }
     #endregion
@@ -1126,17 +1156,21 @@ public class FileManager : MonoBehaviour
     #endregion
 
 
-    #region Read Side Data
+    #region Read Game Data
     /// <summary>
-    /// SideManager.cs data
+    /// important Game data
     /// </summary>
-    private void ReadSideData()
+    private void ReadGameData()
     {
-        GameManager.instance.sideScript.resistanceCurrent = read.sideData.resistanceCurrent;
-        GameManager.instance.sideScript.authorityCurrent = read.sideData.authorityCurrent;
-        GameManager.instance.sideScript.resistanceOverall = read.sideData.resistanceOverall;
-        GameManager.instance.sideScript.authorityOverall = read.sideData.authorityOverall;
-        GameManager.instance.sideScript.PlayerSide = read.sideData.playerSide;
+        //Sidemanager.cs
+        GameManager.instance.sideScript.resistanceCurrent = read.gameData.resistanceCurrent;
+        GameManager.instance.sideScript.authorityCurrent = read.gameData.authorityCurrent;
+        GameManager.instance.sideScript.resistanceOverall = read.gameData.resistanceOverall;
+        GameManager.instance.sideScript.authorityOverall = read.gameData.authorityOverall;
+        GameManager.instance.sideScript.PlayerSide = read.gameData.playerSide;
+        //turnManager.cs
+        GameManager.instance.turnScript.Turn = read.gameData.turn;
+
     }
     #endregion
 
@@ -1578,6 +1612,8 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
+        //message counter
+        GameManager.instance.messageScript.messageCounter = read.dataData.messageCounter;
         #endregion
     }
     #endregion
@@ -2093,31 +2129,11 @@ public class FileManager : MonoBehaviour
     private void ReadAIData()
     {
         //list -> tasks final
-        List<AITask> listOfTasksFinal = GameManager.instance.aiScript.GetListOfTasksFinal();
-        if (listOfTasksFinal != null)
-        {
-            listOfTasksFinal.Clear();
-            listOfTasksFinal.AddRange(read.aiData.listOfTasksFinal);
-        }
-        else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
+        GameManager.instance.aiScript.SetListOfTasksFinal(read.aiData.listOfTasksFinal);
         //list -> player effects
-        List<string> listOfPlayerEffects = GameManager.instance.aiScript.GetListOfPlayerEffects();
-        if (listOfPlayerEffects != null)
-        {
-
-            listOfPlayerEffects.Clear();
-            listOfPlayerEffects.AddRange(read.aiData.listOfPlayerEffects);
-        }
-        else { Debug.LogError("Invalid listOfPlayerEffects (Null)"); }
+        GameManager.instance.aiScript.SetListOfPlayerEffects(read.aiData.listOfPlayerEffects);
         //list -> player effects description
-        List<string> listOfPlayerEffectDescriptors = GameManager.instance.aiScript.GetListOfPlayerEffectDescriptors();
-        if (listOfPlayerEffectDescriptors != null)
-        {
-
-            listOfPlayerEffectDescriptors.Clear();
-            listOfPlayerEffectDescriptors.AddRange(read.aiData.listOfPlayerEffectDescriptors);
-        }
-        else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
+        GameManager.instance.aiScript.SetListOfPlayerEffectDescriptors(read.aiData.listOfPlayerEffectDescriptors);
         //
         // - - - update displays -> load game could have been called from a hot key or the main menu
         //
@@ -2228,7 +2244,35 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+    //
+    // - - - GUI - - -
+    //
 
+    /// <summary>
+    /// if loaded in player mode, update all relevent GUI elements (others may be updated by class specific methods above)
+    /// </summary>
+    private void UpdateGUI()
+    {
+        //Top Widget UI
+        TopWidgetData widget = new TopWidgetData();
+        widget.side = read.gameData.playerSide;
+        widget.turn = read.gameData.turn;
+        widget.actionPoints = read.gameData.actionPoints;
+        widget.cityLoyalty = read.gameData.cityLoyalty;
+        //faction support depends on side
+        switch (read.gameData.playerSide.level)
+        {
+            case 1: widget.factionSupport = read.gameData.factionSupportAuthority; break;
+            case 2: widget.factionSupport = read.gameData.factionSupportResistance; break;
+            default: Debug.LogError("Unrecognised {0}", read.gameData.playerSide); break;
+        }
+        widget.isSecurityFlash = read.gameData.isSecurityFlash;
+
+        //objectives -> TO DO
+
+        //Update top widget UI
+        GameManager.instance.widgetTopScript.LoadSavedData(widget);
+    }
 
     //new methods above here
 }

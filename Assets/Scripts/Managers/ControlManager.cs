@@ -280,7 +280,7 @@ public class ControlManager : MonoBehaviour
         //Debug -> time load game process
         GameManager.instance.testScript.StartTimer();
         //read data from file
-        if (GameManager.instance.fileScript.ReadGameData() == true)
+        if (GameManager.instance.fileScript.ReadSaveData() == true)
         {
             //load data into game
             GameManager.instance.fileScript.LoadSaveData();
@@ -321,7 +321,7 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = GameState.SaveGame;
         //Debug -> time load game process
         GameManager.instance.testScript.StartTimer();
-        GameManager.instance.fileScript.WriteGameData();
+        GameManager.instance.fileScript.WriteSaveData();
         GameManager.instance.fileScript.SaveGame();
         //how long did it take?
         long timeElapsed = GameManager.instance.testScript.StopTimer();

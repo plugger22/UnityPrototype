@@ -55,6 +55,11 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(mayor != null, "Invalid mayor (Null)");
     }
 
+    /// <summary>
+    /// Reset message ID counter prior to a new level
+    /// </summary>
+    public void ResetCounter()
+    { messageCounter = 0; }
 
     /// <summary>
     /// handles events
@@ -3176,13 +3181,13 @@ public class MessageManager : MonoBehaviour
             if (supportGiven > 0)
             {
                 //support Approved
-                data.itemText = string.Format("Support request to {0} HQ APPROVED", faction.name);
+                data.itemText = string.Format("Support request to {0} APPROVED", faction.name);
                 data.topText = "Support APPROVED";
             }
             else
             {
                 //support Declined
-                data.itemText = string.Format("Support request to {0} HQ declined", faction.name);
+                data.itemText = string.Format("Support request to {0} declined", faction.name);
                 data.topText = "Support Declined";
             }
             data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionApprovalLevel, supportGiven);
