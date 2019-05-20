@@ -1056,6 +1056,8 @@ public class FileManager : MonoBehaviour
         write.aiData.numOfCrisis = GameManager.instance.aiScript.numOfCrisis;
         write.aiData.status = GameManager.instance.aiScript.status;
         write.aiData.inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
+        //AIManager.cs -> private fields
+        write.aiData.saveAI = GameManager.instance.aiScript.LoadWriteData();
         //AIRebelManager.cs -> private fields
         write.aiData.saveRebel = GameManager.instance.aiRebelScript.WriteSaveData();
         if (write.aiData.saveRebel == null)
@@ -2206,6 +2208,8 @@ public class FileManager : MonoBehaviour
         GameManager.instance.aiScript.numOfCrisis = read.aiData.numOfCrisis;
         GameManager.instance.aiScript.status = read.aiData.status;
         GameManager.instance.aiScript.inactiveStatus = read.aiData.inactiveStatus;
+        //AIManager.cs -> private fields
+        GameManager.instance.aiScript.LoadReadData(read.aiData.saveAI);
         //AIRebelManager.cs -> private fields
         GameManager.instance.aiRebelScript.ReadSaveData(read.aiData.saveRebel);
         //AIRebelManager -> Nemesis Reports

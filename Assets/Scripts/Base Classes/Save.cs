@@ -276,6 +276,8 @@ public class SaveAIData
     public int numOfCrisis;
     public ActorStatus status;
     public ActorInactive inactiveStatus;
+    //AIManager.cs -> private fields
+    public SaveAIClass saveAI;
     //AIRebelManager.cs
     public SaveAIRebelClass saveRebel;
     public List<AITracker> listOfNemesisReports = new List<AITracker>();

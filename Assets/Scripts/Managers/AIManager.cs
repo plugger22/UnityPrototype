@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using packageAPI;
 using System.Text;
 using System;
 using System.Linq;
@@ -305,13 +306,11 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
     [HideInInspector] public bool isBreakdown;                          //true if suffering from nervous, stress induced, breakdown
-    #endregion
 
     //admin
     private bool isStressed;
     private bool isLowHQApproval;
     private int stressedActorID;                       //actorID (player/actor) -> ProcessDecisionData prioritises player over actors if multiple cases of stress
-
     //ai countermeasure flags
     private bool isOffline;                            //if true AI DisplayUI is offline and can't be hacked by the player
     private bool isTraceBack;                          //if true AI has ability to trace back whenever AI hacking detected and find player and drop their invisibility
@@ -348,6 +347,7 @@ public class AIManager : MonoBehaviour
     private bool isInsufficientResources;                               //true whenever not enough resources to implement a decision (triggers 'Request Resources')
     private int numOfUnsuccessfulResourceRequests;                      //running tally, reset back to zero once a request is APPROVED
     private int numOfSuccessfulResourceRequests;
+    #endregion
 
     //fast access -> teams
     private int teamArcCivil = -1;
@@ -4791,6 +4791,61 @@ public class AIManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfTasks (Null)"); }
+    }
+
+    //
+    // - - - Save / Load - - -
+    //
+
+    /// <summary>
+    /// write dynamic private fields and send to FileManager.cs for serialization
+    /// </summary>
+    /// <returns></returns>
+    public SaveAIClass LoadWriteData()
+    {
+        SaveAIClass data = new SaveAIClass();
+        data.isStressed = isStressed;
+        data.isLowHQApproval = isLowHQApproval;
+        data.stressedActorID = stressedActorID;
+        data.isOffline = isOffline;
+        data.isTraceBack = isTraceBack;
+        data.isScreamer = isScreamer;
+        data.isPolicy = isPolicy;
+        data.timerTraceBack = timerTraceBack;
+        data.aiSecurityProtocolLevel = aiSecurityProtocolLevel;
+        data.timerScreamer = timerScreamer;
+        data.timerOffline = timerOffline;
+        data.timerHandout = timerHandout;
+        data.timerPolicy = timerPolicy;
+        data.policyName = policyName;
+        data.policyEffectCrisis = policyEffectCrisis;
+        data.policyEffectLoyalty = policyEffectLoyalty;
+        data.detectModifierMayor = detectModifierMayor;
+        data.detectModifierFaction = detectModifierFaction;
+        data.detectModifierGear = detectModifierGear;
+        data.authorityPreferredArc = authorityPreferredArc;
+        data.actionsPerTurn = actionsPerTurn;
+        data.playerTargetNodeID = playerTargetNodeID;
+        data.connSecRatio = connSecRatio;
+        data.teamRatio = teamRatio;
+        data.erasureTeamsOnMap = erasureTeamsOnMap;
+        data.isInsufficientResources = isInsufficientResources;
+        data.numOfUnsuccessfulResourceRequests = numOfUnsuccessfulResourceRequests;
+        data.numOfSuccessfulResourceRequests = numOfSuccessfulResourceRequests;
+        return data;
+    }
+
+    /// <summary>
+    /// copy across loaded save game to data into private fields
+    /// </summary>
+    /// <param name="data"></param>
+    public void LoadReadData(SaveAIClass data)
+    {
+        if (data != null)
+        {
+
+        }
+        else { Debug.LogError("Invalid SaveAIClass (Null)"); }
     }
 
     //

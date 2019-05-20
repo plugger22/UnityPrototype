@@ -20,29 +20,7 @@ public class SightingData
     public Priority priority;
 }
 
-/// <summary>
-/// used to save private fields holding dynamic data
-/// </summary>
-[System.Serializable]
-public class SaveAIRebelClass
-{
-    public int actionAllowance;
-    public int actionsUsed;
-    public int gearPool;
-    public int gearPointsUsed;
-    public int targetIntel;
-    public int targetIntelUsed;
-    public int targetNodeID;
-    public int cureNodeID;
-    public int aiPlayerStartNodeID;
-    public bool isConnectionsChanged;
-    public bool isPlayer;
-    public bool isCureNeeded;
-    public bool isCureCritical;
-    public bool isPlayerStressed;
-    public int stressedActorID;
-    public int questionableID;
-}
+
 
 
 /// <summary>

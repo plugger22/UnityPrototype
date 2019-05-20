@@ -410,5 +410,73 @@ namespace packageAPI
         public int actionsTotal;
     }
 
+    /// <summary>
+    /// used to save AIRebelManager.cs private fields holding dynamic data
+    /// </summary>
+    [System.Serializable]
+    public class SaveAIRebelClass
+    {
+        public int actionAllowance;
+        public int actionsUsed;
+        public int gearPool;
+        public int gearPointsUsed;
+        public int targetIntel;
+        public int targetIntelUsed;
+        public int targetNodeID;
+        public int cureNodeID;
+        public int aiPlayerStartNodeID;
+        public bool isConnectionsChanged;
+        public bool isPlayer;
+        public bool isCureNeeded;
+        public bool isCureCritical;
+        public bool isPlayerStressed;
+        public int stressedActorID;
+        public int questionableID;
+    }
+
+    /// <summary>
+    /// Used to save AIManager
+    /// </summary>
+    [System.Serializable]
+    public class SaveAIClass
+    {
+        public bool isStressed;
+        public bool isLowHQApproval;
+        public int stressedActorID;
+        //ai countermeasure flags
+        public bool isOffline;
+        public bool isTraceBack;
+        public bool isScreamer;
+        public bool isPolicy;
+        //ai countermeasures
+        public int timerTraceBack;
+        public int aiSecurityProtocolLevel;
+        public int timerScreamer;
+        public int timerOffline;
+        public int timerHandout;
+        public int timerPolicy;
+        public string policyName;
+        public int policyEffectCrisis;
+        public int policyEffectLoyalty;
+        //hacking
+        public int detectModifierMayor;
+        public int detectModifierFaction;
+        public int detectModifierGear;
+        //factions
+        public string authorityPreferredArc;         
+        public string resistancePreferredArc;*/
+        public int actionsPerTurn;
+        //player target (Nemesis / Erasure teams)
+        public int playerTargetNodeID;
+        //decision data
+        public float connSecRatio;
+        public float teamRatio;
+        public int erasureTeamsOnMap;
+        public bool isInsufficientResources;
+        public int numOfUnsuccessfulResourceRequests;
+        public int numOfSuccessfulResourceRequests;
+    }
+
+
     //new classes above here
 }
