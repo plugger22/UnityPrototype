@@ -464,7 +464,6 @@ namespace packageAPI
         public int detectModifierGear;
         //factions
         public string authorityPreferredArc;         
-        public string resistancePreferredArc;*/
         public int actionsPerTurn;
         //player target (Nemesis / Erasure teams)
         public int playerTargetNodeID;

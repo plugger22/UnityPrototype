@@ -294,7 +294,7 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: NodeArc7
+    m_Name: unassigned
     descriptiveName: Toggle highlight all nodes of this arc type
     descriptiveNegativeName: 
     negativeButton: 

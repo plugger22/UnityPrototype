@@ -2313,6 +2313,7 @@ public class FileManager : MonoBehaviour
     // - - - GUI - - -
     //
 
+    #region UpdateGUI
     /// <summary>
     /// if loaded in player mode, update all relevent GUI elements (others may be updated by class specific methods above)
     /// </summary>
@@ -2338,6 +2339,7 @@ public class FileManager : MonoBehaviour
         //Update top widget UI
         GameManager.instance.widgetTopScript.LoadSavedData(widget);
     }
+    #endregion
 
     //new methods above here
 }

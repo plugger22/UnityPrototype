@@ -347,6 +347,7 @@ public class DataManager : MonoBehaviour
         dictOfNodeDWeighted.Clear();
         dictOfNodeDUnweighted.Clear();
         dictOfNodeDWeighted.Clear();
+        dictOfOngoingID.Clear();
         //dijkstra
         dictOfDijkstraUnweighted.Clear();
         dictOfDijkstraWeighted.Clear();

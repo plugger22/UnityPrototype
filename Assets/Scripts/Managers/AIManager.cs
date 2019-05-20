@@ -4843,7 +4843,34 @@ public class AIManager : MonoBehaviour
     {
         if (data != null)
         {
-
+            isStressed = data.isStressed;
+            isLowHQApproval = data.isLowHQApproval;
+            stressedActorID = data.stressedActorID;
+            isOffline = data.isOffline;
+            isTraceBack = data.isTraceBack;
+            isScreamer = data.isScreamer;
+            isPolicy = data.isPolicy;
+            timerTraceBack = data.timerTraceBack;
+            aiSecurityProtocolLevel = data.aiSecurityProtocolLevel;
+            timerScreamer = data.timerScreamer;
+            timerOffline = data.timerOffline;
+            timerHandout = data.timerHandout;
+            timerPolicy = data.timerPolicy;
+            policyName = data.policyName;
+            policyEffectCrisis = data.policyEffectCrisis;
+            policyEffectLoyalty = data.policyEffectLoyalty;
+            detectModifierMayor = data.detectModifierMayor;
+            detectModifierFaction = data.detectModifierFaction;
+            detectModifierGear = data.detectModifierGear;
+            authorityPreferredArc = data.authorityPreferredArc;
+            actionsPerTurn = data.actionsPerTurn;
+            playerTargetNodeID = data.playerTargetNodeID;
+            connSecRatio = data.connSecRatio;
+            teamRatio = data.teamRatio;
+            erasureTeamsOnMap = data.erasureTeamsOnMap;
+            isInsufficientResources = data.isInsufficientResources;
+            numOfUnsuccessfulResourceRequests = data.numOfUnsuccessfulResourceRequests;
+            numOfSuccessfulResourceRequests = data.numOfSuccessfulResourceRequests;
         }
         else { Debug.LogError("Invalid SaveAIClass (Null)"); }
     }
