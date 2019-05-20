@@ -254,10 +254,28 @@ public class SaveNemesisData
 [System.Serializable]
 public class SaveAIData
 {
-    //AIManager.cs
+    //AIManager.cs -> collections
     public List<AITask> listOfTasksFinal = new List<AITask>();
     public List<string> listOfPlayerEffects = new List<string>();
     public List<string> listOfPlayerEffectDescriptors = new List<string>();
+    //AIManager.cs -> public fields
+    public bool immediateFlagAuthority;
+    public bool immediateFlagResistance;
+    public int resourcesGainAuthority;
+    public int resourcesGainResistance;
+    public int aiTaskCounter;
+    public int hackingAttemptsTotal;
+    public int hackingAttemptsReboot;
+    public int hackingAttemptsDetected;
+    public int hackingCurrentCost;
+    public int hackingModifiedCost;
+    public bool isHacked;
+    public Priority aiAlertStatus;
+    public bool isRebooting;
+    public int rebootTimer;
+    public int numOfCrisis;
+    public ActorStatus status;
+    public ActorInactive inactiveStatus;
     //AIRebelManager.cs
     public SaveAIRebelClass saveRebel;
     public List<AITracker> listOfNemesisReports = new List<AITracker>();

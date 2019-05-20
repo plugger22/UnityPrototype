@@ -1038,7 +1038,25 @@ public class FileManager : MonoBehaviour
         if (listOfPlayerEffectDescriptors != null)
         { write.aiData.listOfPlayerEffectDescriptors.AddRange(listOfPlayerEffectDescriptors); }
         else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
-        //AIRebelManager.cs private fields
+        //AIManager.cs -> public fields
+        write.aiData.immediateFlagAuthority = GameManager.instance.aiScript.immediateFlagAuthority;
+        write.aiData.immediateFlagResistance = GameManager.instance.aiScript.immediateFlagResistance;
+        write.aiData.resourcesGainAuthority = GameManager.instance.aiScript.resourcesGainAuthority;
+        write.aiData.resourcesGainResistance = GameManager.instance.aiScript.resourcesGainResistance;
+        write.aiData.aiTaskCounter = GameManager.instance.aiScript.aiTaskCounter;
+        write.aiData.hackingAttemptsTotal = GameManager.instance.aiScript.hackingAttemptsTotal;
+        write.aiData.hackingAttemptsReboot = GameManager.instance.aiScript.hackingAttemptsReboot;
+        write.aiData.hackingAttemptsDetected = GameManager.instance.aiScript.hackingAttemptsDetected;
+        write.aiData.hackingCurrentCost = GameManager.instance.aiScript.hackingCurrentCost;
+        write.aiData.hackingModifiedCost = GameManager.instance.aiScript.hackingModifiedCost;
+        write.aiData.isHacked = GameManager.instance.aiScript.isHacked;
+        write.aiData.aiAlertStatus = GameManager.instance.aiScript.aiAlertStatus;
+        write.aiData.isRebooting = GameManager.instance.aiScript.isRebooting;
+        write.aiData.rebootTimer = GameManager.instance.aiScript.rebootTimer;
+        write.aiData.numOfCrisis = GameManager.instance.aiScript.numOfCrisis;
+        write.aiData.status = GameManager.instance.aiScript.status;
+        write.aiData.inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
+        //AIRebelManager.cs -> private fields
         write.aiData.saveRebel = GameManager.instance.aiRebelScript.WriteSaveData();
         if (write.aiData.saveRebel == null)
         { Debug.LogError("Invalid AIRebelManager.cs saveRebel data (Null)"); }
@@ -2170,6 +2188,24 @@ public class FileManager : MonoBehaviour
             GameManager.instance.aiScript.UpdateSideTabData();
             GameManager.instance.aiScript.UpdateBottomTabData();
         }
+        //AIManager.cs -> public fields
+        GameManager.instance.aiScript.immediateFlagAuthority = read.aiData.immediateFlagAuthority;
+        GameManager.instance.aiScript.immediateFlagResistance = read.aiData.immediateFlagResistance;
+        GameManager.instance.aiScript.resourcesGainAuthority = read.aiData.resourcesGainAuthority;
+        GameManager.instance.aiScript.resourcesGainResistance = read.aiData.resourcesGainResistance;
+        GameManager.instance.aiScript.aiTaskCounter = read.aiData.aiTaskCounter;
+        GameManager.instance.aiScript.hackingAttemptsTotal = read.aiData.hackingAttemptsTotal;
+        GameManager.instance.aiScript.hackingAttemptsReboot = read.aiData.hackingAttemptsReboot;
+        GameManager.instance.aiScript.hackingAttemptsDetected = read.aiData.hackingAttemptsDetected;
+        GameManager.instance.aiScript.hackingCurrentCost = read.aiData.hackingCurrentCost;
+        GameManager.instance.aiScript.hackingModifiedCost = read.aiData.hackingModifiedCost;
+        GameManager.instance.aiScript.isHacked = read.aiData.isHacked;
+        GameManager.instance.aiScript.aiAlertStatus = read.aiData.aiAlertStatus;
+        GameManager.instance.aiScript.isRebooting = read.aiData.isRebooting;
+        GameManager.instance.aiScript.rebootTimer = read.aiData.rebootTimer;
+        GameManager.instance.aiScript.numOfCrisis = read.aiData.numOfCrisis;
+        GameManager.instance.aiScript.status = read.aiData.status;
+        GameManager.instance.aiScript.inactiveStatus = read.aiData.inactiveStatus;
         //AIRebelManager.cs -> private fields
         GameManager.instance.aiRebelScript.ReadSaveData(read.aiData.saveRebel);
         //AIRebelManager -> Nemesis Reports

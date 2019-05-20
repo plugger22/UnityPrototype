@@ -283,6 +283,7 @@ public class AIManager : MonoBehaviour
     [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of renown to the Authority player")]
     [Range(1, 3)] public int renownFactor = 2;
 
+    #region Save Compatible Data
     //assorted
     [HideInInspector] public bool immediateFlagAuthority;               //true if any authority activity that flags immediate notification
     [HideInInspector] public bool immediateFlagResistance;              //true if any resistance activity that flags immediate notification, eg. activity while invis 0
@@ -304,6 +305,7 @@ public class AIManager : MonoBehaviour
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorInactive inactiveStatus;
     [HideInInspector] public bool isBreakdown;                          //true if suffering from nervous, stress induced, breakdown
+    #endregion
 
     //admin
     private bool isStressed;
@@ -366,8 +368,7 @@ public class AIManager : MonoBehaviour
     private int aiPolicyCostHigher;
     private int aiHandoutCostLower;
     private int aiHandoutCostHigher;
-    //conditions
-    
+    //conditions   
     private Condition conditionStressed;
     //sides
     private GlobalSide globalAuthority;
