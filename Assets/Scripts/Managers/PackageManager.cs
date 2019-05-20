@@ -398,7 +398,7 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// class to pass TurnManager.cs data for serialization (to and from)
+    /// class to pass TurnManager.cs private field data for serialization (to and from)
     /// </summary>
     [System.Serializable]
     public class TurnActionData

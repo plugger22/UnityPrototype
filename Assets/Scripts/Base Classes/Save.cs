@@ -146,6 +146,11 @@ public class SaveGameData
     public GlobalSide playerSide;
     //turnManager.cs
     public TurnActionData turnData;
+    public WinState winStateLevel;
+    public WinReason winReasonLevel;
+    public AuthoritySecurityState authoritySecurity;
+    public GlobalSide currentSide;
+    public bool haltExecution;
     public bool isSecurityFlash;
 }
 

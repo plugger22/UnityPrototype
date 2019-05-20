@@ -291,9 +291,14 @@ public class FileManager : MonoBehaviour
         write.gameData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
         write.gameData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
         write.gameData.playerSide = GameManager.instance.sideScript.PlayerSide;
-        //turnManager.cs
+        //turnManager.cs -> private fields
         write.gameData.turnData = GameManager.instance.turnScript.LoadWriteData();
-
+        //turnManager.cs -> public fields
+        write.gameData.winStateLevel = GameManager.instance.turnScript.winStateLevel;
+        write.gameData.winReasonLevel = GameManager.instance.turnScript.winReasonLevel;
+        write.gameData.authoritySecurity = GameManager.instance.turnScript.authoritySecurityState;
+        write.gameData.currentSide = GameManager.instance.turnScript.currentSide;
+        write.gameData.haltExecution = GameManager.instance.turnScript.haltExecution;
         //top widget
         write.gameData.isSecurityFlash = GameManager.instance.widgetTopScript.CheckSecurityFlash();
     }
@@ -1166,8 +1171,14 @@ public class FileManager : MonoBehaviour
         GameManager.instance.sideScript.resistanceOverall = read.gameData.resistanceOverall;
         GameManager.instance.sideScript.authorityOverall = read.gameData.authorityOverall;
         GameManager.instance.sideScript.PlayerSide = read.gameData.playerSide;
-        //turnManager.cs
+        //turnManager.cs -> private fields
         GameManager.instance.turnScript.LoadReadData(read.gameData.turnData);
+        //turnManager.cs -> public fields
+        GameManager.instance.turnScript.winStateLevel = read.gameData.winStateLevel;
+        GameManager.instance.turnScript.winReasonLevel = read.gameData.winReasonLevel;
+        GameManager.instance.turnScript.authoritySecurityState = read.gameData.authoritySecurity;
+        GameManager.instance.turnScript.currentSide = read.gameData.currentSide;
+        GameManager.instance.turnScript.haltExecution = read.gameData.haltExecution;
 
 
     }

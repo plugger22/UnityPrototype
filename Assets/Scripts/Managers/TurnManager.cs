@@ -30,9 +30,10 @@ public class TurnManager : MonoBehaviour
     [Tooltip("Number of seconds to show finish splash screen for")]
     public float showSplashTimeout = 1.0f;
 
+    #region Save Compatible Data
     [HideInInspector] public WinState winStateLevel = WinState.None;          //set if somebody has won
     [HideInInspector] public WinReason winReasonLevel = WinReason.None;  //why a win (from POV of winner)
-    [HideInInspector] public ResistanceState resistanceState;
+    /*[HideInInspector] public ResistanceState resistanceState;*/
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI). Change value ONLY here in TurnManager.cs
     [HideInInspector] public bool haltExecution;             //used to stop program execution at turn end until all interactions are done prior to opening InfoApp
@@ -43,6 +44,7 @@ public class TurnManager : MonoBehaviour
     private int _actionsLimit;                                                  //set to the actions cap for the player's current side
     private int _actionsAdjust;                                                 //any temporary adjustments that apply to the actions Limit
     private int _actionsTotal;                                                  //total number of actions available to the player this turn (adjustments + limit)
+    #endregion
 
     private bool allowQuitting = false;
     private Coroutine myCoroutineInfoApp;
@@ -96,13 +98,15 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        //actions
-        UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
+
         //if NOT Load game
         if (GameManager.instance.inputScript.GameState != GameState.LoadGame)
         {
+            //actions
+            UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
             //states
-            resistanceState = ResistanceState.Normal;
+
+            /*resistanceState = ResistanceState.Normal;*/
             authoritySecurityState = AuthoritySecurityState.Normal;
             //current side
             currentSide = GameManager.instance.sideScript.PlayerSide;
@@ -684,7 +688,7 @@ public class TurnManager : MonoBehaviour
 
     /// <summary>
     /// debug method to change game states
-    /// category is 'a' -> AuthorityState, 'r' -> ResistanceState
+    /// category is 'a' -> AuthorityState, 'r' -> ResistanceState EDIT: ResistanceState redundant, 20May19
     /// state is specific, AuthorityState -> 'apb' & 'sec' & 'nor'
     /// </summary>
     /// <param name="stateCategory"></param>
@@ -741,10 +745,10 @@ public class TurnManager : MonoBehaviour
                         break;
                 }
                 break;
-            case "r":
+            /*case "r":
             case "R":
                 //ResistanceState
-                break;
+                break;*/
         }
         return string.Format("{0}{1}Press ESC to exit", text, "\n");
     }
