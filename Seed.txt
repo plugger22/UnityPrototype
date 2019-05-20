@@ -283,3 +283,87 @@ City seed 890 -> Arles, France
 
 City seed 5678 -> London, United Kingdom
 
+Dev seed 65175 -> Monday, 20 May 2019 9:29 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40290 -> Monday, 20 May 2019 10:06 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38078 -> Monday, 20 May 2019 10:21 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59817 -> Monday, 20 May 2019 10:26 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3636 -> Monday, 20 May 2019 10:28 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2474 -> Monday, 20 May 2019 10:35 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47956 -> Monday, 20 May 2019 10:47 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52258 -> Monday, 20 May 2019 10:48 AM
+City seed 890 -> Arles, France
+
+Dev seed 31974 -> Monday, 20 May 2019 10:48 AM
+City seed 5678 -> London, United Kingdom
+
+City seed 890 -> Arles, France
+
+Dev seed 31974 -> Monday, 20 May 2019 10:51 AM
+City seed 890 -> Arles, France
+
+Dev seed 31974 -> Monday, 20 May 2019 10:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 10:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 10:56 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 11:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 11:03 AM
+City seed 5678 -> London, United Kingdom
+
+City seed 890 -> Arles, France
+
+Dev seed 31974 -> Monday, 20 May 2019 11:06 AM
+City seed 5678 -> London, United Kingdom
+
+City seed 890 -> Arles, France
+
+Dev seed 31974 -> Monday, 20 May 2019 11:11 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 11:13 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 11:13 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31974 -> Monday, 20 May 2019 11:16 AM
+City seed 890 -> Arles, France
+
+City seed 5678 -> London, United Kingdom
+

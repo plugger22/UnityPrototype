@@ -466,7 +466,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
         listOfLevelMethods.Add(startMethod);
-        //Side Manager -> after scenarioManager
+        //Side Manager -> after campaignManager
         startMethod.handler = sideScript.Initialise;
         startMethod.className = "SideManager";
         listOfLevelMethods.Add(startMethod);
@@ -520,12 +520,12 @@ public class GameManager : MonoBehaviour
         startMethod.className = "AIManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethodsAI.Add(startMethod);
-        //Campaign Manager -> InitialiseLate (includes NemesisManager.Initialise) -> after levelScript.Initialise
+        //Campaign Manager -> InitialiseLate (includes NemesisManager.Initialise & CityManager.InitialiseLate) -> after levelScript.Initialise
         startMethod.handler = campaignScript.InitialiseLate;
         startMethod.className = "CampaignManager Late";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethodsAI.Add(startMethod);
-        //Message Manager -> InitialseLate -> after ScenarioManager
+        //Message Manager -> InitialseLate -> after CampaignManager
         startMethod.handler = messageScript.InitialiseLate;
         startMethod.className = "MessageManager";
         listOfLevelMethods.Add(startMethod);

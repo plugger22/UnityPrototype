@@ -329,7 +329,6 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.NodeArc4:
                     case NodeUI.NodeArc5:
                     case NodeUI.NodeArc6:
-                    case NodeUI.NodeArc7:
                         if (NodeShowFlag > 0)
                         { ResetAll(); }
                         else { ShowNodes(nodeUI); }
@@ -913,7 +912,6 @@ public class NodeManager : MonoBehaviour
             case NodeUI.NodeArc4: data = 4; nodeTypeFlag = true; break;
             case NodeUI.NodeArc5: data = 5; nodeTypeFlag = true; break;
             case NodeUI.NodeArc6: data = 6; nodeTypeFlag = true; break;
-            case NodeUI.NodeArc7: data = 7; nodeTypeFlag = true; break;
             default:
                 Debug.LogError(string.Format("Invalid NodeUI parameter \"{0}\"{1}", nodeUI, "\n"));
                 successFlag = false;

@@ -44,7 +44,7 @@ public class CampaignManager : MonoBehaviour
         //Assign a scenario
         scenario = GetCurrentScenario();
         if (scenario != null)
-        { Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n"); }
+        { Debug.LogFormat("[Cam] CampaignManager.cs -> InitialiseEarly: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n"); }
         else { Debug.LogError("Invalid scenario (Null)"); }
         // City (Early)
         if (scenario.city != null)

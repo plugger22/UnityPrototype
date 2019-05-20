@@ -37,7 +37,7 @@ public class TurnManager : MonoBehaviour
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI). Change value ONLY here in TurnManager.cs
     [HideInInspector] public bool haltExecution;             //used to stop program execution at turn end until all interactions are done prior to opening InfoApp
 
-    [SerializeField, HideInInspector]
+    /*[SerializeField, HideInInspector]*/
     private int _turn;
     private int _actionsCurrent;                                                //cumulative actions taken by the player for the current turn
     private int _actionsLimit;                                                  //set to the actions cap for the player's current side
@@ -900,6 +900,43 @@ public class TurnManager : MonoBehaviour
 #else
             Application.Quit();
 #endif
+    }
+
+
+    //
+    // - - - Save / Load
+    //
+
+    /// <summary>
+    /// copy data over to fileManager.cs for serialization
+    /// </summary>
+    /// <returns></returns>
+    public TurnActionData LoadWriteData()
+    {
+        TurnActionData turnData = new TurnActionData();
+        turnData.turn = Turn;
+        turnData.actionsCurrent = _actionsCurrent;
+        turnData.actionsLimit = _actionsLimit;
+        turnData.actionsAdjust = _actionsAdjust;
+        turnData.actionsTotal = _actionsTotal;
+        return turnData;
+    }
+
+    /// <summary>
+    /// copy across loaded save game data
+    /// </summary>
+    /// <param name="data"></param>
+    public void LoadReadData(TurnActionData data)
+    {
+        if (data != null)
+        {
+            Turn = data.turn;
+            _actionsCurrent = data.actionsCurrent;
+            _actionsLimit = data.actionsLimit;
+            _actionsAdjust = data.actionsAdjust;
+            _actionsTotal = data.actionsTotal;
+        }
+        else { Debug.LogError("Invalid TurnActionData (Null)"); }
     }
 
 

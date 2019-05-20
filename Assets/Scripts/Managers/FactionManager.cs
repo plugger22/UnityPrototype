@@ -48,7 +48,9 @@ public class FactionManager : MonoBehaviour
     /*private string colourSide;*/
     private string colourEnd;
 
-
+    /// <summary>
+    /// use ChangeFactionApproval to set
+    /// </summary>
     public int ApprovalAuthority
     {
         get { return _approvalAuthority; }
@@ -62,6 +64,9 @@ public class FactionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// use ChangeFactionApproval to set
+    /// </summary>
     public int ApprovalResistance
     {
         get { return _approvalResistance; }
@@ -539,6 +544,26 @@ public class FactionManager : MonoBehaviour
                 default:
                     Debug.LogWarningFormat("Invalid PlayerSide \"{0}\"", side);
                     break;
+            }
+        }
+        else { Debug.LogError("Invalid side (Null)"); }
+    }
+
+    /// <summary>
+    /// Set faction approval levels directly when loading saved game data (use ChangeFactionApproval otherwise)
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="approval"></param>
+    public void LoadSetFactionApproval(GlobalSide side, int approval)
+    {
+        if (side != null)
+        {
+            Debug.AssertFormat(approval > -1 && approval <= 10, "Invalid approval \"{0}\"");
+            switch (side.level)
+            {
+                case 1: ApprovalAuthority = approval; break;
+                case 2: ApprovalResistance = approval; break;
+                default: Debug.LogWarningFormat("Unrecognised {0}", side); break;
             }
         }
         else { Debug.LogError("Invalid side (Null)"); }

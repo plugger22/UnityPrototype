@@ -267,10 +267,6 @@ public class InputManager : MonoBehaviour
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessInput NodeArc6");
                 }
-                else if (Input.GetButtonDown("NodeArc7") == true)
-                {
-                    EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc7, "InputManager.cs -> ProcessInput NodeArc7");
-                }
                 else if (Input.GetButtonDown("ActivityTime") == true)
                 {
                     EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Time, "InputManager.cs -> ProcessInput ActivityTime");

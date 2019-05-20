@@ -377,5 +377,38 @@ namespace packageAPI
         public int playerNodeID;
     }
 
+    //
+    // - - - Save / Load packages
+    //
+
+    /// <summary>
+    /// data class to pass onto topWidget to update with saved data
+    /// </summary>
+    public class TopWidgetData
+    {
+        public GlobalSide side;
+        public int turn;
+        public int actionPoints;
+        public int cityLoyalty;
+        public int factionSupport;
+        public float objectiveOne;
+        public float objectiveTwo;
+        public float objectiveThree;
+        public bool isSecurityFlash;
+    }
+
+    /// <summary>
+    /// class to pass TurnManager.cs data for serialization (to and from)
+    /// </summary>
+    [System.Serializable]
+    public class TurnActionData
+    {
+        public int turn;
+        public int actionsCurrent;
+        public int actionsLimit;
+        public int actionsAdjust;
+        public int actionsTotal;
+    }
+
     //new classes above here
 }

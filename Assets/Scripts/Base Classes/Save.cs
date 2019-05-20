@@ -22,6 +22,7 @@ public class Save
     public SaveNemesisData nemesisData = new SaveNemesisData();
     public SaveGearData gearData = new SaveGearData();
     public SaveAIData aiData = new SaveAIData();
+    public SaveScenarioData scenarioData = new SaveScenarioData();
 
 }
 
@@ -144,12 +145,19 @@ public class SaveGameData
     public SideState authorityOverall;
     public GlobalSide playerSide;
     //turnManager.cs
-    public int turn;
-    public int actionPoints;
+    public TurnActionData turnData;
+    public bool isSecurityFlash;
+}
+
+/// <summary>
+/// City and Faction Manager.cs data
+/// </summary>
+[System.Serializable]
+public class SaveScenarioData
+{
     public int cityLoyalty;
     public int factionSupportAuthority;
     public int factionSupportResistance;
-    public bool isSecurityFlash;
 }
 
 /// <summary>

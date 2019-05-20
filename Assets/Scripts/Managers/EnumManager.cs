@@ -57,7 +57,7 @@
         None,
         Reset, Redraw, Move,
         ShowTargets, ShowSpiders, ShowTracers, ShowTeams,
-        NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6, NodeArc7,
+        NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6,
         MostConnected, Centre, NearNeighbours, DecisionNodes, CrisisNodes, LoiterNodes, CureNodes
     };
 

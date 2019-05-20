@@ -62,7 +62,8 @@ public class CityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// need to do BEFORE levelManager.cs -> Initialise. Run from ScenarioManager.InitialiseEarly
+    /// need to do BEFORE levelManager.cs -> Initialise. 
+    /// NOTE: run from CampaignManager.InitialiseEarly
     /// </summary>
     public void InitialiseEarly(Mayor mayor)
     {
@@ -98,23 +99,26 @@ public class CityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// need to do AFTER levelManager.cs -> Initialise. Run from ScenarioManager.InitialiseLate
+    /// need to do AFTER levelManager.cs -> Initialise. 
+    /// NOTE: run from CampaignManager.InitialiseLate
     /// </summary>
     public void InitialiseLate()
     {
-        //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
-        int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
-        if (loyalty == 0) { loyalty = Random.Range(2, 9); }
-        CityLoyalty = loyalty;
-        //initialise number of districts
-        city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
+        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        {
+            //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
+            int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
+            if (loyalty == 0) { loyalty = Random.Range(2, 9); }
+            CityLoyalty = loyalty;
+            //initialise number of districts
+            city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
 
-        //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
-        GameManager.instance.orgScript.SetOrganisationsInCity(city);
+            //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
+            GameManager.instance.orgScript.SetOrganisationsInCity(city);
+        }
         //set up base panel UI
         GameManager.instance.basePanelScript.SetNames(city.name, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
-        
-        
+
     }
 
     /// <summary>
@@ -180,7 +184,10 @@ public class CityManager : MonoBehaviour
     public void SetCity(City city)
     {
         if (city != null)
-        { this.city = city; }
+        {
+            this.city = city;
+            /*Debug.LogFormat("[Cit] CityManager.cs -> SetCity: {0}{1}", city.name, "\n");*/
+        }
         else { Debug.LogError("Invalid city (Null)"); }
     }
 

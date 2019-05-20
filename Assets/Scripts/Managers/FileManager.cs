@@ -6,21 +6,6 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-/// <summary>
-/// data class to pass onto topWidget to update with saved data
-/// </summary>
-public class TopWidgetData
-{
-    public GlobalSide side;
-    public int turn;
-    public int actionPoints;
-    public int cityLoyalty;
-    public int factionSupport;
-    public float objectiveOne;
-    public float objectiveTwo;
-    public float objectiveThree;
-    public bool isSecurityFlash;
-}
 
 /// <summary>
 /// Handles all Save / Load functionality
@@ -83,12 +68,14 @@ public class FileManager : MonoBehaviour
         WritePlayerData();
         WriteNemesisData();
         WriteGameData();
+        WriteScenarioData();
         WriteActorData();
         WriteNodeData();
         WriteGearData();
         WriteAIData();
     }
     #endregion
+
 
     #region SaveGame
     /// <summary>
@@ -182,11 +169,12 @@ public class FileManager : MonoBehaviour
         {
             //side (player) at start
             ReadOptionData();
-            ReadGameData();          
             ReadDataData();
             ReadCampaignData();
+            ReadGameData();
             //set up level based on loaded current scenario seed
             GameManager.instance.InitialiseLoadGame(read.gameData.playerSide.level);
+            ReadScenarioData();
             ReadNodeData();
             ReadNemesisData();
             ReadGearData();
@@ -304,15 +292,25 @@ public class FileManager : MonoBehaviour
         write.gameData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
         write.gameData.playerSide = GameManager.instance.sideScript.PlayerSide;
         //turnManager.cs
-        write.gameData.turn = GameManager.instance.turnScript.Turn;
-        write.gameData.actionPoints = GameManager.instance.turnScript.GetActionsAvailable();
-        //cityManager.cs
-        write.gameData.cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
-        //factionManager.cs
-        write.gameData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
-        write.gameData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
+        write.gameData.turnData = GameManager.instance.turnScript.LoadWriteData();
+
         //top widget
         write.gameData.isSecurityFlash = GameManager.instance.widgetTopScript.CheckSecurityFlash();
+    }
+    #endregion
+
+
+    #region  Write Scenario Data
+    /// <summary>
+    /// CityManager.cs and FactionManager.cs data write to file
+    /// </summary>
+    public void WriteScenarioData()
+    {
+        //cityManager.cs
+        write.scenarioData.cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        //factionManager.cs
+        write.scenarioData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
+        write.scenarioData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
     }
     #endregion
 
@@ -887,7 +885,7 @@ public class FileManager : MonoBehaviour
                             Team team = listOfTeams[i];
                             if (team != null)
                             { saveNode.listOfTeams.Add(team.teamID); }
-                            else { Debug.LogWarningFormat("Invalid team (Null) in listOfTeams[{0}]", i); }
+                            else { Debug.LogWarningFormat("Invalid team (Null) in listOfTeams[{0}], nodeID {1}", i, saveNode.nodeID); }
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid listOfTeams (Null) for nodeID {0}", record.Key); }
@@ -900,10 +898,10 @@ public class FileManager : MonoBehaviour
                             EffectDataOngoing effectOngoing = listOfOngoing[i];
                             if (effectOngoing != null)
                             { saveNode.listOfOngoingEffects.Add(effectOngoing.ongoingID); }
-                            else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoing[{0}]", i); }
+                            else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoing[{0}], nodeID {1}", i, saveNode.nodeID); }
                         }
                     }
-                    else { Debug.LogErrorFormat("Invalid listOfOngoingEffects (Null) for nodeID {0}", record.Key); }
+                    else { Debug.LogErrorFormat("Invalid listOfOngoingEffects (Null) for nodeID {0}, nodeID {1}", record.Key, saveNode.nodeID); }
                     //add to list
                     write.nodeData.listOfNodes.Add(saveNode);
                     
@@ -1169,8 +1167,24 @@ public class FileManager : MonoBehaviour
         GameManager.instance.sideScript.authorityOverall = read.gameData.authorityOverall;
         GameManager.instance.sideScript.PlayerSide = read.gameData.playerSide;
         //turnManager.cs
-        GameManager.instance.turnScript.Turn = read.gameData.turn;
+        GameManager.instance.turnScript.LoadReadData(read.gameData.turnData);
 
+
+    }
+    #endregion
+
+
+    #region Read Scenario Data
+    /// <summary>
+    /// CityManager.cs and FactionManager.cs data
+    /// </summary>
+    private void ReadScenarioData()
+    {
+        //cityManager.cs
+        GameManager.instance.cityScript.CityLoyalty = read.scenarioData.cityLoyalty;
+        //factionManager.cs
+        GameManager.instance.factionScript.LoadSetFactionApproval(globalAuthority, read.scenarioData.factionSupportAuthority);
+        GameManager.instance.factionScript.LoadSetFactionApproval(globalResistance, read.scenarioData.factionSupportResistance);
     }
     #endregion
 
@@ -1949,7 +1963,7 @@ public class FileManager : MonoBehaviour
                         Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureID);
                         if (cure != null)
                         { node.cure = cure; }
-                        else { Debug.LogWarningFormat("Invalid cure for cureID {0}", saveNode.cureID); }
+                        else { Debug.LogWarningFormat("Invalid cure for cureID {0} for nodeID {1}", saveNode.cureID, saveNode.nodeID); }
                     }
                     node.loiter = saveNode.loiter;
                     //teams
@@ -1962,7 +1976,7 @@ public class FileManager : MonoBehaviour
                             Team team = GameManager.instance.dataScript.GetTeam(saveNode.listOfTeams[j]);
                             if (team != null)
                             { node.LoadAddTeam(team); }
-                            else { Debug.LogWarningFormat("Invalid team (Null) for listOfTeams[{0}]", j); }
+                            else { Debug.LogWarningFormat("Invalid team (Null) for listOfTeams[{0}] for nodeID {1}", j, saveNode.nodeID); }
                         }
                     }
                     //ongoing effects
@@ -1975,7 +1989,7 @@ public class FileManager : MonoBehaviour
                             EffectDataOngoing effectOngoing = GameManager.instance.dataScript.GetOngoingEffect(saveNode.listOfOngoingEffects[j]);
                             if (effectOngoing != null)
                             { node.LoadAddOngoingEffect(effectOngoing); }
-                            else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoingEffects[{0}]", j); }
+                            else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoingEffects[{0}] for nodeID {1}", j, saveNode.nodeID); }
                         }
                     }
                  }
@@ -2256,14 +2270,14 @@ public class FileManager : MonoBehaviour
         //Top Widget UI
         TopWidgetData widget = new TopWidgetData();
         widget.side = read.gameData.playerSide;
-        widget.turn = read.gameData.turn;
-        widget.actionPoints = read.gameData.actionPoints;
-        widget.cityLoyalty = read.gameData.cityLoyalty;
+        widget.turn = read.gameData.turnData.turn;
+        widget.actionPoints = read.gameData.turnData.actionsTotal - read.gameData.turnData.actionsCurrent;
+        widget.cityLoyalty = read.scenarioData.cityLoyalty;
         //faction support depends on side
         switch (read.gameData.playerSide.level)
         {
-            case 1: widget.factionSupport = read.gameData.factionSupportAuthority; break;
-            case 2: widget.factionSupport = read.gameData.factionSupportResistance; break;
+            case 1: widget.factionSupport = read.scenarioData.factionSupportAuthority; break;
+            case 2: widget.factionSupport = read.scenarioData.factionSupportResistance; break;
             default: Debug.LogError("Unrecognised {0}", read.gameData.playerSide); break;
         }
         widget.isSecurityFlash = read.gameData.isSecurityFlash;
