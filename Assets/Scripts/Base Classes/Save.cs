@@ -108,6 +108,7 @@ public class SaveDataData
     public List<Message> listOfAIMessagesValue = new List<Message>();
     //Registers
     public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
+    public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
 }
 
 

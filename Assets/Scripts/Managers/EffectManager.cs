@@ -3013,7 +3013,7 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Add":
-                                    actionAdjustment.ongoing = AddOngoingEffectToDict(effect, dataInput, effect.value);
+                                    actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value);
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}", 
@@ -3022,7 +3022,7 @@ public class EffectManager : MonoBehaviour
                                     
                                     break;
                                 case "Subtract":
-                                    actionAdjustment.ongoing = AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
+                                    actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
                                     actionAdjustment.value = effect.value * -1;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
@@ -3054,7 +3054,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
-    private EffectDataOngoing AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
+    private int AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
@@ -3072,7 +3072,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.nodeTooltip = effect.ongoingTooltip;
         //add to register & create message
         GameManager.instance.dataScript.AddOngoingEffectToDict(effectOngoing);
-        return effectOngoing;
+        return effectOngoing.ongoingID;
     }
 
     /// <summary>

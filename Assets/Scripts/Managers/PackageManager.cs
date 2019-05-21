@@ -216,7 +216,6 @@ namespace packageAPI
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
         public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
         public int ongoingID = -1;                                      //ongoing effects only, ignore otherwise, default -1
-        /*public EffectDataOngoing ongoing;                             //Ongoing effects only, ignore otherwise*/
     }
 
 

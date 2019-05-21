@@ -598,6 +598,7 @@ public class FileManager : MonoBehaviour
         write.dataData.messageCounter = GameManager.instance.messageScript.messageCounter;
         #endregion
         #region registers
+        //Ongoing Effects
         Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoing != null)
         {
@@ -609,6 +610,11 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
+        //Action adjustmehts
+        List<ActionAdjustment> listOFAdjustments = GameManager.instance.dataScript.GetListOfActionAdjustments();
+        if (listOFAdjustments != null)
+        { write.dataData.listOfActionAdjustments.AddRange(listOFAdjustments); }
+        else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
         #endregion
     }
     #endregion
@@ -1674,6 +1680,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.messageScript.messageCounter = read.dataData.messageCounter;
         #endregion
         #region registers
+        //ongoing effects
         Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoing != null)
         {
@@ -1693,6 +1700,8 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
+        //action adjustments
+        GameManager.instance.dataScript.SetListOfActionAdjustments(read.dataData.listOfActionAdjustments);
         #endregion
     }
     #endregion

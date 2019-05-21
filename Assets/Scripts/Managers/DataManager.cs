@@ -321,6 +321,8 @@ public class DataManager : MonoBehaviour
         resistanceActorPromoted.Clear();
         resistanceActorDisposedOf.Clear();
         resistanceActorResigned.Clear();
+        //registers
+        listOfActionAdjustments.Clear();
         //target lists
         targetPoolActive.Clear();
         targetPoolLive.Clear();
@@ -5892,6 +5894,20 @@ public class DataManager : MonoBehaviour
 
     public List<ActionAdjustment> GetListOfActionAdjustments()
     { return listOfActionAdjustments; }
+
+    /// <summary>
+    /// clear existing list and copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfAdjustments"></param>
+    public void SetListOfActionAdjustments(List<ActionAdjustment> listOfAdjustments)
+    {
+        if (listOfAdjustments != null)
+        {
+            listOfActionAdjustments.Clear();
+            listOfActionAdjustments.AddRange(listOfAdjustments);
+        }
+        else { Debug.LogError("Invalid listOfAdjustments (Null)"); }
+    }
 
     /// <summary>
     /// run at end of each turn (TurnManager.cs) to decrement timers and delete any adjustments that have timed out)
