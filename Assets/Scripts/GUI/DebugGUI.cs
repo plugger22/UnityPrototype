@@ -1021,7 +1021,7 @@ public class DebugGUI : MonoBehaviour
                     //Ongoing Register
                     case 14:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayOngoingRegister();
+                        analysis = GameManager.instance.dataScript.DebugDisplayOngoingRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
                     //Actions Adjustment Register

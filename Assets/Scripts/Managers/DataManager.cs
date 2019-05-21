@@ -5306,14 +5306,23 @@ public class DataManager : MonoBehaviour
     /// Debug method to display register
     /// </summary>
     /// <returns></returns>
-    public string DisplayOngoingRegister()
+    public string DebugDisplayOngoingRegister()
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" OngoingID Register{0}", "\n"));
         foreach(var ongoing in dictOfOngoingID)
         {
-            if (ongoing.Value.node != null)
-            { builder.Append(string.Format("{0} NodeID {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.node.nodeID, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+            if (ongoing.Value.nodeID > -1)
+            {
+                Node node = GameManager.instance.dataScript.GetNode(ongoing.Value.nodeID);
+                if (node != null)
+                { builder.Append(string.Format("{0} NodeID {1}, {2}, {3} turn{4} remaining", "\n", node.nodeID, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+                else
+                {
+                    builder.Append("Unknown Node");
+                    Debug.LogWarningFormat("Invalid node (Null) for ongoing.nodeID {0}", ongoing.Value.nodeID);
+                }
+            }
             else
             { builder.Append(string.Format("{0} {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.gearName, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
         }
@@ -5901,16 +5910,26 @@ public class DataManager : MonoBehaviour
                     if (actionAdjustment.timer <= 0)
                     {
                         //Ongoing effect
-                        if (actionAdjustment.ongoing != null)
-                        { RemoveOngoingEffect(actionAdjustment.ongoing, actionAdjustment.ongoing.gearID); }
+                        if (actionAdjustment.ongoingID > -1)
+                        {
+                            EffectDataOngoing ongoing = GetOngoingEffect(actionAdjustment.ongoingID);
+                            if (ongoing != null)
+                            { RemoveOngoingEffect(ongoing, ongoing.gearID); }
+                            else { Debug.LogWarningFormat("Invalid EffectDataOngoing (Null) for ongoingID {0}", actionAdjustment.ongoingID); }
+                        }
                         //delete adjustment
                         listOfActionAdjustments.RemoveAt(i);
                     }
                     else
                     {
                         //update ongoing timer, if present
-                        if (actionAdjustment.ongoing != null)
-                        { actionAdjustment.ongoing.timer = actionAdjustment.timer; }
+                        if (actionAdjustment.ongoingID > -1)
+                        {
+                            EffectDataOngoing ongoing = GetOngoingEffect(actionAdjustment.ongoingID);
+                            if (ongoing != null)
+                            { ongoing.timer = actionAdjustment.timer; }
+                            else { Debug.LogWarningFormat("Invalid EffectDataOngoing (Null) for ongoingID {0}", actionAdjustment.ongoingID); }
+                        }
                     }
                 }
             }

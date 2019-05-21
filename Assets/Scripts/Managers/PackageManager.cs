@@ -156,6 +156,7 @@ namespace packageAPI
     /// <summary>
     /// used to pass data back to Node for an ongoing effect
     /// </summary>
+    [System.Serializable]
     public class EffectDataOngoing
     {
         public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
@@ -166,8 +167,8 @@ namespace packageAPI
         public string gearName;                                           //originating gear (used for InfoApp, use only if effect is gear based)
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?
-        public int gearID = -1;                                                //gearID (used for InfoApp, use only if effect is gear based), default -1
-        public Node node;                                                 //originating node (used for InfoApp, use only if effect is node based)
+        public int gearID = -1;                                           //gearID (used for InfoApp, use only if effect is gear based), default -1
+        public int nodeID = -1;                                           //originating node (used for InfoApp, use only if effect is node based), default -1
         public EffectOutcome outcome;
         public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
         public EffectApply apply;
@@ -206,6 +207,7 @@ namespace packageAPI
     /// <summary>
     /// used to track adjustments to either sides per turn action allowance
     /// </summary>
+    [System.Serializable]
     public class ActionAdjustment
     {
         public GlobalSide side;
@@ -213,7 +215,8 @@ namespace packageAPI
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
         public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
-        public EffectDataOngoing ongoing;                               //Ongoing effects only, ignore otherwise
+        public int ongoingID = -1;                                      //ongoing effects only, ignore otherwise, default -1
+        /*public EffectDataOngoing ongoing;                             //Ongoing effects only, ignore otherwise*/
     }
 
 

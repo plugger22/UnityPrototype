@@ -597,6 +597,19 @@ public class FileManager : MonoBehaviour
         //id counter
         write.dataData.messageCounter = GameManager.instance.messageScript.messageCounter;
         #endregion
+        #region registers
+        Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
+        if (dictOfOngoing != null)
+        {
+            foreach(var ongoing in dictOfOngoing)
+            {
+                if (ongoing.Value != null)
+                { write.dataData.listOfOngoingEffects.Add(ongoing.Value); }
+                else { Debug.LogWarningFormat("Invalid ongoing.Value (Null) for ongoingID {0}", ongoing.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -1659,6 +1672,27 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         //message counter
         GameManager.instance.messageScript.messageCounter = read.dataData.messageCounter;
+        #endregion
+        #region registers
+        Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
+        if (dictOfOngoing != null)
+        {
+            //clear dict and copy data across
+            dictOfOngoing.Clear();
+            for (int i = 0; i < read.dataData.listOfOngoingEffects.Count; i++)
+            {
+                EffectDataOngoing effect = read.dataData.listOfOngoingEffects[i];
+                if (effect != null)
+                {
+                    try
+                    { dictOfOngoing.Add(effect.ongoingID, effect); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate ongoingID {0}", effect.ongoingID); }
+                }
+                else { Debug.LogWarningFormat("Invalid effectDataOngoing (Null) for read.dataData.listOfOngoingEffects[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
         #endregion
     }
     #endregion

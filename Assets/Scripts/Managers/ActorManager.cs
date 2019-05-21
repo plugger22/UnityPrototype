@@ -2262,65 +2262,69 @@ public class ActorManager : MonoBehaviour
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
                     {
-                        Actor actor = arrayOfActors[i];
-                        if (actor != null)
+                        //check actor present in slot
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                         {
-                            //actor must be active
-                            if (actor.Status == ActorStatus.Active)
+                            Actor actor = arrayOfActors[i];
+                            if (actor != null)
                             {
-                                StringBuilder builderTooltip = new StringBuilder();
-                                ModalActionDetails gearActionDetails = new ModalActionDetails() { };
-                                gearActionDetails.side = globalResistance;
-                                gearActionDetails.actorDataID = actor.slotID;
-                                gearActionDetails.gearID = gear.gearID;
-                                gearActionDetails.modalLevel = 2;
-                                gearActionDetails.modalState = ModalSubState.Inventory;
-                                gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-                                //get actor's preferred gear
-                                GearType preferredGear = actor.arc.preferredGear;
-                                if (preferredGear != null)
+                                //actor must be active
+                                if (actor.Status == ActorStatus.Active)
                                 {
-                                    benefit = gearSwapBaseAmount;
-                                    if (preferredGear.name.Equals(gear.type.name) == true)
+                                    StringBuilder builderTooltip = new StringBuilder();
+                                    ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                                    gearActionDetails.side = globalResistance;
+                                    gearActionDetails.actorDataID = actor.slotID;
+                                    gearActionDetails.gearID = gear.gearID;
+                                    gearActionDetails.modalLevel = 2;
+                                    gearActionDetails.modalState = ModalSubState.Inventory;
+                                    gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+                                    //get actor's preferred gear
+                                    GearType preferredGear = actor.arc.preferredGear;
+                                    if (preferredGear != null)
                                     {
-                                        benefit += gearSwapPreferredAmount;
-                                        builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
-                                          colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                        benefit = gearSwapBaseAmount;
+                                        if (preferredGear.name.Equals(gear.type.name) == true)
+                                        {
+                                            benefit += gearSwapPreferredAmount;
+                                            builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
+                                              colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                        }
+                                        else
+                                        {
+                                            builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                              preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                        }
                                     }
                                     else
                                     {
-                                        builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
-                                          preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                        builderTooltip.Append("Unknown Preferred Gear");
+                                        Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                     }
+                                    //existing gear
+                                    if (actor.GetGearID() > -1)
+                                    {
+                                        Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearID());
+                                        if (gearOld != null)
+                                        { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
+                                        else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearID()); }
+                                    }
+                                    EventButtonDetails gearDetails = new EventButtonDetails()
+                                    {
+                                        buttonTitle = string.Format("Give to {0}", actor.arc.name),
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                                        buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name,
+                                        colourEnd, actor.arc.name, actor.actorName),
+                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builderTooltip.ToString(), colourEnd),
+                                        //use a Lambda to pass arguments to the action
+                                        action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventoryActions"); }
+                                    };
+                                    //add Lie Low button to list
+                                    eventList.Add(gearDetails);
                                 }
-                                else
-                                {
-                                    builderTooltip.Append("Unknown Preferred Gear");
-                                    Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
-                                }
-                                //existing gear
-                                if (actor.GetGearID() > -1)
-                                {
-                                    Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearID());
-                                    if (gearOld != null)
-                                    { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
-                                    else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearID()); }
-                                }
-                                EventButtonDetails gearDetails = new EventButtonDetails()
-                                {
-                                    buttonTitle = string.Format("Give to {0}", actor.arc.name),
-                                    buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                                    buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name,
-                                    colourEnd, actor.arc.name, actor.actorName),
-                                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builderTooltip.ToString(), colourEnd),
-                                    //use a Lambda to pass arguments to the action
-                                    action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventoryActions"); }
-                                };
-                                //add Lie Low button to list
-                                eventList.Add(gearDetails);
                             }
+                            else { Debug.LogError(string.Format("Invalid actor (Null) in arrayOfActors[{0}]", i)); }
                         }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) in arrayOfActors[{0}]", i)); }
                     }
                 }
                 else

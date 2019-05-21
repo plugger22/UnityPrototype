@@ -2206,7 +2206,7 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.itemText = itemText;
-            data.topText = "Nemesis Status";
+            data.topText = "Ongoing Effect";
             data.bottomText = GameManager.instance.itemDataScript.GetDecisionOngoingEffectDetails(topText, middleText, bottomText);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
@@ -3016,7 +3016,7 @@ public class MessageManager : MonoBehaviour
     public Message MessageOngoingEffectCurrentNode(EffectDataOngoing ongoing)
     {
         Debug.Assert(ongoing != null, "Invalid EffectDataOngoing (Null)");
-        Debug.Assert(ongoing.node != null, "Invalid Ongoing.node (Null)");
+        Debug.Assert(ongoing.nodeID > -1, "Invalid Ongoing.nodeID (less than zero)");
         if (string.IsNullOrEmpty(ongoing.text) == false)
         {
             Message message = new Message();
@@ -3024,11 +3024,18 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Current;
             message.side = globalBoth;
-            message.data0 = ongoing.node.nodeID;
+            message.data0 = ongoing.nodeID;
             message.data1 = ongoing.timer;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", ongoing.node.nodeName, ongoing.node.Arc.name);
+            Node node = GameManager.instance.dataScript.GetNode(ongoing.nodeID);
+            if (node != null)
+            { data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", node.nodeName, node.Arc.name); }
+            else
+            {
+                Debug.LogWarningFormat("Invalid node (Null) for ongoing.nodeID {0}", ongoing.nodeID);
+                data.itemText = "Unknown Node";
+            }
             data.topText = "District Ongoing Effect";
             data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
             data.priority = ItemPriority.Low;
@@ -3070,7 +3077,7 @@ public class MessageManager : MonoBehaviour
             data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
             data.tab = ItemTab.Effects;
             data.side = message.side;
-            data.nodeID = ongoing.node.nodeID;
+            data.nodeID = ongoing.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);

@@ -1189,7 +1189,7 @@ Prefab:
     - target: {fileID: 114008969918969514, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
         type: 2}
       propertyPath: m_Color.a
-      value: 0.3137255
+      value: 0.1254902
       objectReference: {fileID: 0}
     - target: {fileID: 114538222134752734, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
         type: 2}
@@ -5485,7 +5485,7 @@ Prefab:
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -144.375
+      value: -162.43
       objectReference: {fileID: 0}
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
@@ -9192,12 +9192,12 @@ GameObject:
   - component: {fileID: 362411885}
   - component: {fileID: 362411884}
   m_Layer: 5
-  m_Name: Effect_Text
+  m_Name: Bottom_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &362411882
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16774,8 +16774,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6436df6fdfceee34e83dd489cf3577d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outcomeText: {fileID: 1531997086}
-  effectText: {fileID: 362411884}
+  topText: {fileID: 1531997086}
+  bottomText: {fileID: 362411884}
   outcomeImage: {fileID: 1094272325}
   confirmButton: {fileID: 433394200}
   modalOutcomeWindow: {fileID: 457294002}
@@ -32041,7 +32041,7 @@ Prefab:
     - target: {fileID: 114008969918969514, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
         type: 2}
       propertyPath: m_Color.a
-      value: 0.3137255
+      value: 0.1254902
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 662dab0c178262e4da6ad8cc4ea86c4b, type: 2}
@@ -34135,7 +34135,7 @@ GameObject:
   - component: {fileID: 1531997087}
   - component: {fileID: 1531997086}
   m_Layer: 5
-  m_Name: Outcome_Text
+  m_Name: Top_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34156,7 +34156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 365, y: -97.5}
+  m_AnchoredPosition: {x: 365, y: -79.445}
   m_SizeDelta: {x: 250, y: 23.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1531997086

@@ -2138,7 +2138,7 @@ public class NodeManager : MonoBehaviour
                 foreach(var ongoing in dictOfOngoingEffects)
                 {
                     //message
-                    if (ongoing.Value.node != null)
+                    if (ongoing.Value.nodeID > -1)
                     { GameManager.instance.messageScript.MessageOngoingEffectCurrentNode(ongoing.Value); }
                     else { GameManager.instance.messageScript.MessageOngoingEffectCurrentGear(ongoing.Value); }
                 }

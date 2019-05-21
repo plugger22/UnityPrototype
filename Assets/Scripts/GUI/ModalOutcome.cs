@@ -12,8 +12,8 @@ using gameAPI;
 /// </summary>
 public class ModalOutcome : MonoBehaviour
 {
-    public TextMeshProUGUI outcomeText;
-    public TextMeshProUGUI effectText;
+    public TextMeshProUGUI topText;
+    public TextMeshProUGUI bottomText;
     public Image outcomeImage;
     public Button confirmButton;
 
@@ -165,8 +165,8 @@ public class ModalOutcome : MonoBehaviour
                 //SetOpacity(0f);
 
                 //set up modalOutcome elements
-                outcomeText.text = details.textTop;
-                effectText.text = details.textBottom;
+                topText.text = details.textTop;
+                bottomText.text = details.textBottom;
                 if (details.sprite != null)
                 { outcomeImage.sprite = details.sprite; }
 

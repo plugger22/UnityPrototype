@@ -3065,6 +3065,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.value = effect.value;
         effectOngoing.gearName = effectInput.ongoingText;
         effectOngoing.gearID = effectInput.data;
+        effectOngoing.nodeID = -1;
         effectOngoing.reason = effectInput.ongoingText;
         effectOngoing.description = effect.description;
         effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
@@ -3088,7 +3089,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.side = effectInput.side;
         effectOngoing.reason = effectInput.ongoingText;
         effectOngoing.description = effect.description;
-        effectOngoing.node = node;
+        effectOngoing.nodeID = node.nodeID;
         effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
         effectOngoing.nodeTooltip = effect.ongoingTooltip;
         //add to effectProcess

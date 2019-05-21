@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d306d96e8b4ea046a690308f0493599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ongoingEffectTimer: 5
+  ongoingEffectTimer: 10
 --- !u!114 &114271324079928462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2106,9 +2106,9 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 27333
+  seedDev: 46291
   isAuthority: 0
-  autoRunTurns: 10
+  autoRunTurns: 20
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1

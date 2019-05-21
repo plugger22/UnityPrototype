@@ -463,3 +463,68 @@ City seed 890 -> Arles, France
 Dev seed 33970 -> Monday, 20 May 2019 7:37 PM
 City seed 890 -> Arles, France
 
+Dev seed 4746 -> Tuesday, 21 May 2019 9:18 AM
+City seed 890 -> Arles, France
+
+Dev seed 54892 -> Tuesday, 21 May 2019 9:18 AM
+City seed 890 -> Arles, France
+
+Dev seed 35449 -> Tuesday, 21 May 2019 9:18 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27414 -> Tuesday, 21 May 2019 9:19 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38005 -> Tuesday, 21 May 2019 9:19 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51254 -> Tuesday, 21 May 2019 9:19 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15486 -> Tuesday, 21 May 2019 9:23 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22030 -> Tuesday, 21 May 2019 9:25 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2528 -> Tuesday, 21 May 2019 9:26 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8697 -> Tuesday, 21 May 2019 9:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21991 -> Tuesday, 21 May 2019 9:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46820 -> Tuesday, 21 May 2019 10:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26462 -> Tuesday, 21 May 2019 10:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23090 -> Tuesday, 21 May 2019 10:40 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12259 -> Tuesday, 21 May 2019 10:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19909 -> Tuesday, 21 May 2019 10:43 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1316 -> Tuesday, 21 May 2019 10:45 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46291 -> Tuesday, 21 May 2019 10:45 AM
+City seed 890 -> Arles, France
+
+Dev seed 46291 -> Tuesday, 21 May 2019 10:58 AM
+City seed 890 -> Arles, France
+
+Dev seed 46291 -> Tuesday, 21 May 2019 11:07 AM
+City seed 5678 -> London, United Kingdom
+
+City seed 890 -> Arles, France
+
+Dev seed 22447 -> Tuesday, 21 May 2019 11:23 AM
+City seed 5678 -> London, United Kingdom
+

@@ -237,9 +237,9 @@ public class SideManager : MonoBehaviour
         float activeAlpha = GameManager.instance.guiScript.alphaActive;
         //flashing red alert at top UI for Security Status -> switch on/off
         if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
-        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer");  }
+        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
         else
-        { EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer");  }
+        { EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
         switch (_playerSide.level)
         {
             case 1:
@@ -443,18 +443,19 @@ public class SideManager : MonoBehaviour
             List<string> listOfEvents = GameManager.instance.dataScript.GetListOfHistoryAutoRun();
             if (listOfEvents != null)
             {
+                StringBuilder builder = new StringBuilder();
                 if (listOfEvents.Count > 0)
                 {
-                    StringBuilder builder = new StringBuilder();
                     for (int i = 0; i < listOfEvents.Count; i++)
                     { builder.AppendLine(listOfEvents[i]); }
-                    //create an outcome window to notify player
-                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                    outcomeDetails.side = _playerSide;
-                    outcomeDetails.textTop = "AutoRun complete";
-                    outcomeDetails.textBottom = builder.ToString();
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
                 }
+                else { builder.AppendLine("No Events"); }
+                //create an outcome window to notify player
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.side = _playerSide;
+                outcomeDetails.textTop = "AutoRun complete";
+                outcomeDetails.textBottom = builder.ToString();
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
             }
             else { Debug.LogError("Invalid listOfHistoryAutoRun (Null)"); }
         }
