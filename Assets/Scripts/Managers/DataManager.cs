@@ -304,6 +304,7 @@ public class DataManager : MonoBehaviour
         listOfLoiterNodes.Clear();
         listOfCureNodes.Clear();
         listOfCrisisNodes.Clear();
+        listOfMoveNodes.Clear();
         //actor lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();
@@ -2244,6 +2245,23 @@ public class DataManager : MonoBehaviour
             }
         }
         return node;
+    }
+
+    public List<int> GetListOfMoveNodes()
+    { return listOfMoveNodes; }
+
+    /// <summary>
+    /// clear and copy across listOfMoveNodes from loaded save game data
+    /// </summary>
+    /// <param name="listOfNodes"></param>
+    public void SetListOfMoveNodes(List<int> listOfNodes)
+    {
+        if (listOfNodes != null)
+        {
+            listOfMoveNodes.Clear();
+            listOfMoveNodes.AddRange(listOfNodes);
+        }
+        else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
     }
 
     /// <summary>

@@ -616,6 +616,12 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfActionAdjustments.AddRange(listOFAdjustments); }
         else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
         #endregion
+        #region moveNodes
+        List<int> listOfNodes = GameManager.instance.dataScript.GetListOfMoveNodes();
+        if (listOfNodes != null)
+        { write.dataData.listOfMoveNodes.AddRange(listOfNodes); }
+        else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -1702,6 +1708,10 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
         //action adjustments
         GameManager.instance.dataScript.SetListOfActionAdjustments(read.dataData.listOfActionAdjustments);
+
+        #endregion
+        #region moveNodes
+        GameManager.instance.dataScript.SetListOfMoveNodes(read.dataData.listOfMoveNodes);
         #endregion
     }
     #endregion

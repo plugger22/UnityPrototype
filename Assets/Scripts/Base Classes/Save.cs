@@ -109,6 +109,8 @@ public class SaveDataData
     //Registers
     public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
+    //moving
+    public List<int> listOfMoveNodes = new List<int>();
 }
 
 
