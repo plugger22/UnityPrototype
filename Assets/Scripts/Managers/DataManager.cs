@@ -5996,10 +5996,39 @@ public class DataManager : MonoBehaviour
 
 
     /// <summary>
+    /// returns number of individual current action adjustments for the specified side
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public int CheckNumOfActionAdjustments(GlobalSide side)
+    {
+        int adjustments = 0;
+        if (side != null)
+        {
+            int count = listOfActionAdjustments.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    ActionAdjustment actionAdjustment = listOfActionAdjustments[i];
+                    if (actionAdjustment != null)
+                    {
+                        if (actionAdjustment.side.level == side.level)
+                        { adjustments++; }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actionAdjustment (Null) for listOfActionAdjustments[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid GlobalSide (Null)"); }
+        return adjustments;
+    }
+
+    /// <summary>
     /// Debug function to display Action Adjustments
     /// </summary>
     /// <returns></returns>
-    public string DisplayActionsRegister()
+    public string DebugDisplayActionsRegister()
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Action Adjustments Register{0}", "\n"));

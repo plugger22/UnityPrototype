@@ -2024,6 +2024,7 @@ MonoBehaviour:
   priorityMediumSprite: {fileID: 21300000, guid: ff0b496ae1f6f0d4c95c374cee7818ae,
     type: 3}
   priorityLowSprite: {fileID: 21300000, guid: 7417508bc8dc8c04b944767d032e7a5e, type: 3}
+  actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
 --- !u!114 &114736970613289560
 MonoBehaviour:
   m_ObjectHideFlags: 1

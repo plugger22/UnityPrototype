@@ -1027,7 +1027,7 @@ public class DebugGUI : MonoBehaviour
                     //Actions Adjustment Register
                     case 15:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DisplayActionsRegister();
+                        analysis = GameManager.instance.dataScript.DebugDisplayActionsRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
                     //Give Gear Input

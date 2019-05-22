@@ -5644,6 +5644,35 @@ public class ActorManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName,  GameManager.instance.playerScript.actorID); }
             }
         }
+        //
+        // - - - Action Adjustments
+        //
+        if (GameManager.instance.dataScript.CheckNumOfActionAdjustments(playerSide) > 0)
+        {
+            List<ActionAdjustment> listOfActionAdjustments = GameManager.instance.dataScript.GetListOfActionAdjustments();
+            if (listOfActionAdjustments != null)
+            {
+                for (int i = 0; i < listOfActionAdjustments.Count; i++)
+                {
+                    ActionAdjustment adjustment = listOfActionAdjustments[i];
+                    if (adjustment.side.level == playerSide.level)
+                    {
+                        //valid adjustment present, create an InfoApp effect message
+                        text = "Your available ACTIONS have changed";
+                        topText = "Actions Adjustment";
+                        if (adjustment.value > 0)
+                        { detailsTop = string.Format("{0}<b>{1}</b>{2}{3}{4}gives {5}<b>{6}{7} EXTRA</b> Action{8}", colourGood, adjustment.descriptor, colourEnd, "\n", "\n", colourNeutral, adjustment.value, colourEnd,
+                            adjustment.value != 1 ? "s" : ""); }
+                        else
+                        { detailsTop = string.Format("{0}{1}{2}{3}{4}gives {5}<b>{6}{7} LESS</b> Action{8}", colourBad, adjustment.descriptor, colourEnd, "\n", "\n", colourNeutral, adjustment.value, colourEnd,
+                            adjustment.value != 1 ? "s" : ""); }
+                        detailsBottom = string.Format("Lasts for {0}<b>{1}{2} turn</b>{3}", colourNeutral, adjustment.timer, colourEnd, adjustment.timer != 1 ? "s" : "");
+                        GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.guiScript.alarmSprite, 999);
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
+        }
     }
 
 
