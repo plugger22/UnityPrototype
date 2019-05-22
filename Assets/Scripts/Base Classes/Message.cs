@@ -22,6 +22,7 @@ namespace gameAPI
         public int data3;
 
         public bool isPublic;               //display if true
+        
 
         public GlobalSide side;
         public MessageType type;            //main category

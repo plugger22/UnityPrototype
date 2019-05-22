@@ -423,12 +423,17 @@ public class DataManager : MonoBehaviour
         if (data != null)
         {
             Debug.Assert(data.side != null, "Invalid ItemData side (Null)");
-            //only take those from the same side or those aimed at both sides
+            //check side
             if (data.side.level == GameManager.instance.sideScript.PlayerSide.level || data.side.level == GameManager.instance.globalScript.sideBoth.level)
             {
-                if (data.delay == 0)
-                { arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data); }
-                else { listOfDelayedItemData.Add(data); }
+                //check if Player wants category displayed
+                if (data.isDisplay == true)
+                {
+                    //check delay
+                    if (data.delay == 0)
+                    { arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data); }
+                    else { listOfDelayedItemData.Add(data); }
+                }
             }
             /*if (data.delay == 0) //used for testing authority itemData's
             { arrayOfItemDataByPriority[(int)data.tab, (int)data.priority].Add(data); }

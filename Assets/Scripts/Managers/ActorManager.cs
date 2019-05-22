@@ -5381,7 +5381,6 @@ public class ActorManager : MonoBehaviour
         string playerName = GameManager.instance.playerScript.PlayerName;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //doom timer
-
         if (doomTimer > 0)
         {
             //decrement timer

@@ -279,6 +279,8 @@ namespace packageAPI
         public ItemPriority priority;
         public ItemTab tab;
         public GlobalSide side;
+        public MessageType type;                    //main category
+        public MessageSubType subType;              //sub type of main category
         public int delay = 0;                       //allows for a delay in itemData showing, delay is in turns, default zero
         public int nodeID = -1;                     //if > -1 then 'Show Me' button will activate and user can press to see where the node is on the map
         public int connID = -1;                     //if > -1 then 'Show Me' button will activate and user can press to see where the connection is on teh map (can be used together with nodeID)
@@ -289,6 +291,7 @@ namespace packageAPI
         public string tag1;
         public string tag2;
         public string tag3;
+        public bool isDisplay = true;               //toggle to enable player to switch on/off certain message types
     }
 
     /// <summary>
