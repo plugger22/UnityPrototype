@@ -124,7 +124,7 @@ public class MessageManager : MonoBehaviour
         //
         // - - - ItemData - - -
         //
-        List<ItemData> listOfDelayedItemData = GameManager.instance.dataScript.GetListOfDelayItemData();
+        List<ItemData> listOfDelayedItemData = GameManager.instance.dataScript.GetListOfDelayedItemData();
         if (listOfDelayedItemData != null)
         {
             for (int index = listOfDelayedItemData.Count - 1; index >= 0; index-- )

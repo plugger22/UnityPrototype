@@ -270,12 +270,13 @@ namespace packageAPI
     /// multipurpose class to handle message equivalents, requests and meeting decision options for MainInfoData packages
     /// NOTE: Don't add any methods as it needs to be memory efficient
     /// </summary>
+    [System.Serializable]
     public class ItemData
     {
         public string itemText;                     //what is shown for the item
         public string topText;
         public string bottomText;
-        public Sprite sprite;
+        [System.NonSerialized] public Sprite sprite;
         public ItemPriority priority;
         public ItemTab tab;
         public GlobalSide side;

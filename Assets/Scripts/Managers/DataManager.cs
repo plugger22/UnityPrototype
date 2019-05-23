@@ -518,7 +518,7 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public List<ItemData> GetListOfDelayItemData()
+    public List<ItemData> GetListOfDelayedItemData()
     { return listOfDelayedItemData; }
 
     //

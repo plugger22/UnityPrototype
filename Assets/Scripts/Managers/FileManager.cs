@@ -625,6 +625,37 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfMoveNodes.AddRange(listOfNodes); }
         else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
         #endregion
+        #region mainInfoApp
+        //delayed itemData
+        List<ItemData> listOfDelayed = GameManager.instance.dataScript.GetListOfDelayedItemData();
+        if (listOfDelayed != null)
+        { write.dataData.listOfDelayedItemData.AddRange(listOfDelayed); }
+        else { Debug.LogError("Invalid listOfDelayedItemData (Null)"); }
+        //currentInfoData
+        MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
+        if (data != null)
+        {
+            for (int i = 0; i < (int)ItemTab.Count; i++)
+            {
+                List<ItemData> listOfItemData = data.arrayOfItemData[i];
+                if (listOfItemData != null)
+                {
+                    //one for each MainInfoApp tab
+                    switch (i)
+                    {
+                        case 0: write.dataData.listOfTab0.AddRange(listOfItemData); break;
+                        case 1: write.dataData.listOfTab1.AddRange(listOfItemData); break;
+                        case 2: write.dataData.listOfTab2.AddRange(listOfItemData); break;
+                        case 3: write.dataData.listOfTab3.AddRange(listOfItemData); break;
+                        case 4: write.dataData.listOfTab4.AddRange(listOfItemData); break;
+                        case 5: write.dataData.listOfTab5.AddRange(listOfItemData); break;
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfItemData (Null) for arrayOfItemData[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid MainInfoData (Null)"); }
+        #endregion
     }
     #endregion
 

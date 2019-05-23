@@ -112,6 +112,14 @@ public class SaveDataData
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
     //moving
     public List<int> listOfMoveNodes = new List<int>();
+    //MainInfo App data
+    public List<ItemData> listOfDelayedItemData = new List<ItemData>();
+    public List<ItemData> listOfTab0 = new List<ItemData>();
+    public List<ItemData> listOfTab1 = new List<ItemData>();
+    public List<ItemData> listOfTab2 = new List<ItemData>();
+    public List<ItemData> listOfTab3 = new List<ItemData>();
+    public List<ItemData> listOfTab4 = new List<ItemData>();
+    public List<ItemData> listOfTab5 = new List<ItemData>();
 }
 
 
@@ -307,6 +315,7 @@ public class SaveAIData
     public List<AITracker> listOfNemesisReports = new List<AITracker>();
     public List<AITracker> listOfErasureReports = new List<AITracker>();
 }
+
 
 #endregion
 
