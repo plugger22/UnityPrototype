@@ -197,6 +197,13 @@ public class SaveActorData
     public List<int> resistanceActorPromoted = new List<int>();
     public List<int> resistanceActorDisposedOf = new List<int>();
     public List<int> resistanceActorResigned = new List<int>();
+    //actorManager.cs
+    public int actorIDCounter;
+    public int lieLowTimer;
+    public int doomTimer;
+    public int captureTimer;
+    public bool isGearCheckRequired;
+    public NameSet nameSet;
     //fast access fields for actor.cs
     public int actorStressNone;
     public int actorCorruptNone;
@@ -261,8 +268,8 @@ public class SaveNemesisData
 public class SaveContactData
 {
     public int contactIDCounter;
-    public List<int> listOfContactNetworks;
-    public List<int> listOfActors;
+    public List<int> listOfContactNetworks = new List<int>();
+    public List<int> listOfActors = new List<int>();
 }
 
 /// <summary>

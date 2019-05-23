@@ -96,13 +96,14 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
+    #region Save Compatible Data
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
     [HideInInspector] public int doomTimer;                                     //countdown doom timer set when resistance player gains the DOOMED condition (infected with a slow acting lethal virus)
     [HideInInspector] public int captureTimer;                                  //countdown timer which determines how long the Resistance player is inactive while captured
-
     [HideInInspector] public bool isGearCheckRequired;                          //GearManager.cs -> used to flag that actors need to reset their gear
-
-    [HideInInspector] NameSet nameSet;                                          //used for naming actors. Takes nameSet from city
+    [HideInInspector] public NameSet nameSet;                                   //used for naming actors. Takes nameSet from city
+    [HideInInspector] public int actorIDCounter = 0;                            //used to sequentially number actorID's
+    #endregion
 
     //cached recruit picker choices
     private int resistancePlayerTurn;                                           //turn number of last choice for a resistance Player Recruit selection
@@ -114,9 +115,7 @@ public class ActorManager : MonoBehaviour
     private bool isNewActionResistancePlayer;                                   //set to true after resistance player makes a recruit choice at own node
     private bool isNewActionResistanceActor;                                    //set to true after resistance player makes a recruit choice at an actor contact's node
     private bool isNewActionAuthority;                                          //set to true after autority makes a recruit choice
-
-    private static int actorIDCounter = 0;              //used to sequentially number actorID's
-
+   
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -474,10 +473,8 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Reset data prior to a new level
     /// </summary>
-    public void Reset()
-    {
-        actorIDCounter = 0;
-    }
+    public void ResetCounter()
+    { actorIDCounter = 0; }
 
     /// <summary>
     /// Set up number of required actors (minions supporting play)

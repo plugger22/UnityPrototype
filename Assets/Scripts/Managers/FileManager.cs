@@ -160,6 +160,7 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+
     #region Load Save Data
     /// <summary>
     /// Load data from Save file back into game
@@ -709,7 +710,15 @@ public class FileManager : MonoBehaviour
         write.actorData.resistanceActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance));
         write.actorData.resistanceActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance));
         write.actorData.resistanceActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalResistance));
-
+        //
+        // - - - ActorManager.cs 
+        //
+        write.actorData.actorIDCounter = GameManager.instance.actorScript.actorIDCounter;
+        write.actorData.lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
+        write.actorData.doomTimer = GameManager.instance.actorScript.doomTimer;
+        write.actorData.captureTimer = GameManager.instance.actorScript.captureTimer;
+        write.actorData.isGearCheckRequired = GameManager.instance.actorScript.isGearCheckRequired;
+        write.actorData.nameSet = GameManager.instance.actorScript.nameSet;
         //
         // - - - Actor.cs fast access fields
         //
@@ -1938,6 +1947,15 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
+        //
+        // - - - ActorManager.cs
+        //
+        GameManager.instance.actorScript.actorIDCounter = read.actorData.actorIDCounter;
+        GameManager.instance.actorScript.lieLowTimer = read.actorData.lieLowTimer;
+        GameManager.instance.actorScript.doomTimer = read.actorData.doomTimer;
+        GameManager.instance.actorScript.captureTimer = read.actorData.captureTimer;
+        GameManager.instance.actorScript.isGearCheckRequired = read.actorData.isGearCheckRequired;
+        GameManager.instance.actorScript.nameSet = read.actorData.nameSet;
         //
         // - - - Actor Lists
         //
