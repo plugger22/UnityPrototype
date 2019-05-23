@@ -23,6 +23,7 @@ public class Save
     public SaveGearData gearData = new SaveGearData();
     public SaveAIData aiData = new SaveAIData();
     public SaveScenarioData scenarioData = new SaveScenarioData();
+    public SaveContactData contactData = new SaveContactData();
 
 }
 
@@ -251,6 +252,17 @@ public class SaveGearData
 public class SaveNemesisData
 {
     public NemesisSaveClass saveData;
+}
+
+/// <summary>
+/// ContactManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveContactData
+{
+    public int contactIDCounter;
+    public List<int> listOfContactNetworks;
+    public List<int> listOfActors;
 }
 
 /// <summary>

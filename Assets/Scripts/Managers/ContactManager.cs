@@ -33,10 +33,12 @@ public class ContactManager : MonoBehaviour
     [Tooltip("Maximum number of Teams that can be spotted per turn (avoids a RNG spam)")]
     [Range(1, 5)] public int maxSpotTeam = 2;
 
+    #region Save Compatible Data
     private int[] arrayOfContactNetworks;   //use for determining which actor's network of contacts was used
     private Actor[] arrayOfActors;          //used for contact activity. Updated from DataManager.cs each turn
 
-    private static int contactIDCounter = 0;              //used to sequentially number contactID's
+    [HideInInspector] public int contactIDCounter = 0;              //used to sequentially number contactID's
+    #endregion
 
     //fast access fields
     private GlobalSide globalAuthority;
@@ -106,10 +108,8 @@ public class ContactManager : MonoBehaviour
     /// <summary>
     /// Reset data prior to a new level
     /// </summary>
-    public void Reset()
-    {
-        contactIDCounter = 0;
-    }
+    public void ResetCounter()
+    { contactIDCounter = 0; }
 
     /// <summary>
     /// create new Resistance contacts and place them dictionary, unassigned
@@ -776,6 +776,53 @@ public class ContactManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfContacts (Null)"); }
         return builder.ToString();
+    }
+
+    //
+    // - - - Save / Load 
+    //
+
+    public int[] GetArrayOfContactNetworks()
+    { return arrayOfContactNetworks; }
+
+    public Actor[] GetArrayOfActors()
+    { return arrayOfActors; }
+
+    /// <summary>
+    /// clear array and copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfContacts"></param>
+    public void SetArrayOfContactNetworks(List<int> listOfContacts)
+    {
+        if (listOfContacts != null)
+        {
+            Debug.AssertFormat(listOfContacts.Count == arrayOfContactNetworks.Length, "Mismatch on size: listOfContacts {0} and arrayOfContactNetworks {1}", listOfContacts.Count, arrayOfContactNetworks.Length);
+            Array.Clear(arrayOfContactNetworks, 0, arrayOfContactNetworks.Length);
+            arrayOfContactNetworks = listOfContacts.ToArray();
+        }
+        else { Debug.LogError("Invalid listOfContacts (Null)"); }
+    }
+
+    /// <summary>
+    /// clear array and copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfActors"></param>
+    public void SetArrayOfActors(List<int> listOfActors)
+    {
+        if (listOfActors != null)
+        {
+            int count = arrayOfActors.Length;
+            Array.Clear(arrayOfActors, 0, count);
+            Debug.AssertFormat(arrayOfActors.Length == listOfActors.Count, "Mismatch on size: arrayOfActors {0}, listOfActors {1}", count, listOfActors.Count);
+            for (int i = 0; i < count; i++)
+            {
+                Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                if (actor != null)
+                { arrayOfActors[i] = actor; }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfActors (Null)"); }
     }
 
     //new methods above here

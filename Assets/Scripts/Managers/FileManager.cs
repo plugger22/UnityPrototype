@@ -72,6 +72,7 @@ public class FileManager : MonoBehaviour
         WriteActorData();
         WriteNodeData();
         WriteGearData();
+        WriteContactData();
         WriteAIData();
     }
     #endregion
@@ -183,6 +184,7 @@ public class FileManager : MonoBehaviour
             ValidateActorData();
             ReadPlayerData();
             ValidatePlayerData();
+            ReadContactData();
             UpdateGUI();
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
         }
@@ -1038,6 +1040,37 @@ public class FileManager : MonoBehaviour
         //GearManager fields
         write.gearData.gearSaveCurrentCost = GameManager.instance.gearScript.GetGearSaveCurrentCost();
         write.gearData.listOfCompromisedGear.AddRange(GameManager.instance.gearScript.GetListOfCompromisedGear());
+    }
+    #endregion
+
+
+    #region Write Contact Data
+    /// <summary>
+    /// ContactManager.cs data write to file
+    /// </summary>
+    private void WriteContactData()
+    {
+        write.contactData.contactIDCounter = GameManager.instance.contactScript.contactIDCounter;
+        //arrayOfContactNetworks
+        int[] arrayOfContacts = GameManager.instance.contactScript.GetArrayOfContactNetworks();
+        if (arrayOfContacts != null)
+        { write.contactData.listOfContactNetworks.AddRange(arrayOfContacts.ToList()); }
+        else { Debug.LogError("Invalid arrayOfContactNetworks (Null)"); }
+        //arrayOfActors
+        Actor[] arrayOfActors = GameManager.instance.contactScript.GetArrayOfActors();
+        if (arrayOfActors != null)
+        {
+            //loop array and store actorID's in list
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                { write.contactData.listOfActors.Add(actor.actorID); }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        
     }
     #endregion
 
@@ -2216,6 +2249,19 @@ public class FileManager : MonoBehaviour
         if (read.nemesisData.saveData != null)
         { GameManager.instance.nemesisScript.ReadSaveData(read.nemesisData.saveData); }
         else { Debug.LogError("Invalid read.nemesisData.saveData (Null)"); }
+    }
+    #endregion
+
+
+    #region Read Contact Data
+    /// <summary>
+    /// ContactManager.cs data to game
+    /// </summary>
+    private void ReadContactData()
+    {
+        GameManager.instance.contactScript.contactIDCounter = read.contactData.contactIDCounter;
+        GameManager.instance.contactScript.SetArrayOfContactNetworks(read.contactData.listOfContactNetworks);
+        GameManager.instance.contactScript.SetArrayOfActors(read.contactData.listOfActors);
     }
     #endregion
 

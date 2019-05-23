@@ -782,7 +782,7 @@ public class GameManager : MonoBehaviour
             messageScript.ResetCounter();
             nodeScript.Reset();
             actorScript.Reset();
-            contactScript.Reset();
+            contactScript.ResetCounter();
             teamScript.ResetCounter();
         }
         else
@@ -790,7 +790,7 @@ public class GameManager : MonoBehaviour
             dataScript.ResetLoadGame();
             nodeScript.Reset();
             actorScript.Reset();
-            contactScript.Reset();
+            contactScript.ResetCounter();
         }
 
     }
