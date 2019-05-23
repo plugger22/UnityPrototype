@@ -29,6 +29,7 @@ public class FileManager : MonoBehaviour
     GlobalSide globalResistance;
     float alphaActive = -1;
     float alphaInactive = -1;
+    Sprite defaultSprite;
 
     #region Initialise
     /// <summary>
@@ -43,10 +44,12 @@ public class FileManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         alphaActive = GameManager.instance.guiScript.alphaActive;
         alphaInactive = GameManager.instance.guiScript.alphaInactive;
+        defaultSprite = GameManager.instance.guiScript.infoSprite;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(alphaActive > -1, "Invalid alphaActive (-1)");
         Debug.Assert(alphaInactive > -1, "Invalid alphaInactive (-1)");
+        Debug.Assert(defaultSprite != null, "Invalid defaultSprite (Null)");
     }
     #endregion
 
@@ -643,12 +646,23 @@ public class FileManager : MonoBehaviour
                     //one for each MainInfoApp tab
                     switch (i)
                     {
-                        case 0: write.dataData.listOfTab0.AddRange(listOfItemData); break;
-                        case 1: write.dataData.listOfTab1.AddRange(listOfItemData); break;
-                        case 2: write.dataData.listOfTab2.AddRange(listOfItemData); break;
-                        case 3: write.dataData.listOfTab3.AddRange(listOfItemData); break;
-                        case 4: write.dataData.listOfTab4.AddRange(listOfItemData); break;
-                        case 5: write.dataData.listOfTab5.AddRange(listOfItemData); break;
+                        case 0:
+                            write.dataData.listOfTab0Item.AddRange(listOfItemData);
+                            //loop list and serialize sprites (one for each item) as textures
+                            for (int j = 0; j < listOfItemData.Count; j++)
+                            {
+                                Sprite sprite = listOfItemData[j].sprite;
+                                //if no sprite present use general purpose info sprite
+                                if (sprite == null)
+                                { sprite = GameManager.instance.guiScript.infoSprite; }
+                                
+                            }
+                            break;
+                        case 1: write.dataData.listOfTab1Item.AddRange(listOfItemData); break;
+                        case 2: write.dataData.listOfTab2Item.AddRange(listOfItemData); break;
+                        case 3: write.dataData.listOfTab3Item.AddRange(listOfItemData); break;
+                        case 4: write.dataData.listOfTab4Item.AddRange(listOfItemData); break;
+                        case 5: write.dataData.listOfTab5Item.AddRange(listOfItemData); break;
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid listOfItemData (Null) for arrayOfItemData[{0}]", i); }
