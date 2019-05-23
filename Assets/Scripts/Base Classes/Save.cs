@@ -120,12 +120,12 @@ public class SaveDataData
     public List<ItemData> listOfTab3Item = new List<ItemData>();
     public List<ItemData> listOfTab4Item = new List<ItemData>();
     public List<ItemData> listOfTab5Item = new List<ItemData>();
-    public List<SerializeTexture> listOfTab0Sprite = new List<SerializeTexture>();
+    /*public List<SerializeTexture> listOfTab0Sprite = new List<SerializeTexture>();
     public List<SerializeTexture> listOfTab1Sprite = new List<SerializeTexture>();
     public List<SerializeTexture> listOfTab2Sprite = new List<SerializeTexture>();
     public List<SerializeTexture> listOfTab3Sprite = new List<SerializeTexture>();
     public List<SerializeTexture> listOfTab4Sprite = new List<SerializeTexture>();
-    public List<SerializeTexture> listOfTab5Sprite = new List<SerializeTexture>();
+    public List<SerializeTexture> listOfTab5Sprite = new List<SerializeTexture>();*/
 }
 
 
@@ -520,7 +520,7 @@ public class IntListWrapper : ListWrapper<int> { }
 public class ContactListWrapper : ListWrapper<Contact> { }
 #endregion
 
-#region Sprite Serialization
+/*#region Sprite Serialization
 /// <summary>
 /// Sprites need to be serialized as textures (can't be serialized directly)
 /// </summary>
@@ -531,5 +531,4 @@ public class SerializeTexture
     public int y;
     public byte[] bytes;
 }
-
-#endregion
+#endregion*/

@@ -521,6 +521,20 @@ public class DataManager : MonoBehaviour
     public List<ItemData> GetListOfDelayedItemData()
     { return listOfDelayedItemData; }
 
+    /// <summary>
+    /// Clear out and copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfDelayed"></param>
+    public void SetListOfDelayedItemData(List<ItemData> listOfDelayed)
+    {
+        if (listOfDelayed != null)
+        {
+            listOfDelayedItemData.Clear();
+            listOfDelayedItemData.AddRange(listOfDelayed);
+        }
+        else { Debug.LogError("Invalid listOfDelayed (Null)"); }
+    }
+
     //
     // - - - NodeArcs - - -
     //
