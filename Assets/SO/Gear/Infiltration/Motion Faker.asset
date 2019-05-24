@@ -16,10 +16,10 @@ MonoBehaviour:
   rarity: {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
   type: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
   data: 0
-  sprite: {fileID: 21300000, guid: 4bc3f8ffc1e52f741ba6d5f9d475aa7c, type: 3}
+  sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects: []
   aiHackingEffect: {fileID: 0}
-  gearID: 5
+  gearID: 8
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 

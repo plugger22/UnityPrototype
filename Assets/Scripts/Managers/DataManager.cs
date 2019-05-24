@@ -205,9 +205,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
     private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                         //Key -> cureID, Value -> Cure
+    private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();             //Key -> sprite name, Value -> Sprite
     //global SO's (enum equivalents)
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.tag, Value -> Condition
-
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
 
     //
@@ -6271,6 +6271,30 @@ public class DataManager : MonoBehaviour
         if (dictOfCampaigns.ContainsKey(campaignID) == true)
         { campaign = dictOfCampaigns[campaignID]; }
         return campaign;
+    }
+
+    //
+    // - - - Sprites - - -
+    //
+
+    public Dictionary<string, Sprite> GetDictOfSprites()
+    { return dictOfSprites; }
+
+    /// <summary>
+    /// returns sprite for a given sprite name, null if a problem
+    /// </summary>
+    /// <param name="spriteName"></param>
+    /// <returns></returns>
+    public Sprite GetSprite(string spriteName)
+    {
+        Sprite sprite = null;
+        if (String.IsNullOrEmpty(spriteName) == false)
+        {
+            if (dictOfSprites.ContainsKey(spriteName) == true)
+            { sprite = dictOfSprites[spriteName]; }
+        }
+        else { Debug.LogError("Invalid spriteName (Null or Empty)"); }
+        return sprite;
     }
 
     //new methods above here

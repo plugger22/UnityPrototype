@@ -276,7 +276,8 @@ namespace packageAPI
         public string itemText;                     //what is shown for the item
         public string topText;
         public string bottomText;
-        [System.NonSerialized] public Sprite sprite;    //serialized as a texture. ItemData must have a sprite.
+        [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
+        public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public ItemPriority priority;
         public ItemTab tab;
         public GlobalSide side;

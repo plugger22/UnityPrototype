@@ -554,17 +554,17 @@ public class FileManager : MonoBehaviour
         //array -> AI Resources
         int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
         if (arrayOfAIResources != null)
-        { write.dataData.listOfArrayOfAIResources.AddRange(arrayOfAIResources.ToList()); }
+        { write.dataData.listOfArrayOfAIResources.AddRange(arrayOfAIResources); }
         else { Debug.LogError("Invalid arrayOfAIResources (Null)"); }
         //queue -> recentNodes
         Queue<AITracker> queueOfRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
         if (queueOfRecentNodes != null)
-        { write.dataData.listOfRecentNodes.AddRange(queueOfRecentNodes.ToList()); }
+        { write.dataData.listOfRecentNodes.AddRange(queueOfRecentNodes); }
         else { Debug.LogError("Invalid queueOfRecentNodes (Null)"); }
         //queue -> recentConnections
         Queue<AITracker> queueOfRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
         if (queueOfRecentConnections != null)
-        { write.dataData.listOfRecentConnections.AddRange(queueOfRecentConnections.ToList()); }
+        { write.dataData.listOfRecentConnections.AddRange(queueOfRecentConnections); }
         else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
         #endregion
         #region messages
@@ -572,32 +572,32 @@ public class FileManager : MonoBehaviour
         Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
         if (dictOfArchiveMessages != null)
         {
-            write.dataData.listOfArchiveMessagesKey.AddRange(dictOfArchiveMessages.Keys.ToList());
-            write.dataData.listOfArchiveMessagesValue.AddRange(dictOfArchiveMessages.Values.ToList());
+            write.dataData.listOfArchiveMessagesKey.AddRange(dictOfArchiveMessages.Keys);
+            write.dataData.listOfArchiveMessagesValue.AddRange(dictOfArchiveMessages.Values);
         }
         else { Debug.LogError("Invalid dictOfArchiveMessages (Null)"); }
         //pending
         Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
         if (dictOfPendingMessages != null)
         {
-            write.dataData.listOfPendingMessagesKey.AddRange(dictOfPendingMessages.Keys.ToList());
-            write.dataData.listOfPendingMessagesValue.AddRange(dictOfPendingMessages.Values.ToList());
+            write.dataData.listOfPendingMessagesKey.AddRange(dictOfPendingMessages.Keys);
+            write.dataData.listOfPendingMessagesValue.AddRange(dictOfPendingMessages.Values);
         }
         else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
         //current
         Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
         if (dictOfCurrentMessages != null)
         {
-            write.dataData.listOfCurrentMessagesKey.AddRange(dictOfCurrentMessages.Keys.ToList());
-            write.dataData.listOfCurrentMessagesValue.AddRange(dictOfCurrentMessages.Values.ToList());
+            write.dataData.listOfCurrentMessagesKey.AddRange(dictOfCurrentMessages.Keys);
+            write.dataData.listOfCurrentMessagesValue.AddRange(dictOfCurrentMessages.Values);
         }
         else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
         //ai
         Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
         if (dictOfAIMessages != null)
         {
-            write.dataData.listOfAIMessagesKey.AddRange(dictOfAIMessages.Keys.ToList());
-            write.dataData.listOfAIMessagesValue.AddRange(dictOfAIMessages.Values.ToList());
+            write.dataData.listOfAIMessagesKey.AddRange(dictOfAIMessages.Keys);
+            write.dataData.listOfAIMessagesValue.AddRange(dictOfAIMessages.Values);
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         //id counter
@@ -1162,7 +1162,7 @@ public class FileManager : MonoBehaviour
         //arrayOfContactNetworks
         int[] arrayOfContacts = GameManager.instance.contactScript.GetArrayOfContactNetworks();
         if (arrayOfContacts != null)
-        { write.contactData.listOfContactNetworks.AddRange(arrayOfContacts.ToList()); }
+        { write.contactData.listOfContactNetworks.AddRange(arrayOfContacts); }
         else { Debug.LogError("Invalid arrayOfContactNetworks (Null)"); }
         //arrayOfActors
         Actor[] arrayOfActors = GameManager.instance.contactScript.GetArrayOfActors();
@@ -1921,7 +1921,9 @@ public class FileManager : MonoBehaviour
                                     if (itemData != null)
                                     {
                                         //sprite
-                                        itemData.sprite = defaultSprite;
+                                        itemData.sprite = GameManager.instance.dataScript.GetSprite(itemData.spriteName);
+                                        if (itemData.sprite == null)
+                                        { itemData.sprite = defaultSprite; }
                                         //add to array list
                                         arrayOfItemDataByPriority[outer, inner].Add(itemData);
                                     }
@@ -1937,7 +1939,9 @@ public class FileManager : MonoBehaviour
                                     if (itemData != null)
                                     {
                                         //sprite
-                                        itemData.sprite = defaultSprite;
+                                        itemData.sprite = GameManager.instance.dataScript.GetSprite(itemData.spriteName);
+                                        if (itemData.sprite == null)
+                                        { itemData.sprite = defaultSprite; }
                                         //add to array list
                                         arrayOfItemDataByPriority[outer, inner].Add(itemData);
                                     }
@@ -1953,7 +1957,9 @@ public class FileManager : MonoBehaviour
                                     if (itemData != null)
                                     {
                                         //sprite
-                                        itemData.sprite = defaultSprite;
+                                        itemData.sprite = GameManager.instance.dataScript.GetSprite(itemData.spriteName);
+                                        if (itemData.sprite == null)
+                                        { itemData.sprite = defaultSprite; }
                                         //add to array list
                                         arrayOfItemDataByPriority[outer, inner].Add(itemData);
                                     }
@@ -2701,8 +2707,12 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = defaultSprite; }
-                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
+                                item.sprite = defaultSprite;
+                            }
                         }
                         break;
                     case 1:
@@ -2712,8 +2722,12 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = defaultSprite; }
-                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
+                                item.sprite = defaultSprite;
+                            }
                         }
                         break;
                     case 2:
@@ -2723,8 +2737,12 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = defaultSprite; }
-                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
+                                item.sprite = defaultSprite;
+                            }
                         }
                         break;
                     case 3:
@@ -2734,8 +2752,12 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = defaultSprite; }
-                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
+                                item.sprite = defaultSprite;
+                            }
                         }
                         break;
                     case 4:
@@ -2745,8 +2767,12 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = defaultSprite; }
-                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
+                                item.sprite = defaultSprite;
+                            }
                         }
                         break;
                     case 5:
@@ -2756,8 +2782,12 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = defaultSprite; }
-                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
+                                item.sprite = defaultSprite;
+                            }
                         }
                         break;
                     default: Debug.LogErrorFormat("Unrecognised index {0}", i); break;

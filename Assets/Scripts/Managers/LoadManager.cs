@@ -73,6 +73,14 @@ public class LoadManager : MonoBehaviour
     public Target[] arrayOfTargetsStory;
     public Target[] arrayOfTargetsGoal;
 
+    [Header("Sprites")]
+    public Sprite[] arrayOfGearSprites;
+    public Sprite[] arrayOfGlobalSprites;
+    public Sprite[] arrayOfNodeArcSprites;
+    public Sprite[] arrayOfPortraitSprites;
+    public Sprite[] arrayOfTargetSprites;
+    public Sprite[] arrayOfTeamSprites;
+
     [Header("InitialiseEarly -> Second Half")]
     public ManageActor[] arrayOfManageActors;
     public ManageAction[] arrayOfManageActions;
@@ -773,40 +781,53 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict > 0, "No Targets have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Targets count, array {0}, dict {1}", numArray, numDict));
 
-            /*//initialise Generic target array -> EDIT: moved to TargetManager.cs -> Initialise -> InitialiseGenericTargetArray
-            GameManager.instance.dataScript.InitialiseArrayOfGenericTargets();
-            List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
-            if (arrayOfGenericTargets != null)
-            {
-                //assign targets to pools
-                foreach (var target in dictOfTargets)
-                {
-                    if (target.Value.targetType != null)
-                    {
-                        switch (target.Value.targetType.name)
-                        {
-                            case "Generic":
-                                if (target.Value.nodeArc != null)
-                                {
-                                    //only level one targets placed in array
-                                    if (target.Value.targetLevel == 1)
-                                    {
-                                        index = target.Value.nodeArc.nodeArcID;
-                                        arrayOfGenericTargets[index].Add(target.Value.targetID);
-                                    }
-                                }
-                                else { Debug.LogWarningFormat("Invalid nodeArc for Generic target {0}", target.Value.name); }
-                                break;
-
-                        }
-                    }
-                    else { Debug.LogWarningFormat("Invalid TargetType (Null) for target \"{0}\"", target.Value.name); }
-                }
-            }
-            else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }*/
+            /*//initialise Generic target array -> EDIT: moved to TargetManager.cs -> Initialise -> InitialiseGenericTargetArray*/
 
         }
         else { Debug.LogError("Invalid dictOfTargets (Null) -> Import failed"); }
+        //
+        // - - - Sprites - - -
+        //
+        Debug.Assert(arrayOfGearSprites.Length > 0, "Invalid arrayOfGearSprites (No records)");
+        Debug.Assert(arrayOfGlobalSprites.Length > 0, "Invalid arrayOfGlobalSprites (No records)");
+        Debug.Assert(arrayOfTeamSprites.Length > 0, "Invalid arrayOfTeamSprites (No records)");
+        Debug.Assert(arrayOfNodeArcSprites.Length > 0, "Invalid arrayOfNodeArcSprites (No records)");
+        Debug.Assert(arrayOfTargetSprites.Length > 0, "Invalid arrayOfTargetSprites (No records)");
+        Debug.Assert(arrayOfPortraitSprites.Length > 0, "Invalid arrayOfPortraitSprites (No records)");
+        Dictionary<string, Sprite> dictOfSprites = GameManager.instance.dataScript.GetDictOfSprites();
+        if (dictOfSprites != null)
+        {
+            counter = 0;
+            //all sprites that need to be serialized (their names are serialized and they are retrieved from the dict on load)
+            List<Sprite> listOfSprites = new List<Sprite>();
+            listOfSprites.AddRange(arrayOfGearSprites);
+            listOfSprites.AddRange(arrayOfGlobalSprites);
+            listOfSprites.AddRange(arrayOfTeamSprites);
+            listOfSprites.AddRange(arrayOfNodeArcSprites);
+            listOfSprites.AddRange(arrayOfTargetSprites);
+            listOfSprites.AddRange(arrayOfPortraitSprites);
+            numArray = listOfSprites.Count;
+            for (int i = 0; i < numArray; i++)
+            {
+                //add to dictionary
+                Sprite sprite = listOfSprites[i];
+                if (sprite != null)
+                {
+                    try
+                    { dictOfSprites.Add(sprite.name, sprite); counter++; }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate sprite name \"{0}\" for listOfSprites[{1}]", sprite.name, i); }
+                }
+                else { Debug.LogWarningFormat("Invalid sprite (Null) for listOfSprites[{0}]", i); }
+            }
+            numDict = dictOfSprites.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfSprites has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No Sprites have been imported");
+            Debug.AssertFormat(numArray == numDict, "Mismatch in Sprites count, array {0}, dict {1}", numArray, numDict);
+        }
+        else { Debug.LogError("Invalid dictOfSprites (Null)"); }
+
         //
         // - - - Actions - - -
         //

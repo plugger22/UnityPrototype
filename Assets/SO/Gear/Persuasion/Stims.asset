@@ -16,14 +16,14 @@ MonoBehaviour:
   rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
   type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0
-  sprite: {fileID: 21300000, guid: 21919cce44cf19643aded1cfcad97695, type: 3}
+  sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects:
   - {fileID: 11400000, guid: 45811049bf3f89e4baa743d89046fe6c, type: 2}
   aiHackingEffect: {fileID: 0}
   gearID: 26
   timesUsed: 0
   isCompromised: 0
-  reasonUsed: Used to provide Player with a benefit
+  reasonUsed: 
   chanceOfCompromise: 0
   statTurnObtained: 0
   statTurnLost: 0
