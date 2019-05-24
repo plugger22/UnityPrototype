@@ -615,7 +615,7 @@ public class MessageManager : MonoBehaviour
                 {
                     message.type = MessageType.ACTOR;
                     data.itemText = string.Format("{0}, {1}, {2}", actor.actorName, actor.arc.name, itemTextTag);
-                    data.sprite = actor.arc.sprite;
+                    data.sprite = actor.sprite;
                     data.spriteName = data.sprite.name;
                     data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, actor);
                 }
@@ -679,7 +679,7 @@ public class MessageManager : MonoBehaviour
                 {
                     message.type = MessageType.ACTOR;
                     data.itemText = string.Format("{0}, {1}, has taken Stress Leave", actor.actorName, actor.arc.name);
-                    data.sprite = actor.arc.sprite;
+                    data.sprite = actor.sprite;
                     data.spriteName = data.sprite.name;
                     data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(side, actor);
                 }
@@ -724,7 +724,7 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.side = message.side;
             data.help = 1;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -766,7 +766,7 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.side = message.side;
             data.help = 1;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -864,7 +864,7 @@ public class MessageManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
-                    data.sprite = actor.arc.sprite;
+                    data.sprite = actor.sprite;
                     data.spriteName = data.sprite.name;
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
@@ -904,7 +904,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Blackmail Resolved";
             data.bottomText = GameManager.instance.itemDataScript.GetActorBlackmailDetails(actor, secretID, isThreatDropped, reason);
             data.priority = ItemPriority.Medium;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -949,7 +949,7 @@ public class MessageManager : MonoBehaviour
             else
             {  data.itemText = string.Format("{0}, {1}, forgets one of your Secrets", actor.actorName, actor.arc.name);  }
             data.priority = ItemPriority.Low;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -992,7 +992,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.instance.itemDataScript.GetActorRevealSecretDetails(actor, secret, reason);
             data.itemText = string.Format("{0} reveals your SECRET", actor.arc.name);
             data.priority = ItemPriority.High;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1037,7 +1037,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Recruited";
             data.bottomText = GameManager.instance.itemDataScript.GetActorRecruitedDetails(actor, unhappyTimer);
             data.priority = ItemPriority.Low;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1078,7 +1078,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Relationship Conflict";
             data.bottomText = GameManager.instance.itemDataScript.GetActorConflictDetails(actor, conflictID, reasonNoConflict);
             data.priority = ItemPriority.High;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1123,7 +1123,7 @@ public class MessageManager : MonoBehaviour
             data.topText = string.Format("{0} trait used", trait.tag);
             data.bottomText = GameManager.instance.itemDataScript.GetActorTraitDetails(actor, trait, forText, toText);
             data.priority = ItemPriority.Low;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Traits;
             data.type = message.type;
@@ -1390,7 +1390,7 @@ public class MessageManager : MonoBehaviour
             }
             data.bottomText = GameManager.instance.itemDataScript.GetContactDetails(reason, actor, node, contact, isGained);
             data.priority = ItemPriority.Medium;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1438,7 +1438,7 @@ public class MessageManager : MonoBehaviour
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.instance.itemDataScript.GetContactTargetRumourDetails(actor, node, contact, target);
             data.priority = ItemPriority.Low;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1534,7 +1534,7 @@ public class MessageManager : MonoBehaviour
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.instance.itemDataScript.GetContactTeamSpottedDetails(actor, node, contact, team);
             data.priority = ItemPriority.Medium;
-            data.sprite = actor.arc.sprite;
+            data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;

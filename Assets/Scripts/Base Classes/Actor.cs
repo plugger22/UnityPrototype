@@ -42,9 +42,11 @@ namespace gameAPI
         [HideInInspector] public string actorName;              //complete name
         [HideInInspector] public string firstName;              //first name
         [HideInInspector] public ActorArc arc;
-        [HideInInspector] public ActorTooltip tooltipStatus;    //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
-        [HideInInspector] public ActorInactive inactiveStatus;  //reason actor is inactive
-
+        [HideInInspector] public ActorTooltip tooltipStatus;     //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
+        [HideInInspector] public ActorInactive inactiveStatus;   //reason actor is inactive
+        //sprite
+        [HideInInspector] public Sprite sprite;                  //sprite used in-game (default copied from actorArc at present)
+        [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)
         //trait
         private Trait trait;
         //gear

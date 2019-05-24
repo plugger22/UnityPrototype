@@ -837,117 +837,6 @@ public class FileManager : MonoBehaviour
         Debug.Assert(write.actorData.maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
     }
 
-    /// <summary>
-    /// subMethod for WriteActorData to handle serializing an individual actor. Returns null if a problem
-    /// Note: actor checked for null by parent method
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <returns></returns>
-    private SaveActor WriteIndividualActor(Actor actor)
-    {
-        bool isSuccess = true;
-        SaveActor saveActor = new SaveActor();
-        //
-        // - - - base data
-        //
-        saveActor.status = actor.Status;
-        saveActor.actorID = actor.actorID;
-        saveActor.datapoint0 = actor.datapoint0;
-        saveActor.datapoint1 = actor.datapoint1;
-        saveActor.datapoint2 = actor.datapoint2;
-        saveActor.side = actor.side;
-        saveActor.slotID = actor.slotID;
-        saveActor.level = actor.level;
-        saveActor.nodeCaptured = actor.nodeCaptured;
-        saveActor.gearID = actor.GetGearID();
-        saveActor.isMale = actor.isMale;
-        saveActor.actorName = actor.actorName;
-        saveActor.firstName = actor.firstName;
-        saveActor.arcID = actor.arc.ActorArcID;
-        saveActor.trait = actor.GetTrait();
-
-        //data which can be ignored (default values O.K) if actor is in the recruit pool
-        if (actor.Status != ActorStatus.RecruitPool)
-        {
-            saveActor.Renown = actor.Renown;
-            saveActor.unhappyTimer = actor.unhappyTimer;
-            saveActor.blackmailTimer = actor.blackmailTimer;
-            saveActor.captureTimer = actor.captureTimer;
-            saveActor.numOfTimesBullied = actor.numOfTimesBullied;
-            saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
-            saveActor.departedNumOfSecrets = actor.departedNumOfSecrets;
-            saveActor.isPromised = actor.isPromised;
-            saveActor.isNewRecruit = actor.isNewRecruit;
-            saveActor.isReassured = actor.isReassured;
-            saveActor.isThreatening = actor.isThreatening;
-            saveActor.isComplaining = actor.isComplaining;
-            saveActor.isBreakdown = actor.isBreakdown;
-            saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
-            saveActor.isStressLeave = actor.isStressLeave;
-            saveActor.isTraitor = actor.isTraitor;
-            saveActor.tooltipStatus = actor.tooltipStatus;
-            saveActor.inactiveStatus = actor.inactiveStatus;
-            saveActor.gearTimer = actor.GetGearTimer();
-            saveActor.gearTimesTaken = actor.GetGearTimesTaken();
-
-            //
-            // - - - Collections
-            //
-
-            //teams
-            saveActor.listOfTeams.AddRange(actor.GetListOfTeams());
-            //secrets
-            List<Secret> listOfSecrets = actor.GetListOfSecrets();
-            if (listOfSecrets != null)
-            {
-                for (int i = 0; i < listOfSecrets.Count; i++)
-                {
-                    Secret secret = listOfSecrets[i];
-                    if (secret != null)
-                    { saveActor.listOfSecrets.Add(secret.secretID); }
-                    else { Debug.LogWarningFormat("Invalid secret in listOfSecrets[{0}]", i); }
-                }
-            }
-            else { Debug.LogError("Invalid listOfSecrets (Null)"); }
-            //conditions
-            List<Condition> listOfConditions = actor.GetListOfConditions();
-            if (listOfConditions != null)
-            {
-                for (int i = 0; i < listOfConditions.Count; i++)
-                {
-                    Condition condition = listOfConditions[i];
-                    if (condition != null)
-                    { saveActor.listOfConditions.Add(condition.tag); }
-                    else { Debug.LogWarningFormat("Invalid listOfConditons[{0}]", i); }
-                }
-            }
-            else { Debug.LogError("Invalid listOfCondtions (Null)"); }
-            //contacts
-            Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
-            if (dictOfContacts != null)
-            {
-                foreach (var record in dictOfContacts)
-                {
-                    if (record.Value != null)
-                    {
-                        saveActor.listOfContactNodes.Add(record.Key);
-                        saveActor.listOfContacts.Add(record.Value.contactID);
-                    }
-                    else { Debug.LogWarning("Invalid contact (Null) in dictOfContacts"); }
-                }
-            }
-            else { Debug.LogError("Invalid dictOfContacts (Null)"); }
-        }
-        //
-        // - - - Success check
-        //
-        if (isSuccess == false)
-        {
-            saveActor = null;
-            Debug.LogWarningFormat("Failed to serialize {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
-        }
-        return saveActor;
-    }
     #endregion
 
 
@@ -2020,7 +1909,11 @@ public class FileManager : MonoBehaviour
                     actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcID);
                     actor.AddTrait(readActor.trait);
                     actor.Status = readActor.status; //needs to be after SetGear
-
+                    //sprite
+                    actor.spriteName = readActor.spriteName;
+                    actor.sprite = GameManager.instance.dataScript.GetSprite(actor.spriteName);
+                    if (actor.sprite == null)
+                    { actor.sprite = defaultSprite; }
                     //fast access
                     actor.actorStressNone = read.actorData.actorStressNone;
                     actor.actorCorruptNone = read.actorData.actorCorruptNone;
@@ -2795,6 +2688,122 @@ public class FileManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid listOfItemData (Null) for arrayOfItemData[{0}]", i); }
         }
+    }
+    #endregion
+
+
+    #region writeIndividualActor
+    /// <summary>
+    /// subMethod for WriteActorData to handle serializing an individual actor. Returns null if a problem
+    /// Note: actor checked for null by parent method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private SaveActor WriteIndividualActor(Actor actor)
+    {
+        bool isSuccess = true;
+        SaveActor saveActor = new SaveActor();
+        //
+        // - - - base data
+        //
+        saveActor.status = actor.Status;
+        saveActor.actorID = actor.actorID;
+        saveActor.datapoint0 = actor.datapoint0;
+        saveActor.datapoint1 = actor.datapoint1;
+        saveActor.datapoint2 = actor.datapoint2;
+        saveActor.side = actor.side;
+        saveActor.slotID = actor.slotID;
+        saveActor.level = actor.level;
+        saveActor.nodeCaptured = actor.nodeCaptured;
+        saveActor.gearID = actor.GetGearID();
+        saveActor.isMale = actor.isMale;
+        saveActor.actorName = actor.actorName;
+        saveActor.firstName = actor.firstName;
+        saveActor.spriteName = actor.spriteName;
+        saveActor.arcID = actor.arc.ActorArcID;
+        saveActor.trait = actor.GetTrait();
+
+        //data which can be ignored (default values O.K) if actor is in the recruit pool
+        if (actor.Status != ActorStatus.RecruitPool)
+        {
+            saveActor.Renown = actor.Renown;
+            saveActor.unhappyTimer = actor.unhappyTimer;
+            saveActor.blackmailTimer = actor.blackmailTimer;
+            saveActor.captureTimer = actor.captureTimer;
+            saveActor.numOfTimesBullied = actor.numOfTimesBullied;
+            saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
+            saveActor.departedNumOfSecrets = actor.departedNumOfSecrets;
+            saveActor.isPromised = actor.isPromised;
+            saveActor.isNewRecruit = actor.isNewRecruit;
+            saveActor.isReassured = actor.isReassured;
+            saveActor.isThreatening = actor.isThreatening;
+            saveActor.isComplaining = actor.isComplaining;
+            saveActor.isBreakdown = actor.isBreakdown;
+            saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
+            saveActor.isStressLeave = actor.isStressLeave;
+            saveActor.isTraitor = actor.isTraitor;
+            saveActor.tooltipStatus = actor.tooltipStatus;
+            saveActor.inactiveStatus = actor.inactiveStatus;
+            saveActor.gearTimer = actor.GetGearTimer();
+            saveActor.gearTimesTaken = actor.GetGearTimesTaken();
+
+            //
+            // - - - Collections
+            //
+
+            //teams
+            saveActor.listOfTeams.AddRange(actor.GetListOfTeams());
+            //secrets
+            List<Secret> listOfSecrets = actor.GetListOfSecrets();
+            if (listOfSecrets != null)
+            {
+                for (int i = 0; i < listOfSecrets.Count; i++)
+                {
+                    Secret secret = listOfSecrets[i];
+                    if (secret != null)
+                    { saveActor.listOfSecrets.Add(secret.secretID); }
+                    else { Debug.LogWarningFormat("Invalid secret in listOfSecrets[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfSecrets (Null)"); }
+            //conditions
+            List<Condition> listOfConditions = actor.GetListOfConditions();
+            if (listOfConditions != null)
+            {
+                for (int i = 0; i < listOfConditions.Count; i++)
+                {
+                    Condition condition = listOfConditions[i];
+                    if (condition != null)
+                    { saveActor.listOfConditions.Add(condition.tag); }
+                    else { Debug.LogWarningFormat("Invalid listOfConditons[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfCondtions (Null)"); }
+            //contacts
+            Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+            if (dictOfContacts != null)
+            {
+                foreach (var record in dictOfContacts)
+                {
+                    if (record.Value != null)
+                    {
+                        saveActor.listOfContactNodes.Add(record.Key);
+                        saveActor.listOfContacts.Add(record.Value.contactID);
+                    }
+                    else { Debug.LogWarning("Invalid contact (Null) in dictOfContacts"); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+        }
+        //
+        // - - - Success check
+        //
+        if (isSuccess == false)
+        {
+            saveActor = null;
+            Debug.LogWarningFormat("Failed to serialize {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
+        }
+        return saveActor;
     }
     #endregion
 

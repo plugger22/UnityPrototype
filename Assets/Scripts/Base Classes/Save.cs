@@ -384,6 +384,7 @@ public class SaveActor
     public bool isMale;
     public string actorName;
     public string firstName;
+    public string spriteName;
     public int arcID;
     public Trait trait;
 

@@ -1811,7 +1811,7 @@ public class TargetManager : MonoBehaviour
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(detailsGeneric.actorSlotID, globalResistance);
             if (actor != null)
             {
-                Sprite sprite = actor.arc.sprite;
+                Sprite sprite = actor.sprite;
                 Node node = GameManager.instance.dataScript.GetNode(detailsGeneric.nodeID);
                 if (node != null)
                 {

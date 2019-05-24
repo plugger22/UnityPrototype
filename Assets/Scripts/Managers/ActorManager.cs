@@ -629,6 +629,9 @@ public class ActorManager : MonoBehaviour
                 actor.arc = arc;
                 actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory, side));
                 actor.Status = status;
+                //TO DO -> currently actor sprite is derived from actorArc sprite
+                actor.sprite = arc.sprite;
+                actor.spriteName = arc.sprite.name;
                 Debug.Assert(actor.GetTrait() != null, "Invalid actor.trait (Null)");
                 //name
                 if (Random.Range(0, 100) < 50)
@@ -2922,7 +2925,7 @@ public class ActorManager : MonoBehaviour
                             GenericOptionDetails optionDetails = new GenericOptionDetails();
                             optionDetails.optionID = actor.actorID;
                             optionDetails.text = actor.arc.name;
-                            optionDetails.sprite = actor.arc.sprite;
+                            optionDetails.sprite = actor.sprite;
                             //tooltip
                             GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                             //arc type and name
@@ -3074,7 +3077,7 @@ public class ActorManager : MonoBehaviour
                         if (actor != null)
                         {
                             InventoryOptionData optionData = new InventoryOptionData();
-                            optionData.sprite = actor.arc.sprite;
+                            optionData.sprite = actor.sprite;
                             optionData.textUpper = actor.arc.name;
                             //unhappy situation
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
@@ -3218,7 +3221,7 @@ public class ActorManager : MonoBehaviour
                     if (actor != null)
                     {
                         InventoryOptionData optionData = new InventoryOptionData();
-                        optionData.sprite = actor.arc.sprite;
+                        optionData.sprite = actor.sprite;
                         optionData.textUpper = actor.arc.name;
                         //unhappy situation
                         if (actor.CheckConditionPresent(conditionUnhappy) == true)
@@ -3311,7 +3314,7 @@ public class ActorManager : MonoBehaviour
                             //remove actor from appropriate pool list
                             GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, playerSide);
                             //sprite of recruited actor
-                            sprite = actorRecruited.arc.sprite;
+                            sprite = actorRecruited.sprite;
                             //initiliase unhappy timer
                             actorRecruited.unhappyTimer = unhappyTimer;
                             actorRecruited.isNewRecruit = true;
@@ -3450,7 +3453,7 @@ public class ActorManager : MonoBehaviour
                         //remove actor from appropriate pool list
                         GameManager.instance.dataScript.RemoveActorFromPool(actorRecruited.actorID, actorRecruited.level, side);
                         //sprite of recruited actor
-                        sprite = actorRecruited.arc.sprite;
+                        sprite = actorRecruited.sprite;
                         //initialise unhappy timer
                         actorRecruited.unhappyTimer = unhappyTimer;
                         actorRecruited.isNewRecruit = true;
@@ -4163,7 +4166,7 @@ public class ActorManager : MonoBehaviour
                             string topText = "Contact Network";
                             string detailsTop = string.Format("{0}{1} is currently unavailable</b>{2}", colourAlert, actor.actorName, colourEnd);
                             string detailsBottom = string.Format("<b>Their network of contacts will become available once they are {0}back in touch</b>{1}", colourNeutral, colourEnd);
-                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
                         }
                         //
                         // - - - Gear - - -
@@ -4287,7 +4290,7 @@ public class ActorManager : MonoBehaviour
                                 string topText = "Out of Contact";
                                 string detailsTop = string.Format("{0}{1} is deliberately keeping a <b>Low Profile</b>{2}", colourAlert, actor.actorName, colourEnd);
                                 string detailsBottom = string.Format("{0}<b>{1} can't take actions or access their connections</b>{2}", colourBad, actor.arc.name, colourEnd);
-                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
                             }
                         }
                     }
@@ -4404,7 +4407,7 @@ public class ActorManager : MonoBehaviour
                                                 case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                 default: detailsBottom = "Unknown"; break;
                                             }
-                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
                                         }
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
@@ -4558,7 +4561,7 @@ public class ActorManager : MonoBehaviour
                                                     case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                     default: detailsBottom = "Unknown"; break;
                                                 }
-                                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+                                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
                                             }
                                             else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                         }
@@ -4671,7 +4674,7 @@ public class ActorManager : MonoBehaviour
                                                 case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                 default: detailsBottom = "Unknown"; break;
                                             }
-                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
                                         }
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
@@ -4782,7 +4785,7 @@ public class ActorManager : MonoBehaviour
                                                     case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                     default: detailsBottom = "Unknown"; break;
                                                 }
-                                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+                                                GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
                                             }
                                             else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                         }
@@ -5270,7 +5273,7 @@ public class ActorManager : MonoBehaviour
         string detailsTop = string.Format("{0}<b>{1}, {2}{3}{4}</b>{5}{6}<b>Invisibility</b> at {7}<b>Zero</b>{8}", "\n", actor.actorName, colourAlert, actor.arc.name, colourEnd, 
             "\n", "\n", colourNeutral, colourEnd);
         string detailsBottom = string.Format("{0}<b>Can be CAPTURED</b>{1}", colourAlert, colourEnd);
-        GameManager.instance.messageScript.ActorWarningOngoing(itemText, detailsTop, detailsBottom, actor.arc.sprite, actor.actorID);
+        GameManager.instance.messageScript.ActorWarningOngoing(itemText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
     }
 
     /// <summary>
