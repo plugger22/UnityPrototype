@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4565720453740776}
   - component: {fileID: 114736970613289560}
   - component: {fileID: 114558055555623972}
+  - component: {fileID: 114680662969460860}
   - component: {fileID: 114339811107641630}
   - component: {fileID: 114379107075524332}
-  - component: {fileID: 114680662969460860}
   - component: {fileID: 114256465635010494}
   - component: {fileID: 114709307672004698}
   - component: {fileID: 114200138194279740}
@@ -680,8 +680,6 @@ MonoBehaviour:
   outcomeStatusContacts: {fileID: 0}
   outcomeStatusTeams: {fileID: 0}
   activityState: 0
-  _nodeShowFlag: 0
-  _nodeRedraw: 0
 --- !u!114 &114379107075524332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1634,7 +1632,7 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: 5
+  conditionTurnResistance: -1
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
 --- !u!114 &114584680957149894
@@ -1848,6 +1846,8 @@ MonoBehaviour:
   doomTimer: 0
   captureTimer: 0
   isGearCheckRequired: 0
+  nameSet: {fileID: 0}
+  actorIDCounter: 0
 --- !u!114 &114677223304800786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2225,6 +2225,7 @@ MonoBehaviour:
   maxRumoursTarget: 2
   spotTeamChance: 10
   maxSpotTeam: 2
+  contactIDCounter: 0
 --- !u!114 &114854342694066370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2236,7 +2237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f492132b2b83b04eb0ee699f638ac4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageCounter: 0
+  messageIDCounter: 0
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -124,9 +124,7 @@ public class NodeManager : MonoBehaviour
     string colourCancel;
     string colourEnd;
 
-    [SerializeField, HideInInspector]
     private int _nodeShowFlag = 0;                                   //true if a ShowNodes() is active, false otherwise
-    [SerializeField, HideInInspector]
     private bool _nodeRedraw = false;                                //if true a node redraw is triggered in GameManager.Update
 
     //properties
@@ -419,7 +417,7 @@ public class NodeManager : MonoBehaviour
     /// <summary>
     /// reset data ready for a new level
     /// </summary>
-    public void Reset()
+    public void ResetCounters()
     {
         //reset node & connection ID counters
         nodeCounter = 0;

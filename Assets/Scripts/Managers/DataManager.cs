@@ -23,7 +23,7 @@ public class DataManager : MonoBehaviour
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
     private int[,] arrayOfNodeArcTotals;                                                        //array of how many of each node type there is on the map, index -> [(int)NodeArcTally, nodeArc.nodeArcID]
     private int[,] arrayOfTeams;                                                                //info array that uses -> index[TeamArcID, TeamInfo enum]
-    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None->4 x Null) LoadManager.cs InitialiseEarly
+    private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None-> 4 x Null) LoadManager.cs InitialiseEarly
     private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False) LoadManager.cs -> InitialiseEarly
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
 
@@ -499,6 +499,10 @@ public class DataManager : MonoBehaviour
         return currentInfoData;
     }
 
+
+    public List<ItemData>[,] GetArrayOfItemDataByPriority()
+    { return arrayOfItemDataByPriority; }
+
     /// <summary>
     /// returns a notification data package for a specific turn. Returns Null if not found and defaults to current turn if no parameter set
     /// </summary>
@@ -517,6 +521,8 @@ public class DataManager : MonoBehaviour
         return data;
     }
 
+    public Dictionary<int, MainInfoData> GetDictOfHistory()
+    { return dictOfHistory; }
 
     public List<ItemData> GetListOfDelayedItemData()
     { return listOfDelayedItemData; }

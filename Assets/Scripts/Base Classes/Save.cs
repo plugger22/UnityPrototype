@@ -98,7 +98,7 @@ public class SaveDataData
     public List<AITracker> listOfRecentNodes = new List<AITracker>();
     public List<AITracker> listOfRecentConnections = new List<AITracker>();
     //Messages
-    public int messageCounter;
+    public int messageIDCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();
     public List<Message> listOfArchiveMessagesValue = new List<Message>();
     public List<int> listOfPendingMessagesKey = new List<int>();
@@ -113,19 +113,12 @@ public class SaveDataData
     //moving
     public List<int> listOfMoveNodes = new List<int>();
     //MainInfo App data
+    public SaveMainInfo currentInfo = new SaveMainInfo();
+    public List<SavePriorityInfo> listOfPriorityData = new List<SavePriorityInfo>();
     public List<ItemData> listOfDelayedItemData = new List<ItemData>();
-    public List<ItemData> listOfTab0Item = new List<ItemData>();
-    public List<ItemData> listOfTab1Item = new List<ItemData>();
-    public List<ItemData> listOfTab2Item = new List<ItemData>();
-    public List<ItemData> listOfTab3Item = new List<ItemData>();
-    public List<ItemData> listOfTab4Item = new List<ItemData>();
-    public List<ItemData> listOfTab5Item = new List<ItemData>();
-    /*public List<SerializeTexture> listOfTab0Sprite = new List<SerializeTexture>();
-    public List<SerializeTexture> listOfTab1Sprite = new List<SerializeTexture>();
-    public List<SerializeTexture> listOfTab2Sprite = new List<SerializeTexture>();
-    public List<SerializeTexture> listOfTab3Sprite = new List<SerializeTexture>();
-    public List<SerializeTexture> listOfTab4Sprite = new List<SerializeTexture>();
-    public List<SerializeTexture> listOfTab5Sprite = new List<SerializeTexture>();*/
+    public List<SaveMainInfo> listOfHistoryValue = new List<SaveMainInfo>();
+    public List<int> listOfHistoryKey = new List<int>();
+    
 }
 
 
@@ -492,6 +485,36 @@ public class SaveTeam
     public int nodeID;
     public int timer;
     public int turnDeployed;
+}
+
+#endregion
+
+
+#region SubClasses
+/// <summary>
+/// MainInfoData subclass
+/// </summary>
+[System.Serializable]
+public class SaveMainInfo
+{
+    public List<ItemData> listOfTab0Item = new List<ItemData>();
+    public List<ItemData> listOfTab1Item = new List<ItemData>();
+    public List<ItemData> listOfTab2Item = new List<ItemData>();
+    public List<ItemData> listOfTab3Item = new List<ItemData>();
+    public List<ItemData> listOfTab4Item = new List<ItemData>();
+    public List<ItemData> listOfTab5Item = new List<ItemData>();
+    public string tickerText;
+}
+
+/// <summary>
+/// DataManager.cs -> arrayOfItemDataByPriority
+/// </summary>
+[System.Serializable]
+public class SavePriorityInfo
+{
+    public List<ItemData> listOfPriorityLow = new List<ItemData>();
+    public List<ItemData> listOfPriorityMed = new List<ItemData>();
+    public List<ItemData> listOfPriorityHigh = new List<ItemData>();
 }
 #endregion 
 

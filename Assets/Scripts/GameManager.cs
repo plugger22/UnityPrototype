@@ -780,7 +780,7 @@ public class GameManager : MonoBehaviour
             dataScript.ResetNewLevel();
             turnScript.ResetTurn();
             messageScript.ResetCounter();
-            nodeScript.Reset();
+            nodeScript.ResetCounters();
             actorScript.ResetCounter();
             contactScript.ResetCounter();
             teamScript.ResetCounter();
@@ -788,7 +788,7 @@ public class GameManager : MonoBehaviour
         else
         {
             dataScript.ResetLoadGame();
-            nodeScript.Reset();
+            nodeScript.ResetCounters();
             actorScript.ResetCounter();
             contactScript.ResetCounter();
         }

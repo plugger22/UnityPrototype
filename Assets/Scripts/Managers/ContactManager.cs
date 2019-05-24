@@ -812,14 +812,24 @@ public class ContactManager : MonoBehaviour
         if (listOfActors != null)
         {
             int count = arrayOfActors.Length;
+            int actorID;
             Array.Clear(arrayOfActors, 0, count);
             Debug.AssertFormat(arrayOfActors.Length == listOfActors.Count, "Mismatch on size: arrayOfActors {0}, listOfActors {1}", count, listOfActors.Count);
             for (int i = 0; i < count; i++)
             {
-                Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
-                if (actor != null)
-                { arrayOfActors[i] = actor; }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
+                //list has -1 for null actorID's (because you can't serialize 'null')
+                actorID = listOfActors[i];
+                if (actorID > -1)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    { arrayOfActors[i] = actor; }
+                }
+                else
+                {
+                    arrayOfActors[i] = null;
+                    /*Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]);*/
+                }
             }
         }
         else { Debug.LogError("Invalid listOfActors (Null)"); }

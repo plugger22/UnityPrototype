@@ -34,7 +34,7 @@ namespace gameAPI
         /// </summary>
         public Message()
         {
-            msgID = GameManager.instance.messageScript.messageCounter++;
+            msgID = GameManager.instance.messageScript.messageIDCounter++;
             turnCreated = GameManager.instance.turnScript.Turn;
             //default values
             data0 = -1;

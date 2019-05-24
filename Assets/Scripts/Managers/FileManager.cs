@@ -601,7 +601,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         //id counter
-        write.dataData.messageCounter = GameManager.instance.messageScript.messageCounter;
+        write.dataData.messageIDCounter = GameManager.instance.messageScript.messageIDCounter;
         #endregion
         #region registers
         //Ongoing Effects
@@ -638,6 +638,9 @@ public class FileManager : MonoBehaviour
         MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
         if (data != null)
         {
+            //ticker text
+            write.dataData.currentInfo.tickerText = data.tickerText;
+            //ItemData
             for (int i = 0; i < (int)ItemTab.Count; i++)
             {
                 List<ItemData> listOfItemData = data.arrayOfItemData[i];
@@ -646,28 +649,12 @@ public class FileManager : MonoBehaviour
                     //one for each MainInfoApp tab
                     switch (i)
                     {
-                        case 0:
-                            write.dataData.listOfTab0Item.AddRange(listOfItemData);
-                            /*//loop list and serialize sprites (one for each item) as textures
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                Sprite sprite = listOfItemData[j].sprite;
-                                //if no sprite present use general purpose info sprite
-                                if (sprite == null)
-                                { sprite = defaultSprite; }
-                                SerializeTexture saveObj = new SerializeTexture();
-                                Texture2D tex = sprite.texture;
-                                saveObj.x = tex.width;
-                                saveObj.y = tex.height;
-                                saveObj.bytes = ImageConversion.EncodeToPNG(tex);
-                                write.dataData.listOfTab0Sprite.Add(saveObj);                             
-                            }*/
-                            break;
-                        case 1: write.dataData.listOfTab1Item.AddRange(listOfItemData); break;
-                        case 2: write.dataData.listOfTab2Item.AddRange(listOfItemData); break;
-                        case 3: write.dataData.listOfTab3Item.AddRange(listOfItemData); break;
-                        case 4: write.dataData.listOfTab4Item.AddRange(listOfItemData); break;
-                        case 5: write.dataData.listOfTab5Item.AddRange(listOfItemData); break;
+                        case 0: write.dataData.currentInfo.listOfTab0Item.AddRange(listOfItemData); break;
+                        case 1: write.dataData.currentInfo.listOfTab1Item.AddRange(listOfItemData); break;
+                        case 2: write.dataData.currentInfo.listOfTab2Item.AddRange(listOfItemData); break;
+                        case 3: write.dataData.currentInfo.listOfTab3Item.AddRange(listOfItemData); break;
+                        case 4: write.dataData.currentInfo.listOfTab4Item.AddRange(listOfItemData); break;
+                        case 5: write.dataData.currentInfo.listOfTab5Item.AddRange(listOfItemData); break;
                         default: Debug.LogErrorFormat("Unrecognised index {0}", i); break;
                     }
                 }
@@ -675,6 +662,67 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid MainInfoData (Null)"); }
+        //dictOfHistory
+        Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
+        if (dictOfHistory != null)
+        {
+            foreach(var info in dictOfHistory)
+            {
+                if (info.Value != null)
+                {
+                    //create and store a new MainInfoData package
+                    SaveMainInfo mainInfo = new SaveMainInfo();
+                    mainInfo.tickerText = info.Value.tickerText;
+                    //ItemData
+                    for (int i = 0; i < (int)ItemTab.Count; i++)
+                    {
+                        List<ItemData> listOfItemData = info.Value.arrayOfItemData[i];
+                        if (listOfItemData != null)
+                        {
+                            //one for each MainInfoApp tab
+                            switch (i)
+                            {
+                                case 0: mainInfo.listOfTab0Item.AddRange(listOfItemData); break;
+                                case 1: mainInfo.listOfTab1Item.AddRange(listOfItemData); break;
+                                case 2: mainInfo.listOfTab2Item.AddRange(listOfItemData); break;
+                                case 3: mainInfo.listOfTab3Item.AddRange(listOfItemData); break;
+                                case 4: mainInfo.listOfTab4Item.AddRange(listOfItemData); break;
+                                case 5: mainInfo.listOfTab5Item.AddRange(listOfItemData); break;
+                                default: Debug.LogErrorFormat("Unrecognised index {0}", i); break;
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid listOfItemData (Null) for arrayOfItemData[{0}]", i); }
+                    }
+                    //add to lists
+                    write.dataData.listOfHistoryValue.Add(mainInfo);
+                    write.dataData.listOfHistoryKey.Add(info.Key);
+                }
+                else { Debug.LogErrorFormat("Invalid MainInfoData (Null) for turn {0}", info.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfHistory (Null)"); }
+        //arrayOfItemDataByPriority
+        List<ItemData>[,] arrayOfItemDataByPriority = GameManager.instance.dataScript.GetArrayOfItemDataByPriority();
+        if (arrayOfItemDataByPriority != null)
+        {
+            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+            {
+                SavePriorityInfo prioritySave = new SavePriorityInfo();
+                for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+                {
+                    switch (inner)
+                    {
+                        case 0:  prioritySave.listOfPriorityLow.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
+                        case 1: prioritySave.listOfPriorityMed.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
+                        case 2: prioritySave.listOfPriorityHigh.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
+                        default: Debug.LogErrorFormat("Unrecognised inner {0}", inner); break;
+                    }
+                }
+                //add to list
+                write.dataData.listOfPriorityData.Add(prioritySave);
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfItemDataByPriority (Null)"); }
         #endregion
     }
     #endregion
@@ -1126,7 +1174,11 @@ public class FileManager : MonoBehaviour
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
                 { write.contactData.listOfActors.Add(actor.actorID); }
-                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                else
+                {
+                    write.contactData.listOfActors.Add(-1);
+                    /*Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i);*/
+                }
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
@@ -1776,7 +1828,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         //message counter
-        GameManager.instance.messageScript.messageCounter = read.dataData.messageCounter;
+        GameManager.instance.messageScript.messageIDCounter = read.dataData.messageIDCounter;
         #endregion
         #region registers
         //ongoing effects
@@ -1812,89 +1864,110 @@ public class FileManager : MonoBehaviour
         MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
         if (data != null)
         {
-            //loop array and clear out each list before copying across loaded save game data
-            for (int i = 0; i < (int)ItemTab.Count; i++)
-            {
-                List<ItemData> listOfItemData = data.arrayOfItemData[i];
-                if (listOfItemData != null)
-                {
-                    listOfItemData.Clear();
-                    switch (i)
-                    {
-                        case 0:
-                            listOfItemData.AddRange(read.dataData.listOfTab0Item);
-                            //loop items and replace sprite
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                ItemData item = listOfItemData[j];
-                                if (item != null)
-                                { item.sprite = defaultSprite; }
-                                else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
-                            }
-                            break;
-                        case 1:
-                            listOfItemData.AddRange(read.dataData.listOfTab1Item);
-                            //loop items and replace sprite
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                ItemData item = listOfItemData[j];
-                                if (item != null)
-                                { item.sprite = defaultSprite; }
-                                else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
-                            }
-                            break;
-                        case 2:
-                            listOfItemData.AddRange(read.dataData.listOfTab2Item);
-                            //loop items and replace sprite
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                ItemData item = listOfItemData[j];
-                                if (item != null)
-                                { item.sprite = defaultSprite; }
-                                else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
-                            }
-                            break;
-                        case 3:
-                            listOfItemData.AddRange(read.dataData.listOfTab3Item);
-                            //loop items and replace sprite
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                ItemData item = listOfItemData[j];
-                                if (item != null)
-                                { item.sprite = defaultSprite; }
-                                else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
-                            }
-                            break;
-                        case 4:
-                            listOfItemData.AddRange(read.dataData.listOfTab4Item);
-                            //loop items and replace sprite
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                ItemData item = listOfItemData[j];
-                                if (item != null)
-                                { item.sprite = defaultSprite; }
-                                else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
-                            }
-                            break;
-                        case 5:
-                            listOfItemData.AddRange(read.dataData.listOfTab5Item);
-                            //loop items and replace sprite
-                            for (int j = 0; j < listOfItemData.Count; j++)
-                            {
-                                ItemData item = listOfItemData[j];
-                                if (item != null)
-                                { item.sprite = defaultSprite; }
-                                else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
-                            }
-                            break;
-                        default: Debug.LogErrorFormat("Unrecognised index {0}", i); break;
-                    }
-                
-                }
-                else { Debug.LogErrorFormat("Invalid listOfItemData (Null) for arrayOfItemData[{0}]", i); }
-            }
+            if (read.dataData.currentInfo != null)
+            { TransferMainInfoData(read.dataData.currentInfo, data); }
+            else { Debug.LogWarning("Invalid currentInfo (Null)"); }
         }
         else { Debug.LogError("Invalid currentInfoData (Null)"); }
+        //dictOfHistory
+        Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
+        if (dictOfHistory != null)
+        {
+            //clear dictionary
+            dictOfHistory.Clear();
+            //copy across loaded save game data
+            int count = read.dataData.listOfHistoryKey.Count;
+            Debug.AssertFormat(count == read.dataData.listOfHistoryValue.Count, "Mismatch on size: listOfKeys {0}, listOfValues {1}", count, read.dataData.listOfHistoryValue.Count);
+            for (int i = 0; i < read.dataData.listOfHistoryKey.Count; i++)
+            {
+                SaveMainInfo mainInfo = read.dataData.listOfHistoryValue[i];
+                if (mainInfo != null)
+                {
+                    MainInfoData mainData = new MainInfoData();
+                    mainData.tickerText = mainInfo.tickerText;
+                    TransferMainInfoData(mainInfo, mainData);
+                    //Add to dictionary
+                    try { dictOfHistory.Add(read.dataData.listOfHistoryKey[i], mainData); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate Entry for dictOfHistory turn {0}", read.dataData.listOfHistoryKey[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid SaveMainInfo (Null) for turn {0}", read.dataData.listOfHistoryKey[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfHistory (Null)"); }
+        //arrayOfItemDataByPriority
+        List<ItemData>[,] arrayOfItemDataByPriority = GameManager.instance.dataScript.GetArrayOfItemDataByPriority();
+        if (arrayOfItemDataByPriority != null)
+        {
+            int count;
+            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+            {
+                SavePriorityInfo prioritySave = read.dataData.listOfPriorityData[outer];
+                if (prioritySave != null)
+                {
+                    for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+                    {
+                        //clear list
+                        arrayOfItemDataByPriority[outer, inner].Clear();
+                        //copy across loaded save game data
+                        switch (inner)
+                        {
+                            case 0:
+                                count = prioritySave.listOfPriorityLow.Count;
+                                //loop list and update sprite
+                                for (int i = 0; i < count; i++)
+                                {
+                                    ItemData itemData = prioritySave.listOfPriorityLow[i];
+                                    if (itemData != null)
+                                    {
+                                        //sprite
+                                        itemData.sprite = defaultSprite;
+                                        //add to array list
+                                        arrayOfItemDataByPriority[outer, inner].Add(itemData);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid itemData (Null) for listOfPriortyLow[{0}]", i); }
+                                }
+                                break;
+                            case 1:
+                                count = prioritySave.listOfPriorityMed.Count;
+                                //loop list and update sprite
+                                for (int i = 0; i < count; i++)
+                                {
+                                    ItemData itemData = prioritySave.listOfPriorityMed[i];
+                                    if (itemData != null)
+                                    {
+                                        //sprite
+                                        itemData.sprite = defaultSprite;
+                                        //add to array list
+                                        arrayOfItemDataByPriority[outer, inner].Add(itemData);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid itemData (Null) for listOfPriortyMed[{0}]", i); }
+                                }
+                                break;
+                            case 2:
+                                count = prioritySave.listOfPriorityHigh.Count;
+                                //loop list and update sprite
+                                for (int i = 0; i < count; i++)
+                                {
+                                    ItemData itemData = prioritySave.listOfPriorityHigh[i];
+                                    if (itemData != null)
+                                    {
+                                        //sprite
+                                        itemData.sprite = defaultSprite;
+                                        //add to array list
+                                        arrayOfItemDataByPriority[outer, inner].Add(itemData);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid itemData (Null) for listOfPriortyHigh[{0}]", i); }
+                                }
+                                break;
+                            default: Debug.LogErrorFormat("Unrecognised inner index {0}", inner); break;
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid SavePriorityInfo (Null) for outer index {0}", outer); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfItemDataByPriority (Null)"); }
         #endregion
     }
     #endregion
@@ -2598,6 +2671,103 @@ public class FileManager : MonoBehaviour
         GameManager.instance.widgetTopScript.LoadSavedData(widget);
     }
     #endregion
+
+    //
+    // - - - Utilities - - -
+    //
+
+    #region TransferMainInfoData
+    /// <summary>
+    /// subMethod to copy across SaveMainInfo data to a MainInfoData class
+    /// NOTE: infoSave and data have been checked for Null by their parent methods
+    /// </summary>
+    private void TransferMainInfoData(SaveMainInfo infoSave, MainInfoData data)
+    {
+        //ticker text
+        data.tickerText = infoSave.tickerText;
+        //loop array and clear out each list before copying across loaded save game data
+        for (int i = 0; i < (int)ItemTab.Count; i++)
+        {
+            List<ItemData> listOfItemData = data.arrayOfItemData[i];
+            if (listOfItemData != null)
+            {
+                listOfItemData.Clear();
+                switch (i)
+                {
+                    case 0:
+                        listOfItemData.AddRange(infoSave.listOfTab0Item);
+                        //loop items and replace sprite
+                        for (int j = 0; j < listOfItemData.Count; j++)
+                        {
+                            ItemData item = listOfItemData[j];
+                            if (item != null)
+                            { item.sprite = defaultSprite; }
+                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                        }
+                        break;
+                    case 1:
+                        listOfItemData.AddRange(infoSave.listOfTab1Item);
+                        //loop items and replace sprite
+                        for (int j = 0; j < listOfItemData.Count; j++)
+                        {
+                            ItemData item = listOfItemData[j];
+                            if (item != null)
+                            { item.sprite = defaultSprite; }
+                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                        }
+                        break;
+                    case 2:
+                        listOfItemData.AddRange(infoSave.listOfTab2Item);
+                        //loop items and replace sprite
+                        for (int j = 0; j < listOfItemData.Count; j++)
+                        {
+                            ItemData item = listOfItemData[j];
+                            if (item != null)
+                            { item.sprite = defaultSprite; }
+                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                        }
+                        break;
+                    case 3:
+                        listOfItemData.AddRange(infoSave.listOfTab3Item);
+                        //loop items and replace sprite
+                        for (int j = 0; j < listOfItemData.Count; j++)
+                        {
+                            ItemData item = listOfItemData[j];
+                            if (item != null)
+                            { item.sprite = defaultSprite; }
+                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                        }
+                        break;
+                    case 4:
+                        listOfItemData.AddRange(infoSave.listOfTab4Item);
+                        //loop items and replace sprite
+                        for (int j = 0; j < listOfItemData.Count; j++)
+                        {
+                            ItemData item = listOfItemData[j];
+                            if (item != null)
+                            { item.sprite = defaultSprite; }
+                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                        }
+                        break;
+                    case 5:
+                        listOfItemData.AddRange(infoSave.listOfTab5Item);
+                        //loop items and replace sprite
+                        for (int j = 0; j < listOfItemData.Count; j++)
+                        {
+                            ItemData item = listOfItemData[j];
+                            if (item != null)
+                            { item.sprite = defaultSprite; }
+                            else { Debug.LogErrorFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i); }
+                        }
+                        break;
+                    default: Debug.LogErrorFormat("Unrecognised index {0}", i); break;
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfItemData (Null) for arrayOfItemData[{0}]", i); }
+        }
+    }
+    #endregion
+
 
     //new methods above here
 }

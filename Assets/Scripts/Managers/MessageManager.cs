@@ -18,7 +18,9 @@ public class MessageManager : MonoBehaviour
     private Sprite playerSprite;
     private Mayor mayor;
 
-    public int messageCounter = 0;                                          //messageID counter
+    #region Save Compatible Data
+    [HideInInspector] public int messageIDCounter = 0;                                          //messageID counter
+    #endregion
 
     /// <summary>
     /// Set up at start
@@ -59,7 +61,7 @@ public class MessageManager : MonoBehaviour
     /// Reset message ID counter prior to a new level
     /// </summary>
     public void ResetCounter()
-    { messageCounter = 0; }
+    { messageIDCounter = 0; }
 
     /// <summary>
     /// handles events
