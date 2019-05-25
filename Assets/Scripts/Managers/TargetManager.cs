@@ -8,8 +8,6 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum TargetFactors { TargetIntel, NodeSupport, ActorAndGear, NodeSecurity, TargetLevel, Teams} //Sequence is order of factor display
-
 /// <summary>
 /// Handles all node target related matters
 /// </summary>
@@ -59,10 +57,12 @@ public class TargetManager : MonoBehaviour
     [Tooltip("Each target should have a TargetProfile. If not and there is no Mission SO profile, this profile is used as the default")]
     public TargetProfile defaultProfile;
 
+    #region Save Compatible Data
     [HideInInspector] public int StartTargets;
     [HideInInspector] public int ActiveTargets;
     [HideInInspector] public int LiveTargets;
     [HideInInspector] public int MaxTargets;
+    #endregion
 
     private List<TargetFactors> listOfFactors = new List<TargetFactors>();              //used to ensure target calculations are consistent across methods
 

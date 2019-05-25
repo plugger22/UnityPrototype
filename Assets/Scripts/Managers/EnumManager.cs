@@ -87,6 +87,11 @@
     public enum GearRemoved { Lost, Taken, Compromised }                        //Actor.cs -> RemoveGear, reason why
 
     //
+    // - - - Targets - - -
+    //
+    public enum TargetFactors { TargetIntel, NodeSupport, ActorAndGear, NodeSecurity, TargetLevel, Teams } //Sequence is order of factor display
+
+    //
     // - - - Contacts - - -
     //
     public enum ContactStatus { Active, Inactive, ContactPool }

@@ -60,20 +60,17 @@ public class Target : ScriptableObject
     public Target followOnTarget;
     
     [HideInInspector] public TargetProfile profile;                 //Profile that used in code
+
+    #region Save Compatible Data
     [HideInInspector] public Status targetStatus;                   //default status of Dormant
-    /*[HideInInspector] public GlobalChance activation;               //chance of activating each turn, once live*/
     [HideInInspector] public int intel;                             //from 1 to 3, default 0. Gained by Planner action
     [HideInInspector] public int targetID;
     [HideInInspector] public int ongoingID;                         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;                      //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
-    /*[HideInInspector] public bool isRepeat;                         //if true target will repeat at same node using the same profile until target is completed or level times out
-    [HideInInspector] public bool isSameNode;                       //Only applies if a Repeating target -> if true then target repeats at same node, otherwise at a random node*/
-
     [HideInInspector] public int distance;                          //distance to current node (used for Planner). Dynamic (targetManager.cs -> InitialiseGenericPickerTargetInfo. Can be ignored.
     [HideInInspector] public int newIntel;                          //new level of intel after gain, takes into account max cap and existing intel level. Dynamic. Can be ignored. 
     [HideInInspector] public int intelGain;                         //amount of intel gained (info) if selected in generic picker. Dynamic. Can be ignored 
-
     //Tracking data
     [HideInInspector] public int turnSuccess;                       //turn # when target successfully attempted, -1 default
     [HideInInspector] public int turnDone;                          //turn # when target done, -1 default
@@ -85,6 +82,7 @@ public class Target : ScriptableObject
     [HideInInspector] public int timerWindow;                       //number of turns target, once live, stays that way before disappearing, set to turnWindow on activation
     //Contact Rumours
     [HideInInspector] public List<int> listOfRumourContacts = new List<int>();  //list of all contactID's who have heard a rumour about this target (Active targets only)
+    #endregion
 
     /// <summary>
     /// Data Validation

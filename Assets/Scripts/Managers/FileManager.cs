@@ -77,6 +77,7 @@ public class FileManager : MonoBehaviour
         WriteGearData();
         WriteContactData();
         WriteAIData();
+        WriteTargetData();
     }
     #endregion
 
@@ -189,6 +190,7 @@ public class FileManager : MonoBehaviour
             ReadPlayerData();
             ValidatePlayerData();
             ReadContactData();
+            ReadTargetData();
             UpdateGUI();
             Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
         }
@@ -1131,6 +1133,53 @@ public class FileManager : MonoBehaviour
         if (tempListErasure != null)
         { write.aiData.listOfErasureReports.AddRange(tempListErasure); }
         else { Debug.LogError("Invalid listOfErasureReports (Null)"); }
+    }
+    #endregion
+
+
+    #region Write Target Data
+    /// <summary>
+    /// TargetManager.cs data write to file
+    /// </summary>
+    private void WriteTargetData()
+    {
+        write.targetData.startTargets = GameManager.instance.targetScript.StartTargets;
+        write.targetData.activeTargets = GameManager.instance.targetScript.ActiveTargets;
+        write.targetData.liveTargets = GameManager.instance.targetScript.LiveTargets;
+        write.targetData.maxTargets = GameManager.instance.targetScript.MaxTargets;
+        //target.SO dynamic data
+        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        if (dictOfTargets != null)
+        {
+            foreach (var target in dictOfTargets)
+            {
+                if (target.Value != null)
+                {
+                    SaveTarget save = new SaveTarget();
+                    //copy dynamic target SO data
+                    save.targetStatus = target.Value.targetStatus;
+                    save.intel = target.Value.intel;
+                    save.targetID = target.Value.targetID;
+                    save.ongoingID = target.Value.ongoingID;
+                    save.isKnownByAI = target.Value.isKnownByAI;
+                    save.nodeID = target.Value.nodeID;
+                    save.distance = target.Value.distance;
+                    save.newIntel = target.Value.newIntel;
+                    save.intelGain = target.Value.intelGain;
+                    save.turnSuccess = target.Value.turnSuccess;
+                    save.turnDone = target.Value.turnDone;
+                    save.numOfAttempts = target.Value.numOfAttempts;
+                    save.turnsWindow = target.Value.turnsWindow;
+                    save.timerDelay = target.Value.timerDelay;
+                    save.timerHardLimit = target.Value.timerHardLimit;
+                    save.timerWindow = target.Value.timerWindow;
+                    //add to list
+                    write.targetData.listOfTargets.Add(save);
+                }
+                else { Debug.LogError("Invalid target (Null) in dictOfTargets"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTargets (Null)"); }
     }
     #endregion
 
@@ -2446,6 +2495,57 @@ public class FileManager : MonoBehaviour
         GameManager.instance.aiRebelScript.SetListOfNemesisReports(read.aiData.listOfNemesisReports);
         //AIRebelManager -> Erasure Reports
         GameManager.instance.aiRebelScript.SetListOfErasureReports(read.aiData.listOfErasureReports);
+    }
+    #endregion
+
+
+    #region Read Target Data
+    /// <summary>
+    /// read TargetManager.cs data
+    /// </summary>
+    private void ReadTargetData()
+    {
+        //targetManager.cs
+        GameManager.instance.targetScript.StartTargets = read.targetData.startTargets;
+        GameManager.instance.targetScript.ActiveTargets = read.targetData.activeTargets;
+        GameManager.instance.targetScript.LiveTargets = read.targetData.liveTargets;
+        GameManager.instance.targetScript.MaxTargets = read.targetData.maxTargets;
+        //dynamic Target.SO data
+        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        if (dictOfTargets != null)
+        {
+            for (int i = 0; i < read.targetData.listOfTargets.Count; i++)
+            {
+                SaveTarget save = read.targetData.listOfTargets[i];
+                if (save != null)
+                {
+                    //find target in dictionary
+                    Target target = GameManager.instance.dataScript.GetTarget(save.targetID);
+                    if (target != null)
+                    {
+                        //copy across loaded save game dynamic data
+                        target.targetStatus = save.targetStatus;
+                        target.intel = save.intel;
+                        target.ongoingID = save.ongoingID;
+                        target.isKnownByAI = save.isKnownByAI;
+                        target.nodeID = save.nodeID;
+                        target.distance = save.distance;
+                        target.newIntel = save.newIntel;
+                        target.intelGain = save.intelGain;
+                        target.turnSuccess = save.turnSuccess;
+                        target.turnDone = save.turnDone;
+                        target.numOfAttempts = save.numOfAttempts;
+                        target.turnsWindow = save.turnsWindow;
+                        target.timerDelay = save.timerDelay;
+                        target.timerHardLimit = save.timerHardLimit;
+                        target.timerWindow = save.timerWindow;
+                    }
+                    else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", save.targetID); }
+                }
+                else { Debug.LogErrorFormat("Invalid SaveTarget (Null) for listOfTargets[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTargets (Null)"); }
     }
     #endregion
 

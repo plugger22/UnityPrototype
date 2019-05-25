@@ -24,6 +24,7 @@ public class Save
     public SaveAIData aiData = new SaveAIData();
     public SaveScenarioData scenarioData = new SaveScenarioData();
     public SaveContactData contactData = new SaveContactData();
+    public SaveTargetData targetData = new SaveTargetData();
 
 }
 
@@ -32,6 +33,7 @@ public class Save
 // - - - Managers - - -
 //
 
+#region SaveCampaignData
 /// <summary>
 /// CampaignManager.cs data
 /// </summary>
@@ -42,8 +44,10 @@ public class SaveCampaignData
     public int scenarioIndex;
     public int[] arrayOfStoryStatus;
 }
+#endregion
 
 
+#region SaveOptionData
 /// <summary>
 /// OptionManager.cs data
 /// </summary>
@@ -59,8 +63,10 @@ public class SaveOptionData
     public bool connectorTooltips;
     public ColourScheme colourScheme;
 }
+#endregion
 
 
+#region SaveDataData
 /// <summary>
 /// DataManager.cs data
 /// </summary>
@@ -120,8 +126,10 @@ public class SaveDataData
     public List<int> listOfHistoryKey = new List<int>();
     
 }
+#endregion
 
 
+#region SavePlayerData
 /// <summary>
 /// PlayerManager.cs data
 /// </summary>
@@ -143,8 +151,10 @@ public class SavePlayerData
     public List<string> listOfConditionsResistance = new List<string>();
     public List<string> listOfConditionsAuthority = new List<string>();   
 }
+#endregion
 
 
+#region SaveGameData
 /// <summary>
 /// Assorted important game related data
 /// </summary>
@@ -166,7 +176,10 @@ public class SaveGameData
     public bool haltExecution;
     public bool isSecurityFlash;
 }
+#endregion
 
+
+#region SaveScenarioData
 /// <summary>
 /// City and Faction Manager.cs data
 /// </summary>
@@ -177,7 +190,10 @@ public class SaveScenarioData
     public int factionSupportAuthority;
     public int factionSupportResistance;
 }
+#endregion
 
+
+#region SaveActorData
 /// <summary>
 /// ActorManager.cs
 /// </summary>
@@ -220,7 +236,10 @@ public class SaveActorData
     public int actorBlackmailTimerLow;
     public int maxNumOfSecrets;     
 }
+#endregion
 
+
+#region SaveNodeData
 /// <summary>
 /// NodeManager.cs
 /// </summary>
@@ -239,7 +258,10 @@ public class SaveNodeData
     public List<int> listOfCrisisNodes = new List<int>();
     public List<int> listOfCureNodes = new List<int>();
 }
+#endregion
 
+
+#region SaveGearData
 /// <summary>
 /// GearManager.cs
 /// </summary>
@@ -258,6 +280,10 @@ public class SaveGearData
     public List<int> listOfLostGear = new List<int>();
     public List<int> listOfCurrentGear = new List<int>();
 }
+#endregion
+
+
+#region SaveNemesisData
 
 /// <summary>
 /// NemesisManager.cs
@@ -267,7 +293,10 @@ public class SaveNemesisData
 {
     public NemesisSaveClass saveData;
 }
+#endregion
 
+
+#region SaveContactData
 /// <summary>
 /// ContactManager.cs
 /// </summary>
@@ -278,7 +307,10 @@ public class SaveContactData
     public List<int> listOfContactNetworks = new List<int>();
     public List<int> listOfActors = new List<int>();
 }
+#endregion
 
+
+#region SaveAIData
 /// <summary>
 /// AIManager.cs and AIRebelManager.cs
 /// </summary>
@@ -314,15 +346,33 @@ public class SaveAIData
     public List<AITracker> listOfNemesisReports = new List<AITracker>();
     public List<AITracker> listOfErasureReports = new List<AITracker>();
 }
+#endregion
 
+
+#region SaveTargetData
+/// <summary>
+/// TargetManager.cs
+/// </summary>
+[System.Serializable]
+public class SaveTargetData
+{
+    public int startTargets;
+    public int activeTargets;
+    public int liveTargets;
+    public int maxTargets;
+    public List<SaveTarget> listOfTargets = new List<SaveTarget>();
+}
+#endregion
 
 #endregion
+
 
 #region SO's
 //
 // - - - SO's - - -
 //
 
+#region SaveSecret
 /// <summary>
 /// Secret.S0 dynamic data
 /// </summary>
@@ -337,7 +387,9 @@ public class SaveSecret
     public SecretStatus status;
     public List<int> listOfActors = new List<int>();
 }
+#endregion
 
+#region SaveGear
 /// <summary>
 /// Gear.SO dynamic data
 /// </summary>
@@ -359,13 +411,17 @@ public class SaveGear
 }
 #endregion
 
+#endregion
+
+
 #region Base Classes
 //
 // - - - Base Classes - - -
 //
 
+#region SaveActor
 /// <summary>
-/// Actor.cs full data set
+/// Actor.SO full data set
 /// </summary>
 [System.Serializable]
 public class SaveActor
@@ -418,9 +474,12 @@ public class SaveActor
     
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
 }
+#endregion
 
+
+#region SaveNode
 /// <summary>
-/// Node.cs
+/// Node.SO
 /// </summary>
 [System.Serializable]
 public class SaveNode
@@ -471,9 +530,12 @@ public class SaveNode
     public List<int> listOfTeams = new List<int>();                  
     public List<int> listOfOngoingEffects = new List<int>();
 }
+#endregion
 
+
+#region SaveTeam
 /// <summary>
-/// Team.cs
+/// Team.SO
 /// </summary>
 [System.Serializable]
 public class SaveTeam
@@ -487,6 +549,35 @@ public class SaveTeam
     public int timer;
     public int turnDeployed;
 }
+#endregion
+
+
+#region SaveTarget
+/// <summary>
+/// Target.SO dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveTarget
+{
+    public Status targetStatus;
+    public int intel;
+    public int targetID;
+    public int ongoingID;
+    public bool isKnownByAI;
+    public int nodeID;
+    public int distance;
+    public int newIntel;
+    public int intelGain;
+    public int turnSuccess;
+    public int turnDone;
+    public int numOfAttempts;
+    public int turnsWindow;
+    public int timerDelay;
+    public int timerHardLimit;
+    public int timerWindow;
+    public List<int> listOfRumourContacts = new List<int>();
+}
+#endregion
 
 #endregion
 
@@ -517,7 +608,9 @@ public class SavePriorityInfo
     public List<ItemData> listOfPriorityMed = new List<ItemData>();
     public List<ItemData> listOfPriorityHigh = new List<ItemData>();
 }
+
 #endregion 
+
 
 #region List Wrappers
 //
@@ -544,15 +637,3 @@ public class IntListWrapper : ListWrapper<int> { }
 public class ContactListWrapper : ListWrapper<Contact> { }
 #endregion
 
-/*#region Sprite Serialization
-/// <summary>
-/// Sprites need to be serialized as textures (can't be serialized directly)
-/// </summary>
-[System.Serializable]
-public class SerializeTexture
-{
-    public int x;
-    public int y;
-    public byte[] bytes;
-}
-#endregion*/
