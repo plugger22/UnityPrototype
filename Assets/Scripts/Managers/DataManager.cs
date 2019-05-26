@@ -381,9 +381,6 @@ public class DataManager : MonoBehaviour
     public void ResetLoadGame()
     {
         graph = null;
-        //arrays
-        if (arrayOfGenericTargets != null)
-        { Array.Clear(arrayOfGenericTargets, 0, arrayOfGenericTargets.Length); }
         //Node lists
         listOfNodes.Clear();
         listOfConnections.Clear();
@@ -392,12 +389,6 @@ public class DataManager : MonoBehaviour
         listOfDecisionNodes.Clear();
         listOfLoiterNodes.Clear();
         listOfCrisisNodes.Clear();
-        //target lists
-        targetPoolActive.Clear();
-        targetPoolLive.Clear();
-        targetPoolOutstanding.Clear();
-        targetPoolDone.Clear();
-        listOfNodesWithTargets.Clear();
         //dictionaries
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
@@ -2671,7 +2662,7 @@ public class DataManager : MonoBehaviour
     /// returns list all nodes with non-Dormant targets
     /// </summary>
     /// <returns></returns>
-    public List<int> GetNodesWithTargetsList()
+    public List<int> GetListOfNodesWithTargets()
     { return listOfNodesWithTargets; }
 
     /// <summary>

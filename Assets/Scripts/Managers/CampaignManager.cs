@@ -69,7 +69,8 @@ public class CampaignManager : MonoBehaviour
             if (scenario.missionResistance != null)
             {
                 GameManager.instance.missionScript.mission = scenario.missionResistance;
-                GameManager.instance.missionScript.Initialise();
+                if (GameManager.instance.inputScript.GameState != GameState.LoadGame)
+                { GameManager.instance.missionScript.Initialise(); }
             }
             else { Debug.LogError("Invalid mission (Null) for scenario"); }
             // Nemesis -> may or may not be present

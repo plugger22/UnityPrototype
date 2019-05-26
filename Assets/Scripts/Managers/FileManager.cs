@@ -1180,6 +1180,77 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
+        //arrayOfGenericTargets
+        List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+        if (arrayOfGenericTargets != null)
+        {
+            for (int i = 0; i < arrayOfGenericTargets.Length; i++)
+            {
+                IntListWrapper listOfTargets = new IntListWrapper();
+                listOfTargets.myList.AddRange(arrayOfGenericTargets[i]);
+                if (listOfTargets.myList != null)
+                { write.targetData.listOfGenericTargets.Add(listOfTargets); }
+                else { Debug.LogWarningFormat("Invalid listOfTargets (Null) for arrayOfGenericTargets[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
+        //listOfNodesWithTargets
+        List<int> listOfNodesWithTargets = GameManager.instance.dataScript.GetListOfNodesWithTargets();
+        if (listOfNodesWithTargets != null)
+        { write.targetData.listOfNodesWithTargets.AddRange(listOfNodesWithTargets); }
+        else { Debug.LogError("Invalid listOfNodesWithTargets (Null)"); }
+        //targetPoolActive
+        List<Target> listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Active);
+        if (listOfTargetPool != null)
+        {
+            for (int i = 0; i < listOfTargetPool.Count; i++)
+            {
+                Target target = listOfTargetPool[i];
+                if (target != null)
+                { write.targetData.listOfTargetPoolActive.Add(target.targetID); }
+                else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolActive[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTargetPoolActive (Null)"); }
+        //targetPoolLive
+        listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+        if (listOfTargetPool != null)
+        {
+            for (int i = 0; i < listOfTargetPool.Count; i++)
+            {
+                Target target = listOfTargetPool[i];
+                if (target != null)
+                { write.targetData.listOfTargetPoolLive.Add(target.targetID); }
+                else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolLive[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTargetPoolLive (Null)"); }
+        //targetPoolOutstanding
+        listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Outstanding);
+        if (listOfTargetPool != null)
+        {
+            for (int i = 0; i < listOfTargetPool.Count; i++)
+            {
+                Target target = listOfTargetPool[i];
+                if (target != null)
+                { write.targetData.listOfTargetPoolOutstanding.Add(target.targetID); }
+                else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolOutstanding[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTargetPoolOutstanding (Null)"); }
+        //targetPoolDone
+        listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Done);
+        if (listOfTargetPool != null)
+        {
+            for (int i = 0; i < listOfTargetPool.Count; i++)
+            {
+                Target target = listOfTargetPool[i];
+                if (target != null)
+                { write.targetData.listOfTargetPoolDone.Add(target.targetID); }
+                else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolDone[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTargetPoolDone (Null)"); }
     }
     #endregion
 
@@ -2546,6 +2617,24 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
+        //arrayOfGenericTargets
+        List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+        if (arrayOfGenericTargets != null)
+        {
+            int count = arrayOfGenericTargets.Length;
+            //clear out array
+            Array.Clear(arrayOfGenericTargets, 0, count);
+            Debug.AssertFormat(count == read.targetData.listOfGenericTargets.Count, "Mismatch on size: array {0}, list {1}", count, read.targetData.listOfGenericTargets.Count);
+            //copy across loaded save game lists into array
+            for (int i = 0; i < count; i++)
+            {
+                List<int> listOfTargets = read.targetData.listOfGenericTargets[i].myList;
+                if (listOfTargets != null)
+                { arrayOfGenericTargets[i] = listOfTargets; }
+                else { Debug.LogWarningFormat("Invalid listOfTargets (Null) for read.targetData.listOfGenericTargets[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
     }
     #endregion
 

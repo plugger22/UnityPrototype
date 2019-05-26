@@ -360,7 +360,16 @@ public class SaveTargetData
     public int activeTargets;
     public int liveTargets;
     public int maxTargets;
+    //dictOfTargets dynamic data
     public List<SaveTarget> listOfTargets = new List<SaveTarget>();
+    //target pools
+    public List<int> listOfTargetPoolActive = new List<int>();
+    public List<int> listOfTargetPoolLive = new List<int>();
+    public List<int> listOfTargetPoolOutstanding = new List<int>();
+    public List<int> listOfTargetPoolDone = new List<int>();
+    //other
+    public List<int> listOfNodesWithTargets = new List<int>();
+    public List<IntListWrapper> listOfGenericTargets = new List<IntListWrapper>();
 }
 #endregion
 
