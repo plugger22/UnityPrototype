@@ -74,6 +74,7 @@ public class FileManager : MonoBehaviour
         WriteScenarioData();
         WriteActorData();
         WriteNodeData();
+        WriteConnectionData();
         WriteGearData();
         WriteContactData();
         WriteAIData();
@@ -182,6 +183,7 @@ public class FileManager : MonoBehaviour
             GameManager.instance.InitialiseLoadGame(read.gameData.playerSide.level);
             ReadScenarioData();
             ReadNodeData();
+            ReadConnectionData();
             ReadNemesisData();
             ReadGearData();
             ReadAIData();
@@ -844,7 +846,7 @@ public class FileManager : MonoBehaviour
 
     #region Write Node data
     /// <summary>
-    /// NodeManager.cs data to file
+    /// NodeManager.cs data to file and dynamic Node.SO data
     /// </summary>
     private void WriteNodeData()
     {
@@ -973,6 +975,39 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
+    }
+    #endregion
+
+
+    #region Write Connection Data
+    /// <summary>
+    /// Connection.SO dynamic data write to file
+    /// </summary>
+    private void WriteConnectionData()
+    {
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        if (dictOfConnections != null)
+        {
+            foreach(var conn in dictOfConnections)
+            {
+                if (conn.Value != null)
+                {
+                    SaveConnection save = new SaveConnection();
+                    save.connID = conn.Value.connID;
+                    save.securityLevel = conn.Value.SecurityLevel;
+                    save.activityCount = conn.Value.activityCount;
+                    save.activityTime = conn.Value.activityTime;
+                    List<EffectDataOngoing> listOfOngoing = conn.Value.GetListOfOngoingEffects();
+                    if (listOfOngoing != null)
+                    { save.listOfOngoingEffects.AddRange(listOfOngoing); }
+                    else { Debug.LogErrorFormat("Invalid listOfOngoingEffects (Null) for connID {0}", conn.Key); }
+                    //add to list
+                    write.connData.listOfConnectionData.Add(save);
+                }
+                else { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", conn.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
     }
     #endregion
 
@@ -2412,6 +2447,37 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
     }
+    #endregion'
+
+
+    #region Read Connnection Data
+    /// <summary>
+    /// Connection.SO dynamic data
+    /// </summary>
+    private void ReadConnectionData()
+    {       
+        for (int i = 0; i < read.connData.listOfConnectionData.Count; i++)
+        {
+            SaveConnection save = new SaveConnection();
+            save = read.connData.listOfConnectionData[i];
+            if (save != null)
+            {
+                //find record in dictionary
+                Connection conn = GameManager.instance.dataScript.GetConnection(save.connID);
+                if (conn != null)
+                {
+                    //copy across loaded save game dynamic data
+                    conn.ChangeSecurityLevel(save.securityLevel);
+                    conn.activityCount = save.activityCount;
+                    conn.activityTime = save.activityTime;
+                    conn.SetListOfOngoingEffects(save.listOfOngoingEffects);
+                }
+                else { Debug.LogErrorFormat("Invalid connection (Null) for connID {0}", save.connID); }
+            }
+            else { Debug.LogWarningFormat("Invalid SaveConnection (Null) for listOfConnectionData[{0}]", i); }
+        }
+
+    }
     #endregion
 
 
@@ -2635,6 +2701,48 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
+        //listOfNodesWithTargets
+        GameManager.instance.dataScript.SetListOfNodesWithTargets(read.targetData.listOfNodesWithTargets);
+        //target Pool -> Active
+        List<Target> listOfActive = new List<Target>();
+        for (int i = 0; i < read.targetData.listOfTargetPoolActive.Count; i++)
+        {
+            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolActive[i]);
+            if (target != null)
+            { listOfActive.Add(target); }
+            else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolActive[{0}]", i); }
+        }
+        GameManager.instance.dataScript.SetTargetPool(listOfActive, Status.Active);
+        //target Pool -> Live
+        List<Target> listOfLive = new List<Target>();
+        for (int i = 0; i < read.targetData.listOfTargetPoolLive.Count; i++)
+        {
+            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolLive[i]);
+            if (target != null)
+            { listOfLive.Add(target); }
+            else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolLive[{0}]", i); }
+        }
+        GameManager.instance.dataScript.SetTargetPool(listOfLive, Status.Live);
+        //target Pool -> Outstanding
+        List<Target> listOfOutstanding = new List<Target>();
+        for (int i = 0; i < read.targetData.listOfTargetPoolOutstanding.Count; i++)
+        {
+            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolOutstanding[i]);
+            if (target != null)
+            { listOfOutstanding.Add(target); }
+            else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolOutstanding[{0}]", i); }
+        }
+        GameManager.instance.dataScript.SetTargetPool(listOfOutstanding, Status.Outstanding);
+        //target Pool -> Done
+        List<Target> listOfDone = new List<Target>();
+        for (int i = 0; i < read.targetData.listOfTargetPoolDone.Count; i++)
+        {
+            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolDone[i]);
+            if (target != null)
+            { listOfDone.Add(target); }
+            else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolDone[{0}]", i); }
+        }
+        GameManager.instance.dataScript.SetTargetPool(listOfDone, Status.Done);
     }
     #endregion
 

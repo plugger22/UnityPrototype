@@ -2666,6 +2666,20 @@ public class DataManager : MonoBehaviour
     { return listOfNodesWithTargets; }
 
     /// <summary>
+    /// clear list before copying across loaded save game data
+    /// </summary>
+    /// <param name="listOfTargets"></param>
+    public void SetListOfNodesWithTargets(List<int> listOfTargets)
+    {
+        if (listOfTargets != null)
+        {
+            listOfNodesWithTargets.Clear();
+            listOfNodesWithTargets.AddRange(listOfTargets);
+        }
+        else { Debug.LogError("Invalid listOfTargets (Null)"); }
+    }
+
+    /// <summary>
     /// returns true if node on list, false otherwise
     /// </summary>
     /// <param name="nodeID"></param>
@@ -2854,6 +2868,41 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid List target parameter (Null)"); }
         return isSuccess;
+    }
+
+    /// <summary>
+    /// clear target pool then copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfTargets"></param>
+    /// <param name="status"></param>
+    public void SetTargetPool(List<Target> listOfTargets, Status status)
+    {
+        if (listOfTargets != null)
+        {
+            switch (status)
+            {
+                case Status.Active:
+                    targetPoolActive.Clear();
+                    targetPoolActive.AddRange(listOfTargets);
+                    break;
+                case Status.Live:
+                    targetPoolLive.Clear();
+                    targetPoolLive.AddRange(listOfTargets);
+                    break;
+                case Status.Outstanding:
+                    targetPoolOutstanding.Clear();
+                    targetPoolOutstanding.AddRange(listOfTargets);
+                    break;
+                case Status.Done:
+                    targetPoolDone.Clear();
+                    targetPoolDone.AddRange(listOfTargets);
+                    break;
+                default:
+                    Debug.LogError(string.Format("Unrecognised target status {0}", status));
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid listOfTargets (Null)"); }
     }
 
     /// <summary>

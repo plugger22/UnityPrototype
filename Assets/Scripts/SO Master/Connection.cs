@@ -275,6 +275,23 @@ public class Connection : MonoBehaviour
     // - - - Ongoing Effects - - -
     //
 
+    public List<EffectDataOngoing> GetListOfOngoingEffects()
+    { return listOfOngoingEffects; }
+
+    /// <summary>
+    /// clear list and copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfOngoing"></param>
+    public void SetListOfOngoingEffects(List<EffectDataOngoing> listOfOngoing)
+    {
+        if (listOfOngoing != null)
+        {
+            listOfOngoingEffects.Clear();
+            listOfOngoingEffects.AddRange(listOfOngoing);
+        }
+        else { Debug.LogError("Invalid listOfOngoing (Null)"); }
+    }
+
     /// <summary>
     /// Returns tally of ongoing effects for the SecurityLevel, '0' if none, every +1 is increase a level of security, every -1 is decrease
     /// </summary>

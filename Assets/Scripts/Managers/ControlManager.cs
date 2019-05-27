@@ -313,12 +313,18 @@ public class ControlManager : MonoBehaviour
         gameState = state;
         //toggle on modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
-        //Load Game -> open background
+        //Save Game -> open background
         GameManager.instance.modalGUIScript.SetBackground(Background.SaveGame);
         //Close any open background
         GameManager.instance.modalGUIScript.CloseBackgrounds(Background.SaveGame);
         //change game state
         GameManager.instance.inputScript.GameState = GameState.SaveGame;
+        //check node display and reset back to normal if not prior to save
+        if (GameManager.instance.nodeScript.NodeShowFlag > 0)
+        { GameManager.instance.nodeScript.ResetAll(); }
+        //check connection display and reset back to normal if not prior to save
+        if (GameManager.instance.connScript.resetConnections == true)
+        { GameManager.instance.connScript.RestoreConnections(); }
         //Debug -> time load game process
         GameManager.instance.testScript.StartTimer();
         GameManager.instance.fileScript.WriteSaveData();

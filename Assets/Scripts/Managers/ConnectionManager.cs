@@ -19,7 +19,7 @@ public class ConnectionManager : MonoBehaviour
     private ConnectionType secLvl;                                  //used to save existing security level of a single connection prior to flashing
     private List<ConnectionType> listOfSecLevels;                   //stores sec lvl of multiple connections to enable restoration after flashing
     private List<Connection> listOfFlashConnections;                //list of connections (copy) for multiple flashing connection event.
-    private Coroutine myCoroutine;                                  //ginle handler. Can only run one ConnectionManager coroutine at a time (eg. single / multiple flashing connections)
+    private Coroutine myCoroutine;                                  //single handler. Can only run one ConnectionManager coroutine at a time (eg. single / multiple flashing connections)
 
     //fast access
     private float flashConnectionTime;

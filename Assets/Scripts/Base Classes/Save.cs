@@ -19,6 +19,7 @@ public class Save
     public SaveGameData gameData = new SaveGameData();
     public SaveActorData actorData = new SaveActorData();
     public SaveNodeData nodeData = new SaveNodeData();
+    public SaveConnectionData connData = new SaveConnectionData();
     public SaveNemesisData nemesisData = new SaveNemesisData();
     public SaveGearData gearData = new SaveGearData();
     public SaveAIData aiData = new SaveAIData();
@@ -257,6 +258,18 @@ public class SaveNodeData
     public List<SaveNode> listOfNodes = new List<SaveNode>();
     public List<int> listOfCrisisNodes = new List<int>();
     public List<int> listOfCureNodes = new List<int>();
+}
+#endregion
+
+
+#region SaveConnectionData
+/// <summary>
+/// dynamic Connection.SO data
+/// </summary>
+[System.Serializable]
+public class SaveConnectionData
+{
+    public List<SaveConnection> listOfConnectionData = new List<SaveConnection>();
 }
 #endregion
 
@@ -538,6 +551,22 @@ public class SaveNode
   
     public List<int> listOfTeams = new List<int>();                  
     public List<int> listOfOngoingEffects = new List<int>();
+}
+#endregion
+
+
+#region SaveConnection
+/// <summary>
+/// Connection.So
+/// </summary>
+[System.Serializable]
+public class SaveConnection
+{
+    public int connID; 
+    public int activityCount;
+    public int activityTime;
+    public ConnectionType securityLevel;
+    public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
 }
 #endregion
 
