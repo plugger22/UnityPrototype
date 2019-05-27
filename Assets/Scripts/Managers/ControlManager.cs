@@ -275,14 +275,19 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.modalGUIScript.SetBackground(Background.LoadGame);
         //Close any open background
         GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
-        //change game state
-        GameManager.instance.inputScript.GameState = GameState.LoadGame;
-        //check node display and reset back to normal if not prior to save
-        if (GameManager.instance.nodeScript.NodeShowFlag > 0)
-        { GameManager.instance.nodeScript.ResetAll(); }
-        //check connection display and reset back to normal if not prior to save
-        if (GameManager.instance.connScript.resetConnections == true)
-        { GameManager.instance.connScript.RestoreConnections(); }
+        //change game state (mid game load or start of session load?)
+        if (GameManager.instance.isSession == true)
+        {
+            GameManager.instance.inputScript.GameState = GameState.LoadGame;
+            //check node display and reset back to normal if not prior to save
+            if (GameManager.instance.nodeScript.NodeShowFlag > 0)
+            { GameManager.instance.nodeScript.ResetAll(); }
+            //check connection display and reset back to normal if not prior to save
+            if (GameManager.instance.connScript.resetConnections == true)
+            { GameManager.instance.connScript.RestoreConnections(); }
+        }
+        else
+        { GameManager.instance.inputScript.GameState = GameState.LoadAtStart; }
         //Debug -> time load game process
         GameManager.instance.testScript.StartTimer();
         //read data from file

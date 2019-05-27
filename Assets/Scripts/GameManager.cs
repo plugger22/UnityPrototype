@@ -235,10 +235,6 @@ public class GameManager : MonoBehaviour
         actorPanelScript = ActorPanelUI.Instance();
         basePanelScript = BasePanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();       
-        //set up list of delegates
-        InitialiseStartSequence();
-        //sets this to not be destroyed when reloading a scene
-        DontDestroyOnLoad(gameObject);
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -311,6 +307,10 @@ public class GameManager : MonoBehaviour
         Debug.Assert(actorPanelScript != null, "Invalid actorPanelScript (Null)");
         Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");
         Debug.Assert(debugGraphicsScript != null, "Invalid debugGraphicsScript (Null)");
+        //set up list of delegates
+        InitialiseStartSequence();
+        //sets this to not be destroyed when reloading a scene
+        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -754,10 +754,19 @@ public class GameManager : MonoBehaviour
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
-        //initialises both AI sides regardless as some Authority AI data collections are required for the others
-        InitialiseMethods(listOfLoadMethodsAI);
-        //set session flag
-        isSession = true;
+        if (isSession == true)
+        {
+            //initialises both AI sides regardless as some Authority AI data collections are required for the others
+            InitialiseMethods(listOfLoadMethodsAI);
+        }
+        else
+        {
+            InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
+            InitialiseMethods(listOfDebugMethods);
+            //set session flag
+            isSession = true;
+        }
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
         //colour scheme
