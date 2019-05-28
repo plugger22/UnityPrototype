@@ -287,8 +287,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void ResetNewLevel()
     {
-        graph = null;
-        
+        graph = null;        
         //arrays
         Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
         Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
@@ -369,7 +368,7 @@ public class DataManager : MonoBehaviour
         dictOfPendingMessages.Clear();
         dictOfCurrentMessages.Clear();
         dictOfAIMessages.Clear();
-
+        dictOfHistory.Clear();
         //dictOfTargets -> leave
         //dictOfStatistics -> leave
         //dictOfSecrets -> leave

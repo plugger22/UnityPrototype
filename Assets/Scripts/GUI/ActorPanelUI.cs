@@ -94,73 +94,123 @@ public class ActorPanelUI : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Not called for LoadGame
+    /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //assign actorSlotID's to all Actor components
-            Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
-            Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
-            Actor2.GetComponent<ActorHighlightUI>().actorSlotID = 2;
-            Actor3.GetComponent<ActorHighlightUI>().actorSlotID = 3;
-            picture0.GetComponent<ActorClickUI>().actorSlotID = 0;
-            picture1.GetComponent<ActorClickUI>().actorSlotID = 1;
-            picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
-            picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
-            type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
-            type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
-            type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
-            type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
-            //populate lists
-            List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
-            if (listOfActorTypes != null)
-            {
-                listOfActorTypes.Add(type0);
-                listOfActorTypes.Add(type1);
-                listOfActorTypes.Add(type2);
-                listOfActorTypes.Add(type3);
-            }
-            else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
-            List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
-            if (listOfActorPortraits != null)
-            {
-                listOfActorPortraits.Add(picture0);
-                listOfActorPortraits.Add(picture1);
-                listOfActorPortraits.Add(picture2);
-                listOfActorPortraits.Add(picture3);
-            }
-            else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAll();
+                break;
+        }      
+    }
+
+    #region Initialisation Submethods
+
+    #region SubInitialiseEvents
+    /// <summary>
+    /// subMethod events
+    /// </summary>
+    private void SubInitialiseEvents()
+    {
+            //event listener
+            EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+    }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    /// <summary>
+    /// submethod fast Access
+    /// </summary>
+    private void SubInitialiseFastAccess()
+    {
             //fast access
             vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
             vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
             Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
             Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
-            //player
-            typePlayer.text = "PLAYER";
-            if (GameManager.instance.playerScript.sprite != null)
-            { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
-            else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
-            //initialse listOfRenownCircles
-            arrayOfRenownCircles[0] = renownCircle0;
-            arrayOfRenownCircles[1] = renownCircle1;
-            arrayOfRenownCircles[2] = renownCircle2;
-            arrayOfRenownCircles[3] = renownCircle3;
-            //event listener
-            EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    /// <summary>
+    /// subMethod session start
+    /// </summary>
+    private void SubInitialiseSessionStart()
+    {
+        //assign actorSlotID's to all Actor components
+        Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
+        Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
+        Actor2.GetComponent<ActorHighlightUI>().actorSlotID = 2;
+        Actor3.GetComponent<ActorHighlightUI>().actorSlotID = 3;
+        picture0.GetComponent<ActorClickUI>().actorSlotID = 0;
+        picture1.GetComponent<ActorClickUI>().actorSlotID = 1;
+        picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
+        picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
+        type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
+        type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
+        type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
+        type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
+        //populate lists
+        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
+        if (listOfActorTypes != null)
+        {
+            listOfActorTypes.Add(type0);
+            listOfActorTypes.Add(type1);
+            listOfActorTypes.Add(type2);
+            listOfActorTypes.Add(type3);
         }
+        else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
+        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+        if (listOfActorPortraits != null)
+        {
+            listOfActorPortraits.Add(picture0);
+            listOfActorPortraits.Add(picture1);
+            listOfActorPortraits.Add(picture2);
+            listOfActorPortraits.Add(picture3);
+        }
+        else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
+
+        //player
+        typePlayer.text = "PLAYER";
+        if (GameManager.instance.playerScript.sprite != null)
+        { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
+        else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
+        //initialse listOfRenownCircles
+        arrayOfRenownCircles[0] = renownCircle0;
+        arrayOfRenownCircles[1] = renownCircle1;
+        arrayOfRenownCircles[2] = renownCircle2;
+        arrayOfRenownCircles[3] = renownCircle3;
+    }
+    #endregion
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
         //renown UI (default true)
         if (GameManager.instance.optionScript.showRenown == true)
         { SetActorRenownUI(true); }
         else { SetActorRenownUI(false); }
         //initialise starting line up
         UpdateActorPanel();
-        
-
     }
+    #endregion
 
-
+    #endregion
 
     /// <summary>
     /// handles events

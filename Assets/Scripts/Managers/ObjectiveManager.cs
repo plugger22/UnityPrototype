@@ -31,17 +31,45 @@ public class ObjectiveManager : MonoBehaviour
 
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //event listeners
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
+            case GameState.NewInitialisation:
+                SubInitialiseEvents();
+                SubInitialiseObjectives();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseObjectives();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseEvents();
+                SubInitialiseObjectives();
+                break;
+            case GameState.LoadGame:
+                SubInitialiseObjectives();
+                break;
         }
+    }
+
+    #region Initialisation SubMethods
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
+    }
+    #endregion
+
+    #region SubInitialiseObjectives
+    private void SubInitialiseObjectives()
+    {
         //Get objectives -> Placeholder
         listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(maxNumOfObjectives));
         objectivesTotal = maxNumOfObjectives;
     }
+    #endregion
 
+    #endregion
 
     /// <summary>
     /// Called when an event happens

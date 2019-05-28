@@ -1,214 +1,39 @@
-Dev seed 1961 -> Friday, 24 May 2019 10:01 AM
+Dev seed 56666 -> Tuesday, 28 May 2019 10:01 AM
+WARNING: GameManager.cs -> InitialiseNewLevel: commence start game
 City seed 5678 -> London, United Kingdom
 
-Dev seed 1961 -> Friday, 24 May 2019 10:01 AM
+Dev seed 41518 -> Tuesday, 28 May 2019 10:22 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 53310 -> Friday, 24 May 2019 10:01 AM
+Dev seed 27014 -> Tuesday, 28 May 2019 10:23 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 42477 -> Friday, 24 May 2019 10:02 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 56654 -> Friday, 24 May 2019 10:03 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 15974 -> Friday, 24 May 2019 10:06 AM
+Dev seed 53901 -> Tuesday, 28 May 2019 10:30 AM
 City seed 5678 -> London, United Kingdom
 
 City seed 5678 -> London, United Kingdom
 
-Dev seed 47221 -> Friday, 24 May 2019 10:38 AM
+Dev seed 30322 -> Tuesday, 28 May 2019 11:28 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 32514 -> Friday, 24 May 2019 10:40 AM
+Dev seed 4347 -> Tuesday, 28 May 2019 11:29 AM
 City seed 5678 -> London, United Kingdom
 
+City seed 765 -> New York, America
+
+ERROR: Duplicate record exists for MainInfoData turn 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:486)
+	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:416)
+	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:274)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	Dev seed 61275 -> Tuesday, 28 May 2019 11:47 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 8143 -> Friday, 24 May 2019 10:49 AM
-City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
 
-Dev seed 28767 -> Friday, 24 May 2019 10:50 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 59596 -> Friday, 24 May 2019 11:13 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61004 -> Friday, 24 May 2019 11:29 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5778 -> Friday, 24 May 2019 2:50 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 7313 -> Friday, 24 May 2019 3:34 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53923 -> Friday, 24 May 2019 3:36 PM
+Dev seed 52172 -> Tuesday, 28 May 2019 11:48 AM
 City seed 5678 -> London, United Kingdom
 
 City seed 5678 -> London, United Kingdom
 
-Dev seed 11901 -> Friday, 24 May 2019 3:39 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57453 -> Friday, 24 May 2019 3:44 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 54256 -> Friday, 24 May 2019 3:56 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 32021 -> Friday, 24 May 2019 4:01 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 3648 -> Saturday, 25 May 2019 9:44 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57844 -> Saturday, 25 May 2019 9:56 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 12059 -> Saturday, 25 May 2019 9:56 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 36475 -> Saturday, 25 May 2019 1:30 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 10463 -> Saturday, 25 May 2019 2:38 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31091 -> Saturday, 25 May 2019 2:59 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 36553 -> Saturday, 25 May 2019 3:01 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27346 -> Sunday, 26 May 2019 9:33 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27079 -> Sunday, 26 May 2019 9:44 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51097 -> Sunday, 26 May 2019 9:46 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 59888 -> Sunday, 26 May 2019 10:07 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 65372 -> Sunday, 26 May 2019 10:25 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 15111 -> Monday, 27 May 2019 10:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19269 -> Monday, 27 May 2019 10:13 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 48922 -> Monday, 27 May 2019 11:40 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2463 -> Monday, 27 May 2019 11:41 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 13894 -> Monday, 27 May 2019 11:41 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 16889 -> Monday, 27 May 2019 12:12 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45211 -> Monday, 27 May 2019 12:18 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50052 -> Monday, 27 May 2019 12:19 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18937 -> Monday, 27 May 2019 12:20 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57523 -> Monday, 27 May 2019 12:21 PM
-City seed 890 -> Arles, France
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9172 -> Monday, 27 May 2019 12:23 PM
-City seed 890 -> Arles, France
-
-Dev seed 43488 -> Monday, 27 May 2019 12:23 PM
-City seed 890 -> Arles, France
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 58190 -> Monday, 27 May 2019 12:24 PM
-City seed 890 -> Arles, France
-
-Dev seed 40659 -> Monday, 27 May 2019 12:24 PM
-City seed 890 -> Arles, France
-
-Dev seed 22931 -> Monday, 27 May 2019 12:25 PM
-City seed 890 -> Arles, France
-
-Dev seed 64679 -> Monday, 27 May 2019 12:25 PM
-City seed 890 -> Arles, France
-
-Dev seed 1669 -> Monday, 27 May 2019 12:25 PM
-City seed 890 -> Arles, France
-
-City seed 890 -> Arles, France
-
-Dev seed 33924 -> Monday, 27 May 2019 1:20 PM
-City seed 890 -> Arles, France
-
-Dev seed 4732 -> Monday, 27 May 2019 1:21 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 890 -> Arles, France
-
-Dev seed 36798 -> Monday, 27 May 2019 1:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62620 -> Monday, 27 May 2019 1:23 PM
-City seed 890 -> Arles, France
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 10069 -> Monday, 27 May 2019 3:04 PM
-City seed 890 -> Arles, France
-
-Dev seed 11183 -> Monday, 27 May 2019 3:05 PM
-City seed 890 -> Arles, France
-
-Dev seed 11183 -> Monday, 27 May 2019 3:05 PM
-City seed 890 -> Arles, France
-
-Dev seed 11183 -> Monday, 27 May 2019 3:06 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11183 -> Monday, 27 May 2019 3:07 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11183 -> Monday, 27 May 2019 3:08 PM

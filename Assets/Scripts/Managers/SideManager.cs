@@ -95,19 +95,48 @@ public class SideManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Note called for GameState.LoadGame
+    /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            globalAuthority = GameManager.instance.globalScript.sideAuthority;
-            globalResistance = GameManager.instance.globalScript.sideResistance;
-            Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
-            Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSetSides();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSetSides();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseSetSides();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
-        /*//if autoRun then bothSidesAI automatically true
-        if (GameManager.instance.autoRunTurns > 0) { GameManager.instance.isBothAI = true; } else { GameManager.instance.isBothAI = false; }*/
+    }
 
+    #region InitialiseSubMethods
+
+    #region SubInitialiseFastAccess
+    /// <summary>
+    /// subMethod to for fast access cached fields
+    /// </summary>
+    private void SubInitialiseFastAccess()
+    {
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseSetSides
+    private void SubInitialiseSetSides()
+    {
         //AUTORUN (first scenario in a campaign only)
         if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.CheckIsFirstScenario() == true)
         {
@@ -163,6 +192,9 @@ public class SideManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// Returns true if interaction is possible for the current Player side given the overall & noAI settings.
