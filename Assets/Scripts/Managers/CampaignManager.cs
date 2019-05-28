@@ -58,8 +58,28 @@ public class CampaignManager : MonoBehaviour
 
     /// <summary>
     /// run AFTER LevelManager.cs
+    /// NOTE: Initialises CityManager (Late), MissionManager and NemesisManager
     /// </summary>
     public void InitialiseLate()
+    {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                SubInitialiseAll();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
     {
         // City (Late)
         GameManager.instance.cityScript.InitialiseLate();
@@ -83,6 +103,9 @@ public class CampaignManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid scenario Challenge (Null)"); }
     }
+    #endregion
+
+    #endregion
 
 
 

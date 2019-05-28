@@ -80,31 +80,72 @@ public class FactionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Not for GameState.LoadGame
+    /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //fast access
-            globalAuthority = GameManager.instance.globalScript.sideAuthority;
-            globalResistance = GameManager.instance.globalScript.sideResistance;
-            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-            //update colours for AI Display tooltip data
-            SetColours();
-            //register listener
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
-            EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
-            EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "FactionManager");
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseColours();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAll();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseColours();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseColours
+    private void SubInitialiseColours()
+    { SetColours(); }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
+        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "FactionManager");
+    }
+    #endregion
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
         //Authority faction 
         factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
         Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
-
         //Resistance faction
         factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
         Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
-
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
         int approval = GameManager.instance.campaignScript.scenario.approvalStartAuthorityHQ;
         if (approval == 0) { approval = Random.Range(2, 9); }
@@ -116,6 +157,9 @@ public class FactionManager : MonoBehaviour
         Debug.LogFormat("[Fac] FactionManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
             factionResistance, ApprovalResistance, factionAuthority, ApprovalAuthority, "\n");
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// Event Handler

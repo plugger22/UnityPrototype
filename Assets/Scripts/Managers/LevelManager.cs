@@ -137,7 +137,7 @@ public class LevelManager : MonoBehaviour
         //reset to level specific random seed
         int seed = GameManager.instance.campaignScript.scenario.seedCity;
         Random.InitState(seed);
-        string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.name, city.country.name) + Environment.NewLine + Environment.NewLine;
+        string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.name, city.country.name) + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
         Debug.LogFormat("[Cit] LevelManager.cs -> InitialiseLevelRandomSeed: City seed {0} -> {1}, {2}", seed, city.name, city.country.name);
     }

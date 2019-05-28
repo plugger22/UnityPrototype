@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
         Random.InitState(seedDev);
         //debug -> write seed to file
         DateTime date1 = DateTime.Now;
-        string seedInfo = string.Format("Dev seed {0} -> {1}", seedDev, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
+        string seedInfo = Environment.NewLine + string.Format("Dev seed {0} -> {1}", seedDev, date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU"))) + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
         //Get component references
         startScript = GetComponent<StartManager>();

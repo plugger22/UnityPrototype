@@ -1,44 +1,8 @@
-Dev seed 56666 -> Tuesday, 28 May 2019 10:01 AM
-WARNING: GameManager.cs -> InitialiseNewLevel: commence start game
+Dev seed 4611 -> Tuesday, 28 May 2019 4:04 PM
+City seed 890 -> Arles, France
 City seed 5678 -> London, United Kingdom
-
-Dev seed 41518 -> Tuesday, 28 May 2019 10:22 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27014 -> Tuesday, 28 May 2019 10:23 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53901 -> Tuesday, 28 May 2019 10:30 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 30322 -> Tuesday, 28 May 2019 11:28 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4347 -> Tuesday, 28 May 2019 11:29 AM
-City seed 5678 -> London, United Kingdom
-
 City seed 765 -> New York, America
+WARNING Secret NOT added as no space available
 
-ERROR: Duplicate record exists for MainInfoData turn 1
-UnityEngine.Debug:LogErrorFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:486)
-	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:416)
-	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:274)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	Dev seed 61275 -> Tuesday, 28 May 2019 11:47 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 765 -> New York, America
-
-Dev seed 52172 -> Tuesday, 28 May 2019 11:48 AM
-City seed 5678 -> London, United Kingdom
-
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34473 -> Tuesday, 28 May 2019 2:04 PM
-City seed 5678 -> London, United Kingdom
-
-City seed 765 -> New York, America
-
+Dev seed 39527 -> Tuesday, 28 May 2019 4:05 PM
+City seed 890 -> Arles, France
