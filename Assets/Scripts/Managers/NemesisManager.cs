@@ -149,54 +149,35 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        resistancePlayer = GameManager.instance.sideScript.resistanceOverall;
         switch (GameManager.instance.inputScript.GameState)
         {
             case GameState.NewInitialisation:
+                SubInitialisePlayerData();
+                SubInitialiseFastAccess();
+                SubInitialiseLevelStart();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
             case GameState.FollowOnInitialisation:
-                //Debug (FOW OFF)
-                isShown = true;
-                isFirstNemesis = true;
-                //assign nemesis to a starting node
-                int nemesisNodeID = -1;
-                //Nemesis always starts at city Centre
-                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.cityScript.cityHallDistrictID);
-                if (node != null)
-                {
-                    nemesisNodeID = node.nodeID;
-                    nemesisNode = node;
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
-                    //assign node
-                    GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
-                }
-                else { Debug.LogError("Invalid node (Null)"); }
-                //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-                durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
-                if (durationDelay > 0)
-                {
-                    //grace period, start inactive
-                    SetNemesisMode(NemesisMode.Inactive);
-                }
-                else
-                {
-                    //NO grace period, start in normal mode, waiting for signs of player
-                    SetNemesisMode(NemesisMode.NORMAL);
-                }
-                if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
-                {
-                    //fast access
-                    globalAuthority = GameManager.instance.globalScript.sideAuthority;
-                    globalResistance = GameManager.instance.globalScript.sideResistance;
-                    Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-                    Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-                    //event listeners
-                    EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
-                }
+                SubInitialisePlayerData();
+                SubInitialiseLevelStart();
+                SubInitialiseAll();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialisePlayerData();
+                SubInitialiseFastAccess();
+                SubInitialiseLevelStart();
+                SubInitialiseEvents();
+                SubInitialiseAll();
+                break;
+            case GameState.LoadGame:
+                SubInitialisePlayerData();
+                SubInitialiseAll();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
                 break;
         }
-        //Set up datafor Nemesis
-        SetLoiterNodes();
-        SetLoiterData();
     }
 
 
@@ -236,9 +217,14 @@ public class NemesisManager : MonoBehaviour
     }
     #endregion
 
+    #region SubInitialisePlayerData
+    private void SubInitialisePlayerData()
+    { resistancePlayer = GameManager.instance.sideScript.resistanceOverall; }
+    #endregion
+
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
-    {
+    {       
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -252,6 +238,15 @@ public class NemesisManager : MonoBehaviour
     {
         //event listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
+    }
+    #endregion
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
+        //Set up datafor Nemesis
+        SetLoiterNodes();
+        SetLoiterData();
     }
     #endregion
 
