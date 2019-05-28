@@ -201,6 +201,9 @@ public class ActorManager : MonoBehaviour
                 SubInitialiseEvents();
                 SubInitialiseActors();
                 break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
 

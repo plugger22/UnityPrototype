@@ -47,6 +47,9 @@ public class ObjectiveManager : MonoBehaviour
             case GameState.LoadGame:
                 SubInitialiseObjectives();
                 break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
 

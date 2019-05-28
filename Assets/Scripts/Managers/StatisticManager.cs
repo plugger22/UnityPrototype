@@ -11,21 +11,49 @@ using UnityEngine;
 public class StatisticManager : MonoBehaviour
 {
 
+    /// <summary>
+    /// Not for GameState.LoadGame
+    /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //instantiate statistic trackers if a new session, reset if not (eg. new game started from within an existing game session)
-            if (GameManager.instance.isSession == false)
-            {
-                //instantiate statistic trackers if a new sessession
-                foreach(var stat in Enum.GetValues(typeof(StatType)))
-                { GameManager.instance.dataScript.StatisticAddNew((StatType) stat); }
-            }
-            else { GameManager.instance.dataScript.StatisticReset(); }
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+                //instantiate statistic trackers if a new session, reset if not (eg. new game started from within an existing game session)
+                if (GameManager.instance.isSession == false)
+                { SubInitialiseSessionStart(); }
+                else
+                { SubInitialiseSessionInProgress(); }
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        //instantiate statistic trackers if a new sessession
+        foreach (var stat in Enum.GetValues(typeof(StatType)))
+        { GameManager.instance.dataScript.StatisticAddNew((StatType)stat); }
+    }
+    #endregion
+
+    #region SubInitialiseSessionInProgress
+    private void SubInitialiseSessionInProgress()
+    {
+        //session underway -> reset trackers
+        GameManager.instance.dataScript.StatisticReset();
+    }
+    #endregion
+
+    #endregion
 
 
     /// <summary>

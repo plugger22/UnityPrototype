@@ -116,6 +116,9 @@ public class ActorPanelUI : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 SubInitialiseAll();
                 break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }      
     }
 

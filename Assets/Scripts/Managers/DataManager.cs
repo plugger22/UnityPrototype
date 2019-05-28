@@ -219,7 +219,28 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                SubInitialiseAll();
+                if (GameManager.instance.isSession == false)
+                { SubInitialiseStartSession(); }
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
 
+
+    #region Initialisation SubMethods
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
         Debug.Assert(listOfOneConnArcsDefault != null, "Invalid listOfOneConnArcsDefault (Null)");
         Debug.Assert(listOfTwoConnArcsDefault != null, "Invalid listOfTwoConnArcsDefault (Null)");
         Debug.Assert(listOfThreeConnArcsDefault != null, "Invalid listOfThreeConnArcsDefault (Null)");
@@ -250,33 +271,36 @@ public class DataManager : MonoBehaviour
         //Populate List of lists -> place node in the correct list
         foreach (var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
-        //
-        // - - - Start of Session only
-        //
-        if (GameManager.instance.isSession == false)
+    }
+    #endregion
+
+    #region SubInitialiseStartSession
+    private void SubInitialiseStartSession()
+    {
+        //Node Crisis placed into pick lists
+        if (dictOfNodeCrisis != null)
         {
-            //Node Crisis placed into pick lists
-            if (dictOfNodeCrisis != null)
+            foreach (var crisis in dictOfNodeCrisis)
             {
-                foreach (var crisis in dictOfNodeCrisis)
-                {
-                    if (crisis.Value != null)
-                    { AddNodeCrisisToList(crisis.Value); }
-                    else { Debug.LogWarningFormat("Invalid nodeCrisis \"{0}\" (Null)", crisis.Key); }
-                }
-                Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
-                Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
-                Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
+                if (crisis.Value != null)
+                { AddNodeCrisisToList(crisis.Value); }
+                else { Debug.LogWarningFormat("Invalid nodeCrisis \"{0}\" (Null)", crisis.Key); }
             }
-            else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
-            //array Of ItemData
-            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
-            {
-                for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
-                { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
-            }
+            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
+            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
+            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
+        }
+        else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
+        //array Of ItemData
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+        {
+            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+            { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
         }
     }
+    #endregion
+
+    #endregion
 
     //
     // - - - Load / Restore / FollowOn Level - - - 

@@ -77,23 +77,34 @@ public class TooltipNode : MonoBehaviour
     }
 
     /// <summary>
-    /// needed for sequencing issues
+    /// needed for sequencing issues. Not for GameState.LoadGame
     /// </summary>
     public void Initialise()
     {
         switch (GameManager.instance.inputScript.GameState)
         {
             case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                break;
             case GameState.LoadAtStart:
-                InitialiseFastAccess();
+                SubInitialiseFastAccess();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
                 break;
         }
     }
 
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
     /// <summary>
     /// Fast access submethod
     /// </summary>
-    private void InitialiseFastAccess()
+    private void SubInitialiseFastAccess()
     {
             //fast access fields
             globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -105,6 +116,9 @@ public class TooltipNode : MonoBehaviour
             Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
             Debug.Assert(minStatValue > -1, "Invalid minStatValue (-1)");
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// provide a static reference to tooltipNode that can be accessed from any script

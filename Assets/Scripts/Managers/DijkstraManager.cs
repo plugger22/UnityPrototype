@@ -63,6 +63,25 @@ public class DijkstraManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                SubInitialiseAll();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         //Unweighted
         InitialiseDictDataUnweighted();
@@ -71,7 +90,9 @@ public class DijkstraManager : MonoBehaviour
         InitialiseDictDataWeighted();
         InitialiseNodeDataWeighted();
     }
+    #endregion
 
+    #endregion
 
     /// <summary>
     /// Use standard graphAPI data to set up Dijkstra Graph ready for algorithm. Unweighted

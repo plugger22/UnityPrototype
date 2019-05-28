@@ -72,9 +72,37 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                SubInitialiseFastAccess();
+                SubInitialiseAll();
+                SubInitialiseEvents();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }        
+    }
+
+
+    #region InitialiseSubmethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {        
         //fast access
         city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid city (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
         //ProcGen level
         InitialiseLevelRandomSeed();
         InitialiseData();
@@ -84,16 +112,24 @@ public class LevelManager : MonoBehaviour
         InitialiseNodeArcArray();
         InitialiseGraph();
         InitialiseNodeArcs();
-        /*AssignNodeArcs();*/
         AssignSecurityLevels();
         InitialiseDistrictNames();
         GameManager.instance.RestoreRandomDevState();
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
         EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
     }
+    #endregion
 
-   /// <summary>
-   /// uses Scenario seedCity to set up a level random number sequence such that and identical level can be generated each time by using the same seed
-   /// </summary>
+    #endregion
+
+    /// <summary>
+    /// uses Scenario seedCity to set up a level random number sequence such that and identical level can be generated each time by using the same seed
+    /// </summary>
     private void InitialiseLevelRandomSeed()
     {
         //save existing random dev state
