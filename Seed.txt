@@ -6,3 +6,8 @@ WARNING Secret NOT added as no space available
 
 Dev seed 39527 -> Tuesday, 28 May 2019 4:05 PM
 City seed 890 -> Arles, France
+
+Dev seed 14330 -> Tuesday, 28 May 2019 4:55 PM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

@@ -41,6 +41,45 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly()
     {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                SubInitialiseAllEarly();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// run AFTER LevelManager.cs
+    /// NOTE: Initialises CityManager (Late), MissionManager (in turn initialises TargetManager) and NemesisManager
+    /// </summary>
+    public void InitialiseLate()
+    {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+            case GameState.LoadGame:
+                SubInitialiseAllLate();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAllEarly
+    private void SubInitialiseAllEarly()
+    {
         //Assign a scenario
         scenario = GetCurrentScenario();
         if (scenario != null)
@@ -55,31 +94,10 @@ public class CampaignManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid City (Null) for scenario"); }
     }
+    #endregion
 
-    /// <summary>
-    /// run AFTER LevelManager.cs
-    /// NOTE: Initialises CityManager (Late), MissionManager and NemesisManager
-    /// </summary>
-    public void InitialiseLate()
-    {
-        switch (GameManager.instance.inputScript.GameState)
-        {
-            case GameState.NewInitialisation:
-            case GameState.FollowOnInitialisation:
-            case GameState.LoadAtStart:
-            case GameState.LoadGame:
-                SubInitialiseAll();
-                break;
-            default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
-                break;
-        }
-    }
-
-    #region Initialise SubMethods
-
-    #region SubInitialiseAll
-    private void SubInitialiseAll()
+    #region SubInitialiseAllLate
+    private void SubInitialiseAllLate()
     {
         // City (Late)
         GameManager.instance.cityScript.InitialiseLate();

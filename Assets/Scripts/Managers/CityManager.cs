@@ -67,12 +67,62 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly(Mayor mayor)
     {
-        //get random current city -> Placeholder
-        // need to do this once at very start of a new game (set up all cities, set up data in the city SO's)
-        // need to get list of all cities here from mapManager.cs
-        // need to initialise levels (run graphs and get node totals) and store seeds so the cities can be duplicated
-        // need to initialise all relevant info in city.SO's
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseAllEarly(mayor);
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAllEarly(mayor);
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseAllEarly(mayor);
+                SubInitialiseEvents();
+                break;
+            case GameState.LoadGame:
+                SubInitialiseAllEarly(mayor);
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
 
+    /// <summary>
+    /// need to do AFTER levelManager.cs -> Initialise. 
+    /// NOTE: run from CampaignManager.InitialiseLate
+    /// </summary>
+    public void InitialiseLate()
+    {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseLevelStart();
+                SubInitialiseAllLate();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseLevelStart();
+                SubInitialiseAllLate();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseLevelStart();
+                SubInitialiseAllLate();
+                break;
+            case GameState.LoadGame:
+                SubInitialiseAllLate();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAllEarly
+    private void SubInitialiseAllEarly(Mayor mayor)
+    {
         //use a random city if GameManager dev option set true, uses Scenario specified city otherwise
         if (GameManager.instance.isRandomCity == true)
         { city = GameManager.instance.dataScript.GetRandomCity(); }
@@ -84,42 +134,43 @@ public class CityManager : MonoBehaviour
         //Placeholder -> do early so factionManager.cs can have data in start sequence
         city.mayor = mayor;
         if (city.mayor != null)
-        {
-            Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.name, city.mayor.leaderName, city.mayor.trait.tag, "\n");
-            
-            /*city.faction = city.mayor.faction;
-            //initialise authority faction (determined by mayor's faction
-            GameManager.instance.factionScript.factionAuthority = city.mayor.faction;*/
-        }
+        { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.name, city.mayor.leaderName, city.mayor.trait.tag, "\n"); }
         else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
+    }
+    #endregion
 
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CityManager");
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "CityManager");
     }
+    #endregion
 
-    /// <summary>
-    /// need to do AFTER levelManager.cs -> Initialise. 
-    /// NOTE: run from CampaignManager.InitialiseLate
-    /// </summary>
-    public void InitialiseLate()
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
     {
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
-        {
-            //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
-            int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
-            if (loyalty == 0) { loyalty = Random.Range(2, 9); }
-            CityLoyalty = loyalty;
-            //initialise number of districts
-            city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
+        //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
+        int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
+        if (loyalty == 0) { loyalty = Random.Range(2, 9); }
+        CityLoyalty = loyalty;
+        //initialise number of districts
+        city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
+        //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
+        GameManager.instance.orgScript.SetOrganisationsInCity(city);
+    }
+    #endregion
 
-            //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
-            GameManager.instance.orgScript.SetOrganisationsInCity(city);
-        }
+    #region SubInitialiseAllLate
+    private void SubInitialiseAllLate()
+    {
         //set up base panel UI
         GameManager.instance.basePanelScript.SetNames(city.name, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
-
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// Event Handler

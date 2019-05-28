@@ -199,6 +199,64 @@ public class NemesisManager : MonoBehaviour
         SetLoiterData();
     }
 
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
+    {
+        //Debug (FOW OFF)
+        isShown = true;
+        isFirstNemesis = true;
+        //assign nemesis to a starting node
+        int nemesisNodeID = -1;
+        //Nemesis always starts at city Centre
+        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.cityScript.cityHallDistrictID);
+        if (node != null)
+        {
+            nemesisNodeID = node.nodeID;
+            nemesisNode = node;
+            Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
+            //assign node
+            GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        //Nemesis AI -> nemesis does nothing for 'x' turns at game start
+        durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
+        if (durationDelay > 0)
+        {
+            //grace period, start inactive
+            SetNemesisMode(NemesisMode.Inactive);
+        }
+        else
+        {
+            //NO grace period, start in normal mode, waiting for signs of player
+            SetNemesisMode(NemesisMode.NORMAL);
+        }
+    }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
+    }
+    #endregion
+
+    #endregion
+
     /// <summary>
     /// handles events
     /// </summary>
