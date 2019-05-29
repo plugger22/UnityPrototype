@@ -55,48 +55,92 @@ public class TeamManager : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// Set up at start
+    /// Set up at start. Not for GameState.LoadGame
     /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //fast access fields -> BEFORE InitialiseTeams below
-            globalAuthority = GameManager.instance.globalScript.sideAuthority;
-            globalResistance = GameManager.instance.globalScript.sideResistance;
-            spotTeamChance = GameManager.instance.contactScript.spotTeamChance;
-            maxSpotTeam = GameManager.instance.contactScript.maxSpotTeam;
-            maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
-            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-            Debug.Assert(spotTeamChance > -1, "Invalid spotTeamChance (less than Zero)");
-            Debug.Assert(maxSpotTeam > -1, "Invalid maxSpotTeam (less than Zero)");
-            Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
-            //Teams
-            int teamArcCount = 0;
-            Debug.Assert(listOfTeamPrioritiesHigh != null, "Invalid listOfTeamPrioritiesHigh (Null)");
-            Debug.Assert(listOfTeamPrioritiesHigh.Count > 0, "listOfTeamPrioritiesHigh has no records");
-            Debug.Assert(listOfTeamPrioritiesMedium != null, "Invalid listOfTeamPrioritiesMedium (Null)");
-            Debug.Assert(listOfTeamPrioritiesMedium.Count > 0, "listOfTeamPrioritiesMedium has no records");
-            Debug.Assert(listOfTeamPrioritiesLow != null, "Invalid listOfTeamPrioritiesLow (Null)");
-            Debug.Assert(listOfTeamPrioritiesLow.Count > 0, "listOfTeamPrioritiesLow has no records");
-            teamArcCount += listOfTeamPrioritiesHigh.Count + listOfTeamPrioritiesMedium.Count + listOfTeamPrioritiesLow.Count;
-            Debug.Assert(teamArcCount == GameManager.instance.dataScript.CheckNumOfTeamArcs(), "Mismatched count of team Priority Arcs (should be same # as num of unique Team Arcs");
-            
-            /*SeedTeamsOnMap();     //DEBUG*/
-            //event Listeners
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
-            EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "TeamManager");
-            EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TeamManager");
-            EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
-            EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
-            EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
-            EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent, "TeamManager");
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                SubInitialiseLevelStart();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseLevelStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                SubInitialiseLevelStart();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
-        //needs to be after session specific initialisation
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access fields -> BEFORE SubInitialiseSessionStart
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        spotTeamChance = GameManager.instance.contactScript.spotTeamChance;
+        maxSpotTeam = GameManager.instance.contactScript.maxSpotTeam;
+        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(spotTeamChance > -1, "Invalid spotTeamChance (less than Zero)");
+        Debug.Assert(maxSpotTeam > -1, "Invalid maxSpotTeam (less than Zero)");
+        Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        //Teams
+        int teamArcCount = 0;
+        Debug.Assert(listOfTeamPrioritiesHigh != null, "Invalid listOfTeamPrioritiesHigh (Null)");
+        Debug.Assert(listOfTeamPrioritiesHigh.Count > 0, "listOfTeamPrioritiesHigh has no records");
+        Debug.Assert(listOfTeamPrioritiesMedium != null, "Invalid listOfTeamPrioritiesMedium (Null)");
+        Debug.Assert(listOfTeamPrioritiesMedium.Count > 0, "listOfTeamPrioritiesMedium has no records");
+        Debug.Assert(listOfTeamPrioritiesLow != null, "Invalid listOfTeamPrioritiesLow (Null)");
+        Debug.Assert(listOfTeamPrioritiesLow.Count > 0, "listOfTeamPrioritiesLow has no records");
+        teamArcCount += listOfTeamPrioritiesHigh.Count + listOfTeamPrioritiesMedium.Count + listOfTeamPrioritiesLow.Count;
+        Debug.Assert(teamArcCount == GameManager.instance.dataScript.CheckNumOfTeamArcs(), "Mismatched count of team Priority Arcs (should be same # as num of unique Team Arcs");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event Listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent, "TeamManager");
+    }
+    #endregion
+
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
+    {
+        //needs to be after SubInitialiseSessionStart
         InitialiseTeams();
     }
+    #endregion
+
+    #endregion
 
 
     /// <summary>

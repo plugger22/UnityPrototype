@@ -98,37 +98,69 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-
-        //if NOT Load game
-        if (GameManager.instance.inputScript.GameState != GameState.LoadGame)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //actions
-            UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
-            //states
-
-            /*resistanceState = ResistanceState.Normal;*/
-            authoritySecurityState = AuthoritySecurityState.Normal;
-            //current side
-            currentSide = GameManager.instance.sideScript.PlayerSide;
-        }
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
-        {
-            //fast access
-            teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-            scenarioTimer = GameManager.instance.campaignScript.scenario.timer;
-            conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-            Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
-            Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
-            Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
-
-            //event Listeners
-            EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
-            EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
-            EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                SubInitialiseLevelStart();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseLevelStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                SubInitialiseLevelStart();
+                break;
+            case GameState.LoadGame:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
+    
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
+    {
+        //actions
+        UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
+        //states
+        authoritySecurityState = AuthoritySecurityState.Normal;
+        //current side
+        currentSide = GameManager.instance.sideScript.PlayerSide;
+    }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access
+        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        scenarioTimer = GameManager.instance.campaignScript.scenario.timer;
+        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+        Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
+        Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
+        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event Listeners
+        EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
+    }
+    #endregion
+
+    #endregion
 
 
     /// <summary>

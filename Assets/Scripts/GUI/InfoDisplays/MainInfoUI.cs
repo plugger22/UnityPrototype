@@ -1428,15 +1428,19 @@ public class MainInfoUI : MonoBehaviour
     /// 'Show Me' a node or connection in an item, switch off infoApp and highlight onmap
     /// </summary>
     private void ExecuteShowMe()
-    {        
-        //turn off infoApp
-        mainInfoCanvas.gameObject.SetActive(false);
-        //pass data package to GUIManager.cs
-        ShowMeData data = new ShowMeData();
-        data.restoreEvent = EventType.MainInfoRestore;
-        data.nodeID = currentItemNodeID;
-        data.connID = currentItemConnID;
-        GameManager.instance.guiScript.SetShowMe(data);
+    {
+        //only do so if there is something to show
+        if (currentItemNodeID > -1 || currentItemConnID > -1)
+        {
+            //turn off infoApp
+            mainInfoCanvas.gameObject.SetActive(false);
+            //pass data package to GUIManager.cs
+            ShowMeData data = new ShowMeData();
+            data.restoreEvent = EventType.MainInfoRestore;
+            data.nodeID = currentItemNodeID;
+            data.connID = currentItemConnID;
+            GameManager.instance.guiScript.SetShowMe(data);
+        }
     }
 
     /// <summary>

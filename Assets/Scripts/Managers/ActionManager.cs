@@ -44,13 +44,26 @@ public class ActionManager : MonoBehaviour
     private string colourAuthority;
     private string colourEnd;
 
+    /// <summary>
+    /// Not for GameState.Load
+    /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-
-
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
 
