@@ -190,16 +190,17 @@ public class ActorManager : MonoBehaviour
                 SubInitialiseRecruitActorCachedFields();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
-                SubInitialiseActors();
+                SubInitialiseLevelStart();
                 break;
             case GameState.FollowOnInitialisation:
-                SubInitialiseActors();
+                SubInitialiseRecruitActorCachedFields();
+                SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseRecruitActorCachedFields();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
-                SubInitialiseActors();
+                SubInitialiseLevelStart();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -209,12 +210,25 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// Late initialisation done after DataManager.cs -> InitialiseLate
+    /// Not for GameState.LoadGame
     /// </summary>
     public void InitialiseLate()
     {
-        //initialise actor contacts
-        InitialiseActorContacts(globalAuthority);
-        InitialiseActorContacts(globalResistance);
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseAllLate();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAllLate();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseAllLate();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
     }
 
     #region Initialisation SubMethods
@@ -327,8 +341,8 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-    #region SubInitialiseActors
-    private void SubInitialiseActors()
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
     {
         //Name set
         nameSet = GameManager.instance.cityScript.GetNameSet();
@@ -339,6 +353,15 @@ public class ActorManager : MonoBehaviour
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
         InitialisePoolActors();
+    }
+    #endregion
+
+    #region SubInitialiseAllLate
+    private void SubInitialiseAllLate()
+    {
+        //initialise actor contacts
+        InitialiseActorContacts(globalAuthority);
+        InitialiseActorContacts(globalResistance);
     }
     #endregion
 

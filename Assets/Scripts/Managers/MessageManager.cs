@@ -50,12 +50,34 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// needed due to gameManager initialisation sequence
+    /// NOTE: Not for GameState.LoadGame
     /// </summary>
     public void InitialiseLate()
+    {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+                SubInitialiseAllLate();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAllLate
+    private void SubInitialiseAllLate()
     {
         mayor = GameManager.instance.cityScript.GetCity().mayor;
         Debug.Assert(mayor != null, "Invalid mayor (Null)");
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// Reset message ID counter prior to a new level

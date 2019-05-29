@@ -86,49 +86,25 @@ public class TargetManager : MonoBehaviour
     private string colourEnd;
 
     /// <summary>
-    /// Initial setup called by MissionManager.cs -> Initialise and higher up by ScenarioManager.cs -> Initialise
+    /// Initial setup called by MissionManager.cs -> Initialise and higher up by CampaignManager.cs -> Initialise
     /// </summary>
     public void Initialise()
     {
         switch (GameManager.instance.inputScript.GameState)
         {
-
+            case GameState.NewInitialisation:
+            case GameState.FollowOnInitialisation:
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                SubInitialiseLevelStart();
+                break;
+            case GameState.LoadGame:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
-        Debug.Assert(activateLowChance < activateMedChance, "invalid activateLowChance (should be less than MED)");
-        Debug.Assert(activateMedChance < activateHighChance, "invalid activateMedChance (should be less than HIGH)");
-        Debug.Assert(activateHighChance < activateExtremeChance, "invalid activateHighChance (should be less than EXTREME)");
-        Debug.Assert(activateLowChance > 0, "Invalid activateLowChance (Zero or Less)");
-        Debug.Assert(activateMedChance > 0, "Invalid activateMedChance (Zero or Less)");
-        Debug.Assert(activateHighChance > 0, "Invalid activateHighChance (Zero or Less)");
-        Debug.Assert(activateExtremeChance > 0, "Invalid activateExtremeChance (Zero or Less)");
-        Debug.Assert(activateLowLimit > activateMedLimit, "invalid activateLowLimit (should be more than MED)");
-        Debug.Assert(activateMedLimit > activateHighLimit, "invalid activateMedLimit (should be more than HIGH)");
-        Debug.Assert(activateHighLimit > activateExtremeLimit, "invalid activateHighLimit (should be more than EXTREME)");
-        Debug.Assert(activateLowLimit > 0, "Invalid activateLowLimit (Zero or Less");
-        Debug.Assert(activateMedLimit > 0, "Invalid activateMedimit (Zero or Less");
-        Debug.Assert(activateHighLimit > 0, "Invalid activateHighLimit (Zero or Less");
-        Debug.Assert(activateExtremeLimit > 0, "Invalid activateExtremeLimit (Zero or Less");
-        //reset all targets (caters for followOn levels)
-        ResetAllTargets();
-        //set up generic target array
-        InitialiseGenericTargetArray();
-        //set up listOfTargetFactors. Note -> Sequence matters and is the order that the factors will be displayed
-        foreach (var factor in Enum.GetValues(typeof(TargetFactors)))
-        { listOfFactors.Add((TargetFactors)factor); }
-        //fast access
-        infiltrationGear = GameManager.instance.dataScript.GetGearType("Infiltration");
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
-        Debug.Assert(infiltrationGear != null, "Invalid infiltrationGear (Null)");
-        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(maxGenericOptions != -1, "Invalid maxGenericOptions (-1)");
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.TargetInfoAction, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.GenericTargetInfo, OnEvent, "TargetManager");
     }
 
     #region Initialise SubMethods
@@ -159,8 +135,8 @@ public class TargetManager : MonoBehaviour
     }
     #endregion
 
-    #region SubInitialiseAll
-    private void SubInitialiseAll()
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
     {
         Debug.Assert(activateLowChance < activateMedChance, "invalid activateLowChance (should be less than MED)");
         Debug.Assert(activateMedChance < activateHighChance, "invalid activateMedChance (should be less than HIGH)");

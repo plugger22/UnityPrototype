@@ -40,128 +40,149 @@ public class SecretManager : MonoBehaviour
     string colourEnd;*/
 
     /// <summary>
-    /// Initialise Secrets
+    /// Initialise Secrets. Not for GameState.Load
     /// </summary>
     public void Initialise()
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (GameManager.instance.inputScript.GameState)
         {
-            //
-            // - - - SecretTypes - - -
-            //
-            Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
-            if (dictOfSecretTypes != null)
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseLevelStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        //
+        // - - - SecretTypes - - -
+        //
+        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
+        if (dictOfSecretTypes != null)
+        {
+            foreach (var secretType in dictOfSecretTypes)
             {
-                foreach (var secretType in dictOfSecretTypes)
+                //pick out and assign the ones required for fast access. 
+                //Also dynamically assign SecretType.level values (0/1/2). 
+                switch (secretType.Key)
                 {
-                    //pick out and assign the ones required for fast access. 
-                    //Also dynamically assign SecretType.level values (0/1/2). 
-                    switch (secretType.Key)
-                    {
-                        case "Player":
-                            secretType.Value.level = 0;
-                            secretTypePlayer = secretType.Value;
-                            break;
-                        case "Desperate":
-                            secretType.Value.level = 1;
-                            secretTypeDesperate = secretType.Value;
-                            break;
-                        default:
-                            Debug.LogWarningFormat("Invalid secretType \"{0}\"", secretType.Key);
-                            break;
-                    }
+                    case "Player":
+                        secretType.Value.level = 0;
+                        secretTypePlayer = secretType.Value;
+                        break;
+                    case "Desperate":
+                        secretType.Value.level = 1;
+                        secretTypeDesperate = secretType.Value;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid secretType \"{0}\"", secretType.Key);
+                        break;
                 }
-                //error check
-                Debug.Assert(secretTypePlayer != null, "Invalid secretTypePlayer (Null)");
-                Debug.Assert(secretTypeDesperate != null, "Invalid secretTypeDesperate (Null)");
             }
-            else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
-            //
-            // - - - SecretStatus - - -
-            //
-            Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
-            if (dictOfSecretStatus != null)
+            //error check
+            Debug.Assert(secretTypePlayer != null, "Invalid secretTypePlayer (Null)");
+            Debug.Assert(secretTypeDesperate != null, "Invalid secretTypeDesperate (Null)");
+        }
+        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
+        //
+        // - - - SecretStatus - - -
+        //
+        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
+        if (dictOfSecretStatus != null)
+        {
+            foreach (var secretStatus in dictOfSecretStatus)
             {
-                foreach (var secretStatus in dictOfSecretStatus)
+                //pick out and assign the ones required for fast access. 
+                //Also dynamically assign SecretStatus.level values (0/1/2). 
+                switch (secretStatus.Key)
                 {
-                    //pick out and assign the ones required for fast access. 
-                    //Also dynamically assign SecretStatus.level values (0/1/2). 
-                    switch (secretStatus.Key)
-                    {
-                        case "Inactive":
-                            secretStatus.Value.level = 0;
-                            secretStatusInactive = secretStatus.Value;
-                            break;
-                        case "Active":
-                            secretStatus.Value.level = 1;
-                            secretStatusActive = secretStatus.Value;
-                            break;
-                        case "Revealed":
-                            secretStatus.Value.level = 2;
-                            secretStatusRevealed = secretStatus.Value;
-                            break;
-                        case "Deleted":
-                            secretStatus.Value.level = 3;
-                            secretStatusDeleted = secretStatus.Value;
-                            break;
-                        default:
-                            Debug.LogWarningFormat("Invalid secretStatus \"{0}\"", secretStatus.Key);
-                            break;
-                    }
+                    case "Inactive":
+                        secretStatus.Value.level = 0;
+                        secretStatusInactive = secretStatus.Value;
+                        break;
+                    case "Active":
+                        secretStatus.Value.level = 1;
+                        secretStatusActive = secretStatus.Value;
+                        break;
+                    case "Revealed":
+                        secretStatus.Value.level = 2;
+                        secretStatusRevealed = secretStatus.Value;
+                        break;
+                    case "Deleted":
+                        secretStatus.Value.level = 3;
+                        secretStatusDeleted = secretStatus.Value;
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Invalid secretStatus \"{0}\"", secretStatus.Key);
+                        break;
                 }
-                //error check
-                Debug.Assert(secretStatusActive != null, "Invalid secretStatusActive (Null)");
-                Debug.Assert(secretStatusInactive != null, "Invalid secretStatusInactive (Null)");
-                Debug.Assert(secretStatusRevealed != null, "Invalid secretStatusRevealed (Null)");
-                Debug.Assert(secretStatusDeleted != null, "Invalid secretStatusDeleted (Null)");
             }
-            else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
-            //
-            // - - - - Secrets - - - 
-            //
-            Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
-            List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
-            int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
-            if (dictOfSecrets != null)
+            //error check
+            Debug.Assert(secretStatusActive != null, "Invalid secretStatusActive (Null)");
+            Debug.Assert(secretStatusInactive != null, "Invalid secretStatusInactive (Null)");
+            Debug.Assert(secretStatusRevealed != null, "Invalid secretStatusRevealed (Null)");
+            Debug.Assert(secretStatusDeleted != null, "Invalid secretStatusDeleted (Null)");
+        }
+        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
+        //
+        // - - - - Secrets - - - 
+        //
+        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
+        if (dictOfSecrets != null)
+        {
+            if (listOfPlayerSecrets != null)
             {
-                if (listOfPlayerSecrets != null)
+                //add to appropriate lists
+                foreach (var secret in dictOfSecrets)
                 {
-                    //add to appropriate lists
-                    foreach (var secret in dictOfSecrets)
+                    if (secret.Value != null)
                     {
-                        if (secret.Value != null)
+                        //set all key secret data to default settings (otherwise will carry over data between sessions)
+                        secret.Value.Initialise();
+                        //Only add those of the same side as the player)
+                        if (secret.Value.side.level == playerLevel)
                         {
-                            //set all key secret data to default settings (otherwise will carry over data between sessions)
-                            secret.Value.Initialise();
-                            //Only add those of the same side as the player)
-                            if (secret.Value.side.level == playerLevel)
+                            switch (secret.Value.type.level)
                             {
-                                switch (secret.Value.type.level)
-                                {
-                                    case 0:
-                                        //Player secrets
-                                        listOfPlayerSecrets.Add(secret.Value);
-                                        break;
-                                }
+                                case 0:
+                                    //Player secrets
+                                    listOfPlayerSecrets.Add(secret.Value);
+                                    break;
                             }
                         }
-                        else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
                     }
-                    Debug.LogFormat("[Imp] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
-                    Debug.Assert(listOfPlayerSecrets.Count > 0, "No records in listOfPlayerSecrets");
+                    else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
                 }
-                else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
+                Debug.LogFormat("[Imp] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
+                Debug.Assert(listOfPlayerSecrets.Count > 0, "No records in listOfPlayerSecrets");
             }
-            else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
-        //Fast Access
-        conditionBlackmail = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
-        Debug.Assert(conditionBlackmail != null, "Invalid conditionBlackmail (Null)");
-        //Event listeners
-        /*SetColours();
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "SecretManager");*/
+            else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
         }
+        else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
+    }
+    #endregion
 
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
+    {
         //Initialise always (Level based) -> reset all player secrets to known 0
         List<Secret> listOfSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
         if (listOfSecrets != null)
@@ -175,9 +196,19 @@ public class SecretManager : MonoBehaviour
 
         }
         else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
-
     }
+    #endregion
 
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //Fast Access
+        conditionBlackmail = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+        Debug.Assert(conditionBlackmail != null, "Invalid conditionBlackmail (Null)");
+    }
+    #endregion
+
+    #endregion
 
 
     /*/// <summary>
@@ -214,8 +245,6 @@ public class SecretManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }*/
-
-
 
 
     /// <summary>

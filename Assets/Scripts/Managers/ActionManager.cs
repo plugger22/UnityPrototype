@@ -49,57 +49,78 @@ public class ActionManager : MonoBehaviour
         //session specific (once only)
         if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
         {
-            //fast access fields
-            failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
-            lieLowPeriod = GameManager.instance.actorScript.lieLowCooldownPeriod;
-            conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-            actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
-            actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
-            actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
-            actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
-            actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
-            gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
-            gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
-            gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
-            Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
-            Debug.Assert(lieLowPeriod > 0, "Invalid lieLowCooldDownPeriod (Zero)");
-            Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
-            Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
-            Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
-            Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
-            Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
-            Debug.Assert(actorReserveActionDoubled > -1, "Invalid actorReserveActionDoubled (-1) ");
-            Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
-            Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
-            Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
-            //register listener
-            EventManager.instance.AddListener(EventType.NodeAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.TargetAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.LieLowActorAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.LieLowPlayerAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.ActivateActorAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.ActivatePlayerAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.TakeGearAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.UseGearAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.InventoryThreaten, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.InventoryActiveDuty, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.InventoryFire, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.LeavePlayerAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.LeaveActorAction, OnEvent, "ActionManager");
-            EventManager.instance.AddListener(EventType.CurePlayerAction, OnEvent, "ActionManager");
+
+
         }
     }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access fields
+        failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
+        lieLowPeriod = GameManager.instance.actorScript.lieLowCooldownPeriod;
+        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
+        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
+        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
+        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
+        actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
+        gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
+        gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
+        gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
+        Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
+        Debug.Assert(lieLowPeriod > 0, "Invalid lieLowCooldDownPeriod (Zero)");
+        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
+        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
+        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
+        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
+        Debug.Assert(actorReserveActionDoubled > -1, "Invalid actorReserveActionDoubled (-1) ");
+        Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
+        Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
+        Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.NodeAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.NodeGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.TargetAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LieLowActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LieLowPlayerAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ActivateActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ActivatePlayerAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ManageActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GiveGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.TakeGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.UseGearAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InsertTeamAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericHandleActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericReserveActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericDismissActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.GenericDisposeActor, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryReassure, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryThreaten, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryActiveDuty, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryLetGo, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.InventoryFire, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LeavePlayerAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.LeaveActorAction, OnEvent, "ActionManager");
+        EventManager.instance.AddListener(EventType.CurePlayerAction, OnEvent, "ActionManager");
+    }
+    #endregion
+
+    #endregion
+
+
 
     /// <summary>
     /// Event Handler

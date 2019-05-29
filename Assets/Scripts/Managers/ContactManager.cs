@@ -47,33 +47,80 @@ public class ContactManager : MonoBehaviour
     private int actorContactEffectHigh;
     private int actorContactEffectLow;
 
-
+    /// <summary>
+    /// Not for GameState.LoadGame
+    /// </summary>
     public void Initialise()
+    {
+        switch (GameManager.instance.inputScript.GameState)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseLevelStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                SubInitialiseEvents();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
     {
         //collections
         int numOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         arrayOfContactNetworks = new int[numOfOnMapActors];
         arrayOfActors = new Actor[numOfOnMapActors];
+    }
+    #endregion
+
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
+    {
         //seed contact pool
         CreateContacts(numOfPoolContacts);
-
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
-        {
-            //fast acess fields
-            globalAuthority = GameManager.instance.globalScript.sideAuthority;
-            globalResistance = GameManager.instance.globalScript.sideResistance;
-            actorContactEffectHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectHigh");
-            actorContactEffectLow = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectLow");
-            //check O.K
-            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-            Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
-            Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
-            //event Listeners
-            EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");
-        }
     }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access fields
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        actorContactEffectHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectHigh");
+        actorContactEffectLow = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectLow");
+        //check O.K
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
+        Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event Listeners
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MessageManager");
+    }
+    #endregion
+
+    #endregion
+
 
     /// <summary>
     /// handles events
@@ -112,7 +159,7 @@ public class ContactManager : MonoBehaviour
     { contactIDCounter = 0; }
 
     /// <summary>
-    /// create new Resistance contacts and place them dictionary, unassigned
+    /// create new Resistance contacts and place them in dictionary, unassigned
     /// </summary>
     public void CreateContacts(int numOfContacts)
     {

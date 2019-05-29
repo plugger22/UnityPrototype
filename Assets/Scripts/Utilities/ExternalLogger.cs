@@ -30,17 +30,27 @@ public class ExternalLogger : MonoBehaviour
         string logInfo = "";
         if (String.IsNullOrEmpty(logString) == false)
         {
+            StringBuilder builder = new StringBuilder();
             switch (type)
             {
                 case LogType.Error:
-                    StringBuilder builder = new StringBuilder();
                     builder.AppendFormat("ERROR {0}", logString);
                     builder.AppendLine();
                     builder.AppendFormat("{0}", stackTrace.Replace("\n", "\n\t"));
                     logInfo = builder.ToString();
                     break;
-                case LogType.Warning:  logInfo = string.Format("WARNING {0}", logString) + Environment.NewLine; break;
-                case LogType.Exception: logInfo = string.Format("ASSERT {0}", logString) + Environment.NewLine; break;
+                case LogType.Warning:
+                    builder.AppendFormat("WARNING {0}", logString);
+                    builder.AppendLine();
+                    builder.AppendFormat("{0}", stackTrace.Replace("\n", "\n\t"));
+                    logInfo = builder.ToString();
+                    break;
+                case LogType.Exception:
+                    builder.AppendFormat("ASSERT {0}", logString);
+                    builder.AppendLine();
+                    builder.AppendFormat("{0}", stackTrace.Replace("\n", "\n\t"));
+                    logInfo = builder.ToString();
+                    break;
             }
             //write to file
             File.AppendAllText("Seed.txt", logInfo);
