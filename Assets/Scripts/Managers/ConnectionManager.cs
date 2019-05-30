@@ -29,24 +29,63 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void Initialise(GameState state)
     {
-        InitialiseListOfConnections();
-
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (state)
         {
+            case GameState.NewInitialisation:
+                SubInitialiseAll();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAll();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseAll();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.LoadGame:
+                SubInitialiseAll();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
+        InitialiseListOfConnections();
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
             //flash
             flashConnectionTime = GameManager.instance.guiScript.flashNodeTime;
             Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
             //Data Collections
             listOfSecLevels = new List<ConnectionType>();
             listOfFlashConnections = new List<Connection>();
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
             //register listener
             EventManager.instance.AddListener(EventType.FlashSingleConnectionStart, OnEvent, "ConnectionManager");
             EventManager.instance.AddListener(EventType.FlashSingleConnectionStop, OnEvent, "ConnectionManager");
             EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStart, OnEvent, "ConnectionManager");
             EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStop, OnEvent, "ConnectionManager");
-        }
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// event handler

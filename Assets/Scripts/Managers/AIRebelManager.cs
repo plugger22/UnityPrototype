@@ -232,6 +232,7 @@ public class AIRebelManager : MonoBehaviour
                 SubInitialiseAllEarly();
                 SubInitialiseLevelStart();
                 SubInitialiseAllLate();
+                SubInitialiseFollowOn();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseAllEarly();
@@ -363,6 +364,19 @@ public class AIRebelManager : MonoBehaviour
             conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
         }
         else { isAutoRunTest = false; }
+    }
+    #endregion
+
+    #region SubInitialiseFollowOn
+    private void SubInitialiseFollowOn()
+    {
+        //clear out collections
+        listOfNemesisReports.Clear();
+        listOfErasureReports.Clear();
+        listOfNemesisSightData.Clear();
+        listOfErasureSightData.Clear();
+        listOfBadNodes.Clear();
+        listOfSpiderNodes.Clear();
     }
     #endregion
 
@@ -1133,10 +1147,10 @@ public class AIRebelManager : MonoBehaviour
                     sighting.priority = Priority.Low;
                     break;
             }
+            //moveNumber & turn of sighting
+            sighting.turn = tracker.turn;
+            sighting.moveNumber = tracker.data2;
         }
-        //moveNumber & turn of sighting
-        sighting.turn = tracker.turn;
-        sighting.moveNumber = tracker.data2;
         return sighting;
     }
 

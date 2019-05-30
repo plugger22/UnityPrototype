@@ -104,14 +104,13 @@ public class SideManager : MonoBehaviour
         {
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
-                SubInitialiseSetSides();
+                SubInitialiseSessionStart();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
-                SubInitialiseSetSides();
+                SubInitialiseSessionStart();
                 break;
             case GameState.FollowOnInitialisation:
-                SubInitialiseSetSides();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -134,8 +133,8 @@ public class SideManager : MonoBehaviour
     }
     #endregion
 
-    #region SubInitialiseSetSides
-    private void SubInitialiseSetSides()
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
     {
         //AUTORUN (first scenario in a campaign only)
         if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.CheckIsFirstScenario() == true)

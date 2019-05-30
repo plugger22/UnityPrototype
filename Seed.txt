@@ -7,3 +7,109 @@ City seed 890 -> Arles, France
 Dev seed 27497 -> Thursday, 30 May 2019 3:22 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 11473 -> Thursday, 30 May 2019 3:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+AIRebelManager.ConvertTrackerToSighting (AITracker tracker) (at Assets/Scripts/Managers/AIRebelManager.cs:1138)
+	AIRebelManager.ProcessSightingData () (at Assets/Scripts/Managers/AIRebelManager.cs:839)
+	AIRebelManager.ProcessAI () (at Assets/Scripts/Managers/AIRebelManager.cs:474)
+	AIManager.ProcessAISideResistance () (at Assets/Scripts/Managers/AIManager.cs:754)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:382)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 8335 -> Thursday, 30 May 2019 4:01 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 20607 -> Thursday, 30 May 2019 4:03 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+WARNING Invalid sightingData (Null) for tracker d0: 14, d1: 3, turn 18
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AIRebelManager:ProcessSightingData() (at Assets/Scripts/Managers/AIRebelManager.cs:846)
+	AIRebelManager:ProcessAI() (at Assets/Scripts/Managers/AIRebelManager.cs:474)
+	AIManager:ProcessAISideResistance() (at Assets/Scripts/Managers/AIManager.cs:754)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:382)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid sightingData (Null) for tracker d0: 14, d1: 3, turn 20
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AIRebelManager:ProcessSightingData() (at Assets/Scripts/Managers/AIRebelManager.cs:846)
+	AIRebelManager:ProcessAI() (at Assets/Scripts/Managers/AIRebelManager.cs:474)
+	AIManager:ProcessAISideResistance() (at Assets/Scripts/Managers/AIManager.cs:754)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:382)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 63429 -> Thursday, 30 May 2019 4:25 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 60918 -> Thursday, 30 May 2019 4:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 26476 -> Thursday, 30 May 2019 4:58 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 53100 -> Thursday, 30 May 2019 4:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 60496 -> Thursday, 30 May 2019 5:01 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+WARNING Invalid sightingData (Null) for tracker d0: 8, d1: 2, turn 17
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AIRebelManager:ProcessSightingData() (at Assets/Scripts/Managers/AIRebelManager.cs:860)
+	AIRebelManager:ProcessAI() (at Assets/Scripts/Managers/AIRebelManager.cs:488)
+	AIManager:ProcessAISideResistance() (at Assets/Scripts/Managers/AIManager.cs:754)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:382)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid sightingData (Null) for tracker d0: 14, d1: 2, turn 17
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AIRebelManager:ProcessSightingData() (at Assets/Scripts/Managers/AIRebelManager.cs:860)
+	AIRebelManager:ProcessAI() (at Assets/Scripts/Managers/AIRebelManager.cs:488)
+	AIManager:ProcessAISideResistance() (at Assets/Scripts/Managers/AIManager.cs:754)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:382)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid sightingData (Null) for tracker d0: 19, d1: 1, turn 19
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AIRebelManager:ProcessSightingData() (at Assets/Scripts/Managers/AIRebelManager.cs:860)
+	AIRebelManager:ProcessAI() (at Assets/Scripts/Managers/AIRebelManager.cs:488)
+	AIManager:ProcessAISideResistance() (at Assets/Scripts/Managers/AIManager.cs:754)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:382)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 40268 -> Thursday, 30 May 2019 5:04 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
