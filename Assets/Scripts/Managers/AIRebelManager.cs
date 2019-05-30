@@ -287,8 +287,6 @@ public class AIRebelManager : MonoBehaviour
         arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
         actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
         actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
-        gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
-        gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
         Debug.Assert(failedTargetChance > -1, "Invalid failedTargetChance (-1)");
@@ -330,6 +328,9 @@ public class AIRebelManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
         { isPlayer = true; }
+        //gear pool
+        gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
+        gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         //Rebel leader
         InitialiseRebelLeader();
     }
@@ -377,6 +378,20 @@ public class AIRebelManager : MonoBehaviour
         listOfErasureSightData.Clear();
         listOfBadNodes.Clear();
         listOfSpiderNodes.Clear();
+        //reset relevant fields
+        actionsUsed = 0;
+        gearPointsUsed = 0;
+        targetIntel = 0;
+        targetIntelUsed = 0;
+        targetNodeID = -1;
+        cureNodeID = -1;
+        isConnectionsChanged = false;
+        isCureNeeded = false;
+        isCureCritical = false;
+        isPlayerStressed = false;
+        stressedActorID = -1;
+        questionableID = -1;
+
     }
     #endregion
 
