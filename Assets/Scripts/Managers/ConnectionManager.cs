@@ -27,7 +27,7 @@ public class ConnectionManager : MonoBehaviour
     /// <summary>
     /// Initialisation
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         InitialiseListOfConnections();
 

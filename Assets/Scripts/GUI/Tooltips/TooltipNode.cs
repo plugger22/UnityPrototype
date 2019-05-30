@@ -79,9 +79,9 @@ public class TooltipNode : MonoBehaviour
     /// <summary>
     /// needed for sequencing issues. Not for GameState.LoadGame
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();

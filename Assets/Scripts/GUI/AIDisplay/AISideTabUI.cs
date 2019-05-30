@@ -63,7 +63,7 @@ public class AISideTabUI : MonoBehaviour
     /// <summary>
     /// called from AIDisplayUI.cs -> Initialise, not GameManager
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         if (GameManager.instance.aiDisplayScript.isActive == true)
         {

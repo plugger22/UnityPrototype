@@ -451,9 +451,9 @@ public class AIManager : MonoBehaviour
     //stats
     private int[] arrayOfAITaskTypes;                                                       //used for analysis of which tasks the AI generates (not executes but tracks the ones placed into the pool)
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseStartSession();

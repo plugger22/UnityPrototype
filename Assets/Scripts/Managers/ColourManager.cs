@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gameAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -66,7 +67,7 @@ public class ColourManager : MonoBehaviour
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         arrayOfColours = new Colour[(int)ColourType.Count, (int)ColourScheme.Count];
         //add each array of Colours into the List -> NOTE: change this whenever you add, or modify, a colour. 

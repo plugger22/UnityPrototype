@@ -172,7 +172,7 @@ public class ActorManager : MonoBehaviour
     private string colourEnd;
 
 
-    public void PreInitialiseActors()
+    public void PreInitialiseActors(GameState state)
     {
         //number of actors, default 4
         maxNumOfOnMapActors = maxNumOfOnMapActors == 4 ? maxNumOfOnMapActors : 4;
@@ -182,9 +182,9 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Not called for GameState.LoadGame
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseRecruitActorCachedFields();
@@ -212,9 +212,9 @@ public class ActorManager : MonoBehaviour
     /// Late initialisation done after DataManager.cs -> InitialiseLate
     /// Not for GameState.LoadGame
     /// </summary>
-    public void InitialiseLate()
+    public void InitialiseLate(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseAllLate();

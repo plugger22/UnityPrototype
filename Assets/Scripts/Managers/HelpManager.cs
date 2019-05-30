@@ -1,4 +1,5 @@
-﻿using packageAPI;
+﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -22,7 +23,7 @@ public class HelpManager : MonoBehaviour
     private string colourAlert;
     private string colourEnd;
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         SetColours();
         //register listener

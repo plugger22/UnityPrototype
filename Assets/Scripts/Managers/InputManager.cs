@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
     private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalState.InfoDisplay -> what type of info?
     private ModalGenericPickerSubState _modalGenericPickerState;    // sub state of ModalState.GenericPicker -> what type of picker?
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         /*GameState = GameState.StartUp;*/
         ModalState = ModalState.Normal;

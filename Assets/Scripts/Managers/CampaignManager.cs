@@ -28,7 +28,7 @@ public class CampaignManager : MonoBehaviour
     [HideInInspector] public Scenario scenario;
 
 
-    public void InitialiseGame()
+    public void InitialiseGame(GameState state)
     {
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
         //collections
@@ -39,9 +39,9 @@ public class CampaignManager : MonoBehaviour
     /// <summary>
     /// run BEFORE LevelManager.cs
     /// </summary>
-    public void InitialiseEarly()
+    public void InitialiseEarly(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
@@ -59,9 +59,9 @@ public class CampaignManager : MonoBehaviour
     /// run AFTER LevelManager.cs
     /// NOTE: Initialises CityManager (Late), MissionManager (in turn initialises TargetManager) and NemesisManager
     /// </summary>
-    public void InitialiseLate()
+    public void InitialiseLate(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:

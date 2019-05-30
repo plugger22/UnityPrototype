@@ -1,4 +1,5 @@
-﻿using modalAPI;
+﻿using gameAPI;
+using modalAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,6 @@ namespace delegateAPI
     public delegate void ActionButtonDelegate();
 
     //used for GameManager Initialisation
-    public delegate void InitialisationDelegate();
+    public delegate void InitialisationDelegate(GameState state);
 
 }

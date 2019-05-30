@@ -155,9 +155,9 @@ public class NodeManager : MonoBehaviour
         nodeActiveMinimum = nodeActiveMinimum > 2 ? nodeActiveMinimum : 3;
     }
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseAll();

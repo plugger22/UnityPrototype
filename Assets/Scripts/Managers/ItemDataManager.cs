@@ -24,9 +24,6 @@ public class ItemDataManager : MonoBehaviour
     //fast access
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
-    /*private string playerName;                      //human player even if autorun
-    private string playerNameResistance;            //could be human or ai*/
-
     private string colourRebel;
     //private string colourAuthority;
     private string colourNeutral;
@@ -40,7 +37,7 @@ public class ItemDataManager : MonoBehaviour
 
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //textlists
         Debug.Assert(shortRumourAware != null, "Invalid shortRumourHeard (Null)");
@@ -58,8 +55,6 @@ public class ItemDataManager : MonoBehaviour
         playerNameResistance = GameManager.instance.playerScript.GetPlayerNameResistance();*/
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        /*Debug.Assert(string.IsNullOrEmpty(playerName) == false, "Invalid playerName (Null or Empty)");
-        Debug.Assert(string.IsNullOrEmpty(playerNameResistance) == false, "Invalid playerNameResistance (Null or Empty)");*/
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }

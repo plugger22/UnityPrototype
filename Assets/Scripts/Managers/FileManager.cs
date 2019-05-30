@@ -35,7 +35,7 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// Initialisation
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
         cipherKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly

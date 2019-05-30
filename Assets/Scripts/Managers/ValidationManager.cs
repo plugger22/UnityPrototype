@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gameAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -13,12 +14,13 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// Master control for all validations
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         ValidateTargets();
         ValidateGear();
     }
 
+    #region ValidateTargets
     /// <summary>
     /// Checks targets
     /// </summary>
@@ -103,7 +105,9 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", index); }
         }
     }
+    #endregion
 
+    #region ValidateGear
     /// <summary>
     /// Checks Gear
     /// </summary>
@@ -143,13 +147,17 @@ public class ValidationManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
 
 #if (UNITY_EDITOR)
+
+    #region ValidateSO
     /// <summary>
     /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
     /// Designed to pick up SO's that might have been added in the editor but not added to the arrays (ignored by game if this is the case).
     /// </summary>
-    public void ValidateSO()
+    public void ValidateSO(GameState state)
     {
         //GlobalMeta
         ValidateSOGeneric<GlobalMeta>(GameManager.instance.loadScript.arrayOfGlobalMeta);
@@ -286,7 +294,9 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<Target>(arrayOfTargetLists);
 
     }
+    #endregion
 
+    #region ValidateSOGeneric
     /// <summary>
     /// Generic method to validate an SO type via an Asset Search on hard drive vs. the equivalent array in LoadManager.cs
     /// </summary>
@@ -328,6 +338,8 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid arraySO for {0}", typeof(T).Name); }
     }
+    #endregion
+
 #endif
 
     //new methods above here

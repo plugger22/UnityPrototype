@@ -124,7 +124,7 @@ public class AIDisplayUI : MonoBehaviour
     }
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //only initialise if player is Resistance
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)

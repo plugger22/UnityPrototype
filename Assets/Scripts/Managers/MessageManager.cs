@@ -25,7 +25,7 @@ public class MessageManager : MonoBehaviour
     /// <summary>
     /// Set up at start
     /// </summary>
-    public void InitialiseEarly()
+    public void InitialiseEarly(GameState state)
     {
         //Run in GameManager.cs -> listOfGlobalMethods with GameState.StartUp so doesn't need check for GameState.NewInitialisation
         playerActorID = GameManager.instance.playerScript.actorID;
@@ -52,7 +52,7 @@ public class MessageManager : MonoBehaviour
     /// needed due to gameManager initialisation sequence
     /// NOTE: Not for GameState.LoadGame
     /// </summary>
-    public void InitialiseLate()
+    public void InitialiseLate(GameState state)
     {
         switch (GameManager.instance.inputScript.GameState)
         {

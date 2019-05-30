@@ -76,7 +76,7 @@ public class WidgetTopUI : MonoBehaviour
     }
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //get correct number of action points
         SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());

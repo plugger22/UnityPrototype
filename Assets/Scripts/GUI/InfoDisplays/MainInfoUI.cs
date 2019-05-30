@@ -460,7 +460,7 @@ public class MainInfoUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MainInfoTickerSlower, OnEvent, "MainInfoUI");
     }
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //initiliase Active tabs
         for (int index = 0; index < tabActiveArray.Length; index++)

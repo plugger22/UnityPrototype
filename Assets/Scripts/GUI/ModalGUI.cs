@@ -64,7 +64,7 @@ public class ModalGUI : MonoBehaviour
     /// <summary>
     /// Initialisation
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         Debug.Assert(modal0 != null, "Invalid modal0 (Null)");
         Debug.Assert(modal1 != null, "Invalid modal (Null)");

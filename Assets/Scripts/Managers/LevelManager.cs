@@ -70,9 +70,9 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Master method that creates a level (city)
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:

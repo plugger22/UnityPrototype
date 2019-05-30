@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class DebugGraphics : MonoBehaviour
     }
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //adjust scale of centre Plane
         float scaleFactor = GameManager.instance.aiScript.nodeGeographicCentre;

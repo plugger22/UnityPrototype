@@ -217,7 +217,7 @@ public class AIRebelManager : MonoBehaviour
     //targets
     private Dictionary<Target, int> dictOfSortedTargets = new Dictionary<Target, int>();   //key -> target, Value -> Distance (weighted and adjusted for threats)
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //always (data could change in both situations)
         numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();

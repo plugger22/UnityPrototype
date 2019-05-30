@@ -81,7 +81,7 @@ public class CityInfoUI : MonoBehaviour
 
     }
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         int counter = 0;
         //cache list of District names

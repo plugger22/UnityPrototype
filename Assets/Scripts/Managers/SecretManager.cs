@@ -42,9 +42,9 @@ public class SecretManager : MonoBehaviour
     /// <summary>
     /// Initialise Secrets. Not for GameState.Load
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();

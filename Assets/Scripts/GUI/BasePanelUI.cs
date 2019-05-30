@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class BasePanelUI : MonoBehaviour
     }
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         Debug.Assert(cityName != null, "Invalid cityName (Null)");
         Debug.Assert(countryName != null, "Invalid countryName (Null)");

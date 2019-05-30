@@ -10,7 +10,7 @@ public class ControlManager : MonoBehaviour
     private GameState gameState;                    //stores current game state prior to change to enable a revert after change
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //event Listeners
         EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "ControlManager");

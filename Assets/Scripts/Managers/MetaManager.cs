@@ -12,7 +12,7 @@ public class MetaManager : MonoBehaviour
 
 
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         
         //set state

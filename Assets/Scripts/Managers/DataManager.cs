@@ -217,9 +217,9 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Stuff that is done after level Manager.SetUp. Called by GameManager.cs -> LEVEL startup sequenc
     /// </summary>
-    public void InitialiseLate()
+    public void InitialiseLate(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
@@ -4894,7 +4894,8 @@ public class DataManager : MonoBehaviour
                         {
                             gear.statTurnObtained = Random.Range(0, turn);
                             gear.statTimesUsed = Random.Range(0, 3);
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.name, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use (used {4} times){5}", 
+                                gear.name, gear.type.name, gear.rarity.name, gear.gearID, gear.statTimesUsed, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
                         isSuccess = true;
@@ -4962,7 +4963,7 @@ public class DataManager : MonoBehaviour
                 {
                     Gear gear = GetGear(listOfGear[index]);
                     if (gear != null)
-                    { builder.AppendFormat(" {0} ({1}), ID{2}, {3}, used {4} times{5}", gear.name, gear.type.name, gear.gearID, gear.rarity.name, gear.timesUsed, "\n"); }
+                    { builder.AppendFormat(" {0} ({1}), ID{2}, {3}, used {4} times (total {5}){6}", gear.name, gear.type.name, gear.gearID, gear.rarity.name, gear.timesUsed, gear.statTimesUsed, "\n"); }
                     else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
                 }
             }

@@ -37,25 +37,57 @@ public class CaptureManager : MonoBehaviour
     private string colourAlert;
     private string colourEnd;
 
-
-    public void Initialise()
+    /// <summary>
+    /// Not for GameState.LoadGame
+    /// </summary>
+    /// <param name="state"></param>
+    public void Initialise(GameState state)
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (state)
         {
-            //fast access
-            teamErasureID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-            conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-            Debug.Assert(teamErasureID > -1, "Invalid teamErasureID");
-            Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
-            //register listener
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
-            EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
-            EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");
-            EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
-            EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitailiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access
+        teamErasureID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
+        Debug.Assert(teamErasureID > -1, "Invalid teamErasureID");
+        Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
+    }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// event handler

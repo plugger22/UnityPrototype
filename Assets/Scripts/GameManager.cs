@@ -374,6 +374,7 @@ public class GameManager : MonoBehaviour
     private void InitialiseStartSequence()
     {
         StartMethod startMethod = new StartMethod();
+        #region GlobalMethods
         //
         // - - - Global Methods
         //
@@ -438,6 +439,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = fileScript.Initialise;
         startMethod.className = "FileManager";
         listOfGlobalMethods.Add(startMethod);
+        #endregion
+        #region Game Methods
         //
         // - - - Game methods - - -
         //
@@ -449,6 +452,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = campaignScript.InitialiseGame;
         startMethod.className = "CampaignManager Game";
         listOfGameMethods.Add(startMethod);
+        #endregion
+        #region Level Methods
         //
         // - - - Level methods - - -
         //
@@ -593,6 +598,8 @@ public class GameManager : MonoBehaviour
         startMethod.className = "ConnectionManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
+        #endregion
+        #region UI Methods
         //
         // - - - UI methods - - -
         //
@@ -620,6 +627,8 @@ public class GameManager : MonoBehaviour
         startMethod.handler = widgetTopScript.Initialise;
         startMethod.className = "WidgetTopUI";
         listOfUIMethods.Add(startMethod);
+        #endregion
+        #region Debug Methods
         //
         // - - - Debug methods - - -
         //
@@ -634,6 +643,7 @@ public class GameManager : MonoBehaviour
             startMethod.className = "ValidationManager (Content)";
             listOfDebugMethods.Add(startMethod);
         }
+        #endregion
     }
     #endregion
 
@@ -647,11 +657,12 @@ public class GameManager : MonoBehaviour
         //run each method via delegates in their preset order
         if (listOfMethods != null)
         {
+            GameState state = GameManager.instance.inputScript.GameState;
             foreach (StartMethod method in listOfMethods)
             {
                 if (method.handler != null)
                 {
-                    method.handler();
+                    method.handler(state);
                     Debug.LogFormat("[Per] GameManager.cs -> InitialiseMethods: {0}, {1}{2}", method.className, method.handler.Method.Name, "\n");
                 }
                 else { Debug.LogErrorFormat("Invalid startMethod handler for {0}", method.className); }
@@ -668,6 +679,7 @@ public class GameManager : MonoBehaviour
         //run each method via delegates in their preset order
         if (listOfMethods != null)
         {
+            GameState state = GameManager.instance.inputScript.GameState;
             //start timer tally to get an overall performance time
             GameManager.instance.testScript.TimerTallyStart();
             foreach (StartMethod method in listOfMethods)
@@ -675,7 +687,7 @@ public class GameManager : MonoBehaviour
                 if (method.handler != null)
                 {
                     GameManager.instance.testScript.StartTimer();
-                    method.handler();
+                    method.handler(state);
                     long elapsed = testScript.StopTimer();
                     Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", method.className, method.handler.Method.Name, elapsed, "\n");
                 }
@@ -780,13 +792,13 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// reset all relevant data prior to a new level
     /// </summary>
-    private void ResetNewLevelData()
+    private void ResetNewLevelData(GameState state)
     {
         //no need to reset if a new session
         if (isSession == true)
         {
             levelScript.Reset();
-            if (inputScript.GameState != GameState.LoadGame)
+            if (state != GameState.LoadGame)
             {
                 dataScript.ResetNewLevel();
                 turnScript.ResetTurn();

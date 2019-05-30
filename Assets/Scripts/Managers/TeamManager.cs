@@ -57,9 +57,9 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// Set up at start. Not for GameState.LoadGame
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();

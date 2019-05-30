@@ -139,7 +139,7 @@ public class GUIManager : MonoBehaviour
     /// Initialises GUI with all relevant data
     /// </summary>
     /// <param name="arrayOfActors"></param>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //make sure blocking layers are all set to false
         arrayIsBlocked = new bool[numOfModalLevels + 1];

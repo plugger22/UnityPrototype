@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,44 +41,9 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public TraitCategory categoryActor;
     [HideInInspector] public TraitCategory categoryMayor;
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         int num;
-        //
-        // - - - GlobalMeta - - -
-        //
-        /*Dictionary<string, GlobalMeta> dictOfGlobalMeta = GameManager.instance.dataScript.GetDictOfGlobalMeta();
-        if (dictOfGlobalMeta != null)
-        {
-            foreach (var meta in dictOfGlobalMeta)
-            {
-                //pick out and assign the ones required for fast acess, ignore the rest. 
-                //Also dynamically assign GlobalMeta.level values (0/1/2). 
-                switch (meta.Key)
-                {
-                    case "Local":
-                        metaBottom = meta.Value;
-                        meta.Value.level = 0;
-                        break;
-                    case "State":
-                        metaMiddle = meta.Value;
-                        meta.Value.level = 1;
-                        break;
-                    case "National":
-                        metaTop = meta.Value;
-                        meta.Value.level = 2;
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Invalid meta \"{0}\"", meta.Key);
-                        break;
-                }
-            }
-            //error check
-            if (metaBottom == null) { Debug.LogError("Invalid metaBottom (Null)"); }
-            if (metaMiddle == null) { Debug.LogError("Invalid metaMiddle (Null)"); }
-            if (metaTop == null) { Debug.LogError("Invalid metaTop (Null)"); }
-        }*/
-
         GlobalMeta[] arrayOfGlobalMeta = GameManager.instance.loadScript.arrayOfGlobalMeta;
         num = arrayOfGlobalMeta.Length;
         if (num > 0)
@@ -260,41 +226,6 @@ public class GlobalManager : MonoBehaviour
             Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
             Debug.Assert(sideBoth != null, "Invalid sideBoth (Null)");
         }
-        //
-        // - - - NodeDatapoint - - -
-        //
-        /*Dictionary<string, NodeDatapoint> dictOfNodeDatapoints = GameManager.instance.dataScript.GetDictOfNodeDatapoints();
-        if (dictOfNodeDatapoints != null)
-        {
-            foreach (var side in dictOfNodeDatapoints)
-            {
-                //pick out and assign the ones required for fast acess, ignore the rest. 
-                switch (side.Key)
-                {
-                    case "Stability":
-                        nodeStability = side.Value;
-                        side.Value.level = 0;
-                        break;
-                    case "Support":
-                        nodeSupport = side.Value;
-                        side.Value.level = 1;
-                        break;
-                    case "Security":
-                        nodeSecurity = side.Value;
-                        side.Value.level = 2;
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Invalid side \"{0}\"", side.Key);
-                        break;
-                }
-            }
-            //error check
-            Debug.Assert(sideAI != null, "Invalid sideAI (Null)");
-            Debug.Assert(sideAuthority != null, "Invalid sideAuthority (Null)");
-            Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
-            Debug.Assert(sideBoth != null, "Invalid sideBoth (Null)");
-        }*/
-
         NodeDatapoint[] arrayOfNodeDatapoints = GameManager.instance.loadScript.arrayOfNodeDatapoints;
         num = arrayOfNodeDatapoints.Length;
         if (num > 0)

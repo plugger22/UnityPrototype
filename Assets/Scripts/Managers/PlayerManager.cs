@@ -136,7 +136,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Initialisation
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
 
         //session specific (once only)

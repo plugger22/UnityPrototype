@@ -51,7 +51,7 @@ public class TraitManager : MonoBehaviour
     /// <summary>
     /// Initialise
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
         //session specific (once only)
         if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)

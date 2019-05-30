@@ -15,25 +15,46 @@ public class AuthorityManager : MonoBehaviour
     private int securityAlert;
     private int securityCrackdown;
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (state)
         {
-            //fast access fields
-            globalAuthority = GameManager.instance.globalScript.sideAuthority;
-            globalBoth = GameManager.instance.globalScript.sideBoth;
-            Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-            Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
-            //decisions
-            securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
-            securityAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
-            securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
-            Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
-            Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
-            Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
     }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //fast access fields
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalBoth = GameManager.instance.globalScript.sideBoth;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
+        //decisions
+        securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
+        securityAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
+        securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
+        Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
+        Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
+        Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
+    }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// method that Sets a mutually exclusive AuthorityState (enum). Default (no parameter) is to reset back to normal.

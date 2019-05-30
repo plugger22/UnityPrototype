@@ -96,9 +96,9 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// Initialisation
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();

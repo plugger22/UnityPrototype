@@ -29,9 +29,9 @@ public class ObjectiveManager : MonoBehaviour
     private string colourSide;
     private string colourEnd;
 
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
                 SubInitialiseEvents();

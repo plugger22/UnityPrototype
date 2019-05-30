@@ -61,9 +61,9 @@ public class DijkstraManager : MonoBehaviour
     /// <summary>
     /// Start sequence
     /// </summary>
-    public void Initialise()
+    public void Initialise(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (state)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:

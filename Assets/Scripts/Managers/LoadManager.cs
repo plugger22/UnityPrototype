@@ -10,7 +10,7 @@ using packageAPI;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
-
+    #region Arrays
     [Header("Initialise Start -> Enums")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
@@ -96,10 +96,11 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
+    #endregion
 
     #region InitialiseStart
-    
-    public void InitialiseStart()
+
+    public void InitialiseStart(GameState state)
     {
         int numArray, numDict, counter;
         //
@@ -531,7 +532,7 @@ public class LoadManager : MonoBehaviour
     /// <summary>
     /// default main constructor
     /// </summary>
-    public void InitialiseEarly()
+    public void InitialiseEarly(GameState state)
     {
         int numArray, numDict, counter;
         GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
@@ -1508,7 +1509,7 @@ public class LoadManager : MonoBehaviour
     /// Stuff that is done after LevelManager.SetUp
     /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists
     /// </summary>
-    public void InitialiseLate()
+    public void InitialiseLate(GameState state)
     {
         int counter;
         //
