@@ -496,7 +496,7 @@ namespace gameAPI
         { listOfSecrets.Clear(); }
 
         /// <summary>
-        /// Add a Player secret, checks for duplicates and won't add if one found (warning msg)
+        /// Add a Player secret, checks for duplicates and won't add if one found (warning msg). Checks also that total number of secrets known doesn't exceed max (not added if so)
         /// </summary>
         /// <param name="secret"></param>
         public void AddSecret(Secret secret)
@@ -516,7 +516,7 @@ namespace gameAPI
                         GameManager.instance.messageScript.ActorSecret(msgText, this, secret);
                         Debug.LogFormat("[Sec] Actor.cs -> AddSecret: {0}, {1}, ID {2}, learns {3} secret, ID {4}{5}", actorName, arc.name, actorID, secret.tag, secret.secretID, "\n");
                     }
-                    else { Debug.LogWarning("Secret NOT added as no space available"); }
+                    else { Debug.LogFormat("[Sec] Actor.cs -> AddSecret: Secret NOT added to {0}, {1}, ID {2} as no space available{3}", actorName, arc.name, actorID, "\n"); }
                 }
                 else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
             }
