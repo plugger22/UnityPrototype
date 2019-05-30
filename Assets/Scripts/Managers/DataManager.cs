@@ -201,7 +201,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
     private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
-    private Dictionary<StatType, int> dictOfStatistics = new Dictionary<StatType, int>();            //Key -> (int)StatType, Value -> statistic
+    private Dictionary<StatType, int> dictOfStatisticsLevel = new Dictionary<StatType, int>();       //Key -> (int)StatType, Value -> statistic
+    private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();    //Key -> (int)StatType, Value -> statistic
     private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
     private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                         //Key -> cureID, Value -> Cure
@@ -6254,7 +6255,7 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// adds a new stat to the dictionary with an initial value of statValue (default 0)
+    /// adds a new stat to both dictionaries with an initial value of statValue (default 0)
     /// </summary>
     /// <param name="statType"></param>
     /// <param name="statValue"></param>
@@ -6262,32 +6263,35 @@ public class DataManager : MonoBehaviour
     {
 
         try
-        { dictOfStatistics.Add(statType, statValue); }
+        {
+            dictOfStatisticsLevel.Add(statType, statValue);
+            dictOfStatisticsCampaign.Add(statType, statValue);
+        }
         catch (ArgumentException)
         { Debug.LogErrorFormat("Invalid statType \"{0}\" (duplicate exists)", statType); }
     }
 
     /// <summary>
-    /// increases stat value by an amount (default +1) for the specific Statistic Type
+    /// increases stat value by an amount (default +1) for the specific Statistic Type (Level)
     /// </summary>
     /// <param name="statType"></param>
     public void StatisticIncrement(StatType statType, int amount = 1)
     {
-        if (dictOfStatistics.ContainsKey(statType) == true)
-        { dictOfStatistics[statType] += amount; }
+        if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+        { dictOfStatisticsLevel[statType] += amount; }
         else { Debug.LogWarningFormat("StatType \"{0}\" not found in dictOfStatistics", statType); }
     }
 
     /// <summary>
-    /// returns value of specified Statistic type, returns -1 if a problem
+    /// returns value of specified Statistic type, returns -1 if a problem (Level)
     /// </summary>
     /// <param name="statType"></param>
     /// <returns></returns>
     public int StatisticGet(StatType statType)
     {
         int statValue = -1;
-            if (dictOfStatistics.ContainsKey(statType) == true)
-            { statValue = dictOfStatistics[statType]; }
+            if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+            { statValue = dictOfStatisticsLevel[statType]; }
         return statValue;
     }
 
@@ -6299,15 +6303,15 @@ public class DataManager : MonoBehaviour
         //loop enums as you can't directly loop dictionary and change values
         foreach (StatType statType in Enum.GetValues(typeof(StatType)))
         {
-                if (dictOfStatistics.ContainsKey(statType) == true)
-                { dictOfStatistics[statType] = 0; }
+                if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+                { dictOfStatisticsLevel[statType] = 0; }
                 else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
         }
     }
 
 
     public Dictionary<StatType, int> GetDictOfStatistics()
-    { return dictOfStatistics; }
+    { return dictOfStatisticsLevel; }
 
 
     //
