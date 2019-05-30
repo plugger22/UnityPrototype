@@ -219,88 +219,36 @@ public class AIRebelManager : MonoBehaviour
 
     public void Initialise(GameState state)
     {
-        //always (data could change in both situations)
-        numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
-        Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        switch (state)
         {
-            //fast access     
-            playerID = GameManager.instance.playerScript.actorID;
-            globalResistance = GameManager.instance.globalScript.sideResistance;
-            failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
-            conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-            conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-            conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-            conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
-            conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
-            priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
-            priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
-            priorityLow = GameManager.instance.aiScript.priorityLowWeight;
-            turnForCondition = GameManager.instance.testScript.conditionTurnResistance;
-            maxStatValue = GameManager.instance.actorScript.maxStatValue;
-            maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-            delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
-            delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
-            arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
-            actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
-            actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
-            gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
-            gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
-            Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-            Debug.Assert(playerID > -1, "Invalid playerId (-1)");
-            Debug.Assert(failedTargetChance > -1, "Invalid failedTargetChance (-1)");
-            Debug.Assert(priorityHigh > -1, "Invalid priorityHigh (-1)");
-            Debug.Assert(priorityMedium > -1, "Invalid priorityMedium (-1)");
-            Debug.Assert(priorityLow > -1, "Invalid priorityLow (-1)");
-            Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
-            Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
-            Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
-            Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
-            Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
-            Debug.Assert(maxNumOfOnMapActors > -1, "Invalid maxNumOfOnMapActors (-1)");
-            Debug.Assert(delayNoSpider > -1, "Invalid delayNoSpider (-1)");
-            Debug.Assert(delayYesSpider > -1, "Invalid delayYesSpider (-1)");
-            Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
-            Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
-            Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
-            //collections (AFTER: fast access)
-            arrayOfAITaskTypes = new int[(int)AITaskType.Count];
-            arrayOfActorActions = new List<Node>[maxNumOfOnMapActors];
-            for (int i = 0; i < arrayOfActorActions.Length; i++)
-            { arrayOfActorActions[i] = new List<Node>(); }
-            //player (human / AI revert to human)
-            playerName = GameManager.instance.playerScript.GetPlayerNameResistance();
-            /*playerTag = GameManager.instance.campaignScript.scenario.leaderResistance.tag;
-            playerBackground = GameManager.instance.campaignScript.scenario.descriptorResistance;*/
-            if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
-            else
-            { isPlayer = true; }
-            //Rebel leader
-            InitialiseRebelLeader();
+            case GameState.NewInitialisation:
+                SubInitialiseAllEarly();
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                SubInitialiseAllLate();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseAllEarly();
+                SubInitialiseLevelStart();
+                SubInitialiseAllLate();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseAllEarly();
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                SubInitialiseAllLate();
+                break;
+            case GameState.LoadGame:
+                SubInitialiseAllEarly();
+                SubInitialiseLoadGameData();
+                SubInitialiseAllLate();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
         }
-        //Load game
-        if (GameManager.instance.inputScript.GameState == GameState.LoadGame)
-        { InitialiseRebelLeader(); }
-
-        //AFTER session specific initialisation
-
-        //set initial move node to start position (will trigger a new targetNodeID)
-        targetNodeID = GameManager.instance.nodeScript.nodePlayer;
-        aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
-        status = ActorStatus.Active;
-        inactiveStatus = ActorInactive.None;
-        GameManager.instance.playerScript.Invisibility = GameManager.instance.actorScript.maxStatValue;
-        //set AI resource levels
-        GameManager.instance.dataScript.SetAIResources(globalResistance, GameManager.instance.campaignScript.scenario.leaderResistance.resourcesStarting);
-        //autoRun test
-        if (GameManager.instance.testScript.conditionResistance != null && GameManager.instance.testScript.conditionTurnResistance > -1)
-        {
-            isAutoRunTest = true;
-            turnForCondition = GameManager.instance.testScript.conditionTurnResistance;
-            conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
-        }
-        else { isAutoRunTest = false; }
     }
 
 
@@ -407,6 +355,14 @@ public class AIRebelManager : MonoBehaviour
         GameManager.instance.playerScript.Invisibility = GameManager.instance.actorScript.maxStatValue;
         //set AI resource levels
         GameManager.instance.dataScript.SetAIResources(globalResistance, GameManager.instance.campaignScript.scenario.leaderResistance.resourcesStarting);
+        //autoRun test
+        if (GameManager.instance.testScript.conditionResistance != null && GameManager.instance.testScript.conditionTurnResistance > -1)
+        {
+            isAutoRunTest = true;
+            turnForCondition = GameManager.instance.testScript.conditionTurnResistance;
+            conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
+        }
+        else { isAutoRunTest = false; }
     }
     #endregion
 
