@@ -1115,8 +1115,8 @@ public class PlayerManager : MonoBehaviour
         }
         //stats
         builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerBreakdown), "\n");
-        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGet(StatType.PlayerLieLow), "\n");
+        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
+        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLow), "\n");
         return builder.ToString();
     }
 

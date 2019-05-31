@@ -545,14 +545,24 @@ public class FileManager : MonoBehaviour
         write.dataData.teamCounter = GameManager.instance.teamScript.teamCounter;
         #endregion
         #region statistics
-        Dictionary<StatType, int> dictOfStatistics = GameManager.instance.dataScript.GetDictOfStatistics();
-        if (dictOfStatistics != null)
+        //level stats
+        Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
+        if (dictOfStatisticsLevel != null)
         {
             //only need to save stats as StatType Key's are sequentially numbered enums
-            foreach(var stat in dictOfStatistics)
-            { write.dataData.listOfStatistics.Add(stat.Value); }
+            foreach(var stat in dictOfStatisticsLevel)
+            { write.dataData.listOfStatisticsLevel.Add(stat.Value); }
         }
-        else { Debug.LogError("Invalid dictOfStatistics (Null)"); }
+        else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
+        //campaign stats
+        Dictionary<StatType, int> dictOfStatisticsCampaign = GameManager.instance.dataScript.GetDictOfStatisticsCampaign();
+        if (dictOfStatisticsCampaign != null)
+        {
+            //only need to save stats as StatType Key's are sequentially numbered enums
+            foreach (var stat in dictOfStatisticsCampaign)
+            { write.dataData.listOfStatisticsCampaign.Add(stat.Value); }
+        }
+        else { Debug.LogError("Invalid dictOfStatisticsCampaign (Null)"); }
         #endregion
         #region AI
         //array -> AI Resources
@@ -1442,35 +1452,54 @@ public class FileManager : MonoBehaviour
     private void ReadDataData()
     {
         #region statistics
-        Dictionary<StatType, int> dictOfStatistics = GameManager.instance.dataScript.GetDictOfStatistics();
-        if (dictOfStatistics != null)
+        //level stats
+        Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
+        if (dictOfStatisticsLevel != null)
         {
-            
-            int count = read.dataData.listOfStatistics.Count;
-            Debug.AssertFormat(count == dictOfStatistics.Count, "Mismatch on count (should be list {0}, is dict {1}", count, dictOfStatistics.Count);
+            int count = read.dataData.listOfStatisticsLevel.Count;
+            Debug.AssertFormat(count == dictOfStatisticsLevel.Count, "Mismatch on count (should be list {0}, is dict {1}", count, dictOfStatisticsLevel.Count);
             StatType statType;
             for (int i = 0; i < count; i++)
             {
-                /*try
-                { dictOfStatistics.Add((StatType)i, read.dataData.listOfStatistics[i]); }
-                catch (ArgumentException)
-                { Debug.LogWarningFormat("Duplicate stat type \"{0}\" in dictOfStatistics", (StatType)i); }*/
-
                 //update dictionary 
                 statType = (StatType)i;
-                if (dictOfStatistics.ContainsKey(statType) == true)
-                { dictOfStatistics[statType] = read.dataData.listOfStatistics[i]; }
+                if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+                { dictOfStatisticsLevel[statType] = read.dataData.listOfStatisticsLevel[i]; }
                 else
                 {
                     //StatType not present, add to dictionary
                     try
-                    { dictOfStatistics.Add(statType, read.dataData.listOfStatistics[i]); }
+                    { dictOfStatisticsLevel.Add(statType, read.dataData.listOfStatisticsLevel[i]); }
                     catch (ArgumentException)
                     { Debug.LogWarningFormat("Duplicate StatType \"{0\", entry not added", statType); }
                 }
             }
         }
-        else { Debug.LogError("Invalid dictOfStatistics (Null)"); }
+        else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
+        //campaign stats
+        Dictionary<StatType, int> dictOfStatisticsCampaign = GameManager.instance.dataScript.GetDictOfStatisticsCampaign();
+        if (dictOfStatisticsCampaign != null)
+        {
+            int count = read.dataData.listOfStatisticsCampaign.Count;
+            Debug.AssertFormat(count == dictOfStatisticsCampaign.Count, "Mismatch on count (should be list {0}, is dict {1}", count, dictOfStatisticsCampaign.Count);
+            StatType statType;
+            for (int i = 0; i < count; i++)
+            {
+                //update dictionary 
+                statType = (StatType)i;
+                if (dictOfStatisticsCampaign.ContainsKey(statType) == true)
+                { dictOfStatisticsCampaign[statType] = read.dataData.listOfStatisticsCampaign[i]; }
+                else
+                {
+                    //StatType not present, add to dictionary
+                    try
+                    { dictOfStatisticsCampaign.Add(statType, read.dataData.listOfStatisticsCampaign[i]); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate StatType \"{0\", entry not added", statType); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfStatisticsCampaign (Null)"); }
         #endregion
         #region secrets
         //

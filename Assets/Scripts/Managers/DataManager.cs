@@ -6287,7 +6287,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="statType"></param>
     /// <returns></returns>
-    public int StatisticGet(StatType statType)
+    public int StatisticGetLevel(StatType statType)
     {
         int statValue = -1;
             if (dictOfStatisticsLevel.ContainsKey(statType) == true)
@@ -6296,7 +6296,20 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// reset all level based stats to zero (ProcesMetaGame reset)
+    /// returns value of specified Statistic type, returns -1 if a problem (Campaign)
+    /// </summary>
+    /// <param name="statType"></param>
+    /// <returns></returns>
+    public int StatisticGetCampaign(StatType statType)
+    {
+        int statValue = -1;
+        if (dictOfStatisticsCampaign.ContainsKey(statType) == true)
+        { statValue = dictOfStatisticsCampaign[statType]; }
+        return statValue;
+    }
+
+    /// <summary>
+    /// reset all Level based stats to zero (ProcesMetaGame reset)
     /// </summary>
     public void StatisticReset()
     {
@@ -6310,8 +6323,11 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public Dictionary<StatType, int> GetDictOfStatistics()
+    public Dictionary<StatType, int> GetDictOfStatisticsLevel()
     { return dictOfStatisticsLevel; }
+
+    public Dictionary<StatType, int> GetDictOfStatisticsCampaign()
+    { return dictOfStatisticsCampaign; }
 
 
     //

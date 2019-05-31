@@ -99,7 +99,8 @@ public class SaveDataData
     public List<int> listOfTeamPoolOnMap = new List<int>();
     public List<int> listOfTeamPoolInTransit = new List<int>();
     //statistics
-    public List<int> listOfStatistics = new List<int>();
+    public List<int> listOfStatisticsLevel = new List<int>();
+    public List<int> listOfStatisticsCampaign = new List<int>();
     //AI
     public List<int> listOfArrayOfAIResources = new List<int>();
     public List<AITracker> listOfRecentNodes = new List<AITracker>();

@@ -31,16 +31,10 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     public void ProcessMetaGame()
     {
-        ResetData();
+        //statistics
+        GameManager.instance.statScript.ProcessMetaStatistics();
     }
 
-    /// <summary>
-    /// Reset data (level ended, Metalevel commencing)
-    /// </summary>
-    public void ResetData()
-    {
-        //reset all level based statistics back to zero
-        GameManager.instance.dataScript.StatisticReset();
-    }
+
 
 }

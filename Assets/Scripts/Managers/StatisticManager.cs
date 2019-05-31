@@ -55,6 +55,40 @@ public class StatisticManager : MonoBehaviour
 
     #endregion
 
+    /// <summary>
+    /// Update campaign statistics with previous level stats and clear out level stats ready for new level
+    /// </summary>
+    public void ProcessMetaStatistics()
+    {
+        Dictionary<StatType, int> dictOfStatsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
+        if (dictOfStatsLevel != null)
+        {
+            Dictionary<StatType, int> dictOfStatsCampaign = GameManager.instance.dataScript.GetDictOfStatisticsCampaign();
+            if (dictOfStatsCampaign != null)
+            {
+                int statValue;
+                //loop enums and update mirrored stats in campaign dict
+                foreach (StatType statType in Enum.GetValues(typeof(StatType)))
+                {
+                    if (dictOfStatsLevel.ContainsKey(statType) == true)
+                    {
+                        statValue = dictOfStatsLevel[statType];
+                        if (dictOfStatsCampaign.ContainsKey(statType) == true)
+                        {
+                            statValue += dictOfStatsCampaign[statType];
+                            dictOfStatsCampaign[statType] = statValue;
+                        }
+                        else { Debug.LogWarningFormat("StatType \"{0}\" not found in dictOfStatisticsCampaign", statType); }
+                    }
+                    else { Debug.LogWarningFormat("StatType \"{0}\" not found in dictOfStatisticsLevel", statType); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfStatisticsCampaign (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
+        //reset all level based statistics back to zero
+        GameManager.instance.dataScript.StatisticReset();
+    }
 
     /// <summary>
     /// Display statistics
@@ -66,7 +100,8 @@ public class StatisticManager : MonoBehaviour
         builder.AppendFormat("-Statistics{0}{1}", "\n", "\n");
         //loop each stat type
         foreach (var stat in Enum.GetValues(typeof(StatType)))
-        { builder.AppendFormat("{0}: {1}{2}", (StatType)stat, GameManager.instance.dataScript.StatisticGet((StatType)stat), "\n"); }
+        { builder.AppendFormat("{0}: {1} (total {2}){3}", (StatType)stat, GameManager.instance.dataScript.StatisticGetLevel((StatType)stat), 
+            GameManager.instance.dataScript.StatisticGetCampaign((StatType)stat), "\n"); }
         return builder.ToString();
     }
 

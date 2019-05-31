@@ -6930,5 +6930,35 @@ public class ActorManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Meta game processing of actors -> ensure alpha and tooltips are correct and all actors are active
+    /// </summary>
+    public void ProcessMetaActors()
+    {
+        float activeAlpha = GameManager.instance.guiScript.alphaActive;
+        //loop actors and check for status
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //set actor to active (may have been lying low in previous level)
+                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
+                        actor.tooltipStatus = ActorTooltip.None;
+                        actor.Status = ActorStatus.Active;
+                        actor.inactiveStatus = ActorInactive.None;
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+    }
+
     //new methods above here
 }
