@@ -324,6 +324,17 @@ public class ActorPanelUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets actor alpha to active for all onMap slotID's
+    /// </summary>
+    public void SetActorsAlphaActive()
+    {
+        float activeAlpha = GameManager.instance.guiScript.alphaActive;
+        //set all actor alpha's to active (may still be set to inactive from previous level)
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        { UpdateActorAlpha(i, activeAlpha); }
+    }
+
+    /// <summary>
     /// changes the alpha of the player sprite and text
     /// </summary>
     /// <param name="alpha"></param>

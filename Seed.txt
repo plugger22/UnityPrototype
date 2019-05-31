@@ -36,3 +36,51 @@ UnityEngine.Debug:LogWarning(Object)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:365)
 	City seed 890 -> Arles, France
+
+Dev seed 4309 -> Friday, 31 May 2019 11:19 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 3291 -> Friday, 31 May 2019 11:23 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 20826 -> Friday, 31 May 2019 11:33 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 7354 -> Friday, 31 May 2019 11:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38608 -> Friday, 31 May 2019 11:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11337 -> Friday, 31 May 2019 11:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3203 -> Friday, 31 May 2019 11:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31379 -> Friday, 31 May 2019 11:51 AM
+City seed 890 -> Arles, France
+
+Dev seed 43714 -> Friday, 31 May 2019 11:52 AM
+City seed 890 -> Arles, France
+
+Dev seed 61553 -> Friday, 31 May 2019 11:58 AM
+City seed 890 -> Arles, France
+
+Dev seed 22536 -> Friday, 31 May 2019 12:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 21593 -> Friday, 31 May 2019 12:08 PM
+City seed 890 -> Arles, France
+
+Dev seed 39226 -> Friday, 31 May 2019 12:11 PM
+City seed 890 -> Arles, France
+
+Dev seed 29424 -> Friday, 31 May 2019 12:16 PM
+City seed 890 -> Arles, France
+
+Dev seed 61854 -> Friday, 31 May 2019 12:17 PM
+City seed 890 -> Arles, France

@@ -353,6 +353,8 @@ public class ActorManager : MonoBehaviour
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
         InitialisePoolActors();
+        //set actor alpha to active for all onMap slots
+        GameManager.instance.actorPanelScript.SetActorsAlphaActive();
     }
     #endregion
 
@@ -3397,6 +3399,8 @@ public class ActorManager : MonoBehaviour
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
                             GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
+                            //stats
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                             //Process any other effects, if acquisition was successfull, ignore otherwise
                             Action action = actorCurrent.arc.nodeAction;
                             Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
@@ -3536,6 +3540,8 @@ public class ActorManager : MonoBehaviour
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                             traitText, colourEnd);
+                        //stats
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                         //reset cached recruit actor flag
                         isNewActionAuthority = true;
                     }
@@ -6837,6 +6843,8 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.dataScript.RemoveActorFromPool(actorNew.actorID, actorNew.level, side);
                                 //place actor on Map (reset states)
                                 GameManager.instance.dataScript.AddCurrentActor(side, actorNew, slotID);
+                                //stats
+                                GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                                 //admin
                                 Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
                                 string textAutoRun = string.Format("{0}{1}{2} {3}Recruited{4}", colourAlert, actorNew.arc.name, colourEnd, colourGood, colourEnd);
@@ -6899,6 +6907,8 @@ public class ActorManager : MonoBehaviour
                     //initiliase unhappy timer
                     actor.unhappyTimer = unhappyTimer;
                     actor.isNewRecruit = true;
+                    //stats
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                 }
                 else { Debug.LogWarningFormat("Actor unable to be added to Reserve Pool"); }
                 //admin
@@ -6930,35 +6940,6 @@ public class ActorManager : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// Meta game processing of actors -> ensure alpha and tooltips are correct and all actors are active
-    /// </summary>
-    public void ProcessMetaActors()
-    {
-        float activeAlpha = GameManager.instance.guiScript.alphaActive;
-        //loop actors and check for status
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
-        if (arrayOfActors != null)
-        {
-            for (int i = 0; i < arrayOfActors.Length; i++)
-            {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
-                {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
-                    {
-                        //set actor to active (may have been lying low in previous level)
-                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
-                        actor.tooltipStatus = ActorTooltip.None;
-                        actor.Status = ActorStatus.Active;
-                        actor.inactiveStatus = ActorInactive.None;
-                    }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-    }
 
     //new methods above here
 }

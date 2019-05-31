@@ -2408,6 +2408,8 @@ public class NodeManager : MonoBehaviour
                                         loyalty -= crisisCityLoyalty;
                                         loyalty = Mathf.Max(0, loyalty);
                                         GameManager.instance.cityScript.CityLoyalty = loyalty;
+                                        //statistics
+                                        GameManager.instance.dataScript.StatisticIncrement(StatType.NodeCrisisExplodes);
                                         //admin                                
                                         msgText = string.Format("{0}, {1}, crisis ({2}) has EXPLODED", node.nodeName, node.Arc.name, node.crisis.tag);
                                         itemText = string.Format("{0}, {1}, crisis has EXPLODED", node.nodeName, node.Arc.name);

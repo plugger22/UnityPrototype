@@ -136,8 +136,8 @@
         StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
         PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
         TargetAttempts, TargetSuccesses,
-        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors,
-        NodeCrisis
+        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited,
+        NodeCrisis, NodeCrisisExplodes
     }
 
     //

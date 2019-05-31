@@ -486,14 +486,11 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
-        int numOfAutoRunTurns = 0;
+        int numOfAutoRunTurns = GameManager.instance.autoRunTurns - 1;
         isConnectionsChanged = false;
         //debugging
         if (isAutoRunTest == true)
-        {
-            DebugTest();
-            numOfAutoRunTurns = GameManager.instance.autoRunTurns - 1;
-        }
+        { DebugTest(); }
         //AI player ACTIVE
         if (status == ActorStatus.Active)
         {
