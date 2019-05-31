@@ -682,9 +682,18 @@ public class AIManager : MonoBehaviour
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
+        //clear collections (not required but do so regardless for safety)
+        ClearAICollections();
         //decision data
         totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
         totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
+        //reset decision metrics
+        connSecRatio = 0;
+        teamRatio = 0;
+        erasureTeamsOnMap = 0;
+        isInsufficientResources = false;
+        numOfUnsuccessfulResourceRequests = 0;
+        numOfSuccessfulResourceRequests = 0;
         //city
         city = GameManager.instance.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid City (Null)");

@@ -231,8 +231,8 @@ public class AIRebelManager : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 SubInitialiseAllEarly();
                 SubInitialiseLevelStart();
-                SubInitialiseAllLate();
                 SubInitialiseFollowOn();
+                SubInitialiseAllLate();               
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseAllEarly();

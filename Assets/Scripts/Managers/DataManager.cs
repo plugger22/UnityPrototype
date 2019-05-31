@@ -360,6 +360,10 @@ public class DataManager : MonoBehaviour
         teamPoolInTransit.Clear();
         //contact lists
         contactPool.Clear();
+        //ai 
+        queueRecentNodes.Clear();
+        queueRecentConnections.Clear();
+        Array.Clear(arrayOfAIResources, 0, arrayOfAIResources.Length);
         //gear lists
         listOfCommonGear.Clear();
         listOfRareGear.Clear();
