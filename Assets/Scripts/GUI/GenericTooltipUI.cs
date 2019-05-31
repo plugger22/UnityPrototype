@@ -28,16 +28,28 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private float mouseOverDelay;
     /*private float mouseOverFade;*/
     private bool onMouseFlag;
+    private bool isInitialiseDone;
     private Coroutine myCoroutine;
 
     private void Awake()
     {
         //NOTE: need to initialise here in Awake, doing so in Start causes issues
+        if (isInitialiseDone == false)
+        { Initialise();  }
+    }
+
+    /// <summary>
+    /// allows you to manually initialise before tooltip is used. Can ignore and will initialise automatically when it Awakes (See Notes in NBOS)
+    /// </summary>
+    public void Initialise()
+    {
         nodeID = -1;
         connID = -1;
         isNodeHighlightOn = false;
         isConnectionHighlightOn = false;
         isIgnoreClick = false;
+        isInitialiseDone = true;
+        Debug.LogFormat("[Tst] GenericTooltipUI.cs -> Initialise: {0}{1}", testTag, "\n");
     }
 
     /// <summary>

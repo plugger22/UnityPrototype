@@ -145,3 +145,54 @@ Dev seed 28905 -> Friday, 31 May 2019 3:23 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 890 -> Arles, France
+
+Dev seed 43648 -> Friday, 31 May 2019 4:40 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 2384 -> Friday, 31 May 2019 4:42 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 28213 -> Friday, 31 May 2019 4:53 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 34107 -> Friday, 31 May 2019 4:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41032 -> Friday, 31 May 2019 5:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36475 -> Friday, 31 May 2019 5:03 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid myCoroutine (should be Null), can't run FlashingSingleConnections as another connection coroutine already running
+UnityEngine.Debug:LogWarning(Object)
+	ConnectionManager:StartFlashingSingleConnection(Int32) (at Assets/Scripts/Managers/ConnectionManager.cs:359)
+	ConnectionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ConnectionManager.cs:102)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	GenericTooltipUI:OnPointerEnter(PointerEventData) (at Assets/Scripts/GUI/GenericTooltipUI.cs:70)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 12251 -> Friday, 31 May 2019 5:05 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 36759 -> Friday, 31 May 2019 5:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47145 -> Friday, 31 May 2019 5:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18125 -> Friday, 31 May 2019 5:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58862 -> Friday, 31 May 2019 5:17 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 17615 -> Friday, 31 May 2019 5:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35450 -> Friday, 31 May 2019 5:19 PM
+City seed 5678 -> London, United Kingdom

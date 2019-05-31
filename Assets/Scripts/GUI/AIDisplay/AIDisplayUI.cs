@@ -100,6 +100,10 @@ public class AIDisplayUI : MonoBehaviour
         Debug.Assert(topTaskTooltip != null, "Invalid topTaskTooltip (Null)");
         Debug.Assert(middleTaskTooltip != null, "Invalid middleTaskTooltip (Null)");
         Debug.Assert(bottomTaskTooltip != null, "Invalid bottomTaskTooltip (Null)");
+        //initialise tooltips
+        topTaskTooltip.Initialise();
+        middleTaskTooltip.Initialise();
+        bottomTabTooltip.Initialise();
         //buttons
         cancelInteraction = cancelButton.GetComponent<ButtonInteraction>();
         proceedInteraction = proceedButton.GetComponent<ButtonInteraction>();
