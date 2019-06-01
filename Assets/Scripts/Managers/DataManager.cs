@@ -370,6 +370,10 @@ public class DataManager : MonoBehaviour
         listOfUniqueGear.Clear();
         listOfLostGear.Clear();
         listOfCurrentGear.Clear();
+        //history lists
+        listOfHistoryRebelMove.Clear();
+        listOfHistoryNemesisMove.Clear();
+        listOfHistoryAutoRun.Clear();
         //nodes
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
@@ -6168,6 +6172,13 @@ public class DataManager : MonoBehaviour
     // - - - Tracker Data - - -
     //
 
+
+    public List<HistoryRebelMove> GetListOfHistoryRebelMove()
+    { return listOfHistoryRebelMove; }
+
+    public List<HistoryNemesisMove> GetListOfHistoryNemesisMove()
+    { return listOfHistoryNemesisMove; }
+
     /// <summary>
     /// Resistance AI or Player moves
     /// </summary>
@@ -6178,6 +6189,36 @@ public class DataManager : MonoBehaviour
         { listOfHistoryRebelMove.Add(data); }
         else { Debug.LogError("Invalid Resistance Tracker data (Null)"); }
     }
+
+    /// <summary>
+    /// Clear list and then copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfHistory"></param>
+    public void SetListOfHistoryRebelMove(List<HistoryRebelMove> listOfHistory)
+    {
+        if (listOfHistory != null)
+        {
+            listOfHistoryRebelMove.Clear();
+            listOfHistoryRebelMove.AddRange(listOfHistory);
+        }
+        else { Debug.LogError("Invalid listOfHistory (Null)"); }
+    }
+
+    /// <summary>
+    /// Clear list and then copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfHistory"></param>
+    public void SetListOfHistoryNemesisMove(List<HistoryNemesisMove> listOfHistory)
+    {
+        if (listOfHistory != null)
+        {
+            listOfHistoryNemesisMove.Clear();
+            listOfHistoryNemesisMove.AddRange(listOfHistory);
+        }
+        else { Debug.LogError("Invalid listOfHistory (Null)"); }
+    }
+
+
 
     /// <summary>
     /// Nemesis AI or Player controlled moves

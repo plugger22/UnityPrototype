@@ -40,6 +40,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     /// <summary>
     /// allows you to manually initialise before tooltip is used. Can ignore and will initialise automatically when it Awakes (See Notes in NBOS)
+    /// NOTE: Use this option if there a node or conn is to be highlighted when the tooltip is active (overcomes the highlighting not working the first time the tooltip is activated)
     /// </summary>
     public void Initialise()
     {
@@ -49,7 +50,6 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         isConnectionHighlightOn = false;
         isIgnoreClick = false;
         isInitialiseDone = true;
-        Debug.LogFormat("[Tst] GenericTooltipUI.cs -> Initialise: {0}{1}", testTag, "\n");
     }
 
     /// <summary>

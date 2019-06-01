@@ -362,6 +362,7 @@ namespace packageAPI
     /// <summary>
     /// tracks Resistance player or AI. One entry made every time player moves (eg. per action expended)
     /// </summary>
+    [System.Serializable]
     public class HistoryRebelMove
     {
         public int turn;
@@ -373,6 +374,7 @@ namespace packageAPI
     /// <summary>
     /// tracks Nemesis. One entry whenever nemesis moves
     /// </summary>
+    [System.Serializable]
     public class HistoryNemesisMove
     {
         public int turn;

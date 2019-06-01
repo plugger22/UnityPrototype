@@ -231,6 +231,14 @@ public class PlayerManager : MonoBehaviour
     {
         //place Player in a random start location (Sprawl node) -> AFTER Level and Session Initialisation
         InitialisePlayerStartNode();
+        //set player alpha to active (may have been lying low at end of previous level)
+        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+        //set default status
+        status = ActorStatus.Active;
+        inactiveStatus = ActorInactive.None;
+        tooltipStatus = ActorTooltip.None;
+        //remove any conditions, Player starts followOn level with a clean slate
+        RemoveAllConditions(GameManager.instance.sideScript.PlayerSide);
         //empty out gear list
         listOfGear.Clear();
     }
@@ -815,6 +823,21 @@ public class PlayerManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Used for a followOn level, Player starts with no conditions
+    /// </summary>
+    /// <param name="side"></param>
+    private void RemoveAllConditions(GlobalSide side)
+    {
+        //use correct list for the player side
+        List<Condition> listOfConditions = GetListOfConditionForSide(side);
+        if (listOfConditions != null)
+        {
+            if (listOfConditions.Count > 0)
+            { listOfConditions.Clear(); }
+        }
+        else { Debug.LogErrorFormat("Invalid listOfConditions (Null) for {0}", side); }
+    }
 
     /// <summary>
     /// Number of conditions present

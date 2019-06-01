@@ -196,3 +196,23 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 35450 -> Friday, 31 May 2019 5:19 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 53868 -> Saturday, 1 June 2019 10:33 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 18338 -> Saturday, 1 June 2019 10:38 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 53131 -> Saturday, 1 June 2019 10:46 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 39251 -> Saturday, 1 June 2019 11:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36891 -> Saturday, 1 June 2019 11:24 AM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom

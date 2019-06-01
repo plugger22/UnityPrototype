@@ -738,6 +738,18 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfItemDataByPriority (Null)"); }
         #endregion
+        #region history
+        //rebel moves
+        List<HistoryRebelMove> listOfHistoryRebel = GameManager.instance.dataScript.GetListOfHistoryRebelMove();
+        if (listOfHistoryRebel != null)
+        { write.dataData.listOfHistoryRebel.AddRange(listOfHistoryRebel); }
+        else { Debug.LogError("Invalid listOfHistoryRebelMove (Null)"); }
+        //nemesis moves
+        List<HistoryNemesisMove> listOfHistoryNemesis = GameManager.instance.dataScript.GetListOfHistoryNemesisMove();
+        if (listOfHistoryNemesis != null)
+        { write.dataData.listOfHistoryNemesis.AddRange(listOfHistoryNemesis); }
+        else { Debug.LogError("Invalid listOfHistoryNemesisMove (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -2047,6 +2059,10 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfItemDataByPriority (Null)"); }
+        #endregion
+        #region history
+        GameManager.instance.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
+        GameManager.instance.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
         #endregion
     }
     #endregion
