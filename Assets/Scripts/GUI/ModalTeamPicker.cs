@@ -61,55 +61,89 @@ public class ModalTeamPicker : MonoBehaviour
 
 
     /// <summary>
-    /// Initial set up
+    /// Initial set up. Conditional activation based on player side for GameState.LoadGame
     /// </summary>
     public void Initialise(GameState state)
     {
-        //session specific (once only)
-        if (GameManager.instance.inputScript.GameState == GameState.NewInitialisation)
+        //Authority player only
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         {
-            //assign sprites to team Images
-            Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
-            if (dictOfTeamArcs != null)
+            switch (state)
             {
-                if (dictOfTeamArcs.Count != arrayOfTeamOptions.Length)
-                { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamImages.Length {1}", dictOfTeamArcs.Count, arrayOfTeamOptions.Length)); }
-                else
-                {
-                    int limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamOptions.Length);
-                    //limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamTexts.Length);
-                    for (int index = 0; index < limit; index++)
-                    {
-                        //get TeamArc from dict based on index
-                        TeamArc arc = null;
-                        if (dictOfTeamArcs.ContainsKey(index) == true)
-                        {
-                            arc = dictOfTeamArcs[index];
-                            TeamInteraction teamUI = arrayOfTeamOptions[index].GetComponent<TeamInteraction>();
-                            if (teamUI != null)
-                            {
-                                //assign to sprite 
-                                teamUI.teamImage.sprite = arc.sprite;
-                                //assign to text (name of teamArc)
-                                teamUI.teamText.text = arc.name;
-                            }
-                            else { Debug.LogError("Invalid TeamChoiceUI component (Null)"); }
-                        }
-                        else { Debug.LogWarning(string.Format("Invalid arc index \"{0}\" for \"{1}\" -> No Sprite assigned", index, arc.name)); }
-                    }
-                }
+                case GameState.NewInitialisation:
+                    SubInitialiseSessionStart();
+                    SubInitialiseEvents();
+                    break;
+                case GameState.LoadAtStart:
+                    SubInitialiseSessionStart();
+                    SubInitialiseEvents();
+                    break;
+                case GameState.LoadGame:
+                    SubInitialiseSessionStart();
+                    SubInitialiseEvents();
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                    break;
             }
-            else { Debug.LogError("Invalid dictOfTeamArcs (null) -> Sprites not assigned to ModalTeamPicker"); }
-            //register listener
-            EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent, "ModalTeamPicker");
-            EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent, "ModalTeamPicker");
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalTeamPicker");
-            EventManager.instance.AddListener(EventType.ConfirmTeamActivate, OnEvent, "ModalTeamPicker");
-            EventManager.instance.AddListener(EventType.ConfirmTeamChoice, OnEvent, "ModalTeamPicker");
-            EventManager.instance.AddListener(EventType.ConfirmTeamDeactivate, OnEvent, "ModalTeamPicker");
         }
     }
 
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        //assign sprites to team Images
+        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
+        if (dictOfTeamArcs != null)
+        {
+            if (dictOfTeamArcs.Count != arrayOfTeamOptions.Length)
+            { Debug.LogWarning(string.Format("dictOfTeamArcs.Count {0} != arrayOfTeamImages.Length {1}", dictOfTeamArcs.Count, arrayOfTeamOptions.Length)); }
+            else
+            {
+                int limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamOptions.Length);
+                //limit = Mathf.Min(dictOfTeamArcs.Count, arrayOfTeamTexts.Length);
+                for (int index = 0; index < limit; index++)
+                {
+                    //get TeamArc from dict based on index
+                    TeamArc arc = null;
+                    if (dictOfTeamArcs.ContainsKey(index) == true)
+                    {
+                        arc = dictOfTeamArcs[index];
+                        TeamInteraction teamUI = arrayOfTeamOptions[index].GetComponent<TeamInteraction>();
+                        if (teamUI != null)
+                        {
+                            //assign to sprite 
+                            teamUI.teamImage.sprite = arc.sprite;
+                            //assign to text (name of teamArc)
+                            teamUI.teamText.text = arc.name;
+                        }
+                        else { Debug.LogError("Invalid TeamChoiceUI component (Null)"); }
+                    }
+                    else { Debug.LogWarning(string.Format("Invalid arc index \"{0}\" for \"{1}\" -> No Sprite assigned", index, arc.name)); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTeamArcs (null) -> Sprites not assigned to ModalTeamPicker"); }
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.OpenTeamPicker, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.CloseTeamPicker, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ConfirmTeamActivate, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ConfirmTeamChoice, OnEvent, "ModalTeamPicker");
+        EventManager.instance.AddListener(EventType.ConfirmTeamDeactivate, OnEvent, "ModalTeamPicker");
+    }
+    #endregion
+
+    #endregion
 
 
     /// <summary>

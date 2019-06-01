@@ -83,10 +83,90 @@ public class AIDisplayUI : MonoBehaviour
         return aiDisplayUI;
     }
 
-    public void Awake()
+    /// <summary>
+    /// Conditional activation based on player side for GameState.LoadGame
+    /// </summary>
+    /// <param name="state"></param>
+    public void Initialise(GameState state)
+    {
+        //Resistance Player only
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        {
+            switch (state)
+            {
+                case GameState.NewInitialisation:
+                    SubInitialiseSessionStart();
+                    SubInitialiseFastAccess();
+                    SubInitialiseEvents();
+                    SubInitialiseResistance();
+                    break;
+                case GameState.LoadAtStart:
+                    SubInitialiseSessionStart();
+                    SubInitialiseFastAccess();
+                    SubInitialiseEvents();
+                    SubInitialiseResistance();
+                    break;
+                case GameState.LoadGame:
+                    SubInitialiseSessionStart();
+                    SubInitialiseFastAccess();
+                    SubInitialiseEvents();
+                    SubInitialiseResistance();
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                    break;
+            }
+        }
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        aiSide = GameManager.instance.sideScript.GetAISide();      
+        flashRedTime = GameManager.instance.guiScript.flashRedTime;
+        Debug.Assert(aiSide != null, "Invalid AI side (Null)");
+        Debug.Assert(flashRedTime > 0, "Invalid flashRedTime ( <= 0 )");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listener
+        EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AISendHackingData, OnEvent, "AIDisplayUI");
+        EventManager.instance.AddListener(EventType.AIDisplayPanelOpen, OnEvent, "AIDisplayUI");
+    }
+    #endregion
+
+    #region SubInitialiseResistance
+    private void SubInitialiseResistance()
+    {
+        //tooltip data
+        InitialiseTooltips();
+        Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
+        //set button sprites
+        cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+        proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+        //top text
+        tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagAIName, "\n");
+        //active
+        isActive = true;
+        //set all sub compoponents
+        SetAllStatus(isActive);
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
     {
         hackingDetected = string.Format("Hacking Attempt{0}<b>DETECTED</b>", "\n");
-        tabBottomText.text = string.Format("Hacking Status{0}<b>UNKNOWN</b>", "\n");        
+        tabBottomText.text = string.Format("Hacking Status{0}<b>UNKNOWN</b>", "\n");
         //tabs
         topTabTooltip = tabTopMouse.GetComponent<GenericTooltipUI>();
         bottomTabTooltip = tabBottomMouse.GetComponent<GenericTooltipUI>();
@@ -112,58 +192,10 @@ public class AIDisplayUI : MonoBehaviour
         cancelInteraction.SetButton(EventType.AIDisplayClose);
         proceedInteraction.SetButton(EventType.AIDisplayPanelOpen);
     }
+    #endregion
 
+    #endregion
 
-    /// <summary>
-    /// Start runs BEFORE Initialise
-    /// </summary>
-    public void Start()
-    {
-        //event listener
-        EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AISendHackingData, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AIDisplayPanelOpen, OnEvent, "AIDisplayUI");
-    }
-
-
-    public void Initialise(GameState state)
-    {
-        //only initialise if player is Resistance
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-        {
-            //ai controlled side
-            aiSide = GameManager.instance.sideScript.GetAISide();
-            Debug.Assert(aiSide != null, "Invalid AI side (Null)");
-            //tooltip data
-            InitialiseTooltips();
-            flashRedTime = GameManager.instance.guiScript.flashRedTime;
-            Debug.Assert(flashRedTime > 0, "Invalid flashRedTime ( <= 0 )");
-
-            Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
-            //set button sprites
-            cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-            proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-            //top text
-            tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagAIName, "\n");
-            //active
-            isActive = true;
-        }
-        else
-        {
-            //ai display not needed
-            isActive = false;
-            //remove listeners
-            EventManager.instance.RemoveEvent(EventType.AIDisplayOpen);
-            EventManager.instance.RemoveEvent(EventType.AIDisplayClose);
-            EventManager.instance.RemoveEvent(EventType.AISendDisplayData);
-            EventManager.instance.RemoveEvent(EventType.AISendHackingData);
-            EventManager.instance.RemoveEvent(EventType.AIDisplayPanelOpen);
-        }
-        //set all sub compoponents
-        SetAllStatus(isActive);
-    }
 
     /// <summary>
     /// Event handler

@@ -83,6 +83,29 @@ public class CityInfoUI : MonoBehaviour
 
     public void Initialise(GameState state)
     {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
         int counter = 0;
         //cache list of District names
         listOfDistrictNames = new List<string>();
@@ -95,12 +118,21 @@ public class CityInfoUI : MonoBehaviour
         else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
         Debug.LogFormat("CityInfoUI -> Initialise: {0} records addd to listOfDistrictNames", counter);
         Debug.Assert(counter > 0, "Invalid number of records added to listOfDistrictNames");
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         SetAllToActive();
         SetOpacities();
         SetFixedTooltips();
     }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseFastAccess()
+    {
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+    }
+    #endregion
+
+    #endregion
 
 
     public void Start()

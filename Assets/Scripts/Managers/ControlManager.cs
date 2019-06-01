@@ -137,8 +137,8 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.instance.campaignScript.Reset();
-        //set up new level
-        GameManager.instance.InitialiseNewLevel();
+        //set up first level in campaign
+        GameManager.instance.InitialiseNewSession();
         //revert to playGame state by default
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
         //close background
@@ -227,7 +227,7 @@ public class ControlManager : MonoBehaviour
         {
             //change game state
             GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
-            //create new level
+            //create new followOn level
             GameManager.instance.InitialiseNewLevel();
             //revert to playGame state by default
             GameManager.instance.inputScript.GameState = GameState.PlayGame;

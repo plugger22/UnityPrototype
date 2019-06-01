@@ -223,7 +223,31 @@ public class MainInfoUI : MonoBehaviour
         return mainInfoUI;
     }
 
-    private void Awake()
+
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
     {
         //collections
         arrayItemMain = new GameObject[numOfItemsTotal];
@@ -427,41 +451,6 @@ public class MainInfoUI : MonoBehaviour
         cloneRectTransform.position = new Vector3(tickerRectTransform.position.x, tickerRectTransform.position.y, tickerRectTransform.position.z);
         tickerObject.SetActive(true);
         cloneTickerText.gameObject.SetActive(true);
-    }
-
-    public void Start()
-    {
-        //priority icons
-        priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
-        priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
-        priorityLow = GameManager.instance.guiScript.priorityLowSprite;
-        Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
-        Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
-        Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoOpenInterim, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoEnd, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoUpArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoDownArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoLeftArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoShowMe, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoRestore, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoTickerFaster, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoTickerSlower, OnEvent, "MainInfoUI");
-    }
-
-    public void Initialise(GameState state)
-    {
         //initiliase Active tabs
         for (int index = 0; index < tabActiveArray.Length; index++)
         {
@@ -525,6 +514,50 @@ public class MainInfoUI : MonoBehaviour
         InitialiseItems();
         InitialiseTooltips();
     }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        //priority icons
+        priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
+        priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
+        priorityLow = GameManager.instance.guiScript.priorityLowSprite;
+        Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
+        Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
+        Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
+
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listener
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoOpenInterim, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoEnd, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoUpArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoDownArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoLeftArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoShowMe, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoRestore, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoTickerFaster, OnEvent, "MainInfoUI");
+        EventManager.instance.AddListener(EventType.MainInfoTickerSlower, OnEvent, "MainInfoUI");
+    }
+    #endregion
+
+    #endregion
+
 
     private void InitialiseItems()
     {

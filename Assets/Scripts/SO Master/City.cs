@@ -92,7 +92,10 @@ public class City : ScriptableObject
     public void AddOrganisation(Organisation organisation)
     {
         if (organisation != null)
-        { listOfOrganisations.Add(organisation); }
+        {
+            listOfOrganisations.Add(organisation);
+            Debug.LogFormat("[Org] CityManager.cs -> AddOrganisation: {0} present in {1}{2}", organisation.name, this.name, "\n");
+        }
         else { Debug.LogWarning("Invalid organisation (Null)"); }
     }
    

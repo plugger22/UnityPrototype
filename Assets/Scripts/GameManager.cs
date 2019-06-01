@@ -130,6 +130,7 @@ public class GameManager : MonoBehaviour
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods
     private List<StartMethod> listOfLevelMethods = new List<StartMethod>();         //level related methods
     private List<StartMethod> listOfUIMethods = new List<StartMethod>();            //UI related methods
+    private List<StartMethod> listOfConditionalMethods = new List<StartMethod>();   //methods (UI) that conditionally apply, eg. if Resistance Player. Used for InitialiseLoadGame
     private List<StartMethod> listOfDebugMethods = new List<StartMethod>();         //Debug related methods
     private List<StartMethod> listOfLoadMethods = new List<StartMethod>();          //Load a saved game methods (used to regenerate the loaded level). For AI (both sides) Player
 
@@ -339,7 +340,7 @@ public class GameManager : MonoBehaviour
             inputScript.GameState = GameState.NewInitialisation;
             //debug -> set to campaign start
             campaignScript.Reset();
-            InitialiseNewLevel();
+            InitialiseNewSession();
             //commence autorun
             turnScript.SetAutoRun(autoRunTurns);
         }
@@ -606,7 +607,8 @@ public class GameManager : MonoBehaviour
         //Team Picker
         startMethod.handler = teamPickerScript.Initialise;
         startMethod.className = "TeamPickerUI";
-        listOfLevelMethods.Add(startMethod);
+        listOfUIMethods.Add(startMethod);
+        listOfConditionalMethods.Add(startMethod);
         //City Info UI
         startMethod.handler = cityInfoScript.Initialise;
         startMethod.className = "CityInfoUI";
@@ -619,10 +621,12 @@ public class GameManager : MonoBehaviour
         startMethod.handler = aiDisplayScript.Initialise;
         startMethod.className = "AIDisplayUI";
         listOfUIMethods.Add(startMethod);
+        listOfConditionalMethods.Add(startMethod);
         //AI SideTab UI -> after AI Display UI
         startMethod.handler = aiSideTabScript.Initialise;
         startMethod.className = "AISideTabUI";
         listOfUIMethods.Add(startMethod);
+        listOfConditionalMethods.Add(startMethod);
         //Widget Top UI
         startMethod.handler = widgetTopScript.Initialise;
         startMethod.className = "WidgetTopUI";
@@ -721,11 +725,11 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region InitialiseNewLevel
+    #region InitialiseNewSession
     /// <summary>
-    /// Create new level (session start or followOn level
+    /// New Session create level
     /// </summary>
-    public void InitialiseNewLevel()
+    public void InitialiseNewSession()
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
@@ -757,6 +761,34 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
+    #region InitialiseNewLevel
+    /// <summary>
+    /// New FollowOn level
+    /// </summary>
+    public void InitialiseNewLevel()
+    {
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+        //start sequence
+        if (isPerformanceLog == false)
+        {
+            //normal
+            InitialiseMethods(listOfLevelMethods);
+        }
+        else
+        {
+            //Performance Monitoring
+            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+            DisplayTotalTime();
+        }
+        //do a final redraw before level start
+        nodeScript.NodeRedraw = true;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+    }
+    #endregion
+
+
     #region InitialiseLoadGame
     /// <summary>
     /// Load a save game, methods required to generate the new level based on the loaded scenario seed. Input playerSide.level so the appropriate AI initialisation can be done
@@ -769,12 +801,12 @@ public class GameManager : MonoBehaviour
         {
             //initialises both AI sides regardless as some Authority AI data collections are required for the others
             InitialiseMethods(listOfLoadMethods);
+            InitialiseMethods(listOfConditionalMethods);
         }
         else
         {
             InitialiseMethods(listOfLevelMethods);
-            InitialiseMethods(listOfUIMethods);
-            InitialiseMethods(listOfDebugMethods);
+            InitialiseMethods(listOfConditionalMethods);
             //set session flag
             isSession = true;
         }

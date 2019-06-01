@@ -37,29 +37,6 @@ public class WidgetTopUI : MonoBehaviour
     private static WidgetTopUI widgetTopUI;
 
 
-    public void Start()
-    {
-        //cache components
-        transformCity = barCity.GetComponent<RectTransform>();
-        transformFaction = barFaction.GetComponent<RectTransform>();
-        flashRedTime = GameManager.instance.guiScript.flashRedTime;
-        Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
-        Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
-        Debug.Assert(flashRedTime > 0.0f, "Invalid flashRedTime (Zero)");
-        //event listener
-        EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.StopSecurityFlash, OnEvent, "WidgetTopUI");
-    }
-
-
     /// <summary>
     /// provide a static reference to widgetTopUI that can be accessed from any script
     /// </summary>
@@ -78,6 +55,61 @@ public class WidgetTopUI : MonoBehaviour
 
     public void Initialise(GameState state)
     {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                SubInitialiseSessionStart();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        flashRedTime = GameManager.instance.guiScript.flashRedTime;
+        Debug.Assert(flashRedTime > 0.0f, "Invalid flashRedTime (Zero)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listener
+        EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.StopSecurityFlash, OnEvent, "WidgetTopUI");
+
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        //cache components
+        transformCity = barCity.GetComponent<RectTransform>();
+        transformFaction = barFaction.GetComponent<RectTransform>();
+        Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
+        Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
         //get correct number of action points
         SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
         //flash red inner opacity set to 0
@@ -94,6 +126,9 @@ public class WidgetTopUI : MonoBehaviour
         SetStar(10f, AlignHorizontal.Centre);
         SetStar(10f, AlignHorizontal.Right);
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// Event handler

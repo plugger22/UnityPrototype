@@ -49,60 +49,87 @@ public class AISideTabUI : MonoBehaviour
         return aiSideTabUI;
     }
 
+
     /// <summary>
-    /// Start runs BEFORE Initialise
+    /// Initialise. Conditional activiation depending on player side for GameState.LoadGame
     /// </summary>
-    public void Start()
+    public void Initialise(GameState state)
+    {
+        //Resistance player only
+        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        {
+            switch (state)
+            {
+                case GameState.NewInitialisation:
+                    SubInitialiseFastAccess();
+                    SubInitialiseSessionStart();
+                    SubInitialiseEvents();
+                    break;
+                case GameState.LoadAtStart:
+                    SubInitialiseFastAccess();
+                    SubInitialiseSessionStart();
+                    SubInitialiseEvents();
+                    break;
+                case GameState.LoadGame:
+                    SubInitialiseFastAccess();
+                    SubInitialiseSessionStart();
+                    SubInitialiseEvents();
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                    break;
+            }
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+{
+    //tooltip
+    tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
+    Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
+    tooltip.isIgnoreClick = true;
+    tooltip.testTag = "AISideTabUI";
+    tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
+    tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
+    //data
+    topText.text = "AI";
+    bottomText.text = "-";
+    hackingStatus = HackingStatus.Initialising;
+    myCoroutine = null;
+    isFading = false;
+    //set alert flasher to zero opacity
+    tempColour = alertFlasher.color;
+    tempColour.a = 0.0f;
+    alertFlasher.color = tempColour;
+    //set to Active
+    isActive = true;
+    //Set all components 
+    SetAllStatus(isActive);
+}
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
+        Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
     {
         //event listener
         EventManager.instance.AddListener(EventType.AISideTabOpen, OnEvent, "AISideTabUI");
         EventManager.instance.AddListener(EventType.AISideTabClose, OnEvent, "AISideTabUI");
         EventManager.instance.AddListener(EventType.AISendSideData, OnEvent, "AISideTabUI");
     }
+    #endregion
 
-    /// <summary>
-    /// called from AIDisplayUI.cs -> Initialise, not GameManager
-    /// </summary>
-    public void Initialise(GameState state)
-    {
-        if (GameManager.instance.aiDisplayScript.isActive == true)
-        {
-            //tooltip
-            tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
-            Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
-            tooltip.isIgnoreClick = true;
-            /*tooltip.x_offset = 20;*/
-            tooltip.testTag = "AISideTabUI";
-            tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
-            tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
-            //flashing alert
-            flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
-            Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
-            //data
-            topText.text = "AI";
-            bottomText.text = "-";
-            hackingStatus = HackingStatus.Initialising;
-            myCoroutine = null;
-            isFading = false;
-            //set alert flasher to zero opacity
-            tempColour = alertFlasher.color;
-            tempColour.a = 0.0f;
-            alertFlasher.color = tempColour;
-            //set to Active
-            isActive = true;
-        }
-        else
-        {
-            //AI side tab not needed
-            isActive = false;
-            //remove listeners
-            EventManager.instance.RemoveEvent(EventType.AISideTabOpen);
-            EventManager.instance.RemoveEvent(EventType.AISideTabClose);
-            EventManager.instance.RemoveEvent(EventType.AISendSideData);
-        }
-        //Set all components 
-        SetAllStatus(isActive);
-    }
+    #endregion
 
     /// <summary>
     /// Event handler
