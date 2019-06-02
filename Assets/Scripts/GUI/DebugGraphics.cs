@@ -33,11 +33,33 @@ public class DebugGraphics : MonoBehaviour
 
     public void Initialise(GameState state)
     {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseSessionStart();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
         //adjust scale of centre Plane
         float scaleFactor = GameManager.instance.aiScript.nodeGeographicCentre;
         float newScale = 1.1f * scaleFactor / 100f;
         centrePlane.transform.localScale = new Vector3(newScale, 1.15f, newScale);
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// set debug centre pane on/off depending on status
