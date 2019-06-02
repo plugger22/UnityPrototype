@@ -337,6 +337,7 @@ public class SaveAIData
     public List<AITask> listOfTasksFinal = new List<AITask>();
     public List<string> listOfPlayerEffects = new List<string>();
     public List<string> listOfPlayerEffectDescriptors = new List<string>();
+    public List<int> listOfAITaskTypesAuthority = new List<int>();
     //AIManager.cs -> public fields
     public bool immediateFlagAuthority;
     public bool immediateFlagResistance;
@@ -361,6 +362,7 @@ public class SaveAIData
     public SaveAIRebelClass saveRebel;
     public List<AITracker> listOfNemesisReports = new List<AITracker>();
     public List<AITracker> listOfErasureReports = new List<AITracker>();
+    public List<int> listOfAITaskTypesRebel = new List<int>();
 }
 #endregion
 

@@ -1156,6 +1156,11 @@ public class FileManager : MonoBehaviour
         if (listOfPlayerEffectDescriptors != null)
         { write.aiData.listOfPlayerEffectDescriptors.AddRange(listOfPlayerEffectDescriptors); }
         else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
+        //list -> arrayOfAITaskTypes (Authority)
+        int[] arrayOfAITaskTypes = GameManager.instance.aiScript.GetArrayOfAITaskTypes();
+        if (arrayOfAITaskTypes != null)
+        { write.aiData.listOfAITaskTypesAuthority.AddRange(arrayOfAITaskTypes); }
+        else { Debug.LogError("Invalid arrayOfAITaskTypesAuthority (Null)"); }
         //AIManager.cs -> public fields
         write.aiData.immediateFlagAuthority = GameManager.instance.aiScript.immediateFlagAuthority;
         write.aiData.immediateFlagResistance = GameManager.instance.aiScript.immediateFlagResistance;
@@ -1190,6 +1195,10 @@ public class FileManager : MonoBehaviour
         if (tempListErasure != null)
         { write.aiData.listOfErasureReports.AddRange(tempListErasure); }
         else { Debug.LogError("Invalid listOfErasureReports (Null)"); }
+        arrayOfAITaskTypes = GameManager.instance.aiRebelScript.GetArrayOfAITaskTypes();
+        if (arrayOfAITaskTypes != null)
+        { write.aiData.listOfAITaskTypesRebel.AddRange(arrayOfAITaskTypes); }
+        else { Debug.LogError("Invalid arrayOfAITaskTypesRebel (Null)"); }
     }
     #endregion
 
@@ -2634,12 +2643,11 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadAIData()
     {
-        //list -> tasks final
+        //AIManager -> collection
         GameManager.instance.aiScript.SetListOfTasksFinal(read.aiData.listOfTasksFinal);
-        //list -> player effects
         GameManager.instance.aiScript.SetListOfPlayerEffects(read.aiData.listOfPlayerEffects);
-        //list -> player effects description
         GameManager.instance.aiScript.SetListOfPlayerEffectDescriptors(read.aiData.listOfPlayerEffectDescriptors);
+        GameManager.instance.aiScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesAuthority);
         //
         // - - - update displays -> load game could have been called from a hot key or the main menu
         //
@@ -2677,6 +2685,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.aiRebelScript.SetListOfNemesisReports(read.aiData.listOfNemesisReports);
         //AIRebelManager -> Erasure Reports
         GameManager.instance.aiRebelScript.SetListOfErasureReports(read.aiData.listOfErasureReports);
+        GameManager.instance.aiRebelScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesRebel);
     }
     #endregion
 

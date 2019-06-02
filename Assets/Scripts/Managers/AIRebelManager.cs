@@ -4788,6 +4788,24 @@ public class AIRebelManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfReports (Null)"); }
     }
 
+
+    public int[] GetArrayOfAITaskTypes()
+    { return arrayOfAITaskTypes; }
+
+    /// <summary>
+    /// Clear array and copy across loaded save game data
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetArrayOfAITaskTypes(List<int> tempList)
+    {
+        if (tempList != null)
+        {
+            Array.Clear(arrayOfAITaskTypes, 0, arrayOfAITaskTypes.Length);
+            arrayOfAITaskTypes = tempList.ToArray();
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
     //
     // - - -  Debug - - -
     //
