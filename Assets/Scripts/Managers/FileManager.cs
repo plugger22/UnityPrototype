@@ -174,27 +174,32 @@ public class FileManager : MonoBehaviour
     {
         if (read != null)
         {
-            //side (player) at start
-            ReadOptionData();
-            ReadDataData();
-            ReadCampaignData();
-            ReadGameData();
-            //set up level based on loaded current scenario seed
-            GameManager.instance.InitialiseLoadGame(read.gameData.playerSide.level);
-            ReadScenarioData();
-            ReadNodeData();
-            ReadConnectionData();
-            ReadNemesisData();
-            ReadGearData();
-            ReadAIData();
-            ReadActorData();
-            ValidateActorData();
-            ReadPlayerData();
-            ValidatePlayerData();
-            ReadContactData();
-            ReadTargetData();
-            UpdateGUI();
-            Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
+            GlobalSide playerSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.playerSide);
+            if (playerSide != null)
+            {
+                //side (player) at start
+                ReadOptionData();
+                ReadDataData();
+                ReadCampaignData();
+                ReadGameData();
+                //set up level based on loaded current scenario seed
+                GameManager.instance.InitialiseLoadGame(playerSide.level);
+                ReadScenarioData();
+                ReadNodeData();
+                ReadConnectionData();
+                ReadNemesisData();
+                ReadGearData();
+                ReadAIData();
+                ReadActorData();
+                ValidateActorData();
+                ReadPlayerData();
+                ValidatePlayerData();
+                ReadContactData();
+                ReadTargetData();
+                UpdateGUI();
+                Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
+            }
+            else { Debug.LogError("Invalid playerSide (Null)"); }
         }
     }
     #endregion
@@ -300,14 +305,14 @@ public class FileManager : MonoBehaviour
         write.gameData.authorityCurrent = GameManager.instance.sideScript.authorityCurrent;
         write.gameData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
         write.gameData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
-        write.gameData.playerSide = GameManager.instance.sideScript.PlayerSide;
+        write.gameData.playerSide = GameManager.instance.sideScript.PlayerSide.name;
         //turnManager.cs -> private fields
         write.gameData.turnData = GameManager.instance.turnScript.LoadWriteData();
         //turnManager.cs -> public fields
         write.gameData.winStateLevel = GameManager.instance.turnScript.winStateLevel;
         write.gameData.winReasonLevel = GameManager.instance.turnScript.winReasonLevel;
         write.gameData.authoritySecurity = GameManager.instance.turnScript.authoritySecurityState;
-        write.gameData.currentSide = GameManager.instance.turnScript.currentSide;
+        write.gameData.currentSide = GameManager.instance.turnScript.currentSide.name;
         write.gameData.haltExecution = GameManager.instance.turnScript.haltExecution;
         //top widget
         write.gameData.isSecurityFlash = GameManager.instance.widgetTopScript.CheckSecurityFlash();
@@ -1435,14 +1440,20 @@ public class FileManager : MonoBehaviour
         GameManager.instance.sideScript.authorityCurrent = read.gameData.authorityCurrent;
         GameManager.instance.sideScript.resistanceOverall = read.gameData.resistanceOverall;
         GameManager.instance.sideScript.authorityOverall = read.gameData.authorityOverall;
-        GameManager.instance.sideScript.PlayerSide = read.gameData.playerSide;
+        GlobalSide playerSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.playerSide);
+        if (playerSide != null)
+        { GameManager.instance.sideScript.PlayerSide = playerSide; }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
         //turnManager.cs -> private fields
         GameManager.instance.turnScript.LoadReadData(read.gameData.turnData);
         //turnManager.cs -> public fields
         GameManager.instance.turnScript.winStateLevel = read.gameData.winStateLevel;
         GameManager.instance.turnScript.winReasonLevel = read.gameData.winReasonLevel;
         GameManager.instance.turnScript.authoritySecurityState = read.gameData.authoritySecurity;
-        GameManager.instance.turnScript.currentSide = read.gameData.currentSide;
+        GlobalSide currentSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.currentSide);
+        if (currentSide != null)
+        { GameManager.instance.turnScript.currentSide = currentSide; }
+        else { Debug.LogError("Invalid currentSide (Null)"); }
         GameManager.instance.turnScript.haltExecution = read.gameData.haltExecution;
 
 
@@ -2107,7 +2118,10 @@ public class FileManager : MonoBehaviour
                     actor.datapoint0 = readActor.datapoint0;
                     actor.datapoint1 = readActor.datapoint1;
                     actor.datapoint2 = readActor.datapoint2;
-                    actor.side = readActor.side;
+                    GlobalSide actorSide = GameManager.instance.dataScript.GetGlobalSide(readActor.side);
+                    if (actorSide != null)
+                    { actor.side = actorSide; }
+                    else { Debug.LogError("Invalid actorSide (Null)"); }
                     actor.slotID = readActor.slotID;
                     actor.level = readActor.level;
                     actor.nodeCaptured = readActor.nodeCaptured;
@@ -2902,16 +2916,19 @@ public class FileManager : MonoBehaviour
     {
         //Top Widget UI
         TopWidgetData widget = new TopWidgetData();
-        widget.side = read.gameData.playerSide;
+        GlobalSide playerSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.playerSide);
+        if (playerSide != null)
+        { widget.side = playerSide; }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
         widget.turn = read.gameData.turnData.turn;
         widget.actionPoints = read.gameData.turnData.actionsTotal - read.gameData.turnData.actionsCurrent;
         widget.cityLoyalty = read.scenarioData.cityLoyalty;
         //faction support depends on side
-        switch (read.gameData.playerSide.level)
+        switch (playerSide.level)
         {
             case 1: widget.factionSupport = read.scenarioData.factionSupportAuthority; break;
             case 2: widget.factionSupport = read.scenarioData.factionSupportResistance; break;
-            default: Debug.LogError("Unrecognised {0}", read.gameData.playerSide); break;
+            default: Debug.LogError("Unrecognised {0}", playerSide); break;
         }
         widget.isSecurityFlash = read.gameData.isSecurityFlash;
 
@@ -3062,7 +3079,7 @@ public class FileManager : MonoBehaviour
         saveActor.datapoint0 = actor.datapoint0;
         saveActor.datapoint1 = actor.datapoint1;
         saveActor.datapoint2 = actor.datapoint2;
-        saveActor.side = actor.side;
+        saveActor.side = actor.side.name;
         saveActor.slotID = actor.slotID;
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;

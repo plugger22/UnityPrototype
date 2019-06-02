@@ -207,9 +207,13 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
     private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                         //Key -> cureID, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();             //Key -> sprite name, Value -> Sprite
+
+    #region SO enum Dictionaries
     //global SO's (enum equivalents)
-    private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();           //Key -> Condition.tag, Value -> Condition
-    private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();  //Key -> Category.name, Value -> TraitCategory
+    private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();                   //Key -> Condition.tag, Value -> Condition
+    private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();      //Key -> Category.name, Value -> TraitCategory
+    private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();                 //Key -> GlobalSide.name, Value -> GlobalSide
+    #endregion
 
     //
     // - - - Initialisation - - -
@@ -6424,6 +6428,29 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid spriteName (Null or Empty)"); }
         return sprite;
+    }
+
+    //
+    // - - - SO Enum dictionaries
+    //
+
+    public Dictionary<string, GlobalSide> GetDictOfGlobalSide()
+    { return dictOfGlobalSide; }
+
+    /// <summary>
+    /// returns globalSide based on name, Null if a problem
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public GlobalSide GetGlobalSide(string name)
+    {
+        if (String.IsNullOrEmpty(name) == false)
+        {
+            if (dictOfGlobalSide.ContainsKey(name) == true)
+            { return dictOfGlobalSide[name]; }
+        }
+        else { Debug.LogError("Invalid GlobalSide name parameter (Null or Empty)"); }
+        return null;
     }
 
     //new methods above here

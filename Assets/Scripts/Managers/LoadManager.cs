@@ -120,17 +120,33 @@ public class LoadManager : MonoBehaviour
         //
         // - - - GlobalType (not stored in a collection)
         //
+
         numArray = arrayOfGlobalType.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
+
+
         //
         // - - - GlobalSide (not stored in a collection)
         //
-        numArray = arrayOfGlobalSide.Length;
-        if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
+        Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
+        if (dictOfGlobalSide != null)
+        {
+            numArray = arrayOfGlobalSide.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
+            //add to dictionary
+            foreach (GlobalSide side in arrayOfGlobalSide)
+            {
+                try
+                { dictOfGlobalSide.Add(side.name, side); }
+                catch (ArgumentException)
+                { Debug.LogWarningFormat("Duplicate record exists in dictOfGlobalSide for {0}", side); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfGlobalSide (Null)"); }
         //
         // - - - GlobalWho (not stored in a collection)
         //

@@ -170,13 +170,13 @@ public class SaveGameData
     public SideState authorityCurrent;
     public SideState resistanceOverall;
     public SideState authorityOverall;
-    public GlobalSide playerSide;
+    public string playerSide;
     //turnManager.cs
     public TurnActionData turnData;
     public WinState winStateLevel;
     public WinReason winReasonLevel;
     public AuthoritySecurityState authoritySecurity;
-    public GlobalSide currentSide;
+    public string currentSide;
     public bool haltExecution;
     public bool isSecurityFlash;
 }
@@ -459,7 +459,7 @@ public class SaveActor
     public int datapoint0;
     public int datapoint1;
     public int datapoint2;
-    public GlobalSide side;
+    public string side;
     public int slotID;
     public int level;
     public int nodeCaptured;

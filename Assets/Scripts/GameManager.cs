@@ -882,49 +882,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    // EDIT: No longer in use
-    private void StartArchive()
-    {
-        
-        //lock mouse to prevent mouseover events occuring prior to full initialisation
-        Cursor.lockState = CursorLockMode.Locked;
-
-        //start sequence
-        if (isPerformanceLog == false)
-        {
-            //normal start-up
-            InitialiseMethods(listOfGlobalMethods);
-            InitialiseMethods(listOfGameMethods);
-            InitialiseMethods(listOfLevelMethods);
-            InitialiseMethods(listOfUIMethods);
-            InitialiseMethods(listOfDebugMethods);
-        }
-        else
-        {
-            //need testManager in order to access performance timer
-            testScript.Initialise();
-            //start-up with Performance Monitoring
-            InitialiseWithPerformanceMonitoring(listOfGlobalMethods);
-            InitialiseWithPerformanceMonitoring(listOfGameMethods);
-            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
-            InitialiseWithPerformanceMonitoring(listOfUIMethods);
-            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
-            DisplayTotalTime();
-        }
-        //do a final redraw before game start
-        nodeScript.NodeRedraw = true;
-        //free mouse for normal operations
-        Cursor.lockState = CursorLockMode.None;
-        //colour scheme
-        optionScript.ColourOption = ColourScheme.Normal;
-        //AutoRun
-        if (autoRunTurns > 0)
-        { GameManager.instance.turnScript.SetAutoRun(autoRunTurns); }
-        else
-        {
-            InitialiseMainMenu();
-        }
-    }
 
     //place methods above here
 }
