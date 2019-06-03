@@ -549,7 +549,7 @@ public class SaveNode
 
     public int crisisTimer;
     public int waitTimer;
-    public NodeCrisis crisis;
+    public int nodeCrisis = -1;                      //to handle null values
 
     public LoiterData loiter;
     public int cureID;

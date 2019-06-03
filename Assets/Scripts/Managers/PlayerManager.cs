@@ -489,7 +489,7 @@ public class PlayerManager : MonoBehaviour
             else
             { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
         }
-        else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }
+        /*else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }*/
         return false;
     }
 
@@ -1224,8 +1224,8 @@ public class PlayerManager : MonoBehaviour
         else
         {
             //gear inventory already full
-            Debug.LogWarning("You cannot exceed the maximum num of Gear -> gear not added");
             text = string.Format("{0} NOT added as Gear Allowance MAXXED{1}Press ESC to exit", gearName, "\n");
+            /*Debug.LogWarning("You cannot exceed the maximum num of Gear -> gear not added");*/
         }
         return text;
     }

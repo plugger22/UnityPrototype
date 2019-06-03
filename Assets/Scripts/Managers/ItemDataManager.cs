@@ -573,7 +573,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}<b>has {1} a Contact</b>{2}{3}", colourVerb, verb, colourEnd, "\n");
         if (string.IsNullOrEmpty(reason) == false)
         { builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, reason, colourEnd, "\n"); }
-        builder.AppendFormat("{0}{1}<b>{2}</b>{3} contact{4}", "\n", colourNeutral, contact.type.name, colourEnd, "\n");
+        builder.AppendFormat("{0}{1}<b>{2}</b>{3} contact{4}", "\n", colourNeutral, contact.typeName, colourEnd, "\n");
         builder.AppendFormat("{0} {1}, {2}<b>{3}</b>{4}{5}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n");
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         //effectiveness (convert to text string, put into current or past tense and colour code)
@@ -1578,16 +1578,16 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="target"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public string GetTargetNewDetails(Node node, Target target, string sideText, GlobalSide side)
+    public string GetTargetNewDetails(Node node, Target target, string sideText, int sideLevel)
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(sideText) == true) { sideText = "Unknown"; }
-        if (side.level == globalResistance.level)
+        if (sideLevel == globalResistance.level)
         { builder.AppendFormat("An {0}<b>{1}</b>{2} exists at{3}", colourGood, sideText, colourEnd, "\n"); }
         else { builder.AppendFormat("{0}<b>{1}</b>{2} identified at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<size=110%><b>{1}</b></size>{2}{3}", colourAlert, target.targetName, colourEnd, "\n");
-        if (side.level == globalResistance.level)
+        if (sideLevel == globalResistance.level)
         {
             builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, target.descriptorResistance, colourEnd, "\n");
             builder.AppendFormat("{0}<b>{1} gear</b>{2} bonus{3}", colourRebel, target.gear.name, colourEnd, "\n");
@@ -1607,11 +1607,11 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="sideText"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public string GetTargetExpiredDetails(Node node, Target target, string sideText, GlobalSide side)
+    public string GetTargetExpiredDetails(Node node, Target target, string sideText, int sideLevel)
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(sideText) == true) { sideText = "Unknown"; }
-        if (side.level == globalResistance.level)
+        if (sideLevel == globalResistance.level)
         { builder.AppendFormat("Expired {0}{1}{2} at{3}", colourGood, sideText, colourEnd, "\n"); }
         else { builder.AppendFormat("{0}<b>{1}</b>{2} has been resolved at{3}", colourBad, sideText, colourEnd, "\n"); }
         builder.AppendFormat("{0}, {1}<b>{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");

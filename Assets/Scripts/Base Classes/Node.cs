@@ -1040,10 +1040,10 @@ public class Node : MonoBehaviour
             effect.nodeTooltip = ongoing.nodeTooltip;
             effect.value = ongoing.value;
             effect.timer = ongoing.timer;
-            effect.outcome = ongoing.outcome;
+            effect.effectOutcome = ongoing.effectOutcome;
             effect.typeLevel = ongoing.typeLevel;
             effect.gearID = ongoing.gearID;
-            effect.apply = ongoing.apply;
+            effect.effectApply = ongoing.effectApply;
             effect.sideLevel = ongoing.sideLevel;
             effect.nodeID = ongoing.nodeID;
             effect.gearName = ongoing.gearName;
@@ -1097,7 +1097,7 @@ public class Node : MonoBehaviour
         {
             foreach (var adjust in listOfOngoingEffects)
             {
-                if (adjust.outcome == outcome)
+                if (adjust.effectOutcome.Equals(outcome.name) == true)
                 { value += adjust.value; }
             }
         }

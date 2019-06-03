@@ -214,6 +214,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();      //Key -> Category.name, Value -> TraitCategory
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();                 //Key -> GlobalSide.name, Value -> GlobalSide
     private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();                 //Key -> GlobalType.name, Value -> GlobalType
+    /*private Dictionary<string, EffectOutcome> dictOfEffectOutcome = new Dictionary<string, EffectOutcome>();        //Key -> EffectOutcome.name, Value -> EffectOutcome
+    private Dictionary<string, EffectApply> dictOfEffectApply = new Dictionary<string, EffectApply>();              //Key -> EffectApply.name, Value -> EffectApply*/
     #endregion
 
     //
@@ -5306,68 +5308,67 @@ public class DataManager : MonoBehaviour
             listOfMessages = allMessages.ToList<Message>();
             foreach (Message msg in listOfMessages)
             {
-                if (msg.side != null)
+                switch (msg.sideLevel)
                 {
-                    switch (msg.side.name)
-                    {
-                        case "Resistance":
-                            if (counterResistance < limitResistance)
+                    case 2:
+                        //Resistance
+                        if (counterResistance < limitResistance)
+                        {
+                            builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                            if (!isSingleLine)
                             {
-                                builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
-                                if (!isSingleLine)
-                                {
-                                    builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
-                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
-                                }
-                                counterResistance++;
+                                builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                    msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
-                            break;
-                        case "Authority":
-                            if (counterAuthority < limitAuthority)
+                            counterResistance++;
+                        }
+                        break;
+                    case 1:
+                        //Authority
+                        if (counterAuthority < limitAuthority)
+                        {
+                            builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                            if (!isSingleLine)
                             {
-                                builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
-                                if (!isSingleLine)
-                                {
-                                    builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
-                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
-                                }
-                                counterAuthority++;
+                                builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                    msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
-                            break;
-                        case "Both":
-                            //Resistance side
-                            if (counterResistance < limitResistance)
+                            counterAuthority++;
+                        }
+                        break;
+                    case 3:
+                        //Both
+                        //Resistance side
+                        if (counterResistance < limitResistance)
+                        {
+                            builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                            if (!isSingleLine)
                             {
-                                builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
-                                if (!isSingleLine)
-                                {
-                                    builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
-                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
-                                }
-                                counterResistance++;
+                                builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                    msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
-                            //Authority side
-                            if (counterAuthority < limitAuthority)
+                            counterResistance++;
+                        }
+                        //Authority side
+                        if (counterAuthority < limitAuthority)
+                        {
+                            builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
+                            if (!isSingleLine)
                             {
-                                builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
-                                if (!isSingleLine)
-                                {
-                                    builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                        msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
-                                        msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
-                                }
-                                counterAuthority++;
+                                builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                    msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
-                            break;
-                        default:
-                            builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", msg.side.name, msg.msgID, "\n"));
-                            break;
-                    }
+                            counterAuthority++;
+                        }
+                        break;
+                    default:
+                        builderAuthority.Append(string.Format("UNKNOWN side {0}, id {1}{2}", msg.sideLevel, msg.msgID, "\n"));
+                        break;
                 }
-                else { Debug.LogError(string.Format("Invalid record.Value.side (Null), \"{0}\"", msg.text)); }
             }
         }
         //combine two lists
@@ -6456,6 +6457,46 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid GlobalType name parameter (Null or Empty)"); }
         return null;
     }
+
+    /*public Dictionary<string, EffectOutcome> GetDictOfEffectOutcome()
+    { return dictOfEffectOutcome; }
+
+    /// <summary>
+    /// returns effectOutcome based on name, Null if a problem
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public EffectOutcome GetEffectOutcome(string name)
+    {
+        if (String.IsNullOrEmpty(name) == false)
+        {
+            if (dictOfEffectOutcome.ContainsKey(name) == true)
+            { return dictOfEffectOutcome[name]; }
+        }
+        else { Debug.LogError("Invalid EffectOutcome name parameter (Null or Empty)"); }
+        return null;
+    }
+
+    public Dictionary<string, EffectApply> GetDictOfEffectApply()
+    { return dictOfEffectApply; }
+
+    /// <summary>
+    /// returns EffectApply based on name, Null if a problem
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public EffectApply GetEffectApply(string name)
+    {
+        if (String.IsNullOrEmpty(name) == false)
+        {
+            if (dictOfEffectApply.ContainsKey(name) == true)
+            { return dictOfEffectApply[name]; }
+        }
+        else { Debug.LogError("Invalid EffectApply name parameter (Null or Empty)"); }
+        return null;
+    }*/
+
+
     #endregion
 
     //new methods above here

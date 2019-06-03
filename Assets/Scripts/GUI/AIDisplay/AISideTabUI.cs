@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// Handles AI side tab data and logic matters (mouse interactions are handled by AISideTabMouseUI.cs)

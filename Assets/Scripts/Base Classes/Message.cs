@@ -24,7 +24,8 @@ namespace gameAPI
         public bool isPublic;               //display if true
         
 
-        public GlobalSide side;
+        /*public GlobalSide side;*/
+        public int sideLevel;               //GlobalSide.level
         public MessageType type;            //main category
         public MessageSubType subType;      //sub type of main category
 

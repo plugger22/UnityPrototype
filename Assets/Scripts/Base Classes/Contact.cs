@@ -21,8 +21,9 @@ public class Contact
     public int turnStart;               //turn started as a contact
     public int turnFinish;              //turn finished as a contact
     public int usefulIntel;             //tracks number of useful intel items sourced by the contact
-    public ContactType type;            //job category
+    public string typeName;             //ContactType.name
     public ContactStatus status;
+    public string statusName;
     public bool isMale;                 //Male if true, female if false
     public bool isTurned;               //working for Authority as an informant
 

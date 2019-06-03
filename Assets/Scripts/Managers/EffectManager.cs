@@ -3090,10 +3090,10 @@ public class EffectManager : MonoBehaviour
     private int AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
-        effectOngoing.outcome = effect.outcome;
+        effectOngoing.effectOutcome = effect.outcome.name;
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.typeLevel = effect.typeOfEffect.level;
-        effectOngoing.apply = effect.apply;
+        effectOngoing.effectApply = effect.apply.name;
         effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.value = effect.value;
         effectOngoing.gearName = effectInput.ongoingText;
@@ -3114,11 +3114,11 @@ public class EffectManager : MonoBehaviour
     private void ProcessOngoingEffect(Effect effect, EffectDataProcess effectProcess, EffectDataResolve effectResolve, EffectDataInput effectInput, Node node, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
-        effectOngoing.outcome = effect.outcome;
+        effectOngoing.effectOutcome = effect.outcome.name;
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
         effectOngoing.typeLevel = effect.typeOfEffect.level;
-        effectOngoing.apply = effect.apply;
+        effectOngoing.effectApply = effect.apply.name;
         effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.reason = effectInput.ongoingText;
         effectOngoing.description = effect.description;

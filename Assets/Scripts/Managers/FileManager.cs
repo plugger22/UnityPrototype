@@ -930,7 +930,8 @@ public class FileManager : MonoBehaviour
                     saveNode.isErasureTeam = record.Value.isErasureTeam;
                     saveNode.crisisTimer = record.Value.crisisTimer;
                     saveNode.waitTimer = record.Value.waitTimer;
-                    saveNode.crisis = record.Value.crisis;
+                    if (record.Value.crisis != null)
+                    { saveNode.nodeCrisis = record.Value.crisis.nodeCrisisID; }
                     //cure
                     if (record.Value.cure == null)
                     { saveNode.cureID = -1; }
@@ -2424,7 +2425,7 @@ public class FileManager : MonoBehaviour
                     node.isErasureTeam = saveNode.isErasureTeam;
                     node.crisisTimer = saveNode.crisisTimer;
                     node.waitTimer = saveNode.waitTimer;
-                    node.crisis = saveNode.crisis;
+                    node.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(saveNode.nodeCrisis);   // null values O.K
                     //cure
                     if (saveNode.cureID == -1)
                     { node.cure = null; }

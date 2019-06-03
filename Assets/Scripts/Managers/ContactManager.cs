@@ -268,7 +268,7 @@ public class ContactManager : MonoBehaviour
                     ContactType contactType = node.Arc.GetRandomContactType();
                     if (contactType != null)
                     {
-                        contact.type = contactType;
+                        contact.typeName = contactType.name;
                         contact.job = contactType.pickList.GetRandomRecord();
                         if (contact.job == null) { Debug.LogErrorFormat("Invalid contactType job for {0}", contactType.pickList.name); }
                     }
@@ -282,12 +282,12 @@ public class ContactManager : MonoBehaviour
                     if (actor.CheckTraitEffect(actorContactEffectHigh) == true)
                     {
                         contact.effectiveness++;
-                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.type.name, contact.nameFirst), "to raise their Effectiveness +1");
+                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to raise their Effectiveness +1");
                     }
                     if (actor.CheckTraitEffect(actorContactEffectLow) == true)
                     {
                         contact.effectiveness--;
-                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.type.name, contact.nameFirst), "to lower their Effectiveness -1");
+                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to lower their Effectiveness -1");
                     }
                     //keep effectiveness with bounds
                     contact.effectiveness = Mathf.Clamp(contact.effectiveness, 1, 3);
@@ -397,7 +397,7 @@ public class ContactManager : MonoBehaviour
                                     {
                                         actor.AddContact(contact);
                                         Debug.LogFormat("[Cont] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4} {5}, ID {6}, E {7}, {8}", actor.actorName, actor.arc.name, 
-                                            actor.actorID, listOfContactNodes[i], contact.type.name, contact.nameFirst, contact.contactID, contact.effectiveness, "\n");
+                                            actor.actorID, listOfContactNodes[i], contact.typeName, contact.nameFirst, contact.contactID, contact.effectiveness, "\n");
                                     }
                                     else { Debug.LogError("Invalid contact (Null)"); }
                                 }

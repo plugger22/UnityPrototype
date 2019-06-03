@@ -169,10 +169,11 @@ namespace packageAPI
         public int timer;                                                 //how long does the effect last for?
         public int gearID = -1;                                           //gearID (used for InfoApp, use only if effect is gear based), default -1
         public int nodeID = -1;                                           //originating node (used for InfoApp, use only if effect is node based), default -1
-        public EffectOutcome outcome;
-        public int typeLevel;                                            //(GlobalType.level) benefit, or otherwise, of effect from POV of Resistance
-        public EffectApply apply;
+        public string effectOutcome;
+        public int typeLevel;                                             //(GlobalType.level) benefit, or otherwise, of effect from POV of Resistance
+        public string effectApply;
         public int sideLevel;                                             //GlobalSide.level
+        
 
         public EffectDataOngoing()
         {
@@ -485,6 +486,122 @@ namespace packageAPI
         public int numOfSuccessfulResourceRequests;
     }
 
+    //
+    // - - - AIManager.cs
+    //
+
+    /// <summary>
+    /// AI data package used to collate all node info where a node has degraded in some form
+    /// </summary>
+    public class AINodeData
+    {
+        public int nodeID;
+        public int score;                       //used by spider & others to give the node a rating. Higher the score, the more likely it is to be chosen
+        public NodeData type;
+        public NodeArc arc;
+        public int difference;                  //shows difference between current and start values
+        public int current;                     //shows current value
+        public bool isPreferred;                //true if preferred type of node for that side's faction
+    }
+
+    /// <summary>
+    /// AI data package detailing an Authority task that is ready to be executed next turn
+    /// </summary>
+    [System.Serializable]
+    public class AITask
+    {
+        public int taskID;                     //automatically assigned
+        public int data0;                      //could be node, connection ID or teamID
+        public int data1;                      //teamArcID, decision cost in resources
+        public int data2;                      //aiDeciID if a decision, otherwise ignored
+        public string name0;                   //node arc name, decision name
+        public string name1;                   //could be team arc name, eg. 'CIVIL'
+        public Priority priority;
+        public AITaskType type;                     //what type of task
+        public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
+
+        public AITask()
+        { taskID = GameManager.instance.aiScript.aiTaskCounter++; }
+    }
+
+    /// <summary>
+    /// extracted data from AI messages (at time of AI becoming aware of them)
+    /// </summary>
+    [System.Serializable]
+    public class AITracker
+    {
+        public int data0;                       //node or connectionID
+        public int data1;                       //optional, can ignore, contact effectiveness for nemesis sightings
+        public int data2;                       //optional, can ignore, moveNumber for nemesis making multiple moves within a single turn
+        public int turn;                        //turn occurred
+
+        public AITracker(int data, int turn)    //NOTE: Constructor doesn't include data1 (default -1), add manually if required
+        { data0 = data; data1 = -1; data2 = 0; this.turn = turn; }
+    }
+
+    /// <summary>
+    /// data package to populate AIDisplayUI
+    /// </summary>
+    public class AIDisplayData
+    {
+        public int rebootTimer;                 //AIDisplayUI will only open (allow hacking attempts) if timer = 0 (which infers that isRebooting = false)
+        public string task_1_textUpper;
+        public string task_1_textLower;
+        public string task_1_chance;
+        public string task_1_tooltipMain;
+        public string task_1_tooltipDetails;
+        public string task_2_textUpper;
+        public string task_2_textLower;
+        public string task_2_chance;
+        public string task_2_tooltipMain;
+        public string task_2_tooltipDetails;
+        public string task_3_textUpper;
+        public string task_3_textLower;
+        public string task_3_chance;
+        public string task_3_tooltipMain;
+        public string task_3_tooltipDetails;
+        public string aiDetails;
+        public string renownDecision;
+        public int nodeID_1;                   //used for highlighting node or connection referred to by task
+        public int connID_1;
+        public int nodeID_2;
+        public int connID_2;
+        public int nodeID_3;
+        public int connID_3;
+
+        public AIDisplayData()
+        {
+            task_1_textUpper = ""; task_1_textLower = ""; task_1_chance = ""; task_1_tooltipMain = ""; task_1_tooltipDetails = "";
+            task_2_textUpper = ""; task_2_textLower = ""; task_2_chance = ""; task_2_tooltipMain = ""; task_2_tooltipDetails = "";
+            task_3_textUpper = ""; task_3_textLower = ""; task_3_chance = ""; task_3_tooltipMain = ""; task_3_tooltipDetails = "";
+            nodeID_1 = -1; nodeID_2 = -1; nodeID_3 = -1;
+            connID_1 = -1; connID_2 = -1; connID_3 = -1;
+        }
+
+    }
+
+    /// <summary>
+    /// data package to populate AIDisplayUI (needs to be separate because it's dynamic data whereas AIDisplayData is sent once during AIEndOfTurn)
+    /// </summary>
+    public class AIHackingData
+    {
+        public string hackingStatus;            //combined string of AI Alert Status and number of hacking attempts
+        public string tooltipHeader;
+        public string tooltipMain;              //combined string for tooltip
+        public string tooltipDetails;
+    }
+
+    /// <summary>
+    /// data package to populate AISideTabUI
+    /// </summary>
+    public class AISideTabData
+    {
+        public string topText;              //eg. 'A.I' but colour formatted
+        public string bottomText;           //eg. Renown cost to hack or 'X' if not possible, greyed out if not enough renown
+        public string tooltipMain;
+        public string tooltipDetails;
+        public HackingStatus status;        //used to determine what happens when player clicks AI Side Tab UI
+    }
 
     //new classes above here
 }

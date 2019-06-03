@@ -11,7 +11,7 @@ using packageAPI;
 public class LoadManager : MonoBehaviour
 {
     #region Arrays
-    [Header("Initialise Start -> Enums")]
+    [Header("Initialise Start Enums -> ADD TO END OF ARRAYS ONLY")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
     public GlobalType[] arrayOfGlobalType;
@@ -36,7 +36,7 @@ public class LoadManager : MonoBehaviour
     public Nemesis[] arrayOfNemesis;
     public RebelLeader[] arrayOfRebelLeaders;
     
-    [Header("InitialiseStart -> Second Half")]
+    [Header("InitialiseStart -> ADD TO END OF ARRAYS ONLY")]
     public Condition[] arrayOfConditions;
     public Cure[] arrayOfCures;
     public TraitCategory[] arrayOfTraitCategories;
@@ -45,16 +45,16 @@ public class LoadManager : MonoBehaviour
     public SecretStatus[] arrayOfSecretStatus;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
-    [Header("TextLists -> One for each Category")]
+    [Header("TextLists -> ADD TO END OF ARRAYS ONLY")]
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
     public TextList[] arrayOfShortTextLists;
 
-    [Header("TextList Related SO's")]
+    [Header("TextList -> ADD TO END OF ARRAYS ONLY")]
     public NameSet[] arrayOfNameSets;
 
-    [Header("InitialiseEarly -> First Half")]
+    [Header("InitialiseEarly -> ADD TO END OF ARRAYS ONLY")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
@@ -66,14 +66,14 @@ public class LoadManager : MonoBehaviour
     public GearRarity[] arrayOfGearRarity;
     public GearType[] arrayOfGearType;
 
-    [Header("Targets")]
+    [Header("Targets -> ADD TO END OF ARRAYS ONLY")]
     public Target[] arrayOfTargetsGeneric;
     public Target[] arrayOfTargetsCity;
     public Target[] arrayOfTargetsVIP;
     public Target[] arrayOfTargetsStory;
     public Target[] arrayOfTargetsGoal;
 
-    [Header("Sprites")]
+    [Header("Sprites -> ADD TO END OF ARRAYS ONLY")]
     public Sprite[] arrayOfGearSprites;
     public Sprite[] arrayOfGlobalSprites;
     public Sprite[] arrayOfNodeArcSprites;
@@ -81,7 +81,7 @@ public class LoadManager : MonoBehaviour
     public Sprite[] arrayOfTargetSprites;
     public Sprite[] arrayOfTeamSprites;
 
-    [Header("InitialiseEarly -> Second Half")]
+    [Header("InitialiseEarly -> ADD TO END OF ARRAYS ONLY")]
     public ManageActor[] arrayOfManageActors;
     public ManageAction[] arrayOfManageActions;
     public ActorConflict[] arrayOfActorConflicts;
@@ -128,12 +128,17 @@ public class LoadManager : MonoBehaviour
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
             else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
             //add to dictionary
-            foreach (GlobalType type in arrayOfGlobalType)
+            for (int i = 0; i < numArray; i++)
             {
-                try
-                { dictOfGlobalType.Add(type.name, type); }
-                catch (ArgumentException)
-                { Debug.LogWarningFormat("Duplicate record exists in dictOfGlobalType for {0}", type); }
+                GlobalType type = arrayOfGlobalType[i];
+                if (type != null)
+                {
+                    try
+                    { dictOfGlobalType.Add(type.name, type); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfGlobalType for {0}", type); }
+                }
+                else { Debug.LogWarningFormat("Invalid GlobalType (Null) for arrayOfGlobalType[{0}]", i); }
             }
         }
         else { Debug.LogError("Invalid dictOfGlobalType (Null)"); }
@@ -149,12 +154,17 @@ public class LoadManager : MonoBehaviour
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
             else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
             //add to dictionary
-            foreach (GlobalSide side in arrayOfGlobalSide)
+            for (int i = 0; i < numArray; i++) 
             {
-                try
-                { dictOfGlobalSide.Add(side.name, side); }
-                catch (ArgumentException)
-                { Debug.LogWarningFormat("Duplicate record exists in dictOfGlobalSide for {0}", side); }
+                GlobalSide side = arrayOfGlobalSide[i];
+                if (side != null)
+                {
+                    try
+                    { dictOfGlobalSide.Add(side.name, side); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfGlobalSide for {0}", side); }
+                }
+                else { Debug.LogWarningFormat("Invalid GlobalSide (Null) for arrayOfGlobalSide[{0}]", i); }
             }
         }
         else { Debug.LogError("Invalid dictOfGlobalSide (Null)"); }
@@ -172,6 +182,29 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
+
+       /* Dictionary<string, EffectApply> dictOfEffectApply = GameManager.instance.dataScript.GetDictOfEffectApply();
+        if (dictOfEffectApply != null)
+        {
+            numArray = arrayOfEffectApply.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
+            for (int i = 0; i < numArray; i++)
+            {
+                EffectApply apply = arrayOfEffectApply[i];
+                if (apply != null)
+                {
+                    try
+                    { dictOfEffectApply.Add(apply.name, apply); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate effectApply {0}", apply); }
+                }
+                else { Debug.LogWarningFormat("Invalid EffectApply (Null) for arrayOfEffectApply[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfEffectApply (Null)"); }*/
+
         //
         // - - - EffectCriteria (not stored in a collection)
         //
@@ -200,6 +233,29 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
+
+        /*Dictionary<string, EffectOutcome> dictOfEffectOutcome = GameManager.instance.dataScript.GetDictOfEffectOutcome();
+        if (dictOfEffectOutcome != null)
+        {
+            numArray = arrayOfEffectOutcome.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
+            for (int i = 0; i < numArray; i++)
+            {
+                EffectOutcome outcome = arrayOfEffectOutcome[i];
+                if (outcome != null)
+                {
+                    try
+                    { dictOfEffectOutcome.Add(outcome.name, outcome); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate effectOutcome {0}", outcome); }
+                }
+                else { Debug.LogWarningFormat("Invalid effectOutcome (Null) for arrayOfEffectOutcome[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfEffectOutcome (Null)"); }*/
+
         //
         // - - - ContactType (not stored in a collection)
         //

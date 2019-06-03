@@ -213,7 +213,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GENERAL;
             message.subType = MessageSubType.General_Info;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
@@ -226,7 +226,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -256,7 +256,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GENERAL;
             message.subType = MessageSubType.General_Warning;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
@@ -271,7 +271,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -300,7 +300,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GENERAL;
             message.subType = MessageSubType.General_Random;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = numNeeded;
             message.data1 = numRolled;
             //ItemData
@@ -314,7 +314,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Random;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             data.tag0 = "roll_0";
             data.tag1 = "roll_1";
@@ -349,7 +349,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Move;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
@@ -370,7 +370,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             data.isDisplay = false;     //DEBUG
@@ -397,7 +397,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Secret;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = secret.secretID;
             message.isPublic = true;
             //ItemData
@@ -414,7 +414,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             data.tag0 = "secret_0";
             data.tag1 = "secret_1";
@@ -445,7 +445,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Renown;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = amount;
             message.data1 = dataID;
             message.data2 = nodeID;
@@ -475,7 +475,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Damage;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.data0 = nodeID;
             //ItemData
             ItemData data = new ItemData();
@@ -490,7 +490,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -520,7 +520,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Recognised;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             //ItemData
@@ -534,7 +534,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             if (node != null)
             { data.nodeID = node.nodeID; }
             data.help = 1;
@@ -560,7 +560,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Betrayed;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
@@ -573,7 +573,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             data.tag0 = "betrayal_0";
             data.tag1 = "betrayal_1";
@@ -608,7 +608,7 @@ public class MessageManager : MonoBehaviour
             Message message = new Message();
             message.text = text;
             message.subType = MessageSubType.Actor_Status;
-            message.side = side;
+            message.sideLevel = side.level;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
@@ -618,7 +618,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //data depends on whether an actor or player
             if (actorID == playerActorID)
@@ -670,7 +670,7 @@ public class MessageManager : MonoBehaviour
             Message message = new Message();
             message.text = text;
             message.subType = MessageSubType.Actor_StressLeave;
-            message.side = side;
+            message.sideLevel = side.level;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
@@ -680,7 +680,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //data depends on whether an actor or player
             if (actorID == playerActorID)
@@ -732,7 +732,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Complains;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             //ItemData
@@ -744,7 +744,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -773,7 +773,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Reassured;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = isPublic;
             message.data0 = actor.actorID;
             message.data1 = benefit;
@@ -786,7 +786,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -816,7 +816,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Condition;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
@@ -858,7 +858,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             if (condition != null)
             {
@@ -916,7 +916,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Blackmail;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             message.data1 = secretID;
@@ -931,7 +931,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -958,7 +958,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Secret;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             message.data1 = secret.secretID;
@@ -976,7 +976,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1004,7 +1004,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Secret;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             message.data1 = secret.secretID;
@@ -1019,7 +1019,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1049,7 +1049,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Recruited;
-            message.side = side;
+            message.sideLevel = side.level;
             message.data0 = nodeID;
             message.data1 = actor.actorID;
             message.data2 = unhappyTimer;
@@ -1064,7 +1064,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1091,7 +1091,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Conflict;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
             message.data1 = conflictID;
             //ItemData
@@ -1105,7 +1105,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1136,7 +1136,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Trait;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
             message.data1 = trait.traitID;
             //ItemData
@@ -1150,7 +1150,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Traits;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1174,7 +1174,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_LieLow;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = timer;
             //ItemData
             ItemData data = new ItemData();
@@ -1195,7 +1195,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1223,7 +1223,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Captured;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
@@ -1256,7 +1256,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1287,7 +1287,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Warning;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
@@ -1301,7 +1301,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1328,7 +1328,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Captured;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = actorID;
@@ -1360,7 +1360,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             data.tag0 = "traitor_0";
@@ -1394,7 +1394,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CONTACT;
             message.subType = MessageSubType.Contact_Change;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
@@ -1417,7 +1417,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1449,7 +1449,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CONTACT;
             message.subType = MessageSubType.Contact_Target_Rumour;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
@@ -1465,7 +1465,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1497,7 +1497,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CONTACT;
             message.subType = MessageSubType.Contact_Nemesis_Spotted;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
@@ -1513,7 +1513,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1545,7 +1545,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CONTACT;
             message.subType = MessageSubType.Contact_Team_Spotted;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
@@ -1561,7 +1561,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1588,7 +1588,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CONTACT;
             message.subType = MessageSubType.Tracer_Nemesis_Spotted;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
             message.data1 = moveNumber;
             //ItemData
@@ -1602,7 +1602,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1630,7 +1630,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CONTACT;
             message.subType = MessageSubType.Tracer_Team_Spotted;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
             //ItemData
@@ -1644,7 +1644,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -1672,7 +1672,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Nemesis;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = nodeID;
             message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
             message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
@@ -1687,7 +1687,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1714,7 +1714,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Nemesis;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = nodeID;
             message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
             message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
@@ -1729,7 +1729,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -1755,7 +1755,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Nemesis;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.data0 = coolDownTimer;
             message.data1 = controlTimer;
             //ItemData
@@ -1793,7 +1793,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             if (nodeControl != null)
             { data.nodeID = nodeControl.nodeID; }
             data.help = 1;
@@ -1829,7 +1829,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Connection;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = destinationNode.nodeID;
@@ -1845,7 +1845,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             data.nodeID = destinationNode.nodeID;
             data.connID = connection.connID;
@@ -1877,7 +1877,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Node;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = node.nodeID;
@@ -1893,7 +1893,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             data.delay = delay;
@@ -1923,7 +1923,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Detected;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = nodeID;
@@ -1941,7 +1941,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = nodeID;
             data.help = 1;
             data.delay = delay;
@@ -1972,7 +1972,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Immediate;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = nodeID;
             message.data1 = connID;
@@ -2009,7 +2009,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = nodeID;
             data.connID = connID;
             data.help = 1;
@@ -2037,9 +2037,9 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Hacked;
             if (isDetected == true)
-            { message.side = globalBoth; message.data1 = 1; message.isPublic = true; }
+            { message.sideLevel = globalBoth.level; message.data1 = 1; message.isPublic = true; }
             else
-            { message.side = globalResistance; message.data1 = 0; message.isPublic = false; }
+            { message.sideLevel = globalResistance.level; message.data1 = 0; message.isPublic = false; }
             message.data0 = currentRenownCost;
             //ItemData
             ItemData data = new ItemData();
@@ -2053,7 +2053,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2078,7 +2078,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Reboot;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = currentRenownCost;
             message.data1 = rebootTimer;
@@ -2094,7 +2094,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2119,7 +2119,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Countermeasure;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = timerStartValue;
             message.data1 = protocolLevelNew;
@@ -2134,7 +2134,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2159,7 +2159,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.AI;
             message.subType = MessageSubType.AI_Alert;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = chanceOfIncrease;
             message.data1 = randomRoll;
@@ -2191,7 +2191,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.DECISION;
             message.subType = MessageSubType.Decision_Global;
-            message.side = GameManager.instance.globalScript.sideBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = decID;
             //ItemData
@@ -2205,7 +2205,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2233,7 +2233,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.DECISION;
             message.subType = MessageSubType.Decision_Connection;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = connection.connID;
             message.data1 = (int)secLevel;
@@ -2248,7 +2248,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.connID = connection.connID;
             data.help = 1;
             //add
@@ -2276,7 +2276,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.DECISION;
             message.subType = MessageSubType.Decision_Resources;
-            message.side = side;
+            message.sideLevel = side.level;
             message.isPublic = true;
             message.data0 = amount;
             //ItemData
@@ -2290,7 +2290,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2315,7 +2315,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.DECISION;
             message.subType = MessageSubType.Decision_Team;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.isPublic = true;
             message.data0 = teamID;
             //ItemData
@@ -2329,7 +2329,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2358,7 +2358,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Decision;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.data0 = aiDecID;
             //ItemData
             ItemData data = new ItemData();
@@ -2371,7 +2371,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2400,7 +2400,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Add;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.data0 = team.teamID;
             //ItemData
             ItemData data = new ItemData();
@@ -2413,7 +2413,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2441,7 +2441,7 @@ public class MessageManager : MonoBehaviour
                 message.text = text;
                 message.type = MessageType.TEAM;
                 message.subType = MessageSubType.Team_Deploy;
-                message.side = globalAuthority;
+                message.sideLevel = globalAuthority.level;
                 message.data0 = node.nodeID;
                 message.data1 = team.teamID;
                 if (actor != null)
@@ -2458,7 +2458,7 @@ public class MessageManager : MonoBehaviour
                     data.tab = ItemTab.ALERTS;
                     data.type = message.type;
                     data.subType = message.subType;
-                    data.sideLevel = message.side.level;
+                    data.sideLevel = message.sideLevel;
                     data.nodeID = node.nodeID;
                     data.help = 1;
                     //add
@@ -2491,7 +2491,7 @@ public class MessageManager : MonoBehaviour
                 message.text = text;
                 message.type = MessageType.TEAM;
                 message.subType = MessageSubType.Team_AutoRecall;
-                message.side = globalAuthority;
+                message.sideLevel = globalAuthority.level;
                 message.isPublic = true;
                 message.displayDelay = 0;
                 message.data0 = node.nodeID;
@@ -2510,7 +2510,7 @@ public class MessageManager : MonoBehaviour
                     data.tab = ItemTab.ALERTS;
                     data.type = message.type;
                     data.subType = message.subType;
-                    data.sideLevel = message.side.level;
+                    data.sideLevel = message.sideLevel;
                     data.nodeID = node.nodeID;
                     data.help = 1;
                     GameManager.instance.dataScript.AddItemData(data);
@@ -2540,7 +2540,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Withdraw;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
             message.data2 = actor.actorID;
@@ -2555,7 +2555,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -2584,7 +2584,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Effect;
-            message.side = globalAuthority;
+            message.sideLevel = globalAuthority.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
@@ -2599,7 +2599,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -2629,7 +2629,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Neutralise;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.displayDelay = 0;
             message.data0 = node.nodeID;
@@ -2646,7 +2646,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -2680,7 +2680,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Gear_Given;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
             message.data1 = gear.gearID;
             message.data2 = motivation;
@@ -2703,7 +2703,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2730,7 +2730,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Comprised;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.isPublic = true;
             message.data0 = gear.gearID;
             message.data1 = renownUsed;
@@ -2746,7 +2746,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2773,7 +2773,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Used;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = gear.gearID;
             //ItemData
             ItemData data = new ItemData();
@@ -2786,7 +2786,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2813,7 +2813,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Lost;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.isPublic = true;
             message.data0 = gear.gearID;
             message.data1 = actor.actorID;
@@ -2828,7 +2828,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2855,7 +2855,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Available;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.isPublic = true;
             message.data0 = gear.gearID;
             message.data1 = actor.actorID;
@@ -2870,7 +2870,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -2898,7 +2898,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Obtained;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
             message.data1 = gear.gearID;
             message.data2 = actorID;
@@ -2913,7 +2913,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -2948,13 +2948,13 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_New;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
             message.data2 = target.targetID;
             //ItemData
             ItemData data = new ItemData();
-            if(message.side.level == globalResistance.level)
+            if(message.sideLevel == globalResistance.level)
             {
                 //resistance player
                 data.itemText = string.Format("Rebel HQ have identified an OPPORTUNITY at {0}", node.nodeName);
@@ -2968,14 +2968,14 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Target Vulnerability";
                 sideText = "Vulnerability";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetTargetNewDetails(node, target, sideText, message.side);
+            data.bottomText = GameManager.instance.itemDataScript.GetTargetNewDetails(node, target, sideText, message.sideLevel);
             data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;          
             //add
@@ -3005,13 +3005,13 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Expired;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.numOfAttempts;
             message.data2 = target.targetID;
             //ItemData
             ItemData data = new ItemData();
-            if (message.side.level == globalResistance.level)
+            if (message.sideLevel == globalResistance.level)
             {
                 //resistance player
                 data.itemText = string.Format("Window of Opportunity at {0} has CLOSED", node.nodeName);
@@ -3025,14 +3025,14 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Vulnerability Closed";
                 sideText = "Vulnerability";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetTargetExpiredDetails(node, target, sideText, message.side);
+            data.bottomText = GameManager.instance.itemDataScript.GetTargetExpiredDetails(node, target, sideText, message.sideLevel);
             data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -3061,7 +3061,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Expired;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
             message.data2 = target.targetID;
@@ -3077,7 +3077,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -3107,7 +3107,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Attempt;
-            message.side = globalResistance;
+            message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
             message.data1 = actorID;
             message.data2 = target.targetID;
@@ -3132,7 +3132,7 @@ public class MessageManager : MonoBehaviour
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
                 data.subType = message.subType;
-                data.sideLevel = message.side.level;
+                data.sideLevel = message.sideLevel;
                 data.nodeID = node.nodeID;
                 data.help = 1;
                 //add
@@ -3163,7 +3163,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Contained;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
             message.data2 = target.targetID;
@@ -3178,7 +3178,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -3210,7 +3210,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Created;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.data0 = nodeID;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -3234,7 +3234,7 @@ public class MessageManager : MonoBehaviour
             message.text = ongoing.text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Current;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.data0 = ongoing.nodeID;
             message.data1 = ongoing.timer;
             //ItemData
@@ -3255,7 +3255,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -3279,7 +3279,7 @@ public class MessageManager : MonoBehaviour
             message.text = ongoing.text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Current;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.data0 = ongoing.gearID;
             message.data1 = ongoing.timer;
             //ItemData
@@ -3293,7 +3293,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = ongoing.nodeID;
             data.help = 1;
             //add
@@ -3320,7 +3320,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Expired;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = dataID;
             //add
@@ -3348,7 +3348,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTIVE;
             message.subType = MessageSubType.Active_Effect;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             if (node != null) { message.data0 = node.nodeID; }
             if (actorID > -1) { message.data1 = actorID; }
@@ -3363,7 +3363,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             if (node != null)
             { data.nodeID = node.nodeID; }
             data.help = 1;
@@ -3398,7 +3398,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.FACTION;
             message.subType = MessageSubType.Faction_Support;
-            message.side = faction.side;
+            message.sideLevel = faction.side.level;
             message.isPublic = true;
             message.data0 = factionApprovalLevel;
             message.data1 = playerRenownBefore;
@@ -3424,7 +3424,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.sprite = faction.sprite;
             data.spriteName = data.sprite.name;
             data.help = 1;
@@ -3459,7 +3459,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.FACTION;
             message.subType = MessageSubType.Faction_Approval;
-            message.side = faction.side;
+            message.sideLevel = faction.side.level;
             message.isPublic = true;
             message.data0 = oldLevel;
             message.data1 = change;
@@ -3476,7 +3476,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.sprite = faction.sprite;
             data.spriteName = data.sprite.name;
             data.help = 1; //debug
@@ -3508,7 +3508,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.NODE;
             message.subType = MessageSubType.Node_Crisis;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = reductionInCityLoyalty;
@@ -3523,7 +3523,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -3543,7 +3543,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Node;
-            message.side = globalBoth;
+            message.sideLevel = globalBoth.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = node.waitTimer;
@@ -3558,7 +3558,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
@@ -3588,7 +3588,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CITY;
             message.subType = MessageSubType.City_Loyalty;
-            message.side = GameManager.instance.sideScript.PlayerSide;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = newCityLoyalty;
             message.data1 = changeInLoyalty;
@@ -3604,7 +3604,7 @@ public class MessageManager : MonoBehaviour
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
             data.subType = message.subType;
-            data.sideLevel = message.side.level;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
