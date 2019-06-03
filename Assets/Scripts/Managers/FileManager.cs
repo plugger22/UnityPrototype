@@ -2131,7 +2131,10 @@ public class FileManager : MonoBehaviour
                     actor.actorName = readActor.actorName;
                     actor.firstName = readActor.firstName;
                     actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcID);
-                    actor.AddTrait(readActor.trait);
+                    Trait trait = GameManager.instance.dataScript.GetTrait(readActor.traitID);
+                    if (trait != null)
+                    { actor.AddTrait(trait); }
+                    else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitID); }
                     actor.Status = readActor.status; //needs to be after SetGear
                     //sprite
                     actor.spriteName = readActor.spriteName;
@@ -3090,8 +3093,10 @@ public class FileManager : MonoBehaviour
         saveActor.firstName = actor.firstName;
         saveActor.spriteName = actor.spriteName;
         saveActor.arcID = actor.arc.ActorArcID;
-        saveActor.trait = actor.GetTrait();
-
+        Trait trait = actor.GetTrait();
+        if (trait != null)
+        { saveActor.traitID = trait.traitID; }
+        else { Debug.LogWarningFormat("Invalid trait (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }
         //data which can be ignored (default values O.K) if actor is in the recruit pool
         if (actor.Status != ActorStatus.RecruitPool)
         {

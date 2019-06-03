@@ -469,7 +469,8 @@ public class SaveActor
     public string firstName;
     public string spriteName;
     public int arcID;
-    public Trait trait;
+    //public Trait trait;
+    public int traitID;
 
     //data that can be ignored if actor is in Recruit Pool
     public int Renown;

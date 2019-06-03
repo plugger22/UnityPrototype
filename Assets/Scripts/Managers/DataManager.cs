@@ -965,6 +965,18 @@ public class DataManager : MonoBehaviour
         return teffID;
     }
 
+    /// <summary>
+    /// Gets trait based on traitID, null if not found
+    /// </summary>
+    /// <param name="traitID"></param>
+    /// <returns></returns>
+    public Trait GetTrait(int traitID)
+    {
+        if (dictOfTraits.ContainsKey(traitID) == true)
+        { return dictOfTraits[traitID]; }
+        else { return null; }
+    }
+
     //
     // - - - Contacts - - - 
     //
