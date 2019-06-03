@@ -606,7 +606,7 @@ public class TurnManager : MonoBehaviour
                 foreach (ActionAdjustment actionAdjustment in listOfAdjustments)
                 {
                     //same side & valid for this turn or before
-                    if (actionAdjustment.side.level == side.level && actionAdjustment.turnStart <= _turn)
+                    if (actionAdjustment.sideLevel == side.level && actionAdjustment.turnStart <= _turn)
                     {
                         if (builder.Length > 0) { builder.AppendLine(); }
                         {

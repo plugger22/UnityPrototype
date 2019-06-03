@@ -5730,7 +5730,7 @@ public class ActorManager : MonoBehaviour
                 for (int i = 0; i < listOfActionAdjustments.Count; i++)
                 {
                     ActionAdjustment adjustment = listOfActionAdjustments[i];
-                    if (adjustment.side.level == playerSide.level)
+                    if (adjustment.sideLevel == playerSide.level)
                     {
                         //valid adjustment present, create an InfoApp effect message
                         text = "Your available ACTIONS have changed";

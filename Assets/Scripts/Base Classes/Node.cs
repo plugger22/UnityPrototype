@@ -1044,7 +1044,7 @@ public class Node : MonoBehaviour
             effect.type = ongoing.type;
             effect.gearID = ongoing.gearID;
             effect.apply = ongoing.apply;
-            effect.side = ongoing.side;
+            effect.sideLevel = ongoing.sideLevel;
             effect.nodeID = ongoing.nodeID;
             effect.gearName = ongoing.gearName;
             //add new ongoing effect

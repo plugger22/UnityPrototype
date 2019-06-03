@@ -213,6 +213,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Condition> dictOfConditions = new Dictionary<string, Condition>();                   //Key -> Condition.tag, Value -> Condition
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();      //Key -> Category.name, Value -> TraitCategory
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();                 //Key -> GlobalSide.name, Value -> GlobalSide
+    private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();                 //Key -> GlobalType.name, Value -> GlobalType
     #endregion
 
     //
@@ -449,9 +450,8 @@ public class DataManager : MonoBehaviour
     {
         if (data != null)
         {
-            Debug.Assert(data.side != null, "Invalid ItemData side (Null)");
             //check side
-            if (data.side.level == GameManager.instance.sideScript.PlayerSide.level || data.side.level == GameManager.instance.globalScript.sideBoth.level)
+            if (data.sideLevel == GameManager.instance.sideScript.PlayerSide.level || data.sideLevel == GameManager.instance.globalScript.sideBoth.level)
             {
                 //check if Player wants category displayed
                 if (data.isDisplay == true)
@@ -483,7 +483,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public MainInfoData UpdateCurrentItemData()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        /*GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;*/
         List<ItemData> tempList = new List<ItemData>();
         //empty out data package prior to updating
         currentInfoData.Reset();
@@ -5686,68 +5686,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid tempList (Null)"); }
     }
 
-    //
-    // - - - Global SO's - - -
-    //
 
-    /*public Dictionary<string, GlobalMeta> GetDictOfGlobalMeta()
-    { return dictOfGlobalMeta; }
-
-    public Dictionary<string, GlobalChance> GetDictOfGlobalChance()
-    { return dictOfGlobalChance; }
-
-    public Dictionary<string, GlobalType> GetDictOfGlobalType()
-    { return dictOfGlobalType; }
-
-    public Dictionary<string, GlobalWho> GetDictOfGlobalWho()
-    { return dictOfGlobalWho; }
-
-    public Dictionary<string, GlobalSide> GetDictOfGlobalSide()
-    { return dictOfGlobalSide; }*/
-
-    public int GetNumOfGlobalSide()
-    { return GameManager.instance.loadScript.arrayOfGlobalSide.Length; }
-
-    /// <summary>
-    /// Returns condition SO, Null if not found in dictionary
-    /// </summary>
-    /// <param name="category"></param>
-    /// <returns></returns>
-    public Condition GetCondition(string conditionName)
-    {
-        Condition condition = null;
-        if (string.IsNullOrEmpty(conditionName) == false)
-        {
-            if (dictOfConditions.ContainsKey(conditionName))
-            { return dictOfConditions[conditionName]; }
-            else { Debug.LogWarning(string.Format("Condition \"{0}\" not found in dictOfConditions{1}", conditionName, "\n")); }
-        }
-        else { Debug.LogError("Invalid conditionName (Null or Empty)"); }
-        return condition;
-    }
-
-    public Dictionary<string, Condition> GetDictOfConditions()
-    { return dictOfConditions; }
-
-    /// <summary>
-    /// returns a dictionary (by value) of all conditions of the specified type, returns empty dictionary if none
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public Dictionary<string, Condition> GetDictOfConditionsByType(GlobalType type)
-    {
-        Dictionary<string, Condition> dictOfConditionsByType = new Dictionary<string, Condition>();
-        if (dictOfConditions != null)
-        {
-            foreach (var condition in dictOfConditions)
-            {
-                if (condition.Value.type.name.Equals(type.name) == true)
-                { dictOfConditionsByType.Add(condition.Key, condition.Value); }
-            }
-        }
-        else { Debug.LogError("Invalid dictOfConditions (Null)"); }
-        return dictOfConditionsByType;
-    }
 
     //
     // - - - Cures - - -
@@ -6084,7 +6023,7 @@ public class DataManager : MonoBehaviour
         {
             foreach(ActionAdjustment actionAdjustment in listOfActionAdjustments)
             {
-                if (actionAdjustment.side.name.Equals(side.name) == true)
+                if (actionAdjustment.sideLevel == side.level)
                 { netAdjustment += actionAdjustment.value; }
             }
         }
@@ -6110,7 +6049,7 @@ public class DataManager : MonoBehaviour
                     ActionAdjustment actionAdjustment = listOfActionAdjustments[i];
                     if (actionAdjustment != null)
                     {
-                        if (actionAdjustment.side.level == side.level)
+                        if (actionAdjustment.sideLevel == side.level)
                         { adjustments++; }
                     }
                     else { Debug.LogWarningFormat("Invalid actionAdjustment (Null) for listOfActionAdjustments[{0}]", i); }
@@ -6131,7 +6070,7 @@ public class DataManager : MonoBehaviour
         builder.Append(string.Format(" Action Adjustments Register{0}", "\n"));
         foreach (ActionAdjustment actionAdjustment in listOfActionAdjustments)
         { builder.Append(string.Format("{0}\"{1}\", Side: {2} Adjust: {3} Timer: {4}", "\n", actionAdjustment.descriptor, 
-            actionAdjustment.side.name, actionAdjustment.value, actionAdjustment.timer)); }
+            actionAdjustment.sideLevel, actionAdjustment.value, actionAdjustment.timer)); }
         return builder.ToString();
     }
 
@@ -6430,9 +6369,55 @@ public class DataManager : MonoBehaviour
         return sprite;
     }
 
+
+    #region SO Enum Dictionary methods
     //
     // - - - SO Enum dictionaries
     //
+
+    public int GetNumOfGlobalSide()
+    { return GameManager.instance.loadScript.arrayOfGlobalSide.Length; }
+
+    /// <summary>
+    /// Returns condition SO, Null if not found in dictionary
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public Condition GetCondition(string conditionName)
+    {
+        Condition condition = null;
+        if (string.IsNullOrEmpty(conditionName) == false)
+        {
+            if (dictOfConditions.ContainsKey(conditionName))
+            { return dictOfConditions[conditionName]; }
+            else { Debug.LogWarning(string.Format("Condition \"{0}\" not found in dictOfConditions{1}", conditionName, "\n")); }
+        }
+        else { Debug.LogError("Invalid conditionName (Null or Empty)"); }
+        return condition;
+    }
+
+    public Dictionary<string, Condition> GetDictOfConditions()
+    { return dictOfConditions; }
+
+    /// <summary>
+    /// returns a dictionary (by value) of all conditions of the specified type, returns empty dictionary if none
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public Dictionary<string, Condition> GetDictOfConditionsByType(GlobalType type)
+    {
+        Dictionary<string, Condition> dictOfConditionsByType = new Dictionary<string, Condition>();
+        if (dictOfConditions != null)
+        {
+            foreach (var condition in dictOfConditions)
+            {
+                if (condition.Value.type.name.Equals(type.name) == true)
+                { dictOfConditionsByType.Add(condition.Key, condition.Value); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConditions (Null)"); }
+        return dictOfConditionsByType;
+    }
 
     public Dictionary<string, GlobalSide> GetDictOfGlobalSide()
     { return dictOfGlobalSide; }
@@ -6452,6 +6437,26 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid GlobalSide name parameter (Null or Empty)"); }
         return null;
     }
+
+    public Dictionary<string, GlobalType> GetDictOfGlobalType()
+    { return dictOfGlobalType; }
+
+    /// <summary>
+    /// returns globalType based on name, Null if a problem
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public GlobalType GetGlobalType(string name)
+    {
+        if (String.IsNullOrEmpty(name) == false)
+        {
+            if (dictOfGlobalType.ContainsKey(name) == true)
+            { return dictOfGlobalType[name]; }
+        }
+        else { Debug.LogError("Invalid GlobalType name parameter (Null or Empty)"); }
+        return null;
+    }
+    #endregion
 
     //new methods above here
 }

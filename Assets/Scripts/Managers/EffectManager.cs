@@ -3013,7 +3013,7 @@ public class EffectManager : MonoBehaviour
                 case "PlayerActions":
                     //single or ongoing
                     ActionAdjustment actionAdjustment = new ActionAdjustment();
-                    actionAdjustment.side = side;
+                    actionAdjustment.sideLevel = side.level;
                     switch (effect.duration.name)
                     {
                         case "Single":
@@ -3094,7 +3094,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.type = effect.typeOfEffect;
         effectOngoing.apply = effect.apply;
-        effectOngoing.side = effectInput.side;
+        effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.value = effect.value;
         effectOngoing.gearName = effectInput.ongoingText;
         effectOngoing.gearID = effectInput.data;
@@ -3119,7 +3119,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.value = value;
         effectOngoing.type = effect.typeOfEffect;
         effectOngoing.apply = effect.apply;
-        effectOngoing.side = effectInput.side;
+        effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.reason = effectInput.ongoingText;
         effectOngoing.description = effect.description;
         effectOngoing.nodeID = node.nodeID;

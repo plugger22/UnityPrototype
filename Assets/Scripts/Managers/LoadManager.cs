@@ -118,17 +118,28 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalChance has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
         //
-        // - - - GlobalType (not stored in a collection)
+        // - - - GlobalType
         //
-
-        numArray = arrayOfGlobalType.Length;
-        if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
-
+        Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
+        if (dictOfGlobalType != null)
+        {
+            numArray = arrayOfGlobalType.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
+            //add to dictionary
+            foreach (GlobalType type in arrayOfGlobalType)
+            {
+                try
+                { dictOfGlobalType.Add(type.name, type); }
+                catch (ArgumentException)
+                { Debug.LogWarningFormat("Duplicate record exists in dictOfGlobalType for {0}", type); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfGlobalType (Null)"); }
 
         //
-        // - - - GlobalSide (not stored in a collection)
+        // - - - GlobalSide
         //
         Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
         if (dictOfGlobalSide != null)

@@ -172,7 +172,7 @@ namespace packageAPI
         public EffectOutcome outcome;
         public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
         public EffectApply apply;
-        public GlobalSide side;
+        public int sideLevel;                                             //GlobalSide.level
 
         public EffectDataOngoing()
         {
@@ -210,7 +210,7 @@ namespace packageAPI
     [System.Serializable]
     public class ActionAdjustment
     {
-        public GlobalSide side;
+        public int sideLevel;                                           //GlobalSide.level
         public string descriptor;                                       //short (two word) text descriptor used in Turn tooltip
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
@@ -280,7 +280,7 @@ namespace packageAPI
         public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public ItemPriority priority;
         public ItemTab tab;
-        public GlobalSide side;
+        public int sideLevel;                       //GlobalSide.level
         public MessageType type;                    //main category
         public MessageSubType subType;              //sub type of main category
         public int delay = 0;                       //allows for a delay in itemData showing, delay is in turns, default zero
