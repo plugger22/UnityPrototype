@@ -454,20 +454,23 @@ public class TooltipNode : MonoBehaviour
                 effectBuilder.AppendFormat("{0}<size=90%>Ongoing Effects</size>{1}", colourDefault, colourEnd);
                 for (int i = 0; i < data.listOfEffects.Count; i++)
                 {
-                    switch (data.listOfEffects[i].type.name)
+                    switch (data.listOfEffects[i].typeLevel)
                     {
-                        case "Good":
+                        case 2:
+                            //Good
                             effectText = string.Format("{0}{1}{2}", colourGoodSide, data.listOfEffects[i].text, colourEnd);
                             break;
-                        case "Neutral":
+                        case 1:
+                            //Neutral
                             effectText = string.Format("{0}{1}{2}", colourNeutral, data.listOfEffects[i].text, colourEnd);
                             break;
-                        case "Bad":
+                        case 0:
+                            //Bad
                             effectText = string.Format("{0}{1}{2}", colourBadSide, data.listOfEffects[i].text, colourEnd);
                             break;
                         default:
                             effectText = string.Format("{0}{1}{2}", colourDefault, data.listOfEffects[i].text, colourEnd);
-                            Debug.LogError(string.Format("Invalid ongoingEffect.type \"{0}\"", data.listOfEffects[i].type.name));
+                            Debug.LogError(string.Format("Invalid ongoingEffect.type \"{0}\"", data.listOfEffects[i].typeLevel));
                             break;
                     }
                     effectBuilder.AppendLine();

@@ -12,7 +12,7 @@ public class Gear : ScriptableObject
     public string description;
 
     [Tooltip("Only select an option here if the Gear is restricted to a particular metaLevel, otherwise leave as None (null)")]
-    public GlobalMeta metaLevel;  //local / state / national
+    /*public GlobalMeta metaLevel;  //local / state / national*/
     public GearRarity rarity;       //common / rare / unique
     public GearType type;
 

@@ -3092,7 +3092,7 @@ public class EffectManager : MonoBehaviour
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
-        effectOngoing.type = effect.typeOfEffect;
+        effectOngoing.typeLevel = effect.typeOfEffect.level;
         effectOngoing.apply = effect.apply;
         effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.value = effect.value;
@@ -3117,7 +3117,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.outcome = effect.outcome;
         effectOngoing.ongoingID = effectInput.ongoingID;
         effectOngoing.value = value;
-        effectOngoing.type = effect.typeOfEffect;
+        effectOngoing.typeLevel = effect.typeOfEffect.level;
         effectOngoing.apply = effect.apply;
         effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.reason = effectInput.ongoingText;

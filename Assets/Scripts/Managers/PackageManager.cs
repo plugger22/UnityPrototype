@@ -170,7 +170,7 @@ namespace packageAPI
         public int gearID = -1;                                           //gearID (used for InfoApp, use only if effect is gear based), default -1
         public int nodeID = -1;                                           //originating node (used for InfoApp, use only if effect is node based), default -1
         public EffectOutcome outcome;
-        public GlobalType type;                                           //benefit, or otherwise, of effect from POV of Resistance
+        public int typeLevel;                                            //(GlobalType.level) benefit, or otherwise, of effect from POV of Resistance
         public EffectApply apply;
         public int sideLevel;                                             //GlobalSide.level
 
@@ -187,7 +187,7 @@ namespace packageAPI
     public class EffectDataTooltip
     {
         public string text;
-        public GlobalType type;
+        public int typeLevel;                                           //GlobalType.level
     }
 
     //

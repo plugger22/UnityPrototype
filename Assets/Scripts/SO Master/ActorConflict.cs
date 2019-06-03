@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Gear SO. Name of SO is the name of the Conflict, eg. "Resign"
+/// ActorConflict SO. Name of SO is the name of the Conflict, eg. "Resign"
 /// </summary>
 [CreateAssetMenu(menuName = "Actor / Conflict")]
 public class ActorConflict : ScriptableObject

@@ -707,7 +707,7 @@ public class Node : MonoBehaviour
             {
                 EffectDataTooltip data = new EffectDataTooltip();
                 data.text = string.Format("{0}{1}<size=90%><b>{2}</b> turn{3} remaining</size>", ongoingEffect.nodeTooltip, "\n", ongoingEffect.timer, ongoingEffect.timer != 1 ? "s" : "");
-                data.type = ongoingEffect.type;
+                data.typeLevel = ongoingEffect.typeLevel;
                 tempList.Add(data);
             }
         }
@@ -1041,7 +1041,7 @@ public class Node : MonoBehaviour
             effect.value = ongoing.value;
             effect.timer = ongoing.timer;
             effect.outcome = ongoing.outcome;
-            effect.type = ongoing.type;
+            effect.typeLevel = ongoing.typeLevel;
             effect.gearID = ongoing.gearID;
             effect.apply = ongoing.apply;
             effect.sideLevel = ongoing.sideLevel;

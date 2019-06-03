@@ -248,7 +248,6 @@ public class GearManager : MonoBehaviour
         Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
-            int gameLevel = GameManager.instance.metaScript.metaLevel.level;
             //set up an array of Lists, with index corresponding to GearLevel enum, eg. Common / Rare / Unique
             List<int>[] arrayOfGearLists = new List<int>[GameManager.instance.dataScript.GetNumOfGearRarity()];
             for (int i = 0; i < arrayOfGearLists.Length; i++)
@@ -256,15 +255,11 @@ public class GearManager : MonoBehaviour
             //loop dict and allocate gear to various lists
             foreach (var gearEntry in dictOfGear)
             {
-                //check appropriate for metaLevel (same level or 'none', both are acceptable)
-                if (gearEntry.Value.metaLevel == null || gearEntry.Value.metaLevel.level == gameLevel)
-                {
-                    //reset stats (SO carries values over between sessions)
-                    gearEntry.Value.ResetStats();
-                    //assign to a list based on rarity
-                    int index = gearEntry.Value.rarity.level;
-                    arrayOfGearLists[index].Add(gearEntry.Key);
-                }
+                //reset stats (SO carries values over between sessions)
+                gearEntry.Value.ResetStats();
+                //assign to a list based on rarity
+                int index = gearEntry.Value.rarity.level;
+                arrayOfGearLists[index].Add(gearEntry.Key);
             }
             //initialise dataManager lists with local lists
             for (int i = 0; i < arrayOfGearLists.Length; i++)

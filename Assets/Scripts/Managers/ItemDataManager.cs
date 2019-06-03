@@ -1773,12 +1773,12 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(ongoing.description) == false)
         {
             string colourEffect;
-            switch(ongoing.type.level)
+            switch(ongoing.typeLevel)
             {
                 case 0: colourEffect = colourBad; break;
                 case 1: colourEffect = colourNeutral; break;
                 case 2: colourEffect = colourGood; break;
-                default: colourEffect = colourNeutral; Debug.LogWarningFormat("Invalid ongoing.type.level \"{0}\" for \"{1}\"", ongoing.type.level, ongoing.text); break;
+                default: colourEffect = colourNeutral; Debug.LogWarningFormat("Invalid ongoing.type.level \"{0}\" for \"{1}\"", ongoing.typeLevel, ongoing.text); break;
             }
             builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourEffect, ongoing.description, colourEnd);
             if (ongoing.timer > 0)
