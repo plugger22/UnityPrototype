@@ -953,7 +953,7 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Gear (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.tag)); counter--; }
             }
             numDict = dictOfGear.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfGear has {0} entries{1}", numDict, "\n");

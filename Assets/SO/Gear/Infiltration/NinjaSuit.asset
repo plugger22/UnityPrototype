@@ -9,18 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
-  m_Name: Jungle Juice
+  m_Name: NinjaSuit
   m_EditorClassIdentifier: 
-  description: Temporary metabolism super boost
-  metaLevel: {fileID: 0}
-  rarity: {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
-  type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
+  description: Blend into the dark with a custom blackout suit
+  tag: Ninja Suit
+  rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
+  type: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
   data: 0
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
-  listOfPersonalEffects:
-  - {fileID: 11400000, guid: 240031386e8289d4299d66b8380deced, type: 2}
+  listOfPersonalEffects: []
   aiHackingEffect: {fileID: 0}
-  gearID: 22
+  gearID: 9
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 

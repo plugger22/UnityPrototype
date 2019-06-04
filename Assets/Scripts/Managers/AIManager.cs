@@ -3877,7 +3877,7 @@ public class AIManager : MonoBehaviour
                                         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, traceBackFormattedText, colourEnd);
                                         Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
                                         if (gear != null)
-                                        { builder.AppendFormat("{0}{1}{2}{3}{4} defeats TraceBack{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
+                                        { builder.AppendFormat("{0}{1}{2}{3}{4} defeats TraceBack{5}", "\n", colourNeutral, gear.tag, colourEnd, colourGood, colourEnd); }
                                         else { Debug.LogWarning("Invalid gear (Null) for TraceBack"); }
                                     }
                                     else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, traceBackFormattedText, colourEnd); }
@@ -3891,7 +3891,7 @@ public class AIManager : MonoBehaviour
                                         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, screamerFormattedText, colourEnd);
                                         Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
                                         if (gear != null)
-                                        { builder.AppendFormat("{0}{1}{2}{3}{4} defeats Screamer{5}", "\n", colourNeutral, gear.name, colourEnd, colourGood, colourEnd); }
+                                        { builder.AppendFormat("{0}{1}{2}{3}{4} defeats Screamer{5}", "\n", colourNeutral, gear.tag, colourEnd, colourGood, colourEnd); }
                                         else { Debug.LogWarning("Invalid gear (Null) for Screamer"); }
                                     }
                                     else { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, screamerFormattedText, colourEnd); }
@@ -4193,7 +4193,7 @@ public class AIManager : MonoBehaviour
                             }
                             else
                             {
-                                screamerGearName = gear.name;
+                                screamerGearName = gear.tag;
                                 Debug.Log("[Aim] -> UpdateHackingStatus: AI Screamer defeated by Hacking Gear (Screamer Mask)");
                                 GameManager.instance.gearScript.SetGearUsed(gear, "defeat AI Screamer hacking countermeasure");
                             }
@@ -4226,7 +4226,7 @@ public class AIManager : MonoBehaviour
                 if (gear != null)
                 {
                     data.tooltipHeader = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd,
-                        colourNeutral, gear.name, colourEnd);
+                        colourNeutral, gear.tag, colourEnd);
                 }
                 else
                 {
@@ -4306,7 +4306,7 @@ public class AIManager : MonoBehaviour
                         else
                         {
                             //traceback masker present and used
-                            traceBackGearName = gear.name;
+                            traceBackGearName = gear.tag;
                             GameManager.instance.gearScript.SetGearUsed(gear, "defeat AI TraceBack countermeasure");
                         }
                         StringBuilder builder = new StringBuilder();
@@ -4475,10 +4475,10 @@ public class AIManager : MonoBehaviour
                         {
                             case "Common":
                             case "Rare":
-                                listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", gear.aiHackingEffect.description, colourNeutral, gear.name, colourEnd));
+                                listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", gear.aiHackingEffect.description, colourNeutral, gear.tag, colourEnd));
                                 break;
                             case "Unique":
-                                listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", gear.aiHackingEffect.description, colourGood, gear.name, colourEnd));
+                                listOfPlayerEffectDescriptors.Add(string.Format("{0} ({1}{2}{3})", gear.aiHackingEffect.description, colourGood, gear.tag, colourEnd));
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid gear.rarity.name \"{0}\"", gear.rarity.name);
@@ -4533,7 +4533,7 @@ public class AIManager : MonoBehaviour
             Gear gear = GameManager.instance.playerScript.GetAIGear(cheapHackingEffectText);
             if (gear != null)
             {
-                textGear = gear.name;
+                textGear = gear.tag;
                 if (logGearUse == true)
                 { GameManager.instance.gearScript.SetGearUsed(gear, "provide half cost AI Hacking"); }
             }
@@ -4552,7 +4552,7 @@ public class AIManager : MonoBehaviour
             Gear gear = GameManager.instance.playerScript.GetAIGear(freeHackingEffectText);
             if (gear != null)
             {
-                textGear = gear.name;
+                textGear = gear.tag;
                 if (logGearUse == true)
                 { GameManager.instance.gearScript.SetGearUsed(gear, "provide free AI Hacking"); }
             }
@@ -4636,7 +4636,7 @@ public class AIManager : MonoBehaviour
         }
         else
         {
-            gearName = gear.name;
+            gearName = gear.tag;
             if (logGearUse == true)
             { GameManager.instance.gearScript.SetGearUsed(gear, "provide Invisibile AI Hacking"); }
             //Invisible Hacking gear present -> Player can't be detected -> no change to status

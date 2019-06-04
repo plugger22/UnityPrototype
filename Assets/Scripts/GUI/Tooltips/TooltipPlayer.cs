@@ -244,7 +244,7 @@ public class TooltipPlayer : MonoBehaviour
                     {
                         Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                         if (gear != null)
-                        { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.name, colourEnd); }
+                        { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.tag, colourEnd); }
                     }
                     playerMulti_1.text = builderGear.ToString();
                 }

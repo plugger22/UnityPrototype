@@ -57,7 +57,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                     ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                     {
                                         itemID = gear.gearID,
-                                        itemName = gear.name,
+                                        itemName = gear.tag,
                                         modalLevel = 2,
                                         modalState = ModalSubState.Inventory,
                                         itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),

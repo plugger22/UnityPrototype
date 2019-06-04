@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Satchel
   m_EditorClassIdentifier: 
   description: Exclusive designer party drugs
-  metaLevel: {fileID: 0}
+  tag: Satchel
   rarity: {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
   type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0

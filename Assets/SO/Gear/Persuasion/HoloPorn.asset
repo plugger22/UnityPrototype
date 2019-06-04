@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: HoloPorn
   m_EditorClassIdentifier: 
   description: Hyper realistic virtual high class companions
-  metaLevel: {fileID: 0}
+  tag: HoloPorn
   rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
   type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0

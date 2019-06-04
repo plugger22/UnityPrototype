@@ -1568,9 +1568,9 @@ public class ActorManager : MonoBehaviour
                                             }
                                             EventButtonDetails gearDetails = new EventButtonDetails()
                                             {
-                                                buttonTitle = string.Format("Give {0}", gear.name),
+                                                buttonTitle = string.Format("Give {0}", gear.tag),
                                                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                                buttonTooltipMain = string.Format("Give {0}{1}{2} ({3}) to {4}{5}{6}, {7}", colourNeutral, gear.name, colourEnd, gear.type.name,
+                                                buttonTooltipMain = string.Format("Give {0}{1}{2} ({3}) to {4}{5}{6}, {7}", colourNeutral, gear.tag, colourEnd, gear.type.name,
                                                  colourCancel, actor.arc.name, colourEnd, actor.actorName),
                                                 buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builderTooltip.ToString(), colourEnd),
                                                 //use a Lambda to pass arguments to the action
@@ -1583,7 +1583,7 @@ public class ActorManager : MonoBehaviour
                                         else
                                         {
                                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                            infoBuilder.AppendFormat("Can't gift {0}{1}{2}{3}{4}(used this turn){5}", colourNeutral, gear.name, colourEnd, "\n", colourBad, colourEnd);
+                                            infoBuilder.AppendFormat("Can't gift {0}{1}{2}{3}{4}(used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
                                         }
                                     }
                                     else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
@@ -1943,7 +1943,7 @@ public class ActorManager : MonoBehaviour
                                                         //invalid effect criteria -> Action cancelled
                                                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                         infoBuilder.AppendFormat("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
-                                                            colourInvalid, gear.name, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
+                                                            colourInvalid, gear.tag, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
                                                     }
                                                 }
                                             }
@@ -1960,9 +1960,9 @@ public class ActorManager : MonoBehaviour
                                                 gearActionDetails.gearID = gear.gearID;
                                                 EventButtonDetails gearDetails = new EventButtonDetails()
                                                 {
-                                                    buttonTitle = string.Format("Use {0}", gear.name),
+                                                    buttonTitle = string.Format("Use {0}", gear.tag),
                                                     buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                                                    buttonTooltipMain = string.Format("Use {0} (Player)", gear.name),
+                                                    buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
                                                     /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
                                                     buttonTooltipDetail = builder.ToString(),
                                                     //use a Lambda to pass arguments to the action
@@ -2290,7 +2290,7 @@ public class ActorManager : MonoBehaviour
                     {
                         buttonTitle = "Use",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("Use {0} (Player)", gear.name),
+                        buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
                         /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
                         buttonTooltipDetail = builder.ToString(),
                         //use a Lambda to pass arguments to the action
@@ -2305,7 +2305,7 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Give to - - -
             //
-            cancelText = string.Format("{0} {1}", gear.type.name.ToUpper(), gear.name);
+            cancelText = string.Format("{0} {1}", gear.type.name.ToUpper(), gear.tag);
             if (gear.timesUsed == 0)
             {
                 //Loop current, onMap actors
@@ -2365,7 +2365,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         buttonTitle = string.Format("Give to {0}", actor.arc.name),
                                         buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                                        buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.name, colourNeutral, gear.type.name,
+                                        buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.tag, colourNeutral, gear.type.name,
                                         colourEnd, actor.arc.name, actor.actorName),
                                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builderTooltip.ToString(), colourEnd),
                                         //use a Lambda to pass arguments to the action
@@ -2386,7 +2386,7 @@ public class ActorManager : MonoBehaviour
             {
                 //gear has already been used this turn
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}{1}{2} can't be gifted{3}{4}(Used this turn){5}", colourNeutral, gear.name, colourEnd, "\n", colourBad, colourEnd);
+                infoBuilder.AppendFormat("{0}{1}{2} can't be gifted{3}{4}(Used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
             }
         }
         else
@@ -3183,7 +3183,7 @@ public class ActorManager : MonoBehaviour
                                 builderDetails.AppendFormat("{0}{1}Gear{2}", "\n", colourAlert, colourEnd);
                                 Gear gear = GameManager.instance.dataScript.GetGear(gearID);
                                 if (gear != null)
-                                { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, gear.name, colourEnd); }
+                                { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, gear.tag, colourEnd); }
                                 else { Debug.LogWarningFormat("Invalid Gear (Null) for gearID {0}", gearID); }
                             }
 
@@ -4240,7 +4240,7 @@ public class ActorManager : MonoBehaviour
                                         //gear automatically lost after Target use (other uses are taken care elsewhere)
                                         actor.RemoveGear(GearRemoved.Compromised);
                                         //message
-                                        string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                        string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
                                         GameManager.instance.messageScript.GearLost(msgText, gear, actor);
                                     }
                                     else { actor.ResetGearItem(gear); }
@@ -4484,7 +4484,7 @@ public class ActorManager : MonoBehaviour
                                                 //gear automatically lost after Target use (other uses are taken care elsewhere)
                                                 actor.RemoveGear(GearRemoved.Compromised);
                                                 //message
-                                                string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                                string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
                                                 GameManager.instance.messageScript.GearLost(msgText, gear, actor);
                                             }
                                             else {actor.ResetGearItem(gear); }

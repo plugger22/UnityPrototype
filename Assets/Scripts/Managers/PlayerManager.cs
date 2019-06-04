@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
 
-    private List<int> listOfGear = new List<int>();                                 //gearID's of all gear items in inventory
+    private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
     private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
@@ -317,12 +317,12 @@ public class PlayerManager : MonoBehaviour
     /// 
 
     /// <summary>
-    /// returns true if GearID present in player's inventory
+    /// returns true if Gear name present in player's inventory
     /// </summary>
-    /// <param name="gearID"></param>
+    /// <param name="gearName"></param>
     /// <returns></returns>
-    public bool CheckGearPresent(int gearID)
-    { return listOfGear.Exists(id => id == gearID); }
+    public bool CheckGearPresent(string gearName)
+    { return listOfGear.Exists(x => x == gearName); }
 
     /// <summary>
     /// returns gearID of best piece of gear that matches type, '-1' if none
@@ -425,7 +425,7 @@ public class PlayerManager : MonoBehaviour
     { return listOfGear.Count; }
 
 
-    public List<int> GetListOfGear()
+    public List<string> GetListOfGear()
     { return listOfGear; }
 
     /// <summary>
@@ -464,29 +464,29 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public bool AddGear(int gearID)
+    public bool AddGear(string gearName)
     {
-        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
         if (listOfGear.Count < GameManager.instance.gearScript.maxNumOfGear)
         {
             if (gear != null)
             {
                 //check gear not already in inventory
-                if (CheckGearPresent(gearID) == false)
+                if (CheckGearPresent(gearName) == false)
                 {
                     ResetGearItem(gear);
-                    listOfGear.Add(gearID);
-                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to Player inventory{2}", gear.name, gearID, "\n");
+                    listOfGear.Add(gearName);
+                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to Player inventory{2}", gear.tag, gear.gearID, "\n");
                     CheckForAIUpdate(gear);
                     //add to listOfCurrentGear (if not already present)
                     GameManager.instance.dataScript.AddGearNew(gear);
                     return true;
                 }
                 else
-                { Debug.LogWarningFormat("Gear |'{0}\", gearID {1} is already present in Player inventory", gear.name, gearID);  }
+                { Debug.LogWarningFormat("Gear \'{0}\", gearID {1} is already present in Player inventory", gear.tag, gear.gearID);  }
             }
             else
-            { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+            { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
         }
         /*else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }*/
         return false;
@@ -497,28 +497,33 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public bool RemoveGear(int gearID, bool isLost = false)
+    public bool RemoveGear(string gearName, bool isLost = false)
     {
-        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-        if (gear != null)
+        if (string.IsNullOrEmpty(gearName) == false)
         {
-            //check gear not already in inventory
-            if (CheckGearPresent(gearID) == true)
+            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+            if (gear != null)
             {
-                RemoveGearItem(gear, isLost);
-                return true;
+                //check gear not already in inventory
+                if (CheckGearPresent(gearName) == true)
+                {
+                    RemoveGearItem(gear, isLost);
+                    return true;
+                }
+                else
+                {
+                    Debug.LogError(string.Format("Gear \"{0}\", gearID {1} NOT removed from inventory", gear.tag, gear.gearID));
+                    return false;
+                }
             }
             else
             {
-                Debug.LogError(string.Format("Gear \"{0}\", gearID {1} NOT removed from inventory", gear.name, gearID));
+                Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName));
                 return false;
             }
         }
-        else
-        {
-            Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
-            return false;
-        }
+        else { Debug.LogError("Invalid gearName (Null or Empty)"); }
+        return false;
     }
 
     /// <summary>
@@ -529,8 +534,8 @@ public class PlayerManager : MonoBehaviour
     private void RemoveGearItem(Gear gear, bool isLost)
     {
         ResetGearItem(gear);
-        listOfGear.Remove(gear.gearID);
-        Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, ID {1}, removed from inventory{2}", gear.name, gear.gearID, "\n"));
+        listOfGear.Remove(gear.name);
+        Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, ID {1}, removed from inventory{2}", gear.tag, gear.gearID, "\n"));
         CheckForAIUpdate(gear);
         //lost gear
         if (isLost == true)
@@ -538,7 +543,7 @@ public class PlayerManager : MonoBehaviour
             if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
             {
                 gear.statTurnLost = GameManager.instance.turnScript.Turn;
-                Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.name, gear.gearID);
+                Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.tag, gear.gearID);
             }
         }
     }
@@ -621,7 +626,7 @@ public class PlayerManager : MonoBehaviour
                         if (gear.gearID != savedGearID)
                         {
                             //message
-                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.name, gear.type.name);
+                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
                             GameManager.instance.messageScript.GearCompromised(msgText, gear, -1);
                             RemoveGearItem(gear, true);
                         }
@@ -629,8 +634,8 @@ public class PlayerManager : MonoBehaviour
                         {
                             //gear saved
                             ResetGearItem(gear);
-                            gearSavedName = gear.name.ToUpper();
-                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.name, gear.type.name);
+                            gearSavedName = gear.tag.ToUpper();
+                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.tag, gear.type.name);
                             GameManager.instance.messageScript.GearCompromised(msgText, gear, renownUsed);
                         }
                     }
@@ -1130,7 +1135,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
-                    { builder.Append(string.Format(" {0}, ID {1}, {2}{3}", gear.name, gear.gearID, gear.type.name, "\n")); }
+                    { builder.Append(string.Format(" {0}, ID {1}, {2}{3}", gear.tag, gear.gearID, gear.type.name, "\n")); }
                 }
             }
             else { builder.Append(" No gear in inventory"); }
@@ -1159,7 +1164,7 @@ public class PlayerManager : MonoBehaviour
             {
                 builder.AppendLine();
                 builder.AppendLine();
-                builder.Append(string.Format(" {0}", gear.name.ToUpper()));
+                builder.Append(string.Format(" {0}", gear.tag.ToUpper()));
                 builder.AppendLine();
                 /*if (gear.metaLevel != null)
                 { builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel.name)); }

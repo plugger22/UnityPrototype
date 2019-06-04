@@ -1734,7 +1734,7 @@ MonoBehaviour:
   chanceOfCompromise: 50
   gearSwapBaseAmount: 1
   gearSwapPreferredAmount: 1
-  gearSaveBaseCost: 1
+  gearSaveBaseCost: 2
   actorGearGracePeriod: 3
   actorGearLostChance: 5
   gearCommon: {fileID: 0}

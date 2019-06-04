@@ -1304,7 +1304,7 @@ public class EffectManager : MonoBehaviour
                                         if (gear != null)
                                         {
                                             GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
-                                            effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.name.ToUpper(),
+                                            effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
                                                 colourEnd, colourNormal, colourEnd);
                                         }
                                         else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }

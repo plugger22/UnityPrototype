@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Briefcase
   m_EditorClassIdentifier: 
   description: Full of money. Who can resist?
-  metaLevel: {fileID: 0}
+  tag: Briefcase
   rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
   type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0
@@ -24,9 +24,9 @@ MonoBehaviour:
   isCompromised: 0
   reasonUsed: 
   chanceOfCompromise: 0
-  statTurnObtained: 0
-  statTurnLost: 0
-  statTimesUsed: 0
+  statTurnObtained: 10
+  statTurnLost: 20
+  statTimesUsed: 2
   statTimesGiven: 0
   statTimesCompromised: 0
   statTimesSaved: 0

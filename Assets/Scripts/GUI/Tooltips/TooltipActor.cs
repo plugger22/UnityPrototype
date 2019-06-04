@@ -269,9 +269,9 @@ public class TooltipActor : MonoBehaviour
             {
                 //if gear held for <= grace period then show as Grey (can't be requested), otherwise yellow
                 if (data.actor.GetGearTimer() <= gracePeriod)
-                { actorGear.text = string.Format("{0}Gear{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourGrey, data.gear.name, colourEnd); }
+                { actorGear.text = string.Format("{0}Gear{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourGrey, data.gear.tag, colourEnd); }
                 else
-                { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.name, colourEnd); }
+                { actorGear.text = string.Format("<b>{0}Gear{1}{2}{3}{4}{5}</b>", colourAlert, colourEnd, "\n", colourNeutral, data.gear.tag, colourEnd); }
             }
             else { actorGear.text = string.Format("{0}<size=95%>No Gear</size>{1}", colourGrey, colourEnd); }
         }

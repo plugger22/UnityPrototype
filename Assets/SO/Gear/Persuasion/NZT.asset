@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: NZT
   m_EditorClassIdentifier: 
   description: Ongoing metabolism hyper boost
-  metaLevel: {fileID: 0}
+  tag: NZT
   rarity: {fileID: 11400000, guid: d1310aa157ace304e90910c1b4cee64b, type: 2}
   type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0

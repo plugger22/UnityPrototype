@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Name: Encrypter
   m_EditorClassIdentifier: 
   description: Cover your tracks. Nobody can crack it.
-  metaLevel: {fileID: 0}
-  rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
+  tag: Encrypter
+  rarity: {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
   type: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   data: 0
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects:
-  - {fileID: 11400000, guid: 8f924bf6af062ec4e830a7b11913165d, type: 2}
+  - {fileID: 11400000, guid: 35837c4c4d6a6494498e133c6892c886, type: 2}
   aiHackingEffect: {fileID: 11400000, guid: 14f9df613e4c3354596dd07b6c83cc58, type: 2}
   gearID: 6
   timesUsed: 0

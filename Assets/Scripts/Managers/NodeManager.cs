@@ -1423,8 +1423,8 @@ public class NodeManager : MonoBehaviour
                                     else if (gear.data == 1) { colourGearLevel = colourBad; }
                                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                     {
-                                        buttonTitle = string.Format("{0} Move", gear.name),
-                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourNeutral, gear.name, colourEnd,
+                                        buttonTitle = string.Format("{0} Move", gear.tag),
+                                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourNeutral, gear.tag, colourEnd,
                                         "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
                                         buttonTooltipMain = moveMain,
                                         buttonTooltipDetail = builderDetail.ToString(),
@@ -1612,7 +1612,7 @@ public class NodeManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, kineticGear.name, "\n", colourEnd,
+                                                    colourInvalid, kineticGear.tag, "\n", colourEnd,
                                                     colourResistance, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -1632,8 +1632,8 @@ public class NodeManager : MonoBehaviour
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails kineticDetails = new EventButtonDetails()
                                         {
-                                            buttonTitle = string.Format("Use {0}", kineticGear.name),
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, kineticGear.name, colourEnd),
+                                            buttonTitle = string.Format("Use {0}", kineticGear.tag),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, kineticGear.tag, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -1717,7 +1717,7 @@ public class NodeManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, hackingGear.name, "\n", colourEnd,
+                                                    colourInvalid, hackingGear.tag, "\n", colourEnd,
                                                     colourResistance, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -1737,8 +1737,8 @@ public class NodeManager : MonoBehaviour
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails hackingDetails = new EventButtonDetails()
                                         {
-                                            buttonTitle = string.Format("Use {0}", hackingGear.name),
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, hackingGear.name, colourEnd),
+                                            buttonTitle = string.Format("Use {0}", hackingGear.tag),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, hackingGear.tag, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -1822,7 +1822,7 @@ public class NodeManager : MonoBehaviour
                                                 //invalid effect criteria -> Action cancelled
                                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                                 infoBuilder.Append(string.Format("{0}{1} action invalid{2}{3}{4}({5}){6}",
-                                                    colourInvalid, persuasionGear.name, "\n", colourEnd,
+                                                    colourInvalid, persuasionGear.tag, "\n", colourEnd,
                                                     colourResistance, effectCriteria, colourEnd));
                                                 proceedFlag = false;
                                             }
@@ -1842,8 +1842,8 @@ public class NodeManager : MonoBehaviour
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails persuasionDetails = new EventButtonDetails()
                                         {
-                                            buttonTitle = string.Format("Use {0}", persuasionGear.name),
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, persuasionGear.name, colourEnd),
+                                            buttonTitle = string.Format("Use {0}", persuasionGear.tag),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, persuasionGear.tag, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
                                             buttonTooltipDetail = builder.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -2047,7 +2047,7 @@ public class NodeManager : MonoBehaviour
                     Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
                     if (gear != null)
                     {
-                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.name, colourEnd, colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
                         GameManager.instance.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
                         MoveReturnData moveData = new MoveReturnData();
                         moveData.node = node;

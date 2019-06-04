@@ -1501,7 +1501,7 @@ public class ActionManager : MonoBehaviour
                 if (gear != null)
                 {
                     //Give Gear
-                    outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}{5}", actor.arc.name, actor.actorName, "\n", colourNeutral, gear.name, colourEnd);
+                    outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}{5}", actor.arc.name, actor.actorName, "\n", colourNeutral, gear.tag, colourEnd);
                     //update actor details
                     string textGear = actor.AddGear(gear.gearID);
                     //gear stats
@@ -1511,7 +1511,7 @@ public class ActionManager : MonoBehaviour
                     if (preferredGear != null)
                     {
                         motivationBoost = gearSwapBaseAmount;
-                        builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.name, colourEnd);
+                        builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.tag, colourEnd);
                         //motivation loss more if preferred gear
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
@@ -1561,7 +1561,7 @@ public class ActionManager : MonoBehaviour
             actor.datapoint1 += motivationBoost;
             actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
             //message
-            string text = string.Format("{0} ({1}) given to {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
+            string text = string.Format("{0} ({1}) given to {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
         }
         //action (if valid) expended -> must be BEFORE outcome window event
@@ -1606,12 +1606,12 @@ public class ActionManager : MonoBehaviour
                         default: emotion = "resentfully"; break;
                     }
                     outcomeDetails.textTop = string.Format("{0}, {1}, <b>{2}</b> hands over the {3}{4}{5}{6}", actor.arc.name, actor.actorName, emotion,
-                        "\n", colourNeutral, gear.name, colourEnd);
+                        "\n", colourNeutral, gear.tag, colourEnd);
                     //get actor's preferred gear
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
                     {
-                        builder.AppendFormat("{0}{1} is available{2}", colourGood, gear.name, colourEnd);
+                        builder.AppendFormat("{0}{1} is available{2}", colourGood, gear.tag, colourEnd);
                         if (preferredGear.name.Equals(gear.type.name) == true)
                         {
                             //Preferred gear (extra motivation)
@@ -1660,7 +1660,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.sprite = gear.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //message
-            string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.name, gear.rarity.name, actor.arc.name, actor.actorName);
+            string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationCost, false);
             //action (if valid) expended -> must be BEFORE outcome window event
             outcomeDetails.isAction = true;
@@ -1701,7 +1701,7 @@ public class ActionManager : MonoBehaviour
                         EffectDataReturn effectReturn = new EffectDataReturn();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
-                        dataInput.originText = gear.name;
+                        dataInput.originText = gear.tag;
                         //
                         // - - - Process effects
                         //
@@ -1710,12 +1710,12 @@ public class ActionManager : MonoBehaviour
                             //ongoing effect for gear ONLY player actions +/- (handled differently to other ongoing effects)
                             dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID(); ;
                             dataInput.data = gear.gearID;
-                            dataInput.ongoingText = string.Format("{0} gear", gear.name);
+                            dataInput.ongoingText = string.Format("{0} gear", gear.tag);
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
                                 outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
-                                builderTop.AppendFormat("{0} has been used by the Player", gear.name);
+                                builderTop.AppendFormat("{0} has been used by the Player", gear.tag);
                                 //update stringBuilder texts
                                 if (effectReturn.topText != null && effectReturn.topText.Length > 0)
                                 {
@@ -1745,7 +1745,7 @@ public class ActionManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogErrorFormat("There are no USE Effects for this \"{0}\" gear", gear.name);
+                        Debug.LogErrorFormat("There are no USE Effects for this \"{0}\" gear", gear.tag);
                         errorFlag = true;
                     }
                 }
@@ -2496,9 +2496,9 @@ public class ActionManager : MonoBehaviour
                                 {
                                     if (builderBottom.Length > 0)
                                     { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.AppendFormat("{0}{1} gear Lost{2}", colourBad, gear.name, colourEnd);
+                                    builderBottom.AppendFormat("{0}{1} gear Lost{2}", colourBad, gear.tag, colourEnd);
                                     //message
-                                    string gearText = string.Format("{0} gear lost by {1}, {2}", gear.name, actor.actorName, actor.arc.name);
+                                    string gearText = string.Format("{0} gear lost by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
                                     GameManager.instance.messageScript.GearLost(gearText, gear, actor);
                                 }
                                 else { Debug.LogWarningFormat("Invalid Gear (Null) for gearID {0}", gearID); }

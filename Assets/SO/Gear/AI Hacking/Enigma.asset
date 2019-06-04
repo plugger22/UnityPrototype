@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Enigma
   m_EditorClassIdentifier: 
   description: AI Tracebacks look straight past you
-  metaLevel: {fileID: 0}
+  tag: Enigma
   rarity: {fileID: 11400000, guid: d1310aa157ace304e90910c1b4cee64b, type: 2}
   type: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   data: 0

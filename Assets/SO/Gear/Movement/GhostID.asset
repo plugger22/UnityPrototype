@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
-  m_Name: Work Permit
+  m_Name: GhostID
   m_EditorClassIdentifier: 
-  description: Temporary use Security pass for travel
-  metaLevel: {fileID: 0}
-  rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
+  description: Fake ID good for travel
+  tag: Ghost ID
+  rarity: {fileID: 11400000, guid: d1310aa157ace304e90910c1b4cee64b, type: 2}
   type: {fileID: 11400000, guid: a88df17476114704ab637e71e32b4140, type: 2}
-  data: 3
+  data: 1
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects: []
   aiHackingEffect: {fileID: 0}
-  gearID: 19
+  gearID: 17
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 

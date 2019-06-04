@@ -2688,12 +2688,12 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             if (isGiven == true)
             {
-                data.itemText = string.Format("{0} gear Given", gear.name);
+                data.itemText = string.Format("{0} gear Given", gear.tag);
                 data.topText = "Give Gear";
             }
             else
             {
-                data.itemText = string.Format("{0} gear Taken", gear.name);
+                data.itemText = string.Format("{0} gear Taken", gear.tag);
                 data.topText = "Gear Taken";
             }
             data.bottomText = GameManager.instance.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
@@ -2737,7 +2737,7 @@ public class MessageManager : MonoBehaviour
             message.data2 = nodeID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} gear Compromised", gear.name);
+            data.itemText = string.Format("{0} gear Compromised", gear.tag);
             data.topText = "Gear Compromised";
             data.bottomText = GameManager.instance.itemDataScript.GetGearCompromisedDetails(gear, renownUsed);
             data.priority = ItemPriority.Low;
@@ -2777,7 +2777,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = gear.gearID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} gear Used", gear.name);
+            data.itemText = string.Format("{0} gear Used", gear.tag);
             data.topText = "Gear Used";
             data.bottomText = GameManager.instance.itemDataScript.GetGearUsedDetails(gear);
             data.priority = ItemPriority.Low;
@@ -2819,7 +2819,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} gear Lost", gear.name);
+            data.itemText = string.Format("{0} gear Lost", gear.tag);
             data.topText = "Gear Lost";
             data.bottomText = GameManager.instance.itemDataScript.GetGearLostDetails(gear, actor, isGivenToHQ);
             data.priority = ItemPriority.Medium;
@@ -2861,7 +2861,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} gear Available", gear.name);
+            data.itemText = string.Format("{0} gear Available", gear.tag);
             data.topText = "Gear Available";
             data.bottomText = GameManager.instance.itemDataScript.GetGearAvailableDetails(gear, actor);
             data.priority = ItemPriority.Medium;
@@ -2904,7 +2904,7 @@ public class MessageManager : MonoBehaviour
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} gear Obtained", gear.name);
+            data.itemText = string.Format("{0} gear Obtained", gear.tag);
             data.topText = "Gear Obtained";
             data.bottomText = GameManager.instance.itemDataScript.GetGearObtainedDetails(gear, node, actorID);
             data.priority = ItemPriority.Low;

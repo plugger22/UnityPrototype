@@ -25,7 +25,7 @@ public class GearManager : MonoBehaviour
     [Range(0, 3)] public int gearSwapBaseAmount = 1;
     [Tooltip("Motivation boost/cost to give/take PREFERRED gear from an actor")]
     [Range(0, 3)] public int gearSwapPreferredAmount = 1;
-    [Tooltip("Base cost to save compromised gear (in Renown) at level start. Cost increases +1 each time the option is used")]
+    [Tooltip("Base cost to save compromised gear (in Renown)")]
     [Range(0, 3)] public int gearSaveBaseCost = 0;
 
     [Header("Actor Gear")]
@@ -378,7 +378,7 @@ public class GearManager : MonoBehaviour
                                     gear.isCompromised = true;
                                     gear.chanceOfCompromise = chance;
                                     //add to list (used for outcome dialogues)
-                                    listOfCompromisedGear.Add(gear.name.ToUpper());
+                                    listOfCompromisedGear.Add(gear.tag.ToUpper());
                                     if (GameManager.instance.playerScript.CheckGearPresent(gear.gearID) == true)
                                     {
                                         listOfPlayerGear.Add(gear.gearID);
@@ -389,9 +389,9 @@ public class GearManager : MonoBehaviour
                                     //stat (before message)
                                     gear.statTimesCompromised++;
                                     //admin
-                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
-                                    Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.name, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
-                                    string msgText = string.Format("Gear {0} COMPROMISED", gear.name);
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.tag, chance, rnd, "\n");
+                                    Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.tag, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
+                                    string msgText = string.Format("Gear {0} COMPROMISED", gear.tag);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
                                     break;
                                 }
@@ -399,8 +399,8 @@ public class GearManager : MonoBehaviour
                                 {
                                     //gear not compromised
                                     gear.chanceOfCompromise = chance;
-                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} NOT compromised, need < {1}, rolled {2}{3}", gear.name, chance, rnd, "\n");
-                                    string msgText = string.Format("Gear {0} NOT Compromised", gear.name);
+                                    Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} NOT compromised, need < {1}, rolled {2}{3}", gear.tag, chance, rnd, "\n");
+                                    string msgText = string.Format("Gear {0} NOT Compromised", gear.tag);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
                                 }
                             }
@@ -477,7 +477,7 @@ public class GearManager : MonoBehaviour
                             if (timer == actorGearGracePeriod)
                                 {
                                     //let player know that gear will be available
-                                    string msgText = string.Format("{0} gear held by {1}, available next turn", gear.name, actor.arc.name);
+                                    string msgText = string.Format("{0} gear held by {1}, available next turn", gear.tag, actor.arc.name);
                                     GameManager.instance.messageScript.GearAvailable(msgText, gear, actor);
                                 }
                             //grace period exceeded
@@ -505,12 +505,12 @@ public class GearManager : MonoBehaviour
                                 {
                                     //Gear LOST
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckActorGear: {0} LOST ({1}), need < {2}{3}, rolled {4}{5}",
-                                        gear.name, actor.arc.name,  chance, traitName, rnd, "\n");
+                                        gear.tag, actor.arc.name,  chance, traitName, rnd, "\n");
                                     //message
-                                    string msgText = string.Format("{0} gear lost by {1}, {2}{3}", gear.name, actor.actorName, actor.arc.name, traitName);
+                                    string msgText = string.Format("{0} gear lost by {1}, {2}{3}", gear.tag, actor.actorName, actor.arc.name, traitName);
                                     GameManager.instance.messageScript.GearLost(msgText, gear, actor);
                                     //random
-                                    msgText = string.Format("Gear {0} LOST", gear.name);
+                                    msgText = string.Format("Gear {0} LOST", gear.tag);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                     //remove gear AFTER message
                                     actor.RemoveGear(GearRemoved.Lost);
@@ -519,7 +519,7 @@ public class GearManager : MonoBehaviour
                                 else
                                 {
                                     //random
-                                    string msgText = string.Format("{0} gear, {1}, retained", actor.arc.name, gear.name);
+                                    string msgText = string.Format("{0} gear, {1}, retained", actor.arc.name, gear.tag);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                 }
                             }
@@ -572,7 +572,7 @@ public class GearManager : MonoBehaviour
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
                                 optionDetails.optionID = gear.gearID;
-                                optionDetails.text = gear.name.ToUpper();
+                                optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[index] = optionDetails;
@@ -588,7 +588,7 @@ public class GearManager : MonoBehaviour
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
                                 optionDetails.optionID = gear.gearID;
-                                optionDetails.text = gear.name.ToUpper();
+                                optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 optionDetails.isOptionActive = false;
                                 //add to master arrays
@@ -725,8 +725,8 @@ public class GearManager : MonoBehaviour
                             Gear rareGear = GameManager.instance.dataScript.GetGear(gearID);
                             if (rareGear != null)
                             {
-                                Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear ({0}) Success, need < {1} roll {2}{3}", rareGear.name, chance, rnd, "\n");
-                                GameManager.instance.messageScript.GeneralRandom(string.Format("Gear Choice, Rare gear ({0}) SUCCESS", rareGear.name), "Rare Gear", chance, rnd);
+                                Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear ({0}) Success, need < {1} roll {2}{3}", rareGear.tag, chance, rnd, "\n");
+                                GameManager.instance.messageScript.GeneralRandom(string.Format("Gear Choice, Rare gear ({0}) SUCCESS", rareGear.tag), "Rare Gear", chance, rnd);
                             }
                             else
                             {
@@ -784,7 +784,7 @@ public class GearManager : MonoBehaviour
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
                                 optionDetails.optionID = gear.gearID;
-                                optionDetails.text = gear.name.ToUpper();
+                                optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 //add to master arrays
                                 genericDetails.arrayOfOptions[i] = optionDetails;
@@ -899,7 +899,7 @@ public class GearManager : MonoBehaviour
                             {
                                 InventoryOptionData optionData = new InventoryOptionData();
                                 optionData.sprite = gear.sprite;
-                                optionData.textUpper = gear.name.ToUpper();
+                                optionData.textUpper = gear.tag.ToUpper();
                                 //colour code Rarity
                                 switch (gear.rarity.name)
                                 {
@@ -1014,7 +1014,7 @@ public class GearManager : MonoBehaviour
                         {
                             InventoryOptionData optionData = new InventoryOptionData();
                             optionData.sprite = gear.sprite;
-                            optionData.textUpper = gear.name.ToUpper();
+                            optionData.textUpper = gear.tag.ToUpper();
                             //colour code Rarity
                             switch (gear.rarity.name)
                             {
@@ -1156,12 +1156,12 @@ public class GearManager : MonoBehaviour
                             {
                                 //remove gear from pool
                                 if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
-                                { Debug.LogWarningFormat("Invalid removal for \"{0}\", ID {1}", gear.name, gear.gearID); }
+                                { Debug.LogWarningFormat("Invalid removal for \"{0}\", ID {1}", gear.tag, gear.gearID); }
                                 //stat
                                 gear.statTurnObtained = GameManager.instance.turnScript.Turn;
                                 //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
-                                builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.name.ToUpper(), colourEnd,
+                                builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.tag.ToUpper(), colourEnd,
                                     colourDefault, colourEnd));
                                 //reset flags for gear caches
                                 if (isPlayer == true)
@@ -1171,12 +1171,12 @@ public class GearManager : MonoBehaviour
                                 string textMsg;
                                 if (isPlayer == true)
                                 {
-                                    textMsg = string.Format("{0} ({1}) has been acquired (by PLAYER)", gear.name, gear.type.name);
+                                    textMsg = string.Format("{0} ({1}) has been acquired (by PLAYER)", gear.tag, gear.type.name);
                                     GameManager.instance.messageScript.GearObtained(textMsg, node, gear);
                                 }
                                 else
                                 {
-                                    textMsg = string.Format("{0} ({1}) has been acquired ( by {2})", gear.name, gear.type.name, actor.arc.name);
+                                    textMsg = string.Format("{0} ({1}) has been acquired ( by {2})", gear.tag, gear.type.name, actor.arc.name);
                                     GameManager.instance.messageScript.GearObtained(textMsg, node, gear, actor.actorID);
                                 }
                                 //Process any other effects, if acquisition was successfull, ignore otherwise
@@ -1287,7 +1287,7 @@ public class GearManager : MonoBehaviour
                 gear.statTimesUsed++;
                 gear.reasonUsed = string.Format("Used to {0}", descriptorUsedTo);
                 //message
-                string msgText = string.Format("{0} used to {1}", gear.name, descriptorUsedTo);
+                string msgText = string.Format("{0} used to {1}", gear.tag, descriptorUsedTo);
                 GameManager.instance.messageScript.GearUsed(msgText, gear);
             }
             else { Debug.LogWarning("Invalid descriptorUsedTo parameter (Null)"); }
@@ -1307,8 +1307,8 @@ public class GearManager : MonoBehaviour
         renown -= amount;
         GameManager.instance.playerScript.Renown = renown;
         //message
-        string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.name, gear.gearID, amount);
-        GameManager.instance.messageScript.RenownUsedPlayer(textMsg, string.Format("save {0} gear", gear.name), amount, gear.gearID, node.nodeID);
+        string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.tag, gear.gearID, amount);
+        GameManager.instance.messageScript.RenownUsedPlayer(textMsg, string.Format("save {0} gear", gear.tag), amount, gear.gearID, node.nodeID);
         //return text string for builder
         return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
     }*/
@@ -1326,7 +1326,7 @@ public class GearManager : MonoBehaviour
             details = new GenericTooltipDetails();
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd);
+            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.tag.ToUpper(), colourEnd);
             string colourGearEffect = colourNeutral;
             if (gear.data == 3) { colourGearEffect = colourGood; }
             else if (gear.data == 1) { colourGearEffect = colourBad; }
@@ -1398,7 +1398,7 @@ public class GearManager : MonoBehaviour
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderMain = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd);
+            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.tag.ToUpper(), colourEnd);
             string colourGearEffect = colourNeutral;
             if (gear.data == 3) { colourGearEffect = colourGood; }
             else if (gear.data == 1) { colourGearEffect = colourBad; }
@@ -1442,7 +1442,7 @@ public class GearManager : MonoBehaviour
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderMain = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.name.ToUpper(), colourEnd);
+            builderHeader.AppendFormat("{0}<size=110%>{1}</size>{2}", colourGear, gear.tag.ToUpper(), colourEnd);
             string colourGearEffect = colourNeutral;
             if (gear.data == 3) { colourGearEffect = colourGood; }
             else if (gear.data == 1) { colourGearEffect = colourBad; }

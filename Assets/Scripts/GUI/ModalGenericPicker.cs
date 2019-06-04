@@ -430,7 +430,7 @@ public class ModalGenericPicker : MonoBehaviour
                             Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
                             if (gear != null)
                             {
-                                text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.name.ToUpper(), colourEnd, colourDefault, colourEnd);
+                                text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.tag.ToUpper(), colourEnd, colourDefault, colourEnd);
                                 Debug.LogFormat("[UI] -> ModalGenericPicker: gearID {0} selected{1}", data.optionID, "\n");
                             }
                             else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", data.optionID)); }
@@ -456,7 +456,7 @@ public class ModalGenericPicker : MonoBehaviour
                             Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
                             if (gear != null)
                             {
-                                text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.name.ToUpper(), colourEnd, 
+                                text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd, 
                                     colourNeutral, datapoint, colourEnd, colourGood, GameManager.instance.playerScript.Renown, colourEnd);
                                 Debug.LogFormat("[UI] -> ModalGenericPicker: gearID {0} selected{1}", data.optionID, "\n");
                             }

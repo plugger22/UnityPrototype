@@ -10,6 +10,8 @@ using gameAPI;
 public class Gear : ScriptableObject
 {
     public string description;
+    [Tooltip("Used for in-Game")]
+    public string tag;
 
     [Tooltip("Only select an option here if the Gear is restricted to a particular metaLevel, otherwise leave as None (null)")]
     /*public GlobalMeta metaLevel;  //local / state / national*/

@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
-  m_Name: Neural Mask
+  m_Name: VirtualBomb
   m_EditorClassIdentifier: 
-  description: Hack the AI without risk of Detection
-  metaLevel: {fileID: 0}
-  rarity: {fileID: 11400000, guid: d1310aa157ace304e90910c1b4cee64b, type: 2}
+  description: Turns databases into scrambled eggs
+  tag: Virtual Bomb
+  rarity: {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
   type: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   data: 0
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects: []
-  aiHackingEffect: {fileID: 11400000, guid: 1e7c8b2101ceb084aa6910503dc42f89, type: 2}
-  gearID: 1
+  aiHackingEffect: {fileID: 11400000, guid: 14f9df613e4c3354596dd07b6c83cc58, type: 2}
+  gearID: 7
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 
