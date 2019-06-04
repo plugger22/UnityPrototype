@@ -27,3 +27,62 @@ Dev seed 27681 -> Tuesday, 4 June 2019 4:02 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 890 -> Arles, France
+
+Dev seed 54805 -> Tuesday, 4 June 2019 7:59 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.RemoveActorAdmin (GlobalSide side, gameAPI.Actor actor, gameAPI.ActorStatus status) (at Assets/Scripts/Managers/DataManager.cs:3531)
+	DataManager.RemoveCurrentActor (GlobalSide side, gameAPI.Actor actor, gameAPI.ActorStatus status) (at Assets/Scripts/Managers/DataManager.cs:3508)
+	ActorManager.TakeAction (gameAPI.Actor actor) (at Assets/Scripts/Managers/ActorManager.cs:6359)
+	ActorManager.UpdateReserveActors () (at Assets/Scripts/Managers/ActorManager.cs:6145)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:490)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:368)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:363)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 54805 -> Tuesday, 4 June 2019 8:15 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.RemoveActorAdmin (GlobalSide side, gameAPI.Actor actor, gameAPI.ActorStatus status) (at Assets/Scripts/Managers/DataManager.cs:3531)
+	DataManager.RemoveCurrentActor (GlobalSide side, gameAPI.Actor actor, gameAPI.ActorStatus status) (at Assets/Scripts/Managers/DataManager.cs:3508)
+	ActorManager.TakeAction (gameAPI.Actor actor) (at Assets/Scripts/Managers/ActorManager.cs:6359)
+	ActorManager.UpdateReserveActors () (at Assets/Scripts/Managers/ActorManager.cs:6145)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:490)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:368)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:363)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 54805 -> Tuesday, 4 June 2019 8:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43203 -> Tuesday, 4 June 2019 8:42 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid actor (Null) for actorID 29
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1395)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3538)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3508)
+	ActorManager:TakeAction(Actor) (at Assets/Scripts/Managers/ActorManager.cs:6359)
+	ActorManager:UpdateReserveActors() (at Assets/Scripts/Managers/ActorManager.cs:6145)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:490)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:368)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:363)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 61720 -> Tuesday, 4 June 2019 8:48 PM
+City seed 5678 -> London, United Kingdom

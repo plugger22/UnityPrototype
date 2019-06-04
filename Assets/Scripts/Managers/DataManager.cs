@@ -3458,7 +3458,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes current actor and handles all relevant admin details. Returns true if actor removed successfully
+    /// Removes current actor and handles all relevant admin details. Returns true if actor removed successfully. Actor could be in Reserves.
     /// NOTE: Actor status will be updated if operation successful otherwise no change
     /// </summary>
     /// <param name="side"></param>
@@ -3519,7 +3519,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod for RemoveActor to handle all the admin details
+    /// subMethod for RemoveActor to handle all the admin details.Handles all cases including reserves
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actor"></param>
@@ -3528,11 +3528,15 @@ public class DataManager : MonoBehaviour
     private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status)
     {
         //update actor arrays
-        arrayOfActors[side.level, actor.slotID] = null;
-        arrayOfActorsPresent[side.level, actor.slotID] = false;
+        if (actor.Status != ActorStatus.Reserve)
+        {
+            arrayOfActors[side.level, actor.slotID] = null;
+            arrayOfActorsPresent[side.level, actor.slotID] = false;
+        }
         actor.Status = status;
         //update node contacts
-        RemoveContactsActor(actor.actorID);
+        if (actor.CheckNumOfContacts() > 0)
+        { RemoveContactsActor(actor.actorID); }
         //handle special cases
         switch (status)
         {

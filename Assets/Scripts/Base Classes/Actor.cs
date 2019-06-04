@@ -301,6 +301,13 @@ namespace gameAPI
             return contact;
         }
 
+        /// <summary>
+        /// returns number of contacts, if any
+        /// </summary>
+        /// <returns></returns>
+        public int CheckNumOfContacts()
+        { return dictOfContacts.Count; }
+
         //
         // - - - Conditions - - -
         //
