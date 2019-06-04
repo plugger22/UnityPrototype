@@ -151,61 +151,61 @@ public class DataManager : MonoBehaviour
 
 
     //dictionaries
-    private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();      //Key -> nodeID, Value -> Node gameObject
-    private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                        //Key -> nodeID, Value -> Node
-    private Dictionary<int, NodeD> dictOfNodeDUnweighted = new Dictionary<int, NodeD>();            //Key -> id, Value -> NodeD (Dijkstra API), Unweighted
-    private Dictionary<int, NodeD> dictOfNodeDWeighted = new Dictionary<int, NodeD>();              //Key -> id, Value -> NodeD (Dijkstra API), Weighted
-    private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();               //Key -> nodeArcID, Value -> NodeArc
-    private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();           //Key -> nodeArc name, Value -> nodeArcID
-    private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();   //Key -> nodeID, Value -> PathData
-    private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();     //Key -> nodeID, Value -> PathData
-    private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
-    private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();          //Key -> actorArc name, Value -> actorArcID
-    private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
-    private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();               //Key -> trait.name, Value -> Trait
-    private Dictionary<int, TraitEffect> dictOfTraitEffects = new Dictionary<int, TraitEffect>();   //Key -> teffID, Value -> TraitEffect
-    private Dictionary<string, int> dictOfLookUpTraitEffects = new Dictionary<string, int>();       //Key -> TraitEffect name, Value -> teffID
-    private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
-    private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>(); //Key -> ManageAction.name, Value -> ManageAction
-    private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();            //Key -> action name, Value -> actionID
-    private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
-    private Dictionary<string, Target> dictOfTargets = new Dictionary<string, Target>();            //Key -> Target.name, Value -> Target
-    private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
-    private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
-    private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
-    private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                         //Key -> gearID, Value -> Gear
-    private Dictionary<int, Connection> dictOfConnections = new Dictionary<int, Connection>();      //Key -> connID, Value -> Connection
-    private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
-    private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
-    private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();        //Key -> msgID, Value -> Message
-    private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();             //Key -> msgID, Value -> Message
-    private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();  //Key -> ongoingID, Value -> Ongoing effect details
-    private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();               //Key -> factionID, Value -> Faction
-    private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                       //Key -> cityID, Value -> City
-    private Dictionary<int, CityArc> dictOfCityArcs = new Dictionary<int, CityArc>();               //Key -> cityArcID, Value -> CityArc
-    private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();         //Key -> objectiveID, Value -> Objective
-    private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();//Key -> orgID, Value -> Organisation
-    private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                     //Key -> mayorID, Value -> Mayor
-    private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();      //Key -> aiDecID, Value -> DecisionAI
-    private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();        //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
-    private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();   //Key -> actBreakID, Value -> ActorBreakdown
-    private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                  //Key -> secretID, Value -> Secret
-    private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();      //Key -> SecretType.name, Value -> SecretType
-    private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
-    private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();       //Key -> turn, Value -> MainInfoData set for turn
-    private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                //Key -> contactID, Value -> Contact
-    private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();       //Key -> ActorID, Value -> list of nodeID's where actor has contacts
-    private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();   //Key -> NodeID, Value -> list of actorID's who have a contact at node
-    private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();    //Key -> NodeID, Value -> list of actorID's who have a contact at node
+    private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
+    private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                                    //Key -> nodeID, Value -> Node
+    private Dictionary<int, NodeD> dictOfNodeDUnweighted = new Dictionary<int, NodeD>();                        //Key -> id, Value -> NodeD (Dijkstra API), Unweighted
+    private Dictionary<int, NodeD> dictOfNodeDWeighted = new Dictionary<int, NodeD>();                          //Key -> id, Value -> NodeD (Dijkstra API), Weighted
+    private Dictionary<int, NodeArc> dictOfNodeArcs = new Dictionary<int, NodeArc>();                           //Key -> nodeArcID, Value -> NodeArc
+    private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();                       //Key -> nodeArc name, Value -> nodeArcID
+    private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();               //Key -> nodeID, Value -> PathData
+    private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();                 //Key -> nodeID, Value -> PathData
+    private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();                        //Key -> actorArcID, Value -> ActorArc
+    private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();                      //Key -> actorArc name, Value -> actorArcID
+    private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                                 //Key -> actorID, Value -> Actor
+    private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();                           //Key -> trait.name, Value -> Trait
+    private Dictionary<string, TraitEffect> dictOfTraitEffects = new Dictionary<string, TraitEffect>();         //Key -> traitEffect.name, Value -> TraitEffect
+    /*private Dictionary<string, int> dictOfLookUpTraitEffects = new Dictionary<string, int>();                   //Key -> TraitEffect name, Value -> teffID*/
+    private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                              //Key -> ActionID, Value -> Action
+    private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>();      //Key -> ManageAction.name, Value -> ManageAction
+    private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();                        //Key -> action name, Value -> actionID
+    private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                              //Key -> effectID, Value -> ActionEffect
+    private Dictionary<string, Target> dictOfTargets = new Dictionary<string, Target>();                        //Key -> Target.name, Value -> Target
+    private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();                           //Key -> teamID, Value -> Team
+    private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();                       //Key -> teamArc name, Value -> TeamArcID
+    private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                                    //Key -> teamID, Value -> Team
+    private Dictionary<int, Gear> dictOfGear = new Dictionary<int, Gear>();                                     //Key -> gearID, Value -> Gear
+    private Dictionary<int, Connection> dictOfConnections = new Dictionary<int, Connection>();                  //Key -> connID, Value -> Connection
+    private Dictionary<int, Message> dictOfArchiveMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
+    private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();                         //Key -> msgID, Value -> Message
+    private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();      //Key -> ongoingID, Value -> Ongoing effect details
+    private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();                           //Key -> factionID, Value -> Faction
+    private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                                   //Key -> cityID, Value -> City
+    private Dictionary<int, CityArc> dictOfCityArcs = new Dictionary<int, CityArc>();                           //Key -> cityArcID, Value -> CityArc
+    private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();                     //Key -> objectiveID, Value -> Objective
+    private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();            //Key -> orgID, Value -> Organisation
+    private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                                 //Key -> mayorID, Value -> Mayor
+    private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();                  //Key -> aiDecID, Value -> DecisionAI
+    private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();                    //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
+    private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();         //Key -> actBreakID, Value -> ActorBreakdown
+    private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                              //Key -> secretID, Value -> Secret
+    private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
+    private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();                   //Key -> nodeCrisisID, Value -> NodeCrisis
+    private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();                  //Key -> turn, Value -> MainInfoData set for turn
+    private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                           //Key -> contactID, Value -> Contact
+    private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();                  //Key -> ActorID, Value -> list of nodeID's where actor has contacts
+    private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();         //Key -> NodeID, Value -> list of actorID's who have a contact at node
+    private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();          //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
-    private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                //Key -> missionID, Value -> Mission
-    private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();        //Key -> tag, Value -> HelpData
-    private Dictionary<StatType, int> dictOfStatisticsLevel = new Dictionary<StatType, int>();       //Key -> (int)StatType, Value -> statistic
-    private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();    //Key -> (int)StatType, Value -> statistic
-    private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();             //Key -> scenarioID, Value -> Scenario
-    private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();             //Key -> campaignID, Value -> Campaign
-    private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                         //Key -> cureID, Value -> Cure
-    private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();             //Key -> sprite name, Value -> Sprite
+    private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                           //Key -> missionID, Value -> Mission
+    private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();                   //Key -> tag, Value -> HelpData
+    private Dictionary<StatType, int> dictOfStatisticsLevel = new Dictionary<StatType, int>();                  //Key -> (int)StatType, Value -> statistic
+    private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();               //Key -> (int)StatType, Value -> statistic
+    private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();                        //Key -> scenarioID, Value -> Scenario
+    private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();                        //Key -> campaignID, Value -> Campaign
+    private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                                    //Key -> cureID, Value -> Cure
+    private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
 
     #region SO enum Dictionaries
     //global SO's (enum equivalents)
@@ -866,26 +866,6 @@ public class DataManager : MonoBehaviour
         return trait;
     }
 
-    /*/// <summary>
-    /// returns the matching trait to the input string. Null if not found.
-    /// </summary>
-    /// <param name="traitText"></param>
-    /// <returns></returns>
-    public Trait GetTrait(string traitText)
-    {
-        Trait trait = null;
-        foreach (var record in dictOfTraits)
-        {
-            if (record.Value.tag.Equals(traitText) == true)
-            {
-                trait = record.Value;
-                break;
-            }
-        }
-        return trait;
-    }*/
-
-
     public Dictionary<string, Trait> GetDictOfTraits()
     { return dictOfTraits; }
 
@@ -913,28 +893,30 @@ public class DataManager : MonoBehaviour
         return traitCategory;
     }
 
-    public Dictionary<int, TraitEffect> GetDictOfTraitEffects()
+    public Dictionary<string, TraitEffect> GetDictOfTraitEffects()
     { return dictOfTraitEffects; }
 
-    public Dictionary<string, int> GetDictOfLookUpTraitEffects()
-    { return dictOfLookUpTraitEffects; }
+    /*public Dictionary<string, int> GetDictOfLookUpTraitEffects()
+    { return dictOfLookUpTraitEffects; }*/
 
     /// <summary>
     /// Gets specified TraitEffect, returns null if not found
+    /// NOTE: Null is an acceptable input value
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    public TraitEffect GetTraitEffect(int traitEffectID)
+    public TraitEffect GetTraitEffect(string effectName)
     {
-        TraitEffect traitEffect = null;
-        if (dictOfTraitEffects.TryGetValue(traitEffectID, out traitEffect))
+        if (string.IsNullOrEmpty(effectName) == false)
         {
-            return traitEffect;
+            TraitEffect traitEffect = null;
+            if (dictOfTraitEffects.TryGetValue(effectName, out traitEffect))
+            { return traitEffect; }
         }
         return null;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Returns TraitEffect teffID, -1 if not found in dictionary
     /// </summary>
     /// <param name="category"></param>
@@ -950,7 +932,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid traitEffect (Null or Empty)"); }
         return teffID;
-    }
+    }*/
 
     /// <summary>
     /// Gets trait based on trait.name, null if not found

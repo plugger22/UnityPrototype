@@ -2213,6 +2213,14 @@ public class FileManager : MonoBehaviour
                             }
                         }
                         else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+                        //trait effects
+                        List<string> listOfTraitEffects = actor.GetListOfTraitEffects();
+                        if (listOfTraitEffects != null)
+                        {
+                            listOfTraitEffects.Clear();
+                            listOfTraitEffects.AddRange(readActor.listOfTraitEffects);
+                        }
+                        else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
                     }
                     //
                     // - - - Add to dictionary
@@ -3165,6 +3173,11 @@ public class FileManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+            //trait effects
+            List<string> listOfTraitEffects = actor.GetListOfTraitEffects();
+            if (listOfTraitEffects != null)
+            { saveActor.listOfTraitEffects.AddRange(listOfTraitEffects); }
+            else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
         }
         //
         // - - - Success check

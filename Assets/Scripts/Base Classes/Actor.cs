@@ -57,17 +57,17 @@ namespace gameAPI
         private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
         private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
-        private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+        private List<string> listOfTraitEffects = new List<string>();             //list of all traitEffect.teffID's
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();  //key -> nodeID where contact is, Value -> contact
         #endregion
 
         //cached trait effects (public for serialization reasons)
-        [HideInInspector] public int actorStressNone;
-        [HideInInspector] public int actorCorruptNone;
-        [HideInInspector] public int actorUnhappyNone;
-        [HideInInspector] public int actorBlackmailNone;
-        [HideInInspector] public int actorBlackmailTimerHigh;
-        [HideInInspector] public int actorBlackmailTimerLow;
+        [HideInInspector] public string actorStressNone;
+        [HideInInspector] public string actorCorruptNone;
+        [HideInInspector] public string actorUnhappyNone;
+        [HideInInspector] public string actorBlackmailNone;
+        [HideInInspector] public string actorBlackmailTimerHigh;
+        [HideInInspector] public string actorBlackmailTimerLow;
         [HideInInspector] public int maxNumOfSecrets = -1;
 
         //private backing field
@@ -119,20 +119,14 @@ namespace gameAPI
             if (GameManager.instance.isSession == false)
             {
                 //fast access & cached
-                actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
-                actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
-                actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
-                actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
-                actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
-                actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
+                actorStressNone = "ActorStressNone";
+                actorCorruptNone = "ActorCorruptNone";
+                actorUnhappyNone = "ActorUnhappyNone";
+                actorBlackmailNone = "ActorBlackmailNone";
+                actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
+                actorBlackmailTimerLow = "ActorBlackmailTimerLow";
                 maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
                 Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
-                Debug.Assert(actorStressNone > -1, "Invalid actorStressNone (-1)");
-                Debug.Assert(actorStressNone > -1, "Invalid actorCorruptNone (-1)");
-                Debug.Assert(actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
-                Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
-                Debug.Assert(actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
-                Debug.Assert(actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
             }
         }
 
@@ -637,7 +631,7 @@ namespace gameAPI
         public Trait GetTrait()
         { return trait; }
 
-        public List<int> GetListOfTraitEffects()
+        public List<string> GetListOfTraitEffects()
         { return listOfTraitEffects; }
 
         /// <summary>

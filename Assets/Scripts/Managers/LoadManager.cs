@@ -473,12 +473,10 @@ public class LoadManager : MonoBehaviour
         //
         // - - - TraitEffects - - -
         //
-        Dictionary<int, TraitEffect> dictOfTraitEffects = GameManager.instance.dataScript.GetDictOfTraitEffects();
-        Dictionary<string, int> dictOfLookUpTraitEffects = GameManager.instance.dataScript.GetDictOfLookUpTraitEffects();
+        Dictionary<string, TraitEffect> dictOfTraitEffects = GameManager.instance.dataScript.GetDictOfTraitEffects();
         if (dictOfTraitCategories != null)
         {
-            if (dictOfLookUpTraitEffects != null)
-            {
+
                 counter = 0;
                 numArray = arrayOfTraitEffects.Length;
                 if (numArray > 0)
@@ -491,29 +489,19 @@ public class LoadManager : MonoBehaviour
                         counter++;
                         //add to dictionaries
                         try
-                        { dictOfTraitEffects.Add(traitEffect.teffID, traitEffect); }
+                        { dictOfTraitEffects.Add(traitEffect.name, traitEffect); }
                         catch (ArgumentNullException)
                         { Debug.LogError("Invalid trait Effect (Null)"); }
                         catch (ArgumentException)
                         { Debug.LogErrorFormat("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name); }
-                        try
-                        { dictOfLookUpTraitEffects.Add(traitEffect.name, traitEffect.teffID); }
-                        catch (ArgumentNullException)
-                        { Debug.LogError("Invalid traitEffect.name (Null)"); }
-                        catch (ArgumentException)
-                        { Debug.LogErrorFormat("Invalid traitEffect.name (duplicate) \"{0}\"", traitEffect.name); }
                     }
                 }
                 numDict = dictOfTraitEffects.Count;
                 Debug.LogFormat("[Loa] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Loa] InitialiseStart -> dictOfLookUpTraitEffects has {0} entries{1}", dictOfLookUpTraitEffects.Count, "\n");
                 Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
-                Debug.Assert(dictOfLookUpTraitEffects.Count == counter, "Mismatch on count");
                 Debug.Assert(dictOfTraitEffects.Count > 0, "No Trait Effects imported to dictionary");
-                Debug.Assert(dictOfLookUpTraitEffects.Count > 0, "No Trait Effects in Lookup dictionary");
                 Debug.Assert(numArray == numDict, string.Format("Mismatch in TraitEffect count, array {0}, dict {1}", numArray, numDict));
-            }
-            else { Debug.LogError("Invalid dictOfLookUpTraitEffects (Null) -> Import failed"); }
+
         }
         else { Debug.LogError("Invalid dictOfTraitEffects (Null) -> Import failed"); }
         //
