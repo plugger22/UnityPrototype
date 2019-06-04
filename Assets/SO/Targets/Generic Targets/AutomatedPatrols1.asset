@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: Automated Patrols 1
+  m_Name: AutomatedPatrols1
   m_EditorClassIdentifier: 
   targetName: Automated Patrols
   descriptorResistance: Disable Guard bots
@@ -36,11 +36,14 @@ MonoBehaviour:
   followOnTarget: {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
   profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   targetStatus: 4
-  infoLevel: 0
+  intel: 0
   targetID: 0
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
+  distance: 0
+  newIntel: 0
+  intelGain: 0
   turnSuccess: -1
   turnDone: 6
   numOfAttempts: 0

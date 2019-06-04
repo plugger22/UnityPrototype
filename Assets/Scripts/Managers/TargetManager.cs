@@ -549,7 +549,7 @@ public class TargetManager : MonoBehaviour
                             if (node != null)
                             {
                                 //check node doesn't already have a target
-                                if (node.targetID == -1)
+                                if (String.IsNullOrEmpty(node.targetName) == true)
                                 { break; }
                                 else { node = null; }
                             }
@@ -567,7 +567,7 @@ public class TargetManager : MonoBehaviour
                                     target.targetName, target.targetID);
                                 counter++;
                                 //delete target to prevent dupes
-                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
+                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
                                 { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.targetName, target.targetID, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
@@ -611,7 +611,7 @@ public class TargetManager : MonoBehaviour
                             if (node != null)
                             {
                                 //check node doesn't already have a target
-                                if (node.targetID == -1)
+                                if (String.IsNullOrEmpty(node.targetName) == true)
                                 { break; }
                                 else { node = null; }
                             }
@@ -629,7 +629,7 @@ public class TargetManager : MonoBehaviour
                                     target.targetName, target.targetID);
                                 counter++;
                                 //delete target to prevent dupes
-                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.targetID, nodeArc.nodeArcID) == false)
+                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
                                 { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.targetName, target.targetID, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
@@ -719,7 +719,7 @@ public class TargetManager : MonoBehaviour
     {
         bool isSuccess = true;
         //check if node doesn't already has a target
-        if (node.targetID == -1)
+        if (String.IsNullOrEmpty(node.targetName) == true)
         {
             //check if target isn't already assigned to a node
             if (target.nodeID == -1)
@@ -738,7 +738,7 @@ public class TargetManager : MonoBehaviour
                     if (target.profile != null)
                     {
                         //ID's
-                        node.targetID = target.targetID;
+                        node.targetName = target.name;
                         target.nodeID = node.nodeID;
                         //timers
                         target.timerDelay = target.profile.delay;
@@ -787,13 +787,13 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public List<string> GetTargetTooltip(int targetID, bool isTargetKnown)
+    public List<string> GetTargetTooltip(string targetName, bool isTargetKnown)
     {
         List<string> tempList = new List<string>();
-        if (targetID > -1)
+        if (String.IsNullOrEmpty(targetName) == false)
         {
             //find target
-            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+            Target target = GameManager.instance.dataScript.GetTarget(targetName);
             if (target != null)
             {
                 switch (GameManager.instance.sideScript.PlayerSide.level)
@@ -862,7 +862,7 @@ public class TargetManager : MonoBehaviour
                 }
             }
             else
-            { Debug.LogError(string.Format("Invalid Target (null) for ID {0}{1}", targetID, "\n")); }
+            { Debug.LogError(string.Format("Invalid Target (null) for {0}{1}", targetName, "\n")); }
         }
         return tempList;
     }
@@ -957,11 +957,11 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public string GetTargetEffects(int targetID)
+    public string GetTargetEffects(string targetName)
     {
         List<string> tempList = new List<string>();
         //find target
-        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        Target target = GameManager.instance.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //good effects
@@ -995,7 +995,7 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
-            Debug.LogErrorFormat("Invalid Target (null) for ID {0}{1}", targetID, "\n");
+            Debug.LogErrorFormat("Invalid Target (null) for {0}{1}", targetName, "\n");
             return null;
         }
         //convert to a string
@@ -1027,11 +1027,11 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public string GetTargetFactors(int targetID)
+    public string GetTargetFactors(string targetName)
     {
         List<string> tempList = new List<string>();
         //get target
-        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        Target target = GameManager.instance.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //get node
@@ -1178,7 +1178,7 @@ public class TargetManager : MonoBehaviour
                 //
                 // - - - Total - - -
                 //
-                int tally = GetTargetTally(targetID);
+                int tally = GetTargetTally(targetName);
                 int chance = GetTargetChance(tally);
                 //add tally and chance to string
                 tempList.Add(string.Format("{0}<size=95%>Total {1}</size>{2}", colourNeutral, tally, colourEnd));
@@ -1192,7 +1192,7 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Target (null), ID \"{0}\"{1}", targetID, "\n"));
+            Debug.LogError(string.Format("Invalid Target (null), \"{0}\"{1}", targetName, "\n"));
             tempList.Add(string.Format("{0}{1}{2}", colourBad, "Target Data inaccessible", colourEnd));
         }
         //convert list to string and return
@@ -1218,7 +1218,7 @@ public class TargetManager : MonoBehaviour
         //base chance
         tally += (int)(baseTargetChance * 0.1);
         //get target
-        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        Target target = GameManager.instance.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //get node
@@ -1361,13 +1361,13 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public int GetTargetTallyAI(int targetID)
+    public int GetTargetTallyAI(string targetName)
     {
         int tally = 0;
         //base chance
         tally += (int)(baseTargetChance * 0.1);
         //get target
-        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        Target target = GameManager.instance.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //get node
@@ -1411,7 +1411,7 @@ public class TargetManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}", target.nodeID, "\n")); }
         }
         else
-        { Debug.LogError(string.Format("Invalid Target (null), ID \"{0}\"{1}", targetID, "\n")); }
+        { Debug.LogError(string.Format("Invalid Target (null), \"{0}\"{1}", targetName, "\n")); }
         return tally;
     }
 
@@ -1484,7 +1484,7 @@ public class TargetManager : MonoBehaviour
                     if (GameManager.instance.dataScript.RemoveNodeFromTargetList(node.nodeID) == false)
                     { Debug.LogWarningFormat("Node id {0} NOT removed from listOfNodesWithTargets", node.nodeID); }
                     //id's back to default
-                    node.targetID = -1;
+                    node.targetName = null;
                     target.nodeID = -1;
                     //
                     // - - - Follow On target
@@ -1841,7 +1841,7 @@ public class TargetManager : MonoBehaviour
     /// <param name="details"></param>
     private void ProcessTargetInfo(GenericReturnData detailsGeneric)
     {
-        Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionID);
+        Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionText);
         if (target != null)
         {
             //Get actor

@@ -250,7 +250,7 @@ public class ModalGenericPicker : MonoBehaviour
                                     genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
                                     genericData.displayText.text = details.arrayOfOptions[i].text;
                                     genericData.data.optionID = details.arrayOfOptions[i].optionID;
-                                    genericData.data.optionText = details.arrayOfOptions[i].optionText;
+                                    genericData.data.optionNested = details.arrayOfOptions[i].optionText;
                                     genericData.data.actorSlotID = details.actorSlotID;
                                     //option Active or Not?
                                     if (details.arrayOfOptions[i].isOptionActive == true)
@@ -394,7 +394,7 @@ public class ModalGenericPicker : MonoBehaviour
             {
                 //update currently selected option
                 optionIDSelected = data.optionID;
-                optionTextSelected = data.optionText;
+                optionTextSelected = data.optionNested;
                 //change top text to show which option selected
                 switch (defaultReturnEvent)
                 {
@@ -440,7 +440,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericTargetInfo:
                         if (data.optionID > -1)
                         {
-                            Target target = GameManager.instance.dataScript.GetTarget(data.optionID);
+                            Target target = GameManager.instance.dataScript.GetTarget(data.optionText);
                             if (target != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, target.targetName.ToUpper(), colourEnd, colourDefault, colourEnd);
@@ -481,12 +481,12 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericHandleActor:
                         if (data.actorSlotID > -1)
                         {
-                            if (string.IsNullOrEmpty(data.optionText) == false)
+                            if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
-                                    switch (data.optionText)
+                                    switch (data.optionNested)
                                     {
                                         case "HandleReserve":
                                             text = string.Format("{0}Send {1} to Reserve Pool{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
@@ -501,7 +501,7 @@ public class ModalGenericPicker : MonoBehaviour
                                             Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, DISPOSE selected{2}", actor.actorName, data.actorSlotID, "\n");
                                             break;
                                         default:
-                                            Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                                            Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                                             break;
                                     }
 
@@ -515,12 +515,12 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericReserveActor:
                         if (data.actorSlotID > -1)
                         {
-                            if (string.IsNullOrEmpty(data.optionText) == false)
+                            if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
-                                    switch (data.optionText)
+                                    switch (data.optionNested)
                                     {
                                         case "ReserveRest":
                                             text = string.Format("{0}Send {1} to Rest{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
@@ -535,7 +535,7 @@ public class ModalGenericPicker : MonoBehaviour
                                             Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, NO PROMISE selected{2}", actor.actorName, data.actorSlotID, "\n");
                                             break;
                                         default:
-                                            Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionText));
+                                            Debug.LogError(string.Format("Invalid data.optionText \"{0}\"", data.optionNested));
                                             break;
                                     }
 
@@ -549,12 +549,12 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericDismissActor:
                         if (data.actorSlotID > -1)
                         {
-                            if (string.IsNullOrEmpty(data.optionText) == false)
+                            if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
-                                    switch (data.optionText)
+                                    switch (data.optionNested)
                                     {
                                         case "DismissPromote":
                                             text = string.Format("{0}Promote {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
@@ -569,7 +569,7 @@ public class ModalGenericPicker : MonoBehaviour
                                             Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, UNSUITED selected{2}", actor.actorName, data.actorSlotID, "\n");
                                             break;
                                         default:
-                                            Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                                            Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                                             break;
                                     }
 
@@ -583,12 +583,12 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericDisposeActor:
                         if (data.actorSlotID > -1)
                         {
-                            if (string.IsNullOrEmpty(data.optionText) == false)
+                            if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
                                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
-                                    switch (data.optionText)
+                                    switch (data.optionNested)
                                     {
                                         case "DisposeLoyalty":
                                             text = string.Format("{0}Dispose of {1} because they are Disloyal{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
@@ -603,7 +603,7 @@ public class ModalGenericPicker : MonoBehaviour
                                             Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, DISPOSE due to HABIT{2}", actor.actorName, data.actorSlotID, "\n");
                                             break;
                                         default:
-                                            Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                                            Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                                             break;
                                     }
 
@@ -672,7 +672,7 @@ public class ModalGenericPicker : MonoBehaviour
     {
         GenericReturnData returnData = new GenericReturnData();
         returnData.optionID = optionIDSelected;
-        returnData.optionText = optionTextSelected;
+        returnData.optionNested = optionTextSelected;
         returnData.nodeID = nodeIDSelected;
         returnData.actorSlotID = actorSlotIDSelected;
         //close picker window regardless

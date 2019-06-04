@@ -806,9 +806,9 @@ public class ActorManager : MonoBehaviour
                 // - - -  Target - - -
                 //
                 //Does the Node have a target attached? -> added first
-                if (node.targetID >= 0)
+                if (String.IsNullOrEmpty(node.targetName) == false)
                 {
-                    Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
+                    Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
                     if (target != null)
                     {
                         if (target.targetStatus == Status.Live)
@@ -848,8 +848,8 @@ public class ActorManager : MonoBehaviour
                                 {
                                     buttonTitle = "Attempt Target",
                                     buttonTooltipHeader = targetHeader,
-                                    buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetID),
-                                    buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetID),
+                                    buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetName),
+                                    buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetName),
                                     //use a Lambda to pass arguments to the action
                                     action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID, "ActorManager.cs -> GetNodeActions"); }
                                 };
@@ -870,7 +870,7 @@ public class ActorManager : MonoBehaviour
                             infoBuilder.Append("Target completed");
                         }
                     }
-                    else { Debug.LogError(string.Format("Invalid TargetID \"{0}\" (Null){1}", node.targetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid target \"{0}\" (Null){1}", node.targetName, "\n")); }
                 }
                 //
                 // - - - Actors - - - 

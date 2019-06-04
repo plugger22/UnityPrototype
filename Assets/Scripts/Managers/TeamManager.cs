@@ -6,6 +6,7 @@ using modalAPI;
 using packageAPI;
 using System.Text;
 using Random = UnityEngine.Random;
+using System;
 
 /// <summary>
 /// handles all team related matters
@@ -1461,9 +1462,9 @@ public class TeamManager : MonoBehaviour
                 break;
             case "DAMAGE":
                 //at node with a completed, but uncontained, target?
-                if (node.targetID > -1)
+                if (String.IsNullOrEmpty(node.targetName) == false)
                 {
-                    Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
+                    Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
                     if (target != null)
                     {
                         if (target.targetStatus == Status.Outstanding && target.ongoingID > -1)
@@ -1475,7 +1476,7 @@ public class TeamManager : MonoBehaviour
                             GameManager.instance.messageScript.TargetContained(text, node, team, target);
                         }
                     }
-                    else { Debug.LogError(string.Format("Invalid Target (Null) for targetID {0}", node.targetID)); }
+                    else { Debug.LogError(string.Format("Invalid Target (Null) for targetID {0}", node.targetName)); }
                 }
                 break;
             default:

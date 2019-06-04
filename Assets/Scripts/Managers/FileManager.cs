@@ -916,7 +916,7 @@ public class FileManager : MonoBehaviour
                     saveNode.isLoiterNode = record.Value.isLoiterNode;
                     saveNode.isConnectedNode = record.Value.isConnectedNode;
                     saveNode.isChokepointNode = record.Value.isChokepointNode;
-                    saveNode.targetID = record.Value.targetID;
+                    saveNode.targetName = record.Value.targetName;
                     saveNode.spiderTimer = record.Value.spiderTimer;
                     saveNode.tracerTimer = record.Value.tracerTimer;
                     saveNode.activityCount = record.Value.activityCount;
@@ -1220,7 +1220,7 @@ public class FileManager : MonoBehaviour
         write.targetData.liveTargets = GameManager.instance.targetScript.LiveTargets;
         write.targetData.maxTargets = GameManager.instance.targetScript.MaxTargets;
         //target.SO dynamic data
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             foreach (var target in dictOfTargets)
@@ -1231,7 +1231,7 @@ public class FileManager : MonoBehaviour
                     //copy dynamic target SO data
                     save.targetStatus = target.Value.targetStatus;
                     save.intel = target.Value.intel;
-                    save.targetID = target.Value.targetID;
+                    save.targetName = target.Value.name;
                     save.ongoingID = target.Value.ongoingID;
                     save.isKnownByAI = target.Value.isKnownByAI;
                     save.nodeID = target.Value.nodeID;
@@ -1253,12 +1253,12 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
         //arrayOfGenericTargets
-        List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+        List<string>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
         if (arrayOfGenericTargets != null)
         {
             for (int i = 0; i < arrayOfGenericTargets.Length; i++)
             {
-                IntListWrapper listOfTargets = new IntListWrapper();
+                StringListWrapper listOfTargets = new StringListWrapper();
                 listOfTargets.myList.AddRange(arrayOfGenericTargets[i]);
                 if (listOfTargets.myList != null)
                 { write.targetData.listOfGenericTargets.Add(listOfTargets); }
@@ -1279,7 +1279,7 @@ public class FileManager : MonoBehaviour
             {
                 Target target = listOfTargetPool[i];
                 if (target != null)
-                { write.targetData.listOfTargetPoolActive.Add(target.targetID); }
+                { write.targetData.listOfTargetPoolActive.Add(target.name); }
                 else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolActive[{0}]", i); }
             }
         }
@@ -1292,7 +1292,7 @@ public class FileManager : MonoBehaviour
             {
                 Target target = listOfTargetPool[i];
                 if (target != null)
-                { write.targetData.listOfTargetPoolLive.Add(target.targetID); }
+                { write.targetData.listOfTargetPoolLive.Add(target.name); }
                 else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolLive[{0}]", i); }
             }
         }
@@ -1305,7 +1305,7 @@ public class FileManager : MonoBehaviour
             {
                 Target target = listOfTargetPool[i];
                 if (target != null)
-                { write.targetData.listOfTargetPoolOutstanding.Add(target.targetID); }
+                { write.targetData.listOfTargetPoolOutstanding.Add(target.name); }
                 else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolOutstanding[{0}]", i); }
             }
         }
@@ -1318,7 +1318,7 @@ public class FileManager : MonoBehaviour
             {
                 Target target = listOfTargetPool[i];
                 if (target != null)
-                { write.targetData.listOfTargetPoolDone.Add(target.targetID); }
+                { write.targetData.listOfTargetPoolDone.Add(target.name); }
                 else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolDone[{0}]", i); }
             }
         }
@@ -2414,7 +2414,7 @@ public class FileManager : MonoBehaviour
                     node.isLoiterNode = saveNode.isLoiterNode;
                     node.isConnectedNode = saveNode.isConnectedNode;
                     node.isChokepointNode = saveNode.isChokepointNode;
-                    node.targetID = saveNode.targetID;
+                    node.targetName = saveNode.targetName;
                     node.spiderTimer = saveNode.spiderTimer;
                     node.tracerTimer = saveNode.tracerTimer;
                     node.activityCount = saveNode.activityCount;
@@ -2720,7 +2720,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.targetScript.LiveTargets = read.targetData.liveTargets;
         GameManager.instance.targetScript.MaxTargets = read.targetData.maxTargets;
         //dynamic Target.SO data
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             for (int i = 0; i < read.targetData.listOfTargets.Count; i++)
@@ -2729,7 +2729,7 @@ public class FileManager : MonoBehaviour
                 if (save != null)
                 {
                     //find target in dictionary
-                    Target target = GameManager.instance.dataScript.GetTarget(save.targetID);
+                    Target target = GameManager.instance.dataScript.GetTarget(save.targetName);
                     if (target != null)
                     {
                         //copy across loaded save game dynamic data
@@ -2749,14 +2749,14 @@ public class FileManager : MonoBehaviour
                         target.timerHardLimit = save.timerHardLimit;
                         target.timerWindow = save.timerWindow;
                     }
-                    else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", save.targetID); }
+                    else { Debug.LogErrorFormat("Invalid target (Null) for target {0}", save.targetName); }
                 }
                 else { Debug.LogErrorFormat("Invalid SaveTarget (Null) for listOfTargets[{0}]", i); }
             }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
         //arrayOfGenericTargets
-        List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+        List<string>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
         if (arrayOfGenericTargets != null)
         {
             int count = arrayOfGenericTargets.Length;
@@ -2766,7 +2766,7 @@ public class FileManager : MonoBehaviour
             //copy across loaded save game lists into array
             for (int i = 0; i < count; i++)
             {
-                List<int> listOfTargets = read.targetData.listOfGenericTargets[i].myList;
+                List<string> listOfTargets = read.targetData.listOfGenericTargets[i].myList;
                 if (listOfTargets != null)
                 { arrayOfGenericTargets[i] = listOfTargets; }
                 else { Debug.LogWarningFormat("Invalid listOfTargets (Null) for read.targetData.listOfGenericTargets[{0}]", i); }

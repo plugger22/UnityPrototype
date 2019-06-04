@@ -253,8 +253,9 @@ namespace modalAPI
     /// </summary>
     public class GenericReturnData
     {
-        public int optionID;        //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
-        public string optionText;   //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
+        public int optionID;                //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
+        public string optionText;           //used instead of an ID
+        public string optionNested;         //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
         public int nodeID;
         public int actorSlotID;                    
     }

@@ -1895,7 +1895,8 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessTargetTask()
     {
-        int targetTally, targetID, rnd;
+        int targetTally, rnd;
+        string targetName;
         bool isSuccess = false;
         Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
         //intel assumed to be used at max for any target attempt
@@ -1905,11 +1906,11 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Player - - -
         //
-        targetID = nodePlayer.targetID;
+        targetName = nodePlayer.targetName;
         //target present
-        if (targetID > -1)
+        if (String.IsNullOrEmpty(targetName) == false)
         {
-            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+            Target target = GameManager.instance.dataScript.GetTarget(targetName);
             if (target != null)
             {
                 //Live target
@@ -1922,7 +1923,7 @@ public class AIRebelManager : MonoBehaviour
                         //node not bad
                         if (CheckForBadNode(nodePlayer.nodeID) == false)
                         {
-                            targetTally = GameManager.instance.targetScript.GetTargetTallyAI(targetID);
+                            targetTally = GameManager.instance.targetScript.GetTargetTallyAI(targetName);
                             targetTally += intelTemp;
                             if (gearPool > 0 && CheckGearAvailable(false) == true)
                             { targetTally++; }
@@ -1936,12 +1937,12 @@ public class AIRebelManager : MonoBehaviour
                                 AITask task = new AITask();
                                 task.data0 = playerID;
                                 task.data1 = nodePlayer.nodeID;
-                                task.data2 = targetID;
+                                task.name1 = targetName;
                                 task.type = AITaskType.Target;
                                 task.priority = priorityTargetPlayer;
                                 //add task to list of potential tasks
                                 AddWeightedTask(task);
-                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player Attempt Target task, targetID {0} at {1}, {2}, id {3}{4}", targetID, nodePlayer.nodeName, nodePlayer.Arc.name,
+                                Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player Attempt Target task, targetID {0} at {1}, {2}, id {3}{4}", targetName, nodePlayer.nodeName, nodePlayer.Arc.name,
                                     nodePlayer.nodeID, "\n");
                             }
                             else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player target NOT attempted due to low odds (threshold {0}, tally {1}){2}", targetAttemptMinOdds, targetTally, "\n"); }
@@ -1951,7 +1952,7 @@ public class AIRebelManager : MonoBehaviour
                     else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: Player declines to attempt target (needed {0}, rolled {1}){2}", targetAttemptPlayerChance, rnd, "\n"); }
                 }
             }
-            else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", targetID); }
+            else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", targetName); }
         }
         //
         // - - - Actors - - -
@@ -1991,7 +1992,7 @@ public class AIRebelManager : MonoBehaviour
                                                 if (rnd < targetAttemptActorChance)
                                                 {
                                                     //Actor present, check target odds
-                                                    targetTally = GameManager.instance.targetScript.GetTargetTallyAI(target.targetID);
+                                                    targetTally = GameManager.instance.targetScript.GetTargetTallyAI(target.name);
                                                     targetTally += intelTemp;
                                                     if (gearPool > 0 && CheckGearAvailable(false) == true)
                                                     { targetTally++; }
@@ -2010,7 +2011,7 @@ public class AIRebelManager : MonoBehaviour
                                                             AITask task = new AITask();
                                                             task.data0 = actorID;
                                                             task.data1 = target.nodeID;
-                                                            task.data2 = target.targetID;
+                                                            task.name1 = target.name;
                                                             task.type = AITaskType.Target;
                                                             task.priority = priorityTargetActor;
                                                             //add task to list of potential tasks
@@ -3673,7 +3674,7 @@ public class AIRebelManager : MonoBehaviour
             nodeArc = node.Arc.name;
             nodeID = node.nodeID;
             //effect
-            ExecuteTargetAttempt(node, task.data0, task.data2);
+            ExecuteTargetAttempt(node, task.data0);
             //expend an action -> get actor Name
             if (task.data0 == playerID)
             {
@@ -3707,7 +3708,7 @@ public class AIRebelManager : MonoBehaviour
     /// NOTE: Node checked for null by calling method
     /// </summary>
     /// <param name="task"></param>
-    private void ExecuteTargetAttempt(Node node, int actorID, int targetID)
+    private void ExecuteTargetAttempt(Node node, int actorID)
     {
         string text;
         string actorArc = "Unknown";
@@ -3725,8 +3726,7 @@ public class AIRebelManager : MonoBehaviour
             { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         }
         //target
-        targetID = node.targetID;
-        Target target = GameManager.instance.dataScript.GetTarget(targetID);
+        Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
         if (target != null)
         {
             //
@@ -3759,7 +3759,7 @@ public class AIRebelManager : MonoBehaviour
             //
             // - - - Attempt Target - - -  
             //
-            int tally = GameManager.instance.targetScript.GetTargetTallyAI(targetID);
+            int tally = GameManager.instance.targetScript.GetTargetTallyAI(target.name);
             //gear used for target attempt
             if (CheckGearAvailable() == true)
             {
@@ -3890,7 +3890,7 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", node.targetID); }
+        else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", node.targetName); }
     }
         
     /// <summary>

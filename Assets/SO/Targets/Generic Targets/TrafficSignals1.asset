@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: Traffic Signals 1
+  m_Name: TrafficSignals1
   m_EditorClassIdentifier: 
   targetName: Traffic Signals
   descriptorResistance: Grind traffic to a halt
@@ -36,11 +36,14 @@ MonoBehaviour:
   followOnTarget: {fileID: 11400000, guid: 37c1e4a3c2baff249859912691de130c, type: 2}
   profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   targetStatus: 0
-  infoLevel: 1
+  intel: 0
   targetID: 15
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1
+  distance: 0
+  newIntel: 0
+  intelGain: 0
   turnSuccess: -1
   turnDone: 6
   numOfAttempts: 0

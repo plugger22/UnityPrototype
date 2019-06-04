@@ -2205,7 +2205,6 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
-        int targetID;
         int actorID = GameManager.instance.playerScript.actorID;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
@@ -2218,8 +2217,7 @@ public class ActionManager : MonoBehaviour
             StringBuilder builderTop = new StringBuilder();
             StringBuilder builderBottom = new StringBuilder();
             //target
-            targetID = node.targetID;
-            Target target = GameManager.instance.dataScript.GetTarget(targetID);
+            Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
             if (target != null)
             {
                 //
@@ -2277,7 +2275,7 @@ public class ActionManager : MonoBehaviour
                 // - - - Attempt Target - - -  
                 //
                 isAction = true;
-                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetID, true);
+                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetName, true);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.targetName, "\n");
                 target.numOfAttempts++;
@@ -2464,9 +2462,9 @@ public class ActionManager : MonoBehaviour
                         }
                         builderTop.AppendLine();
                         //actor successfully moved to reserve
-                        if (string.IsNullOrEmpty(data.optionText) == false)
+                        if (string.IsNullOrEmpty(data.optionNested) == false)
                         {
-                            switch (data.optionText)
+                            switch (data.optionNested)
                             {
                                 case "ReserveRest":
                                     builderTop.AppendFormat("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
@@ -2484,7 +2482,7 @@ public class ActionManager : MonoBehaviour
                                     msgText = "No Promise";
                                     break;
                                 default:
-                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                                     break;
                             }
                             //teams
@@ -2521,7 +2519,7 @@ public class ActionManager : MonoBehaviour
                         string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
                         GameManager.instance.messageScript.ActorStatus(text, "sent to Reserves", "has been moved to the Reserves", actor.actorID, playerSide);
                         //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
-                        ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
+                        ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionNested);
                         if (manageAction != null)
                         {
                             List<Effect> listOfEffects = manageAction.listOfEffects;
@@ -2550,7 +2548,7 @@ public class ActionManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText);
+                            Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionNested);
                             successFlag = false;
                         }
                     }
@@ -2616,7 +2614,7 @@ public class ActionManager : MonoBehaviour
         ActorStatus status = ActorStatus.Dismissed;
         if (data != null)
         {
-            if (string.IsNullOrEmpty(data.optionText) == false)
+            if (string.IsNullOrEmpty(data.optionNested) == false)
             {
                 if (data.actorSlotID > -1)
                 {
@@ -2624,7 +2622,7 @@ public class ActionManager : MonoBehaviour
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                     if (actor != null)
                     {
-                        if (data.optionText.Equals("DismissPromote") == true)
+                        if (data.optionNested.Equals("DismissPromote") == true)
                         { status = ActorStatus.Promoted; }
                         //add actor to the dismissed or promoted lists
                         if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, status) == true)
@@ -2639,7 +2637,7 @@ public class ActionManager : MonoBehaviour
                             }
                             builderTop.AppendLine();
                             //actor successfully dismissed or promoted
-                            switch (data.optionText)
+                            switch (data.optionNested)
                             {
                                 case "DismissPromote":
                                     builderTop.AppendFormat("{0}{1} {2} shakes your hand and heads off to bigger things{3}", colourNormal, actor.arc.name,
@@ -2664,7 +2662,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 default:
-                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                                     break;
                             }
                             //teams
@@ -2678,7 +2676,7 @@ public class ActionManager : MonoBehaviour
                             //message
                             GameManager.instance.messageScript.ActorStatus(msgTextMain, msgReason, string.Format("has been <b>{0}</b>", msgReason), actor.actorID, playerSide);
                             //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
-                            ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
+                            ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionNested);
                             if (manageAction != null)
                             {
                                 List<Effect> listOfEffects = manageAction.listOfEffects;
@@ -2707,7 +2705,7 @@ public class ActionManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText);
+                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionNested);
                                 successFlag = false;
                             }
                         }
@@ -2774,7 +2772,7 @@ public class ActionManager : MonoBehaviour
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data != null)
         {
-            if (string.IsNullOrEmpty(data.optionText) == false)
+            if (string.IsNullOrEmpty(data.optionNested) == false)
             {
                 if (data.actorSlotID > -1)
                 {
@@ -2795,7 +2793,7 @@ public class ActionManager : MonoBehaviour
                             }
                             builderTop.AppendLine();
                             //actor successfully dismissed or promoted
-                            switch (data.optionText)
+                            switch (data.optionNested)
                             {
                                 case "DisposeLoyalty":
                                     builderTop.AppendFormat("{0}{1} {2} vehemently denies being disployal but nobody is listening{3}", colourNormal, actor.arc.name,
@@ -2819,7 +2817,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     break;
                                 default:
-                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                                     break;
                             }
                             //teams
@@ -2833,7 +2831,7 @@ public class ActionManager : MonoBehaviour
                             //message
                             GameManager.instance.messageScript.ActorStatus(msgTextMain, "Disposed Off",  string.Format("has been disposed off ({0})", msgReason), actor.actorID, playerSide);
                             //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
-                            ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionText);
+                            ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionNested);
                             if (manageAction != null)
                             {
                                 List<Effect> listOfEffects = manageAction.listOfEffects;
@@ -2862,7 +2860,7 @@ public class ActionManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionText);
+                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionNested);
                                 successFlag = false;
                             }
                         }
@@ -2939,27 +2937,27 @@ public class ActionManager : MonoBehaviour
             //pass through data
             details.actorDataID = data.actorSlotID;
             details.side = playerSide;
-            if (string.IsNullOrEmpty(data.optionText) == false)
+            if (string.IsNullOrEmpty(data.optionNested) == false)
             {
-                switch (data.optionText)
+                switch (data.optionNested)
                 {
                     case "HandleReserve":
-                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n");
+                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionNested, "\n");
                         handler = InitialiseReserveActorAction;
                         details.eventType = EventType.GenericReserveActor;
                         break;
                     case "HandleDismiss":
-                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n");
+                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionNested, "\n");
                         handler = InitialiseDismissActorAction;
                         details.eventType = EventType.GenericDismissActor;
                         break;
                     case "HandleDispose":
-                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionText, "\n");
+                        Debug.LogFormat("ProcessHandleActor: \"{0}\" selected{1}", data.optionNested, "\n");
                         handler = InitialiseDisposeActorAction;
                         details.eventType = EventType.GenericDisposeActor;
                         break;
                     default:
-                        Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionText);
+                        Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
                         errorFlag = true;
                         break;
                 }

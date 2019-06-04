@@ -319,13 +319,18 @@ public class EffectManager : MonoBehaviour
                                                     break;
                                                 case "TargetInfoMax":
                                                     val = GameManager.instance.targetScript.maxTargetInfo;
-                                                    compareTip = ComparisonCheck(val, node.targetID, criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "Full Info already"); }
+                                                    Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
+                                                    if (target != null)
+                                                    {
+                                                        compareTip = ComparisonCheck(val, target.intel, criteria.comparison);
+                                                        if (compareTip != null)
+                                                        { BuildString(result, "Full Info already"); }
+                                                    }
+                                                    else { Debug.LogErrorFormat("Invalid target (Null) for {0}", node.targetName); }
                                                     break;
                                                 case "TargetPresent":
                                                     //check that a target is present at the node
-                                                    if (node.targetID < 0)
+                                                    if (String.IsNullOrEmpty(node.targetName) == true)
                                                     { BuildString(result, "No Target present"); }
                                                     break;
                                                 case "TeamActorAbility":

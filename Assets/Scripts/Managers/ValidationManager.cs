@@ -26,83 +26,83 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateTargets()
     {
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
-        for (int index = 0; index < dictOfTargets.Count; index++)
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        /*for (int index = 0; index < dictOfTargets.Count; index++)*/
+        foreach(var target in dictOfTargets)
         {
-            Target target = dictOfTargets[index];
-            if (target != null)
+            if (target.Value != null)
             {
                 //fields
-                if (string.IsNullOrEmpty(target.descriptorResistance) == true)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid description field (Null or Empty)", target.targetName); }
-                if (target.profile.activation == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid activation field (Null)", target.targetName); }
-                if (target.nodeArc == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid NodeArc field (Null)", target.targetName); }
-                if (target.actorArc == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid ActorArc field (Null)", target.targetName); }
-                if (target.gear == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid Gear field (Null)", target.targetName); }
-                if (target.sprite == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid sprite field (Null)", target.targetName); }
+                if (string.IsNullOrEmpty(target.Value.descriptorResistance) == true)
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid description field (Null or Empty)", target.Value.targetName); }
+                if (target.Value.profile.activation == null)
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid activation field (Null)", target.Value.targetName); }
+                if (target.Value.nodeArc == null)
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid NodeArc field (Null)", target.Value.targetName); }
+                if (target.Value.actorArc == null)
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid ActorArc field (Null)", target.Value.targetName); }
+                if (target.Value.gear == null)
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid Gear field (Null)", target.Value.targetName); }
+                if (target.Value.sprite == null)
+                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid sprite field (Null)", target.Value.targetName); }
                 //Good effects
-                if (target.listOfGoodEffects.Count > 0)
+                if (target.Value.listOfGoodEffects.Count > 0)
                 {
-                    foreach (Effect effect in target.listOfGoodEffects)
+                    foreach (Effect effect in target.Value.listOfGoodEffects)
                     {
                         if (effect != null)
                         {
                             //should be duration 'Single'
                             if (effect.duration.name.Equals("Single") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Good effect \"{1}\" NOT Single", target.targetName, effect.name); }
+                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Good effect \"{1}\" NOT Single", target.Value.targetName, effect.name); }
                         }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Good effect (Null)", target.targetName); }
+                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Good effect (Null)", target.Value.targetName); }
                     }
                 }
                 //Bad effects
-                if (target.listOfBadEffects.Count > 0)
+                if (target.Value.listOfBadEffects.Count > 0)
                 {
-                    foreach (Effect effect in target.listOfBadEffects)
+                    foreach (Effect effect in target.Value.listOfBadEffects)
                     {
                         if (effect != null)
                         {
                             //should be duration 'Single'
                             if (effect.duration.name.Equals("Single") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Bad effect \"{1}\" NOT Single", target.targetName, effect.name); }
+                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Bad effect \"{1}\" NOT Single", target.Value.targetName, effect.name); }
                         }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Bad effect (Null)", target.targetName); }
+                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Bad effect (Null)", target.Value.targetName); }
                     }
                 }
                 //Fail effects
-                if (target.listOfFailEffects.Count > 0)
+                if (target.Value.listOfFailEffects.Count > 0)
                 {
-                    foreach (Effect effect in target.listOfFailEffects)
+                    foreach (Effect effect in target.Value.listOfFailEffects)
                     {
                         if (effect != null)
                         {
                             //should be duration 'Single'
                             if (effect.duration.name.Equals("Single") == false)
-                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Fail effect \"{1}\" NOT Single", target.targetName, effect.name); }
+                            { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Fail effect \"{1}\" NOT Single", target.Value.targetName, effect.name); }
                         }
-                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Fail effect (Null)", target.targetName); }
+                        else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Fail effect (Null)", target.Value.targetName); }
                     }
                 }
                 //Ongoing effects
-                if (target.OngoingEffect != null)
+                if (target.Value.OngoingEffect != null)
                 {
                     //should be duration 'Ongoing'
-                    if (target.OngoingEffect.duration.name.Equals("Ongoing") == false)
-                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>ongoing effect \"{1}\" NOT Ongoing</b>", target.targetName, target.OngoingEffect.name); }
+                    if (target.Value.OngoingEffect.duration.name.Equals("Ongoing") == false)
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>ongoing effect \"{1}\" NOT Ongoing</b>", target.Value.targetName, target.Value.OngoingEffect.name); }
                 }
                 //Target gear present and shouldn't be infiltration
-                if (target.gear != null)
+                if (target.Value.gear != null)
                 {
-                    if (target.gear.name.Equals("Infiltration") == true)
-                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>is using INFILTRATION gear</b> (doubled up as can be used automatically on any target)", target.targetName); }
+                    if (target.Value.gear.name.Equals("Infiltration") == true)
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>is using INFILTRATION gear</b> (doubled up as can be used automatically on any target)", target.Value.targetName); }
                 }
-                else {Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Gear (Null)", target.targetName); }
+                else {Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Gear (Null)", target.Value.targetName); }
             }
-            else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", index); }
+            else { Debug.LogErrorFormat("Invalid target (Null) for target {0}", target.Key); }
         }
     }
     #endregion

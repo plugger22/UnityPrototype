@@ -381,13 +381,13 @@ public class SaveTargetData
     //dictOfTargets dynamic data
     public List<SaveTarget> listOfTargets = new List<SaveTarget>();
     //target pools
-    public List<int> listOfTargetPoolActive = new List<int>();
-    public List<int> listOfTargetPoolLive = new List<int>();
-    public List<int> listOfTargetPoolOutstanding = new List<int>();
-    public List<int> listOfTargetPoolDone = new List<int>();
+    public List<string> listOfTargetPoolActive = new List<string>();
+    public List<string> listOfTargetPoolLive = new List<string>();
+    public List<string> listOfTargetPoolOutstanding = new List<string>();
+    public List<string> listOfTargetPoolDone = new List<string>();
     //other
     public List<int> listOfNodesWithTargets = new List<int>();
-    public List<IntListWrapper> listOfGenericTargets = new List<IntListWrapper>();
+    public List<StringListWrapper> listOfGenericTargets = new List<StringListWrapper>();
 }
 #endregion
 
@@ -533,7 +533,7 @@ public class SaveNode
     public bool isConnectedNode;
     public bool isChokepointNode;
 
-    public int targetID;
+    public string targetName;
 
     public int spiderTimer;
     public int tracerTimer;
@@ -605,7 +605,7 @@ public class SaveTarget
 {
     public Status targetStatus;
     public int intel;
-    public int targetID;
+    public string targetName;
     public int ongoingID;
     public bool isKnownByAI;
     public int nodeID;
@@ -676,6 +676,9 @@ public class ListWrapper<T>
 
 [System.Serializable]
 public class IntListWrapper : ListWrapper<int> { }
+
+[System.Serializable]
+public class StringListWrapper : ListWrapper<string> { }
 
 [System.Serializable]
 public class ContactListWrapper : ListWrapper<Contact> { }

@@ -1673,7 +1673,7 @@ public class ItemDataManager : MonoBehaviour
             //success
             builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}attempt {5}<b>SUCCEEDED</b>{6}{7}{8}", actorName, colourAlert, actorArc, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
             //effects
-            targetEffects = GameManager.instance.targetScript.GetTargetEffects(target.targetID);
+            targetEffects = GameManager.instance.targetScript.GetTargetEffects(target.name);
             builder.AppendFormat(targetEffects);
         }
         return builder.ToString();

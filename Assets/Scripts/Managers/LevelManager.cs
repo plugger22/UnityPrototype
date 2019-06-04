@@ -1030,7 +1030,7 @@ public class LevelManager : MonoBehaviour
             //position
             node.nodePosition = node.transform.position;
             //target -> none
-            node.targetID = -1;
+            node.targetName = null;
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
     }

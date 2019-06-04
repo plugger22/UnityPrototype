@@ -1285,7 +1285,7 @@ public class AIManager : MonoBehaviour
                     //
                     if (node.isTargetKnown == true)
                     {
-                        Target target = GameManager.instance.dataScript.GetTarget(node.targetID);
+                        Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
                         if (target != null)
                         {
                             switch (target.targetStatus)
@@ -1605,9 +1605,9 @@ public class AIManager : MonoBehaviour
                                     if (nodeNear.isPreferredAuthority == true)
                                     { score += nodePreferredFactor; }
                                     //target
-                                    if (nodeNear.targetID > -1)
+                                    if (String.IsNullOrEmpty(nodeNear.targetName) == false)
                                     {
-                                        Target target = GameManager.instance.dataScript.GetTarget(nodeNear.targetID);
+                                        Target target = GameManager.instance.dataScript.GetTarget(nodeNear.targetName);
                                         {
                                             //positive effect if target known by AI and uncompleted, reversed negative effect otherwise
                                             if (target != null)
@@ -1624,7 +1624,7 @@ public class AIManager : MonoBehaviour
                                                         break;
                                                 }
                                             }
-                                            else { Debug.LogWarningFormat("Invalid target (Null) for targetID {0}", nodeNear.targetID); }
+                                            else { Debug.LogWarningFormat("Invalid target (Null) for targetID {0}", nodeNear.targetName); }
                                         }
                                     }
                                     //add to list of possible target nodes
