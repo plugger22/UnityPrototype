@@ -170,11 +170,11 @@ public class TargetManager : MonoBehaviour
     private void InitialiseGenericTargetArray()
     {
         int index;
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             GameManager.instance.dataScript.InitialiseArrayOfGenericTargets();
-            List<int>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+            List<string>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
             if (arrayOfGenericTargets != null)
             {
                 //assign targets to pools
@@ -191,7 +191,7 @@ public class TargetManager : MonoBehaviour
                                     if (target.Value.targetLevel == 1)
                                     {
                                         index = target.Value.nodeArc.nodeArcID;
-                                        arrayOfGenericTargets[index].Add(target.Value.targetID);
+                                        arrayOfGenericTargets[index].Add(target.Value.name);
                                         /*Debug.LogFormat("[Tst] LoadManager.cs -> InitialiseEarly: Target \"{0}\", nodeArcID {1}, added to arrayOfGenericTargets[{2}]{3}", target.Value.name,
                                             target.Value.nodeArc.nodeArcID, index, "\n");*/
                                     }
@@ -270,7 +270,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     private void ResetAllTargets()
     {
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             foreach (var target in dictOfTargets)
@@ -288,7 +288,8 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     private void CheckTargets()
     {
-        int targetID, rndNum;
+        string targetName;
+        int rndNum;
         bool isLive;
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
@@ -296,11 +297,11 @@ public class TargetManager : MonoBehaviour
             //loop nodes
             foreach (Node node in listOfNodes)
             {
-                targetID = node.targetID;
+                targetName = node.targetName;
                 //Target present
-                if (targetID > -1)
+                if (targetName != null)
                 {
-                    Target target = GameManager.instance.dataScript.GetTarget(targetID);
+                    Target target = GameManager.instance.dataScript.GetTarget(targetName);
                     if (target != null)
                     {
                         //
@@ -396,7 +397,7 @@ public class TargetManager : MonoBehaviour
                                 break;
                         }
                     }
-                    else { Debug.LogWarning(string.Format("Invalid target (Null) for targetID {0}", targetID)); }
+                    else { Debug.LogWarning(string.Format("Invalid target (Null) for target {0}", targetName)); }
                 }
                 else
                 {
@@ -1211,7 +1212,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public int GetTargetTally(int targetID, bool setGearAsUsed = false)
+    public int GetTargetTally(string targetName, bool setGearAsUsed = false)
     {
         int tally = 0;
         //base chance
@@ -1351,7 +1352,7 @@ public class TargetManager : MonoBehaviour
             { Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}", target.nodeID, "\n")); }
         }
         else
-        { Debug.LogError(string.Format("Invalid Target (null), ID \"{0}\"{1}", targetID, "\n")); }
+        { Debug.LogError(string.Format("Invalid Target (null), \"{0}\"{1}", targetName, "\n")); }
         return tally;
     }
 

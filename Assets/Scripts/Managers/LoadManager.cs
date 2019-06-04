@@ -45,7 +45,7 @@ public class LoadManager : MonoBehaviour
     public SecretType[] arrayOfSecretTypes;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
-    [Header("TextLists -> ADD TO END OF ARRAYS ONLY")]
+    [Header("TextLists -> Not stored. Do whatever")]
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
@@ -66,14 +66,14 @@ public class LoadManager : MonoBehaviour
     public GearRarity[] arrayOfGearRarity;
     public GearType[] arrayOfGearType;
 
-    [Header("Targets -> ADD TO END OF ARRAYS ONLY")]
+    [Header("Targets -> NAME is key")]
     public Target[] arrayOfTargetsGeneric;
     public Target[] arrayOfTargetsCity;
     public Target[] arrayOfTargetsVIP;
     public Target[] arrayOfTargetsStory;
     public Target[] arrayOfTargetsGoal;
 
-    [Header("Sprites -> ADD TO END OF ARRAYS ONLY")]
+    [Header("Sprites -> NAME is key")]
     public Sprite[] arrayOfGearSprites;
     public Sprite[] arrayOfGlobalSprites;
     public Sprite[] arrayOfNodeArcSprites;
@@ -768,7 +768,7 @@ public class LoadManager : MonoBehaviour
         Debug.Assert(arrayOfTargetsVIP.Length > 0, "Invalid arrayOfTargetsVIP (no records)");
         Debug.Assert(arrayOfTargetsStory.Length > 0, "Invalid arrayOfTargetsStory (no records)");
         Debug.Assert(arrayOfTargetsGoal.Length > 0, "Invalid arrayOfTargetsGoal (no records)");
-        Dictionary<int, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             counter = 0;
@@ -796,7 +796,7 @@ public class LoadManager : MonoBehaviour
                 target.profile = target.profileBase;
                 //add to dictionary
                 try
-                { dictOfTargets.Add(target.targetID, target); }
+                { dictOfTargets.Add(target.name, target); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Target (Null)"); counter--; }
                 catch (ArgumentException)

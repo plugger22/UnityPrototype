@@ -181,7 +181,7 @@ public class FileManager : MonoBehaviour
                 ReadOptionData();
                 ReadDataData();
                 ReadCampaignData();
-                ReadGameData();
+                ReadGameData(playerSide);
                 //set up level based on loaded current scenario seed
                 GameManager.instance.InitialiseLoadGame(playerSide.level);
                 ReadScenarioData();
@@ -196,7 +196,7 @@ public class FileManager : MonoBehaviour
                 ValidatePlayerData();
                 ReadContactData();
                 ReadTargetData();
-                UpdateGUI();
+                UpdateGUI(playerSide);
                 Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
             }
             else { Debug.LogError("Invalid playerSide (Null)"); }
@@ -1434,17 +1434,14 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// important Game data
     /// </summary>
-    private void ReadGameData()
+    private void ReadGameData(GlobalSide side)
     {
         //Sidemanager.cs
         GameManager.instance.sideScript.resistanceCurrent = read.gameData.resistanceCurrent;
         GameManager.instance.sideScript.authorityCurrent = read.gameData.authorityCurrent;
         GameManager.instance.sideScript.resistanceOverall = read.gameData.resistanceOverall;
         GameManager.instance.sideScript.authorityOverall = read.gameData.authorityOverall;
-        GlobalSide playerSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.playerSide);
-        if (playerSide != null)
-        { GameManager.instance.sideScript.PlayerSide = playerSide; }
-        else { Debug.LogError("Invalid playerSide (Null)"); }
+        GameManager.instance.sideScript.PlayerSide = side;
         //turnManager.cs -> private fields
         GameManager.instance.turnScript.LoadReadData(read.gameData.turnData);
         //turnManager.cs -> public fields
@@ -2919,23 +2916,20 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// if loaded in player mode, update all relevent GUI elements (others may be updated by class specific methods above)
     /// </summary>
-    private void UpdateGUI()
+    private void UpdateGUI(GlobalSide side)
     {
         //Top Widget UI
         TopWidgetData widget = new TopWidgetData();
-        GlobalSide playerSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.playerSide);
-        if (playerSide != null)
-        { widget.side = playerSide; }
-        else { Debug.LogError("Invalid playerSide (Null)"); }
+        widget.side = side;
         widget.turn = read.gameData.turnData.turn;
         widget.actionPoints = read.gameData.turnData.actionsTotal - read.gameData.turnData.actionsCurrent;
         widget.cityLoyalty = read.scenarioData.cityLoyalty;
         //faction support depends on side
-        switch (playerSide.level)
+        switch (side.level)
         {
             case 1: widget.factionSupport = read.scenarioData.factionSupportAuthority; break;
             case 2: widget.factionSupport = read.scenarioData.factionSupportResistance; break;
-            default: Debug.LogError("Unrecognised {0}", playerSide); break;
+            default: Debug.LogError("Unrecognised {0}", side); break;
         }
         widget.isSecurityFlash = read.gameData.isSecurityFlash;
 

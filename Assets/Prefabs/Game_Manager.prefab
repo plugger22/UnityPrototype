@@ -291,10 +291,6 @@ MonoBehaviour:
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
   secretTypeDesperate: {fileID: 0}
-  secretStatusActive: {fileID: 0}
-  secretStatusInactive: {fileID: 0}
-  secretStatusRevealed: {fileID: 0}
-  secretStatusDeleted: {fileID: 0}
 --- !u!114 &114200138194279740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -978,11 +974,6 @@ MonoBehaviour:
   arrayOfSecretTypes:
   - {fileID: 11400000, guid: c0b00b29663259c408f686102d99c40e, type: 2}
   - {fileID: 11400000, guid: a35f399b223f4e543af6dfbde66f0952, type: 2}
-  arrayOfSecretStatus:
-  - {fileID: 11400000, guid: 514260cb64d98d34db031b8a905fc759, type: 2}
-  - {fileID: 11400000, guid: 81456b14b71f3964db6c8f6365146322, type: 2}
-  - {fileID: 11400000, guid: 1859280532d10f043a3d0ba6a97dda40, type: 2}
-  - {fileID: 11400000, guid: 4a5e97e2ae88ebe459a6a1476b1f2d2a, type: 2}
   arrayOfNodeDatapoints:
   - {fileID: 11400000, guid: 328fc79a49afa494c851432a4f6d6ff9, type: 2}
   - {fileID: 11400000, guid: 18fe623c56599d544965b9144cb965ff, type: 2}
@@ -1947,7 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c5f4638fef720428f1b6683d94e2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
+  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
   numOfFlags: 10
   arrayOfStoryStatus: 
   scenario: {fileID: 0}

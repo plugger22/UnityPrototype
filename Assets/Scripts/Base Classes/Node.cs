@@ -31,7 +31,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public bool isConnectedNode;           //true if node is in the listMostConnectedNodes
     [HideInInspector] public bool isChokepointNode;          //true if node is a chokepoint (one connection between it and another subgraph)
 
-    [HideInInspector] public int targetID;              //unique ID, 0+, -1 indicates no target
+    [HideInInspector] public string targetName;              //unique name, null indicates no target
 
     [HideInInspector] public int spiderTimer;           //countdown timer before removed
     [HideInInspector] public int tracerTimer;           //countdown timer before removed
@@ -417,8 +417,8 @@ public class Node : MonoBehaviour
                     // - - - TARGET info (TargetManager method handles FOW, isTargetKnown and sides logic)
                     //
                     List<string> targetList = new List<string>();
-                    if (targetID > -1)
-                    { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetID, isTargetKnown); }
+                    if (targetName != null)
+                    { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetName, isTargetKnown); }
                     //crisis info
                     List<string> crisisList= new List<string>();
                     if (crisis != null)

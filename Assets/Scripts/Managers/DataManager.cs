@@ -77,7 +77,7 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorResigned = new List<int>();
 
     //target pools
-    private List<int>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetID's for each nodeArc type. All level one targets
+    private List<string>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetNames for each nodeArc type. All level one targets
     //private List<Target> possibleTargetsPool = new List<Target>();                        //level 1 target and node of the correct type available
     private List<Target> targetPoolActive = new List<Target>();                         //targets onMap but not yet visible to resistance player
     private List<Target> targetPoolLive = new List<Target>();                           //targets OnMap and visible to resistance player
@@ -169,7 +169,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>(); //Key -> ManageAction.name, Value -> ManageAction
     private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();            //Key -> action name, Value -> actionID
     private Dictionary<int, Effect> dictOfEffects = new Dictionary<int, Effect>();                  //Key -> effectID, Value -> ActionEffect
-    private Dictionary<int, Target> dictOfTargets = new Dictionary<int, Target>();                  //Key -> targetID, Value -> Target
+    private Dictionary<string, Target> dictOfTargets = new Dictionary<string, Target>();            //Key -> Target.name, Value -> Target
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();               //Key -> teamID, Value -> Team
     private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();           //Key -> teamArc name, Value -> TeamArcID
     private Dictionary<int, Team> dictOfTeams = new Dictionary<int, Team>();                        //Key -> teamID, Value -> Team
@@ -2647,19 +2647,19 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// returns a Target from dictionary based on TargetID key, null if not found
+    /// returns a Target from dictionary based on targetName key, null if not found
     /// </summary>
-    /// <param name="targetID"></param>
+    /// <param name="targetName"></param>
     /// <returns></returns>
-    public Target GetTarget(int targetID)
+    public Target GetTarget(string targetName)
     {
         Target target = null;
-        if (dictOfTargets.TryGetValue(targetID, out target))
+        if (dictOfTargets.TryGetValue(targetName, out target))
         { return target; }
         return null;
     }
 
-    public List<int>[] GetArrayOfGenericTargets()
+    public List<string>[] GetArrayOfGenericTargets()
     { return arrayOfGenericTargets; }
 
     /// <summary>
@@ -2669,12 +2669,12 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public Target GetRandomGenericTarget(int nodeArcID)
     {
-        int targetID = -1;
-        List<int> tempList = arrayOfGenericTargets[nodeArcID];
+        string targetName = "";
+        List<string> tempList = arrayOfGenericTargets[nodeArcID];
         if (tempList.Count > 0)
-        { targetID = tempList[Random.Range(0, tempList.Count)]; }
-        if (targetID > -1)
-        { return GetTarget(targetID); }
+        { targetName = tempList[Random.Range(0, tempList.Count)]; }
+        if (String.IsNullOrEmpty(targetName) == false)
+        { return GetTarget(targetName); }
         return null;
     }
 
@@ -2686,10 +2686,10 @@ public class DataManager : MonoBehaviour
         int sizeOfArray = CheckNumOfNodeArcs();
         if (sizeOfArray > 0)
         {
-            arrayOfGenericTargets = new List<int>[sizeOfArray];
+            arrayOfGenericTargets = new List<string>[sizeOfArray];
             for (int i = 0; i < sizeOfArray; i++)
             {
-                List<int> tempList = new List<int>();
+                List<string> tempList = new List<string>();
                 arrayOfGenericTargets[i] = tempList;
             }
         }
@@ -2700,9 +2700,9 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <param name="nodeArcID"></param>
-    public bool RemoveTargetFromGenericList(int targetID, int nodeArcID)
+    public bool RemoveTargetFromGenericList(string targetName, int nodeArcID)
     {
-        if (arrayOfGenericTargets[nodeArcID].Remove(targetID) == true)
+        if (arrayOfGenericTargets[nodeArcID].Remove(targetName) == true)
         { return true; }
         return false;
     }
@@ -2799,7 +2799,7 @@ public class DataManager : MonoBehaviour
         return node;
     }
 
-    public Dictionary<int, Target> GetDictOfTargets()
+    public Dictionary<string, Target> GetDictOfTargets()
     { return dictOfTargets; }
 
     /// <summary>
@@ -2962,7 +2962,7 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         Target target = null;
-        List<int> tempList = new List<int>();
+        List<string> tempList = new List<string>();
         builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
         for (int i = 0; i < arrayOfGenericTargets.Length; i++)
         {
