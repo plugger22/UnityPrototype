@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using gameAPI;
 
 /// <summary>
 /// SO for Secrets. Name of SO is the name of the secret, eg. "Paid to Murder"
@@ -22,7 +23,8 @@ public class Secret : ScriptableObject
     public SecretType type;
 
     #region Save Data Compatible
-    [HideInInspector] public SecretStatus status;           //SO enum -> Inactive 0, Active 1, Revealed 2, Deleted 3
+    //[HideInInspector] public SecretStatus status;           //SO enum -> Inactive 0, Active 1, Revealed 2, Deleted 3
+    [HideInInspector] public gameAPI.SecretStatus status;           //enum as dynamic data 
     [HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import
     [HideInInspector] public int gainedWhen;                //turn player gains secret
     [HideInInspector] public int revealedWho;               //actorID of person who revealed the secret
@@ -37,7 +39,7 @@ public class Secret : ScriptableObject
     /// </summary>
     public void Initialise()
     {
-        status = GameManager.instance.secretScript.secretStatusInactive;
+        status = gameAPI.SecretStatus.Inactive;
         revealedWho = -1;
         revealedWhen = -1;
         deletedWhen = -1;

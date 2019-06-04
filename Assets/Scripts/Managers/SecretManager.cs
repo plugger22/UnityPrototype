@@ -21,10 +21,10 @@ public class SecretManager : MonoBehaviour
     //globals
     [HideInInspector] public SecretType secretTypePlayer;
     [HideInInspector] public SecretType secretTypeDesperate;
-    [HideInInspector] public SecretStatus secretStatusActive;
+    /*[HideInInspector] public SecretStatus secretStatusActive;
     [HideInInspector] public SecretStatus secretStatusInactive;
     [HideInInspector] public SecretStatus secretStatusRevealed;
-    [HideInInspector] public SecretStatus secretStatusDeleted;
+    [HideInInspector] public SecretStatus secretStatusDeleted;*/
 
     //fast access
     private Condition conditionBlackmail;
@@ -103,7 +103,7 @@ public class SecretManager : MonoBehaviour
         //
         // - - - SecretStatus - - -
         //
-        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
+        /*Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
         if (dictOfSecretStatus != null)
         {
             foreach (var secretStatus in dictOfSecretStatus)
@@ -139,7 +139,7 @@ public class SecretManager : MonoBehaviour
             Debug.Assert(secretStatusRevealed != null, "Invalid secretStatusRevealed (Null)");
             Debug.Assert(secretStatusDeleted != null, "Invalid secretStatusDeleted (Null)");
         }
-        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
+        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }*/
         //
         // - - - - Secrets - - - 
         //
@@ -386,7 +386,7 @@ public class SecretManager : MonoBehaviour
             {
                 foreach (var secret in dictOfSecrets)
                 {
-                    builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.status.name,
+                    builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.status,
                         secret.Value.CheckNumOfActorsWhoKnow());
                 }
             }
@@ -442,10 +442,10 @@ public class SecretManager : MonoBehaviour
                     if (secret.revealedWho > -1)
                     {
                         builderTemp.AppendFormat("{0} ID {1}, {2} ({3}), {4} turn {5}, {6}", "\n", secret.secretID, secret.name, secret.tag,
-                            GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen, secret.status.name);
+                            GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen, secret.status);
                     }
                     else
-                    { builderTemp.AppendFormat("{0} ID {1}, {2} ({3}) {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status.name ); }
+                    { builderTemp.AppendFormat("{0} ID {1}, {2} ({3}) {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status ); }
                 }
             }
             else { builderTemp.AppendFormat("{0} No records", "\n"); }

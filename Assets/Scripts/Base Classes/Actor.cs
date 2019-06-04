@@ -591,7 +591,7 @@ namespace gameAPI
             if (listOfSecrets.Count > 0)
             {
                 foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID {1}, {2} ({3}), status: {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status.name); }
+                { builder.AppendFormat("{0} ID {1}, {2} ({3}), status: {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status); }
             }
             else { builder.AppendFormat("{0} No records", "\n"); }
             return builder.ToString();

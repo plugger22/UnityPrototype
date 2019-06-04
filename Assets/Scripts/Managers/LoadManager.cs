@@ -10,6 +10,7 @@ using packageAPI;
 /// </summary>
 public class LoadManager : MonoBehaviour
 {
+
     #region Arrays
     [Header("Initialise Start Enums -> ADD TO END OF ARRAYS ONLY")]
     public GlobalMeta[] arrayOfGlobalMeta;
@@ -42,7 +43,6 @@ public class LoadManager : MonoBehaviour
     public TraitCategory[] arrayOfTraitCategories;
     public TraitEffect[] arrayOfTraitEffects;
     public SecretType[] arrayOfSecretTypes;
-    public SecretStatus[] arrayOfSecretStatus;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
     [Header("TextLists -> ADD TO END OF ARRAYS ONLY")]
@@ -182,29 +182,6 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
-
-       /* Dictionary<string, EffectApply> dictOfEffectApply = GameManager.instance.dataScript.GetDictOfEffectApply();
-        if (dictOfEffectApply != null)
-        {
-            numArray = arrayOfEffectApply.Length;
-            if (numArray > 0)
-            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
-            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
-            for (int i = 0; i < numArray; i++)
-            {
-                EffectApply apply = arrayOfEffectApply[i];
-                if (apply != null)
-                {
-                    try
-                    { dictOfEffectApply.Add(apply.name, apply); }
-                    catch (ArgumentException)
-                    { Debug.LogWarningFormat("Duplicate effectApply {0}", apply); }
-                }
-                else { Debug.LogWarningFormat("Invalid EffectApply (Null) for arrayOfEffectApply[{0}]", i); }
-            }
-        }
-        else { Debug.LogError("Invalid dictOfEffectApply (Null)"); }*/
-
         //
         // - - - EffectCriteria (not stored in a collection)
         //
@@ -233,29 +210,6 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
-
-        /*Dictionary<string, EffectOutcome> dictOfEffectOutcome = GameManager.instance.dataScript.GetDictOfEffectOutcome();
-        if (dictOfEffectOutcome != null)
-        {
-            numArray = arrayOfEffectOutcome.Length;
-            if (numArray > 0)
-            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
-            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
-            for (int i = 0; i < numArray; i++)
-            {
-                EffectOutcome outcome = arrayOfEffectOutcome[i];
-                if (outcome != null)
-                {
-                    try
-                    { dictOfEffectOutcome.Add(outcome.name, outcome); }
-                    catch (ArgumentException)
-                    { Debug.LogWarningFormat("Duplicate effectOutcome {0}", outcome); }
-                }
-                else { Debug.LogWarningFormat("Invalid effectOutcome (Null) for arrayOfEffectOutcome[{0}]", i); }
-            }
-        }
-        else { Debug.LogError("Invalid dictOfEffectOutcome (Null)"); }*/
-
         //
         // - - - ContactType (not stored in a collection)
         //
@@ -315,10 +269,27 @@ public class LoadManager : MonoBehaviour
         //
         // - - - NameSets (not stored in a collection)
         //
-        numArray = arrayOfNameSets.Length;
-        if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NameSets present"); }
+        Dictionary<string, NameSet> dictOfNameSet = GameManager.instance.dataScript.GetDictOfNameSet();
+        if (dictOfNameSet != null)
+        {
+            numArray = arrayOfNameSets.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NameSets present"); }
+            for (int i = 0; i < numArray; i++)
+            {
+                NameSet set = arrayOfNameSets[i];
+                if (set != null)
+                {
+                    try
+                    { dictOfNameSet.Add(set.name, set); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate NameSet {0}", set); }
+                }
+                else { Debug.LogWarningFormat("Invalid nameSet (Null) for arrayOfNameSets[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNameSet (Null)"); }
         //
         // - - - CitySize (not stored in a collection)
         //
@@ -573,33 +544,6 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfecretTypes (Null) -> Import failed"); }
         //
-        // - - - Secret Status - - -
-        //
-        Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
-        if (dictOfSecretStatus != null)
-        {
-            numArray = arrayOfSecretStatus.Length;
-            if (numArray > 0)
-            {
-                for (int i = 0; i < numArray; i++)
-                {
-                    SecretStatus secretStatus = arrayOfSecretStatus[i];
-                    //add to dictionary
-                    try
-                    { dictOfSecretStatus.Add(secretStatus.name, secretStatus); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Secret Status (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogErrorFormat("Invalid SecretStatus (duplicate) \"{0}\"", secretStatus.name); }
-                }
-            }
-            numDict = dictOfSecretStatus.Count;
-            Debug.LogFormat("[Loa] InitialiseStart -> dictOfSecretStatus has {0} entries{1}", numDict, "\n");
-            Debug.Assert(numDict > 0, "No SecretStatus in dictOfSecretStatus");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch on SecretStatus count, array {0}, dict {1}", numArray, numDict));
-        }
-        else { Debug.LogError("Invalid dictOfSecretStatus (Null) -> Import failed"); }
-        //
         // - - - Node Datapoints - - -
         //
         numArray = arrayOfNodeDatapoints.Length;
@@ -607,7 +551,6 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNodeDatapoints has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
     }
-
     #endregion
 
     #region InitialiseEarly

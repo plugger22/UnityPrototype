@@ -848,7 +848,7 @@ public class FileManager : MonoBehaviour
         write.actorData.doomTimer = GameManager.instance.actorScript.doomTimer;
         write.actorData.captureTimer = GameManager.instance.actorScript.captureTimer;
         write.actorData.isGearCheckRequired = GameManager.instance.actorScript.isGearCheckRequired;
-        write.actorData.nameSet = GameManager.instance.actorScript.nameSet;
+        write.actorData.nameSet = GameManager.instance.actorScript.nameSet.name;
         //
         // - - - Actor.cs fast access fields
         //
@@ -2295,7 +2295,10 @@ public class FileManager : MonoBehaviour
         GameManager.instance.actorScript.doomTimer = read.actorData.doomTimer;
         GameManager.instance.actorScript.captureTimer = read.actorData.captureTimer;
         GameManager.instance.actorScript.isGearCheckRequired = read.actorData.isGearCheckRequired;
-        GameManager.instance.actorScript.nameSet = read.actorData.nameSet;
+        NameSet nameSet = GameManager.instance.dataScript.GetNameSet(read.actorData.nameSet);
+        if (nameSet != null)
+        { GameManager.instance.actorScript.nameSet = nameSet; }
+        else { Debug.LogWarningFormat("Invalid nameSet (Null) for \"{0}\"", read.actorData.nameSet); }
         //
         // - - - Actor Lists
         //

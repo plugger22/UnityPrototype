@@ -172,7 +172,6 @@ public class PlayerManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         hackingGear = GameManager.instance.gearScript.typeHacking.name;
         maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-        secretStatusActive = GameManager.instance.secretScript.secretStatusActive;
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
@@ -951,7 +950,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     //add secret & make active
                     listOfSecrets.Add(secret);
-                    secret.status = secretStatusActive;
+                    secret.status = gameAPI.SecretStatus.Active;
                     secret.gainedWhen = GameManager.instance.turnScript.Turn;
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
@@ -982,13 +981,13 @@ public class PlayerManager : MonoBehaviour
                     //reset secret known
                     secret.ResetSecret();
                     //add to correct list
-                    switch(secret.status.level)
+                    switch(secret.status)
                     {
-                        case 2:
+                        case gameAPI.SecretStatus.Revealed:
                             //revealed secret
                             GameManager.instance.dataScript.AddRevealedSecret(secret);
                             break;
-                        case 3:
+                        case gameAPI.SecretStatus.Deleted:
                             //deleted secret
                             GameManager.instance.dataScript.AddDeletedSecret(secret);
                             break;
@@ -1062,7 +1061,7 @@ public class PlayerManager : MonoBehaviour
         if (listOfSecrets.Count > 0)
         {
             foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.secretID, secret.name, secret.tag, secret.status.name, secret.CheckNumOfActorsWhoKnow()); }
+                { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.secretID, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
         }
         else { builder.AppendFormat("{0} No records", "\n"); }
         return builder.ToString();
@@ -1240,7 +1239,7 @@ public class PlayerManager : MonoBehaviour
             //put all inactive player secrets into the list to enable a random pick
             foreach(var secret in listOfSecrets)
             {
-                if (secret.status.level == 0)
+                if (secret.status == gameAPI.SecretStatus.Inactive)
                 { tempList.Add(secret); }
             }
             //make a random choice

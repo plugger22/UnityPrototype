@@ -1052,7 +1052,7 @@ public class EffectManager : MonoBehaviour
                         Secret secret = GameManager.instance.playerScript.GetRandomCurrentSecret();
                         if (secret != null)
                         {
-                            secret.status = GameManager.instance.secretScript.secretStatusDeleted;
+                            secret.status = gameAPI.SecretStatus.Deleted;
                             secret.deletedWhen = GameManager.instance.turnScript.Turn;
                             //remove secret from game
                             if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID, true) == true)

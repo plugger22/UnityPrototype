@@ -197,8 +197,6 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<TraitEffect>(GameManager.instance.loadScript.arrayOfTraitEffects);
         //SecretType
         ValidateSOGeneric<SecretType>(GameManager.instance.loadScript.arrayOfSecretTypes);
-        //SecretStatus
-        ValidateSOGeneric<SecretStatus>(GameManager.instance.loadScript.arrayOfSecretStatus);
         //CityArc
         ValidateSOGeneric<CityArc>(GameManager.instance.loadScript.arrayOfCityArcs);
         //City

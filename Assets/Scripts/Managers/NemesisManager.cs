@@ -6,38 +6,7 @@ using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[System.Serializable]
-public class NemesisSaveClass
-{
-    public bool hasMoved;
-    public bool hasActed;
-    public bool hasWarning;
-    public bool isFirstNemesis;
 
-    //Resistance Player
-    public SideState resistancePlayer;
-
-    //Nemesis AI
-    public NemesisMode mode;
-    public NemesisGoal goal;
-    public int durationGoal;
-    public int durationDelay;
-    public int nemesisNodeID;
-    public AITracker trackerDebug;
-
-    //player tracking info
-    public int targetNodeID;
-    public int moveToNodeID;
-    public int targetDistance;
-    public bool isImmediate;
-
-    //Authority player control
-    public bool isPlayerControl;
-    public int controlNodeID;
-    public int controlTimer;
-    public int controlCooldownTimer;
-    public NemesisGoal controlGoal;
-}
 
 /// <summary>
 /// Handles all nemesis related matters

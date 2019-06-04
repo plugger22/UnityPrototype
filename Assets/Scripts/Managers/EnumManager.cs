@@ -110,6 +110,11 @@
     public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}
 
     //
+    // - - - Secrets - - -
+    //
+    public enum SecretStatus {  Inactive, Active, Revealed, Deleted }
+
+    //
     // - - - Dice - - -
     //
     public enum DiceOutcome { None, Ignore, Auto, Roll }

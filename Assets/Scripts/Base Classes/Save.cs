@@ -230,7 +230,7 @@ public class SaveActorData
     public int doomTimer;
     public int captureTimer;
     public bool isGearCheckRequired;
-    public NameSet nameSet;
+    public string nameSet;
     //fast access fields for actor.cs
     public int actorStressNone;
     public int actorCorruptNone;
@@ -411,7 +411,7 @@ public class SaveSecret
     public int revealedWho;
     public int revealedWhen;
     public int deleteWhen;
-    public SecretStatus status;
+    public gameAPI.SecretStatus status;
     public List<int> listOfActors = new List<int>();
 }
 #endregion

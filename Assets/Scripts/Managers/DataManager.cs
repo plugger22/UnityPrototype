@@ -191,7 +191,6 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();   //Key -> actBreakID, Value -> ActorBreakdown
     private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                  //Key -> secretID, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();      //Key -> SecretType.name, Value -> SecretType
-    private Dictionary<string, SecretStatus> dictOfSecretStatus = new Dictionary<string, SecretStatus>(); //Key -> SecretStatus.name, Value -> SecretStatus
     private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();        //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();       //Key -> turn, Value -> MainInfoData set for turn
     private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                //Key -> contactID, Value -> Contact
@@ -214,8 +213,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TraitCategory> dictOfTraitCategories = new Dictionary<string, TraitCategory>();      //Key -> Category.name, Value -> TraitCategory
     private Dictionary<string, GlobalSide> dictOfGlobalSide = new Dictionary<string, GlobalSide>();                 //Key -> GlobalSide.name, Value -> GlobalSide
     private Dictionary<string, GlobalType> dictOfGlobalType = new Dictionary<string, GlobalType>();                 //Key -> GlobalType.name, Value -> GlobalType
-    /*private Dictionary<string, EffectOutcome> dictOfEffectOutcome = new Dictionary<string, EffectOutcome>();        //Key -> EffectOutcome.name, Value -> EffectOutcome
-    private Dictionary<string, EffectApply> dictOfEffectApply = new Dictionary<string, EffectApply>();              //Key -> EffectApply.name, Value -> EffectApply*/
+    private Dictionary<string, NameSet> dictOfNameSet = new Dictionary<string, NameSet>();                          //Key -> NameSet.name, Value -> NameSet
+
     #endregion
 
     //
@@ -4424,9 +4423,6 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, SecretType> GetDictOfSecretTypes()
     { return dictOfSecretTypes; }
 
-    public Dictionary<string, SecretStatus> GetDictOfSecretStatus()
-    { return dictOfSecretStatus; }
-
     /// <summary>
     /// returns player secrets (only those relevant to player side are loaded at game start)
     /// </summary>
@@ -4504,7 +4500,7 @@ public class DataManager : MonoBehaviour
     {
         if (secret != null)
         {
-            if (secret.status.level == 2)
+            if (secret.status == gameAPI.SecretStatus.Revealed)
             { listOfRevealedSecrets.Add(secret); }
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.secretID, secret.revealedWhen); }
         }
@@ -4519,7 +4515,7 @@ public class DataManager : MonoBehaviour
     {
         if (secret != null)
         {
-            if (secret.status.level == 3)
+            if (secret.status == gameAPI.SecretStatus.Deleted)
             { listOfDeletedSecrets.Add(secret); }
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.secretID, secret.deletedWhen); }
         }
@@ -6470,43 +6466,26 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    /*public Dictionary<string, EffectOutcome> GetDictOfEffectOutcome()
-    { return dictOfEffectOutcome; }
+    public Dictionary<string, NameSet> GetDictOfNameSet()
+    { return dictOfNameSet; }
 
     /// <summary>
-    /// returns effectOutcome based on name, Null if a problem
+    /// returns NameSet based on name, Null if a problem
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public EffectOutcome GetEffectOutcome(string name)
+    public NameSet GetNameSet(string name)
     {
         if (String.IsNullOrEmpty(name) == false)
         {
-            if (dictOfEffectOutcome.ContainsKey(name) == true)
-            { return dictOfEffectOutcome[name]; }
+            if (dictOfNameSet.ContainsKey(name) == true)
+            { return dictOfNameSet[name]; }
         }
-        else { Debug.LogError("Invalid EffectOutcome name parameter (Null or Empty)"); }
+        else { Debug.LogError("Invalid NameSet name parameter (Null or Empty)"); }
         return null;
     }
 
-    public Dictionary<string, EffectApply> GetDictOfEffectApply()
-    { return dictOfEffectApply; }
 
-    /// <summary>
-    /// returns EffectApply based on name, Null if a problem
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public EffectApply GetEffectApply(string name)
-    {
-        if (String.IsNullOrEmpty(name) == false)
-        {
-            if (dictOfEffectApply.ContainsKey(name) == true)
-            { return dictOfEffectApply[name]; }
-        }
-        else { Debug.LogError("Invalid EffectApply name parameter (Null or Empty)"); }
-        return null;
-    }*/
 
 
     #endregion

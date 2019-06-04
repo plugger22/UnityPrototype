@@ -445,7 +445,7 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// Used to save AIManager
+    /// Used to save AIManager.cs private fields
     /// </summary>
     [System.Serializable]
     public class SaveAIClass
@@ -484,6 +484,42 @@ namespace packageAPI
         public bool isInsufficientResources;
         public int numOfUnsuccessfulResourceRequests;
         public int numOfSuccessfulResourceRequests;
+    }
+
+    /// <summary>
+    /// Used to save NemesisManager.cs private fields
+    /// </summary>
+    [System.Serializable]
+    public class NemesisSaveClass
+    {
+        public bool hasMoved;
+        public bool hasActed;
+        public bool hasWarning;
+        public bool isFirstNemesis;
+
+        //Resistance Player
+        public SideState resistancePlayer;
+
+        //Nemesis AI
+        public NemesisMode mode;
+        public NemesisGoal goal;
+        public int durationGoal;
+        public int durationDelay;
+        public int nemesisNodeID;
+        public AITracker trackerDebug;
+
+        //player tracking info
+        public int targetNodeID;
+        public int moveToNodeID;
+        public int targetDistance;
+        public bool isImmediate;
+
+        //Authority player control
+        public bool isPlayerControl;
+        public int controlNodeID;
+        public int controlTimer;
+        public int controlCooldownTimer;
+        public NemesisGoal controlGoal;
     }
 
     //
