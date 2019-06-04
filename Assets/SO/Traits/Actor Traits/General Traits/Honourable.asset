@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd1570ff41cf034488029ec9d972af2, type: 3}
+  m_Name: Honourable
+  m_EditorClassIdentifier: 
+  tag: Honourable
+  description: Doesn't Blackmail
+  typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 0}
+  category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
+  listOfTraitEffects:
+  - {fileID: 11400000, guid: f572e130622b6bb4ca33196a27454220, type: 2}
+  tagFormatted: <color=#7FFF00>Honourable</color>
+  traitID: 10

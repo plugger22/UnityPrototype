@@ -162,7 +162,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();            //Key -> actorArcID, Value -> ActorArc
     private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();          //Key -> actorArc name, Value -> actorArcID
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                     //Key -> actorID, Value -> Actor
-    private Dictionary<int, Trait> dictOfTraits = new Dictionary<int, Trait>();                     //Key -> traitID, Value -> Trait
+    private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();               //Key -> trait.name, Value -> Trait
     private Dictionary<int, TraitEffect> dictOfTraitEffects = new Dictionary<int, TraitEffect>();   //Key -> teffID, Value -> TraitEffect
     private Dictionary<string, int> dictOfLookUpTraitEffects = new Dictionary<string, int>();       //Key -> TraitEffect name, Value -> teffID
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                  //Key -> ActionID, Value -> Action
@@ -866,7 +866,7 @@ public class DataManager : MonoBehaviour
         return trait;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// returns the matching trait to the input string. Null if not found.
     /// </summary>
     /// <param name="traitText"></param>
@@ -883,22 +883,10 @@ public class DataManager : MonoBehaviour
             }
         }
         return trait;
-    }
-
-    /*/// <summary>
-    /// Gets specified Trait by trait ID, returns null if not found
-    /// </summary>
-    /// <param name="traitID"></param>
-    /// <returns></returns>
-    public Trait GetTrait(int traitID)
-    {
-        Trait trait = null;
-        if (dictOfTraits.TryGetValue(traitID, out trait))
-        { return trait; }
-        return null;
     }*/
 
-    public Dictionary<int, Trait> GetDictOfTraits()
+
+    public Dictionary<string, Trait> GetDictOfTraits()
     { return dictOfTraits; }
 
     public List<Trait> GetListOfAllTraits()
@@ -965,15 +953,19 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets trait based on traitID, null if not found
+    /// Gets trait based on trait.name, null if not found
     /// </summary>
     /// <param name="traitID"></param>
     /// <returns></returns>
-    public Trait GetTrait(int traitID)
+    public Trait GetTrait(string traitName)
     {
-        if (dictOfTraits.ContainsKey(traitID) == true)
-        { return dictOfTraits[traitID]; }
-        else { return null; }
+        if (string.IsNullOrEmpty(traitName) == false)
+        {
+            if (dictOfTraits.ContainsKey(traitName) == true)
+            { return dictOfTraits[traitName]; }
+            else { return null; }
+        }
+        return null;
     }
 
     //
@@ -2653,9 +2645,12 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public Target GetTarget(string targetName)
     {
-        Target target = null;
-        if (dictOfTargets.TryGetValue(targetName, out target))
-        { return target; }
+        if (string.IsNullOrEmpty(targetName) == false)
+        {
+            Target target = null;
+            if (dictOfTargets.TryGetValue(targetName, out target))
+            { return target; }
+        }
         return null;
     }
 
@@ -2673,7 +2668,7 @@ public class DataManager : MonoBehaviour
         List<string> tempList = arrayOfGenericTargets[nodeArcID];
         if (tempList.Count > 0)
         { targetName = tempList[Random.Range(0, tempList.Count)]; }
-        if (String.IsNullOrEmpty(targetName) == false)
+        if (string.IsNullOrEmpty(targetName) == false)
         { return GetTarget(targetName); }
         return null;
     }
@@ -6187,7 +6182,7 @@ public class DataManager : MonoBehaviour
     /// Add a text to the listOfHistoryAutoRun. Text should be a formatted, self-contained sentence (short) summarising the event. Ignore turn # as it's added automatically. Ignore Bold as auto bold everything.
     /// </summary>
     /// <param name="text"></param>
-    public void AddHistoryAutoRun(String text)
+    public void AddHistoryAutoRun(string text)
     {
         if (string.IsNullOrEmpty(text) == false)
         { listOfHistoryAutoRun.Add(string.Format("D{0}: {1}", GameManager.instance.turnScript.Turn, text)); }
@@ -6369,7 +6364,7 @@ public class DataManager : MonoBehaviour
     public Sprite GetSprite(string spriteName)
     {
         Sprite sprite = null;
-        if (String.IsNullOrEmpty(spriteName) == false)
+        if (string.IsNullOrEmpty(spriteName) == false)
         {
             if (dictOfSprites.ContainsKey(spriteName) == true)
             { sprite = dictOfSprites[spriteName]; }
@@ -6438,7 +6433,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public GlobalSide GetGlobalSide(string name)
     {
-        if (String.IsNullOrEmpty(name) == false)
+        if (string.IsNullOrEmpty(name) == false)
         {
             if (dictOfGlobalSide.ContainsKey(name) == true)
             { return dictOfGlobalSide[name]; }
@@ -6457,7 +6452,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public GlobalType GetGlobalType(string name)
     {
-        if (String.IsNullOrEmpty(name) == false)
+        if (string.IsNullOrEmpty(name) == false)
         {
             if (dictOfGlobalType.ContainsKey(name) == true)
             { return dictOfGlobalType[name]; }
@@ -6476,7 +6471,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public NameSet GetNameSet(string name)
     {
-        if (String.IsNullOrEmpty(name) == false)
+        if (string.IsNullOrEmpty(name) == false)
         {
             if (dictOfNameSet.ContainsKey(name) == true)
             { return dictOfNameSet[name]; }

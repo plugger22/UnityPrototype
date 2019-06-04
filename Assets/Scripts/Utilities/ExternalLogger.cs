@@ -28,7 +28,7 @@ public class ExternalLogger : MonoBehaviour
     public void HandleLog(string logString, string stackTrace, LogType type)
     {
         string logInfo = "";
-        if (String.IsNullOrEmpty(logString) == false)
+        if (string.IsNullOrEmpty(logString) == false)
         {
             StringBuilder builder = new StringBuilder();
             switch (type)

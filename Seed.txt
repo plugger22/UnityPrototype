@@ -1,23 +1,29 @@
 
-
-Dev seed 63260 -> Tuesday, 4 June 2019 9:46 AM
-City seed 890 -> Arles, France
-
-Dev seed 53091 -> Tuesday, 4 June 2019 9:47 AM
-City seed 5678 -> London, United Kingdom
+Dev seed 30915 -> Tuesday, 4 June 2019 3:46 PM
 City seed 890 -> Arles, France
 City seed 234 -> Sydney, Australia
 
-Dev seed 43703 -> Tuesday, 4 June 2019 10:16 AM
-WARNING [Val] ValidateSO: MISMATCH on SecretStatus, array 4, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(SecretStatus[]) (at Assets/Scripts/Managers/ValidationManager.cs:319)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:201)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:334)
-	City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
+Dev seed 47498 -> Tuesday, 4 June 2019 3:49 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DijkstraManager.GetDistanceUnweighted (System.Int32 nodeSourceID, System.Int32 nodeDestinationID) (at Assets/Scripts/Managers/DijkstraManager.cs:570)
+	NemesisManager.ProcessNemesisHunt () (at Assets/Scripts/Managers/NemesisManager.cs:772)
+	NemesisManager.ProcessNemesisActivity (packageAPI.AITracker tracker, System.Boolean immediateFlag) (at Assets/Scripts/Managers/NemesisManager.cs:518)
+	NemesisManager.ProcessNemesis (packageAPI.AITracker tracker, System.Boolean immediateFlagResistance) (at Assets/Scripts/Managers/NemesisManager.cs:289)
+	AIManager.ProcessNemesis () (at Assets/Scripts/Managers/AIManager.cs:710)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:385)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:218)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 8320 -> Tuesday, 4 June 2019 3:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
 
-Dev seed 49349 -> Tuesday, 4 June 2019 10:21 AM
+Dev seed 27681 -> Tuesday, 4 June 2019 4:02 PM
 City seed 5678 -> London, United Kingdom
-City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 890 -> Arles, France

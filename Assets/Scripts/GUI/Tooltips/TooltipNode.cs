@@ -346,7 +346,7 @@ public class TooltipNode : MonoBehaviour
             }
             else if (isPossibleCrisis == true)
             {
-                crisis.text = String.Format("{0}Potential Crisis{1}", colourAlert, colourEnd);
+                crisis.text = string.Format("{0}Potential Crisis{1}", colourAlert, colourEnd);
                 crisis.gameObject.SetActive(true);
                 dividerCrisis.gameObject.SetActive(true);
             }
@@ -499,7 +499,7 @@ public class TooltipNode : MonoBehaviour
                 if (data.listOfTeams.Count > 0)
                 {
                     StringBuilder teamBuilder = new StringBuilder();
-                    foreach (String teamText in data.listOfTeams)
+                    foreach (string teamText in data.listOfTeams)
                     {
                         if (teamBuilder.Length > 0) { teamBuilder.AppendLine(); }
                         teamBuilder.AppendFormat("{0}<b>{1}</b>{2}", colourTeam, teamText, colourEnd);

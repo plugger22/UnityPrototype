@@ -1561,7 +1561,7 @@ public class MainInfoUI : MonoBehaviour
     /// <param name="text"></param>
     private void SetTicker(string text)
     {
-        if (String.IsNullOrEmpty(text) == false)
+        if (string.IsNullOrEmpty(text) == false)
         {
             string sourceText = text.ToUpper();
             tickerText.text = sourceText;

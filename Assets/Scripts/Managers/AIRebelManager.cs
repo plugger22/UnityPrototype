@@ -1908,7 +1908,7 @@ public class AIRebelManager : MonoBehaviour
         //
         targetName = nodePlayer.targetName;
         //target present
-        if (String.IsNullOrEmpty(targetName) == false)
+        if (string.IsNullOrEmpty(targetName) == false)
         {
             Target target = GameManager.instance.dataScript.GetTarget(targetName);
             if (target != null)

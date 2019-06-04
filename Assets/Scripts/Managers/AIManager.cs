@@ -1605,7 +1605,7 @@ public class AIManager : MonoBehaviour
                                     if (nodeNear.isPreferredAuthority == true)
                                     { score += nodePreferredFactor; }
                                     //target
-                                    if (String.IsNullOrEmpty(nodeNear.targetName) == false)
+                                    if (string.IsNullOrEmpty(nodeNear.targetName) == false)
                                     {
                                         Target target = GameManager.instance.dataScript.GetTarget(nodeNear.targetName);
                                         {
@@ -4967,7 +4967,7 @@ public class AIManager : MonoBehaviour
     /// Debug display of all relevant erasure AI related data
     /// </summary>
     /// <returns></returns>
-    public String DisplayErasureData()
+    public string DisplayErasureData()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("Authority AI Status (Erasure){0}{1}", "\n", "\n");
@@ -5016,7 +5016,7 @@ public class AIManager : MonoBehaviour
         return builder.ToString();
     }
 
-    public String DisplayDecisionData()
+    public string DisplayDecisionData()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("Authority AI Status (Decisions){0}{1}", "\n", "\n");

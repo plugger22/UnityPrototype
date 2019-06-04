@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd1570ff41cf034488029ec9d972af2, type: 3}
+  m_Name: Dynamite
+  m_EditorClassIdentifier: 
+  tag: Dynamite
+  description: Excels at preventing a district Crisis
+  typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  category: {fileID: 11400000, guid: 4dc6bc7afec85ba4593931a1144467d3, type: 2}
+  listOfTraitEffects:
+  - {fileID: 11400000, guid: ed9b577ed205c2145a89d01a909b0c74, type: 2}
+  tagFormatted: <color=#FF4500>Dynamite</color>
+  traitID: 36

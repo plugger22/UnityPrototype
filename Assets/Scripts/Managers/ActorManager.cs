@@ -806,7 +806,7 @@ public class ActorManager : MonoBehaviour
                 // - - -  Target - - -
                 //
                 //Does the Node have a target attached? -> added first
-                if (String.IsNullOrEmpty(node.targetName) == false)
+                if (string.IsNullOrEmpty(node.targetName) == false)
                 {
                     Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
                     if (target != null)
@@ -2704,7 +2704,7 @@ public class ActorManager : MonoBehaviour
             renownCost = manageRenownCost.renownCost;
             //tooltip
             builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
-            if (String.IsNullOrEmpty(manageRenownCost.tooltip) == false)
+            if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
             { builderTooltip.Append(manageRenownCost.tooltip); }
             //only show button if player has enough renown to cover the cost of firing
             if (playerRenown >= renownCost)
@@ -3189,7 +3189,7 @@ public class ActorManager : MonoBehaviour
                                 List<string> listOfSecrets = actor.GetSecretsTooltipList();
                                 if (listOfSecrets != null)
                                 {
-                                    foreach(String secret in listOfSecrets)
+                                    foreach(string secret in listOfSecrets)
                                     { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, secret, colourEnd); }
                                 }
                                 else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
@@ -3938,7 +3938,7 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public string DebugAddCondition(string what, string who)
     {
-        Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
+        Debug.Assert(string.IsNullOrEmpty(what) == false && string.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
         string text = "";
         //Condition
         Condition condition = GameManager.instance.dataScript.GetCondition(what.ToUpper());
@@ -3971,7 +3971,7 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public string DebugRemoveCondition(string what, string who)
     {
-        Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
+        Debug.Assert(string.IsNullOrEmpty(what) == false && string.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
         string text = "";
         //Condition
         Condition condition = GameManager.instance.dataScript.GetCondition(what.ToUpper());
@@ -4113,7 +4113,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="who"></param>
     public string DebugAddTrait(string what, string who)
     {
-        Debug.Assert(String.IsNullOrEmpty(what) == false && String.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
+        Debug.Assert(string.IsNullOrEmpty(what) == false && string.IsNullOrEmpty(who) == false, "Invalid input parameters (Who or What are Null or empty");
         string text = "";
         int i;
         if (int.TryParse(who, out i) == true)
@@ -5285,7 +5285,7 @@ public class ActorManager : MonoBehaviour
                             Condition conditionUpsetOver = listOfBadConditions[Random.Range(0, numOfBadConditions)];
                             if (conditionUpsetOver != null)
                             {
-                                if (String.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
+                                if (string.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
                                 {
                                     msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag);
                                     Debug.LogFormat("[Ply] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
@@ -5305,7 +5305,7 @@ public class ActorManager : MonoBehaviour
                             else { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsResignedAuthority); }
                         }
                         //message
-                        if (String.IsNullOrEmpty(msgText) == false)
+                        if (string.IsNullOrEmpty(msgText) == false)
                         { GameManager.instance.messageScript.ActorStatus(msgText, "Resigned", "has resigned because of Player reputation", actor.actorID, side); }
                     }
                     else

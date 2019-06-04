@@ -639,7 +639,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Traits - - -
         //
-        Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
+        Dictionary<string, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
         List<Trait> listOfAllTraits = GameManager.instance.dataScript.GetListOfAllTraits();
         if (dictOfTraits != null)
         {
@@ -655,7 +655,7 @@ public class LoadManager : MonoBehaviour
                     //add to dictionary
                     try
                     {
-                        dictOfTraits.Add(trait.traitID, trait);
+                        dictOfTraits.Add(trait.name, trait);
                         //add to list
                         listOfAllTraits.Add(trait);
                     }

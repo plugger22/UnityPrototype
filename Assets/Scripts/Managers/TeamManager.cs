@@ -1462,7 +1462,7 @@ public class TeamManager : MonoBehaviour
                 break;
             case "DAMAGE":
                 //at node with a completed, but uncontained, target?
-                if (String.IsNullOrEmpty(node.targetName) == false)
+                if (string.IsNullOrEmpty(node.targetName) == false)
                 {
                     Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
                     if (target != null)

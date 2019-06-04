@@ -17,7 +17,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
     public void Start()
     {
         menuHeaderRightClick = GameManager.instance.actionScript.GetPlayerActionMenuHeader();
-        Debug.Assert(String.IsNullOrEmpty(menuHeaderRightClick) == false, "Invalid menuHeaderRightClick (Null or empty)");
+        Debug.Assert(string.IsNullOrEmpty(menuHeaderRightClick) == false, "Invalid menuHeaderRightClick (Null or empty)");
     }
 
     /// <summary>

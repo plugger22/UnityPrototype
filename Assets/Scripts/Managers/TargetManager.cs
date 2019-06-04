@@ -397,7 +397,7 @@ public class TargetManager : MonoBehaviour
                                 break;
                         }
                     }
-                    else { Debug.LogWarning(string.Format("Invalid target (Null) for target {0}", targetName)); }
+                    /*else { Debug.LogWarning(string.Format("Invalid target (Null) for target {0}", targetName)); } EDIT: Null is acceptable value for a node without a target*/
                 }
                 else
                 {
@@ -549,7 +549,7 @@ public class TargetManager : MonoBehaviour
                             if (node != null)
                             {
                                 //check node doesn't already have a target
-                                if (String.IsNullOrEmpty(node.targetName) == true)
+                                if (string.IsNullOrEmpty(node.targetName) == true)
                                 { break; }
                                 else { node = null; }
                             }
@@ -611,7 +611,7 @@ public class TargetManager : MonoBehaviour
                             if (node != null)
                             {
                                 //check node doesn't already have a target
-                                if (String.IsNullOrEmpty(node.targetName) == true)
+                                if (string.IsNullOrEmpty(node.targetName) == true)
                                 { break; }
                                 else { node = null; }
                             }
@@ -719,7 +719,7 @@ public class TargetManager : MonoBehaviour
     {
         bool isSuccess = true;
         //check if node doesn't already has a target
-        if (String.IsNullOrEmpty(node.targetName) == true)
+        if (string.IsNullOrEmpty(node.targetName) == true)
         {
             //check if target isn't already assigned to a node
             if (target.nodeID == -1)
@@ -790,7 +790,7 @@ public class TargetManager : MonoBehaviour
     public List<string> GetTargetTooltip(string targetName, bool isTargetKnown)
     {
         List<string> tempList = new List<string>();
-        if (String.IsNullOrEmpty(targetName) == false)
+        if (string.IsNullOrEmpty(targetName) == false)
         {
             //find target
             Target target = GameManager.instance.dataScript.GetTarget(targetName);

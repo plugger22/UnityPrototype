@@ -182,7 +182,7 @@ public class TooltipConnection : MonoBehaviour
             foreach (EffectDataOngoing effect in listOfOngoingEffects)
             {
                 if (builderOngoing.Length > 0) { builderOngoing.AppendLine(); }
-                if (String.IsNullOrEmpty(effect.text) == false)
+                if (string.IsNullOrEmpty(effect.text) == false)
                 { builderOngoing.AppendFormat("{0}effect.text{1}{2}", colourNeutral, colourEnd, "\n"); }
                 builderOngoing.AppendFormat("Security {0}{1}{2}{3}{4}", effect.value > 0 ? colourGood : colourBad, effect.value > 0 ? "+" : "", effect.value,
                     colourEnd, "\n");

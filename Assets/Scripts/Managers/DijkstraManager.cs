@@ -562,7 +562,7 @@ public class DijkstraManager : MonoBehaviour
     {
         int distance = -1;
         Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
-        Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
+        Debug.AssertFormat(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes) destID {0}, numOfNodes {1}", nodeDestinationID, numOfNodes);
         if (nodeSourceID != nodeDestinationID)
         {
             PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodeSourceID);

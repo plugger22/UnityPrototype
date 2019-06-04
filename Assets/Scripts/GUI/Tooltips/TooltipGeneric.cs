@@ -80,14 +80,14 @@ public class TooltipGeneric : MonoBehaviour
         genericText.text = data.main;
 
         //header
-        if (String.IsNullOrEmpty(data.header) == false)
+        if (string.IsNullOrEmpty(data.header) == false)
         {
             genericHeader.text = data.header;
             genericHeader.gameObject.SetActive(true);
             dividerTop.gameObject.SetActive(true);
         }
         //details
-        if (String.IsNullOrEmpty(data.details) == false)
+        if (string.IsNullOrEmpty(data.details) == false)
         {
             genericDetail.text = data.details;
             genericDetail.gameObject.SetActive(true);

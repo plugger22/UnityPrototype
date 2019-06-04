@@ -310,20 +310,20 @@ public class AIDisplayUI : MonoBehaviour
             //
             // - - - 1st Task - - -
             //
-            if (String.IsNullOrEmpty(data.task_1_textUpper) == false)
+            if (string.IsNullOrEmpty(data.task_1_textUpper) == false)
             { subTopUpper.text = data.task_1_textUpper; }
             else { subTopUpper.text = ""; }
-            if (String.IsNullOrEmpty(data.task_1_textLower) == false)
+            if (string.IsNullOrEmpty(data.task_1_textLower) == false)
             { subTopLower.text = data.task_1_textLower; }
             else { subTopLower.text = ""; }
-            if (String.IsNullOrEmpty(data.task_1_chance) == false)
+            if (string.IsNullOrEmpty(data.task_1_chance) == false)
             { subTopChance.text = data.task_1_chance; }
             else { subTopChance.text = ""; }
             //1st task -> tooltip
-            if (String.IsNullOrEmpty(data.task_1_tooltipMain) == false)
+            if (string.IsNullOrEmpty(data.task_1_tooltipMain) == false)
             {
                 topTaskTooltip.tooltipMain = data.task_1_tooltipMain;
-                if (String.IsNullOrEmpty(data.task_1_tooltipDetails) == false)
+                if (string.IsNullOrEmpty(data.task_1_tooltipDetails) == false)
                 { topTaskTooltip.tooltipDetails = data.task_1_tooltipDetails; }
             }
             else { topTaskTooltip.tooltipMain = ""; }
@@ -333,20 +333,20 @@ public class AIDisplayUI : MonoBehaviour
             //
             // - - - 2nd Task - - -
             //
-            if (String.IsNullOrEmpty(data.task_2_textUpper) == false)
+            if (string.IsNullOrEmpty(data.task_2_textUpper) == false)
             { subMiddleUpper.text = data.task_2_textUpper; }
             else { subMiddleUpper.text = ""; }
-            if (String.IsNullOrEmpty(data.task_2_textLower) == false)
+            if (string.IsNullOrEmpty(data.task_2_textLower) == false)
             { subMiddleLower.text = data.task_2_textLower; }
             else { subMiddleLower.text = ""; }
-            if (String.IsNullOrEmpty(data.task_2_chance) == false)
+            if (string.IsNullOrEmpty(data.task_2_chance) == false)
             { subMiddleChance.text = data.task_2_chance; }
             else { subMiddleChance.text = ""; }
             //2nd Task -> tooltip
-            if (String.IsNullOrEmpty(data.task_2_tooltipMain) == false)
+            if (string.IsNullOrEmpty(data.task_2_tooltipMain) == false)
             {
                 middleTaskTooltip.tooltipMain = data.task_2_tooltipMain;
-                if (String.IsNullOrEmpty(data.task_2_tooltipDetails) == false)
+                if (string.IsNullOrEmpty(data.task_2_tooltipDetails) == false)
                 { middleTaskTooltip.tooltipDetails = data.task_2_tooltipDetails; }
             }
             else { middleTaskTooltip.tooltipMain = ""; }
@@ -356,20 +356,20 @@ public class AIDisplayUI : MonoBehaviour
             //
             // - - - 3rd Task - - -
             //
-            if (String.IsNullOrEmpty(data.task_3_textUpper) == false)
+            if (string.IsNullOrEmpty(data.task_3_textUpper) == false)
             { subBottomUpper.text = data.task_3_textUpper; }
             else { subBottomUpper.text = ""; }
-            if (String.IsNullOrEmpty(data.task_3_textLower) == false)
+            if (string.IsNullOrEmpty(data.task_3_textLower) == false)
             { subBottomLower.text = data.task_3_textLower; }
             else { subBottomLower.text = ""; }
-            if (String.IsNullOrEmpty(data.task_3_chance) == false)
+            if (string.IsNullOrEmpty(data.task_3_chance) == false)
             { subBottomChance.text = data.task_3_chance; }
             else { subBottomChance.text = ""; }
             //3rd Task -> tooltip
-            if (String.IsNullOrEmpty(data.task_3_tooltipMain) == false)
+            if (string.IsNullOrEmpty(data.task_3_tooltipMain) == false)
             {
                 bottomTaskTooltip.tooltipMain = data.task_3_tooltipMain;
-                if (String.IsNullOrEmpty(data.task_3_tooltipDetails) == false)
+                if (string.IsNullOrEmpty(data.task_3_tooltipDetails) == false)
                 { bottomTaskTooltip.tooltipDetails = data.task_3_tooltipDetails; }
             }
             else { bottomTaskTooltip.tooltipMain = ""; }
@@ -377,7 +377,7 @@ public class AIDisplayUI : MonoBehaviour
             bottomTaskTooltip.connID = data.connID_3;
             bottomTaskTooltip.testTag = "Bottom Task";
             //Faction
-            if (String.IsNullOrEmpty(data.aiDetails) == false)
+            if (string.IsNullOrEmpty(data.aiDetails) == false)
             { tabTopText.text = data.aiDetails; }
             else { tabTopText.text = ""; }
         }
@@ -393,20 +393,20 @@ public class AIDisplayUI : MonoBehaviour
         if (data != null)
         {
             //bottom tab data
-            if (String.IsNullOrEmpty(data.hackingStatus) == false)
+            if (string.IsNullOrEmpty(data.hackingStatus) == false)
             {
                 tabBottomText.text = data.hackingStatus;
                 tabBottomTextCache = data.hackingStatus;
             }
             else { tabBottomText.text = "Unknown Data"; }
             //bottom tab hacking tooltip
-            if (String.IsNullOrEmpty(data.tooltipHeader) == false)
+            if (string.IsNullOrEmpty(data.tooltipHeader) == false)
             { bottomTabTooltip.tooltipHeader = data.tooltipHeader; }
             else { bottomTabTooltip.tooltipHeader = ""; }
-            if (String.IsNullOrEmpty(data.tooltipMain) == false)
+            if (string.IsNullOrEmpty(data.tooltipMain) == false)
             { bottomTabTooltip.tooltipMain = data.tooltipMain; }
             else { bottomTabTooltip.tooltipMain = ""; }
-            if (String.IsNullOrEmpty(data.tooltipDetails) == false)
+            if (string.IsNullOrEmpty(data.tooltipDetails) == false)
             { bottomTabTooltip.tooltipDetails = data.tooltipDetails; }
             else { bottomTabTooltip.tooltipDetails = ""; }
         }

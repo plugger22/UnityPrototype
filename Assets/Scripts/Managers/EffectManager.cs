@@ -330,7 +330,7 @@ public class EffectManager : MonoBehaviour
                                                     break;
                                                 case "TargetPresent":
                                                     //check that a target is present at the node
-                                                    if (String.IsNullOrEmpty(node.targetName) == true)
+                                                    if (string.IsNullOrEmpty(node.targetName) == true)
                                                     { BuildString(result, "No Target present"); }
                                                     break;
                                                 case "TeamActorAbility":
@@ -706,7 +706,7 @@ public class EffectManager : MonoBehaviour
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
                                                       colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
-                                                    if (String.IsNullOrEmpty(manageDismissCost.tooltip) == false)
+                                                    if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
                                                     { result.Append(manageDismissCost.tooltip); }
                                                 }
                                                 break;
@@ -719,7 +719,7 @@ public class EffectManager : MonoBehaviour
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
                                                       colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
-                                                    if (String.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
+                                                    if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
                                                     { result.Append(manageDisposeCost.tooltip); }
                                                 }
                                                 break;
@@ -2897,7 +2897,7 @@ public class EffectManager : MonoBehaviour
                 data = manageDismissCost.renownCost;
                 GameManager.instance.playerScript.Renown -= data;
                 StringBuilder builderDismiss = new StringBuilder();
-                if (String.IsNullOrEmpty(manageDismissCost.tooltip) == false)
+                if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
                 { builderDismiss.AppendLine(manageDismissCost.tooltip); builderDismiss.AppendLine(); }
                 builderDismiss.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 effectResolve.bottomText = builderDismiss.ToString();
@@ -2907,7 +2907,7 @@ public class EffectManager : MonoBehaviour
                 data = manageDisposeCost.renownCost;
                 GameManager.instance.playerScript.Renown -= data;
                 StringBuilder builderDispose = new StringBuilder();
-                if (String.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
+                if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
                 { builderDispose.AppendLine(manageDisposeCost.tooltip); builderDispose.AppendLine(); }
                 builderDispose.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 effectResolve.bottomText = builderDispose.ToString();

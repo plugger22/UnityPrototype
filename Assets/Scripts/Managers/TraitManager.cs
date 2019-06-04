@@ -45,7 +45,7 @@ public class TraitManager : MonoBehaviour
     {
         SetColours();
         //initialise trait formatted field
-        Dictionary<int, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
+        Dictionary<string, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
         if (dictOfTraits != null)
         {
             foreach (var trait in dictOfTraits)
@@ -56,15 +56,18 @@ public class TraitManager : MonoBehaviour
                     if (traitType != null)
                     {
                         //traitType is as is, NOT from the POV of anybody. If it says bad, then it's bad regardless
-                        switch (traitType.name)
+                        switch (traitType.level)
                         {
-                            case "Good":
+                            case 2:
+                                //Good
                                 trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourGood, trait.Value.tag, colourEnd);
                                 break;
-                            case "Neutral":
+                            case 1:
+                                //Neutral
                                 trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourNeutral, trait.Value.tag, colourEnd);
                                 break;
-                            case "Bad":
+                            case 0:
+                                //Bad
                                 trait.Value.tagFormatted = string.Format("{0}{1}{2}", colourBad, trait.Value.tag, colourEnd);
                                 break;
                             default:
