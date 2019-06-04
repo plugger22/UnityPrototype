@@ -85,12 +85,12 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public EffectOutcome outcomeStatusContacts;
     [HideInInspector] public EffectOutcome outcomeStatusTeams;
     //traits
-    private int crisisBaseChanceDoubled;
-    private int crisisBaseChanceHalved;
-    private int crisisTimerHigh;
-    private int crisisTimerLow;
-    private int crisisWaitTimerDoubled;
-    private int crisisWaitTimerHalved;
+    private string crisisBaseChanceDoubled;
+    private string crisisBaseChanceHalved;
+    private string crisisTimerHigh;
+    private string crisisTimerLow;
+    private string crisisWaitTimerDoubled;
+    private string crisisWaitTimerHalved;
     //gear node actions
     private Action actionKinetic;
     private Action actionHacking;
@@ -196,12 +196,12 @@ public class NodeManager : MonoBehaviour
         materialActive = GetNodeMaterial(NodeType.Active);
         materialPlayer = GetNodeMaterial(NodeType.Player);
         materialNemesis = GetNodeMaterial(NodeType.Nemesis);
-        crisisBaseChanceDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceDoubled");
-        crisisBaseChanceHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisBaseChanceHalved");
-        crisisTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerHigh");
-        crisisTimerLow = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisTimerLow");
-        crisisWaitTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisWaitTimerDoubled");
-        crisisWaitTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("NodeCrisisWaitTimerHalved");
+        crisisBaseChanceDoubled = "NodeCrisisBaseChanceDoubled";
+        crisisBaseChanceHalved = "NodeCrisisBaseChanceHalved";
+        crisisTimerHigh = "NodeCrisisTimerHigh";
+        crisisTimerLow = "NodeCrisisTimerLow";
+        crisisWaitTimerDoubled = "NodeCrisisWaitTimerDoubled";
+        crisisWaitTimerHalved = "NodeCrisisWaitTimerHalved";
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
@@ -209,12 +209,6 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
         Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
-        Debug.Assert(crisisBaseChanceDoubled > -1, "Invalid crisisBaseChanceDoubled (-1)");
-        Debug.Assert(crisisBaseChanceHalved > -1, "Invalid crisisBaseChanceHalved (-1)");
-        Debug.Assert(crisisTimerHigh > -1, "Invalid crisisTimerHigh (-1)");
-        Debug.Assert(crisisTimerLow > -1, "Invalid crisisTimerLow (-1)");
-        Debug.Assert(crisisWaitTimerDoubled > -1, "Invalid crisisWaitTimerDoubled (-1)");
-        Debug.Assert(crisisWaitTimerHalved > -1, "Invalid crisisWaitTimerHalved (-1)");
         //flash
         flashNodeTime = GameManager.instance.guiScript.flashNodeTime;
         Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");

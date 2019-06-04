@@ -232,12 +232,12 @@ public class SaveActorData
     public bool isGearCheckRequired;
     public string nameSet;
     //fast access fields for actor.cs
-    public int actorStressNone;
-    public int actorCorruptNone;
-    public int actorUnhappyNone;
-    public int actorBlackmailNone;
-    public int actorBlackmailTimerHigh;
-    public int actorBlackmailTimerLow;
+    public string actorStressNone;
+    public string actorCorruptNone;
+    public string actorUnhappyNone;
+    public string actorBlackmailNone;
+    public string actorBlackmailTimerHigh;
+    public string actorBlackmailTimerLow;
     public int maxNumOfSecrets;     
 }
 #endregion

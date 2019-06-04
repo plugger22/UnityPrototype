@@ -248,15 +248,15 @@ public class AIManager : MonoBehaviour
     private int teamArcErasure = -1;
     private int maxTeamsAtNode = -1;
     //traits
-    private int aiDetectionChanceHigher;
-    private int aiDetectionChanceLower;
-    private int aiCounterMeasurePriorityRaise;
-    private int aiCounterMeasureTimerDoubled;
-    private int aiPolicyTimerDoubled;
-    private int aiPolicyCostLower;
-    private int aiPolicyCostHigher;
-    private int aiHandoutCostLower;
-    private int aiHandoutCostHigher;
+    private string aiDetectionChanceHigher;
+    private string aiDetectionChanceLower;
+    private string aiCounterMeasurePriorityRaise;
+    private string aiCounterMeasureTimerDoubled;
+    private string aiPolicyTimerDoubled;
+    private string aiPolicyCostLower;
+    private string aiPolicyCostHigher;
+    private string aiHandoutCostLower;
+    private string aiHandoutCostHigher;
     //conditions   
     private Condition conditionStressed;
     //sides
@@ -488,19 +488,15 @@ public class AIManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         //cached TraitEffects
-        aiDetectionChanceHigher = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceHigher");
-        aiDetectionChanceLower = GameManager.instance.dataScript.GetTraitEffectID("AIDetectionChanceLower");
-        aiCounterMeasurePriorityRaise = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasurePriorityRaise");
-        aiCounterMeasureTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AICounterMeasureTimerDoubled");
-        aiPolicyTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyTimerDoubled");
-        aiPolicyCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostLower");
-        aiPolicyCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIPolicyCostHigher");
-        aiHandoutCostLower = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostLower");
-        aiHandoutCostHigher = GameManager.instance.dataScript.GetTraitEffectID("AIHandoutCostHigher");
-        Debug.Assert(aiDetectionChanceHigher > -1, "Invalid aiDetectionChanceHigher (-1)");
-        Debug.Assert(aiDetectionChanceLower > -1, "Invalid aiDetectionChanceLower (-1)");
-        Debug.Assert(aiCounterMeasurePriorityRaise > -1, "Invalid aiCounterMeasurePriorityRaise (-1)");
-        Debug.Assert(aiCounterMeasureTimerDoubled > -1, "Invalid aiCounterMeasuresTimerDoubled (-1)");
+        aiDetectionChanceHigher = "AIDetectionChanceHigher";
+        aiDetectionChanceLower = "AIDetectionChanceLower";
+        aiCounterMeasurePriorityRaise = "AICounterMeasurePriorityRaise";
+        aiCounterMeasureTimerDoubled = "AICounterMeasureTimerDoubled";
+        aiPolicyTimerDoubled = "AIPolicyTimerDoubled";
+        aiPolicyCostLower = "AIPolicyCostLower";
+        aiPolicyCostHigher = "AIPolicyCostHigher";
+        aiHandoutCostLower = "AIHandoutCostLower";
+        aiHandoutCostHigher = "AIHandoutCostHigher";
         //fast access
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");

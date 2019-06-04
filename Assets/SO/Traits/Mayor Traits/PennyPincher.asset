@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbd1570ff41cf034488029ec9d972af2, type: 3}
-  m_Name: Penny Pincher
+  m_Name: PennyPincher
   m_EditorClassIdentifier: 
   tag: Penny Pincher
   description: Can't see the big picture

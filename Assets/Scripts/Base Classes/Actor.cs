@@ -645,7 +645,7 @@ namespace gameAPI
                 listOfTraitEffects.Clear();
                 this.trait = trait;
                 foreach(TraitEffect traitEffect in trait.listOfTraitEffects)
-                { listOfTraitEffects.Add(traitEffect.teffID); }
+                { listOfTraitEffects.Add(traitEffect.name); }
             }
             else { Debug.LogError("Invalid trait (Null)"); }
         }
@@ -655,11 +655,15 @@ namespace gameAPI
         /// </summary>
         /// <param name="traitEffectID"></param>
         /// <returns></returns>
-        public bool CheckTraitEffect(int traitEffectID)
+        public bool CheckTraitEffect(string effectName)
         {
-            if (listOfTraitEffects != null)
-            { return listOfTraitEffects.Exists(x => x == traitEffectID); }
-            else { return false; }
+            if (string.IsNullOrEmpty(effectName) == false)
+            {
+                if (listOfTraitEffects != null)
+                { return listOfTraitEffects.Exists(x => x == effectName); }
+                else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+            }
+            return false;
         }
 
         //

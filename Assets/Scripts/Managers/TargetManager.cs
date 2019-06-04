@@ -299,7 +299,7 @@ public class TargetManager : MonoBehaviour
             {
                 targetName = node.targetName;
                 //Target present
-                if (targetName != null)
+                if (string.IsNullOrEmpty(targetName) == false)
                 {
                     Target target = GameManager.instance.dataScript.GetTarget(targetName);
                     if (target != null)

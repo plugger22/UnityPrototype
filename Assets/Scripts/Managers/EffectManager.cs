@@ -28,14 +28,14 @@ public class EffectManager : MonoBehaviour
     private int teamArcDamage = -1;
     private int teamArcErasure = -1;
     //fast access -> traits
-    private int actorStressedOverInvisibility;
-    private int actorDoubleRenown;
-    private int actorBlackmailNone;
-    private int actorConflictPoison;
-    private int actorConflictKill;
-    private int actorNeverResigns;
-    private int actorReserveTimerDoubled;
-    private int actorReserveTimerHalved;
+    private string actorStressedOverInvisibility;
+    private string actorDoubleRenown;
+    private string actorBlackmailNone;
+    private string actorConflictPoison;
+    private string actorConflictKill;
+    private string actorNeverResigns;
+    private string actorReserveTimerDoubled;
+    private string actorReserveTimerHalved;
     //fast access -> assorted
     private int maxTargetInfo = -1;
     //fast access -> conditions
@@ -94,14 +94,14 @@ public class EffectManager : MonoBehaviour
         //fast access
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
-        actorStressedOverInvisibility = GameManager.instance.dataScript.GetTraitEffectID("ActorInvisibilityStress");
-        actorDoubleRenown = GameManager.instance.dataScript.GetTraitEffectID("ActorDoubleRenown");
-        actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
-        actorConflictPoison = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictPoison");
-        actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
-        actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
-        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
-        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
+        actorStressedOverInvisibility = "ActorInvisibilityStress";
+        actorDoubleRenown = "ActorDoubleRenown";
+        actorBlackmailNone = "ActorBlackmailNone";
+        actorConflictPoison = "ActorConflictPoison";
+        actorConflictKill = "ActorConflictKill";
+        actorNeverResigns = "ActorResignNone";
+        actorReserveTimerDoubled = "ActorReserveTimerDoubled";
+        actorReserveTimerHalved = "ActorReserveTimerHalved";
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
@@ -109,14 +109,6 @@ public class EffectManager : MonoBehaviour
         conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
         conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
-        Debug.Assert(actorStressedOverInvisibility > -1, "Invalid actorStressedOverInvisibility (-1)");
-        Debug.Assert(actorDoubleRenown > -1, "Invalid actorDoubleRenown (-1)");
-        Debug.Assert(actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
-        Debug.Assert(actorConflictPoison > -1, "Invalid actorPoisonYes (-1)");
-        Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
-        Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
-        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
-        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");

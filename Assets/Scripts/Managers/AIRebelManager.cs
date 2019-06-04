@@ -178,8 +178,8 @@ public class AIRebelManager : MonoBehaviour
     private int failedTargetChance = -1;
     private AuthoritySecurityState security;            //updated each turn in UpdateAdmin
     //traits
-    private int actorRemoveActionDoubled;
-    private int actorRemoveActionHalved;
+    private string actorRemoveActionDoubled;
+    private string actorRemoveActionHalved;
     //conditions
     private Condition conditionStressed;
     private Condition conditionQuestionable;
@@ -285,8 +285,8 @@ public class AIRebelManager : MonoBehaviour
         delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
         arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
-        actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
-        actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
+        actorRemoveActionDoubled = "ActorRemoveActionDoubled";
+        actorRemoveActionHalved = "ActorRemoveActionHalved";
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(playerID > -1, "Invalid playerId (-1)");
         Debug.Assert(failedTargetChance > -1, "Invalid failedTargetChance (-1)");
@@ -302,8 +302,6 @@ public class AIRebelManager : MonoBehaviour
         Debug.Assert(delayNoSpider > -1, "Invalid delayNoSpider (-1)");
         Debug.Assert(delayYesSpider > -1, "Invalid delayYesSpider (-1)");
         Debug.Assert(arcFixer != null, "Invalid arcFixer (Null)");
-        Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
-        Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
     }
     #endregion
 

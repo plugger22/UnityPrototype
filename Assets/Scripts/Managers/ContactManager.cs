@@ -44,8 +44,8 @@ public class ContactManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     //traits
-    private int actorContactEffectHigh;
-    private int actorContactEffectLow;
+    private string actorContactEffectHigh;
+    private string actorContactEffectLow;
 
     /// <summary>
     /// Not for GameState.LoadGame
@@ -101,13 +101,11 @@ public class ContactManager : MonoBehaviour
         //fast access fields
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
-        actorContactEffectHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectHigh");
-        actorContactEffectLow = GameManager.instance.dataScript.GetTraitEffectID("ActorContactEffectLow");
+        actorContactEffectHigh = "ActorContactEffectHigh";
+        actorContactEffectLow = "ActorContactEffectLow";
         //check O.K
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
-        Debug.Assert(actorContactEffectHigh > -1, "Invalid actorContactEffectHigh (-1)");
-        Debug.Assert(actorContactEffectLow > -1, "Invalid actorContactEffectLow (-1)");
     }
     #endregion
 

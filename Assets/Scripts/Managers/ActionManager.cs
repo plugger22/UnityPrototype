@@ -26,11 +26,11 @@ public class ActionManager : MonoBehaviour
     private int gearSwapBaseAmount = -1;
     private int gearSwapPreferredAmount = -1;
     //traits
-    private int actorStressedDuringSecurity = -1;
-    private int actorKeepGear = -1;
-    private int actorReserveTimerDoubled = -1;
-    private int actorReserveTimerHalved = -1;
-    private int actorReserveActionDoubled = -1;
+    private string actorStressedDuringSecurity;
+    private string actorKeepGear;
+    private string actorReserveTimerDoubled;
+    private string actorReserveTimerHalved;
+    private string actorReserveActionDoubled;
 
     //colour palette for Modal Outcome
     private string colourNormal;
@@ -77,23 +77,18 @@ public class ActionManager : MonoBehaviour
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         lieLowPeriod = GameManager.instance.actorScript.lieLowCooldownPeriod;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        actorStressedDuringSecurity = GameManager.instance.dataScript.GetTraitEffectID("ActorStressSecurity");
-        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
-        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
-        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
-        actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
+        actorStressedDuringSecurity = "ActorStressSecurity";
+        actorKeepGear = "ActorKeepGear";
+        actorReserveTimerDoubled = "ActorReserveTimerDoubled";
+        actorReserveTimerHalved = "ActorReserveTimerHalved";
+        actorReserveActionDoubled = "ActorReserveActionDoubled";
         gearGracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
         Debug.Assert(lieLowPeriod > 0, "Invalid lieLowCooldDownPeriod (Zero)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
-        Debug.Assert(actorStressedDuringSecurity > -1, "Invalid actorStressedDuringSecurity (-1) ");
-        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
-        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1) ");
-        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1) ");
-        Debug.Assert(actorReserveActionDoubled > -1, "Invalid actorReserveActionDoubled (-1) ");
-        Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
+          Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
     }

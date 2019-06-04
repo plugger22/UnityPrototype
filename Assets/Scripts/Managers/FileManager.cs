@@ -852,19 +852,13 @@ public class FileManager : MonoBehaviour
         //
         // - - - Actor.cs fast access fields
         //
-        write.actorData.actorStressNone = GameManager.instance.dataScript.GetTraitEffectID("ActorStressNone");
-        write.actorData.actorCorruptNone = GameManager.instance.dataScript.GetTraitEffectID("ActorCorruptNone");
-        write.actorData.actorUnhappyNone = GameManager.instance.dataScript.GetTraitEffectID("ActorUnhappyNone");
-        write.actorData.actorBlackmailNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailNone");
-        write.actorData.actorBlackmailTimerHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerHigh");
-        write.actorData.actorBlackmailTimerLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBlackmailTimerLow");
+        write.actorData.actorStressNone = "ActorStressNone";
+        write.actorData.actorCorruptNone = "ActorCorruptNone";
+        write.actorData.actorUnhappyNone = "ActorUnhappyNone";
+        write.actorData.actorBlackmailNone = "ActorBlackmailNone";
+        write.actorData.actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
+        write.actorData.actorBlackmailTimerLow = "ActorBlackmailTimerLow";
         write.actorData.maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-        Debug.Assert(write.actorData.actorStressNone > -1, "Invalid actorStressNone (-1)");
-        Debug.Assert(write.actorData.actorStressNone > -1, "Invalid actorCorruptNone (-1)");
-        Debug.Assert(write.actorData.actorUnhappyNone > -1, "Invalid actorUnhappyNone (-1)");
-        Debug.Assert(write.actorData.actorBlackmailNone > -1, "Invalid actorBlackmailNone (-1)");
-        Debug.Assert(write.actorData.actorBlackmailTimerHigh > -1, "Invalid actorBlackmailTimerHigh (-1)");
-        Debug.Assert(write.actorData.actorBlackmailTimerLow > -1, "Invalid actorBlackmailTimerLow (-1)");
         Debug.Assert(write.actorData.maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
     }
 

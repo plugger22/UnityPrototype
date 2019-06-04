@@ -64,8 +64,8 @@ public class GearManager : MonoBehaviour
     //fast access
     private int maxGenericOptions = -1;
     //fast access -> traits
-    private int actorLoseGearHigh = -1;
-    private int actorLoseGearNone = -1;
+    private string actorLoseGearHigh;
+    private string actorLoseGearNone;
     //fast access -> sides
     private GlobalSide globalResistance;
     private GlobalSide globalAuthority;
@@ -155,13 +155,11 @@ public class GearManager : MonoBehaviour
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        actorLoseGearHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearHigh");
-        actorLoseGearNone = GameManager.instance.dataScript.GetTraitEffectID("ActorLoseGearNone");
+        actorLoseGearHigh = "ActorLoseGearHigh";
+        actorLoseGearNone = "ActorLoseGearNone";
         maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(actorLoseGearHigh > -1, "Invalid actorLoseGearHigh (-1)");
-        Debug.Assert(actorLoseGearNone > -1, "Invalid actorLoseGearNone (-1)");
         Debug.Assert(maxGenericOptions != -1, "Invalid maxGenericOptions (-1)");
         if (listOfGearType != null)
         {

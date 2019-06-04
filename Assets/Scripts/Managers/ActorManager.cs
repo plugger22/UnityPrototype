@@ -128,25 +128,26 @@ public class ActorManager : MonoBehaviour
     private TraitCategory actorCategory;
     private int secretBaseChance = -1;
     //cached TraitEffects
-    private int actorBreakdownChanceHigh;
-    private int actorBreakdownChanceLow;
-    private int actorBreakdownChanceNone;
-    private int actorNoActionsDuringSecurityMeasures;
-    private int actorSecretChanceHigh;
-    private int actorSecretChanceNone;
-    private int actorSecretTellAll;
-    private int actorAppeaseNone;
-    private int actorConflictNoGoodOptions;
-    private int actorConflictNone;
-    private int actorNeverResigns;
-    private int actorConflictKill;
-    private int actorResignHigh;
-    private int actorReserveTimerDoubled;
-    private int actorReserveTimerHalved;
-    private int actorReserveActionNone;
-    private int actorReserveActionDoubled;
-    private int actorRemoveActionDoubled;
-    private int actorRemoveActionHalved;
+    private string actorBreakdownChanceHigh;
+    private string actorBreakdownChanceLow;
+    private string actorBreakdownChanceNone;
+    private string actorNoActionsDuringSecurityMeasures;
+    private string actorSecretChanceHigh;
+    private string actorSecretChanceNone;
+    private string actorSecretTellAll;
+    private string actorAppeaseNone;
+    private string actorConflictNoGoodOptions;
+    private string actorConflictNone;
+    private string actorNeverResigns;
+    private string actorConflictKill;
+    private string actorResignHigh;
+    private string actorReserveTimerDoubled;
+    private string actorReserveTimerHalved;
+    private string actorReserveActionNone;
+    private string actorReserveActionDoubled;
+    private string actorRemoveActionDoubled;
+    private string actorRemoveActionHalved;
+    private string actorKeepGear;
     //generic picker
     private int maxGenericOptions = -1;
     //gear
@@ -154,8 +155,6 @@ public class ActorManager : MonoBehaviour
     private int gearGracePeriod = -1;
     private int gearSwapBaseAmount = -1;
     private int gearSwapPreferredAmount = -1;
-    //traits
-    private int actorKeepGear = 1;
     //colour palette for Generic tool tip
     private string colourResistance;
     private string colourAuthority;
@@ -284,44 +283,26 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
         //cached TraitEffects
-        actorBreakdownChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceHigh");
-        actorBreakdownChanceLow = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceLow");
-        actorBreakdownChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorBreakdownChanceNone");
-        actorNoActionsDuringSecurityMeasures = GameManager.instance.dataScript.GetTraitEffectID("ActorNoActionsSecurity");
-        actorSecretChanceHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceHigh");
-        actorSecretChanceNone = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretChanceNone");
-        actorSecretTellAll = GameManager.instance.dataScript.GetTraitEffectID("ActorSecretTellAll");
-        actorAppeaseNone = GameManager.instance.dataScript.GetTraitEffectID("ActorAppeaseNone");
-        actorKeepGear = GameManager.instance.dataScript.GetTraitEffectID("ActorKeepGear");
-        actorConflictNoGoodOptions = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictGoodNone");
-        actorConflictNone = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictNone");
-        actorConflictKill = GameManager.instance.dataScript.GetTraitEffectID("ActorConflictKill");
-        actorNeverResigns = GameManager.instance.dataScript.GetTraitEffectID("ActorResignNone");
-        actorResignHigh = GameManager.instance.dataScript.GetTraitEffectID("ActorResignHigh");
-        actorReserveTimerDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerDoubled");
-        actorReserveTimerHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveTimerHalved");
-        actorReserveActionNone = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionNone");
-        actorReserveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorReserveActionDoubled");
-        actorRemoveActionDoubled = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionDoubled");
-        actorRemoveActionHalved = GameManager.instance.dataScript.GetTraitEffectID("ActorRemoveActionHalved");
-        Debug.Assert(actorBreakdownChanceHigh > -1, "Invalid actorBreakdownHigh (-1)");
-        Debug.Assert(actorBreakdownChanceLow > -1, "Invalid actorBreakdownLow (-1)");
-        Debug.Assert(actorBreakdownChanceNone > -1, "Invalid actorBreakdownNone (-1)");
-        Debug.Assert(actorNoActionsDuringSecurityMeasures > -1, "Invalid actorNoActionsDuringSecurityMeasures (-1)");
-        Debug.Assert(actorSecretChanceHigh > -1, "Invalid actorSecretChanceHigh (-1)");
-        Debug.Assert(actorSecretChanceNone > -1, "Invalid actorSecretChanceNone (-1)");
-        Debug.Assert(actorAppeaseNone > -1, "Invalid actorAppeaseNone (-1)");
-        Debug.Assert(actorKeepGear > -1, "Invalid actorKeepGear (-1)");
-        Debug.Assert(actorConflictNoGoodOptions > -1, "Invalid actorConflictNoGoodOptions (-1)");
-        Debug.Assert(actorConflictNone > -1, "Invalid actorConflictNone (-1)");
-        Debug.Assert(actorConflictKill > -1, "Invalid actorConflictKill (-1)");
-        Debug.Assert(actorNeverResigns > -1, "Invalid actorNeverResigns (-1)");
-        Debug.Assert(actorResignHigh > -1, "Invalid actorResignHigh (-1)");
-        Debug.Assert(actorReserveTimerDoubled > -1, "Invalid actorReserveTimerDoubled (-1)");
-        Debug.Assert(actorReserveTimerHalved > -1, "Invalid actorReserveTimerHalved (-1)");
-        Debug.Assert(actorReserveActionNone > -1, "Invalid actorReserveActionNone (-1)");
-        Debug.Assert(actorRemoveActionDoubled > -1, "Invalid actorRemoveActionDoubled (-1)");
-        Debug.Assert(actorRemoveActionHalved > -1, "Invalid actorRemoveActionHalved (-1)");
+        actorBreakdownChanceHigh = "ActorBreakdownChanceHigh";
+        actorBreakdownChanceLow = "ActorBreakdownChanceLow";
+        actorBreakdownChanceNone = "ActorBreakdownChanceNone";
+        actorNoActionsDuringSecurityMeasures = "ActorNoActionsSecurity";
+        actorSecretChanceHigh = "ActorSecretChanceHigh";
+        actorSecretChanceNone = "ActorSecretChanceNone";
+        actorSecretTellAll = "ActorSecretTellAll";
+        actorAppeaseNone = "ActorAppeaseNone";
+        actorKeepGear = "ActorKeepGear";
+        actorConflictNoGoodOptions = "ActorConflictGoodNone";
+        actorConflictNone = "ActorConflictNone";
+        actorConflictKill = "ActorConflictKill";
+        actorNeverResigns = "ActorResignNone";
+        actorResignHigh = "ActorResignHigh";
+        actorReserveTimerDoubled = "ActorReserveTimerDoubled";
+        actorReserveTimerHalved = "ActorReserveTimerHalved";
+        actorReserveActionNone = "ActorReserveActionNone";
+        actorReserveActionDoubled = "ActorReserveActionDoubled";
+        actorRemoveActionDoubled = "ActorRemoveActionDoubled";
+        actorRemoveActionHalved = "ActorRemoveActionHalved";
     }
     #endregion
 

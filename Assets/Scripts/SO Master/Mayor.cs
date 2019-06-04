@@ -40,7 +40,7 @@ public class Mayor : ScriptableObject
     [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
     public bool isTestOff = false;
 
-    private List<int> listOfTraitEffects = new List<int>();             //list of all traitEffect.teffID's
+    private List<string> listOfTraitEffects = new List<string>();             //list of all traitEffect.name's
 
     /// <summary>
     /// initialisation
@@ -69,7 +69,7 @@ public class Mayor : ScriptableObject
             listOfTraitEffects.Clear();
             this.trait = trait;
             foreach (TraitEffect traitEffect in trait.listOfTraitEffects)
-            { listOfTraitEffects.Add(traitEffect.teffID); }
+            { listOfTraitEffects.Add(traitEffect.name); }
         }
         else { Debug.LogError("Invalid trait (Null)"); }
     }
@@ -79,10 +79,14 @@ public class Mayor : ScriptableObject
     /// </summary>
     /// <param name="traitEffectID"></param>
     /// <returns></returns>
-    public bool CheckTraitEffect(int traitEffectID)
+    public bool CheckTraitEffect(string effectName)
     {
-        if (listOfTraitEffects != null)
-        { return listOfTraitEffects.Exists(x => x == traitEffectID); }
-        else { return false; }
+        if (string.IsNullOrEmpty(effectName) == false)
+        {
+            if (listOfTraitEffects != null)
+            { return listOfTraitEffects.Exists(x => x == effectName); }
+            else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+        }
+        return false;
     }
 }
