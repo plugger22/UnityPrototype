@@ -220,7 +220,7 @@ public class CaptureManager : MonoBehaviour
             int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
             if (numOfGear > 0)
             {
-                List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                 if (listOfGear != null)
                 {
                     //reverse loop through list of gear and remove all

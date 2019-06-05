@@ -1410,7 +1410,7 @@ public class NodeManager : MonoBehaviour
                                     }
                                     //add gear chance of compromise
                                     builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
-                                        GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID), colourEnd, colourAlert, colourEnd));
+                                        GameManager.instance.gearScript.GetChanceOfCompromise(gear.name), colourEnd, colourAlert, colourEnd));
 
                                     //Move details
                                     moveGearDetails.nodeID = nodeID;
@@ -1628,7 +1628,7 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.side = GameManager.instance.globalScript.sideResistance;
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionKinetic;
-                                        actionDetails.gearID = kineticGear.gearID;
+                                        actionDetails.gearName = kineticGear.name;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails kineticDetails = new EventButtonDetails()
                                         {
@@ -1733,7 +1733,7 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.side = GameManager.instance.globalScript.sideResistance;
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionHacking;
-                                        actionDetails.gearID = hackingGear.gearID;
+                                        actionDetails.gearName = hackingGear.name;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails hackingDetails = new EventButtonDetails()
                                         {
@@ -1838,7 +1838,7 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.side = GameManager.instance.globalScript.sideResistance;
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionPersuasion;
-                                        actionDetails.gearID = persuasionGear.gearID;
+                                        actionDetails.gearName = persuasionGear.name;
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails persuasionDetails = new EventButtonDetails()
                                         {

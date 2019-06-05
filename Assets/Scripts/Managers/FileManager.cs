@@ -2117,7 +2117,7 @@ public class FileManager : MonoBehaviour
                     actor.slotID = readActor.slotID;
                     actor.level = readActor.level;
                     actor.nodeCaptured = readActor.nodeCaptured;
-                    actor.SetGear(readActor.gearID);
+                    actor.SetGear(readActor.gearName);
                     actor.isMale = readActor.isMale;
                     actor.actorName = readActor.actorName;
                     actor.firstName = readActor.firstName;
@@ -3086,7 +3086,7 @@ public class FileManager : MonoBehaviour
         saveActor.slotID = actor.slotID;
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;
-        saveActor.gearID = actor.GetGearName();
+        saveActor.gearName = actor.GetGearName();
         saveActor.isMale = actor.isMale;
         saveActor.actorName = actor.actorName;
         saveActor.firstName = actor.firstName;

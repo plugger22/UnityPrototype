@@ -10,3 +10,25 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 62003 -> Wednesday, 5 June 2019 9:16 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 12493 -> Wednesday, 5 June 2019 3:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61243 -> Wednesday, 5 June 2019 3:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8424 -> Wednesday, 5 June 2019 3:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41143 -> Wednesday, 5 June 2019 3:54 PM
+City seed 890 -> Arles, France
+ERROR Invalid gearName (Null or Empty
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4568)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid Gear (Null) for gearID / optionData 7
+UnityEngine.Debug:LogError(Object)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:75)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

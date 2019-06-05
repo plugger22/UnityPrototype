@@ -234,15 +234,15 @@ public class TooltipPlayer : MonoBehaviour
                 break;
             case 2:
                 //Resistance -> Gear
-                List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                 if (listOfGear != null && listOfGear.Count > 0)
                 {
                     StringBuilder builderGear = new StringBuilder();
                     builderGear.AppendFormat("{0}Gear{1}", colourAlert, colourEnd);
                     //gear in inventory
-                    foreach (int gearID in listOfGear)
+                    foreach (string gearName in listOfGear)
                     {
-                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                         if (gear != null)
                         { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.tag, colourEnd); }
                     }

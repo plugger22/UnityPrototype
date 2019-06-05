@@ -1070,13 +1070,13 @@ public class TargetManager : MonoBehaviour
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
-                                    if (gearID > -1)
+                                    string gearName = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
+                                    if (string.IsNullOrEmpty(gearName) == false)
                                     {
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                         if (gear != null)
                                         { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.tag, gearEffect * (gear.rarity.level + 1), colourEnd)); }
-                                        else { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gearID {0}", gearID)); }
+                                        else { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gear {0}", gearName)); }
                                     }
                                     else
                                     { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd)); }
@@ -1084,13 +1084,13 @@ public class TargetManager : MonoBehaviour
                                     if (target.gear.name.Equals(infiltrationGear.name) == false)
                                     {
                                         //check player has infiltration gear
-                                        gearID = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
-                                        if (gearID > -1)
+                                        gearName = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
+                                        if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                             if (gear != null)
                                             { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.tag, gearEffect * (gear.rarity.level + 1), colourEnd)); }
-                                            else { Debug.LogWarning(string.Format("Invalid Infiltration gear (Null) for gearID {0}", gearID)); }
+                                            else { Debug.LogWarning(string.Format("Invalid Infiltration gear (Null) for gear {0}", gearName)); }
                                         }
                                         else
                                         { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd)); }
@@ -1124,10 +1124,10 @@ public class TargetManager : MonoBehaviour
                                     if (actor != null)
                                     {
                                         //actor with actor arc required can use applicable gear just like a player
-                                        int gearID = actor.GetGearName();
-                                        if (gearID > -1)
+                                        string gearName = actor.GetGearName();
+                                        if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                             if (gear != null)
                                             {
                                                 //correct type of gear
@@ -1147,7 +1147,7 @@ public class TargetManager : MonoBehaviour
                                                 }
                                             }
                                             else
-                                            { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gearID {0}", gearID)); }
+                                            { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gear {0}", gearName)); }
                                         }
                                         else
                                         {
@@ -1246,10 +1246,10 @@ public class TargetManager : MonoBehaviour
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
-                                    if (gearID > -1)
+                                    string gearName = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
+                                    if (string.IsNullOrEmpty(gearName) == false)
                                     {
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                         if (gear != null)
                                         {
                                             tally += gearEffect * (gear.rarity.level + 1);
@@ -1257,16 +1257,16 @@ public class TargetManager : MonoBehaviour
                                             if (setGearAsUsed == true)
                                             { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
                                         }
-                                        else { Debug.LogWarningFormat("Invalid Target gear (Null) for gearID {0}", gearID); }
+                                        else { Debug.LogWarningFormat("Invalid Target gear (Null) for gear {0}", gearName); }
                                     }
                                     //infiltration gear works on any target in addition to special gear
                                     if (target.gear.name.Equals(infiltrationGear.name) == false)
                                     {
                                         //check player has infiltration gear
-                                        gearID = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
-                                        if (gearID > -1)
+                                        gearName = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
+                                        if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                             if (gear != null)
                                             {
                                                 tally += gearEffect * (gear.rarity.level + 1);
@@ -1274,7 +1274,7 @@ public class TargetManager : MonoBehaviour
                                                 if (setGearAsUsed == true)
                                                 { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
                                             }
-                                            else { Debug.LogWarningFormat("Invalid Infiltration gear (Null) for gearID {0}", gearID); }
+                                            else { Debug.LogWarningFormat("Invalid Infiltration gear (Null) for gear {0}", gearName); }
                                         }
                                     }
                                 }
@@ -1296,10 +1296,10 @@ public class TargetManager : MonoBehaviour
                                             if (target.gear != null)
                                             {
                                                 //actor, of the required actor arc type, present and available. Can use gear same as a Player
-                                                int gearID = actor.GetGearName();
-                                                if (gearID > -1)
+                                                string gearName = actor.GetGearName();
+                                                if (string.IsNullOrEmpty(gearName) == false)
                                                 {
-                                                    Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                                     if (gear != null)
                                                     {
                                                         //correct type of gear
@@ -1320,7 +1320,7 @@ public class TargetManager : MonoBehaviour
                                                             }
                                                         }
                                                     }
-                                                    else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                                                    else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
                                                 }
                                             }
                                         }

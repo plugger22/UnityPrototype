@@ -243,13 +243,13 @@ public class GearManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //initialise gear lists
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             //set up an array of Lists, with index corresponding to GearLevel enum, eg. Common / Rare / Unique
-            List<int>[] arrayOfGearLists = new List<int>[GameManager.instance.dataScript.GetNumOfGearRarity()];
+            List<string>[] arrayOfGearLists = new List<string>[GameManager.instance.dataScript.GetNumOfGearRarity()];
             for (int i = 0; i < arrayOfGearLists.Length; i++)
-            { arrayOfGearLists[i] = new List<int>(); }
+            { arrayOfGearLists[i] = new List<string>(); }
             //loop dict and allocate gear to various lists
             foreach (var gearEntry in dictOfGear)
             {
@@ -257,7 +257,7 @@ public class GearManager : MonoBehaviour
                 gearEntry.Value.ResetStats();
                 //assign to a list based on rarity
                 int index = gearEntry.Value.rarity.level;
-                arrayOfGearLists[index].Add(gearEntry.Key);
+                arrayOfGearLists[index].Add(gearEntry.Value.name);
             }
             //initialise dataManager lists with local lists
             for (int i = 0; i < arrayOfGearLists.Length; i++)
@@ -353,8 +353,8 @@ public class GearManager : MonoBehaviour
         bool isCompromisedGear = false;
         listOfCompromisedGear.Clear();
         //inclues all gear held by player and actors
-        List<int> listOfGear = GameManager.instance.dataScript.GetListOfCurrentGear();
-        List<int> listOfPlayerGear = new List<int>();
+        List<string> listOfGear = GameManager.instance.dataScript.GetListOfCurrentGear();
+        List<string> listOfPlayerGear = new List<string>();
         if (listOfGear != null)
         {
             if (listOfGear.Count > 0)
@@ -368,7 +368,7 @@ public class GearManager : MonoBehaviour
                         if (gear.timesUsed > 0)
                         {
                             //check to see if compromised
-                            chance = GetChanceOfCompromise(gear.gearID);
+                            chance = GetChanceOfCompromise(gear.name);
                             for (int j = 0; j < gear.timesUsed; j++)
                             {
                                 rnd = Random.Range(0, 100);
@@ -379,9 +379,9 @@ public class GearManager : MonoBehaviour
                                     gear.chanceOfCompromise = chance;
                                     //add to list (used for outcome dialogues)
                                     listOfCompromisedGear.Add(gear.tag.ToUpper());
-                                    if (GameManager.instance.playerScript.CheckGearPresent(gear.gearID) == true)
+                                    if (GameManager.instance.playerScript.CheckGearPresent(gear.name) == true)
                                     {
-                                        listOfPlayerGear.Add(gear.gearID);
+                                        listOfPlayerGear.Add(gear.name);
                                         isCompromisedGear = true;
                                         GameManager.instance.playerScript.isEndOfTurnGearCheck = true;
                                     }
@@ -465,7 +465,7 @@ public class GearManager : MonoBehaviour
                 //only check Active actors
                 if (actor.Status == ActorStatus.Active)
                 {
-                    if (actor.GetGearName() > -1)
+                    if (string.IsNullOrEmpty(actor.GetGearName()) == false)
                     {
                         Gear gear = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                         if (gear != null)
@@ -551,7 +551,7 @@ public class GearManager : MonoBehaviour
         //renown cost to save gear
         genericDetails.data = gearSaveCurrentCost;
         //get all compromised gear
-        List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         if (listOfGear != null && listOfGear.Count > 0)
         {
             //loop gear (max 'maxGenericOptions' pieces of gear / max 'maxGenericOptions' options)
@@ -625,7 +625,8 @@ public class GearManager : MonoBehaviour
         bool errorFlag = false;
         bool isIgnoreCache = false;
         bool isPlayer = false;
-        int gearID, index;
+        int index;
+        string gearName;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
         if (node != null)
@@ -689,16 +690,16 @@ public class GearManager : MonoBehaviour
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to obtain gear. Mouseover gear for more information.";
                 //generate temp list of gear to choose from
-                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
-                List<int> tempRareGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(gearRare));
+                List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(gearCommon));
+                List<string> tempRareGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(gearRare));
                 //
                 //select two items of gear for the picker
                 //
-                int[] arrayOfGear = new int[2];
+                string[] arrayOfGear = new string[2];
                 int countOfGear = 0;
                 for (int i = 0; i < arrayOfGear.Length; i++)
                 {
-                    gearID = -1;
+                    gearName = null;
                     //any rare gear available?
                     if (tempRareGear.Count > 0)
                     {
@@ -720,9 +721,9 @@ public class GearManager : MonoBehaviour
                         if (rnd < chance)
                         {
                             index = Random.Range(0, tempRareGear.Count);
-                            gearID = tempRareGear[index];
+                            gearName = tempRareGear[index];
                             tempRareGear.RemoveAt(index);
-                            Gear rareGear = GameManager.instance.dataScript.GetGear(gearID);
+                            Gear rareGear = GameManager.instance.dataScript.GetGear(gearName);
                             if (rareGear != null)
                             {
                                 Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear ({0}) Success, need < {1} roll {2}{3}", rareGear.tag, chance, rnd, "\n");
@@ -732,7 +733,7 @@ public class GearManager : MonoBehaviour
                             {
                                 Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear Success, need < {0} roll {1}{2}", chance, rnd, "\n");
                                 GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear SUCCESS", "Rare Gear", chance, rnd);
-                               Debug.LogWarningFormat("Invalid rare gear (Null) for gearID {0}", gearID);
+                                Debug.LogWarningFormat("Invalid rare gear (Null) for gear {0}", gearName);
                             }
                             
                         }
@@ -740,7 +741,7 @@ public class GearManager : MonoBehaviour
                         {
                             //if failed chance for rare gear then need to get common
                             index = Random.Range(0, tempCommonGear.Count);
-                            gearID = tempCommonGear[index];
+                            gearName = tempCommonGear[index];
                             tempCommonGear.RemoveAt(index);
                             Debug.LogFormat("[Rnd] GearManager.cs -> InitialiseGenericPickerGear: Rare gear FAIL, need < {0} roll {1}{2}", chance, rnd, "\n");
                             GameManager.instance.messageScript.GeneralRandom("Gear Choice, Rare gear FAILED", "Rare Gear", chance, rnd);
@@ -752,13 +753,13 @@ public class GearManager : MonoBehaviour
                         if (tempCommonGear.Count > 0)
                         {
                             index = Random.Range(0, tempCommonGear.Count);
-                            gearID = tempCommonGear[index];
+                            gearName = tempCommonGear[index];
                             tempCommonGear.RemoveAt(index);
                         }
                     }
                     //found some gear?
-                    if (gearID > -1)
-                    { arrayOfGear[i] = gearID; countOfGear++; }
+                    if (string.IsNullOrEmpty(gearName) == false)
+                    { arrayOfGear[i] = gearName; countOfGear++; }
                 }
                 //check there is at least one item of gear available
                 if (countOfGear < 1)
@@ -783,7 +784,7 @@ public class GearManager : MonoBehaviour
                             {
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
-                                optionDetails.optionID = gear.gearID;
+                                optionDetails.optionName = gear.name;
                                 optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 //add to master arrays
@@ -886,7 +887,7 @@ public class GearManager : MonoBehaviour
                 data.handler = RefreshGearInventory;
                 data.state = InventoryState.Gear;
                 //Loop Gear list and populate arrays
-                List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                 if (listOfGear != null)
                 {
                     for (int i = 0; i < numOfGear; i++)
@@ -911,15 +912,16 @@ public class GearManager : MonoBehaviour
                                 optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
                                     colourDefault, gear.type.name, colourEnd);
                                 optionData.optionID = gear.gearID;
+                                optionData.optionName = gear.name;
                                 //add to array
                                 data.arrayOfOptions[i] = optionData;
                                 data.arrayOfTooltips[i] = tooltipDetails;
                             }
                             else
-                            { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+                            { Debug.LogWarning(string.Format("Invalid gear (Null) for gear {0}", listOfGear[i])); }
                         }
                         else
-                        { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
+                        { Debug.LogWarning(string.Format("Invalid gear (Null) for gear {0}", listOfGear[i])); }
                     }
                 }
                 else
@@ -1001,7 +1003,7 @@ public class GearManager : MonoBehaviour
             else { data.textBottom = ""; }
             data.handler = RefreshGearInventory;
             //Loop Gear list and populate arrays
-            List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+            List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
             if (listOfGear != null)
             {
                 for (int i = 0; i < numOfGear; i++)
@@ -1065,7 +1067,7 @@ public class GearManager : MonoBehaviour
                 //retain saved gear, remove any unsaved gear
                 string gearSavedName = GameManager.instance.playerScript.UpdateGear(gearSaveCurrentCost, data.optionID);
                 //stats
-                Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                 if (gear != null)
                 {
                     gear.statTimesSaved++;
@@ -1134,7 +1136,7 @@ public class GearManager : MonoBehaviour
             //get currently selected node
             if (data.nodeID != -1)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                 if (gear != null)
                 {
                     //check whether it is invisible type gear (if so then invisibility -1 effect is ignored)
@@ -1152,7 +1154,7 @@ public class GearManager : MonoBehaviour
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
 
-                            if (GameManager.instance.playerScript.AddGear(gear.gearID) == true)
+                            if (GameManager.instance.playerScript.AddGear(gear.name) == true)
                             {
                                 //remove gear from pool
                                 if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
@@ -1248,26 +1250,29 @@ public class GearManager : MonoBehaviour
     /// </summary>
     /// <param name="gearID"></param>
     /// <returns></returns>
-    public int GetChanceOfCompromise(int gearID)
+    public int GetChanceOfCompromise(string gearName)
     {
         int chance = 0;
-        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-        if (gear != null)
+        if (string.IsNullOrEmpty(gearName) == false)
         {
-            //chance of compromise same for all
-            switch (gear.rarity.name)
+            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+            if (gear != null)
             {
-                case "Unique":
-                case "Rare":
-                case "Common":
-                    chance = chanceOfCompromise;
-                    break;
+                //chance of compromise same for all
+                switch (gear.rarity.name)
+                {
+                    case "Unique":
+                    case "Rare":
+                    case "Common":
+                        chance = chanceOfCompromise;
+                        break;
+                }
             }
-        }
-        else
-        {
-            //problem. Default compromised.
-            Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", gearID));
+            else
+            {
+                //problem. Default compromised.
+                Debug.LogWarning(string.Format("Invalid gear (Null) for gear {0}", gearName));
+            }
         }
         return chance;
     }

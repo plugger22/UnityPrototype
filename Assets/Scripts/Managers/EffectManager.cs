@@ -761,19 +761,19 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "GearAvailability":
                                                 //checks to see if at least 1 piece of unused common gear is available
-                                                List<int> tempCommonGear = new List<int>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
+                                                List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
                                                 if (tempCommonGear.Count > 0)
                                                 {
                                                     //remove from lists any gear that the player currently has
-                                                    List<int> tempPlayerGear = new List<int>(GameManager.instance.playerScript.GetListOfGear());
-                                                    int gearID;
+                                                    List<string> tempPlayerGear = new List<string>(GameManager.instance.playerScript.GetListOfGear());
+                                                    string gearName;
                                                     if (tempPlayerGear.Count > 0)
                                                     {
                                                         for (int i = 0; i < tempPlayerGear.Count; i++)
                                                         {
-                                                            gearID = tempPlayerGear[i];
-                                                            if (tempCommonGear.Exists(id => id == gearID) == true)
-                                                            { tempCommonGear.Remove(gearID); }
+                                                            gearName = tempPlayerGear[i];
+                                                            if (tempCommonGear.Exists(x => x == gearName) == true)
+                                                            { tempCommonGear.Remove(gearName); }
                                                         }
                                                     }
                                                     if (tempCommonGear.Count == 0)
@@ -1296,18 +1296,18 @@ public class EffectManager : MonoBehaviour
                                     break;
                                 case "Subtract":
                                     //does player have any invisibility type gear?
-                                    int gearID = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
-                                    if (gearID > -1)
+                                    string gearName = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
+                                    if (string.IsNullOrEmpty(gearName) == false)
                                     {
                                         //gear present -> No drop in Invisibility
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                         if (gear != null)
                                         {
                                             GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
                                             effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
                                                 colourEnd, colourNormal, colourEnd);
                                         }
-                                        else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID)); }
+                                        else { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
                                     }
                                     else
                                     {

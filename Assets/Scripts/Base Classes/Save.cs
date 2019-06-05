@@ -463,7 +463,7 @@ public class SaveActor
     public int slotID;
     public int level;
     public int nodeCaptured;
-    public int gearID;
+    public string gearName;
     public bool isMale;
     public string actorName;
     public string firstName;

@@ -17,7 +17,8 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI textUpper;
     public TextMeshProUGUI textLower;
 
-    [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of gear or actor, etc.
+    [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
+    [HideInInspector] public string optionName;                                         //multipurpose field for key name fields, eg. gear
     [HideInInspector] public InventoryState type;
 
     /// <summary>
@@ -45,7 +46,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                         switch (type)
                         {
                             case InventoryState.Gear:
-                                Gear gear = GameManager.instance.dataScript.GetGear(optionData);
+                                Gear gear = GameManager.instance.dataScript.GetGear(optionName);
                                 if (gear != null)
                                 {
                                     //adjust position prior to sending
@@ -62,7 +63,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                         modalState = ModalSubState.Inventory,
                                         itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
                                         menuPos = position,
-                                        listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),
+                                        listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.name),
                                         menuType = ActionMenuType.Gear
                                     };
                                     //activate menu

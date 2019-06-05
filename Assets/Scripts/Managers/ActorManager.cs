@@ -1510,7 +1510,7 @@ public class ActorManager : MonoBehaviour
                         int numOfGear = GameManager.instance.playerScript.CheckNumOfGear();
                         if (numOfGear > 0)
                         {
-                            List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                            List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                             if (listOfGear != null)
                             {
                                 //loop gear and create a button for each
@@ -1526,7 +1526,7 @@ public class ActorManager : MonoBehaviour
                                             ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                             gearActionDetails.side = playerSide;
                                             gearActionDetails.actorDataID = actor.slotID;
-                                            gearActionDetails.gearID = gear.gearID;
+                                            gearActionDetails.gearName = gear.name;
                                             //get actor's preferred gear
                                             GearType preferredGear = actor.arc.preferredGear;
                                             if (preferredGear != null)
@@ -1559,7 +1559,7 @@ public class ActorManager : MonoBehaviour
                                             }
 
                                             //existing gear
-                                            if (actor.GetGearName() > -1)
+                                            if (string.IsNullOrEmpty(actor.GetGearName()) == false)
                                             {
                                                 Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                                                 if (gearOld != null)
@@ -1600,12 +1600,12 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Take Gear - - -
                         //
-                        int actorGearID = actor.GetGearName();
+                        string actorGearName = actor.GetGearName();
                         //Player must have at least one free slot
                         if (numOfGear < maxNumOfGear)
                         {
                             //actor must have an item of gear
-                            if (actorGearID > -1)
+                            if (string.IsNullOrEmpty(actorGearName) == false)
                             {
                                 //traits
                                 if (actor.CheckTraitEffect(actorKeepGear) == false)
@@ -1613,7 +1613,7 @@ public class ActorManager : MonoBehaviour
                                     //grace period must have expired
                                     if (actor.GetGearTimer() > gearGracePeriod)
                                     {
-                                        Gear gearActor = GameManager.instance.dataScript.GetGear(actorGearID);
+                                        Gear gearActor = GameManager.instance.dataScript.GetGear(actorGearName);
                                         if (gearActor != null)
                                         {
                                             benefit = gearSwapBaseAmount;
@@ -1622,7 +1622,7 @@ public class ActorManager : MonoBehaviour
                                             ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                             gearActionDetails.side = playerSide;
                                             gearActionDetails.actorDataID = actor.slotID;
-                                            gearActionDetails.gearID = gearActor.gearID;
+                                            gearActionDetails.gearName = gearActor.name;
                                             //get actor's preferred gear
                                             GearType preferredGear = actor.arc.preferredGear;
                                             if (preferredGear != null)
@@ -1666,7 +1666,7 @@ public class ActorManager : MonoBehaviour
                                             tempList.Add(gearDetails);
                                             isGearToGive = true;
                                         }
-                                        else { Debug.LogWarningFormat("Invalid gearActor (Null) for gearID {0}", actorGearID); }
+                                        else { Debug.LogWarningFormat("Invalid gearActor (Null) for gear {0}", actorGearName); }
                                     }
                                     else
                                     {
@@ -1694,7 +1694,7 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             //player has no spare slot to put gear
-                            if (actorGearID > -1)
+                            if (string.IsNullOrEmpty(actorGearName) == false)
                             {
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                                 { infoBuilder.AppendFormat("Can't Take Gear{0}{1}(No space){2}", "\n", colourBad, colourEnd); }
@@ -1878,15 +1878,15 @@ public class ActorManager : MonoBehaviour
                     //
                     // - - - Use Gear (Personal) - - -
                     //
-                    List<int> listOfGearID = GameManager.instance.playerScript.GetListOfGear();
-                    if (listOfGearID != null)
+                    List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                    if (listOfGear != null)
                     {
                         //has gear?
-                        if (listOfGearID.Count > 0)
+                        if (listOfGear.Count > 0)
                         {
-                            for (int index = 0; index < listOfGearID.Count; index++)
+                            for (int index = 0; index < listOfGear.Count; index++)
                             {
-                                Gear gear = GameManager.instance.dataScript.GetGear(listOfGearID[index]);
+                                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[index]);
                                 if (gear != null)
                                 {
                                     //Personal Use gear?
@@ -1933,7 +1933,7 @@ public class ActorManager : MonoBehaviour
                                                         if (builder.Length > 0) { builder.AppendLine(); }
                                                         builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                                         //chance of compromise
-                                                        int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
+                                                        int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
                                                         builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
                                                             colourNeutral, compromiseChance, colourEnd);
                                                     }
@@ -1957,7 +1957,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 ModalActionDetails gearActionDetails = new ModalActionDetails() { };
                                                 gearActionDetails.side = globalResistance;
-                                                gearActionDetails.gearID = gear.gearID;
+                                                gearActionDetails.gearName = gear.name;
                                                 EventButtonDetails gearDetails = new EventButtonDetails()
                                                 {
                                                     buttonTitle = string.Format("Use {0}", gear.tag),
@@ -1976,7 +1976,7 @@ public class ActorManager : MonoBehaviour
                                         { infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd); }
                                     }
                                 }
-                                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGearID[index]); }
+                                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
                             }
                         }
                     }
@@ -2200,248 +2200,252 @@ public class ActorManager : MonoBehaviour
     /// Returns a list of all relevant actions for Gear in the player's Inventory (right click gear sprite in inventory)
     /// Resistance only -> up to 4 x 'Give Gear to Actor', 1 x 'Use' (if there is a viable use gear action), 1 x Cancel
     /// </summary>
-    public List<EventButtonDetails> GetGearInventoryActions(int gearID)
+    public List<EventButtonDetails> GetGearInventoryActions(string gearName)
     {            
         //return list of button details
-        List<EventButtonDetails> eventList = new List<EventButtonDetails>();            
-        //Cancel button tooltip (handles all no go cases)
-        StringBuilder infoBuilder = new StringBuilder();
-        string effectCriteria, colourEffect;
-        string cancelText = null;
-        bool proceedFlag = false;
-        int benefit;
-        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-        if (gear != null)
+        List<EventButtonDetails> eventList = new List<EventButtonDetails>();
+        if (string.IsNullOrEmpty(gearName) == false)
         {
-            //
-            // - - - Use - - -
-            //
-            List<Effect> listOfEffects = gear.listOfPersonalEffects;
-            if (listOfEffects != null)
+            //Cancel button tooltip (handles all no go cases)
+            StringBuilder infoBuilder = new StringBuilder();
+            string effectCriteria, colourEffect;
+            string cancelText = null;
+            bool proceedFlag = false;
+            int benefit;
+            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+            if (gear != null)
             {
-                //effects
-                StringBuilder builder = new StringBuilder();
-                if (listOfEffects.Count > 0)
+                //
+                // - - - Use - - -
+                //
+                List<Effect> listOfEffects = gear.listOfPersonalEffects;
+                if (listOfEffects != null)
                 {
-                    for (int i = 0; i < listOfEffects.Count; i++)
+                    //effects
+                    StringBuilder builder = new StringBuilder();
+                    if (listOfEffects.Count > 0)
                     {
-                        proceedFlag = true;
-                        colourEffect = colourDefault;
-                        Effect effect = listOfEffects[i];
-                        //colour code effects according to type
-                        if (effect.typeOfEffect != null)
+                        for (int i = 0; i < listOfEffects.Count; i++)
                         {
-                            switch (effect.typeOfEffect.name)
+                            proceedFlag = true;
+                            colourEffect = colourDefault;
+                            Effect effect = listOfEffects[i];
+                            //colour code effects according to type
+                            if (effect.typeOfEffect != null)
                             {
-                                case "Good":
-                                    colourEffect = colourGood;
-                                    break;
-                                case "Neutral":
-                                    colourEffect = colourNeutral;
-                                    break;
-                                case "Bad":
-                                    colourEffect = colourBad;
-                                    break;
+                                switch (effect.typeOfEffect.name)
+                                {
+                                    case "Good":
+                                        colourEffect = colourGood;
+                                        break;
+                                    case "Neutral":
+                                        colourEffect = colourNeutral;
+                                        break;
+                                    case "Bad":
+                                        colourEffect = colourBad;
+                                        break;
+                                }
+                            }
+                            //check effect criteria is valid
+                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                            {
+                                listOfCriteria = effect.listOfCriteria
+                            };
+                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                            if (effectCriteria == null)
+                            {
+                                //Effect criteria O.K -> tool tip text
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                //chance of compromise
+                                int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
+                                builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
+                                    colourNeutral, compromiseChance, colourEnd);
+                            }
+                            else
+                            {
+                                proceedFlag = false;
+                                //invalid effect criteria -> Action cancelled
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
+                                    colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
                             }
                         }
-                        //check effect criteria is valid
-                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                    }
+                    else
+                    {
+                        proceedFlag = false;
+                        infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd);
+                    }
+
+
+                    //button 
+                    if (proceedFlag == true)
+                    {
+                        ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                        gearActionDetails.side = globalResistance;
+                        gearActionDetails.gearName = gear.name;
+                        gearActionDetails.modalLevel = 2;
+                        gearActionDetails.modalState = ModalSubState.Inventory;
+                        gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+                        EventButtonDetails gearDetails = new EventButtonDetails()
                         {
-                            listOfCriteria = effect.listOfCriteria
+                            buttonTitle = "Use",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                            buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
+                            /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
+                            buttonTooltipDetail = builder.ToString(),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
                         };
-                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                        if (effectCriteria == null)
-                        {
-                            //Effect criteria O.K -> tool tip text
-                            if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                            //chance of compromise
-                            int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.gearID);
-                            builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd, 
-                                colourNeutral, compromiseChance, colourEnd);
-                        }
-                        else
-                        {
-                            proceedFlag = false;
-                            //invalid effect criteria -> Action cancelled
-                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
-                                colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
-                        }
+                        //add USE to list
+                        eventList.Add(gearDetails);
                     }
                 }
                 else
+                { infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd); }
+                //
+                // - - - Give to - - -
+                //
+                cancelText = string.Format("{0} {1}", gear.type.name.ToUpper(), gear.tag);
+                if (gear.timesUsed == 0)
                 {
-                    proceedFlag = false;
-                    infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd);
-                }
-
-
-                //button 
-                if (proceedFlag == true)
-                {
-                    ModalActionDetails gearActionDetails = new ModalActionDetails() { };
-                    gearActionDetails.side = globalResistance;
-                    gearActionDetails.gearID = gear.gearID;
-                    gearActionDetails.modalLevel = 2;
-                    gearActionDetails.modalState = ModalSubState.Inventory;
-                    gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-                    EventButtonDetails gearDetails = new EventButtonDetails()
+                    //Loop current, onMap actors
+                    Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                    if (arrayOfActors != null)
                     {
-                        buttonTitle = "Use",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
-                        /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
-                        buttonTooltipDetail = builder.ToString(),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
-                    };
-                    //add USE to list
-                    eventList.Add(gearDetails);
-                }
-            }
-            else
-            { infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd); }
-            //
-            // - - - Give to - - -
-            //
-            cancelText = string.Format("{0} {1}", gear.type.name.ToUpper(), gear.tag);
-            if (gear.timesUsed == 0)
-            {
-                //Loop current, onMap actors
-                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-                if (arrayOfActors != null)
-                {
-                    for (int i = 0; i < arrayOfActors.Length; i++)
-                    {
-                        //check actor present in slot
-                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                        for (int i = 0; i < arrayOfActors.Length; i++)
                         {
-                            Actor actor = arrayOfActors[i];
-                            if (actor != null)
+                            //check actor present in slot
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                             {
-                                //actor must be active
-                                if (actor.Status == ActorStatus.Active)
+                                Actor actor = arrayOfActors[i];
+                                if (actor != null)
                                 {
-                                    StringBuilder builderTooltip = new StringBuilder();
-                                    ModalActionDetails gearActionDetails = new ModalActionDetails() { };
-                                    gearActionDetails.side = globalResistance;
-                                    gearActionDetails.actorDataID = actor.slotID;
-                                    gearActionDetails.gearID = gear.gearID;
-                                    gearActionDetails.modalLevel = 2;
-                                    gearActionDetails.modalState = ModalSubState.Inventory;
-                                    gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-                                    //get actor's preferred gear
-                                    GearType preferredGear = actor.arc.preferredGear;
-                                    if (preferredGear != null)
+                                    //actor must be active
+                                    if (actor.Status == ActorStatus.Active)
                                     {
-                                        benefit = gearSwapBaseAmount;
-                                        if (preferredGear.name.Equals(gear.type.name) == true)
+                                        StringBuilder builderTooltip = new StringBuilder();
+                                        ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                                        gearActionDetails.side = globalResistance;
+                                        gearActionDetails.actorDataID = actor.slotID;
+                                        gearActionDetails.gearName = gear.name;
+                                        gearActionDetails.modalLevel = 2;
+                                        gearActionDetails.modalState = ModalSubState.Inventory;
+                                        gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+                                        //get actor's preferred gear
+                                        GearType preferredGear = actor.arc.preferredGear;
+                                        if (preferredGear != null)
                                         {
-                                            benefit += gearSwapPreferredAmount;
-                                            builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
-                                              colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                            benefit = gearSwapBaseAmount;
+                                            if (preferredGear.name.Equals(gear.type.name) == true)
+                                            {
+                                                benefit += gearSwapPreferredAmount;
+                                                builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
+                                                  colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                            }
+                                            else
+                                            {
+                                                builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                                  preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                            }
                                         }
                                         else
                                         {
-                                            builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
-                                              preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
+                                            builderTooltip.Append("Unknown Preferred Gear");
+                                            Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                         }
+                                        //existing gear
+                                        if (string.IsNullOrEmpty(actor.GetGearName()) == false)
+                                        {
+                                            Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
+                                            if (gearOld != null)
+                                            { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
+                                            else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearName()); }
+                                        }
+                                        EventButtonDetails gearDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = string.Format("Give to {0}", actor.arc.name),
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                                            buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.tag, colourNeutral, gear.type.name,
+                                            colourEnd, actor.arc.name, actor.actorName),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builderTooltip.ToString(), colourEnd),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventoryActions"); }
+                                        };
+                                        //add Lie Low button to list
+                                        eventList.Add(gearDetails);
                                     }
-                                    else
-                                    {
-                                        builderTooltip.Append("Unknown Preferred Gear");
-                                        Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
-                                    }
-                                    //existing gear
-                                    if (actor.GetGearName() > -1)
-                                    {
-                                        Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
-                                        if (gearOld != null)
-                                        { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
-                                        else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearName()); }
-                                    }
-                                    EventButtonDetails gearDetails = new EventButtonDetails()
-                                    {
-                                        buttonTitle = string.Format("Give to {0}", actor.arc.name),
-                                        buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                                        buttonTooltipMain = string.Format("Give {0} ({1}{2}{3}) to {4} {5}", gear.tag, colourNeutral, gear.type.name,
-                                        colourEnd, actor.arc.name, actor.actorName),
-                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builderTooltip.ToString(), colourEnd),
-                                        //use a Lambda to pass arguments to the action
-                                        action = () => { EventManager.instance.PostNotification(EventType.GiveGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventoryActions"); }
-                                    };
-                                    //add Lie Low button to list
-                                    eventList.Add(gearDetails);
                                 }
+                                else { Debug.LogError(string.Format("Invalid actor (Null) in arrayOfActors[{0}]", i)); }
                             }
-                            else { Debug.LogError(string.Format("Invalid actor (Null) in arrayOfActors[{0}]", i)); }
                         }
                     }
+                    else
+                    { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 }
                 else
-                { Debug.LogError("Invalid arrayOfActors (Null)"); }
+                {
+                    //gear has already been used this turn
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.AppendFormat("{0}{1}{2} can't be gifted{3}{4}(Used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
+                }
             }
             else
             {
-                //gear has already been used this turn
-                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}{1}{2} can't be gifted{3}{4}(Used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
+                Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName));
             }
-        }
-        else
-        {
-            Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", gearID));
-        }
-        //Debug
-        if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
-        //
-        // - - - Cancel - - - (both sides)
-        //
-        //Cancel button is added last
-        EventButtonDetails cancelDetails = null;
-        if (gear != null)
-        {
-            if (infoBuilder.Length > 0)
+            //Debug
+            if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
+            //
+            // - - - Cancel - - - (both sides)
+            //
+            //Cancel button is added last
+            EventButtonDetails cancelDetails = null;
+            if (gear != null)
             {
+                if (infoBuilder.Length > 0)
+                {
+                    cancelDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "CANCEL",
+                        buttonTooltipHeader = string.Format("{0}INFO{1}", colourResistance, colourEnd),
+                        buttonTooltipMain = cancelText,
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
+                    };
+                }
+                else
+                {
+                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                    cancelDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "CANCEL",
+                        buttonTooltipHeader = string.Format("{0}INFO{1}", colourResistance, colourEnd),
+                        buttonTooltipMain = cancelText,
+                        buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
+                    };
+                }
+            }
+            else
+            {
+                //Null gear -> invalid menu creation
                 cancelDetails = new EventButtonDetails()
                 {
                     buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}INFO{1}", colourResistance, colourEnd),
-                    buttonTooltipMain = cancelText,
-                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, infoBuilder.ToString(), colourEnd),
+                    buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
+                    buttonTooltipMain = string.Format("{0}Invalid Gear{1}", colourBad, colourEnd),
                     //use a Lambda to pass arguments to the action
                     action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
                 };
             }
-            else
-            {
-                //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
-                cancelDetails = new EventButtonDetails()
-                {
-                    buttonTitle = "CANCEL",
-                    buttonTooltipHeader = string.Format("{0}INFO{1}", colourResistance, colourEnd),
-                    buttonTooltipMain = cancelText,
-                    buttonTooltipDetail = string.Format("{0}Press Cancel to Exit{1}", colourCancel, colourEnd),
-                    //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
-                };
-            }
+            //add Cancel button to list
+            eventList.Add(cancelDetails);
         }
-        else
-        {
-            //Null gear -> invalid menu creation
-            cancelDetails = new EventButtonDetails()
-            {
-                buttonTitle = "CANCEL",
-                buttonTooltipHeader = string.Format("{0}{1}{2}", globalResistance, "INFO", colourEnd),
-                buttonTooltipMain = string.Format("{0}Invalid Gear{1}", colourBad, colourEnd),
-                //use a Lambda to pass arguments to the action
-                action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetGearInventoryActions"); }
-            };
-        }
-        //add Cancel button to list
-        eventList.Add(cancelDetails);
+        else { Debug.LogError("Invalid gearName (Null)"); }
         return eventList;
     }
 
@@ -3177,14 +3181,14 @@ public class ActorManager : MonoBehaviour
 
                             }
                             //gear
-                            int gearID = actor.GetGearName();
-                            if (gearID > -1)
+                            string gearName = actor.GetGearName();
+                            if (string.IsNullOrEmpty(gearName) == false)
                             {
                                 builderDetails.AppendFormat("{0}{1}Gear{2}", "\n", colourAlert, colourEnd);
-                                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                 if (gear != null)
                                 { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, gear.tag, colourEnd); }
-                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gearID {0}", gearID); }
+                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gear {0}", gearName); }
                             }
 
                             tooltipDetails.textDetails = builderDetails.ToString();
@@ -4134,7 +4138,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckInactiveResistanceActorsHuman()
     {
-        int gearID;
+        string gearName;
         // Resistance actors only
         Actor[] arrayOfActorsResistance = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActorsResistance != null)
@@ -4227,12 +4231,12 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Gear - - -
                         //
-                        gearID = actor.GetGearName();
-                        if (gearID > -1)
+                        gearName = actor.GetGearName();
+                        if (string.IsNullOrEmpty(gearName) == false)
                         {
                             if (isGearCheckRequired == true)
                             {
-                                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                 if (gear != null)
                                 {
                                     if (gear.isCompromised == true)
@@ -4246,7 +4250,7 @@ public class ActorManager : MonoBehaviour
                                     else { actor.ResetGearItem(gear); }
 
                                 }
-                                else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                                else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
                             }
                         }
                     }
@@ -4362,7 +4366,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveResistanceActorsHuman()
     {
-        int gearID;
+        string gearName;
         int numOfTraitors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if AI player is not Active
@@ -4471,12 +4475,12 @@ public class ActorManager : MonoBehaviour
                                 //
                                 // - - - Gear - - -
                                 //
-                                gearID = actor.GetGearName();
-                                if (gearID > -1)
+                                gearName = actor.GetGearName();
+                                if (string.IsNullOrEmpty(gearName) == false)
                                 {
                                     if (isGearCheckRequired == true)
                                     {
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                         if (gear != null)
                                         {
                                             if (gear.isCompromised == true)
@@ -4490,7 +4494,7 @@ public class ActorManager : MonoBehaviour
                                             else {actor.ResetGearItem(gear); }
                                             
                                         }
-                                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                                        else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearName); }
                                     }
                                 }
                             }

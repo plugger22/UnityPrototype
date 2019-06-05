@@ -325,13 +325,13 @@ public class PlayerManager : MonoBehaviour
     { return listOfGear.Exists(x => x == gearName); }
 
     /// <summary>
-    /// returns gearID of best piece of gear that matches type, '-1' if none
+    /// returns gearName of best piece of gear that matches type, Null if none
     /// </summary>
     /// <param name="gearType"></param>
     /// <returns></returns>
-    public int CheckGearTypePresent(GearType gearType)
+    public string CheckGearTypePresent(GearType gearType)
     {
-        int gearID = -1;
+        string gearName = null;
         int rarity = -1;
         if (listOfGear.Count > 0)
         {
@@ -347,26 +347,25 @@ public class PlayerManager : MonoBehaviour
                         if (gear.rarity.level > rarity)
                         {
                             rarity = gear.rarity.level;
-                            gearID = gear.gearID;
+                            gearName = gear.name;
                         }
                     }
                 }
                 else
                 { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }
             }
-            return gearID;
         }
-        else { return -1; }
+        return gearName;
     }
 
 
     /// <summary>
-    /// returns list of AI(Hacking) gearID's of all gear capable of doing so in Player's inventory. Returns null if none
+    /// returns list of AI(Hacking) gearNames of all gear capable of doing so in Player's inventory. Returns null if none
     /// </summary>
     /// <returns></returns>
-    public List<int> CheckAIGearPresent()
+    public List<string> CheckAIGearPresent()
     {
-        List<int> tempList = new List<int>();
+        List<string> tempList = new List<string>();
         //loop through looking for all AI hacking capable gear
         for (int i = 0; i < listOfGear.Count; i++)
         {
@@ -378,7 +377,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     //has AI effects
                     if (gear.aiHackingEffect != null)
-                    { tempList.Add(gear.gearID); }
+                    { tempList.Add(gear.name); }
                 }
             }
             else

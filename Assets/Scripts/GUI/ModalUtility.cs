@@ -40,7 +40,7 @@ namespace modalAPI
             modalLevel = 1;
             modalState = ModalSubState.None;
             itemID = -1;
-            
+            itemKey = null;
             listOfButtonDetails = new List<EventButtonDetails>();
         }
     }
@@ -233,6 +233,7 @@ namespace modalAPI
         public string text;                 //keep SHORT
         public int optionID;                //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
         public string optionText;           //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
+        public string optionName;           //Used instead of optionID where you name keys, e.g gear
         public bool isOptionActive;         //if false then option shown greyed out an is unselectable
 
         public GenericOptionDetails()
@@ -255,7 +256,8 @@ namespace modalAPI
     public class GenericReturnData
     {
         public int optionID;                //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
-        public string optionText;           //used instead of an ID
+        public string optionText;           //used instead of an ID when you multiple nested Generic pickers, ignore otherwise
+        public string optionName;           //Used instead of optionID where you name keys, e.g gear
         public string optionNested;         //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
         public int nodeID;
         public int actorSlotID;                    
@@ -286,7 +288,8 @@ namespace modalAPI
         public Sprite sprite;
         public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'CHAOS CRITTER'
         public string textLower;                //details that go below name, eg. "Unhappy in 2 turns"
-        public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
+        public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, etc.
+        public string optionName;                  //used when Generic Picker returns a result which is then processed, for name key's, eg. gear
     }
 
 

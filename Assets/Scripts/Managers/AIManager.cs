@@ -4455,7 +4455,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void UpdatePlayerHackingLists()
     {
-        List<int> tempList = GameManager.instance.playerScript.CheckAIGearPresent();
+        List<string> tempList = GameManager.instance.playerScript.CheckAIGearPresent();
         listOfPlayerEffects.Clear();
         listOfPlayerEffectDescriptors.Clear();
         if (tempList != null)
@@ -4487,7 +4487,7 @@ public class AIManager : MonoBehaviour
 
                     }
                 }
-                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", tempList[i]); }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", tempList[i]); }
             }
         }
     }

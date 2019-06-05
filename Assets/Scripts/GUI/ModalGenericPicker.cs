@@ -427,7 +427,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericGearChoice:
                         if (data.optionID > -1)
                         {
-                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.tag.ToUpper(), colourEnd, colourDefault, colourEnd);
@@ -453,7 +453,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericCompromisedGear:
                         if (data.optionID > -1)
                         {
-                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionID);
+                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
                                 text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd, 

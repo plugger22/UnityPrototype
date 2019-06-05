@@ -349,9 +349,9 @@ public class ModalInventoryUI : MonoBehaviour
     /// Method to run when a gear option is right clicked (info display)
     /// </summary>
     /// <param name="optionID"></param>
-    public void GearRightClicked(int optionData)
+    public void GearRightClicked(string optionName)
     {
-        Gear gear = GameManager.instance.dataScript.GetGear(optionData);
+        Gear gear = GameManager.instance.dataScript.GetGear(optionName);
         if (gear != null)
         {
             //adjust position prior to sending
@@ -368,7 +368,7 @@ public class ModalInventoryUI : MonoBehaviour
                 modalState = ModalSubState.Inventory,
                 itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
                 menuPos = position,
-                listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.gearID),
+                listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.name),
                 menuType = ActionMenuType.Gear
             };
             //activate menu
@@ -376,7 +376,7 @@ public class ModalInventoryUI : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData));
+            Debug.LogError(string.Format("Invalid Gear (Null) for gear / optionData {0}", optionName));
         }
     }
 
