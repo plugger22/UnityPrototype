@@ -32,3 +32,170 @@ UnityEngine.Debug:LogError(Object)
 	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:75)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 497 -> Wednesday, 5 June 2019 7:58 PM
+City seed 890 -> Arles, France
+ERROR Invalid gearName (Null or Empty
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4568)
+	gameAPI.Actor:AddGear(String) (at Assets/Scripts/Base Classes/Actor.cs:691)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1506)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:193)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid gear Old (Null) for gear 
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddGear(String) (at Assets/Scripts/Base Classes/Actor.cs:703)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1506)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:193)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 28134 -> Wednesday, 5 June 2019 8:02 PM
+City seed 890 -> Arles, France
+
+Dev seed 2328 -> Wednesday, 5 June 2019 8:03 PM
+City seed 890 -> Arles, France
+ERROR Invalid gearName (Null or Empty
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4568)
+	gameAPI.Actor:AddGear(String) (at Assets/Scripts/Base Classes/Actor.cs:691)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1506)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:193)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid gear Old (Null) for gear 
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddGear(String) (at Assets/Scripts/Base Classes/Actor.cs:703)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1506)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:193)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	
+Dev seed 57785 -> Wednesday, 5 June 2019 8:14 PM
+City seed 890 -> Arles, France
+
+Dev seed 52129 -> Wednesday, 5 June 2019 8:14 PM
+City seed 890 -> Arles, France
+
+Dev seed 22833 -> Wednesday, 5 June 2019 8:15 PM
+City seed 890 -> Arles, France
+ERROR Invalid gearName (Null or Empty
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4568)
+	gameAPI.Actor:AddGear(String) (at Assets/Scripts/Base Classes/Actor.cs:691)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1506)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:193)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid gear Old (Null) for gear 
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddGear(String) (at Assets/Scripts/Base Classes/Actor.cs:703)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1506)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:193)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 39300 -> Wednesday, 5 June 2019 8:17 PM
+City seed 890 -> Arles, France
+WARNING Gear Not found Work Permit, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4566)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1193)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	WARNING Gear Not found Work Permit, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4566)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1193)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	
+Dev seed 7187 -> Wednesday, 5 June 2019 8:23 PM
+City seed 890 -> Arles, France
+ERROR Invalid gearName (Null or Empty
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4568)
+	ModalGenericPicker:SetConfirmButton(Boolean, GenericReturnData) (at Assets/Scripts/GUI/ModalGenericPicker.cs:456)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:137)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	gameAPI.GenericInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/GenericInteraction.cs:82)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid gear (Null) for gearID 19
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalGenericPicker:SetConfirmButton(Boolean, GenericReturnData) (at Assets/Scripts/GUI/ModalGenericPicker.cs:463)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:137)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	gameAPI.GenericInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/GenericInteraction.cs:82)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 19904 -> Wednesday, 5 June 2019 8:32 PM
+City seed 890 -> Arles, France
+ERROR Invalid data.optionName (Null or Empty)
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetConfirmButton(Boolean, GenericReturnData) (at Assets/Scripts/GUI/ModalGenericPicker.cs:465)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:137)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	gameAPI.GenericInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/GenericInteraction.cs:82)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 55181 -> Wednesday, 5 June 2019 8:39 PM
+City seed 890 -> Arles, France
+WARNING Gear "Work Permit", ID 19, not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4707)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1200)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	ERROR Invalid data.optionName (Null or Empty)
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetConfirmButton(Boolean, GenericReturnData) (at Assets/Scripts/GUI/ModalGenericPicker.cs:466)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:137)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	gameAPI.GenericInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/GenericInteraction.cs:82)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 33681 -> Wednesday, 5 June 2019 8:49 PM
+City seed 890 -> Arles, France
+ERROR Invalid gearName (Null or Empty
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4568)
+	GearManager:ProcessCompromisedGear(GenericReturnData) (at Assets/Scripts/Managers/GearManager.cs:1072)
+	GearManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GearManager.cs:308)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:695)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:143)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid gear (Null) for gearID 19
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GearManager:ProcessCompromisedGear(GenericReturnData) (at Assets/Scripts/Managers/GearManager.cs:1078)
+	GearManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GearManager.cs:308)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:695)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:143)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

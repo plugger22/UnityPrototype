@@ -572,6 +572,7 @@ public class GearManager : MonoBehaviour
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
                                 optionDetails.optionID = gear.gearID;
+                                optionDetails.optionName = gear.name;
                                 optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 //add to master arrays
@@ -588,6 +589,7 @@ public class GearManager : MonoBehaviour
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
                                 optionDetails.optionID = gear.gearID;
+                                optionDetails.optionName = gear.name;
                                 optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
                                 optionDetails.isOptionActive = false;
@@ -1054,7 +1056,7 @@ public class GearManager : MonoBehaviour
         if (data != null)
         {
             //deduct renown
-            if (data.optionID > -1)
+            if (string.IsNullOrEmpty(data.optionName) == false)
             {
                 int renown = GameManager.instance.playerScript.Renown;
                 renown -= gearSaveCurrentCost;
@@ -1065,7 +1067,7 @@ public class GearManager : MonoBehaviour
                 }
                 GameManager.instance.playerScript.Renown = renown;
                 //retain saved gear, remove any unsaved gear
-                string gearSavedName = GameManager.instance.playerScript.UpdateGear(gearSaveCurrentCost, data.optionID);
+                string gearSavedName = GameManager.instance.playerScript.UpdateGear(gearSaveCurrentCost, data.optionName);
                 //stats
                 Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                 if (gear != null)
@@ -1073,7 +1075,7 @@ public class GearManager : MonoBehaviour
                     gear.statTimesSaved++;
                     gear.statRenownSpent += gearSaveCurrentCost;
                 }
-                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", data.optionID); }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", data.optionName); }
                 //outcome -> one item saved, any other compromised gear lost
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 StringBuilder builderTop = new StringBuilder();
@@ -1131,7 +1133,7 @@ public class GearManager : MonoBehaviour
         bool successFlag = true;
         bool isInvisibility = false;
         bool isPlayer = false;
-        if (data.optionID > -1)
+        if (string.IsNullOrEmpty(data.optionName) == false)
         {
             //get currently selected node
             if (data.nodeID != -1)
@@ -1238,11 +1240,11 @@ public class GearManager : MonoBehaviour
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }
-                else { Debug.LogError(string.Format("Invalid Gear (Null) for teamID {0}", data.optionID)); }
+                else { Debug.LogError(string.Format("Invalid Gear (Null) for gear {0}", data.optionName)); }
             }
             else { Debug.LogError("Highlighted node invalid (default '-1' value)"); }
         }
-        else { Debug.LogError("Invalid gearID (default '-1')"); }
+        else { Debug.LogError("Invalid gear (Null or Empty)"); }
     }
 
     /// <summary>

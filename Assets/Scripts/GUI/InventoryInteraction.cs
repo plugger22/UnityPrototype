@@ -71,9 +71,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
 
                                 }
                                 else
-                                {
-                                    Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData));
-                                }
+                                { Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData)); }
                                 break;
                             case InventoryState.ReservePool:
                                 Actor actor = GameManager.instance.dataScript.GetActor(optionData);
@@ -101,9 +99,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
 
                                 }
                                 else
-                                {
-                                    Debug.LogError(string.Format("Invalid Actor (Null) for actorID / optionData {0}", optionData));
-                                }
+                                { Debug.LogError(string.Format("Invalid Actor (Null) for actorID / optionData {0}", optionData));  }
                                 break;
                             default:
                                 Debug.LogError(string.Format("Invalid InventoryType \"{0}\"", type));

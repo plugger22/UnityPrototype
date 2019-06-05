@@ -2248,9 +2248,7 @@ public class ActorManager : MonoBehaviour
                             }
                             //check effect criteria is valid
                             CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                            {
-                                listOfCriteria = effect.listOfCriteria
-                            };
+                            { listOfCriteria = effect.listOfCriteria };
                             effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                             if (effectCriteria == null)
                             {

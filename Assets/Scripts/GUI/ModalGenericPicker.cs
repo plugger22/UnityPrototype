@@ -250,6 +250,7 @@ public class ModalGenericPicker : MonoBehaviour
                                     genericData.optionImage.sprite = details.arrayOfOptions[i].sprite;
                                     genericData.displayText.text = details.arrayOfOptions[i].text;
                                     genericData.data.optionID = details.arrayOfOptions[i].optionID;
+                                    genericData.data.optionName = details.arrayOfOptions[i].optionName;
                                     genericData.data.optionNested = details.arrayOfOptions[i].optionText;
                                     genericData.data.actorSlotID = details.actorSlotID;
                                     //option Active or Not?
@@ -425,17 +426,17 @@ public class ModalGenericPicker : MonoBehaviour
                         else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericGearChoice:
-                        if (data.optionID > -1)
+                        if (string.IsNullOrEmpty(data.optionName) == false)
                         {
                             Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.tag.ToUpper(), colourEnd, colourDefault, colourEnd);
-                                Debug.LogFormat("[UI] -> ModalGenericPicker: gearID {0} selected{1}", data.optionID, "\n");
+                                Debug.LogFormat("[UI] -> ModalGenericPicker: gear {0} selected{1}", data.optionName, "\n");
                             }
-                            else { Debug.LogError(string.Format("Invalid gear (Null) for gearID {0}", data.optionID)); }
+                            else { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", data.optionName)); }
                         }
-                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        else { Debug.LogError("Invalid data.optionName (Null or Empty)"); }
                         break;
                     case EventType.GenericTargetInfo:
                         if (data.optionID > -1)
@@ -451,18 +452,18 @@ public class ModalGenericPicker : MonoBehaviour
                         else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;
                     case EventType.GenericCompromisedGear:
-                        if (data.optionID > -1)
+                        if (string.IsNullOrEmpty(data.optionName) == false)
                         {
                             Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
                                 text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd, 
                                     colourNeutral, datapoint, colourEnd, colourGood, GameManager.instance.playerScript.Renown, colourEnd);
-                                Debug.LogFormat("[UI] -> ModalGenericPicker: gearID {0} selected{1}", data.optionID, "\n");
+                                Debug.LogFormat("[UI] -> ModalGenericPicker: gear {0} selected{1}", data.optionName, "\n");
                             }
-                            else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", data.optionID); }
+                            else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", data.optionName); }
                         }
-                        else { Debug.LogError("Invalid data.optionID (< 0)"); }
+                        else { Debug.LogError("Invalid data.optionName (Null or Empty)"); }
                         break;
                     case EventType.GenericRecruitActorResistance:
                     case EventType.GenericRecruitActorAuthority:

@@ -686,7 +686,7 @@ namespace gameAPI
             Debug.AssertFormat(string.IsNullOrEmpty(gearNewName) == false, "Invalid gear {0}", gearNewName);
             string text = null;
             //existing gear?
-            if (string.IsNullOrEmpty(gearNewName) == false)
+            if (string.IsNullOrEmpty(gearName) == false)
             {
                 Gear gearOld = GameManager.instance.dataScript.GetGear(gearName);
                 if (gearOld != null)
