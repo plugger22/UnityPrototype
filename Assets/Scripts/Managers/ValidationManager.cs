@@ -113,7 +113,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateGear()
     {
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             foreach (var gear in dictOfGear)

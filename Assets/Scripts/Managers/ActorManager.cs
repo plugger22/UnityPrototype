@@ -1559,12 +1559,12 @@ public class ActorManager : MonoBehaviour
                                             }
 
                                             //existing gear
-                                            if (actor.GetGearID() > -1)
+                                            if (actor.GetGearName() > -1)
                                             {
-                                                Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearID());
+                                                Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                                                 if (gearOld != null)
                                                 { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
-                                                else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearID()); }
+                                                else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearName()); }
                                             }
                                             EventButtonDetails gearDetails = new EventButtonDetails()
                                             {
@@ -1600,7 +1600,7 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Take Gear - - -
                         //
-                        int actorGearID = actor.GetGearID();
+                        int actorGearID = actor.GetGearName();
                         //Player must have at least one free slot
                         if (numOfGear < maxNumOfGear)
                         {
@@ -2354,12 +2354,12 @@ public class ActorManager : MonoBehaviour
                                         Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                     }
                                     //existing gear
-                                    if (actor.GetGearID() > -1)
+                                    if (actor.GetGearName() > -1)
                                     {
-                                        Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearID());
+                                        Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                                         if (gearOld != null)
                                         { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
-                                        else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearID()); }
+                                        else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearName()); }
                                     }
                                     EventButtonDetails gearDetails = new EventButtonDetails()
                                     {
@@ -3177,7 +3177,7 @@ public class ActorManager : MonoBehaviour
 
                             }
                             //gear
-                            int gearID = actor.GetGearID();
+                            int gearID = actor.GetGearName();
                             if (gearID > -1)
                             {
                                 builderDetails.AppendFormat("{0}{1}Gear{2}", "\n", colourAlert, colourEnd);
@@ -4227,7 +4227,7 @@ public class ActorManager : MonoBehaviour
                         //
                         // - - - Gear - - -
                         //
-                        gearID = actor.GetGearID();
+                        gearID = actor.GetGearName();
                         if (gearID > -1)
                         {
                             if (isGearCheckRequired == true)
@@ -4471,7 +4471,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 // - - - Gear - - -
                                 //
-                                gearID = actor.GetGearID();
+                                gearID = actor.GetGearName();
                                 if (gearID > -1)
                                 {
                                     if (isGearCheckRequired == true)

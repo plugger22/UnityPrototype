@@ -150,7 +150,7 @@ public class SavePlayerData
     public bool isEndOfTurnGearCheck;
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
-    public List<int> listOfGear = new List<int>();
+    public List<string> listOfGear = new List<string>();
     public List<int> listOfSecrets = new List<int>();
     public List<string> listOfConditionsResistance = new List<string>();
     public List<string> listOfConditionsAuthority = new List<string>();   
@@ -290,11 +290,11 @@ public class SaveGearData
     //gear.cs data
     public List<SaveGear> listOfGear = new List<SaveGear>();
     //dataManager collections
-    public List<int> listOfCommonGear = new List<int>();
-    public List<int> listOfRareGear = new List<int>();
-    public List<int> listOfUniqueGear = new List<int>();
-    public List<int> listOfLostGear = new List<int>();
-    public List<int> listOfCurrentGear = new List<int>();
+    public List<string> listOfCommonGear = new List<string>();
+    public List<string> listOfRareGear = new List<string>();
+    public List<string> listOfUniqueGear = new List<string>();
+    public List<string> listOfLostGear = new List<string>();
+    public List<string> listOfCurrentGear = new List<string>();
 }
 #endregion
 
@@ -423,7 +423,7 @@ public class SaveSecret
 [System.Serializable]
 public class SaveGear
 {
-    public int gearID;
+    public string gearName;
     public int timesUsed;
     public bool isCompromised;
     public string reasonUsed;

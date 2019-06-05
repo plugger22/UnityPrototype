@@ -1124,7 +1124,7 @@ public class TargetManager : MonoBehaviour
                                     if (actor != null)
                                     {
                                         //actor with actor arc required can use applicable gear just like a player
-                                        int gearID = actor.GetGearID();
+                                        int gearID = actor.GetGearName();
                                         if (gearID > -1)
                                         {
                                             Gear gear = GameManager.instance.dataScript.GetGear(gearID);
@@ -1296,7 +1296,7 @@ public class TargetManager : MonoBehaviour
                                             if (target.gear != null)
                                             {
                                                 //actor, of the required actor arc type, present and available. Can use gear same as a Player
-                                                int gearID = actor.GetGearID();
+                                                int gearID = actor.GetGearName();
                                                 if (gearID > -1)
                                                 {
                                                     Gear gear = GameManager.instance.dataScript.GetGear(gearID);

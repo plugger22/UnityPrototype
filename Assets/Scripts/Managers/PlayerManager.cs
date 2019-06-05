@@ -1157,18 +1157,15 @@ public class PlayerManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(" Player's Gear");
         builder.AppendLine();
-        foreach (int gearID in listOfGear)
+        foreach (string gearName in listOfGear)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
             if (gear != null)
             {
                 builder.AppendLine();
                 builder.AppendLine();
                 builder.Append(string.Format(" {0}", gear.tag.ToUpper()));
                 builder.AppendLine();
-                /*if (gear.metaLevel != null)
-                { builder.Append(string.Format(" Metalevel \"{0}\"", gear.metaLevel.name)); }
-                else { builder.Append(" MetaLevel \"None\""); }*/
                 builder.AppendLine();
                 builder.Append(string.Format(" gearID {0}", gear.gearID));
                 builder.AppendLine();
@@ -1189,38 +1186,24 @@ public class PlayerManager : MonoBehaviour
     public string DebugAddGear(string gearName)
     {
         string text = string.Format("{0} has NOT been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
-        int gearID = -1;
         if (listOfGear.Count < GameManager.instance.gearScript.maxNumOfGear)
         {
             if (string.IsNullOrEmpty(gearName) == false)
             {
                 //find gear in dictionary
-                Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
-                if (dictOfGear != null)
+                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                if (gear != null)
                 {
-                    //loop dictionary looking for gear
-                    foreach (var gear in dictOfGear)
+                    //add gear to player's inventory
+                    if (AddGear(gearName) == true)
                     {
-                        if (gear.Value.name.Equals(gearName) == true)
-                        {
-                            gearID = gear.Value.gearID;
-                            break;
-                        }
-                    }
-                    if (gearID > -1)
-                    {
-                        //add gear to player's inventory
-                        if (AddGear(gearID) == true)
-                        {
-                            //remove from pool
-                            Gear gear = GameManager.instance.dataScript.GetGear(gearID);
-                            if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
-                            { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
-                            text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
-                            //message
-                            Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                            GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
-                        }
+                        //remove from pool
+                        if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
+                        { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
+                        text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
+                        //message
+                        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                        GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
                     }
                 }
             }

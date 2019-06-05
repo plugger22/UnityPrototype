@@ -465,9 +465,9 @@ public class GearManager : MonoBehaviour
                 //only check Active actors
                 if (actor.Status == ActorStatus.Active)
                 {
-                    if (actor.GetGearID() > -1)
+                    if (actor.GetGearName() > -1)
                     {
-                        Gear gear = GameManager.instance.dataScript.GetGear(actor.GetGearID());
+                        Gear gear = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                         if (gear != null)
                         {
                             actor.IncrementGearTimer();
@@ -524,7 +524,7 @@ public class GearManager : MonoBehaviour
                                 }
                             }
                         }
-                        else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}{1}", actor.GetGearID(), "\n"); }
+                        else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}{1}", actor.GetGearName(), "\n"); }
                     }
                 }
             }

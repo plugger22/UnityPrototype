@@ -25,7 +25,8 @@ namespace modalAPI
     /// </summary>
     public class ModalGenericMenuDetails
     {
-        public string itemName;                                         //multipurpose node, Actor or gear name
+        public string itemKey;                                          //dictionary key for stuff that has a string key
+        public string itemName;                                         //multipurpose node, Actor or gear name (inGame tag)
         public string itemDetails;
         public int itemID;                                              //multipurpose datapoint, default -1
         public int modalLevel;                                          //what level modal masking do you want? default 1
@@ -58,7 +59,7 @@ namespace modalAPI
         public ActionButtonDelegate handler;                            //method to call once button pressed, ignore if default null
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
-        public int gearID;                                              //Resistance only: special node gear actions
+        public string gearName;                                         //Resistance only: special node gear actions
         public Action gearAction;                                       //Resistance only: Special node Gear actions, eg. gearKinetic
         public int renownCost;                                          //renown cost of an action, eg. dismiss, dispose off
 
@@ -68,7 +69,7 @@ namespace modalAPI
             actorDataID = -1;
             level = -1;
             gearAction = null;
-            gearID = -1;
+            gearName = null;
             modalLevel = 1;
             modalState = ModalSubState.None;
         }
@@ -142,13 +143,13 @@ namespace modalAPI
         public int connectionID;           
         public int changeInvisibility;      //adjustment to player invisibility
         public int ai_Delay;                //number of turns before AI is notified that player was spotted, default -1 (Constructor)
-        public int gearID;                  //default -1 if none (Constructor)
+        public string gearName;              //default null if none (Constructor)
 
         public ModalMoveDetails()
         {
             changeInvisibility = 0;
             ai_Delay = -1;
-            gearID = -1;
+            gearName = null;
         }
     }
 

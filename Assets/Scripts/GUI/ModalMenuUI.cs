@@ -13,7 +13,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     //data needed for tooltips and passed by ModalActionMenu.cs -> SetActionMenu
     [HideInInspector] public int nodeID;
-    [HideInInspector] public int gearID;
+    [HideInInspector] public string gearName;
     [HideInInspector] public int actorSlotID;
     [HideInInspector] public ActionMenuType menuType;
 
@@ -65,7 +65,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 myCoroutine = StartCoroutine("ShowTooltip");
                 break;
             case ActionMenuType.Gear:
-                if (gearID > -1)
+                if (string.IsNullOrEmpty(gearName) == false)
                 { myCoroutine = StartCoroutine("ShowTooltip"); }
                 break;
         }
@@ -171,7 +171,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     break;
                 case ActionMenuType.Gear:
-                    Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                     if (gear != null)
                     {
                         GenericTooltipDetails details = GameManager.instance.gearScript.GetGearTooltip(gear);
@@ -203,11 +203,6 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                     if (actor != null)
                     {
-                        /*Gear gearActor = null;
-                        int gearID = actor.GetGearID();
-                        if (gearID > -1)
-                        { gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID()); }*/
-
                         //do once
                         while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
                         {
@@ -215,20 +210,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             Vector3 positionActor = rectTransform.position;
                             positionActor.x += 70;
                             positionActor.y -= 100;
-
-                            /*ActorTooltipData actorTooltip = new ActorTooltipData()
-                            {
-                                tooltipPos = positionActor,
-                                actor = actor,
-                                action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
-                                gear = gearActor,
-                                listOfSecrets = actor.GetSecretsTooltipList(),
-                                arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
-                                arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
-                            };*/
-
                             ActorTooltipData actorTooltip = actor.GetTooltipData(positionActor);
-
                             GameManager.instance.tooltipActorScript.SetTooltip(actorTooltip);
                             yield return null;
                             //fade in

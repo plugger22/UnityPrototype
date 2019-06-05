@@ -1040,7 +1040,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteGearData()
     {
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             foreach(var gear in dictOfGear)
@@ -1049,7 +1049,7 @@ public class FileManager : MonoBehaviour
                 {
                     //create new SaveGear object and copy across all dynamic data
                     SaveGear saveGear = new SaveGear();
-                    saveGear.gearID = gear.Value.gearID;
+                    saveGear.gearName = gear.Value.name;
                     saveGear.timesUsed = gear.Value.timesUsed;
                     saveGear.isCompromised = gear.Value.isCompromised;
                     saveGear.reasonUsed = gear.Value.reasonUsed;
@@ -1069,7 +1069,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfGear (Null)"); }
         //list -> listOfCommonGear
-        List<int> tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon);
+        List<string> tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon);
         if (tempList != null)
         { write.gearData.listOfCommonGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
@@ -1390,7 +1390,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
         GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
         //gear
-        List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         listOfGear.Clear();
         listOfGear.AddRange(read.playerData.listOfGear);
         //secrets
@@ -2561,7 +2561,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadGearData()
     {
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             for (int i = 0; i < read.gearData.listOfGear.Count; i++)
@@ -2570,9 +2570,9 @@ public class FileManager : MonoBehaviour
                 if (saveGear != null)
                 {
                     //find in dictionary
-                    if (dictOfGear.ContainsKey(saveGear.gearID) == true)
+                    if (dictOfGear.ContainsKey(saveGear.gearName) == true)
                     {
-                        Gear gear = dictOfGear[saveGear.gearID];
+                        Gear gear = dictOfGear[saveGear.gearName];
                         if (gear != null)
                         {
                             //copy over dynamic data
@@ -2588,9 +2588,9 @@ public class FileManager : MonoBehaviour
                             gear.statTimesSaved = saveGear.statTimesSaved;
                             gear.statRenownSpent = saveGear.statRenownSpent;
                         }
-                        else { Debug.LogWarningFormat("Invalid gear (Null) in dict for gearID {0}", saveGear.gearID); }
+                        else { Debug.LogWarningFormat("Invalid gear (Null) in dict for gearID {0}", saveGear.gearName); }
                     }
-                    else { Debug.LogWarningFormat("Gear not found in dictionary for gearID {0}", saveGear.gearID); }
+                    else { Debug.LogWarningFormat("Gear not found in dictionary for gearID {0}", saveGear.gearName); }
                 }
                 else { Debug.LogWarningFormat("Invalid saveGear (Null) for read.gearData.listOfGear[{0}]", i); }
             }
@@ -2598,7 +2598,7 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfGear (Null)"); }
         //list -> Common gear
         GearRarity rarity = GameManager.instance.gearScript.gearCommon;
-        List<int> tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        List<string> tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
         if (tempList != null)
         { GameManager.instance.dataScript.SetGearList(read.gearData.listOfCommonGear, rarity); }
         else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
@@ -3086,7 +3086,7 @@ public class FileManager : MonoBehaviour
         saveActor.slotID = actor.slotID;
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;
-        saveActor.gearID = actor.GetGearID();
+        saveActor.gearID = actor.GetGearName();
         saveActor.isMale = actor.isMale;
         saveActor.actorName = actor.actorName;
         saveActor.firstName = actor.firstName;

@@ -525,7 +525,7 @@ public class ActionManager : MonoBehaviour
         //no error -> PROCEED to some form of dice outcome for gear use
         if (errorFlag == false)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+            Gear gear = GameManager.instance.dataScript.GetGear(details.gearName);
             if (gear != null)
             {
                 GameManager.instance.gearScript.SetGearUsed(gear, string.Format("affect {0} district", node.nodeName));
@@ -1497,13 +1497,13 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
-                gear = GameManager.instance.dataScript.GetGear(details.gearID);
+                gear = GameManager.instance.dataScript.GetGear(details.gearName);
                 if (gear != null)
                 {
                     //Give Gear
                     outcomeDetails.textTop = string.Format("{0}, {1}, thanks you for the {2}{3}{4}{5}", actor.arc.name, actor.actorName, "\n", colourNeutral, gear.tag, colourEnd);
                     //update actor details
-                    string textGear = actor.AddGear(gear.gearID);
+                    string textGear = actor.AddGear(gear.name);
                     //gear stats
                     gear.statTimesGiven++;
                     //get actor's preferred gear
@@ -1545,7 +1545,7 @@ public class ActionManager : MonoBehaviour
                     { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
 
                 }
-                else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearID); errorFlag = true; }
+                else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearName); errorFlag = true; }
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1554,7 +1554,7 @@ public class ActionManager : MonoBehaviour
         {
             //Remove Gear
             if (gear != null)
-            { GameManager.instance.playerScript.RemoveGear(gear.gearID); }
+            { GameManager.instance.playerScript.RemoveGear(gear.name); }
             outcomeDetails.sprite = actor.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //give actor motivation boost
@@ -1593,7 +1593,7 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, details.side);
             if (actor != null)
             {
-                gear = GameManager.instance.dataScript.GetGear(details.gearID);
+                gear = GameManager.instance.dataScript.GetGear(details.gearName);
                 if (gear != null)
                 {
                     //Cost to take gear
@@ -1625,7 +1625,7 @@ public class ActionManager : MonoBehaviour
                     else
                     { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
                 }
-                else { Debug.LogErrorFormat("Invalid gear (Null) for details.gearID {0}", details.gearID); errorFlag = true; }
+                else { Debug.LogErrorFormat("Invalid gear (Null) for details.gear {0}", details.gearName); errorFlag = true; }
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1637,7 +1637,7 @@ public class ActionManager : MonoBehaviour
             //remove gear from actor
             actor.RemoveGear(GearRemoved.Taken);
             //Give Gear to Player
-            GameManager.instance.playerScript.AddGear(gear.gearID);
+            GameManager.instance.playerScript.AddGear(gear.name);
             //deduct motivation from actor
             if (motivationCost > 0)
             {
@@ -1691,7 +1691,7 @@ public class ActionManager : MonoBehaviour
             if (details != null)
             {
                 //Get Gear
-                Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+                Gear gear = GameManager.instance.dataScript.GetGear(details.gearName);
                 if (gear != null)
                 {
                     List<Effect> listOfEffects = gear.listOfPersonalEffects;
@@ -1751,7 +1751,7 @@ public class ActionManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", details.gearID);
+                    Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", details.gearName);
                     errorFlag = true;
                 }
             }
@@ -1778,7 +1778,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.reason = "Use Gear (Personal Use)";
             }
             //Gear Used            
-            Gear gear = GameManager.instance.dataScript.GetGear(details.gearID);
+            Gear gear = GameManager.instance.dataScript.GetGear(details.gearName);
             if (gear != null)
             { GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit");  }
             else
@@ -2430,7 +2430,7 @@ public class ActionManager : MonoBehaviour
         bool successFlag = true;
         string msgText = "Unknown";
         int numOfTeams = 0;
-        int gearID;
+        string gearName;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
@@ -2443,7 +2443,7 @@ public class ActionManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                 if (actor != null)
                 {
-                    gearID = actor.GetGearID();
+                    gearName = actor.GetGearName();
                     //add actor to reserve pool
                     if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
                     {
@@ -2489,9 +2489,9 @@ public class ActionManager : MonoBehaviour
                                 numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //gear
-                            if (gearID > -1)
+                            if (string.IsNullOrEmpty(gearName) == false)
                             {
-                                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                                 if (gear != null)
                                 {
                                     if (builderBottom.Length > 0)
@@ -2501,7 +2501,7 @@ public class ActionManager : MonoBehaviour
                                     string gearText = string.Format("{0} gear lost by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
                                     GameManager.instance.messageScript.GearLost(gearText, gear, actor);
                                 }
-                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gearID {0}", gearID); }
+                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gear {0}", gearName); }
                             }
                         }
                         else

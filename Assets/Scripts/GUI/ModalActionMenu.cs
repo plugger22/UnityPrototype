@@ -131,7 +131,7 @@ public class ModalActionMenu : MonoBehaviour
                 case ActionMenuType.Player:
                     break;
                 case ActionMenuType.Gear:
-                    modal.gearID = details.itemID;
+                    modal.gearName = details.itemKey;
                     break;
             }
             //There can be a max of 6 buttons (5 plus 1 x Cancel)

@@ -1363,7 +1363,7 @@ public class NodeManager : MonoBehaviour
                 //
                 if (secLevel < 4)
                 {
-                    List<int> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                    List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
                     if (listOfGear.Count > 0)
                     {
                         string movement = GameManager.instance.gearScript.typeMovement.name;
@@ -1416,7 +1416,7 @@ public class NodeManager : MonoBehaviour
                                     moveGearDetails.nodeID = nodeID;
                                     moveGearDetails.connectionID = connection.connID;
                                     moveGearDetails.changeInvisibility = adjustInvisibility;
-                                    moveGearDetails.gearID = gear.gearID;
+                                    moveGearDetails.gearName = gear.name;
                                     //button target details (red for High security to match red connection security colour on map)
                                     string colourGearLevel = colourNeutral;
                                     if (gear.data == 3) { colourGearLevel = colourGood; }
@@ -1468,7 +1468,7 @@ public class NodeManager : MonoBehaviour
                 moveDetails.nodeID = nodeID;
                 moveDetails.connectionID = connection.connID;
                 moveDetails.changeInvisibility = adjustInvisibility;
-                moveDetails.gearID = -1;
+                moveDetails.gearName = null;
                 //button target details
                 EventButtonDetails eventDetails = new EventButtonDetails()
                 {
@@ -2042,9 +2042,9 @@ public class NodeManager : MonoBehaviour
                 //
                 // - - - Gear - - -
                 //
-                if (moveDetails.gearID > -1)
+                if (string.IsNullOrEmpty(moveDetails.gearName) == false)
                 {
-                    Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearID);
+                    Gear gear = GameManager.instance.dataScript.GetGear(moveDetails.gearName);
                     if (gear != null)
                     {
                         builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
@@ -2054,7 +2054,7 @@ public class NodeManager : MonoBehaviour
                         moveData.text = builder.ToString();
                         ProcessMoveOutcome(moveData);
                     }
-                    else { Debug.LogError(string.Format("Invalid Gear (Null) for gearID {0}", moveDetails.gearID)); }
+                    else { Debug.LogError(string.Format("Invalid Gear (Null) for gear {0}", moveDetails.gearName)); }
                 }
                 else
                 {

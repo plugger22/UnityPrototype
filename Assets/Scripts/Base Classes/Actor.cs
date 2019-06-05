@@ -50,15 +50,15 @@ namespace gameAPI
         //trait
         private Trait trait;
         //gear
-        private int gearID;                                     //can only have one piece of gear at a time, default -1
-        private int gearTimer;                                  //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
-        private int gearTimesTaken;                             //tally of how many times player has taken gear from actor (harder to do so each time) NO GAME EFFECT AT PRESENT
+        private string gearName;                                                            //can only have one piece of gear at a time, default null
+        private int gearTimer;                                                              //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
+        private int gearTimesTaken;                                                         //tally of how many times player has taken gear from actor (harder to do so each time) NO GAME EFFECT AT PRESENT
         //collections
-        private List<int> listOfTeams = new List<int>();                    //teamID of all teams that the actor has currently deployed OnMap
-        private List<Secret> listOfSecrets = new List<Secret>();            //Player secrets that the actor knows
-        private List<Condition> listOfConditions = new List<Condition>();   //list of all conditions currently affecting the actor
-        private List<string> listOfTraitEffects = new List<string>();             //list of all traitEffect.teffID's
-        private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();  //key -> nodeID where contact is, Value -> contact
+        private List<int> listOfTeams = new List<int>();                                    //teamID of all teams that the actor has currently deployed OnMap
+        private List<Secret> listOfSecrets = new List<Secret>();                            //Player secrets that the actor knows
+        private List<Condition> listOfConditions = new List<Condition>();                   //list of all conditions currently affecting the actor
+        private List<string> listOfTraitEffects = new List<string>();                       //list of all traitEffect.teffID's
+        private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         #endregion
 
         //cached trait effects (public for serialization reasons)
@@ -83,7 +83,7 @@ namespace gameAPI
                 //remove gear
                 if (_status != ActorStatus.Active && _status != ActorStatus.Inactive)
                 {
-                    if (gearID > -1)
+                    if (string.IsNullOrEmpty(gearName) == false)
                     { RemoveGear(GearRemoved.Lost); }
                 }
             }
@@ -110,7 +110,7 @@ namespace gameAPI
         {
             nodeCaptured = -1;
             Renown = 0;
-            gearID = -1;
+            gearName = null;
             gearTimer = 0;
             gearTimesTaken = 0;
             blackmailTimer = 0;
@@ -681,14 +681,14 @@ namespace gameAPI
         /// Add gear. Max 1 piece of gear at a time. If gear already present, new gear overrides, old gear lost. Returns null if no msg (Msg is name & type of gear, if lost)
         /// </summary>
         /// <param name="gearID"></param>
-        public string AddGear(int newGearID)
+        public string AddGear(string gearNewName)
         {
-            Debug.Assert(newGearID > -1, "Invalid gearID (< 0)");
+            Debug.AssertFormat(string.IsNullOrEmpty(gearNewName) == false, "Invalid gear {0}", gearNewName);
             string text = null;
             //existing gear?
-            if (gearID > -1)
+            if (string.IsNullOrEmpty(gearNewName) == false)
             {
-                Gear gearOld = GameManager.instance.dataScript.GetGear(gearID);
+                Gear gearOld = GameManager.instance.dataScript.GetGear(gearName);
                 if (gearOld != null)
                 {
                     text = gearOld.name;
@@ -700,19 +700,19 @@ namespace gameAPI
                     string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
                     GameManager.instance.messageScript.GearLost(msgText, gearOld, this, true);
                 }
-                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                else { Debug.LogWarningFormat("Invalid gear Old (Null) for gear {0}", gearName); }
             }
             //add new gear
-            Gear gearNew = GameManager.instance.dataScript.GetGear(newGearID);
+            Gear gearNew = GameManager.instance.dataScript.GetGear(gearNewName);
             if (gearNew != null)
             {
-                gearID = newGearID;
+                gearName = gearNewName;
                 gearTimer = 0;
-                Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} added to inventory of {1}{2}", gearNew.name, arc.name, "\n");
+                Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} added to inventory of {1}{2}", gearNew.tag, arc.name, "\n");
                 //add to listOfCurrentGear (if not already present)
                 GameManager.instance.dataScript.AddGearNew(gearNew);
             }
-            else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", newGearID); }
+            else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", gearNewName); }
             //return name and type of any gear that was lost (existing prior to new gear being added)
             return text;
         }
@@ -722,27 +722,27 @@ namespace gameAPI
         /// </summary>
         public void RemoveGear(GearRemoved reason)
         {
-            if (gearID > -1)
+            if (string.IsNullOrEmpty(gearName) == false)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(gearID);
+                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                 if (gear != null)
                 { Debug.LogFormat("[Gea] Actor.cs -> RemoveGear: {0} removed from inventory of {1}{2}", gear.tag, arc.name, "\n"); }
-                else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", gearID); }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", gearName); }
                 //remove gear AFTER logger
-                gearID = -1;
+                gearName = null;
                 gearTimer = 0;
                 switch (reason)
                 {
                     case GearRemoved.Lost:
                         if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
-                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.tag, gear.gearID); }
+                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
                         break;
                     case GearRemoved.Taken:
                         gearTimesTaken++;
                         break;
                     case GearRemoved.Compromised:
                         if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
-                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.tag, gear.gearID); }
+                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
                         break;
                     default:
                         Debug.LogErrorFormat("Unrecognised GearRemoved reason \"{0}\"", reason);
@@ -761,18 +761,18 @@ namespace gameAPI
         { return gearTimesTaken; }
 
         /// <summary>
-        /// returns -1 if no gear
+        /// returns null if no gear
         /// </summary>
         /// <returns></returns>
-        public int GetGearID()
-        { return gearID; }
+        public string GetGearName()
+        { return gearName; }
 
         /// <summary>
         /// used only by FileManager.cs to load in save game data
         /// </summary>
         /// <param name="gearID"></param>
-        public void SetGear(int gearID)
-        { this.gearID = gearID; }
+        public void SetGear(string gearName)
+        { this.gearName = gearName; }
 
         public void SetGearTimer(int gearTimer)
         { this.gearTimer = gearTimer; }
@@ -806,8 +806,8 @@ namespace gameAPI
         public ActorTooltipData GetTooltipData(Vector3 position)
         {
             Gear gear = null;
-            if (gearID > -1)
-            { gear = GameManager.instance.dataScript.GetGear(gearID); }
+            if (string.IsNullOrEmpty(gearName) == false)
+            { gear = GameManager.instance.dataScript.GetGear(gearName); }
             ActorTooltipData data = new ActorTooltipData()
             {
                 tooltipPos = position,

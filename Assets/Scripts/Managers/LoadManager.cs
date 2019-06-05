@@ -936,7 +936,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Gear - - -
         //
-        Dictionary<int, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             counter = 0;
@@ -949,11 +949,11 @@ public class LoadManager : MonoBehaviour
                 gear.gearID = counter++;
                 //add to dictionary
                 try
-                { dictOfGear.Add(gear.gearID, gear); }
+                { dictOfGear.Add(gear.name, gear); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Gear (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Gear (duplicate) ID \"{0}\" for \"{1}\"", counter, gear.tag)); counter--; }
+                { Debug.LogError(string.Format("Invalid Gear (duplicate) \"{0}\" for \"{1}\"", counter, gear.name)); counter--; }
             }
             numDict = dictOfGear.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfGear has {0} entries{1}", numDict, "\n");
