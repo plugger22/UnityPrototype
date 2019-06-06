@@ -44,13 +44,13 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
     [Range(1, 99)] public int unhappyLoseMotivationChance = 40;
     [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
-    [Range(1, 99)] public int unhappyTakeActionChance = 25;
+    [Range(1, 99)] public int unhappyTakeActionChance = 30;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the first check made (ignored if actor has no secrets")]
     [Range(1, 99)] public int unhappyRevealSecretChance = 50;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the second check made. Double chance if actor has previously complained")]
     [Range(1, 99)] public int unhappyResignChance = 25;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the third check made. An actor can only complain once")]
-    [Range(1, 99)] public int unhappyComplainChance = 50;
+    [Range(1, 99)] public int unhappyComplainChance = 60;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Reassured")]
     [Range(1, 10)] public int unhappyReassureBoost = 5;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Bullied")]
@@ -5049,7 +5049,7 @@ public class ActorManager : MonoBehaviour
                     /*StringBuilder builder = new StringBuilder();*/
                     //message
                     msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.secretID);
+                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.name);
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {
@@ -5080,7 +5080,7 @@ public class ActorManager : MonoBehaviour
                     //attempt executed, Blackmailer condition cancelled
                     actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
                     //remove secret from all actors and player
-                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
+                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
                 }
                 else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
             }
@@ -6333,7 +6333,7 @@ public class ActorManager : MonoBehaviour
                         else { Debug.LogWarning("Invalid player node (Null)"); }
                     }
                     //remove secret from all actors and player
-                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID);
+                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
                     //message
                     GameManager.instance.messageScript.ActorRevealSecret(string.Format("{0} Reveals your SECRET", actor.arc.name), actor, secret, "Unhappy at being left in Reserve");
                 }

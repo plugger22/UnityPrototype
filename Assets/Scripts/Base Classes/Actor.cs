@@ -490,8 +490,16 @@ namespace gameAPI
         public List<Secret> GetListOfSecrets()
         { return listOfSecrets; }
 
-        public bool CheckSecretPresent(int secretID)
-        { return listOfSecrets.Exists(x => x.secretID == secretID); }
+        public bool CheckSecretPresent(string secretName)
+        {
+            if (string.IsNullOrEmpty(secretName) == false)
+            { return listOfSecrets.Exists(x => x.name == secretName); }
+            else
+            {
+                Debug.LogError("Invalid secretName (Null)");
+                return false;
+            }
+        }
 
         public void RemoveAllSecrets()
         { listOfSecrets.Clear(); }
@@ -505,7 +513,7 @@ namespace gameAPI
             if (secret != null)
             {
                 //check same secret doesn't already exist
-                if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
+                if (listOfSecrets.Exists(x => x.name == secret.name) == false)
                 {
                     //check space for a new secret
                     if (listOfSecrets.Count < maxNumOfSecrets)
@@ -515,11 +523,11 @@ namespace gameAPI
                         //message
                         string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
                         GameManager.instance.messageScript.ActorSecret(msgText, this, secret);
-                        Debug.LogFormat("[Sec] Actor.cs -> AddSecret: {0}, {1}, ID {2}, learns {3} secret, ID {4}{5}", actorName, arc.name, actorID, secret.tag, secret.secretID, "\n");
+                        Debug.LogFormat("[Sec] Actor.cs -> AddSecret: {0}, {1}, ID {2}, learns {3} secret, {4}{5}", actorName, arc.name, actorID, secret.tag, secret.name, "\n");
                     }
                     else { Debug.LogFormat("[Sec] Actor.cs -> AddSecret: Secret NOT added to {0}, {1}, ID {2} as no space available{3}", actorName, arc.name, actorID, "\n"); }
                 }
-                else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
+                else { Debug.LogWarningFormat("Duplicate secret already in list, secret {0}", secret.name); }
             }
         }
 
@@ -528,27 +536,32 @@ namespace gameAPI
         /// </summary>
         /// <param name="secretID"></param>
         /// <returns></returns>
-        public bool RemoveSecret(int secretID)
+        public bool RemoveSecret(string secretName)
         {
             bool isSuccess = false;
-            if (CheckSecretPresent(secretID) == true)
+            if (string.IsNullOrEmpty(secretName) == false)
             {
-                //reverse loop through and remove secret
-                for (int i = listOfSecrets.Count - 1; i >= 0; i--)
+                
+                if (CheckSecretPresent(secretName) == true)
                 {
-                    if (listOfSecrets[i].secretID == secretID)
+                    //reverse loop through and remove secret
+                    for (int i = listOfSecrets.Count - 1; i >= 0; i--)
                     {
-                        listOfSecrets.RemoveAt(i);
-                        isSuccess = true;
-                        //admin
-                        Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
-                        if (secret != null)
-                        { Debug.LogFormat("[Sec] Actor.cs -> RemoveSecret: {0}, {1}, ID {2}, {3} secret REMOVED, ID {4}{5}", actorName, arc.name, actorID, secret.tag, secret.secretID, "\n"); }
-                        else { Debug.LogErrorFormat("Invalid secret (Null) for secretID {0}", secret.secretID); }
-                        break;
+                        if (listOfSecrets[i].name.Equals(secretName) == true)
+                        {
+                            listOfSecrets.RemoveAt(i);
+                            isSuccess = true;
+                            //admin
+                            Secret secret = GameManager.instance.dataScript.GetSecret(secretName);
+                            if (secret != null)
+                            { Debug.LogFormat("[Sec] Actor.cs -> RemoveSecret: {0}, {1}, {2}, {3} secret REMOVED {4}{5}", actorName, arc.name, actorID, secret.tag, secret.name, "\n"); }
+                            else { Debug.LogErrorFormat("Invalid secret (Null) for secret {0}", secret.name); }
+                            break;
+                        }
                     }
                 }
             }
+            else { Debug.LogError("Invalid secretName (Null)"); }
             return isSuccess;
         }
 
@@ -592,7 +605,7 @@ namespace gameAPI
             if (listOfSecrets.Count > 0)
             {
                 foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID {1}, {2} ({3}), status: {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status); }
+                { builder.AppendFormat("{0} {1}, {2} ({3}), status: {4}", "\n", secret.name, secret.name, secret.tag, secret.status); }
             }
             else { builder.AppendFormat("{0} No records", "\n"); }
             return builder.ToString();

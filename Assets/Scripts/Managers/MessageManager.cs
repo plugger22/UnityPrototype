@@ -398,7 +398,7 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Secret;
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
-            message.data0 = secret.secretID;
+            message.data0 = secret.name;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
@@ -961,7 +961,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secret.secretID;
+            message.data1 = secret.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
@@ -1007,7 +1007,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secret.secretID;
+            message.data1 = secret.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;

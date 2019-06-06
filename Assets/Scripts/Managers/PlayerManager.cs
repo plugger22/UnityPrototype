@@ -989,7 +989,7 @@ public class PlayerManager : MonoBehaviour
         if (secret != null)
         {
             //check same secret doesn't already exist
-            if (listOfSecrets.Exists(x => x.secretID == secret.secretID) == false)
+            if (listOfSecrets.Exists(x => x.name == secret.name) == false)
             {
                 //check space for a new secret
                 if (listOfSecrets.Count < maxNumOfSecrets)
@@ -1000,11 +1000,11 @@ public class PlayerManager : MonoBehaviour
                     secret.gainedWhen = GameManager.instance.turnScript.Turn;
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
-                    Debug.LogFormat("[Sec] PlayerManager.cs -> AddSecret: Player learns {0} secret, ID {1}{2}", secret.tag, secret.secretID, "\n");
+                    Debug.LogFormat("[Sec] PlayerManager.cs -> AddSecret: Player learns {0} secret, ID {1}{2}", secret.tag, secret.name, "\n");
                 }
                 else { Debug.LogWarning("Secret NOT added as not enough space"); }
             }
-            else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.secretID); }
+            else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.name); }
         }
     }
 
@@ -1013,15 +1013,15 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="secretID"></param>
     /// <returns></returns>
-    public bool RemoveSecret(int secretID)
+    public bool RemoveSecret(string secretName)
     {
         bool isSuccess = false;
-        if (listOfSecrets.Exists(x => x.secretID == secretID) == true)
+        if (listOfSecrets.Exists(x => x.name == secretName) == true)
         {
             //reverse loop through and remove secret
             for (int i = listOfSecrets.Count - 1; i >= 0; i--)
             {
-                if (listOfSecrets[i].secretID == secretID)
+                if (listOfSecrets[i].name.Equals(secretName) == true)
                 {
                     Secret secret = listOfSecrets[i];
                     //reset secret known
@@ -1042,7 +1042,7 @@ public class PlayerManager : MonoBehaviour
                     listOfSecrets.RemoveAt(i);
                     isSuccess = true;
                     //admin
-                    Debug.LogFormat("[Sec] PlayerManager.cs -> RemoveSecret: Player REMOVES {0} secret, ID {1}{2}", secret.tag, secret.secretID, "\n");
+                    Debug.LogFormat("[Sec] PlayerManager.cs -> RemoveSecret: Player REMOVES {0} secret {1}{2}", secret.tag, secret.name, "\n");
                     break;
                 }
             }
@@ -1107,7 +1107,7 @@ public class PlayerManager : MonoBehaviour
         if (listOfSecrets.Count > 0)
         {
             foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.secretID, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
+                { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.name, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
         }
         else { builder.AppendFormat("{0} No records", "\n"); }
         return builder.ToString();

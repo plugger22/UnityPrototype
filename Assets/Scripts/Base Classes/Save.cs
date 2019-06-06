@@ -75,9 +75,9 @@ public class SaveOptionData
 public class SaveDataData
 {
     //secrets
-    public List<int> listOfPlayerSecrets = new List<int>();
-    public List<int> listOfRevealedSecrets = new List<int>();
-    public List<int> listOfDeletedSecrets = new List<int>();
+    public List<string> listOfPlayerSecrets = new List<string>();
+    public List<string> listOfRevealedSecrets = new List<string>();
+    public List<string> listOfDeletedSecrets = new List<string>();
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
     //contacts
     public int contactCounter;
@@ -151,7 +151,7 @@ public class SavePlayerData
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
     public List<string> listOfGear = new List<string>();
-    public List<int> listOfSecrets = new List<int>();
+    public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditionsResistance = new List<string>();
     public List<string> listOfConditionsAuthority = new List<string>();   
 }
@@ -406,7 +406,7 @@ public class SaveTargetData
 [System.Serializable]
 public class SaveSecret
 {
-    public int secretID;
+    public string secretName;
     public int gainedWhen;
     public int revealedWho;
     public int revealedWhen;
@@ -495,7 +495,7 @@ public class SaveActor
     public int gearTimesTaken;
     //collections
     public List<int> listOfTeams = new List<int>();
-    public List<int> listOfSecrets = new List<int>();
+    public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditions = new List<string>();   
     public List<int> listOfContactNodes = new List<int>();
     public List<int> listOfContacts = new List<int>();

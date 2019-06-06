@@ -189,7 +189,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();                  //Key -> aiDecID, Value -> DecisionAI
     private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();                    //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();         //Key -> actBreakID, Value -> ActorBreakdown
-    private Dictionary<int, Secret> dictOfSecrets = new Dictionary<int, Secret>();                              //Key -> secretID, Value -> Secret
+    private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
     private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();                   //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();                  //Key -> turn, Value -> MainInfoData set for turn
@@ -4398,7 +4398,7 @@ public class DataManager : MonoBehaviour
     // - - - Secrets - - -
     //
 
-    public Dictionary<int, Secret> GetDictOfSecrets()
+    public Dictionary<string, Secret> GetDictOfSecrets()
     { return dictOfSecrets; }
 
     public Dictionary<string, SecretType> GetDictOfSecretTypes()
@@ -4465,11 +4465,15 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="secretID"></param>
     /// <returns></returns>
-    public Secret GetSecret(int secretID)
+    public Secret GetSecret(string secretName)
     {
-        if (dictOfSecrets.ContainsKey(secretID))
-        { return dictOfSecrets[secretID]; }
-        else { Debug.LogWarningFormat("Not found secretID {0}, in dictOfSecrets", secretID); }
+        if (string.IsNullOrEmpty(secretName) == false)
+        {
+            if (dictOfSecrets.ContainsKey(secretName))
+            { return dictOfSecrets[secretName]; }
+            else { Debug.LogWarningFormat("Not found secret {0}, in dictOfSecrets", secretName); }
+        }
+        else { Debug.LogError("Invalid secretName (Null)"); }
         return null;
     }
 
@@ -4483,7 +4487,7 @@ public class DataManager : MonoBehaviour
         {
             if (secret.status == gameAPI.SecretStatus.Revealed)
             { listOfRevealedSecrets.Add(secret); }
-            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.secretID, secret.revealedWhen); }
+            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.name, secret.revealedWhen); }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
     }
@@ -4498,7 +4502,7 @@ public class DataManager : MonoBehaviour
         {
             if (secret.status == gameAPI.SecretStatus.Deleted)
             { listOfDeletedSecrets.Add(secret); }
-            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.secretID, secret.deletedWhen); }
+            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.name, secret.deletedWhen); }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
     }

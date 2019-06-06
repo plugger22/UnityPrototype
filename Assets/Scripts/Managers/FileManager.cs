@@ -272,7 +272,7 @@ public class FileManager : MonoBehaviour
         foreach (Secret secret in listOfSecrets)
         {
             if (secret != null)
-            { write.playerData.listOfSecrets.Add(secret.secretID); }
+            { write.playerData.listOfSecrets.Add(secret.name); }
             else { Debug.LogWarning("Invalid secret (Null)"); }
         }
         //conditions
@@ -347,7 +347,7 @@ public class FileManager : MonoBehaviour
         // - - - Secrets
         //
         //individual secret SO dynamic data for Secrets in dictOfSecrets
-        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             foreach (var secret in dictOfSecrets)
@@ -356,7 +356,7 @@ public class FileManager : MonoBehaviour
                 {
                     //create a new SaveSecret & pass across dynamic data
                     SaveSecret saveSecret = new SaveSecret();
-                    saveSecret.secretID = secret.Key;
+                    saveSecret.secretName = secret.Key;
                     saveSecret.gainedWhen = secret.Value.gainedWhen;
                     saveSecret.revealedWho = secret.Value.revealedWho;
                     saveSecret.revealedWhen = secret.Value.revealedWhen;
@@ -375,7 +375,7 @@ public class FileManager : MonoBehaviour
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
-            { write.dataData.listOfPlayerSecrets.Add(listOfSecrets[i].secretID); }
+            { write.dataData.listOfPlayerSecrets.Add(listOfSecrets[i].name); }
         }
         else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
         //secret list -> RevealSecrets
@@ -383,7 +383,7 @@ public class FileManager : MonoBehaviour
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
-            { write.dataData.listOfRevealedSecrets.Add(listOfSecrets[i].secretID); }
+            { write.dataData.listOfRevealedSecrets.Add(listOfSecrets[i].name); }
         }
         else { Debug.LogError("Invalid listOfRevealedSecrets (Null)"); }
         //secret list -> DeletedSecrets
@@ -391,7 +391,7 @@ public class FileManager : MonoBehaviour
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
-            { write.dataData.listOfDeletedSecrets.Add(listOfSecrets[i].secretID); }
+            { write.dataData.listOfDeletedSecrets.Add(listOfSecrets[i].name); }
         }
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
         #endregion
@@ -1530,7 +1530,7 @@ public class FileManager : MonoBehaviour
         // - - - Secrets
         //
         //Copy any dynamic data into dictOfSecrets
-        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             //loop saved list of secret changes
@@ -1540,9 +1540,9 @@ public class FileManager : MonoBehaviour
                 if (secretData != null)
                 {
                     //find record in dict
-                    if (dictOfSecrets.ContainsKey(secretData.secretID) == true)
+                    if (dictOfSecrets.ContainsKey(secretData.secretName) == true)
                     {
-                        Secret secret = dictOfSecrets[secretData.secretID];
+                        Secret secret = dictOfSecrets[secretData.secretName];
                         if (secret != null)
                         {
                             //copy data across
@@ -1553,9 +1553,9 @@ public class FileManager : MonoBehaviour
                             secret.deletedWhen = secretData.deleteWhen;
                             secret.SetListOfActors(secretData.listOfActors);
                         }
-                        else { Debug.LogErrorFormat("Invalid secret (Null) for secretID {0}", secretData.secretID); }
+                        else { Debug.LogErrorFormat("Invalid secret (Null) for secret {0}", secretData.secretName); }
                     }
-                    else { Debug.LogWarningFormat("Secret ID {0} not found in dictionary, record not updated for dynamic data", secretData.secretID); }
+                    else { Debug.LogWarningFormat("Secret {0} not found in dictionary, record not updated for dynamic data", secretData.secretName); }
                 }
                 else { Debug.LogErrorFormat("Invalid SaveSecret (Null) for listOfSecretChanges[{0}]", i); }
             }
@@ -3134,7 +3134,7 @@ public class FileManager : MonoBehaviour
                 {
                     Secret secret = listOfSecrets[i];
                     if (secret != null)
-                    { saveActor.listOfSecrets.Add(secret.secretID); }
+                    { saveActor.listOfSecrets.Add(secret.name); }
                     else { Debug.LogWarningFormat("Invalid secret in listOfSecrets[{0}]", i); }
                 }
             }

@@ -369,6 +369,7 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  showGUI: 0
   button_height: 20
   offset_x: 5
   offset_y: 4
@@ -2177,7 +2178,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   seedDev: 0
   isAuthority: 0
-  autoRunTurns: 20
+  autoRunTurns: 10
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
