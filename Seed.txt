@@ -199,3 +199,96 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 31680 -> Thursday, 6 June 2019 10:25 AM
+City seed 890 -> Arles, France
+WARNING Gear "Work Permit", ID 19, not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4707)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1245)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	WARNING Gear "Work Permit", ID 19, not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4707)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1245)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	
+Dev seed 52500 -> Thursday, 6 June 2019 10:35 AM
+City seed 890 -> Arles, France
+ERROR Duplicate record exists for MainInfoData turn 13
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:523)
+	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:448)
+	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:306)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 25862 -> Thursday, 6 June 2019 10:40 AM
+City seed 890 -> Arles, France
+WARNING Gear "Work Permit", ID 19, not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4707)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1245)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	ERROR Duplicate record exists for MainInfoData turn 18
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:523)
+	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:448)
+	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:306)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 22343 -> Thursday, 6 June 2019 10:49 AM
+City seed 890 -> Arles, France
+
+Dev seed 43394 -> Thursday, 6 June 2019 10:55 AM
+City seed 890 -> Arles, France
+
+Dev seed 20771 -> Thursday, 6 June 2019 10:57 AM
+City seed 890 -> Arles, France
+ERROR Duplicate record exists for MainInfoData turn 13
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:523)
+	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:448)
+	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:306)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 44877 -> Thursday, 6 June 2019 11:08 AM
+City seed 890 -> Arles, France
+ERROR Duplicate record exists for MainInfoData turn 13
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:523)
+	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:448)
+	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:306)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 27633 -> Thursday, 6 June 2019 11:32 AM
+City seed 890 -> Arles, France
+
+Dev seed 63899 -> Thursday, 6 June 2019 11:34 AM
+City seed 890 -> Arles, France
+
+Dev seed 28949 -> Thursday, 6 June 2019 11:34 AM
+City seed 890 -> Arles, France
+ERROR Duplicate record exists for MainInfoData turn 13
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:523)
+	TurnManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/TurnManager.cs:448)
+	<InfoApp>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:306)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 37902 -> Thursday, 6 June 2019 2:08 PM
+City seed 890 -> Arles, France
+
+Dev seed 12126 -> Thursday, 6 June 2019 2:14 PM
+City seed 890 -> Arles, France
+ERROR Invalid actor (Null) for actorSlotID 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActionManager:ProcessManageActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:654)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:161)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ModalGenericPicker:ProcessBackButton() (at Assets/Scripts/GUI/ModalGenericPicker.cs:381)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:147)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 58000 -> Thursday, 6 June 2019 2:44 PM
+City seed 890 -> Arles, France

@@ -38,10 +38,11 @@ public class ModalGenericPicker : MonoBehaviour
     private ButtonInteraction buttonBackInteraction;                //specifically for the Back button as it can be dynamically updated
     private static ModalGenericPicker modalGenericPicker;
 
-    private int optionIDSelected;                                   //slot ID (eg arrayOfGenericOptions [index] of selected option
+    private int optionIDSelected;                                   //slot ID (eg arrayOfGenericOptions [index] of selected option [EDIT: Not sure about this, I think it is teamID, targetID, actorID etc)
     private string optionTextSelected;                              //used for nested Generic Picker windows, ignore otherwise
-    private int nodeIDSelected;
-    private int actorSlotIDSelected;
+    private string optionNameSelected;                              //used instead of optionID for objects with a name key, eg. gear
+    private int nodeIDSelected;                                     //used for MANAGE
+    private int actorSlotIDSelected;                                //used for MANAGE
     private int datapoint;                                          //generic data point passed to picker by initialising method
     private EventType defaultReturnEvent;                           //event to trigger once confirmation button is clicked
     private EventType backReturnEvent;                              //event triggered when back button clicked (dynamic -> SetBackButton)
@@ -229,6 +230,7 @@ public class ModalGenericPicker : MonoBehaviour
                 actorSlotIDSelected = details.actorSlotID;
                 datapoint = details.data;
                 optionIDSelected = -1;
+                optionNameSelected = "";
                 //assign sprites, texts, optionID's and tooltips
                 for (int i = 0; i < details.arrayOfOptions.Length; i++)
                 {
@@ -359,9 +361,9 @@ public class ModalGenericPicker : MonoBehaviour
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
         //reset GUI elements to default
         SetConfirmButton(false);
-        
-        /*SetBackButton(EventType.None); Edit: 4Mar19 -> if these are live then the back button won't work
-        nestedDetails = null;*/
+
+        SetBackButton(EventType.None); /*Edit: 4Mar19 -> if these are live then the back button won't work*/
+        nestedDetails = null;
 
         //set game state
         GameManager.instance.inputScript.ResetStates();
@@ -395,6 +397,7 @@ public class ModalGenericPicker : MonoBehaviour
             {
                 //update currently selected option
                 optionIDSelected = data.optionID;
+                optionNameSelected = data.optionName;
                 optionTextSelected = data.optionNested;
                 //change top text to show which option selected
                 switch (defaultReturnEvent)
@@ -673,9 +676,11 @@ public class ModalGenericPicker : MonoBehaviour
     {
         GenericReturnData returnData = new GenericReturnData();
         returnData.optionID = optionIDSelected;
+        returnData.optionName = optionNameSelected;
         returnData.optionNested = optionTextSelected;
         returnData.nodeID = nodeIDSelected;
         returnData.actorSlotID = actorSlotIDSelected;
+
         //close picker window regardless
         EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "ModalGenericPicker.cs -> ProcessGenericChoice");
         //trigger the appropriate return Event and pass selected optionID back to the originating class

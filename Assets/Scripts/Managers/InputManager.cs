@@ -157,7 +157,7 @@ public class InputManager : MonoBehaviour
                             break;
                     }
                 }
-                else if (Input.GetButton("Cancel") == true)
+                else if (Input.GetButton("Cancel") == true)     //ESC
                 {
                     //can only exit while in Normal mode -> NOTE: use Input.inputString only for normal key presses (won't pick up non-standard keypresses)
                     switch (_gameState)
@@ -170,12 +170,17 @@ public class InputManager : MonoBehaviour
                             //do nothing, already exiting game
                             break;
                         default:
-                            //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
-                            EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessInput Exit \"Cancel (ESC)\"");
+                            //if debug overlay on then switch this off first before any game UI element
+                            if (GameManager.instance.debugScript.showGUI == false)
+                            {
+                                //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
+                                EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessInput Exit \"Cancel (ESC)\"");
+                            }
+                            else { GameManager.instance.debugScript.showGUI = false; }
                             break;
                     }
                 }
-                else if (Input.GetButton("Multipurpose") == true)
+                else if (Input.GetButton("Multipurpose") == true)  //SPACEBAR
                 {
                     switch (_gameState)
                     {
@@ -209,7 +214,7 @@ public class InputManager : MonoBehaviour
                             break;
                     }
                 }
-                else if (Input.GetButtonDown("NewTurn") == true)
+                else if (Input.GetButtonDown("NewTurn") == true)    //ENTER
                 {
                     //new turn only if in normal play game state
                     if (GameState == GameState.PlayGame)
@@ -285,7 +290,6 @@ public class InputManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper()));
                 }
                 break;
-
             case ModalState.ModalUI:
                 //Hotkeys for Modal UI windows
                 switch (_modalSubState)
@@ -463,6 +467,7 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ModalInfo -> {0}{1}", ModalInfoState, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n");
         builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.instance.nodeScript.NodeShowFlag, "\n");
+        builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.instance.turnScript.haltExecution, "\n");
         builder.AppendFormat(" {0} PlayerSide -> {1}{2}{3}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n", "\n");
         builder.AppendFormat(" currentSide -> {0}{1}", GameManager.instance.turnScript.currentSide.name, "\n");
         builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.instance.sideScript.authorityCurrent, "\n");

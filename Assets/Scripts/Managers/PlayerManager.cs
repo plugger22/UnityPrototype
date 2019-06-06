@@ -605,12 +605,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. gearName is the compromised gear that the player chose to save. Resets all gear
+    /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. gearSaveName is the compromised gear that the player chose to save. Resets all gear
     /// returns name of gear saved (UPPER) [assumes only one piece of gear can be saved per turn], if any. Otherwise returns Empty string
     /// </summary>
-    public string UpdateGear(int renownUsed = -1, string gearName = "")
+    public void UpdateGear(int renownUsed = -1, string gearSaveName = null)
     {
-        string gearSavedName = "";
         if (listOfGear.Count > 0)
         {
             //reverse loop through looking for compromised gear
@@ -621,8 +620,51 @@ public class PlayerManager : MonoBehaviour
                 {
                     if (gear.isCompromised == true)
                     {
+                        if (gearSaveName != null)
+                        {
+                            //if not saved gear then remove
+                            if (gear.name.Equals(gearSaveName) == false)
+                            {
+                                //gear lost
+                                string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
+                                GameManager.instance.messageScript.GearCompromised(msgText, gear, -1);
+                                RemoveGearItem(gear, true);
+                            }
+                            else
+                            {
+                                //gear saved
+                                ResetGearItem(gear);
+                                string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.tag, gear.type.name);
+                                GameManager.instance.messageScript.GearCompromised(msgText, gear, renownUsed);
+                            }
+                        }
+                        else
+                        {
+                            //gear lost
+                            string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
+                            GameManager.instance.messageScript.GearCompromised(msgText, gear, -1);
+                            RemoveGearItem(gear, true);
+                        }
+                    }
+                    else
+                    {
+                        //no compromised gear
+                        ResetGearItem(gear);
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid gear (Null) for gear ID {0}", listOfGear[i]); }
+            }
+            #region archived code
+            /*// reverse loop through looking for compromised gear
+            for (int i = listOfGear.Count - 1; i >= 0; i--)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                if (gear != null)
+                {
+                    if (gear.isCompromised == true)
+                    {
                         //if not saved gear then remove
-                        if (gear.name.Equals(gearName) == false)
+                        if (gear.name.Equals(gearSaveName) == false)
                         {
                             //message
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
@@ -645,9 +687,9 @@ public class PlayerManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gear ID {0}", listOfGear[i]); }
-            }
+            }*/
+            #endregion
         }
-        return gearSavedName;
     }
 
     //

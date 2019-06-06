@@ -214,6 +214,7 @@ namespace modalAPI
         public GlobalSide side;
         public int nodeID;
         public int actorSlotID;
+        public string gearName;
         public int data;                                                                           //general purpose datapoint, can be ignored
         public bool isHaltExecution;                                                               //if true execution is halted until outcome obtained, ignore otherwise
         public ModalGenericPickerSubState subState;                                                         //can be ignored unless needed
@@ -257,10 +258,10 @@ namespace modalAPI
     {
         public int optionID;                //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, gearID, etc.
         public string optionText;           //used instead of an ID when you multiple nested Generic pickers, ignore otherwise
-        public string optionName;           //Used instead of optionID where you name keys, e.g gear
         public string optionNested;         //Used instead of optionID where you have multiple nested Generic Pickers, ignore otherwise
-        public int nodeID;
-        public int actorSlotID;                    
+        public string optionName;           //Used instead of optionID for name orientated objects, eg. gear
+        public int nodeID;                  //Used for MANAGE
+        public int actorSlotID;             //Used for MANAGE
     }
 
     /// <summary>

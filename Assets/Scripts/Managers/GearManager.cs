@@ -571,7 +571,7 @@ public class GearManager : MonoBehaviour
                             {
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
-                                optionDetails.optionID = gear.gearID;
+                                /*optionDetails.optionID = gear.gearID;*/
                                 optionDetails.optionName = gear.name;
                                 optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
@@ -588,7 +588,7 @@ public class GearManager : MonoBehaviour
                             {
                                 //option details
                                 GenericOptionDetails optionDetails = new GenericOptionDetails();
-                                optionDetails.optionID = gear.gearID;
+                                /*optionDetails.optionID = gear.gearID;*/
                                 optionDetails.optionName = gear.name;
                                 optionDetails.text = gear.tag.ToUpper();
                                 optionDetails.sprite = gear.sprite;
@@ -1067,7 +1067,7 @@ public class GearManager : MonoBehaviour
                 }
                 GameManager.instance.playerScript.Renown = renown;
                 //retain saved gear, remove any unsaved gear
-                string gearSavedName = GameManager.instance.playerScript.UpdateGear(gearSaveCurrentCost, data.optionName);
+                GameManager.instance.playerScript.UpdateGear(gearSaveCurrentCost, data.optionName);
                 //stats
                 Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
                 if (gear != null)
@@ -1086,7 +1086,7 @@ public class GearManager : MonoBehaviour
                 StringBuilder builderBottom = new StringBuilder();
                 foreach (string gearName in listOfCompromisedGear)
                 {
-                    if (gearName.Equals(gearSavedName) == false)
+                    if (gearName.Equals(data.optionName) == false)
                     {
                         //gear lost
                         if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }

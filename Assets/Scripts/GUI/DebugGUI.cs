@@ -21,7 +21,7 @@ public class DebugGUI : MonoBehaviour
     private TeamDebug teamStatus;
     private ActorDebugData actorStatus;
     private DebugRegister registerStatus;
-    private bool showGUI = false;
+    public  bool showGUI = false;
     private bool doOnceFlag = false;                            //used to prevent continual repeats of input / output sequences
     private int debugDisplay = 0;
 
