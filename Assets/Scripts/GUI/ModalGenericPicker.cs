@@ -362,8 +362,8 @@ public class ModalGenericPicker : MonoBehaviour
         //reset GUI elements to default
         SetConfirmButton(false);
 
-        SetBackButton(EventType.None); /*Edit: 4Mar19 -> if these are live then the back button won't work*/
-        nestedDetails = null;
+        /*SetBackButton(EventType.None); //Edit: 4Mar19 -> if these are live then the back button won't work
+        nestedDetails = null;*/
 
         //set game state
         GameManager.instance.inputScript.ResetStates();

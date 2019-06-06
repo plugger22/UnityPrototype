@@ -3029,8 +3029,11 @@ public class ActorManager : MonoBehaviour
         }
         else
         {
+            //deactivate back button
+            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
             if (isIgnoreCache == true)
             {
+
                 //activate Generic Picker window
                 EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
                 if (isResistance == true)
@@ -3067,7 +3070,9 @@ public class ActorManager : MonoBehaviour
                     {
                         //Player recruit selection
                         if (cachedResistancePlayerDetails != null)
-                        { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedResistancePlayerDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit"); }
+                        {
+                            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedResistancePlayerDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+                        }
                         else
                         { Debug.LogWarning("Invalid cachedGenericDetails Resistance Player(Null)"); }
                     }

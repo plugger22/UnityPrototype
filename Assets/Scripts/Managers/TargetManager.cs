@@ -1802,6 +1802,8 @@ public class TargetManager : MonoBehaviour
         }
         else
         {
+            //deactivate back button
+            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }

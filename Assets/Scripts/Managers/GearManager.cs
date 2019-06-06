@@ -608,6 +608,8 @@ public class GearManager : MonoBehaviour
                     break;
                 }
             }
+            //deactivate back button
+            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
             //open picker
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
         }
@@ -818,6 +820,8 @@ public class GearManager : MonoBehaviour
         }
         else
         {
+            //deactivate back button
+            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
             if (isIgnoreCache == true)
             {
                 //activate Generic Picker window

@@ -125,7 +125,7 @@ public class InputManager : MonoBehaviour
             //only reset back to normal if there is no longer a modal state
             if (modal == ModalSubState.None)
             {
-                ModalState = gameAPI.ModalState.Normal;
+                ModalState = ModalState.Normal;
                 ModalInfoState = ModalInfoSubState.None;
                 ModalGenericPickerState = ModalGenericPickerSubState.None;
             }
