@@ -4000,25 +4000,20 @@ public class AIManager : MonoBehaviour
             {
                 if (string.IsNullOrEmpty(policyName) == false)
                 {
-                    int aiDecID = GameManager.instance.dataScript.GetAIDecisionID(policyName);
-                    if (aiDecID > -1)
+                    DecisionAI policy = GameManager.instance.dataScript.GetAIDecision(policyName);
+                    if (policy != null)
                     {
-                        DecisionAI policy = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-                        if (policy != null)
-                        {
-                            //ongoing effect message
-                            msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
-                            string itemText = string.Format("City Wide {0} policy in force", policyName);
-                            string topText = policy.descriptor;
-                            string middleText = string.Format("{0}<b>District Crisis chance -{1}%{2}{3}City Loyalty +{4}</b>{5}{6}{7}Applies once policy ends{8}", colourBad, policyEffectCrisis, "\n", "\n", 
-                                policyEffectLoyalty, colourEnd, "\n", colourAlert, colourEnd);
-                            
-                            string bottomText = string.Format("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, timerPolicy, timerPolicy != 1 ? "s" : "", colourEnd);
-                            GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, aiDecID);
-                        }
-                        else { Debug.LogErrorFormat("Invalid policy (Null) for aiDecID {0}", aiDecID); }
+                        //ongoing effect message
+                        msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
+                        string itemText = string.Format("City Wide {0} policy in force", policyName);
+                        string topText = policy.descriptor;
+                        string middleText = string.Format("{0}<b>District Crisis chance -{1}%{2}{3}City Loyalty +{4}</b>{5}{6}{7}Applies once policy ends{8}", colourBad, policyEffectCrisis, "\n", "\n",
+                            policyEffectLoyalty, colourEnd, "\n", colourAlert, colourEnd);
+
+                        string bottomText = string.Format("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, timerPolicy, timerPolicy != 1 ? "s" : "", colourEnd);
+                        GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, aiDecID);
                     }
-                    else { Debug.LogWarningFormat("Invalid aiDecID (-1) for policyName \"{0}\"", policyName); }
+                    else { Debug.LogErrorFormat("Invalid policy (Null) for aiDec {0}", policyName); }
                 }
                 else { Debug.LogError("Invalid policyName (Null)"); }
             }

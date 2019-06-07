@@ -9,9 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Blind Eye
+  m_Name: BlindEye
   m_EditorClassIdentifier: 
   descriptor: Mayor deliberately turns a blind eye
+  tag: Blind Eye
+  warning: 
   tooltipDescriptor: 'There are certain ''entertainments'', you know, that aren''t
     exactly legal. <i>Most</i> of the time. <b>City Loyalty will increase</b>.
 

@@ -9,12 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Security Protocol
+  m_Name: SecProtocol
   m_EditorClassIdentifier: 
   descriptor: AI implements improved Security Protocols
+  tag: Security Protocol
+  warning: 
   tooltipDescriptor: Each level of Security Protocol increases the AI's chance of
     detecting a Hacking attempt
   type: {fileID: 11400000, guid: 69c9367e7434c194c9e9179f5c4403e2, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 2
-  aiDecID: 13
+  aiDecID: 9

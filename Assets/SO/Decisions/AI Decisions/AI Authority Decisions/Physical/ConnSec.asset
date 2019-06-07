@@ -9,11 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Connection Security
+  m_Name: ConnSec
   m_EditorClassIdentifier: 
   descriptor: 'Authority increases a Connections Security level '
+  tag: Connection Security
+  warning: 
   tooltipDescriptor: Security procedures are raised on a Connection between two districts
   type: {fileID: 11400000, guid: d3afad47ad7e88f49af933e165705b5b, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 2
-  aiDecID: 3
+  aiDecID: 11

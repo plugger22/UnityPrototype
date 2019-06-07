@@ -9,12 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Request Resources
+  m_Name: RqstResources
   m_EditorClassIdentifier: 
   descriptor: Authority requests additional Resources
+  tag: Request Resources
+  warning: 
   tooltipDescriptor: The AI issues a request to their Faction HQ for more resources.
     This request <i>may</i> be  denied.
   type: {fileID: 11400000, guid: b9a5f22a88419d244ad05ed4e037831a, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 0
-  aiDecID: 8
+  aiDecID: 5

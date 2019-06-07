@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Drone Warfare
+  m_Name: DroneWarfare
   m_EditorClassIdentifier: 
   descriptor: Mayor authorises lethal drone activity
+  tag: Drone Warfare
   warning: 
   tooltipDescriptor: Aerial drones are authorised to kill wrongdoers. <b>City Loyalty</b>
     will decrease. The chance of a district having a <b>Crisis</b> will lessen. <b>High

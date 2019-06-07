@@ -9,9 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Medical Care
+  m_Name: MedicalCare
   m_EditorClassIdentifier: 
   descriptor: Mayor rolls out mobile Medical Clinics
+  tag: Medical Care
+  warning: 
   tooltipDescriptor: 'I need help. We all do. Who can afford a Doctor these days?
     I''ll be the first in line at the Clinic. <b>City Loyalty will increase</b>.
 

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 215bf920778eed04ba16e1f6d556f5e5, type: 3}
-  m_Name: Security Alert
+  m_Name: SecAlert
   m_EditorClassIdentifier: 
   descriptor: Authority declares a city wide Security Alert
+  tag: Security Alert
   warning: Can be Captured in Adjacent Districts
   tooltipDescriptor: ERASURE Teams will capture anyone with Invisibility 0 (normal)
     in the same district and in all <b>ADJACENT districts</b>
