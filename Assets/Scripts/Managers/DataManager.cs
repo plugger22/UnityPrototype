@@ -4538,7 +4538,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public GearType GetGearType(string gearTypeName)
     {
-        return listOfGearType.Find(x => x.name.Equals(gearTypeName));
+        return listOfGearType.Find(x => x.name.Equals(gearTypeName, StringComparison.Ordinal));
     }
 
     /// <summary>
@@ -5031,7 +5031,7 @@ public class DataManager : MonoBehaviour
                         if (team != null)
                         {
                             //f an erasure team then extract sighting data
-                            if (team.arc.name.Equals("ERASURE") == true)
+                            if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
                             { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
                         }
                         else { Debug.LogErrorFormat("Invalid Contact team (Null) for teamID {0}", message.data3); }
@@ -5041,7 +5041,7 @@ public class DataManager : MonoBehaviour
                         if (team != null)
                         {
                             //f an erasure team then extract sighting data
-                            if (team.arc.name.Equals("ERASURE") == true)
+                            if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
                             { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
                         }
                         else { Debug.LogErrorFormat("Invalid Tracer team (Null) for teamID {0}", message.data3); }
@@ -5751,7 +5751,7 @@ public class DataManager : MonoBehaviour
             case "Resistance":
                 IEnumerable<Faction> factions =
                     from faction in dictOfFactions
-                    where faction.Value.side.name.Equals(sideRequired.name) == true
+                    where faction.Value.side.name.Equals(sideRequired.name, StringComparison.Ordinal) == true
                     select faction.Value;
                 listOfFactions = factions.ToList();
                 factionReturn = listOfFactions[Random.Range(0, listOfFactions.Count)];
@@ -6410,7 +6410,7 @@ public class DataManager : MonoBehaviour
         {
             foreach (var condition in dictOfConditions)
             {
-                if (condition.Value.type.name.Equals(type.name) == true)
+                if (condition.Value.type.name.Equals(type.name, StringComparison.Ordinal) == true)
                 { dictOfConditionsByType.Add(condition.Key, condition.Value); }
             }
         }

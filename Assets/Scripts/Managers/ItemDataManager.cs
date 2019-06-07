@@ -44,10 +44,10 @@ public class ItemDataManager : MonoBehaviour
         Debug.Assert(shortRumourAction != null, "Invalid shortRumourAction (Null)");
         Debug.Assert(shortContactAware != null, "Invalid shortContactAware (Null)");
         Debug.Assert(shortContactAction != null, "Invalid shortContactAction (Null)");
-        Debug.Assert(shortRumourAware.category.name.Equals("Shorts") == true, "Invalid shortRumourHeard (wrong Category)");
-        Debug.Assert(shortRumourAction.category.name.Equals("Shorts") == true, "Invalid shortRumourAction (wrong Category)");
-        Debug.Assert(shortContactAware.category.name.Equals("Shorts") == true, "Invalid shortContactAware (wrong Category)");
-        Debug.Assert(shortContactAction.category.name.Equals("Shorts") == true, "Invalid shortContactAction (wrong Category)");
+        Debug.Assert(shortRumourAware.category.name.Equals("Shorts", System.StringComparison.Ordinal) == true, "Invalid shortRumourHeard (wrong Category)");
+        Debug.Assert(shortRumourAction.category.name.Equals("Shorts", System.StringComparison.Ordinal) == true, "Invalid shortRumourAction (wrong Category)");
+        Debug.Assert(shortContactAware.category.name.Equals("Shorts", System.StringComparison.Ordinal) == true, "Invalid shortContactAware (wrong Category)");
+        Debug.Assert(shortContactAction.category.name.Equals("Shorts", System.StringComparison.Ordinal) == true, "Invalid shortContactAction (wrong Category)");
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;

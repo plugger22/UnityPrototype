@@ -417,7 +417,7 @@ namespace gameAPI
                 {
                     foreach (Condition checkCondition in listOfConditions)
                     {
-                        if (checkCondition.tag.Equals(condition.tag) == true)
+                        if (checkCondition.tag.Equals(condition.tag, StringComparison.Ordinal) == true)
                         { return true; }
                     }
                 }
@@ -446,7 +446,7 @@ namespace gameAPI
                     //reverse loop -> delete and return if found
                     for (int i = listOfConditions.Count - 1; i >= 0; i--)
                     {
-                        if (listOfConditions[i].name.Equals(condition.tag) == true)
+                        if (listOfConditions[i].name.Equals(condition.tag, StringComparison.Ordinal) == true)
                         {
                             //special cases
                             switch(condition.tag)
@@ -547,7 +547,7 @@ namespace gameAPI
                     //reverse loop through and remove secret
                     for (int i = listOfSecrets.Count - 1; i >= 0; i--)
                     {
-                        if (listOfSecrets[i].name.Equals(secretName) == true)
+                        if (listOfSecrets[i].name.Equals(secretName, StringComparison.Ordinal) == true)
                         {
                             listOfSecrets.RemoveAt(i);
                             isSuccess = true;

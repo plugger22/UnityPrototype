@@ -918,7 +918,7 @@ public class Node : MonoBehaviour
                 //loop list looking for an erasure team
                 for (int i = 0; i < count; i++)
                 {
-                    if (listOfTeams[i].arc.name.Equals("ERASURE") == true)
+                    if (listOfTeams[i].arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
                     {
                         //remove Erasure team
                         team = listOfTeams[i];
@@ -1094,7 +1094,7 @@ public class Node : MonoBehaviour
         {
             foreach (var adjust in listOfOngoingEffects)
             {
-                if (adjust.effectOutcome.Equals(outcome.name) == true)
+                if (adjust.effectOutcome.Equals(outcome.name, StringComparison.Ordinal) == true)
                 { value += adjust.value; }
             }
         }

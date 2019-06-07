@@ -1374,7 +1374,7 @@ public class NodeManager : MonoBehaviour
                             if (gear != null)
                             {
                                 /*if (gear.type == GearTypeEnum.Movement)*/
-                                if (gear.type.name.Equals(movement) == true)
+                                if (gear.type.name.Equals(movement, StringComparison.Ordinal) == true)
                                 {
                                     //
                                     // - - - Create Gear Button (one for each item of relevant gear in Player's possesion)
@@ -1596,12 +1596,12 @@ public class NodeManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false && effect.outcome.name.Equals("Invisibility", StringComparison.Ordinal) == false)
                                                 { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
                                                 else
                                                 {
                                                     //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
-                                                    if (effect.outcome.name.Equals("Renown"))
+                                                    if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == true)
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.description, colourEnd)); }
                                                     else
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.description, colourEnd)); }
@@ -1701,12 +1701,12 @@ public class NodeManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false && effect.outcome.name.Equals("Invisibility", StringComparison.Ordinal) == false)
                                                 { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
                                                 else
                                                 {
                                                     //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
-                                                    if (effect.outcome.name.Equals("Renown"))
+                                                    if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == true)
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.description, colourEnd)); }
                                                     else
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.description, colourEnd)); }
@@ -1806,12 +1806,12 @@ public class NodeManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false && effect.outcome.name.Equals("Invisibility", StringComparison.Ordinal) == false)
                                                 { builder.Append(string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd)); }
                                                 else
                                                 {
                                                     //Invisibility and Renown -> player affected (good for renown, bad for invisibility)
-                                                    if (effect.outcome.name.Equals("Renown"))
+                                                    if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal))
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourGood, effect.description, colourEnd)); }
                                                     else
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.description, colourEnd)); }

@@ -939,7 +939,7 @@ public class ActorManager : MonoBehaviour
                                                     {
                                                         //Effect criteria O.K -> tool tip text
                                                         if (builder.Length > 0) { builder.AppendLine(); }
-                                                        if (effect.outcome.name.Equals("Renown") == false && effect.outcome.name.Equals("Invisibility") == false)
+                                                        if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false && effect.outcome.name.Equals("Invisibility", StringComparison.Ordinal) == false)
                                                         { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
                                                         else
                                                         {
@@ -947,7 +947,7 @@ public class ActorManager : MonoBehaviour
                                                             if (nodeID == playerID)
                                                             {
                                                                 //player affected (good for renown, bad for invisibility)
-                                                                if (effect.outcome.name.Equals("Renown"))
+                                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal))
                                                                 { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.description, colourEnd); }
                                                                 else
                                                                 {
@@ -1196,7 +1196,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.outcome.name.Equals("Renown") == false)
+                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false)
                                                 {
                                                     //sort out colour, remember effect.typeOfEffect is from POV of resistance so good will be bad for authority
                                                     if (effect.typeOfEffect != null)
@@ -1532,7 +1532,7 @@ public class ActorManager : MonoBehaviour
                                             if (preferredGear != null)
                                             {
                                                 benefit = gearSwapBaseAmount;
-                                                if (preferredGear.name.Equals(gear.type.name) == true)
+                                                if (preferredGear.name.Equals(gear.type.name, StringComparison.Ordinal) == true)
                                                 {
                                                     benefit += gearSwapPreferredAmount;
                                                     builderTooltip.AppendFormat("Preferred Gear for {0}{1}{2}{3} Motivation +{4}{5}",
@@ -1627,7 +1627,7 @@ public class ActorManager : MonoBehaviour
                                             GearType preferredGear = actor.arc.preferredGear;
                                             if (preferredGear != null)
                                             {
-                                                if (preferredGear.name.Equals(gearActor.type.name) == true)
+                                                if (preferredGear.name.Equals(gearActor.type.name, StringComparison.Ordinal) == true)
                                                 {
                                                     benefit += gearSwapPreferredAmount;
                                                     builder.AppendFormat("Preferred Gear for {0}{1}{2}{3} Motivation -{4}{5}",
@@ -2336,7 +2336,7 @@ public class ActorManager : MonoBehaviour
                                         if (preferredGear != null)
                                         {
                                             benefit = gearSwapBaseAmount;
-                                            if (preferredGear.name.Equals(gear.type.name) == true)
+                                            if (preferredGear.name.Equals(gear.type.name, StringComparison.Ordinal) == true)
                                             {
                                                 benefit += gearSwapPreferredAmount;
                                                 builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
@@ -4882,7 +4882,7 @@ public class ActorManager : MonoBehaviour
             foreach (Condition condition in listOfBadConditions)
             {
                 //check for questionable condition
-                if (condition.tag.Equals(conditionQuestionable.name) == true)
+                if (condition.tag.Equals(conditionQuestionable.name, StringComparison.Ordinal) == true)
                 { isQuestionable = true; }
                 if (builder.Length > 0) { builder.Append(", "); }
                 builder.Append(condition.tag);

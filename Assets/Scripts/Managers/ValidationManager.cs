@@ -53,7 +53,7 @@ public class ValidationManager : MonoBehaviour
                         if (effect != null)
                         {
                             //should be duration 'Single'
-                            if (effect.duration.name.Equals("Single") == false)
+                            if (effect.duration.name.Equals("Single", StringComparison.Ordinal) == false)
                             { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Good effect \"{1}\" NOT Single", target.Value.targetName, effect.name); }
                         }
                         else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Good effect (Null)", target.Value.targetName); }
@@ -67,7 +67,7 @@ public class ValidationManager : MonoBehaviour
                         if (effect != null)
                         {
                             //should be duration 'Single'
-                            if (effect.duration.name.Equals("Single") == false)
+                            if (effect.duration.name.Equals("Single", StringComparison.Ordinal) == false)
                             { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Bad effect \"{1}\" NOT Single", target.Value.targetName, effect.name); }
                         }
                         else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Bad effect (Null)", target.Value.targetName); }
@@ -81,7 +81,7 @@ public class ValidationManager : MonoBehaviour
                         if (effect != null)
                         {
                             //should be duration 'Single'
-                            if (effect.duration.name.Equals("Single") == false)
+                            if (effect.duration.name.Equals("Single", StringComparison.Ordinal) == false)
                             { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Fail effect \"{1}\" NOT Single", target.Value.targetName, effect.name); }
                         }
                         else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Fail effect (Null)", target.Value.targetName); }
@@ -91,13 +91,13 @@ public class ValidationManager : MonoBehaviour
                 if (target.Value.OngoingEffect != null)
                 {
                     //should be duration 'Ongoing'
-                    if (target.Value.OngoingEffect.duration.name.Equals("Ongoing") == false)
+                    if (target.Value.OngoingEffect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == false)
                     { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>ongoing effect \"{1}\" NOT Ongoing</b>", target.Value.targetName, target.Value.OngoingEffect.name); }
                 }
                 //Target gear present and shouldn't be infiltration
                 if (target.Value.gear != null)
                 {
-                    if (target.Value.gear.name.Equals("Infiltration") == true)
+                    if (target.Value.gear.name.Equals("Infiltration", StringComparison.Ordinal) == true)
                     { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>is using INFILTRATION gear</b> (doubled up as can be used automatically on any target)", target.Value.targetName); }
                 }
                 else {Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Gear (Null)", target.Value.targetName); }
@@ -129,7 +129,7 @@ public class ValidationManager : MonoBehaviour
                             if (effect != null)
                             {
                                 //Can't be ONGOING
-                                if (effect.duration.name.Equals("Ongoing") == true)
+                                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == true)
                                 { Debug.LogFormat("[Val] ValidateGear: Gear \"{0}\"  invalid Personal effect (ONGOING)", gear.Value.name); }
                             }
                             else { Debug.LogFormat("[Val] ValidateGear: Gear \"{0}\"  invalid effect (Null)", gear.Value.name); }
@@ -138,7 +138,7 @@ public class ValidationManager : MonoBehaviour
                         if (gear.Value.aiHackingEffect != null)
                         {
                             //Can't be ONGOING
-                            if (gear.Value.aiHackingEffect.duration.name.Equals("Ongoing") == true)
+                            if (gear.Value.aiHackingEffect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == true)
                             { Debug.LogFormat("[Val] ValidateGear: Gear \"{0}\"  invalid aiHacking effect (ONGOING)", gear.Value.name); }
                         }
                     }
@@ -324,7 +324,7 @@ public class ValidationManager : MonoBehaviour
                     UnityEngine.Object metaObject = AssetDatabase.LoadAssetAtPath(path, typeof(T));
                     //get object
                     T meta = metaObject as T;
-                    if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name)) == false)
+                    if (Array.Exists(arrayTemp, element => element.name.Equals(meta.name, StringComparison.Ordinal)) == false)
                     { Debug.LogFormat("[Val] ValidateSO: array MISSING {0} \"{1}\"", typeof(T).Name, meta.name); }
                 }
             }

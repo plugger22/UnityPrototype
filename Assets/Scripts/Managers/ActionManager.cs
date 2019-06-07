@@ -1513,7 +1513,7 @@ public class ActionManager : MonoBehaviour
                         motivationBoost = gearSwapBaseAmount;
                         builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.tag, colourEnd);
                         //motivation loss more if preferred gear
-                        if (preferredGear.name.Equals(gear.type.name) == true)
+                        if (preferredGear.name.Equals(gear.type.name, System.StringComparison.Ordinal) == true)
                         {
                             //Preferred gear (extra motivation)
                             motivationBoost += gearSwapPreferredAmount;
@@ -1612,7 +1612,7 @@ public class ActionManager : MonoBehaviour
                     if (preferredGear != null)
                     {
                         builder.AppendFormat("{0}{1} is available{2}", colourGood, gear.tag, colourEnd);
-                        if (preferredGear.name.Equals(gear.type.name) == true)
+                        if (preferredGear.name.Equals(gear.type.name, System.StringComparison.Ordinal) == true)
                         {
                             //Preferred gear (extra motivation)
                             motivationCost += gearSwapPreferredAmount;
@@ -2617,7 +2617,7 @@ public class ActionManager : MonoBehaviour
                     Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                     if (actor != null)
                     {
-                        if (data.optionNested.Equals("DismissPromote") == true)
+                        if (data.optionNested.Equals("DismissPromote", System.StringComparison.Ordinal) == true)
                         { status = ActorStatus.Promoted; }
                         //add actor to the dismissed or promoted lists
                         if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, actor, status) == true)

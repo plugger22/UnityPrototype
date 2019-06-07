@@ -1636,7 +1636,7 @@ public class AIRebelManager : MonoBehaviour
                     if (condition != null)
                     {
                         //Critical condition (Doomed), eg. timer
-                        if (listOfConditions[i].name.Equals(conditionDoomed.name) == true)
+                        if (listOfConditions[i].name.Equals(conditionDoomed.name, StringComparison.Ordinal) == true)
                         {
                             isCureCritical = true;
                             //is there a cure available -> if so assign node to move towards (overrides all other cure nodes)

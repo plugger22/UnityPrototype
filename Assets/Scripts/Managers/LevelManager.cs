@@ -1109,7 +1109,7 @@ public class LevelManager : MonoBehaviour
                         //find the first government node for City Hall (which will be closest to the centre)
                         foreach (var record in sortedDictMayor)
                         {
-                            if (record.Key.Arc.name.Equals("GOVERNMENT") == true)
+                            if (record.Key.Arc.name.Equals("GOVERNMENT", StringComparison.Ordinal) == true)
                             {
                                 Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor & City Hall at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                 record.Key.nodeName = "City Centre";

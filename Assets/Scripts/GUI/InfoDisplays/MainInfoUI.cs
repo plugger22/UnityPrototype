@@ -477,7 +477,7 @@ public class MainInfoUI : MonoBehaviour
                 var childrenImage = itemObject.GetComponentsInChildren<Image>();
                 foreach (var child in childrenImage)
                 {
-                    if (child.name.Equals("background") == true)
+                    if (child.name.Equals("background", StringComparison.Ordinal) == true)
                     {
                         arrayItemBackground[index] = child;
                         //attached interaction script
@@ -486,16 +486,16 @@ public class MainInfoUI : MonoBehaviour
                         { itemScript.SetItemIndex(index, numOfItemsTotal); }
                         else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
                     }
-                    else if (child.name.Equals("icon") == true)
+                    else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
                     { arrayItemIcon[index] = child; }
-                    else if (child.name.Equals("border") == true)
+                    else if (child.name.Equals("border", StringComparison.Ordinal) == true)
                     { arrayItemBorder[index] = child; }
                 }
                 //child components -> Text
                 var childrenText = itemObject.GetComponentsInChildren<TextMeshProUGUI>();
                 foreach (var child in childrenText)
                 {
-                    if (child.name.Equals("text") == true)
+                    if (child.name.Equals("text", StringComparison.Ordinal) == true)
                     {
                         TextMeshProUGUI itemText = child.GetComponent<TextMeshProUGUI>();
                         if (itemText != null)

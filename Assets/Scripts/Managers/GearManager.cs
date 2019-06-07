@@ -1087,10 +1087,11 @@ public class GearManager : MonoBehaviour
                 builderTop.AppendFormat("{0}You used {1}{2}{3}{4}{5} Renown to Save gear{6}", colourNormal, colourEnd, colourNeutral, gearSaveCurrentCost, colourEnd,
                     colourNormal, colourEnd);
                 details.textTop = builderTop.ToString();
-                StringBuilder builderBottom = new StringBuilder();
+                StringBuilder builderBottom = new StringBuilder();                
                 foreach (string gearName in listOfCompromisedGear)
                 {
-                    if (gearName.Equals(data.optionName) == false)
+                    //listOfCompromisedGear is gear.tag.ToUpper(), not gear.name
+                    if (gearName.Equals(gear.tag, System.StringComparison.OrdinalIgnoreCase) == false)
                     {
                         //gear lost
                         if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
@@ -1146,7 +1147,7 @@ public class GearManager : MonoBehaviour
                 if (gear != null)
                 {
                     //check whether it is invisible type gear (if so then invisibility -1 effect is ignored)
-                    if (gear.type.name.Equals("Invisibility") == true)
+                    if (gear.type.name.Equals("Invisibility", System.StringComparison.Ordinal) == true)
                     { isInvisibility = true; }
                     Sprite sprite = gear.sprite;
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
@@ -1199,7 +1200,7 @@ public class GearManager : MonoBehaviour
                                         if (effect.ignoreEffect == false)
                                         {
                                             //ignore invisiblity effect in case of fixer/player getting invisibility gear 
-                                            if (isInvisibility == true && effect.outcome.name.Equals("Invisibility") == true)
+                                            if (isInvisibility == true && effect.outcome.name.Equals("Invisibility", System.StringComparison.Ordinal) == true)
                                             { Debug.LogFormat("GearManager.cs -> ProcessGearChoice: {0} effect ignored due to Invisibility{1}", 
                                                 effect.name, "\n"); }
                                             else

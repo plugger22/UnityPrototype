@@ -293,7 +293,7 @@ public class EventManager : MonoBehaviour
             for (int i = Item.Value.Count - 1; i >= 0; i--)
             {
                 //If null, then remove item
-                if (Item.Value[i].Equals(null))
+                if (Item.Value[i] == null)
                     Item.Value.RemoveAt(i);
             }
 

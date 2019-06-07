@@ -341,7 +341,7 @@ public class PlayerManager : MonoBehaviour
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
-                    if (gear.type.name.Equals(gearType.name) == true)
+                    if (gear.type.name.Equals(gearType.name, System.StringComparison.Ordinal) == true)
                     {
                         //is it a better piece of gear (higher rarity) than already found?
                         if (gear.rarity.level > rarity)
@@ -373,7 +373,7 @@ public class PlayerManager : MonoBehaviour
             if (gear != null)
             {
                 //hacking gear
-                if (gear.type.name.Equals(hackingGear) == true)
+                if (gear.type.name.Equals(hackingGear, System.StringComparison.Ordinal) == true)
                 {
                     //has AI effects
                     if (gear.aiHackingEffect != null)
@@ -400,12 +400,12 @@ public class PlayerManager : MonoBehaviour
             if (gear != null)
             {
                 //hacking gear
-                if (gear.type.name.Equals(hackingGear) == true)
+                if (gear.type.name.Equals(hackingGear, System.StringComparison.Ordinal) == true)
                 {
                     //has AI effects -> return first instance found
                     if (gear.aiHackingEffect != null)
                     {
-                        if (gear.aiHackingEffect.name.Equals(effectName) == true)
+                        if (gear.aiHackingEffect.name.Equals(effectName, System.StringComparison.Ordinal) == true)
                         { return gear; }
                     }
                 }
@@ -444,7 +444,7 @@ public class PlayerManager : MonoBehaviour
                 Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
-                    if (gear.type.name.Equals(gearType.name) == true)
+                    if (gear.type.name.Equals(gearType.name, System.StringComparison.Ordinal) == true)
                     {
                         //initialise list if haven't already done so
                         if (listOfSpecificGear == null)
@@ -593,7 +593,7 @@ public class PlayerManager : MonoBehaviour
     private void CheckForAIUpdate(Gear gear)
     {
         //check for AI hacking gear
-        if (gear.type.name.Equals(hackingGear) == true)
+        if (gear.type.name.Equals(hackingGear, System.StringComparison.Ordinal) == true)
         {
             //has AI effects
             if (gear.aiHackingEffect != null)
@@ -623,7 +623,7 @@ public class PlayerManager : MonoBehaviour
                         if (gearSaveName != null)
                         {
                             //if not saved gear then remove
-                            if (gear.name.Equals(gearSaveName) == false)
+                            if (gear.name.Equals(gearSaveName, System.StringComparison.Ordinal) == false)
                             {
                                 //gear lost
                                 string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
@@ -793,7 +793,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     foreach (Condition checkCondition in listOfConditions)
                     {
-                        if (checkCondition.tag.Equals(condition.tag) == true)
+                        if (checkCondition.tag.Equals(condition.tag, System.StringComparison.Ordinal) == true)
                         { return true; }
                     }
                 }
@@ -830,7 +830,7 @@ public class PlayerManager : MonoBehaviour
                     //reverse loop -> delete and return if found
                     for (int i = listOfConditions.Count - 1; i >= 0; i--)
                     {
-                        if (listOfConditions[i].name.Equals(condition.tag) == true)
+                        if (listOfConditions[i].name.Equals(condition.tag, System.StringComparison.Ordinal) == true)
                         {
                             listOfConditions.RemoveAt(i);
                             Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.tag, "\n");
@@ -914,11 +914,11 @@ public class PlayerManager : MonoBehaviour
             {
                 foreach (Condition condition in listOfConditions)
                 {
-                    if (checkCorrupt == true && condition.tag.Equals(conditionCorrupt.name) == true)
+                    if (checkCorrupt == true && condition.tag.Equals(conditionCorrupt.name, System.StringComparison.Ordinal) == true)
                     { tempList.Add(conditionCorrupt); checkCorrupt = false; }
-                    if (checkIncompetent == true && condition.tag.Equals(conditionIncompetent.name) == true)
+                    if (checkIncompetent == true && condition.tag.Equals(conditionIncompetent.name, System.StringComparison.Ordinal) == true)
                     { tempList.Add(conditionIncompetent); checkIncompetent = false; }
-                    if (checkQuestionable == true && condition.tag.Equals(conditionQuestionable.name) == true)
+                    if (checkQuestionable == true && condition.tag.Equals(conditionQuestionable.name, System.StringComparison.Ordinal) == true)
                     { tempList.Add(conditionQuestionable); checkQuestionable = false; }
                 }
             }
@@ -1021,7 +1021,7 @@ public class PlayerManager : MonoBehaviour
             //reverse loop through and remove secret
             for (int i = listOfSecrets.Count - 1; i >= 0; i--)
             {
-                if (listOfSecrets[i].name.Equals(secretName) == true)
+                if (listOfSecrets[i].name.Equals(secretName, System.StringComparison.Ordinal) == true)
                 {
                     Secret secret = listOfSecrets[i];
                     //reset secret known

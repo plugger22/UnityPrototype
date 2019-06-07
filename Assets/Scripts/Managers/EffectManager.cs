@@ -1889,7 +1889,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect
                 node.ProcessNodeEffect(effectProcess);
@@ -1975,7 +1975,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
@@ -2069,7 +2069,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
@@ -2167,7 +2167,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
@@ -2268,7 +2268,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Connection effect for current node
                 node.ProcessConnectionEffect(effectProcess);
@@ -2355,7 +2355,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value);
                     /*//DEBUG -> remove when finished with testing
@@ -2410,7 +2410,7 @@ public class EffectManager : MonoBehaviour
                 }
                 effectProcess.value = value;
                 //Ongoing effect
-                if (effect.duration.name.Equals("Ongoing"))
+                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal))
                 {
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value);
                 }
@@ -2640,7 +2640,7 @@ public class EffectManager : MonoBehaviour
                                             typeCompare = GameManager.instance.globalScript.typeGood.name;
                                             for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                             {
-                                                if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
                                                 { listOfConditions.RemoveAt(i); counter++; }
                                             }
                                             effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBadSide, counter, colourEnd);
@@ -2653,7 +2653,7 @@ public class EffectManager : MonoBehaviour
                                             typeCompare = GameManager.instance.globalScript.typeBad.name;
                                             for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                             {
-                                                if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
                                                 { listOfConditions.RemoveAt(i); counter++; }
                                             }
                                             effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGoodSide, counter, colourEnd);
@@ -2725,7 +2725,7 @@ public class EffectManager : MonoBehaviour
                                                 typeCompare = GameManager.instance.globalScript.typeGood.name;
                                                 for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                                 {
-                                                    if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                    if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
                                                     { listOfConditions.RemoveAt(i); counter++; }
                                                 }
                                                 effectResolve.bottomText = string.Format("{0}All ({1}) Good conditions removed{2}", colourBadSide, counter, colourEnd);
@@ -2738,7 +2738,7 @@ public class EffectManager : MonoBehaviour
                                                 typeCompare = GameManager.instance.globalScript.typeBad.name;
                                                 for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                                 {
-                                                    if (listOfConditions[i].type.name.Equals(typeCompare) == true)
+                                                    if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
                                                     { listOfConditions.RemoveAt(i); counter++; }
                                                 }
                                                 effectResolve.bottomText = string.Format("{0}All ({1}) Bad conditions removed{2}", colourGoodSide, counter, colourEnd);
@@ -2789,7 +2789,7 @@ public class EffectManager : MonoBehaviour
                         foreach (Condition condition in listOfConditions)
                         {
                             //add to list if the correct type
-                            if (condition.type.name.Equals(type.name) == true)
+                            if (condition.type.name.Equals(type.name, StringComparison.Ordinal) == true)
                             { tempList.Add(condition); }
                         }
                         //select a condition

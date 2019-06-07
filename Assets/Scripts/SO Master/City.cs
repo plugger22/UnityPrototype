@@ -55,7 +55,7 @@ public class City : ScriptableObject
         Debug.Assert(iconDistrict != null, "Invalid iconDistrict (Null)");
         Debug.Assert(airportDistrict != null, "Invalid airportDistrict (Null)");
         Debug.Assert(districtNames != null, "Invalid TextList of DistrictNames (Null)");
-        Debug.Assert(districtNames.category.name.Equals("Districts") == true, "Invalid districtNames TextList (wrong Category)");
+        Debug.Assert(districtNames.category.name.Equals("Districts", System.StringComparison.Ordinal) == true, "Invalid districtNames TextList (wrong Category)");
     }
 
     /// <summary>

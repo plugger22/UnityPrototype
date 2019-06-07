@@ -732,7 +732,7 @@ public class TargetManager : MonoBehaviour
                     { target.profile = profileOverride; }
                     else if (target.profile == null)
                     { target.profile = defaultProfile; }
-                    else if (target.targetType.name.Equals("Generic") == true)
+                    else if (target.targetType.name.Equals("Generic", StringComparison.Ordinal) == true)
                     { target.profile = defaultProfile; }
                     //profile must be valid
                     if (target.profile != null)
@@ -1081,7 +1081,7 @@ public class TargetManager : MonoBehaviour
                                     else
                                     { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd)); }
                                     //infiltration gear works on any target in addition to special gear
-                                    if (target.gear.name.Equals(infiltrationGear.name) == false)
+                                    if (target.gear.name.Equals(infiltrationGear.name, StringComparison.Ordinal) == false)
                                     {
                                         //check player has infiltration gear
                                         gearName = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
@@ -1131,7 +1131,7 @@ public class TargetManager : MonoBehaviour
                                             if (gear != null)
                                             {
                                                 //correct type of gear
-                                                if (gear.type.name.Equals(target.gear.name) == true)
+                                                if (gear.type.name.Equals(target.gear.name, StringComparison.Ordinal) == true)
                                                 { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.tag, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                                 else
                                                 {
@@ -1140,7 +1140,7 @@ public class TargetManager : MonoBehaviour
                                                     /*Debug.LogFormat("[Tst]: TargetManager.cs -> GetTargetFactors: {0}, {1}, gear present but not applicable to target{2}", gear.tag, gear.type.name, "\n");*/
 
                                                     //infiltration gear can be used
-                                                    if (gear.type.name.Equals(infiltrationGear.name) == true)
+                                                    if (gear.type.name.Equals(infiltrationGear.name, StringComparison.Ordinal) == true)
                                                     { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.tag, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                                     else
                                                     { tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, infiltrationGear.name, colourEnd)); }
@@ -1260,7 +1260,7 @@ public class TargetManager : MonoBehaviour
                                         else { Debug.LogWarningFormat("Invalid Target gear (Null) for gear {0}", gearName); }
                                     }
                                     //infiltration gear works on any target in addition to special gear
-                                    if (target.gear.name.Equals(infiltrationGear.name) == false)
+                                    if (target.gear.name.Equals(infiltrationGear.name, StringComparison.Ordinal) == false)
                                     {
                                         //check player has infiltration gear
                                         gearName = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
@@ -1303,7 +1303,7 @@ public class TargetManager : MonoBehaviour
                                                     if (gear != null)
                                                     {
                                                         //correct type of gear
-                                                        if (gear.type.name.Equals(target.gear.name) == true)
+                                                        if (gear.type.name.Equals(target.gear.name, StringComparison.Ordinal) == true)
                                                         {
                                                             tally += gearEffect * (gear.rarity.level + 1);
                                                             if (setGearAsUsed == true)
@@ -1312,7 +1312,7 @@ public class TargetManager : MonoBehaviour
                                                         else
                                                         {
                                                             //infiltration gear can be used
-                                                            if (gear.type.name.Equals(infiltrationGear.name) == true)
+                                                            if (gear.type.name.Equals(infiltrationGear.name, StringComparison.Ordinal) == true)
                                                             {
                                                                 tally += gearEffect * (gear.rarity.level + 1);
                                                                 if (setGearAsUsed == true)
@@ -1556,7 +1556,7 @@ public class TargetManager : MonoBehaviour
                         if (target.turnSuccess == -1)
                         {
                             //Generic targets can't repeat
-                            if (target.targetType.name.Equals("Generic") == false)
+                            if (target.targetType.name.Equals("Generic", StringComparison.Ordinal) == false)
                             {
                                 isDone = false;
                                 //assign repeat profile if present
@@ -1576,7 +1576,7 @@ public class TargetManager : MonoBehaviour
                                 else
                                 {
                                     //City targets can't have random repeats
-                                    if (target.targetType.name.Equals("City") == false)
+                                    if (target.targetType.name.Equals("City", StringComparison.Ordinal) == false)
                                     {
                                         Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
                                         if (nodeRandom != null)

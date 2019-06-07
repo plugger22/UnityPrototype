@@ -392,3 +392,39 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 22712 -> Friday, 7 June 2019 12:04 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 910 -> Friday, 7 June 2019 1:30 PM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found NingaSuit, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4570)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1235)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	WARNING Gear "Ninja Suit", ID 9, not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4711)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1242)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1045)
+	
+Dev seed 33241 -> Friday, 7 June 2019 1:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22041 -> Friday, 7 June 2019 1:46 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:501)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:253)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:450)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+OptionManager.OnDisable () (at Assets/Scripts/Managers/OptionManager.cs:50)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 43363 -> Friday, 7 June 2019 1:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30076 -> Friday, 7 June 2019 4:43 PM
+City seed 5678 -> London, United Kingdom

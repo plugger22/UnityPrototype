@@ -327,7 +327,7 @@ public class TeamManager : MonoBehaviour
                                     if (ProcessContactInteraction(team, node) == true)
                                     { tally++; }
                                 }*/
-                                if (team.arc.name.Equals("ERASURE") == true)
+                                if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
                                 {
                                     if (ProcessErasureTeamSighting(team, node) == true)
                                     { tally++; }

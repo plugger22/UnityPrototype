@@ -907,7 +907,7 @@ public class AIManager : MonoBehaviour
             {
                 foreach (Node node in listOfNodes)
                 {
-                    if (node.Arc.name.Equals(authorityPreferredArc) == true)
+                    if (node.Arc.name.Equals(authorityPreferredArc, StringComparison.Ordinal) == true)
                     { node.isPreferredAuthority = true; }
                     else { node.isPreferredAuthority = false; }
                 }
@@ -2577,7 +2577,7 @@ public class AIManager : MonoBehaviour
                 //reverse loop list of most connected nodes and find any that match the preferred node type (delete entries from list to prevent future selection)
                 for (int i = listOfDecisionNodes.Count - 1; i >= 0; i--)
                 {
-                    if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name) == true)
+                    if (listOfDecisionNodes[i].Arc.name.Equals(preferredNodeArc.name, StringComparison.Ordinal) == true)
                     {
                         //add to tempList and remove from decision List
                         tempList.Add(listOfDecisionNodes[i]);
@@ -2993,7 +2993,7 @@ public class AIManager : MonoBehaviour
                     if (decisionAI != null)
                     {
                         //Connection decision
-                        if (decisionAI.name.Equals(decisionConnSec.name) == true)
+                        if (decisionAI.name.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
                         {
                             Connection connection = GameManager.instance.dataScript.GetConnection(task.data0);
                             if (connection != null)
@@ -3333,65 +3333,65 @@ public class AIManager : MonoBehaviour
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
             //Security Measures
-            if (task.name0.Equals(decisionAPB.name) == true)
+            if (task.name0.Equals(decisionAPB.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, decisionAPB.warning, AuthoritySecurityState.APB);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
-            else if (task.name0.Equals(decisionSecAlert.name) == true)
+            else if (task.name0.Equals(decisionSecAlert.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, decisionSecAlert.warning, AuthoritySecurityState.SecurityAlert);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
-            else if (task.name0.Equals(decisionCrackdown.name) == true)
+            else if (task.name0.Equals(decisionCrackdown.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, decisionCrackdown.warning, AuthoritySecurityState.SurveillanceCrackdown);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
-            else if (task.name0.Equals(decisionConnSec.name) == true)
+            else if (task.name0.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(task.data0); }
             //logistics
-            else if (task.name0.Equals(decisionRequestTeam.name) == true)
+            else if (task.name0.Equals(decisionRequestTeam.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAITeamRequest(); }
-            else if (task.name0.Equals(decisionResources.name) == true)
+            else if (task.name0.Equals(decisionResources.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIResourceRequest(); }
             //Network countermeasures
-            else if (task.name0.Equals(decisionTraceBack.name) == true)
+            else if (task.name0.Equals(decisionTraceBack.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAITraceBack(); }
-            else if (task.name0.Equals(decisionScreamer.name) == true)
+            else if (task.name0.Equals(decisionScreamer.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIScreamer(); }
-            else if (task.name0.Equals(decisionProtocol.name) == true)
+            else if (task.name0.Equals(decisionProtocol.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIProtocol(); }
-            else if (task.name0.Equals(decisionOffline.name) == true)
+            else if (task.name0.Equals(decisionOffline.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIOffline(); }
             //policies
-            else if (task.name0.Equals(decisionCensorship.name) == true)
+            else if (task.name0.Equals(decisionCensorship.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionBanProtests.name) == true)
+            else if (task.name0.Equals(decisionBanProtests.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionCurfew.name) == true)
+            else if (task.name0.Equals(decisionCurfew.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionRoboCop.name) == true)
+            else if (task.name0.Equals(decisionRoboCop.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionMartialLaw.name) == true)
+            else if (task.name0.Equals(decisionMartialLaw.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionDrones.name) == true)
+            else if (task.name0.Equals(decisionDrones.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
             //handouts
-            else if (task.name0.Equals(decisionHamper.name) == true)
+            else if (task.name0.Equals(decisionHamper.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionBlindEye.name) == true)
+            else if (task.name0.Equals(decisionBlindEye.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionAusterity.name) == true)
+            else if (task.name0.Equals(decisionAusterity.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionHoliday.name) == true)
+            else if (task.name0.Equals(decisionHoliday.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionMedical.name) == true)
+            else if (task.name0.Equals(decisionMedical.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
             //administrative
-            else if (task.name0.Equals(decisionStressLeave.name) == true)
+            else if (task.name0.Equals(decisionStressLeave.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessStressLeave(task.data0); }
-            else if (task.name0.Equals(decisionLobbyHQ.name) == true)
+            else if (task.name0.Equals(decisionLobbyHQ.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessLobbyHQ(); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
