@@ -411,52 +411,29 @@ public class AIManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //decision ID's
-        int aiDecID = GameManager.instance.dataScript.GetAIDecisionID("APB");
-        decisionAPB = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Connection Security");
-        decisionConnSec = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Team");
-        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
-        decisionSecAlert = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
-        decisionCrackdown = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Request Resources");
-        decisionResources = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("TraceBack");
-        decisionTraceBack = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Screamer");
-        decisionScreamer = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Offline");
-        decisionOffline = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Security Protocol");
-        decisionProtocol = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Censorship");
-        decisionCensorship = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Ban Protests");
-        decisionBanProtests = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Martial Law");
-        decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Curfew");
-        decisionCurfew = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Robo Cops");
-        decisionRoboCop = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Drone Warfare");
-        decisionDrones = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Christmas Hampers");
-        decisionHamper = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Austerity Payment");
-        decisionAusterity = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Medical Care");
-        decisionMedical = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Blind Eye");
-        decisionBlindEye = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Holiday");
-        decisionHoliday = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Stress Leave");
-        decisionStressLeave = GameManager.instance.dataScript.GetAIDecision(aiDecID);
-        aiDecID = GameManager.instance.dataScript.GetAIDecisionID("Lobby HQ");
-        decisionLobbyHQ = GameManager.instance.dataScript.GetAIDecision(aiDecID);
+        decisionAPB = GameManager.instance.dataScript.GetAIDecision("APB");
+        decisionConnSec = GameManager.instance.dataScript.GetAIDecision("ConnSec");
+        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision("RqstTeam");
+        decisionSecAlert = GameManager.instance.dataScript.GetAIDecision("SecAlert");
+        decisionCrackdown = GameManager.instance.dataScript.GetAIDecision("SurvCrackdwn");
+        decisionResources = GameManager.instance.dataScript.GetAIDecision("RqstResources");
+        decisionTraceBack = GameManager.instance.dataScript.GetAIDecision("TraceBack");
+        decisionScreamer = GameManager.instance.dataScript.GetAIDecision("Screamer");
+        decisionOffline = GameManager.instance.dataScript.GetAIDecision("Offline");
+        decisionProtocol = GameManager.instance.dataScript.GetAIDecision("SecProtocol");
+        decisionCensorship = GameManager.instance.dataScript.GetAIDecision("Censorship");
+        decisionBanProtests = GameManager.instance.dataScript.GetAIDecision("BanProtests");
+        decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision("MartialLaw");
+        decisionCurfew = GameManager.instance.dataScript.GetAIDecision("Curfew");
+        decisionRoboCop = GameManager.instance.dataScript.GetAIDecision("RoboCops");
+        decisionDrones = GameManager.instance.dataScript.GetAIDecision("DroneWarfare");
+        decisionHamper = GameManager.instance.dataScript.GetAIDecision("XmasHampers");
+        decisionAusterity = GameManager.instance.dataScript.GetAIDecision("AusterityPymnt");
+        decisionMedical = GameManager.instance.dataScript.GetAIDecision("MedicalCare");
+        decisionBlindEye = GameManager.instance.dataScript.GetAIDecision("BlindEye");
+        decisionHoliday = GameManager.instance.dataScript.GetAIDecision("Holiday");
+        decisionStressLeave = GameManager.instance.dataScript.GetAIDecision("StressLve");
+        decisionLobbyHQ = GameManager.instance.dataScript.GetAIDecision("LobbyHQ");
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -2072,8 +2049,8 @@ public class AIManager : MonoBehaviour
                 AITask taskAPB = new AITask()
                 {
                     data1 = decisionAPB.cost,
-                    data2 = decisionAPB.aiDecID,
-                    name0 = decisionAPB.name,
+                    dataName = decisionAPB.name,
+                    name0 = decisionAPB.tag,
                     type = AITaskType.Decision,
                     priority = Priority.Critical
                 };
@@ -2085,8 +2062,8 @@ public class AIManager : MonoBehaviour
                 AITask taskSecAlert = new AITask()
                 {
                     data1 = decisionSecAlert.cost,
-                    data2 = decisionSecAlert.aiDecID,
-                    name0 = decisionSecAlert.name,
+                    dataName = decisionSecAlert.name,
+                    name0 = decisionSecAlert.tag,
                     type = AITaskType.Decision,
                     priority = Priority.Critical
                 };
@@ -2098,8 +2075,8 @@ public class AIManager : MonoBehaviour
                 AITask taskCrackdown = new AITask()
                 {
                     data1 = decisionCrackdown.cost,
-                    data2 = decisionCrackdown.aiDecID,
-                    name0 = decisionCrackdown.name,
+                    dataName = decisionCrackdown.name,
+                    name0 = decisionCrackdown.tag,
                     type = AITaskType.Decision,
                     priority = Priority.Critical
                 };
@@ -2116,8 +2093,8 @@ public class AIManager : MonoBehaviour
                 {
                     data0 = connID,
                     data1 = decisionConnSec.cost,
-                    data2 = decisionConnSec.aiDecID,
-                    name0 = decisionConnSec.name,
+                    dataName = decisionConnSec.name,
+                    name0 = decisionConnSec.tag,
                     type = AITaskType.Decision,
                     priority = Priority.Medium
                 };
@@ -2135,8 +2112,8 @@ public class AIManager : MonoBehaviour
             AITask taskTeam = new AITask()
             {
                 data1 = decisionRequestTeam.cost,
-                data2 = decisionRequestTeam.aiDecID,
-                name0 = decisionRequestTeam.name,
+                dataName = decisionRequestTeam.name,
+                name0 = decisionRequestTeam.tag,
                 type = AITaskType.Decision,
                 priority = Priority.Medium
             };
@@ -2149,8 +2126,8 @@ public class AIManager : MonoBehaviour
             AITask taskResources = new AITask()
             {
                 data1 = decisionResources.cost,
-                data2 = decisionResources.aiDecID,
-                name0 = decisionResources.name,
+                dataName = decisionResources.name,
+                name0 = decisionResources.tag,
                 type = AITaskType.Decision,
                 priority = Priority.Critical
             };
@@ -2171,8 +2148,8 @@ public class AIManager : MonoBehaviour
                 {
                     data0 = stressedActorID,
                     data1 = decisionStressLeave.cost,
-                    data2 = decisionStressLeave.aiDecID,
-                    name0 = decisionStressLeave.name,
+                    dataName = decisionStressLeave.name,
+                    name0 = decisionStressLeave.tag,
                     type = AITaskType.Decision,
                     priority = Priority.Medium
                 };
@@ -2191,8 +2168,8 @@ public class AIManager : MonoBehaviour
             AITask taskSupport = new AITask()
             {
                 data1 = decisionLobbyHQ.cost,
-                data2 = decisionLobbyHQ.aiDecID,
-                name0 = decisionLobbyHQ.name,
+                dataName = decisionLobbyHQ.name,
+                name0 = decisionLobbyHQ.tag,
                 type = AITaskType.Decision,
                 priority = Priority.Medium
             };
@@ -2220,8 +2197,8 @@ public class AIManager : MonoBehaviour
                             AITask taskPolicy = new AITask()
                             {
                                 data1 = decisionCensorship.cost,
-                                data2 = decisionCensorship.aiDecID,
-                                name0 = decisionCensorship.name,
+                                dataName = decisionCensorship.name,
+                                name0 = decisionCensorship.tag,
                                 type = AITaskType.Decision,
                                 priority = Priority.Low
                             };
@@ -2236,8 +2213,8 @@ public class AIManager : MonoBehaviour
                             AITask taskPolicy = new AITask()
                             {
                                 data1 = decisionBanProtests.cost,
-                                data2 = decisionBanProtests.aiDecID,
-                                name0 = decisionBanProtests.name,
+                                dataName = decisionBanProtests.name,
+                                name0 = decisionBanProtests.tag,
                                 type = AITaskType.Decision,
                                 priority = Priority.Low
                             };
@@ -2257,8 +2234,8 @@ public class AIManager : MonoBehaviour
                             AITask taskPolicy = new AITask()
                             {
                                 data1 = decisionCurfew.cost,
-                                data2 = decisionCurfew.aiDecID,
-                                name0 = decisionCurfew.name,
+                                dataName = decisionCurfew.name,
+                                name0 = decisionCurfew.tag,
                                 type = AITaskType.Decision,
                                 priority = Priority.Medium
                             };
@@ -2273,8 +2250,8 @@ public class AIManager : MonoBehaviour
                             AITask taskPolicy = new AITask()
                             {
                                 data1 = decisionRoboCop.cost,
-                                data2 = decisionRoboCop.aiDecID,
-                                name0 = decisionRoboCop.name,
+                                dataName = decisionRoboCop.name,
+                                name0 = decisionRoboCop.tag,
                                 type = AITaskType.Decision,
                                 priority = Priority.Medium
                             };
@@ -2294,8 +2271,8 @@ public class AIManager : MonoBehaviour
                             AITask taskPolicy = new AITask()
                             {
                                 data1 = decisionMartialLaw.cost,
-                                data2 = decisionMartialLaw.aiDecID,
-                                name0 = decisionMartialLaw.name,
+                                dataName = decisionMartialLaw.name,
+                                name0 = decisionMartialLaw.tag,
                                 type = AITaskType.Decision,
                                 priority = Priority.High
                             };
@@ -2310,8 +2287,8 @@ public class AIManager : MonoBehaviour
                             AITask taskPolicy = new AITask()
                             {
                                 data1 = decisionDrones.cost,
-                                data2 = decisionDrones.aiDecID,
-                                name0 = decisionDrones.name,
+                                dataName = decisionDrones.name,
+                                name0 = decisionDrones.tag,
                                 type = AITaskType.Decision,
                                 priority = Priority.High
                             };
@@ -2338,8 +2315,8 @@ public class AIManager : MonoBehaviour
                         AITask taskHandout = new AITask()
                         {
                             data1 = decisionHamper.cost,
-                            data2 = decisionHamper.aiDecID,
-                            name0 = decisionHamper.name,
+                            dataName = decisionHamper.name,
+                            name0 = decisionHamper.tag,
                             type = AITaskType.Decision,
                             priority = Priority.Low
                         };
@@ -2354,8 +2331,8 @@ public class AIManager : MonoBehaviour
                         AITask taskHandout = new AITask()
                         {
                             data1 = decisionBlindEye.cost,
-                            data2 = decisionBlindEye.aiDecID,
-                            name0 = decisionBlindEye.name,
+                            dataName = decisionBlindEye.name,
+                            name0 = decisionBlindEye.tag,
                             type = AITaskType.Decision,
                             priority = Priority.Low
                         };
@@ -2375,8 +2352,8 @@ public class AIManager : MonoBehaviour
                         AITask taskHandout = new AITask()
                         {
                             data1 = decisionAusterity.cost,
-                            data2 = decisionAusterity.aiDecID,
-                            name0 = decisionAusterity.name,
+                            dataName = decisionAusterity.name,
+                            name0 = decisionAusterity.tag,
                             type = AITaskType.Decision,
                             priority = Priority.Medium
                         };
@@ -2391,8 +2368,8 @@ public class AIManager : MonoBehaviour
                         AITask taskHandout = new AITask()
                         {
                             data1 = decisionHoliday.cost,
-                            data2 = decisionHoliday.aiDecID,
-                            name0 = decisionHoliday.name,
+                            dataName = decisionHoliday.name,
+                            name0 = decisionHoliday.tag,
                             type = AITaskType.Decision,
                             priority = Priority.Medium
                         };
@@ -2412,8 +2389,8 @@ public class AIManager : MonoBehaviour
                     AITask taskHandout = new AITask()
                     {
                         data1 = decisionMedical.cost,
-                        data2 = decisionMedical.aiDecID,
-                        name0 = decisionMedical.name,
+                        dataName = decisionMedical.name,
+                        name0 = decisionMedical.tag,
                         type = AITaskType.Decision,
                         priority = Priority.High
                     };
@@ -2465,8 +2442,8 @@ public class AIManager : MonoBehaviour
                 AITask taskProtocol = new AITask()
                 {
                     data1 = decisionProtocol.cost,
-                    data2 = decisionProtocol.aiDecID,
-                    name0 = decisionProtocol.name,
+                    dataName = decisionProtocol.name,
+                    name0 = decisionProtocol.tag,
                     type = AITaskType.Decision,
                     priority = priorityDetect
                 };
@@ -2484,8 +2461,8 @@ public class AIManager : MonoBehaviour
                 AITask taskTraceBack = new AITask()
                 {
                     data1 = decisionTraceBack.cost,
-                    data2 = decisionTraceBack.aiDecID,
-                    name0 = decisionTraceBack.name,
+                    dataName = decisionTraceBack.name,
+                    name0 = decisionTraceBack.tag,
                     type = AITaskType.Decision,
                     priority = priorityDetect
                 };
@@ -2503,8 +2480,8 @@ public class AIManager : MonoBehaviour
                 AITask taskScreamer = new AITask()
                 {
                     data1 = decisionScreamer.cost,
-                    data2 = decisionScreamer.aiDecID,
-                    name0 = decisionScreamer.name,
+                    dataName = decisionScreamer.name,
+                    name0 = decisionScreamer.tag,
                     type = AITaskType.Decision,
                     priority = priorityDetect
                 };
@@ -2522,8 +2499,8 @@ public class AIManager : MonoBehaviour
                 AITask taskOffline = new AITask()
                 {
                     data1 = decisionOffline.cost,
-                    data2 = decisionOffline.aiDecID,
-                    name0 = decisionOffline.name,
+                    dataName = decisionOffline.name,
+                    name0 = decisionOffline.tag,
                     type = AITaskType.Decision,
                     priority = priorityDetect
                 };
@@ -2989,7 +2966,7 @@ public class AIManager : MonoBehaviour
                     break;
                 case AITaskType.Decision:
                     textUpper = string.Format("{0} DECISION", task.name0);
-                    DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.data2);
+                    DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.dataName);
                     if (decisionAI != null)
                     {
                         //Connection decision
@@ -3018,7 +2995,7 @@ public class AIManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarningFormat("Invalid decisionAI (Null) for task.data2 aiDecID {0}", task.data2);
+                        Debug.LogWarningFormat("Invalid decisionAI (Null) for task.data2 aiDec {0}", task.dataName);
                         textLower = "Details unknown";
                     }
                     break;
@@ -3474,13 +3451,13 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, resources, "\n");
         }
         string policyDescription = "Unknown";
-        DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.data2);
+        DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.dataName);
         if (decision != null)
         { policyDescription = decision.descriptor; }
-        else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.data2); }
+        else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.dataName); }
         //admin
         string msgText = string.Format("Authority implements {0} policy", policyName);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.data2, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.dataName, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
         msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
         string reasonText = string.Format("{0} policy", policyName);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
@@ -3541,13 +3518,13 @@ public class AIManager : MonoBehaviour
             Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.leaderName, city.mayor.GetTrait().tag, resources, "\n");
         }
         string handoutDescription = "Unknown";
-        DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.data2);
+        DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.dataName);
         if (decision != null)
         { handoutDescription = string.Format("<b>{0}</b>", decision.descriptor); }
-        else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.data2); }
+        else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.dataName); }
         //admin
         string msgText = string.Format("Authority implements {0} policy", task.name0);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, handoutDescription, task.data2, 0, loyaltyChange);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, handoutDescription, task.dataName, 0, loyaltyChange);
         msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.name, loyaltyChange, task.name0);
         string reasonText = string.Format("{0} policy", task.name0);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);

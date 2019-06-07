@@ -1385,12 +1385,9 @@ public class LoadManager : MonoBehaviour
         //
         // - - - AI Decisions - - -
         //
-        Dictionary<int, DecisionAI> dictOfAIDecisions = GameManager.instance.dataScript.GetDictOfAIDecisions();
-        Dictionary<string, int> dictOfLookUpAIDecisions = GameManager.instance.dataScript.GetDictOfLookUpAIDecisions();
+        Dictionary<string, DecisionAI> dictOfAIDecisions = GameManager.instance.dataScript.GetDictOfAIDecisions();
         if (dictOfAIDecisions != null)
         {
-            if (dictOfLookUpAIDecisions != null)
-            {
                 counter = 0;
                 numArray = arrayOfDecisionAI.Length;
                 for (int i = 0; i < numArray; i++)
@@ -1401,29 +1398,17 @@ public class LoadManager : MonoBehaviour
                     decisionAI.aiDecID = counter++;
                     //add to main dictionary
                     try
-                    { dictOfAIDecisions.Add(decisionAI.aiDecID, decisionAI); }
+                    { dictOfAIDecisions.Add(decisionAI.name, decisionAI); }
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid decisionAI (duplicate) ID \"{0}\" for \"{1}\"", counter, decisionAI.name)); counter--; }
-                    //add to Lookup dictionary
-                    try
-                    { dictOfLookUpAIDecisions.Add(decisionAI.name, decisionAI.aiDecID); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid decisionAI.name (duplicate) \"{0}\" for aiDecID \"{1}\"", decisionAI.name, counter)); counter--; }
                 }
                 numDict = dictOfAIDecisions.Count;
                 Debug.LogFormat("[Loa] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpAIDecisions has {0} entries{1}", dictOfLookUpAIDecisions.Count, "\n");
                 Debug.Assert(numDict == counter, "Mismatch in count");
-                Debug.Assert(dictOfLookUpAIDecisions.Count == counter, "Mismatch in count");
                 Debug.Assert(numDict > 0, "No AI Decisions have been imported");
-                Debug.Assert(dictOfLookUpAIDecisions.Count > 0, "No AI Decisions in lookup dictionary");
                 Debug.Assert(numArray == numDict, string.Format("Mismatch in DecisionAI count, array {0}, dict {1}", numArray, numDict));
-            }
-            else { Debug.LogError("Invalid dictOfLookUpAIDecision (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
         //

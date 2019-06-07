@@ -428,3 +428,209 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 30076 -> Friday, 7 June 2019 4:43 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 24193 -> Friday, 7 June 2019 4:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37348 -> Friday, 7 June 2019 4:57 PM
+City seed 5678 -> London, United Kingdom
+WARNING DecisionAI "Connection Security" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:416)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Request Team" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:418)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Security Alert" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:420)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Surveillance Crackdown" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:422)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Request Resources" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:424)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Security Protocol" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:432)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Ban Protests" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:436)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Martial Law" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:438)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Robo Cops" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:442)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Drone Warfare" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:444)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Christmas Hampers" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:446)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Austerity Payment" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:448)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Medical Care" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:450)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Blind Eye" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:452)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Stress Leave" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:456)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Lobby HQ" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:458)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Security Alert" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AuthorityManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AuthorityManager.cs:49)
+	AuthorityManager:Initialise(GameState) (at Assets/Scripts/Managers/AuthorityManager.cs:23)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "Surveillance Crackdown" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AuthorityManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AuthorityManager.cs:50)
+	AuthorityManager:Initialise(GameState) (at Assets/Scripts/Managers/AuthorityManager.cs:23)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AIManager.ProcessDecisionTask () (at Assets/Scripts/Managers/AIManager.cs:2118)
+	AIManager.ProcessAISideAuthority () (at Assets/Scripts/Managers/AIManager.cs:687)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:403)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:345)
+	
+Dev seed 26455 -> Friday, 7 June 2019 5:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING DecisionAI "AusteritPymnt" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:448)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	WARNING DecisionAI "StressLeave" not found in dictOfLookUpAIDecisions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetAIDecisionID(String) (at Assets/Scripts/Managers/DataManager.cs:5581)
+	AIManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/AIManager.cs:456)
+	AIManager:Initialise(GameState) (at Assets/Scripts/Managers/AIManager.cs:350)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AIManager.ProcessDecisionTask () (at Assets/Scripts/Managers/AIManager.cs:2373)
+	AIManager.ProcessAISideAuthority () (at Assets/Scripts/Managers/AIManager.cs:687)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:403)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:266)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:345)
+	
+Dev seed 44754 -> Friday, 7 June 2019 5:04 PM
+City seed 5678 -> London, United Kingdom

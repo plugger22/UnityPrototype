@@ -549,12 +549,12 @@ namespace packageAPI
         public int taskID;                     //automatically assigned
         public int data0;                      //could be node, connection ID or teamID
         public int data1;                      //teamArcID, decision cost in resources
-        public int data2;                      //aiDeciID if a decision, otherwise ignored
-        public string name0;                   //node arc name, decision name
+        public string dataName;                //aiDecision.name if a decision, otherwise ignored
+        public string name0;                   //node arc name, aiDecision.tag
         public string name1;                   //could be target or team arc name, eg. 'CIVIL'
         public Priority priority;
-        public AITaskType type;                     //what type of task
-        public int chance;                      //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
+        public AITaskType type;                //what type of task
+        public int chance;                     //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 
         public AITask()
         { taskID = GameManager.instance.aiScript.aiTaskCounter++; }

@@ -164,7 +164,6 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                                 //Key -> actorID, Value -> Actor
     private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();                           //Key -> trait.name, Value -> Trait
     private Dictionary<string, TraitEffect> dictOfTraitEffects = new Dictionary<string, TraitEffect>();         //Key -> traitEffect.name, Value -> TraitEffect
-    /*private Dictionary<string, int> dictOfLookUpTraitEffects = new Dictionary<string, int>();                   //Key -> TraitEffect name, Value -> teffID*/
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                              //Key -> ActionID, Value -> Action
     private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>();      //Key -> ManageAction.name, Value -> ManageAction
     private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();                        //Key -> action name, Value -> actionID
@@ -186,8 +185,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();                     //Key -> objectiveID, Value -> Objective
     private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();            //Key -> orgID, Value -> Organisation
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                                 //Key -> mayorID, Value -> Mayor
-    private Dictionary<int, DecisionAI> dictOfAIDecisions = new Dictionary<int, DecisionAI>();                  //Key -> aiDecID, Value -> DecisionAI
-    private Dictionary<string, int> dictOfLookUpAIDecisions = new Dictionary<string, int>();                    //Key -> DecisionAI.name, Value -> DecisionAI.aiDecID
+    private Dictionary<string, DecisionAI> dictOfAIDecisions = new Dictionary<string, DecisionAI>();            //Key -> DecisionAI.name, Value -> DecisionAI
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();         //Key -> actBreakID, Value -> ActorBreakdown
     private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
@@ -5560,40 +5558,22 @@ public class DataManager : MonoBehaviour
     { return arrayOfAIResources; }
 
 
-    public Dictionary<int, DecisionAI> GetDictOfAIDecisions()
+    public Dictionary<string, DecisionAI> GetDictOfAIDecisions()
     { return dictOfAIDecisions; }
-
-    public Dictionary<string, int> GetDictOfLookUpAIDecisions()
-    { return dictOfLookUpAIDecisions; }
-
-    /// <summary>
-    /// returns DecisionAI.aiDecID from an input decision name (name of SO), -1 if not found
-    /// </summary>
-    /// <param name="decisionName"></param>
-    /// <returns></returns>
-    public int GetAIDecisionID(string decisionName)
-    {
-        int aiDecID = -1;
-        if (string.IsNullOrEmpty(decisionName) == false)
-        {
-            if (dictOfLookUpAIDecisions.ContainsKey(decisionName))
-            {  return dictOfLookUpAIDecisions[decisionName]; }
-            else { Debug.LogWarning(string.Format("DecisionAI \"{0}\" not found in dictOfLookUpAIDecisions{1}", decisionName, "\n")); }
-        }
-        else { Debug.LogError("Invalid decisionName (Null or Empty)"); }
-        return aiDecID;
-    }
 
     /// <summary>
     /// returns DecisionAI from dictOfAIDecisions based on aiDecID. Null if not found.
     /// </summary>
     /// <param name="aiDecID"></param>
     /// <returns></returns>
-    public DecisionAI GetAIDecision(int aiDecID)
+    public DecisionAI GetAIDecision(string decisionName)
     {
-        DecisionAI decisionAI = null;
-        if (dictOfAIDecisions.TryGetValue(aiDecID, out decisionAI))
-        { return decisionAI; }
+        if (string.IsNullOrEmpty(decisionName) == false)
+        {
+            if (dictOfAIDecisions.ContainsKey(decisionName) == true)
+            { return dictOfAIDecisions[decisionName]; }
+        }
+        else { Debug.LogError("Invalid decisionName (Null)"); }
         return null;
     }
 

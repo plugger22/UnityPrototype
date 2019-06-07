@@ -10,6 +10,8 @@ public class DecisionAI : ScriptableObject
 {
     [Tooltip("Used for task description in the AIDisplayUI")]
     public string descriptor;
+    [Tooltip("Used for inGame display purposes")]
+    public string tag;
     [Tooltip("Used for warning in ItemData notification")]
     public string warning;
     [TextArea]

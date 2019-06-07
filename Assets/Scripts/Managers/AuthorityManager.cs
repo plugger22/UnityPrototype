@@ -46,8 +46,8 @@ public class AuthorityManager : MonoBehaviour
         Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
         //decisions
         securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
-        securityAlert = GameManager.instance.dataScript.GetAIDecisionID("Security Alert");
-        securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("Surveillance Crackdown");
+        securityAlert = GameManager.instance.dataScript.GetAIDecisionID("SecAlert");
+        securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("SurvCrackdwn");
         Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
         Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
         Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
