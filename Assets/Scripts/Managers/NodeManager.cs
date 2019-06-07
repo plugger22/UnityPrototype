@@ -2174,7 +2174,7 @@ public class NodeManager : MonoBehaviour
                     //message
                     if (ongoing.Value.nodeID > -1)
                     { GameManager.instance.messageScript.MessageOngoingEffectCurrentNode(ongoing.Value); }
-                    else { GameManager.instance.messageScript.MessageOngoingEffectCurrentGear(ongoing.Value); }
+                    else { Debug.LogWarningFormat("Invalid ongoingEffect for {0}, ID {1}", ongoing.Value.text, ongoing.Key); }
                 }
             }
         }

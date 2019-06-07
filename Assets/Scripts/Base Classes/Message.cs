@@ -11,8 +11,8 @@ namespace gameAPI
     [System.Serializable]
     public class Message
     {
+        #region Save Compatible Data
         public string text;
-
         public int msgID;
         public int turnCreated;
         public int displayDelay;            //number of turns delay before message is displayed (if isPublic == true)
@@ -20,15 +20,13 @@ namespace gameAPI
         public int data1;
         public int data2;
         public int data3;
+        public string dataName;             //used for objects with a name key instead of an ID
 
-        public bool isPublic;               //display if true
-        
-
-        /*public GlobalSide side;*/
+        public bool isPublic;               //display if true (debug message system only)
         public int sideLevel;               //GlobalSide.level
         public MessageType type;            //main category
         public MessageSubType subType;      //sub type of main category
-
+        #endregion
 
         /// <summary>
         /// Constructor (not a Unity class)

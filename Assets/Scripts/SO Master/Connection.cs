@@ -357,9 +357,9 @@ public class Connection : MonoBehaviour
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
-                    Debug.Log(string.Format("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID, ongoing.ongoingID, ongoing.text, "\n"));
+                    Debug.LogFormat("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID, ongoing.ongoingID, ongoing.description, "\n");
                     //add to register & create message
-                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing, connID);
+                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing);
                     //remove from list
                     listOfOngoingEffects.RemoveAt(i);
                     isRemoved = true;

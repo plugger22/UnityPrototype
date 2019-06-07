@@ -5028,7 +5028,7 @@ public class ActorManager : MonoBehaviour
                 //message
                 msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
                 reason = string.Format("{0} has regained MAXIMUM Motivation", actor.arc.name);
-                GameManager.instance.messageScript.ActorBlackmail(msgText, actor, -1, true, reason);
+                GameManager.instance.messageScript.ActorBlackmail(msgText, actor, null, true, reason);
             }
             else
             { TraitLogMessage(actor, "for a Stop Blackmail check", "to REFUSE being bought-off"); }
@@ -5049,7 +5049,7 @@ public class ActorManager : MonoBehaviour
                     /*StringBuilder builder = new StringBuilder();*/
                     //message
                     msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret.name);
+                    GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret);
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {

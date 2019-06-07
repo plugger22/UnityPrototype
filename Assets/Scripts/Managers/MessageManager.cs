@@ -398,7 +398,8 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Secret;
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
-            message.data0 = secret.name;
+            message.data0 = secret.secretID;
+            message.dataName = secret.name;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
@@ -907,7 +908,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     ///<param name="secretID"></param>
     /// <returns></returns>
-    public Message ActorBlackmail(string text, Actor actor, int secretID = -1, bool isThreatDropped = false, string reason = null)
+    public Message ActorBlackmail(string text, Actor actor, Secret secret = null, bool isThreatDropped = false, string reason = null)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -919,12 +920,16 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secretID;
+            if (secret != null)
+            {
+                message.data1 = secret.secretID;
+                message.dataName = secret.name;
+            }
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Blackmail threat resolved", actor.arc.name);
             data.topText = "Blackmail Resolved";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorBlackmailDetails(actor, secretID, isThreatDropped, reason);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorBlackmailDetails(actor, message.dataName, isThreatDropped, reason);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -961,7 +966,8 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secret.name;
+            message.data1 = secret.secretID;
+            message.dataName = secret.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
@@ -1007,7 +1013,8 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secret.name;
+            message.data1 = secret.secretID;
+            message.dataName = secret.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
@@ -1454,6 +1461,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
             message.data3 = target.targetID;
+            message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts learns of a RUMOUR", actor.arc.name);
@@ -2684,6 +2692,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = actor.actorID;
             message.data1 = gear.gearID;
             message.data2 = motivation;
+            message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             if (isGiven == true)
@@ -2735,6 +2744,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = gear.gearID;
             message.data1 = renownUsed;
             message.data2 = nodeID;
+            message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Compromised", gear.tag);
@@ -2775,6 +2785,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Used;
             message.sideLevel = globalResistance.level;
             message.data0 = gear.gearID;
+            message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Used", gear.tag);
@@ -2817,6 +2828,7 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.data0 = gear.gearID;
             message.data1 = actor.actorID;
+            message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Lost", gear.tag);
@@ -2859,6 +2871,7 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.data0 = gear.gearID;
             message.data1 = actor.actorID;
+            message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Available", gear.tag);
@@ -2902,6 +2915,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             message.data1 = gear.gearID;
             message.data2 = actorID;
+            message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Obtained", gear.tag);
@@ -2952,6 +2966,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
             message.data2 = target.targetID;
+            message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
             if(message.sideLevel == globalResistance.level)
@@ -3009,6 +3024,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             message.data1 = target.numOfAttempts;
             message.data2 = target.targetID;
+            message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
             if (message.sideLevel == globalResistance.level)
@@ -3065,6 +3081,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
             message.data2 = target.targetID;
+            message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
             //resistance player only
@@ -3111,6 +3128,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             message.data1 = actorID;
             message.data2 = target.targetID;
+            message.dataName = target.name;
             //ItemData, resistance only
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
             {
@@ -3167,6 +3185,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
             message.data2 = target.targetID;
+            message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} target CONTAINED", target.targetName);
@@ -3265,7 +3284,7 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// current ongoing effect Gear -> InfoApp 'Effect' tab
     /// </summary>
     /// <param name="text"></param>
@@ -3282,6 +3301,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = globalBoth.level;
             message.data0 = ongoing.gearID;
             message.data1 = ongoing.timer;
+            message.dataName = ongoing.gearName;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0}, ONGOING EFFECT", ongoing.gearName);
@@ -3302,18 +3322,17 @@ public class MessageManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
-    }
+    }*/
 
 
     /// <summary>
-    /// Ongoing effect that timed out (expired) automatically or has been shut down. DataID could be node / conn / gearID
+    /// Ongoing effect that timed out (expired) automatically or has been shut down
     /// </summary>
     /// <param name="text"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message OngoingEffectExpired(string text, int dataID)
+    public Message OngoingEffectExpired(string text)
     {
-        Debug.Assert(dataID > -1, "Invalid dataID (less than Zero)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -3322,7 +3341,6 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Ongoing_Expired;
             message.sideLevel = globalBoth.level;
             message.isPublic = true;
-            message.data0 = dataID;
             //add
             GameManager.instance.dataScript.AddMessage(message);
         }

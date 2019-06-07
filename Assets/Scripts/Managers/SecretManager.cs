@@ -143,7 +143,7 @@ public class SecretManager : MonoBehaviour
         //
         // - - - - Secrets - - - 
         //
-        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
         int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
         if (dictOfSecrets != null)
@@ -253,15 +253,15 @@ public class SecretManager : MonoBehaviour
     /// Returns true if successfully removed secret/s, false otherwise
     /// </summary>
     /// <param name="secretID"></param>
-    public bool RemoveSecretFromAll(int secretID, bool isDeletedSecret = false)
+    public bool RemoveSecretFromAll(string secretName, bool isDeletedSecret = false)
     {
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
+        Secret secret = GameManager.instance.dataScript.GetSecret(secretName);
         bool isSuccess = true;
         if (secret != null)
         {
             //remove from player
-            GameManager.instance.playerScript.RemoveSecret(secretID);
+            GameManager.instance.playerScript.RemoveSecret(secretName);
             if (isDeletedSecret == true)
             {
                 //message
@@ -301,7 +301,7 @@ public class SecretManager : MonoBehaviour
             {
                 if (actor != null)
                 {
-                    actor.RemoveSecret(secretID);
+                    actor.RemoveSecret(secretName);
                     //blackmail check -> if actor is blackmailing and they end up with zero secrets then the condition is removed
                     if (isDeletedSecret == true)
                     {
@@ -316,7 +316,7 @@ public class SecretManager : MonoBehaviour
                                 //additional explanatory message (why has condition gone?)
                                 string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
                                 string reason = "The secret they hold has no value";
-                                GameManager.instance.messageScript.ActorBlackmail(blackText, actor, secret.secretID, true, reason);
+                                GameManager.instance.messageScript.ActorBlackmail(blackText, actor, secret, true, reason);
                             }
                         }
                     }
@@ -326,7 +326,7 @@ public class SecretManager : MonoBehaviour
         else
         {
             isSuccess = false;
-            Debug.LogWarningFormat("Invalid secret (Null) for secretID {0} -> Not removed", secretID);
+            Debug.LogWarningFormat("Invalid secret (Null) for secret {0} -> Not removed", secretName);
         }
         return isSuccess;
     }
@@ -372,11 +372,11 @@ public class SecretManager : MonoBehaviour
     /// debug method to display data
     /// </summary>
     /// <returns></returns>
-    public string DisplaySecretData()
+    public string DebugDisplaySecretData()
     {
         StringBuilder builder = new StringBuilder();
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         builder.AppendFormat(" Secret Data {0}{1}", "\n", "\n");
         //main dictionary data
         builder.Append("- dictOfSecrets");
@@ -385,10 +385,7 @@ public class SecretManager : MonoBehaviour
             if (dictOfSecrets.Count > 0)
             {
                 foreach (var secret in dictOfSecrets)
-                {
-                    builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.Value.secretID, secret.Value.name, secret.Value.tag, secret.Value.status,
-                        secret.Value.CheckNumOfActorsWhoKnow());
-                }
+                { builder.AppendFormat("{0} {1} (\"{2}\"), {3}, Known: {4}", "\n", secret.Key, secret.Value.tag, secret.Value.status, secret.Value.CheckNumOfActorsWhoKnow()); }
             }
             else { builder.AppendFormat("{0} No records", "\n"); }
         }

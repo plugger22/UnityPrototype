@@ -1176,7 +1176,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Secrets - - -
         //
-        Dictionary<int, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             counter = 0;
@@ -1189,7 +1189,7 @@ public class LoadManager : MonoBehaviour
                 secret.secretID = counter++;
                 //add to dictionary
                 try
-                { dictOfSecrets.Add(secret.secretID, secret); }
+                { dictOfSecrets.Add(secret.name, secret); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Secret (Null)"); counter--; }
                 catch (ArgumentException)

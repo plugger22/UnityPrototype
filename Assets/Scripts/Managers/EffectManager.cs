@@ -1052,7 +1052,7 @@ public class EffectManager : MonoBehaviour
                             secret.status = gameAPI.SecretStatus.Deleted;
                             secret.deletedWhen = GameManager.instance.turnScript.Turn;
                             //remove secret from game
-                            if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.secretID, true) == true)
+                            if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
                             { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
                             else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secret.tag, colourEnd); }
                             effectReturn.isAction = true;
@@ -1065,7 +1065,7 @@ public class EffectManager : MonoBehaviour
                         if (secret != null)
                         {
                             //removes secret from actor only (could still be with other actors and will always be with the player)
-                            actor.RemoveSecret(secret.secretID);
+                            actor.RemoveSecret(secret.name);
                             effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted from {2}{3}", colourGood, secret.tag, actor.arc.name, colourEnd);
                             effectReturn.isAction = true;
                         }
@@ -3093,8 +3093,6 @@ public class EffectManager : MonoBehaviour
         effectOngoing.effectApply = effect.apply.name;
         effectOngoing.sideLevel = effectInput.side.level;
         effectOngoing.value = effect.value;
-        effectOngoing.gearName = effectInput.ongoingText;
-        effectOngoing.gearID = effectInput.data;
         effectOngoing.nodeID = -1;
         effectOngoing.reason = effectInput.ongoingText;
         effectOngoing.description = effect.description;

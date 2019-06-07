@@ -1042,11 +1042,9 @@ public class Node : MonoBehaviour
             effect.timer = ongoing.timer;
             effect.effectOutcome = ongoing.effectOutcome;
             effect.typeLevel = ongoing.typeLevel;
-            effect.gearID = ongoing.gearID;
             effect.effectApply = ongoing.effectApply;
             effect.sideLevel = ongoing.sideLevel;
             effect.nodeID = ongoing.nodeID;
-            effect.gearName = ongoing.gearName;
             //add new ongoing effect
             listOfOngoingEffects.Add(effect);
             //add to register & create message
@@ -1069,8 +1067,7 @@ public class Node : MonoBehaviour
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
-                    //Debug.Log(string.Format("Node Effect: {0}, ID {1}, \"{2}\", ID {3}{4}", Arc.name.ToUpper(), nodeID, ongoing.text, ongoing.ongoingID, "\n"));
-                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing, nodeID);
+                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }
@@ -1115,14 +1112,14 @@ public class Node : MonoBehaviour
             {
                 //decrement timer
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
-                Debug.Log(string.Format("Node ID {0}, \"{1}\", Timer before {2}{3}", nodeID, ongoing.text, ongoing.timer, "\n"));
+                Debug.LogFormat("[Nod] Node.cs -> ProcessOngoingEffect: Node ID {0}, \"{1}\", TIMER before {2}{3}", nodeID, ongoing.description, ongoing.timer, "\n");
                 ongoing.timer--;
                 if (ongoing.timer <= 0)
                 {
                     //message
-                    Debug.Log(string.Format("REMOVE: Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.text, nodeID, "\n"));
+                    Debug.LogFormat("[Nod] Node.cs -> ProcessOngoingEffect: REMOVE Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.description, nodeID, "\n");
                     //delete effect
-                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing, nodeID);
+                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }

@@ -1889,10 +1889,10 @@ MonoBehaviour:
   manageSecretRenown: 2
   manageDisposeRenown: 4
   unhappyLoseMotivationChance: 40
-  unhappyTakeActionChance: 25
+  unhappyTakeActionChance: 30
   unhappyRevealSecretChance: 50
   unhappyResignChance: 25
-  unhappyComplainChance: 50
+  unhappyComplainChance: 60
   unhappyReassureBoost: 5
   unhappyBullyBoost: 5
   motivationLossLetGo: 1

@@ -352,10 +352,10 @@ public class ItemDataManager : MonoBehaviour
     /// Actor resolves blackmail -> either carries out threat or drops threat (isThreatDropped 'true' and 'reason' why) due to max. motivation
     /// </summary>
     /// <param name="actor"></param>
-    /// <param name="secretID"></param>
+    /// <param name="secretName"></param>
     /// <param name="isThreatDropped"></param>
     /// <returns></returns>
-    public string GetActorBlackmailDetails(Actor actor, int secretID, bool isThreatDropped, string reason)
+    public string GetActorBlackmailDetails(Actor actor, string secretName, bool isThreatDropped, string reason)
     {
         StringBuilder builder = new StringBuilder();
         if (isThreatDropped == true)
@@ -368,16 +368,16 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             //blackmail threat carried out -> Secret Revealed
-            if (secretID > -1)
+            if (string.IsNullOrEmpty(secretName) == false)
             {
-                Secret secret = GameManager.instance.dataScript.GetSecret(secretID);
+                Secret secret = GameManager.instance.dataScript.GetSecret(secretName);
                 if (secret != null)
                 {
                     builder.AppendFormat("{0}, {1}{2}{3}{4}{5}has carried out their threat{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
                     builder.AppendFormat("<b>\"{0}\" is Revealed</b>", secret.tag);
                     /*GetSecretEffects(builder, secret);*/
                 }
-                else { Debug.LogWarningFormat("Invalid secret (Null) for secretID {0}", secretID); }
+                else { Debug.LogWarningFormat("Invalid secret (Null) for secret {0}", secretName); }
             }
         }
         return builder.ToString();
@@ -1171,7 +1171,7 @@ public class ItemDataManager : MonoBehaviour
             }
             else { builder.AppendFormat("{0}No effect", "\n"); }
         }
-        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for secretID {0}", secret.secretID); }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for secret {0}", secret.name); }
         return builder;
     }
 
@@ -1778,14 +1778,14 @@ public class ItemDataManager : MonoBehaviour
                 case 0: colourEffect = colourBad; break;
                 case 1: colourEffect = colourNeutral; break;
                 case 2: colourEffect = colourGood; break;
-                default: colourEffect = colourNeutral; Debug.LogWarningFormat("Invalid ongoing.type.level \"{0}\" for \"{1}\"", ongoing.typeLevel, ongoing.text); break;
+                default: colourEffect = colourNeutral; Debug.LogWarningFormat("Invalid ongoing.type.level \"{0}\" for \"{1}\"", ongoing.typeLevel, ongoing.description); break;
             }
             builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourEffect, ongoing.description, colourEnd);
             if (ongoing.timer > 0)
             { builder.AppendFormat("{0}{1}{2}<b>{3} turn{4}</b>{5} remaining", "\n", "\n", colourNeutral, ongoing.timer, ongoing.timer != 1 ? "s" : "", colourEnd); }
-            else { Debug.LogWarningFormat("Invalid ongoing.timer (less than 1) for \"{0}\"", ongoing.text); }
+            else { Debug.LogWarningFormat("Invalid ongoing.timer (less than 1) for \"{0}\"", ongoing.description); }
         }
-        else { Debug.LogWarningFormat("Invalid ongoing.description (Null or Empty) for \"{0}\"", ongoing.text); }
+        else { Debug.LogWarningFormat("Invalid ongoing.description (Null or Empty) for \"{0}\"", ongoing.description); }
         return builder.ToString();
     }
 

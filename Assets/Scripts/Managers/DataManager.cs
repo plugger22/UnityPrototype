@@ -5398,10 +5398,13 @@ public class DataManager : MonoBehaviour
                     dictOfOngoingID.Add(ongoing.ongoingID, ongoing);
                     //generate message (node effect only)
                     if (nodeID > -1)
-                    { GameManager.instance.messageScript.OngoingEffectCreated(ongoing.text, nodeID); }
+                    {
+                        GameManager.instance.messageScript.OngoingEffectCreated(ongoing.text, nodeID);
+                        Debug.LogFormat("[Nod] DataManager.cs -> AddOngoingEffectToDict: ADDED Ongoing effect {0} to nodeID {1}{2}", ongoing.description, ongoing.nodeID, "\n");
+                    }
                 }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, ongoing.text)); }
+                { Debug.LogErrorFormat("Invalid ongoingID (duplicate) \"{0}\" for \"{1}\"", ongoing.ongoingID, ongoing.description); }
             }
         }
         else { Debug.LogError("Invalid Ongoing effect (Null)"); }
@@ -5442,7 +5445,7 @@ public class DataManager : MonoBehaviour
                 }
             }
             else
-            { builder.Append(string.Format("{0} {1}, {2}, {3} turn{4} remaining", "\n", ongoing.Value.gearName, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
+            { builder.Append(string.Format("{0} {1}, {2} turn{3} remaining", "\n", ongoing.Value.text, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
         }
         return builder.ToString();
     }
@@ -5451,7 +5454,7 @@ public class DataManager : MonoBehaviour
     /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. dataID could be NodeID or ConnID for connections
     /// </summary>
     /// <param name="ongoing"></param>
-    public void RemoveOngoingEffect(EffectDataOngoing ongoing, int dataID)
+    public void RemoveOngoingEffect(EffectDataOngoing ongoing)
     {
         if (ongoing != null)
         {
@@ -5461,8 +5464,8 @@ public class DataManager : MonoBehaviour
                 //remove entry
                 dictOfOngoingID.Remove(ongoing.ongoingID);
                 //generate message
-                string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.text);
-                GameManager.instance.messageScript.OngoingEffectExpired(text, dataID);
+                string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.description);
+                GameManager.instance.messageScript.OngoingEffectExpired(text);
             }
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
@@ -5985,7 +5988,7 @@ public class DataManager : MonoBehaviour
                         {
                             EffectDataOngoing ongoing = GetOngoingEffect(actionAdjustment.ongoingID);
                             if (ongoing != null)
-                            { RemoveOngoingEffect(ongoing, ongoing.gearID); }
+                            { RemoveOngoingEffect(ongoing); }
                             else { Debug.LogWarningFormat("Invalid EffectDataOngoing (Null) for ongoingID {0}", actionAdjustment.ongoingID); }
                         }
                         //delete adjustment
