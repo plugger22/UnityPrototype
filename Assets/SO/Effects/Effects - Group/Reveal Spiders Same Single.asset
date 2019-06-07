@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Reveal Spiders Same Single
   m_EditorClassIdentifier: 
   effectID: 142
-  description: Reveal Spiders at Similar districts
-  textTag: Reveal Spiders at Similar Nodes +1
+  description: Reveal Spiders at Like districts
+  ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: a3d16415671095a4cb2ea93051bd2bd1, type: 2}

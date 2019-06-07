@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Reveal Spiders Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 141
-  description: Reveal Spiders at Similar districts
+  description: Reveal Spiders at Like districts
   ongoingTooltip: Reveal Spider
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}

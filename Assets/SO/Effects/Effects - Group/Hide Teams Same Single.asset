@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Hide Teams Same Single
   m_EditorClassIdentifier: 
   effectID: 64
-  description: Hide Teams at Similar districts
-  textTag: Hide Teams at Similar Nodes -1
+  description: Hide Teams at Like districts
+  ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: 0bb18a59c3a3f584d94d91e65c083bcf, type: 2}

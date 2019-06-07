@@ -26,22 +26,25 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects: []
   listOfFailEffects: []
-  OngoingEffect: {fileID: 0}
+  OngoingEffect: {fileID: 11400000, guid: 9eef9920ae131f847ac02efc8b347252, type: 2}
   profileBase: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
-  targetStatus: 1
-  infoLevel: 0
+  targetStatus: 2
+  intel: 0
   targetID: 19
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 15
+  nodeID: 5
+  distance: 0
+  newIntel: 0
+  intelGain: 0
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 6
-  timerWindow: 10
-  listOfRumourContacts: 00000000
+  timerHardLimit: 3
+  timerWindow: 5
+  listOfRumourContacts: 0000000003000000

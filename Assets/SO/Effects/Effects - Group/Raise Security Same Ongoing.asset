@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Raise Security Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 113
-  description: Similiar districts Security +1
+  description: Like districts Security +1
   ongoingTooltip: Security +1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}

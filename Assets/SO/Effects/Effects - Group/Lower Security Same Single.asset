@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Lower Security Same Single
   m_EditorClassIdentifier: 
   effectID: 87
-  description: Similar districts Security -1
-  textTag: Similar Nodes Security -1
+  description: Like districts Security -1
+  ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: 4d1c81b2e596a1d4f8908148c7b6fa6f, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Reveal Teams Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 149
-  description: Reveal Teams at Similar districts
+  description: Reveal Teams at Like districts
   ongoingTooltip: Reveal Teams
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}

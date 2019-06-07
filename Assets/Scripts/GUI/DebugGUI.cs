@@ -1034,7 +1034,7 @@ public class DebugGUI : MonoBehaviour
                     case 16:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
-                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 20), "Input Gear name (exact)");
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 20), "Input Gear.name (exact)");
                         textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 90, 100, 20), textInput_0);
                         status = GUIStatus.GiveGear;
                         textOutput = null;

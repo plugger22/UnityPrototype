@@ -125,7 +125,7 @@ public class TeamManager : MonoBehaviour
         //event Listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "TeamManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
         EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
@@ -158,8 +158,8 @@ public class TeamManager : MonoBehaviour
             case EventType.EndTurnEarly:
                 EndTurn();
                 break;
-            case EventType.StartTurnLate:
-                StartTurnLate();
+            case EventType.StartTurnEarly:
+                StartTurnEarly();
                 break;
             case EventType.ChangeColour:
                 SetColours();
@@ -233,9 +233,10 @@ public class TeamManager : MonoBehaviour
 
 
     /// <summary>
-    /// Start turn Late activity -> Event driven. Team Management (inTransit, OnMap timers)
+    /// Start turn Early activity -> Event driven. Team Management (inTransit, OnMap timers)
+    /// NOTE: needs to be before NodeManager.cs process ongoing effects in StartTurnLate (team can cancel effect and NodeManager.cs still creates an ongoing effect msg otherwise)
     /// </summary>
-    private void StartTurnLate()
+    private void StartTurnEarly()
     {
         int tally = 0;
         List<int> teamPool = new List<int>();
@@ -1372,9 +1373,10 @@ public class TeamManager : MonoBehaviour
                     if (isError == false)
                     {
                         text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, teamEffect.description, node.nodeName, node.nodeID);
-                        itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
+                        itemText = string.Format("{0} Team completes TASK at {0}", team.arc.name, node.nodeName);
                         effectText = string.Format("{0}{1}{2}", colourGood, teamEffect.description, colourEnd);
-                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                        //both sides get a message for these teams
+                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team, true);
                     }
                     else { Debug.LogWarningFormat("{0} effectReturn.errorFlag TRUE", team.arc.name); }
                 }

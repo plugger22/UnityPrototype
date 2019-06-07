@@ -2270,7 +2270,7 @@ public class ActionManager : MonoBehaviour
                 // - - - Attempt Target - - -  
                 //
                 isAction = true;
-                int tally = GameManager.instance.targetScript.GetTargetTally(target.targetName, true);
+                int tally = GameManager.instance.targetScript.GetTargetTally(target.name, true);
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.targetName, "\n");
                 target.numOfAttempts++;

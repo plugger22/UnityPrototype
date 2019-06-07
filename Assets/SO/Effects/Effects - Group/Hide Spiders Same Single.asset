@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Hide Spiders Same Single
   m_EditorClassIdentifier: 
   effectID: 56
-  description: Hide Spiders at Similar districts
-  textTag: Hide Spiders at Similar Nodes -1
+  description: Hide Spiders at Like districts
+  ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: a3d16415671095a4cb2ea93051bd2bd1, type: 2}

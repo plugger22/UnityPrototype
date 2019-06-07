@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Lower Conn Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 79
-  description: Similar Node Connections Security -1
+  description: Like Node Connections Security -1
   ongoingTooltip: Connection Security -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 9ef2c42915d122c4ab5fde9e48ae512c, type: 2}

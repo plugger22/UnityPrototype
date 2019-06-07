@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Hide Contacts Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 47
-  description: Hide Contacts at Similar districts
+  description: Hide Contacts at Like districts
   ongoingTooltip: Contacts Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}

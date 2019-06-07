@@ -2582,7 +2582,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="teamID"></param>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Message TeamEffect(string text, string itemText, string effectText, Node node, Team team)
+    public Message TeamEffect(string text, string itemText, string effectText, Node node, Team team, bool isBothSides = false)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
@@ -2592,7 +2592,9 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TEAM;
             message.subType = MessageSubType.Team_Effect;
-            message.sideLevel = globalAuthority.level;
+            if (isBothSides == true)
+            { message.sideLevel = globalBoth.level; }
+            else { message.sideLevel = globalAuthority.level; }
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
@@ -3188,7 +3190,7 @@ public class MessageManager : MonoBehaviour
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} target CONTAINED", target.targetName);
+            data.itemText = string.Format("Target CONTAINED at {0}", node.nodeName);
             data.topText = "Target Contained";
             data.bottomText = GameManager.instance.itemDataScript.GetTargetContainedDetails(node, team, target);
             data.priority = ItemPriority.Medium;

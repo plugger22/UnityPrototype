@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Hide Teams Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 63
-  description: Hide Teams at Similar districts
+  description: Hide Teams at Like districts
   ongoingTooltip: Teams Hidden
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}

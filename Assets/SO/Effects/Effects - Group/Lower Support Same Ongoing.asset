@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Lower Support Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 98
-  description: Similiar districts Support -1
+  description: Like districts Support -1
   ongoingTooltip: Support -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}

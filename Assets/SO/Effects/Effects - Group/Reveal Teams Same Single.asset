@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Reveal Teams Same Single
   m_EditorClassIdentifier: 
   effectID: 150
-  description: Reveal Teams at Similar districts
-  textTag: Reveal Teams at Similar Nodes +1
+  description: Reveal Teams at Like districts
+  ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: 0bb18a59c3a3f584d94d91e65c083bcf, type: 2}

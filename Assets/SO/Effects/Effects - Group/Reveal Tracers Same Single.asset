@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Reveal Tracers Same Single
   m_EditorClassIdentifier: 
   effectID: 158
-  description: Reveal Tracers at Similar districts
-  textTag: Reveal Tracers at Similar Nodes +1
+  description: Reveal Tracers at Like districts
+  ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   outcome: {fileID: 11400000, guid: b2ac9163f6f08f0479eb8cd8bc15d8fc, type: 2}

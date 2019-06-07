@@ -991,7 +991,7 @@ public class TargetManager : MonoBehaviour
             }
             //Ongoing effects -> add header
             if (target.OngoingEffect != null)
-            { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, effect.description, colourEnd)); }
+            { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, target.OngoingEffect.description, colourEnd)); }
         }
         else
         {

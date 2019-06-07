@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Lower Stability Same Ongoing
   m_EditorClassIdentifier: 
   effectID: 92
-  description: Similiar districts Stability -1
+  description: Like districts Stability -1
   ongoingTooltip: Stability -1
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
