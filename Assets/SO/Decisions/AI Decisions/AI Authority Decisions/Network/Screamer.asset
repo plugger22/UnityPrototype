@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Name: Screamer
   m_EditorClassIdentifier: 
   descriptor: AI implements Screamer countermeasures
+  tag: Screamer
+  warning: 
   tooltipDescriptor: Whenever somebody is detected hacking the AI they gain the <b>STRESSED</b>
     condition
   type: {fileID: 11400000, guid: 69c9367e7434c194c9e9179f5c4403e2, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 2
-  aiDecID: 11
+  aiDecID: 8

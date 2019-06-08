@@ -5246,7 +5246,7 @@ public class DataManager : MonoBehaviour
     /// debug method to display messages. Returns display string or empty if category is invalid.
     /// </summary>
     /// <returns></returns>
-    public string DisplayMessages(MessageCategory category)
+    public string DebugDisplayMessages(MessageCategory category)
     {
         //which dictionary to use
         Dictionary<int, Message> tempDict = null;
@@ -5310,8 +5310,8 @@ public class DataManager : MonoBehaviour
                             builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
                             if (!isSingleLine)
                             {
-                                builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                builderResistance.Append(string.Format(" -> id {0}, {1} / {2}, data: {3} | {4} | {5} | {6} | {7} {8}{9}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.dataName, msg.isPublic == true ? "del" : "",
                                     msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
                             counterResistance++;
@@ -5324,8 +5324,8 @@ public class DataManager : MonoBehaviour
                             builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
                             if (!isSingleLine)
                             {
-                                builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                builderAuthority.Append(string.Format(" -> id {0}, {1} / {2}, data: {3} | {4} | {5} | {6} | {7} {8}{9}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.dataName, msg.isPublic == true ? "del" : "",
                                     msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
                             counterAuthority++;
@@ -5339,8 +5339,8 @@ public class DataManager : MonoBehaviour
                             builderResistance.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
                             if (!isSingleLine)
                             {
-                                builderResistance.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                builderResistance.Append(string.Format(" -> id {0}, {1} / {2}, data: {3} | {4} | {5} | {6} | {7} {8}{9}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.dataName, msg.isPublic == true ? "del" : "",
                                     msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
                             counterResistance++;
@@ -5351,8 +5351,8 @@ public class DataManager : MonoBehaviour
                             builderAuthority.Append(string.Format(" t{0}: {1}{2}", msg.turnCreated, msg.text, "\n"));
                             if (!isSingleLine)
                             {
-                                builderAuthority.Append(string.Format(" -> id {0}, type: {1} subType: {2}, data: {3} | {4} | {5}  {6} {7}{8}", msg.msgID, msg.type,
-                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.isPublic == true ? "del" : "",
+                                builderAuthority.Append(string.Format(" -> id {0}, {1} / {2}, data: {3} | {4} | {5} | {6} | {7} {8}{9}", msg.msgID, msg.type,
+                                    msg.subType, msg.data0, msg.data1, msg.data2, msg.dataName, msg.isPublic == true ? "del" : "",
                                     msg.isPublic == true ? msg.displayDelay.ToString() : "", "\n"));
                             }
                             counterAuthority++;
@@ -5562,7 +5562,7 @@ public class DataManager : MonoBehaviour
     { return dictOfAIDecisions; }
 
     /// <summary>
-    /// returns DecisionAI from dictOfAIDecisions based on aiDecID. Null if not found.
+    /// returns DecisionAI from dictOfAIDecisions based on decision.name, Null if not found.
     /// </summary>
     /// <param name="aiDecID"></param>
     /// <returns></returns>

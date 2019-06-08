@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Name: TraceBack
   m_EditorClassIdentifier: 
   descriptor: AI implements TraceBack countermeasures
+  tag: TraceBack
+  warning: 
   tooltipDescriptor: When a hacking attempt is detected the AI gains the person's
     <b>Location</b> and they lose a level of <b>Invisibility</b>
   type: {fileID: 11400000, guid: 69c9367e7434c194c9e9179f5c4403e2, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 2
-  aiDecID: 15
+  aiDecID: 10

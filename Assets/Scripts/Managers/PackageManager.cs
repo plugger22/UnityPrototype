@@ -466,6 +466,7 @@ namespace packageAPI
         public int timerHandout;
         public int timerPolicy;
         public string policyName;
+        public string policyTag;
         public int policyEffectCrisis;
         public int policyEffectLoyalty;
         //hacking
@@ -549,6 +550,7 @@ namespace packageAPI
         public int taskID;                     //automatically assigned
         public int data0;                      //could be node, connection ID or teamID
         public int data1;                      //teamArcID, decision cost in resources
+        public int data2;                      //gearPoolTopUp etc.
         public string dataName;                //aiDecision.name if a decision, otherwise ignored
         public string name0;                   //node arc name, aiDecision.tag
         public string name1;                   //could be target or team arc name, eg. 'CIVIL'

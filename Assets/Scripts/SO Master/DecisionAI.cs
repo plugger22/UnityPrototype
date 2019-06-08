@@ -26,6 +26,6 @@ public class DecisionAI : ScriptableObject
     [Range(0, 5)] public int cost = 3;
 
 
-    [HideInInspector] public int aiDecID;         //dynamically assigned by DataManager.cs on import
+    /*[HideInInspector] public int aiDecID;         //dynamically assigned by DataManager.cs on import*/
 
 }

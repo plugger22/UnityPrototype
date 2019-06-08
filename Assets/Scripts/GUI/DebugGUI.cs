@@ -962,16 +962,16 @@ public class DebugGUI : MonoBehaviour
                         switch (msgStatus)
                         {
                             case MessageCategory.Pending:
-                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Pending);
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Pending);
                                 break;
                             case MessageCategory.Current:
-                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Current);
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Current);
                                 break;
                             case MessageCategory.Archive:
-                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.Archive);
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Archive);
                                 break;
                             case MessageCategory.AI:
-                                analysis = GameManager.instance.dataScript.DisplayMessages(MessageCategory.AI);
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.AI);
                                 break;
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);

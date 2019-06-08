@@ -1388,27 +1388,25 @@ public class LoadManager : MonoBehaviour
         Dictionary<string, DecisionAI> dictOfAIDecisions = GameManager.instance.dataScript.GetDictOfAIDecisions();
         if (dictOfAIDecisions != null)
         {
-                counter = 0;
-                numArray = arrayOfDecisionAI.Length;
-                for (int i = 0; i < numArray; i++)
-                {
-                    //assign a zero based unique ID number
-                    DecisionAI decisionAI = arrayOfDecisionAI[i];
-                    //set data
-                    decisionAI.aiDecID = counter++;
-                    //add to main dictionary
-                    try
-                    { dictOfAIDecisions.Add(decisionAI.name, decisionAI); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid decisionAI (duplicate) ID \"{0}\" for \"{1}\"", counter, decisionAI.name)); counter--; }
-                }
-                numDict = dictOfAIDecisions.Count;
-                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", numDict, "\n");
-                Debug.Assert(numDict == counter, "Mismatch in count");
-                Debug.Assert(numDict > 0, "No AI Decisions have been imported");
-                Debug.Assert(numArray == numDict, string.Format("Mismatch in DecisionAI count, array {0}, dict {1}", numArray, numDict));
+            counter = 0;
+            numArray = arrayOfDecisionAI.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                DecisionAI decisionAI = arrayOfDecisionAI[i];
+                counter++;
+                //add to main dictionary
+                try
+                { dictOfAIDecisions.Add(decisionAI.name, decisionAI); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid decisionAI (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid decisionAI (duplicate) ID \"{0}\" for \"{1}\"", counter, decisionAI.name)); counter--; }
+            }
+            numDict = dictOfAIDecisions.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfAIDecisions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch in count");
+            Debug.Assert(numDict > 0, "No AI Decisions have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in DecisionAI count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
         //

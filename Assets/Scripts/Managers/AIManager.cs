@@ -212,7 +212,8 @@ public class AIManager : MonoBehaviour
     private int timerOffline;
     private int timerHandout;                           //cooldown timer before another handout is possible
     private int timerPolicy;
-    private string policyName;                          //name of current policy in play, null if none
+    private string policyTag;                          //name of current policy in play (aiDecision.tag), null if none 
+    private string policyName;                          //name of current policy in play (aiDecision.name), null if none
     private int policyEffectCrisis;                     //int for use with a tag detailing effect of policy on node crisis chance, eg. "District Crisis base chance -15%"
     private int policyEffectLoyalty;                    //int for use with a tag detailing effect of Policy on City Loyalty, eg. "City Loyalty -2 (while policy in force)"
     //hacking
@@ -3310,65 +3311,65 @@ public class AIManager : MonoBehaviour
             GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
             //Security Measures
-            if (task.name0.Equals(decisionAPB.name, StringComparison.Ordinal) == true)
+            if (task.dataName.Equals(decisionAPB.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, decisionAPB.warning, AuthoritySecurityState.APB);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
-            else if (task.name0.Equals(decisionSecAlert.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionSecAlert.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, decisionSecAlert.warning, AuthoritySecurityState.SecurityAlert);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
-            else if (task.name0.Equals(decisionCrackdown.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionCrackdown.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, decisionCrackdown.warning, AuthoritySecurityState.SurveillanceCrackdown);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
-            else if (task.name0.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
             { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(task.data0); }
             //logistics
-            else if (task.name0.Equals(decisionRequestTeam.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionRequestTeam.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAITeamRequest(); }
-            else if (task.name0.Equals(decisionResources.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionResources.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIResourceRequest(); }
             //Network countermeasures
-            else if (task.name0.Equals(decisionTraceBack.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionTraceBack.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAITraceBack(); }
-            else if (task.name0.Equals(decisionScreamer.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionScreamer.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIScreamer(); }
-            else if (task.name0.Equals(decisionProtocol.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionProtocol.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIProtocol(); }
-            else if (task.name0.Equals(decisionOffline.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionOffline.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIOffline(); }
             //policies
-            else if (task.name0.Equals(decisionCensorship.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionCensorship.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionBanProtests.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionBanProtests.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionCurfew.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionCurfew.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionRoboCop.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionRoboCop.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionMartialLaw.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionMartialLaw.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
-            else if (task.name0.Equals(decisionDrones.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionDrones.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIPolicy(task); }
             //handouts
-            else if (task.name0.Equals(decisionHamper.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionHamper.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionBlindEye.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionBlindEye.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionAusterity.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionAusterity.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionHoliday.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionHoliday.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
-            else if (task.name0.Equals(decisionMedical.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionMedical.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAIHandout(task); }
             //administrative
-            else if (task.name0.Equals(decisionStressLeave.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionStressLeave.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessStressLeave(task.data0); }
-            else if (task.name0.Equals(decisionLobbyHQ.name, StringComparison.Ordinal) == true)
+            else if (task.dataName.Equals(decisionLobbyHQ.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessLobbyHQ(); }
             else
             { Debug.LogWarningFormat("Invalid task.name0 \"{0}\"", task.name0); }
@@ -3422,7 +3423,8 @@ public class AIManager : MonoBehaviour
         //set vars
         isPolicy = true;
         timerPolicy = aiPolicyTimer;
-        policyName = task.name0;
+        policyName = task.dataName;
+        policyTag = task.name0;
         policyEffectCrisis = nodeCrisisModifier;
         policyEffectLoyalty = loyaltyChange;
         //trait -> PolicyWonk
@@ -3456,10 +3458,10 @@ public class AIManager : MonoBehaviour
         { policyDescription = decision.descriptor; }
         else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.dataName); }
         //admin
-        string msgText = string.Format("Authority implements {0} policy", policyName);
+        string msgText = string.Format("Authority implements {0} policy", policyTag);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.dataName, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
-        msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyName);
-        string reasonText = string.Format("{0} policy", policyName);
+        msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyTag);
+        string reasonText = string.Format("{0} policy", policyTag);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
     }
@@ -4004,16 +4006,16 @@ public class AIManager : MonoBehaviour
                     if (policy != null)
                     {
                         //ongoing effect message
-                        msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyName, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
-                        string itemText = string.Format("City Wide {0} policy in force", policyName);
+                        msgText = string.Format("{0} policy in force (District Crisis chance -{1} %), {2} turn{3} to go", policyTag, policyEffectCrisis, timerPolicy, timerPolicy != 1 ? "s" : "");
+                        string itemText = string.Format("City Wide {0} policy in force", policyTag);
                         string topText = policy.descriptor;
                         string middleText = string.Format("{0}<b>District Crisis chance -{1}%{2}{3}City Loyalty +{4}</b>{5}{6}{7}Applies once policy ends{8}", colourBad, policyEffectCrisis, "\n", "\n",
                             policyEffectLoyalty, colourEnd, "\n", colourAlert, colourEnd);
 
                         string bottomText = string.Format("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, timerPolicy, timerPolicy != 1 ? "s" : "", colourEnd);
-                        GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, aiDecID);
+                        GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, policy.name);
                     }
-                    else { Debug.LogErrorFormat("Invalid policy (Null) for aiDec {0}", policyName); }
+                    else { Debug.LogErrorFormat("Invalid policy (Null) for aiDec {0}", policyTag); }
                 }
                 else { Debug.LogError("Invalid policyName (Null)"); }
             }
@@ -4695,16 +4697,17 @@ public class AIManager : MonoBehaviour
         cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
         //admin
-        string msgText = string.Format("{0} policy is no longer in effect", policyName);
-        string cancelText = string.Format("{0} policy has been cancelled", policyName);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, cancelText, -1, 0, policyEffectLoyalty);
-        msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyName);
-        string reasonText = string.Format("{0} policy being cancelled", policyName);
+        string msgText = string.Format("{0} policy is no longer in effect", policyTag);
+        string cancelText = string.Format("{0} policy has been cancelled", policyTag);
+        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, cancelText, policyName, 0, policyEffectLoyalty);
+        msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyTag);
+        string reasonText = string.Format("{0} policy being cancelled", policyTag);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, policyEffectLoyalty);
         //reset vars
         isPolicy = false;
         timerPolicy = -1;
-        policyName = "Unknown";
+        policyTag = null;
+        policyName = null;
         policyEffectCrisis = -1;
         policyEffectLoyalty = -1;
     }
@@ -4774,6 +4777,7 @@ public class AIManager : MonoBehaviour
         data.timerHandout = timerHandout;
         data.timerPolicy = timerPolicy;
         data.policyName = policyName;
+        data.policyTag = policyTag;
         data.policyEffectCrisis = policyEffectCrisis;
         data.policyEffectLoyalty = policyEffectLoyalty;
         data.detectModifierMayor = detectModifierMayor;
@@ -4813,6 +4817,7 @@ public class AIManager : MonoBehaviour
             timerHandout = data.timerHandout;
             timerPolicy = data.timerPolicy;
             policyName = data.policyName;
+            policyTag = data.policyTag;
             policyEffectCrisis = data.policyEffectCrisis;
             policyEffectLoyalty = data.policyEffectLoyalty;
             detectModifierMayor = data.detectModifierMayor;
@@ -5054,9 +5059,9 @@ public class AIManager : MonoBehaviour
                             break;
                         case AITaskType.Decision:
                             if (showChance == true)
-                            { builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", Prob {3} %{4}", task.taskID, task.data0, task.name0, task.chance, "\n"); }
+                            { builderList.AppendFormat(" taskID {0}, Decision \"{1}\", Prob {2} %{3}", task.taskID, task.name0, task.chance, "\n"); }
                             else
-                            { builderList.AppendFormat(" taskID {0}, aiDecID {1}, Decision \"{2}\", {3}{4}", task.taskID, task.data0, task.name0, task.priority, "\n"); }
+                            { builderList.AppendFormat(" taskID {0}, Decision \"{1}\", {2}{3}", task.taskID, task.name0, task.priority, "\n"); }
                             break;
                         default:
                             builderList.AppendFormat(" Unknown task type \"{0}\"{1}", task.type, "\n");
@@ -5148,7 +5153,6 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessOngoingEffects()
     {
-        int aiDecID;
         string text, itemText, topText, detailsTop, detailsMiddle, detailsBottom/* ,colourEffect*/;
         //
         // - - - Network decisions - - -
@@ -5156,35 +5160,32 @@ public class AIManager : MonoBehaviour
         //Screamer
         if (isScreamer == true)
         {
-            aiDecID = decisionScreamer.aiDecID;
             text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionScreamer.name.ToUpper(), timerScreamer, timerScreamer != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionScreamer.name.ToUpper());
             detailsTop = decisionScreamer.descriptor;
             detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionScreamer.tooltipDescriptor, colourEnd);
             detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerScreamer, timerScreamer != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionScreamer.name);
         }
         //Traceback
         if (isTraceBack == true)
         {
-            aiDecID = decisionTraceBack.aiDecID;
             text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionTraceBack.name.ToUpper(), timerTraceBack, timerTraceBack != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionTraceBack.name.ToUpper());
             detailsTop = decisionTraceBack.descriptor;
             detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionTraceBack.tooltipDescriptor, colourEnd);
             detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerTraceBack, timerTraceBack != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionTraceBack.name);
         }
         //Offline
         if (isOffline == true)
         {
-            aiDecID = decisionOffline.aiDecID;
             text = string.Format("AI Network countermeasure {0} in place, duration {1} turn{2}", decisionOffline.name.ToUpper(), timerOffline, timerOffline != 1 ? "s" : "");
             itemText = string.Format("AI hacking countermeasure {0} in force", decisionOffline.name.ToUpper());
             detailsTop = decisionOffline.descriptor;
             detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionOffline.tooltipDescriptor, colourEnd);
             detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerOffline, timerOffline != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
+            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionOffline.name);
         }
         //
         // - - - Security decisions - - -
@@ -5192,31 +5193,28 @@ public class AIManager : MonoBehaviour
         switch (GameManager.instance.turnScript.authoritySecurityState)
         {
             case AuthoritySecurityState.APB:
-                aiDecID = decisionAPB.aiDecID;
                 text = string.Format("AI Security countermeasure {0} in place", decisionAPB.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionAPB.name.ToUpper());
                 detailsTop = decisionAPB.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionAPB.name);
                 break;
             case AuthoritySecurityState.SecurityAlert:
-                aiDecID = decisionSecAlert.aiDecID;
                 text = string.Format("AI Security countermeasure {0} in place", decisionSecAlert.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionSecAlert.name.ToUpper());
                 detailsTop = decisionSecAlert.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionSecAlert.name);
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
-                aiDecID = decisionCrackdown.aiDecID;
                 text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.name.ToUpper());
                 itemText = string.Format("AI Security countermeasure {0} in force", decisionCrackdown.name.ToUpper());
                 detailsTop = decisionCrackdown.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, aiDecID);
+                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionCrackdown.name);
                 break;
             case AuthoritySecurityState.Normal:
                 //Nothing happens here but needed to avoid triggering default statement -> Erasure team message

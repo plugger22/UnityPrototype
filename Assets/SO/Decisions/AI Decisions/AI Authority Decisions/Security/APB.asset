@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: APB
   m_EditorClassIdentifier: 
   descriptor: Authority issues a city wide All Points Bulletin
+  tag: APB
   warning: Capture on Invisibility ONE or less
   tooltipDescriptor: ERASURE Teams will capture anyone with <b>Invisibility of 1 or
     less</b> (normally zero)

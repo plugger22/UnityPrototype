@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: Holiday
   m_EditorClassIdentifier: 
   descriptor: Mayor declares a half day holiday
+  tag: Holiday
+  warning: 
   tooltipDescriptor: 'It''s a holiday. Only half a day but when you work as hard as
     I do that''s a lot. <b>City Loyalty will increase</b>.
 

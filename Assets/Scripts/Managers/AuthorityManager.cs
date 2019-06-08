@@ -11,9 +11,9 @@ public class AuthorityManager : MonoBehaviour
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalBoth;
-    private int securityAPB;
-    private int securityAlert;
-    private int securityCrackdown;
+    private string securityAPB;
+    private string securityAlert;
+    private string securityCrackdown;
 
     public void Initialise(GameState state)
     {
@@ -45,12 +45,9 @@ public class AuthorityManager : MonoBehaviour
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
         //decisions
-        securityAPB = GameManager.instance.dataScript.GetAIDecisionID("APB");
-        securityAlert = GameManager.instance.dataScript.GetAIDecisionID("SecAlert");
-        securityCrackdown = GameManager.instance.dataScript.GetAIDecisionID("SurvCrackdwn");
-        Debug.Assert(securityAPB > -1, "Invalid securityAPB (-1)");
-        Debug.Assert(securityAlert > -1, "Invalid securityAlert (-1)");
-        Debug.Assert(securityCrackdown > -1, "Invalid securityCrackdown (-1)");
+        securityAPB = "APB";
+        securityAlert = "SecAlert";
+        securityCrackdown = "SurvCrackdwn";
     }
     #endregion
 
@@ -65,7 +62,7 @@ public class AuthorityManager : MonoBehaviour
     public bool SetAuthoritySecurityState(string descriptor, string warning, AuthoritySecurityState state = AuthoritySecurityState.Normal)
     {
         bool isDone = false;
-        int decID = -1;
+        string decName;
         string itemText = "Unknown";
         if (string.IsNullOrEmpty(descriptor) == false)
         {
@@ -77,24 +74,25 @@ public class AuthorityManager : MonoBehaviour
                 case AuthoritySecurityState.APB:
                     isDone = true;
                     itemText = "Authority implements an ALL POINTS BULLETIN";
-                    decID = securityAPB;
+                    decName = securityAPB;
                     break;
                 case AuthoritySecurityState.SecurityAlert:
                     isDone = true;
                     itemText = "Authority implements a SECURITY ALERT";
-                    decID = securityAlert;
+                    decName = securityAlert;
                     break;
                 case AuthoritySecurityState.SurveillanceCrackdown:
                     isDone = true;
                     itemText = "Authority implements a SURVEILLANCE CRACKDOWN";
-                    decID = securityCrackdown;
+                    decName = securityCrackdown;
                     break;
                 default:
                     itemText = "Authority reverts SECURITY back to Normal";
+                    decName = "NORMAL";  //has no effect but isn't Null or Empty which would trigger an Assert in MessageManager.cs -> DecisionGlobal
                     break;
             }
             //message
-            GameManager.instance.messageScript.DecisionGlobal(descriptor, itemText, warning, decID);
+            GameManager.instance.messageScript.DecisionGlobal(descriptor, itemText, warning, decName);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;

@@ -2191,8 +2191,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message DecisionGlobal(string text, string itemText, string description, int decID, int duration = 0, int loyaltyAdjust = 0, int crisisAdjust = 0)
+    public Message DecisionGlobal(string text, string itemText, string description, string decName, int duration = 0, int loyaltyAdjust = 0, int crisisAdjust = 0)
     {
+        Debug.Assert(string.IsNullOrEmpty(decName) == false, "Invalid decName (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -2201,7 +2202,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Decision_Global;
             message.sideLevel = globalBoth.level;
             message.isPublic = true;
-            message.data0 = decID;
+            message.dataName = decName;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = itemText;
@@ -2356,9 +2357,9 @@ public class MessageManager : MonoBehaviour
     /// <param name="bottomText"></param>
     /// <param name="aiDecID"></param>
     /// <returns></returns>
-    public Message DecisionOngoingEffect(string text, string itemText, string topText, string middleText, string bottomText, int aiDecID)
+    public Message DecisionOngoingEffect(string text, string itemText, string topText, string middleText, string bottomText, string decName)
     {
-        Debug.Assert(aiDecID > -1, "Invalid aiDecID (less than Zeros)");
+        Debug.Assert(string.IsNullOrEmpty(decName) == false, "Invalid decName (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(itemText) == false, "Invalid itemText (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -2367,7 +2368,7 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Decision;
             message.sideLevel = globalBoth.level;
-            message.data0 = aiDecID;
+            message.dataName = decName;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = itemText;

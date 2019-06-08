@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Censorship
   m_EditorClassIdentifier: 
   descriptor: Mayor aggressively censors all media
+  tag: Censorship
   warning: 
   tooltipDescriptor: Active censorship deletes all anti-Authority content. <b>City
     Loyalty</b> will decrease. The chance of a district having a <b>Crisis</b> will

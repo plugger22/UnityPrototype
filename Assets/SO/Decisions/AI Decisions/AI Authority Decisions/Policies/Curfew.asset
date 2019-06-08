@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Curfew
   m_EditorClassIdentifier: 
   descriptor: Mayor instigates a city wide Curfew
+  tag: Curfew
   warning: 
   tooltipDescriptor: Nocturnal city activity will be subdued. <b>City Loyalty</b>
     will decrease. The chance of a district having a <b>Crisis</b> will lessen. <b>Medium
