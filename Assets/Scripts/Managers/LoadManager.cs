@@ -723,19 +723,18 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Effects - - -
         //
-        Dictionary<int, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
+        Dictionary<string, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
         if (dictOfEffects != null)
         {
             counter = 0;
             numArray = arrayOfEffects.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based Unique ID number
                 Effect effect = arrayOfEffects[i];
-                effect.effectID = counter++;
+                counter++;
                 //add to dictionary
                 try
-                { dictOfEffects.Add(effect.effectID, effect); }
+                { dictOfEffects.Add(effect.name, effect); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Effect (Null)"); counter--; }
                 catch (ArgumentException)

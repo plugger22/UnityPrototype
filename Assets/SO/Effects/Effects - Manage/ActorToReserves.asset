@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
+  m_Name: ActorToReserves
+  m_EditorClassIdentifier: 
+  description: actor sent to Reserves
+  ongoingTooltip: 
+  listOfCriteria: []
+  apply: {fileID: 0}
+  outcome: {fileID: 11400000, guid: a11a072d82559ff408de17f49097a214, type: 2}
+  operand: {fileID: 0}
+  typeOfEffect: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
+  duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
+  value: 0
+  ignoreEffect: 0

@@ -4,3 +4,139 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 58754 -> Saturday, 8 June 2019 12:35 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 43770 -> Saturday, 8 June 2019 12:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36688 -> Saturday, 8 June 2019 12:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25285 -> Saturday, 8 June 2019 2:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46738 -> Saturday, 8 June 2019 2:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20676 -> Saturday, 8 June 2019 2:47 PM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20772 -> Saturday, 8 June 2019 2:59 PM
+City seed 890 -> Arles, France
+
+Dev seed 14309 -> Saturday, 8 June 2019 3:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:451)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:501)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:253)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:450)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+OptionManager.OnDisable () (at Assets/Scripts/Managers/OptionManager.cs:50)
+	
+Dev seed 41474 -> Saturday, 8 June 2019 3:11 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 5924 -> Saturday, 8 June 2019 3:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23679 -> Saturday, 8 June 2019 3:13 PM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8414 -> Saturday, 8 June 2019 4:03 PM
+City seed 890 -> Arles, France
+
+Dev seed 42805 -> Saturday, 8 June 2019 4:04 PM
+City seed 890 -> Arles, France
+
+Dev seed 46317 -> Saturday, 8 June 2019 4:10 PM
+City seed 890 -> Arles, France
+
+Dev seed 7691 -> Saturday, 8 June 2019 4:28 PM
+City seed 890 -> Arles, France
+
+Dev seed 34045 -> Saturday, 8 June 2019 5:28 PM
+City seed 890 -> Arles, France
+ERROR Invalid target (Null) for targetID 27
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetConfirmButton(Boolean, GenericReturnData) (at Assets/Scripts/GUI/ModalGenericPicker.cs:453)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:138)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	gameAPI.GenericInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/GenericInteraction.cs:82)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 15390 -> Saturday, 8 June 2019 5:32 PM
+City seed 890 -> Arles, France
+ERROR Invalid target (Null) for target CityTarget1
+UnityEngine.Debug:LogError(Object)
+	ModalGenericPicker:SetConfirmButton(Boolean, GenericReturnData) (at Assets/Scripts/GUI/ModalGenericPicker.cs:453)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:138)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	gameAPI.GenericInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/GenericInteraction.cs:82)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 51612 -> Saturday, 8 June 2019 5:33 PM
+City seed 890 -> Arles, France
+ERROR Invalid target (Null) for targetID 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TargetManager:ProcessTargetInfo(GenericReturnData) (at Assets/Scripts/Managers/TargetManager.cs:1909)
+	TargetManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TargetManager.cs:234)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54776 -> Saturday, 8 June 2019 5:35 PM
+City seed 890 -> Arles, France

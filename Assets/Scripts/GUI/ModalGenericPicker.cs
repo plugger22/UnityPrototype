@@ -442,15 +442,15 @@ public class ModalGenericPicker : MonoBehaviour
                         else { Debug.LogError("Invalid data.optionName (Null or Empty)"); }
                         break;
                     case EventType.GenericTargetInfo:
-                        if (data.optionID > -1)
+                        if (string.IsNullOrEmpty(data.optionName) == false)
                         {
-                            Target target = GameManager.instance.dataScript.GetTarget(data.optionText);
+                            Target target = GameManager.instance.dataScript.GetTarget(data.optionName);
                             if (target != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, target.targetName.ToUpper(), colourEnd, colourDefault, colourEnd);
-                                Debug.LogFormat("[UI] -> ModalGenericPicker: targetID {0} selected{1}", data.optionID, "\n");
+                                Debug.LogFormat("[UI] -> ModalGenericPicker: target {0} selected{1}", data.optionName, "\n");
                             }
-                            else { Debug.LogError(string.Format("Invalid target (Null) for targetID {0}", data.optionID)); }
+                            else { Debug.LogError(string.Format("Invalid target (Null) for target {0}", data.optionName)); }
                         }
                         else { Debug.LogError("Invalid data.optionID (< 0)"); }
                         break;

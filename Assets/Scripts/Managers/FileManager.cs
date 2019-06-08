@@ -1146,6 +1146,11 @@ public class FileManager : MonoBehaviour
         if (listOfTasksFinal != null)
         { write.aiData.listOfTasksFinal.AddRange(listOfTasksFinal); }
         else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
+        //list -> tasks potential
+        List<AITask> listOfTasksPotential = GameManager.instance.aiScript.GetListOfTasksPotential();
+        if (listOfTasksPotential != null)
+        { write.aiData.listOfTasksPotential.AddRange(listOfTasksPotential); }
+        else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
         //list -> player effects
         List<string> listOfPlayerEffects = GameManager.instance.aiScript.GetListOfPlayerEffects();
         if (listOfPlayerEffects != null)
@@ -2665,6 +2670,7 @@ public class FileManager : MonoBehaviour
     {
         //AIManager -> collection
         GameManager.instance.aiScript.SetListOfTasksFinal(read.aiData.listOfTasksFinal);
+        GameManager.instance.aiScript.SetListOfTasksPotential(read.aiData.listOfTasksPotential);
         GameManager.instance.aiScript.SetListOfPlayerEffects(read.aiData.listOfPlayerEffects);
         GameManager.instance.aiScript.SetListOfPlayerEffectDescriptors(read.aiData.listOfPlayerEffectDescriptors);
         GameManager.instance.aiScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesAuthority);

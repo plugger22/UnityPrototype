@@ -1674,7 +1674,7 @@ public class TargetManager : MonoBehaviour
             //proceed with a new target Selection
 
                 #region TargetSelection
-                //Obtain Gear
+                //Obtain Info
                 genericDetails.returnEvent = EventType.GenericTargetInfo;
                 genericDetails.textHeader = "Select Target";
                 genericDetails.side = globalResistance;
@@ -1767,7 +1767,8 @@ public class TargetManager : MonoBehaviour
                                 {
                                     //option details
                                     GenericOptionDetails optionDetails = new GenericOptionDetails();
-                                    optionDetails.optionID = target.targetID;
+                                    /*optionDetails.optionID = target.targetID;*/
+                                    optionDetails.optionName = target.name;
                                     optionDetails.text = target.targetName.ToUpper();
                                     optionDetails.sprite = GameManager.instance.guiScript.targetInfoSprite;
                                     //add to master arrays
@@ -1843,7 +1844,7 @@ public class TargetManager : MonoBehaviour
     /// <param name="details"></param>
     private void ProcessTargetInfo(GenericReturnData detailsGeneric)
     {
-        Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionText);
+        Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionName);
         if (target != null)
         {
             //Get actor
@@ -1905,7 +1906,7 @@ public class TargetManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", detailsGeneric.actorSlotID); }
         }
-        else { Debug.LogErrorFormat("Invalid target (Null) for targetID {0}", detailsGeneric.optionID); }
+        else { Debug.LogErrorFormat("Invalid target (Null) for target {0}", detailsGeneric.optionName); }
     }
 
     /// <summary>

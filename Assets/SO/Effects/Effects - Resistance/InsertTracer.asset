@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
+  m_Name: InsertTracer
+  m_EditorClassIdentifier: 
+  description: Insert a Tracer
+  ongoingTooltip: 
+  listOfCriteria:
+  - {fileID: 11400000, guid: 6dd6bd11c4c322a49947e521d0206665, type: 2}
+  - {fileID: 11400000, guid: 81dbec287224e9f4986f4dd155e57c5e, type: 2}
+  apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}
+  outcome: {fileID: 11400000, guid: d77e6494404005247b6d73690a11af22, type: 2}
+  operand: {fileID: 0}
+  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
+  value: 1
+  ignoreEffect: 0

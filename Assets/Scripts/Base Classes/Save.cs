@@ -335,6 +335,7 @@ public class SaveAIData
 {
     //AIManager.cs -> collections
     public List<AITask> listOfTasksFinal = new List<AITask>();
+    public List<AITask> listOfTasksPotential = new List<AITask>();
     public List<string> listOfPlayerEffects = new List<string>();
     public List<string> listOfPlayerEffectDescriptors = new List<string>();
     public List<int> listOfAITaskTypesAuthority = new List<int>();
