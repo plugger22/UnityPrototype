@@ -176,6 +176,13 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
         //
+        // - - - Effect (not stored in a collection)
+        //
+        numArray = arrayOfEffects.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffects has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Effects present"); }
+        //
         // - - - EffectApply (not stored in a collection)
         //
         numArray = arrayOfEffectApply.Length;
@@ -720,8 +727,8 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid authorityActorArcs (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfActorArcs (Null) -> Import failed"); }
-        //
-        // - - - Effects - - -
+        /*//
+        // - - - Effects - - - (not loaded into dict so a straight enum as above)
         //
         Dictionary<string, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
         if (dictOfEffects != null)
@@ -746,7 +753,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict > 0, "No Effects have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Effects count, array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }*/
         //
         // - - - Targets - - -
         //            

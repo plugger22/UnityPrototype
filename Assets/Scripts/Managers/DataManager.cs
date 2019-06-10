@@ -167,7 +167,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                              //Key -> ActionID, Value -> Action
     private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>();      //Key -> ManageAction.name, Value -> ManageAction
     private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();                        //Key -> action name, Value -> actionID
-    private Dictionary<string, Effect> dictOfEffects = new Dictionary<string, Effect>();                        //Key -> effect.name, Value -> ActionEffect
+    /*private Dictionary<string, Effect> dictOfEffects = new Dictionary<string, Effect>();                        //Key -> effect.name, Value -> ActionEffect*/
     private Dictionary<string, Target> dictOfTargets = new Dictionary<string, Target>();                        //Key -> Target.name, Value -> Target
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();                           //Key -> teamID, Value -> Team
     private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();                       //Key -> teamArc name, Value -> TeamArcID
@@ -5485,8 +5485,8 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public Dictionary<string, Effect> GetDictOfEffects()
-    { return dictOfEffects; }
+    /*public Dictionary<string, Effect> GetDictOfEffects()
+    { return dictOfEffects; }*/
 
     //
     // - - - AI - - -
