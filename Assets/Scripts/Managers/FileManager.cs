@@ -928,8 +928,8 @@ public class FileManager : MonoBehaviour
                     { saveNode.nodeCrisis = record.Value.crisis.nodeCrisisID; }
                     //cure
                     if (record.Value.cure == null)
-                    { saveNode.cureID = -1; }
-                    else { saveNode.cureID = record.Value.cure.cureID; }
+                    { saveNode.cureName = ""; }
+                    else { saveNode.cureName = record.Value.cure.name; }
                     saveNode.loiter = record.Value.loiter;
                     //teams
                     List<Team> listOfTeams = record.Value.GetListOfTeams();
@@ -2437,15 +2437,18 @@ public class FileManager : MonoBehaviour
                     node.waitTimer = saveNode.waitTimer;
                     node.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(saveNode.nodeCrisis);   // null values O.K
                     //cure
-                    if (saveNode.cureID == -1)
+                    if (string.IsNullOrEmpty(saveNode.cureName) == true)
                     { node.cure = null; }
                     else
                     {
                         //get cure from dictionary
-                        Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureID);
-                        if (cure != null)
-                        { node.cure = cure; }
-                        else { Debug.LogWarningFormat("Invalid cure for cureID {0} for nodeID {1}", saveNode.cureID, saveNode.nodeID); }
+                        if (saveNode.cureName != null)
+                        {
+                            Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureName);
+                            if (cure = null)
+                            { node.cure = cure; }
+                        }
+                        else { node.cure = null; }
                     }
                     node.loiter = saveNode.loiter;
                     //teams

@@ -12,7 +12,7 @@ public class LoadManager : MonoBehaviour
 {
 
     #region Arrays
-    [Header("Initialise Start Enums -> ADD TO END OF ARRAYS ONLY")]
+    [Header("Initialise Start Enums")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
     public GlobalType[] arrayOfGlobalType;
@@ -430,18 +430,17 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfCures.Length;
         if (numArray > 0)
         {
-            Dictionary<int, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
+            Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
             for (int i = 0; i < numArray; i++)
             {
                 //assign a zero based unique ID number
                 Cure cure = arrayOfCures[i];
                 if (cure != null)
                 {
-                    //assign a unique zero based ID
-                    cure.cureID = counter++;
+                    counter++;
                     //add to dictionary
                     try
-                    { dictOfCures.Add(cure.cureID, cure); }
+                    { dictOfCures.Add(cure.name, cure); }
                     catch (ArgumentException)
                     { Debug.LogError(string.Format("Invalid Cure (duplicate) \"{0}\"", cure.name)); }
                 }
@@ -450,7 +449,7 @@ public class LoadManager : MonoBehaviour
             numDict = dictOfCures.Count;
             Debug.LogFormat("[Loa] InitialiseStart -> dictOfCures has {0} entries{1}", numDict, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Cure Load -> array {0}, dict {1}", numArray, numDict));
-            Debug.Assert(counter == numDict, string.Format("Mismatch on Cure Load -> counter (ID) {0}, dict {1}", counter, numDict));
+            Debug.Assert(counter == numDict, string.Format("Mismatch on Cure Load -> counter {0}, dict {1}", counter, numDict));
         }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Cures present"); }
         //
@@ -571,9 +570,36 @@ public class LoadManager : MonoBehaviour
             {
                 for (int i = 0; i < numArray; i++)
                 {
-                    //assign a zero based unique ID number
+                    //assign a zero based unique ID number (Hard coded so that it's the same for every session / save game file)
                     NodeArc nodeArc = arrayOfNodeArcs[i];
-                    nodeArc.nodeArcID = counter++;
+                    switch (nodeArc.name)
+                    {
+                        case "CORPORATE":
+                            nodeArc.nodeArcID = 0;
+                            break;
+                        case "GATED":
+                            nodeArc.nodeArcID = 1;
+                            break;
+                        case "GOVERNMENT":
+                            nodeArc.nodeArcID = 2;
+                            break;
+                        case "INDUSTRIAL":
+                            nodeArc.nodeArcID = 3;
+                            break;
+                        case "RESEARCH":
+                            nodeArc.nodeArcID = 4;
+                            break;
+                        case "SPRAWL":
+                            nodeArc.nodeArcID = 5;
+                            break;
+                        case "UTILITY":
+                            nodeArc.nodeArcID = 6;
+                            break;
+                        default:
+                            Debug.LogErrorFormat("Unrecognised nodeArc \"{0}\"", nodeArc.name);
+                            break;
+                    }
+                    counter++;
                     //add to dictionary
                     try
                     { dictOfNodeArcs.Add(nodeArc.nodeArcID, nodeArc); }

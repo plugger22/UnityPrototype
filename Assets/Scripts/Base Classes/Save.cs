@@ -555,7 +555,7 @@ public class SaveNode
     public int nodeCrisis = -1;                      //to handle null values
 
     public LoiterData loiter;
-    public int cureID;
+    public string cureName;
   
     public List<int> listOfTeams = new List<int>();                  
     public List<int> listOfOngoingEffects = new List<int>();

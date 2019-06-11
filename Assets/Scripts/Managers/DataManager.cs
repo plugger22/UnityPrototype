@@ -202,7 +202,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();               //Key -> (int)StatType, Value -> statistic
     private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();                        //Key -> scenarioID, Value -> Scenario
     private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();                        //Key -> campaignID, Value -> Campaign
-    private Dictionary<int, Cure> dictOfCures = new Dictionary<int, Cure>();                                    //Key -> cureID, Value -> Cure
+    private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                              //Key -> cure.name, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
 
     #region SO enum Dictionaries
@@ -5671,7 +5671,7 @@ public class DataManager : MonoBehaviour
     // - - - Cures - - -
     //
 
-    public Dictionary<int, Cure> GetDictOfCures()
+    public Dictionary<string, Cure> GetDictOfCures()
     { return dictOfCures; }
 
     /// <summary>
@@ -5679,11 +5679,15 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="cureID"></param>
     /// <returns></returns>
-    public Cure GetCure(int cureID)
+    public Cure GetCure(string cureName)
     {
-        if (dictOfCures.ContainsKey(cureID))
-        { return dictOfCures[cureID]; }
-        else { return null; }
+        if (string.IsNullOrEmpty(cureName) == false)
+        {
+            if (dictOfCures.ContainsKey(cureName))
+            { return dictOfCures[cureName]; }
+        }
+        else { Debug.LogError("Invalid cureName (Null or Empty)"); }
+        return null;
     }
 
     //
