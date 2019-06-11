@@ -925,7 +925,8 @@ public class FileManager : MonoBehaviour
                     saveNode.crisisTimer = record.Value.crisisTimer;
                     saveNode.waitTimer = record.Value.waitTimer;
                     if (record.Value.crisis != null)
-                    { saveNode.nodeCrisis = record.Value.crisis.nodeCrisisID; }
+                    { saveNode.nodeCrisisName = record.Value.crisis.name; }
+                    else { saveNode.nodeCrisisName = ""; }
                     //cure
                     if (record.Value.cure == null)
                     { saveNode.cureName = ""; }
@@ -2435,7 +2436,18 @@ public class FileManager : MonoBehaviour
                     node.isErasureTeam = saveNode.isErasureTeam;
                     node.crisisTimer = saveNode.crisisTimer;
                     node.waitTimer = saveNode.waitTimer;
-                    node.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(saveNode.nodeCrisis);   // null values O.K
+                    if (string.IsNullOrEmpty(saveNode.nodeCrisisName) == false)
+                    {
+                        NodeCrisis crisis = GameManager.instance.dataScript.GetNodeCrisis(saveNode.nodeCrisisName);
+                        if (crisis != null)
+                        { node.crisis = crisis; }
+                        else
+                        {
+                            Debug.LogWarningFormat("Invalid nodeCrisis (Null) for {0}, nodeID {1}, {2}, {3}", saveNode.nodeCrisisName, node.nodeID, node.nodeName, node.Arc.name);
+                            node.crisis = null;
+                        }
+                    }
+                    else { node.crisis = null; }
                     //cure
                     if (string.IsNullOrEmpty(saveNode.cureName) == true)
                     { node.cure = null; }
@@ -2447,6 +2459,11 @@ public class FileManager : MonoBehaviour
                             Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureName);
                             if (cure = null)
                             { node.cure = cure; }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid Cure (Null) for {0}, nodeID {1}, {2}, {3}", saveNode.cureName, node.nodeID, node.nodeName, node.Arc.name);
+                                node.cure = null;
+                            }
                         }
                         else { node.cure = null; }
                     }

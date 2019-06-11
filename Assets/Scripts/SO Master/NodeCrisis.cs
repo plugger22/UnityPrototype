@@ -9,8 +9,6 @@ using UnityEngine;
 public class NodeCrisis : ScriptableObject
 {
     #region Save Data Compatible
-    [HideInInspector] public int nodeCrisisID;               //unique #, zero based, assigned automatically by DataManager.Initialise
-
     public NodeDatapoint datapoint;
     [Tooltip("Used for shorter description")]
     public string tag;

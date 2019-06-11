@@ -189,7 +189,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();         //Key -> actBreakID, Value -> ActorBreakdown
     private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
-    private Dictionary<int, NodeCrisis> dictOfNodeCrisis = new Dictionary<int, NodeCrisis>();                   //Key -> nodeCrisisID, Value -> NodeCrisis
+    private Dictionary<string, NodeCrisis> dictOfNodeCrisis = new Dictionary<string, NodeCrisis>();                   //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();                  //Key -> turn, Value -> MainInfoData set for turn
     private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                           //Key -> contactID, Value -> Contact
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();                  //Key -> ActorID, Value -> list of nodeID's where actor has contacts
@@ -2421,7 +2421,7 @@ public class DataManager : MonoBehaviour
     public List<Node> GetListOfDecisionNodes()
     { return listOfDecisionNodes; }
 
-    public Dictionary<int, NodeCrisis> GetDictOfNodeCrisis()
+    public Dictionary<string, NodeCrisis> GetDictOfNodeCrisis()
     { return dictOfNodeCrisis; }
 
     /// <summary>
@@ -2510,19 +2510,21 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a specific crisis based on nodeCrisisID, null if not found
+    /// returns nodeCrisis based on object.name key, null if a problem
     /// </summary>
-    /// <param name="nodeCrisisID"></param>
+    /// <param name="nodeCrisisName"></param>
     /// <returns></returns>
-    public NodeCrisis GetNodeCrisisByID(int nodeCrisisID)
+    public NodeCrisis GetNodeCrisis(string nodeCrisisName)
     {
-        NodeCrisis crisis = null;
-        if (dictOfNodeCrisis.TryGetValue(nodeCrisisID, out crisis))
+        if (string.IsNullOrEmpty(nodeCrisisName) == false)
         {
-            return crisis;
+           if (dictOfNodeCrisis.ContainsKey(nodeCrisisName) == true)
+            { return dictOfNodeCrisis[nodeCrisisName]; }
         }
+        else { Debug.LogError("Invalid nodeCrisisName (Null)"); }
         return null;
     }
+
 
     /// <summary>
     /// Game start -> add crisis to the appropriate pick lists

@@ -629,7 +629,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Node Crisis - - -
         //
-        Dictionary<int, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
+        Dictionary<string, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
         if (dictOfNodeCrisis != null)
         {
             counter = 0;
@@ -638,16 +638,15 @@ public class LoadManager : MonoBehaviour
             {
                 for (int i = 0; i < numArray; i++)
                 {
-                    //assign a zero based unique ID number
                     NodeCrisis nodeCrisis = arrayOfNodeCrisis[i];
-                    nodeCrisis.nodeCrisisID = counter++;
+                    counter++;
                     //add to dictionary
                     try
-                    { dictOfNodeCrisis.Add(nodeCrisis.nodeCrisisID, nodeCrisis); }
+                    { dictOfNodeCrisis.Add(nodeCrisis.name, nodeCrisis); }
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid NodeCrisis (Null)"); counter--; }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid NodeCrisis (duplicate) ID \"{0}\" for  \"{1}\"", counter, nodeCrisis.name)); counter--; }
+                    { Debug.LogError(string.Format("Invalid NodeCrisis (duplicate) \"{0}\" for  \"{1}\"", counter, nodeCrisis.name)); counter--; }
                 }
             }
             numDict = dictOfNodeCrisis.Count;

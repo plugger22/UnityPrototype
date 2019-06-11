@@ -2468,14 +2468,7 @@ public class NodeManager : MonoBehaviour
                                         }
                                         node.crisis = GameManager.instance.dataScript.GetRandomNodeCrisis(datapoint);
                                         if (node.crisis == null)
-                                        {
-                                            //safety backup
-                                            Debug.LogWarning("Invalid node.Value.crisis (Null) -> default value Crisis provided (nodeCrisisID 0)");
-                                            node.crisis = GameManager.instance.dataScript.GetNodeCrisisByID(0);
-                                            //if backup failed, generate an error
-                                            if (node.crisis == null)
-                                            { Debug.LogError("Invalid nodeCrisis default backup nodeCrisisID 0 (Null)"); }
-                                        }
+                                        { Debug.LogErrorFormat("Invalid nodeCrisis default random crisis (Null) for datapoint {0}", datapoint); }
                                         //admin
                                         Debug.LogFormat("[Rnd] NodeManager.cs -> ProcessNodeCrisis: {0} ID {1}, CRISIS need < {2}, rolled {3}", node.Arc.name, node.nodeID,
                                             chance, rnd);
