@@ -3290,3 +3290,83 @@ City seed 890 -> Arles, France
 
 Dev seed 16604 -> Monday, 17 June 2019 8:17 PM
 City seed 890 -> Arles, France
+
+Dev seed 57995 -> Tuesday, 18 June 2019 9:02 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 9516 -> Tuesday, 18 June 2019 9:03 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 57955 -> Tuesday, 18 June 2019 9:04 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 25453 -> Tuesday, 18 June 2019 9:11 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 66 -> Tuesday, 18 June 2019 9:13 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 27517 -> Tuesday, 18 June 2019 9:14 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 65419 -> Tuesday, 18 June 2019 9:18 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 52773 -> Tuesday, 18 June 2019 9:22 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 54861 -> Tuesday, 18 June 2019 9:25 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+WARNING Unrecognised GameState "FollowOnInitialisation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CityInfoUI:Initialise(GameState) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:97)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:669)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:783)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:231)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:82)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:207)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised GameState "FollowOnInitialisation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MainInfoUI:Initialise(GameState) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:242)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:669)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:783)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:231)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:82)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:207)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised GameState "FollowOnInitialisation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AIDisplayUI:Initialise(GameState) (at Assets/Scripts/GUI/AIDisplay/AIDisplayUI.cs:117)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:669)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:783)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:231)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:82)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:207)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised GameState "FollowOnInitialisation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	AISideTabUI:Initialise(GameState) (at Assets/Scripts/GUI/AIDisplay/AISideTabUI.cs:80)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:669)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:783)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:231)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:82)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:269)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:207)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 43278 -> Tuesday, 18 June 2019 9:29 AM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia

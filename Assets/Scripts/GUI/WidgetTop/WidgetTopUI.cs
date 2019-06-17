@@ -61,11 +61,16 @@ public class WidgetTopUI : MonoBehaviour
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
                 SubInitialiseSessionStart();
+                SubInitialiseResetWidget();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
                 SubInitialiseSessionStart();
+                SubInitialiseResetWidget();
+                break;
+            case GameState.FollowOnInitialisation:
+                SubInitialiseResetWidget();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -110,8 +115,6 @@ public class WidgetTopUI : MonoBehaviour
         transformFaction = barFaction.GetComponent<RectTransform>();
         Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
         Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
-        //get correct number of action points
-        SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
         //flash red inner opacity set to 0
         Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;
@@ -125,6 +128,18 @@ public class WidgetTopUI : MonoBehaviour
         SetStar(10f, AlignHorizontal.Left);
         SetStar(10f, AlignHorizontal.Centre);
         SetStar(10f, AlignHorizontal.Right);
+    }
+    #endregion
+
+    #region SubInitialiseResetWidget
+    /// <summary>
+    /// reset data to start of level
+    /// </summary>
+    private void SubInitialiseResetWidget()
+    {
+        SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
+        SetTurn(GameManager.instance.turnScript.Turn);
+        SetSecurityFlasher(false);
     }
     #endregion
 

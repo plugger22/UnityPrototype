@@ -774,11 +774,13 @@ public class GameManager : MonoBehaviour
         {
             //normal
             InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
         }
         else
         {
             //Performance Monitoring
             InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
             DisplayTotalTime();
         }
         //do a final redraw before level start

@@ -93,6 +93,8 @@ public class CityInfoUI : MonoBehaviour
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();
                 break;
+            case GameState.FollowOnInitialisation:
+                break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
                 break;

@@ -113,6 +113,8 @@ public class AIDisplayUI : MonoBehaviour
                     SubInitialiseEvents();
                     SubInitialiseResistance();
                     break;
+                case GameState.FollowOnInitialisation:
+                    break;
                 default:
                     Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
                     break;
