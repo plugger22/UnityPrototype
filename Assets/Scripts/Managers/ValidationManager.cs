@@ -18,6 +18,7 @@ public class ValidationManager : MonoBehaviour
     {
         ValidateTargets();
         ValidateGear();
+        ValidateTextLists();
     }
 
     #region ValidateTargets
@@ -149,7 +150,53 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region ValidateTextLists
+    /// <summary>
+    /// checks all textlists for duplicates
+    /// </summary>
+    private void ValidateTextLists()
+    {
+        //combine all text list arrays into a single list for validation checks
+        List<TextList> listOfAllTextLists = new List<TextList>();
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
+        //NOTE: add extra text lists here (as above)
+        TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
+        //loop textlists
+        List<string> findList = new List<string>();
+        int count;
+        for (int i = 0; i < arrayOfTextLists.Length; i++)
+        {
+            TextList textList = arrayOfTextLists[i];
+            if (textList != null)
+            {
+                //check for duplicates
+                List<string> tempList = new List<string>(textList.randomList);
+                if (tempList != null)
+                {
+                    //loop temp list and check against master text list
+                    foreach(String item in tempList)
+                    {
+                        findList.Clear();
+                        findList = textList.randomList.FindAll(x => x == item);
+                        count = findList.Count;
+                        //always one copy present, shouldn't be any more
+                        if (count > 1)
+                        {
+                            //ignore first, legit, copy
+                            count--;
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");                }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
+            }
+            else { Debug.LogErrorFormat("Invalid textList (Null) for arrayOfTextLists[{0}]", i); }
+        }
+    }
 
+    #endregion
 
 
 #if (UNITY_EDITOR)

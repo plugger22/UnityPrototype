@@ -3215,3 +3215,30 @@ City seed 890 -> Arles, France
 
 Dev seed 15034 -> Monday, 17 June 2019 1:37 PM
 City seed 890 -> Arles, France
+
+Dev seed 3901 -> Monday, 17 June 2019 1:58 PM
+City seed 890 -> Arles, France
+
+Dev seed 56152 -> Monday, 17 June 2019 1:59 PM
+City seed 890 -> Arles, France
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ValidationManager.ValidateTextLists () (at Assets/Scripts/Managers/ValidationManager.cs:190)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:21)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:694)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:749)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:343)
+	
+Dev seed 45741 -> Monday, 17 June 2019 1:59 PM
+City seed 890 -> Arles, France
+
+Dev seed 46683 -> Monday, 17 June 2019 2:10 PM
+City seed 890 -> Arles, France
+
+Dev seed 31484 -> Monday, 17 June 2019 2:15 PM
+City seed 890 -> Arles, France
