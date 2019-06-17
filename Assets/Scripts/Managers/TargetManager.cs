@@ -331,7 +331,7 @@ public class TargetManager : MonoBehaviour
                             case Status.Live:
                                 if (target.timerWindow == 0)
                                 {
-                                    Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0}, id {1} Expired", target.targetName, target.targetID);
+                                    Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} Expired", target.targetName);
                                     string text = string.Format("Target {0} at {1}, {2}, has Expired", target.targetName, node.nodeName, node.Arc.name);
                                     GameManager.instance.messageScript.TargetExpired(text, node, target);
                                     SetTargetDone(target, node);
@@ -387,9 +387,9 @@ public class TargetManager : MonoBehaviour
                                         target.targetStatus = Status.Live;
                                         GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
                                         GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Active);
-                                        string text = string.Format("New target {0}, id {1} at {2}, {3}, id {4}", target.targetName, target.targetID, node.nodeName, node.Arc.name, node.nodeID);
+                                        string text = string.Format("New target {0} at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
                                         GameManager.instance.messageScript.TargetNew(text, node, target);
-                                        Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0}, id {1} goes LIVE", target.targetName, target.targetID);
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} goes LIVE", target.targetName);
                                     }
                                 }
                                 else
@@ -443,8 +443,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: CityHall node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
+                    target.targetName);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
@@ -457,8 +457,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Icon node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
+                    target.targetName);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for iconTarget", nodeID); }
         }
@@ -471,8 +471,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Airport node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
+                    target.targetName);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} for airportTarget", nodeID); }
         }
@@ -485,8 +485,8 @@ public class TargetManager : MonoBehaviour
             if (node != null)
             {
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignCityTarget: Harbour node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, nodeID,
+                    target.targetName);
             }
         }
     }
@@ -563,12 +563,12 @@ public class TargetManager : MonoBehaviour
                             {
                                 //assign target to node
                                 SetTargetDetails(target, node, mission.profileGenericLive);
-                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                                    target.targetName, target.targetID);
+                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget LIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                                    target.targetName);
                                 counter++;
                                 //delete target to prevent dupes
                                 if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
-                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.targetName, target.targetID, nodeArc.nodeArcID); }
+                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, nodeArc {1}", target.targetName, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
                         }
@@ -625,12 +625,12 @@ public class TargetManager : MonoBehaviour
                             {
                                 //assign target to node
                                 SetTargetDetails(target, node, mission.profileGenericActive);
-                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget ACTIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                                    target.targetName, target.targetID);
+                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGenericTarget ACTIVE: node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                                    target.targetName);
                                 counter++;
                                 //delete target to prevent dupes
                                 if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
-                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, id {1}, nodeArc {2}", target.targetName, target.targetID, nodeArc.nodeArcID); }
+                                { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, nodeArc {1}", target.targetName, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
                         }
@@ -663,8 +663,8 @@ public class TargetManager : MonoBehaviour
                 Target target = mission.targetBaseVIP;
                 //VIP targets don't have follow-on targets (use repeating random node targets instead)
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignVIPTarget: VIP node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignVIPTarget: VIP node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                    target.targetName);
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for VIPTarget"); }
@@ -683,8 +683,8 @@ public class TargetManager : MonoBehaviour
             {
                 Target target = mission.targetBaseStory;
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                    target.targetName);
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for StoryTarget"); }
@@ -703,8 +703,8 @@ public class TargetManager : MonoBehaviour
             {
                 Target target = mission.targetBaseGoal;
                 SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\", id {4}", node.nodeName, node.Arc.name, node.nodeID,
-                    target.targetName, target.targetID);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                    target.targetName);
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for GoalTarget"); }
@@ -752,7 +752,7 @@ public class TargetManager : MonoBehaviour
                         {
                             case "Live":
                                 target.targetStatus = Status.Live;
-                                string text = string.Format("New target {0}, id {1} at {2}, {3}, id {4}", target.targetName, target.targetID, node.nodeName, node.Arc.name, node.nodeID);
+                                string text = string.Format("New target {0}, at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
                                 GameManager.instance.messageScript.TargetNew(text, node, target);
                                 break;
                             case "Custom":
@@ -767,7 +767,7 @@ public class TargetManager : MonoBehaviour
                         if (isSuccess == true)
                         { GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus); }
                     }
-                    else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}, targetID {1}", target.targetName, target.targetID); isSuccess = false; }
+                    else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}", target.targetName); isSuccess = false; }
                 }
                 else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3}", node.nodeName, node.Arc.name, node.nodeID, target.targetName); }
             }
@@ -974,7 +974,7 @@ public class TargetManager : MonoBehaviour
                     effect = target.listOfGoodEffects[i];
                     if (effect != null)
                     { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\", ID {1}{2}", target.targetName, target.targetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\"{1}", target.targetName, "\n")); }
                 }
             }
             //bad effects
@@ -986,7 +986,7 @@ public class TargetManager : MonoBehaviour
                     effect = target.listOfBadEffects[i];
                     if (effect != null)
                     { tempList.Add(string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd)); }
-                    else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\", ID {1}{2}", target.targetName, target.targetID, "\n")); }
+                    else { Debug.LogError(string.Format("Invalid Bad effect (null) for \"{0}\"{1}", target.targetName, "\n")); }
                 }
             }
             //Ongoing effects -> add header
@@ -1508,16 +1508,16 @@ public class TargetManager : MonoBehaviour
                                         {
                                             if (SetTargetDetails(target.followOnTarget, node, mission.profileGenericFollowOn) == true)
                                             {
-                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName,
-                                                    node.Arc.name, node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\"", node.nodeName,
+                                                    node.Arc.name, node.nodeID, target.followOnTarget.targetName);
                                             }
                                         }
                                         else
                                         {
                                             if (SetTargetDetails(target.followOnTarget, node) == true)
                                             {
-                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\", id {4}", node.nodeName,
-                                                    node.Arc.name, node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On GENERIC target \"{3}\"", node.nodeName,
+                                                    node.Arc.name, node.nodeID, target.followOnTarget.targetName);
                                             }
                                         }
                                     }
@@ -1527,8 +1527,8 @@ public class TargetManager : MonoBehaviour
                                     //City must follow On to the same node
                                     if (SetTargetDetails(target.followOnTarget, node) == true)
                                     {
-                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On City target \"{3}\", id {4}", node.nodeName, node.Arc.name,
-                                          node.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned follow On City target \"{3}\"", node.nodeName, node.Arc.name,
+                                          node.nodeID, target.followOnTarget.targetName);
                                     }
                                     break;
                                 default:
@@ -1538,8 +1538,8 @@ public class TargetManager : MonoBehaviour
                                     {
                                         if (SetTargetDetails(target.followOnTarget, nodeRandom) == true)
                                         {
-                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\", id {4}", nodeRandom.nodeName,
-                                                nodeRandom.Arc.name, nodeRandom.nodeID, target.followOnTarget.targetName, target.followOnTarget.targetID);
+                                            Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned follow On target \"{3}\"", nodeRandom.nodeName,
+                                                nodeRandom.Arc.name, nodeRandom.nodeID, target.followOnTarget.targetName);
                                         }
                                     }
                                     else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
@@ -1562,14 +1562,14 @@ public class TargetManager : MonoBehaviour
                                 //assign repeat profile if present
                                 if (target.profile.repeatProfile != null)
                                 { target.profile = target.profile.repeatProfile; }
-                                else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} repeatProfile Invalid (Null)", target.targetName, target.targetID); }
+                                else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, repeatProfile Invalid (Null)", target.targetName); }
                                 //same node
                                 if (target.profile.isRepeatSameNode == true)
                                 {
                                     if (SetTargetDetails(target, node) == true)
                                     {
-                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\", id {4}", node.nodeName, node.Arc.name,
-                                          node.nodeID, target.targetName, target.targetID);
+                                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (same) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\"", node.nodeName, node.Arc.name,
+                                          node.nodeID, target.targetName);
                                     }
                                 }
                                 //random node
@@ -1583,28 +1583,28 @@ public class TargetManager : MonoBehaviour
                                         {
                                             if (SetTargetDetails(target, nodeRandom) == true)
                                             {
-                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\", id {4}", nodeRandom.nodeName,
-                                                    nodeRandom.Arc.name, nodeRandom.nodeID, target.targetName, target.targetID);
+                                                Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Node (random) \"{0}\", {1}, id {2}, assigned REPEAT target \"{3}\"", nodeRandom.nodeName,
+                                                    nodeRandom.Arc.name, nodeRandom.nodeID, target.targetName);
                                             }
                                         }
                                         else { Debug.LogError("Invalid nodeRandom (Null), Target not assigned"); }
                                     }
                                     else
                                     {
-                                        Debug.LogWarningFormat("CITY target {0}, id {1}, can't have a Repeating RANDOM node (must be Same)", target.targetName, target.targetID);
+                                        Debug.LogWarningFormat("CITY target {0}, can't have a Repeating RANDOM node (must be Same)", target.targetName);
                                         //set target as done, put in pool, etc. (below)
                                         isDone = true;
                                     }
                                 }
                             }
-                            else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as GENERIC", target.targetName, target.targetID); }
+                            else { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: target {0}, can't REPEAT as GENERIC", target.targetName); }
                         }
-                        else { Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: target {0}, id {1} can't REPEAT as successfully attempted", target.targetName, target.targetID); }
+                        else { Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: target {0}, can't REPEAT as successfully attempted", target.targetName); }
                     }
                     else
                     {
                         //no follow on, no repeat, successfully handled done admin
-                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin completed", target.targetName, target.targetID);
+                        Debug.LogFormat("[Tar] TargetManager.cs -> SetTargetDone: Target \"{0}\", DONE admin completed", target.targetName);
                     }
                     //
                     // - - - Target Done (no repeat, no follow On) - - -
@@ -1622,7 +1622,7 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid node (Null)"); isSuccess = false; }
         if (isSuccess == false)
-        { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", id {1}, DONE admin FAILED", target.targetName, target.targetID); }
+        { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", DONE admin FAILED", target.targetName); }
         return isSuccess;
     }
 
@@ -1775,9 +1775,9 @@ public class TargetManager : MonoBehaviour
                                     genericDetails.arrayOfOptions[i] = optionDetails;
                                     genericDetails.arrayOfTooltips[i] = tooltipDetails;
                                 }
-                                else { Debug.LogErrorFormat("Invalid tooltip Details (Null) for targetID {0}", target.targetID); }
+                                else { Debug.LogErrorFormat("Invalid tooltip Details (Null) for target {0}", target.targetName); }
                             }
-                            else { Debug.LogErrorFormat("Invalid target (Null) for target ID {0}", target.targetID); }
+                            else { Debug.LogErrorFormat("Invalid target (Null) for target {0}", target.targetName); }
                         }
                     }
                     else { Debug.LogWarning("NOTIFICATION Only: No records in dictOfTargetDistances"); }
@@ -1865,7 +1865,7 @@ public class TargetManager : MonoBehaviour
                     builderTop.AppendFormat("{0}+{1}{2} INTEL gained, now {3}{4}{5}", colourNeutral, target.intelGain, colourEnd, GameManager.instance.colourScript.GetValueColour(target.intel), 
                         target.intel, colourEnd);
                     //message
-                    Debug.LogFormat("[Tar] TargetManager.cs -> ProcessTargetInfo: {0}, id {1} at {2}, {3}, id {4}, Intel +{5}, now {6} (PLANNER action){7}", target.targetName, target.targetID,
+                    Debug.LogFormat("[Tar] TargetManager.cs -> ProcessTargetInfo: {0} at {1}, {2}, id {3}, Intel +{4}, now {5} (PLANNER action){6}", target.targetName,
                         node.nodeName, node.Arc.name, node.nodeID, target.intelGain, target.intel, "\n");
                     //Process any other effects, if acquisition was successfull, ignore otherwise
                     Action action = actor.arc.nodeAction;

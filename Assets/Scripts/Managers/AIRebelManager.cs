@@ -1194,7 +1194,7 @@ public class AIRebelManager : MonoBehaviour
                             try
                             { dictOfTargets.Add(target, distance); }
                             catch (ArgumentException)
-                            { Debug.LogErrorFormat("Duplicate target entry for target {0}, id {1}", target.name, target.targetID); }
+                            { Debug.LogErrorFormat("Duplicate target entry for target {0}", target.targetName); }
                         }
                         else { Debug.LogWarningFormat("Invalid dijkstra weighted distance (-1) between id {0} and id {1}", playerNodeID, listOfTargets[i].nodeID); }
                     }
@@ -2014,8 +2014,8 @@ public class AIRebelManager : MonoBehaviour
                                                             task.priority = priorityTargetActor;
                                                             //add task to list of potential tasks
                                                             AddWeightedTask(task);
-                                                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} attempt Target task, targetID {1} at {2}, {3}, id {4}{5}", target.actorArc.name,
-                                                                target.targetID, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                                            Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} attempt Target task, {1} at {2}, {3}, id {4}{5}", target.actorArc.name,
+                                                                target.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                                         }
                                                         else { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: target task aborted as no SUITABLE Active, OnMap, actor found"); }
                                                     }
@@ -3798,7 +3798,7 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                 //random roll
                 Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, ID {1}, attempted SUCCESSFULLY by {2}, ID {3}, at nodeID {4}{5}", target.targetName, target.targetID, actorArc,
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, attempted SUCCESSFULLY by {1}, ID {2}, at nodeID {3}{4}", target.targetName, actorArc,
                     actorID, node.nodeID, "\n");
                 text = string.Format("Target {0} attempt SUCCESS", target.targetName);
                 GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
@@ -3806,7 +3806,7 @@ public class AIRebelManager : MonoBehaviour
             else
             {
                 Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n");
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, ID {1}, attempt FAILED by {2}, ID {3}, at nodeID {4}{5}", target.targetName, target.targetID, actorArc,
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, attempt FAILED by {1}, ID {2}, at nodeID {3}{4}", target.targetName, actorArc,
                     actorID, node.nodeID, "\n");
                 text = string.Format("Target {0} attempt FAILED", target.targetName);
                 GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);

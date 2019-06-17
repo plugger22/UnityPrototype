@@ -2806,11 +2806,11 @@ public class DataManager : MonoBehaviour
             for (int i = 0; i < listOfTargets.Count; i++)
             {
                 Target targetList = listOfTargets[i];
-                if (targetList.targetID == target.targetID)
+                if (targetList.name.Equals(target.name) == true)
                 {
                     listOfTargets.RemoveAt(i);
                     isSuccess = true;
-                    Debug.Log(string.Format("DataManager: Target \"{0}\", ID {1}, successfully removed from {2} List{3}", target.targetName, target.targetID, status, "\n"));
+                    Debug.Log(string.Format("DataManager: Target \"{0}\", successfully removed from {1} List{2}", target.targetName, status, "\n"));
                     break;
                 }
             }
@@ -2877,7 +2877,7 @@ public class DataManager : MonoBehaviour
                         target = GetTarget(tempList[j]);
                         if (target != null)
                         {
-                            builder.AppendFormat(" {0}, id {1}, level {2}, act {3}, del {4}, win {5}{6}", target.targetName, target.targetID, target.targetLevel,
+                            builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
                                 target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
                         }
                         else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
@@ -2931,13 +2931,13 @@ public class DataManager : MonoBehaviour
                         node = GetNode(target.nodeID);
                         if (node != null)
                         {
-                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, {7}, {8}, id {9}{10}", target.targetName, target.targetID, target.targetLevel, target.profile.activation.name,
+                            builderTemp.AppendFormat(" {0}, lvl {1}, act {2}, {3}, d {4}, w {5}, {6}, {7}, id {8}{9}", target.targetName, target.targetLevel, target.profile.activation.name,
                                 target.targetStatus, target.timerDelay, target.timerWindow, node.nodeName, node.Arc.name, target.nodeID, "\n");
                         }
                         else
                         {
                             //no error 'cause you want to pick up targets without node data as they are 'Done' targets
-                            builderTemp.AppendFormat(" {0}, id {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, id {7}{8}", target.targetName, target.targetID, target.targetLevel, target.profile.activation.name,
+                            builderTemp.AppendFormat(" {0}, lvl {1}, act {2}, {3}, d {4}, w {5}, id {6}{7}", target.targetName, target.targetLevel, target.profile.activation.name,
                                 target.targetStatus, target.timerDelay, target.timerWindow, target.nodeID, "\n");
                         }
                     }
@@ -2964,14 +2964,14 @@ public class DataManager : MonoBehaviour
                 if (target.Value.profile.activation != null)
                 {
                     //non-dormant but has follow-on target & valid activation
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, follow id {8}{9}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
-                        target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
+                    builder.AppendFormat(" {0}: lvl {1}, act {2}, {3}, d {4}, w {5}, nodeID {6}, followOn {7}{8}", target.Value.name, target.Value.targetLevel,
+                        target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetName, "\n");
                 }
                 else
                 {
                     //dormant ->  follow-on target & NO valid activation
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act n.a, {3}, d {4}, w {5}, nodeID {6}, follow id {7}{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
-                        target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetID, "\n");
+                    builder.AppendFormat(" {0}: lvl {1}, act n.a, {2}, d {3}, w {4}, nodeID {5}, followOn {6}{87}", target.Value.name, target.Value.targetLevel,
+                        target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetName, "\n");
                 }
             }
             else
@@ -2980,13 +2980,13 @@ public class DataManager : MonoBehaviour
                 if (target.Value.profile.activation != null)
                 {
                     //active / live / outstanding -> valid activation
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act {3}, {4}, d {5}, w {6}, nodeID {7}, follow id n.a{8}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                    builder.AppendFormat(" {0}: lvl {1}, act {2}, {3}, d {4}, w {5}, nodeID {6}{7}", target.Value.name, target.Value.targetLevel,
                           target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
                 }
                 else
                 {
                     //dormant -> no activation value
-                    builder.AppendFormat(" id {0}: {1}, lvl {2}, act n.a, {3}, d {4}, w {5}, nodeID {6}, tar id n.a{7}", target.Value.targetID, target.Value.name, target.Value.targetLevel,
+                    builder.AppendFormat(" {0}: lvl {1}, act n.a, {2}, d {3}, w {4}, nodeID {5}{6}", target.Value.name, target.Value.targetLevel,
                           target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
                 }
             }

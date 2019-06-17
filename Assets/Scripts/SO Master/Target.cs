@@ -64,7 +64,7 @@ public class Target : ScriptableObject
     #region Save Compatible Data
     [HideInInspector] public Status targetStatus;                   //default status of Dormant
     [HideInInspector] public int intel;                             //from 1 to 3, default 0. Gained by Planner action
-    [HideInInspector] public int targetID;
+    /*[HideInInspector] public int targetID;*/
     [HideInInspector] public int ongoingID;                         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;                      //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
@@ -91,7 +91,7 @@ public class Target : ScriptableObject
     {
         Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(descriptorAuthority) == false, "Invalid descriptorAuthority (Null or Empty)");
-        Debug.Assert(profileBase != null, string.Format("Target {0}, id {1}, has no profileBase (Null)", targetName, targetID));
+        Debug.Assert(profileBase != null, string.Format("Target {0} has no profileBase (Null)", targetName));
 
         //NOTE: No need to check profile for Null as handled in TargetManager.cs -> SetTargetDetails (assigns defaultProfile if null)
     }

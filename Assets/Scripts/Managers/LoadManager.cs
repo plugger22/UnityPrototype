@@ -761,10 +761,9 @@ public class LoadManager : MonoBehaviour
 
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Target target = listOfTargets[i];
                 //set data
-                target.targetID = counter++;
+                counter++;
                 target.targetStatus = Status.Dormant;
                 //target.timer = -1;
                 target.intel = 1;

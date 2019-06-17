@@ -1460,7 +1460,6 @@ public class MessageManager : MonoBehaviour
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
-            message.data3 = target.targetID;
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
@@ -2968,7 +2967,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
-            message.data2 = target.targetID;
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
@@ -3026,7 +3024,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.numOfAttempts;
-            message.data2 = target.targetID;
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
@@ -3083,7 +3080,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
-            message.data2 = target.targetID;
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
@@ -3130,7 +3126,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
             message.data1 = actorID;
-            message.data2 = target.targetID;
             message.dataName = target.name;
             //ItemData, resistance only
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
@@ -3187,7 +3182,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = globalBoth.level;
             message.data0 = node.nodeID;
             message.data1 = team.teamID;
-            message.data2 = target.targetID;
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
