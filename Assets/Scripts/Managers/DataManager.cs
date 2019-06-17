@@ -771,7 +771,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public ActorArc GetActorArc(string arcName)
     {
-        if (string.IsNullOrEmpty(arcName) != false)
+        if (string.IsNullOrEmpty(arcName) == false)
         {
             if (dictOfActorArcs.ContainsKey(arcName) == true)
             { return dictOfActorArcs[arcName]; }
