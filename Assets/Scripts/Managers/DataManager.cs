@@ -677,19 +677,6 @@ public class DataManager : MonoBehaviour
     // - - - Action Related - - -
     //
 
-    /*/// <summary>
-    /// returns ActionID for a specified Action name, eg. "Any Team". Returns '-1' if not found in lookup dictionary
-    /// </summary>
-    /// <param name="actionName"></param>
-    /// <returns></returns>
-    public int GetActionID(string actionName)
-    {
-        if (dictOfLookUpActions.ContainsKey(actionName))
-        { return dictOfLookUpActions[actionName]; }
-        else { Debug.LogWarning(string.Format("Not found in Lookup Action dict \"{0}\"{1}", actionName, "\n")); }
-        return -1;
-    }*/
-
     /// <summary>
     /// returns Action based on Action.name, null if a problem
     /// </summary>

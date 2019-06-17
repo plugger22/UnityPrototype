@@ -873,10 +873,34 @@ public class LoadManager : MonoBehaviour
                 numArray = arrayOfTeamArcs.Length;
                 for (int i = 0; i < numArray; i++)
                 {
-                    //assign a zero based unique ID number
+                    //assign a zero based unique ID number (hard coded)
                     TeamArc teamArc = arrayOfTeamArcs[i];
-                    //set data
-                    teamArc.TeamArcID = counter++;
+                    //set data teamArcID
+                    switch (teamArc.name)
+                    {
+                        case "CIVIL":
+                            teamArc.TeamArcID = 0;
+                            break;
+                        case "CONTROL":
+                            teamArc.TeamArcID = 1;
+                            break;
+                        case "DAMAGE":
+                            teamArc.TeamArcID = 2;
+                            break;
+                        case "ERASURE":
+                            teamArc.TeamArcID = 3;
+                            break;
+                        case "MEDIA":
+                            teamArc.TeamArcID = 4;
+                            break;
+                        case "PROBE":
+                            teamArc.TeamArcID = 5;
+                            break;
+                        case "SPIDER":
+                            teamArc.TeamArcID = 6;
+                            break;
+                    }
+                    counter++;
                     //add to dictionary
                     try
                     { dictOfTeamArcs.Add(teamArc.TeamArcID, teamArc); }
