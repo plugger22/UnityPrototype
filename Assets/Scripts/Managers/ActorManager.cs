@@ -126,6 +126,7 @@ public class ActorManager : MonoBehaviour
     private Condition conditionQuestionable;
     private Condition conditionImaged;
     private TraitCategory actorCategory;
+    private Action actionAnyTeam;
     private int secretBaseChance = -1;
     //cached TraitEffects
     private string actorBreakdownChanceHigh;
@@ -266,6 +267,7 @@ public class ActorManager : MonoBehaviour
         gearSwapBaseAmount = GameManager.instance.gearScript.gearSwapBaseAmount;
         gearSwapPreferredAmount = GameManager.instance.gearScript.gearSwapPreferredAmount;
         maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
+        actionAnyTeam = GameManager.instance.dataScript.GetAction("AnyTeam");
         Debug.Assert(numOfQualities > 0, "Invalid numOfQualities (zero or less)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
@@ -282,6 +284,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
+        Debug.Assert(actionAnyTeam != null, "Invalid actionAnyTeam (Null)");
         //cached TraitEffects
         actorBreakdownChanceHigh = "ActorBreakdownChanceHigh";
         actorBreakdownChanceLow = "ActorBreakdownChanceLow";
@@ -756,7 +759,6 @@ public class ActorManager : MonoBehaviour
         string effectCriteria;
         bool proceedFlag;
         AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
-        int actionID;
         Actor[] arrayOfActors;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
@@ -988,7 +990,7 @@ public class ActorManager : MonoBehaviour
                                                 {
                                                     details = new EventButtonDetails()
                                                     {
-                                                        buttonTitle = tempAction.name,
+                                                        buttonTitle = tempAction.tag,
                                                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                         buttonTooltipMain = tempAction.tooltipText,
                                                         buttonTooltipDetail = builder.ToString(),
@@ -1004,7 +1006,7 @@ public class ActorManager : MonoBehaviour
                                                         case "NeutraliseTeam":
                                                             details = new EventButtonDetails()
                                                             {
-                                                                buttonTitle = tempAction.name,
+                                                                buttonTitle = tempAction.tag,
                                                                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                                 buttonTooltipMain = tempAction.tooltipText,
                                                                 buttonTooltipDetail = builder.ToString(),
@@ -1014,7 +1016,7 @@ public class ActorManager : MonoBehaviour
                                                         case "GetGear":
                                                             details = new EventButtonDetails()
                                                             {
-                                                                buttonTitle = tempAction.name,
+                                                                buttonTitle = tempAction.tag,
                                                                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                                 buttonTooltipMain = tempAction.tooltipText,
                                                                 buttonTooltipDetail = builder.ToString(),
@@ -1024,7 +1026,7 @@ public class ActorManager : MonoBehaviour
                                                         case "GetRecruit":
                                                             details = new EventButtonDetails()
                                                             {
-                                                                buttonTitle = tempAction.name,
+                                                                buttonTitle = tempAction.tag,
                                                                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                                 buttonTooltipMain = tempAction.tooltipText,
                                                                 buttonTooltipDetail = builder.ToString(),
@@ -1034,7 +1036,7 @@ public class ActorManager : MonoBehaviour
                                                         case "TargetInfo":
                                                             details = new EventButtonDetails()
                                                             {
-                                                                buttonTitle = tempAction.name,
+                                                                buttonTitle = tempAction.tag,
                                                                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
                                                                 buttonTooltipMain = tempAction.tooltipText,
                                                                 buttonTooltipDetail = builder.ToString(),
@@ -1154,16 +1156,11 @@ public class ActorManager : MonoBehaviour
                                 teamArcID = actor.arc.preferredTeam.TeamArcID;
                                 tempAction = null;
                                 //active node for actor
-                                /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, GameManager.instance.sideScript.PlayerSide, actor.actorSlotID) == true)*/
                                 if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
                                 {
-                                    //get ANY TEAM node action
-                                    actionID = GameManager.instance.dataScript.GetActionID("Any Team");
-                                    if (actionID > -1)
-                                    {
-                                        tempAction = GameManager.instance.dataScript.GetAction(actionID);
-                                        isAnyTeam = true;
-                                    }
+                                    //temporary action "Any Team"
+                                    tempAction = actionAnyTeam;
+                                    isAnyTeam = true;
                                 }
                                 //actor not live at node -> Preferred team
                                 else

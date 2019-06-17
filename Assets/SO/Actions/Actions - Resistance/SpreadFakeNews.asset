@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Spread Fake News
+  m_Name: SpreadFakeNews
   m_EditorClassIdentifier: 
+  tag: Spread Fake News
   tooltipText: Massaging the regular newsfeed to twist the facts in favour of the
     cause helps shape perceptions
   intendedActor: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}

@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Civil Team
+  m_Name: SpiderTeam
   m_EditorClassIdentifier: 
-  tooltipText: Insert a Civil team
+  tag: Spider Team
+  tooltipText: Insert a Spider Team
   intendedActor: {fileID: 0}
   listOfEffects:
-  - {fileID: 11400000, guid: 1e584f551182f5543a80bc5349564aaa, type: 2}
+  - {fileID: 11400000, guid: ada99b83817c2f642a59bb4270b0e36f, type: 2}
   special: {fileID: 0}
   coolDown: 0

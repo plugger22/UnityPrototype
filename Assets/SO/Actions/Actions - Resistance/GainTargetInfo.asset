@@ -9,14 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Recruit Actor
+  m_Name: GainTargetInfo
   m_EditorClassIdentifier: 
-  tooltipText: It takes a special person to whisper entreaties into the ear of an
-    undecided Rebel
-  intendedActor: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  tag: Gain Target Info
+  tooltipText: Meticulous research into a target can reap dividends when it comes
+    to execution
+  intendedActor: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: 38be8d19ea0a29b4bb20562b7b0a24b2, type: 2}
+  - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  special: {fileID: 11400000, guid: 9dc825f3922af9e409632d8db9414a7d, type: 2}
+  special: {fileID: 11400000, guid: 39a636fed40b9b84d978c996d13970fd, type: 2}
   coolDown: 0

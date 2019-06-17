@@ -836,45 +836,28 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Actions - - -
         //
-        Dictionary<int, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
-        Dictionary<string, int> dictOfLookUpActions = GameManager.instance.dataScript.GetDictOfLookUpActions();
+        Dictionary<string, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
         if (dictOfActions != null)
         {
-            if (dictOfLookUpActions != null)
-            {
                 counter = 0;
                 numArray = arrayOfActions.Length;
                 for (int i = 0; i < numArray; i++)
                 {
-                    //assign a zero based unique ID number
                     Action action = arrayOfActions[i];
-                    //set data
-                    action.ActionID = counter++;
+                    counter++;
                     //add to dictionary
                     try
-                    { dictOfActions.Add(action.ActionID, action); }
+                    { dictOfActions.Add(action.name, action); }
                     catch (ArgumentNullException)
                     { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
                     catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid (duplicate) ActionID \"{0}\" for Action \"{1}\"", action.ActionID, action.name)); counter--; }
-                    //add to lookup dictionary
-                    try
-                    { dictOfLookUpActions.Add(action.name, action.ActionID); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Lookup Actions (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid Lookup Actions (duplicate) ID \"{0}\" for \"{1}\"", counter, action.name)); }
+                    { Debug.LogError(string.Format("Invalid (duplicate) for Action \"{0}\"", action.name)); counter--; }
                 }
                 numDict = dictOfActions.Count;
                 Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActions has {0} entries{1}", numDict, "\n");
-                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpActions has {0} entries{1}", dictOfLookUpActions.Count, "\n");
                 Debug.Assert(numDict == counter, "Mismatch on count");
-                Debug.Assert(dictOfLookUpActions.Count == counter, "Mismatch on count");
                 Debug.Assert(numDict > 0, "No Actions have been imported");
-                Debug.Assert(dictOfLookUpActions.Count > 0, "No Actions in lookup dictionary");
                 Debug.Assert(numArray == numDict, string.Format("Mismatch in Action count, array {0}, dict {1}", numArray, numDict));
-            }
-            else { Debug.LogError("Invalid dictOfLookUpActions (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfActions (Null) -> Import failed"); }
         //

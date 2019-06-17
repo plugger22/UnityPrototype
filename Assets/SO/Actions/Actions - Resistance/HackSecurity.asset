@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
+  m_Name: HackSecurity
+  m_EditorClassIdentifier: 
+  tag: Hack Security
+  tooltipText: Security systems are all seeing and all knowing as long as they are
+    working...
+  intendedActor: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  listOfEffects:
+  - {fileID: 11400000, guid: 182dd7cb388c99245a0385ed160fcdd5, type: 2}
+  - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
+  special: {fileID: 0}
+  coolDown: 0

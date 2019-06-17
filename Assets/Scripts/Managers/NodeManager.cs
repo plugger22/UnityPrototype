@@ -290,30 +290,13 @@ public class NodeManager : MonoBehaviour
         if (outcomeStatusTracers == null) { Debug.LogError("Invalid outcomeStatusTracers (Null)"); }
         if (outcomeStatusContacts == null) { Debug.LogError("Invalid outcomeStatusContacts (Null)"); }
         if (outcomeStatusTeams == null) { Debug.LogError("Invalid outcomeStatusTeams (Null)"); }
-        //gear node Action Quick Reference -> Kinetic
-        int actionID = GameManager.instance.dataScript.GetActionID("gearKinetic");
-        if (actionID > -1)
-        {
-            actionKinetic = GameManager.instance.dataScript.GetAction(actionID);
-            if (actionKinetic == null) { Debug.LogError("Invalid actionKinetic (Null)"); }
-        }
-        else { Debug.LogError("Invalid gearKinetic actionID (not found)"); }
-        //gear node Action Quick Reference -> Hacking
-        actionID = GameManager.instance.dataScript.GetActionID("gearHacking");
-        if (actionID > -1)
-        {
-            actionHacking = GameManager.instance.dataScript.GetAction(actionID);
-            if (actionHacking == null) { Debug.LogError("Invalid actionHacking (Null)"); }
-        }
-        else { Debug.LogError("Invalid gearHacking actionID (not found)"); }
-        //gear node Action Quick Reference -> Persuasion
-        actionID = GameManager.instance.dataScript.GetActionID("gearPersuasion");
-        if (actionID > -1)
-        {
-            actionPersuasion = GameManager.instance.dataScript.GetAction(actionID);
-            if (actionPersuasion == null) { Debug.LogError("Invalid actionPersuasion (Null)"); }
-        }
-        else { Debug.LogError("Invalid gearPersuasion actionID (not found)"); }
+        //gear node Action Fast access
+        actionKinetic = GameManager.instance.dataScript.GetAction("gearKinetic");
+        actionHacking = GameManager.instance.dataScript.GetAction("gearHacking");
+        actionPersuasion = GameManager.instance.dataScript.GetAction("gearPersuasion");
+        Debug.Assert(actionKinetic != null, "Invalid actionKinetic (Null)");
+        Debug.Assert(actionHacking != null, "Invalid actionHacking (Null)");
+        Debug.Assert(actionPersuasion != null, "Invalid actionPersuasion (Null)");
     }
     #endregion
 

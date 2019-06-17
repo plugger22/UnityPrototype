@@ -9,13 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Hack Security
+  m_Name: SpreadUnrest
   m_EditorClassIdentifier: 
-  tooltipText: Security systems are all seeing and all knowing as long as they are
-    working...
-  intendedActor: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  tag: Spread Unrest
+  tooltipText: Unrest is like a fire waiting to be lit. With the proper encouragement
+    it can spread rapidly
+  intendedActor: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: 182dd7cb388c99245a0385ed160fcdd5, type: 2}
+  - {fileID: 11400000, guid: d0b72a8ebac94404e941665f4e8cdf9c, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   special: {fileID: 0}

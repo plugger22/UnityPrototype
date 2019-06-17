@@ -9,14 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Neutralise Team
+  m_Name: RecruitActor
   m_EditorClassIdentifier: 
-  tooltipText: Authority teams all have their vulnerabilities that can be exploited
-    by fair means or foul
-  intendedActor: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  tag: Recruit Actor
+  tooltipText: It takes a special person to whisper entreaties into the ear of an
+    undecided Rebel
+  intendedActor: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: 277ee1bc213ac46448310782b86291f0, type: 2}
+  - {fileID: 11400000, guid: 38be8d19ea0a29b4bb20562b7b0a24b2, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  special: {fileID: 11400000, guid: b2d36d68b875826458e367f924697c8d, type: 2}
+  special: {fileID: 11400000, guid: 9dc825f3922af9e409632d8db9414a7d, type: 2}
   coolDown: 0

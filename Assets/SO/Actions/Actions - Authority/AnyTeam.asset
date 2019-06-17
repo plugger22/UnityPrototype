@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Erasure Team
+  m_Name: AnyTeam
   m_EditorClassIdentifier: 
-  tooltipText: Insert an Erasure team
+  tag: Any Team
+  tooltipText: Insert Any Team
   intendedActor: {fileID: 0}
   listOfEffects:
-  - {fileID: 11400000, guid: 8b991a1e2754d0e49b2cc4137761cf13, type: 2}
+  - {fileID: 11400000, guid: f9bf6133533fed941835fab042079c0a, type: 2}
   special: {fileID: 0}
   coolDown: 0

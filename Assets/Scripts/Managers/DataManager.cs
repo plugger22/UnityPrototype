@@ -159,15 +159,12 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();                       //Key -> nodeArc name, Value -> nodeArcID
     private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();               //Key -> nodeID, Value -> PathData
     private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();                 //Key -> nodeID, Value -> PathData
-    private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();                        //Key -> actorArcID, Value -> ActorArc
-    /*private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();                      //Key -> actorArc name, Value -> actorArcID*/
+    private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();                  //Key -> actorArc.name, Value -> ActorArc
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                                 //Key -> actorID, Value -> Actor
     private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();                           //Key -> trait.name, Value -> Trait
     private Dictionary<string, TraitEffect> dictOfTraitEffects = new Dictionary<string, TraitEffect>();         //Key -> traitEffect.name, Value -> TraitEffect
-    private Dictionary<int, Action> dictOfActions = new Dictionary<int, Action>();                              //Key -> ActionID, Value -> Action
+    private Dictionary<string, Action> dictOfActions = new Dictionary<string, Action>();                        //Key -> Action.name, Value -> Action
     private Dictionary<string, ManageAction> dictOfManageActions = new Dictionary<string, ManageAction>();      //Key -> ManageAction.name, Value -> ManageAction
-    private Dictionary<string, int> dictOfLookUpActions = new Dictionary<string, int>();                        //Key -> action name, Value -> actionID
-    /*private Dictionary<string, Effect> dictOfEffects = new Dictionary<string, Effect>();                        //Key -> effect.name, Value -> ActionEffect*/
     private Dictionary<string, Target> dictOfTargets = new Dictionary<string, Target>();                        //Key -> Target.name, Value -> Target
     private Dictionary<int, TeamArc> dictOfTeamArcs = new Dictionary<int, TeamArc>();                           //Key -> teamID, Value -> Team
     private Dictionary<string, int> dictOfLookUpTeamArcs = new Dictionary<string, int>();                       //Key -> teamArc name, Value -> TeamArcID
@@ -680,7 +677,7 @@ public class DataManager : MonoBehaviour
     // - - - Action Related - - -
     //
 
-    /// <summary>
+    /*/// <summary>
     /// returns ActionID for a specified Action name, eg. "Any Team". Returns '-1' if not found in lookup dictionary
     /// </summary>
     /// <param name="actionName"></param>
@@ -691,26 +688,27 @@ public class DataManager : MonoBehaviour
         { return dictOfLookUpActions[actionName]; }
         else { Debug.LogWarning(string.Format("Not found in Lookup Action dict \"{0}\"{1}", actionName, "\n")); }
         return -1;
-    }
+    }*/
 
     /// <summary>
-    /// returns
+    /// returns Action based on Action.name, null if a problem
     /// </summary>
-    /// <param name="actionID"></param>
+    /// <param name="actionName"></param>
     /// <returns></returns>
-    public Action GetAction(int actionID)
+    public Action GetAction(string actionName)
     {
-        if (dictOfActions.ContainsKey(actionID))
-        { return dictOfActions[actionID]; }
-        else { Debug.LogWarning("Not found in DictOfActions " + actionID); }
+        if (string.IsNullOrEmpty(actionName) == false)
+        {
+            if (dictOfActions.ContainsKey(actionName))
+            { return dictOfActions[actionName]; }
+            else { Debug.LogWarning("Not found in DictOfActions " + actionName); }
+        }
+        else { Debug.LogError("Invalid actionName (Null)"); }
         return null;
     }
 
-    public Dictionary<int, Action> GetDictOfActions()
+    public Dictionary<string, Action> GetDictOfActions()
     { return dictOfActions; }
-
-    public Dictionary<string, int> GetDictOfLookUpActions()
-    { return dictOfLookUpActions; }
 
     //
     // - - - Actor Arcs - - - 

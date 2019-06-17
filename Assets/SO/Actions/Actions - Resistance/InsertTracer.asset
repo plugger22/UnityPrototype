@@ -9,8 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Insert Tracer
+  m_Name: InsertTracer
   m_EditorClassIdentifier: 
+  tag: Insert Tracer
   tooltipText: Strategically placed tracers in the network can highlight glitches
     in the void where the Spiders lurk unseen
   intendedActor: {fileID: 11400000, guid: 47b35b061cc8ac94b8c82676e37f243e, type: 2}

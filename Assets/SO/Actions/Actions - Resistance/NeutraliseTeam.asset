@@ -9,14 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Spread Unrest
+  m_Name: NeutraliseTeam
   m_EditorClassIdentifier: 
-  tooltipText: Unrest is like a fire waiting to be lit. With the proper encouragement
-    it can spread rapidly
-  intendedActor: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
+  tag: Neutralise Team
+  tooltipText: Authority teams all have their vulnerabilities that can be exploited
+    by fair means or foul
+  intendedActor: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: d0b72a8ebac94404e941665f4e8cdf9c, type: 2}
+  - {fileID: 11400000, guid: 277ee1bc213ac46448310782b86291f0, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  special: {fileID: 0}
+  special: {fileID: 11400000, guid: b2d36d68b875826458e367f924697c8d, type: 2}
   coolDown: 0

@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Gain Target Info
+  m_Name: ObtainGear
   m_EditorClassIdentifier: 
-  tooltipText: Meticulous research into a target can reap dividends when it comes
-    to execution
-  intendedActor: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  tag: Obtain Gear
+  tooltipText: People who know people who have access to the goods are a gift
+  intendedActor: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
+  - {fileID: 11400000, guid: 91122dcbe98bfd540a745f4c0773a202, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  special: {fileID: 11400000, guid: 39a636fed40b9b84d978c996d13970fd, type: 2}
+  special: {fileID: 11400000, guid: c05902b8bc37f9a488a3a5a7b0941190, type: 2}
   coolDown: 0

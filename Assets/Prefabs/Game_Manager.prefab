@@ -2180,7 +2180,7 @@ MonoBehaviour:
   isAuthority: 0
   autoRunTurns: 20
   isPerformanceLog: 1
-  isValidateData: 1
+  isValidateData: 0
   isValidateSO: 1
   isRandomCity: 0
   isEncrypted: 0

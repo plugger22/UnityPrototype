@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Damage Team
+  m_Name: MediaTeam
   m_EditorClassIdentifier: 
-  tooltipText: Insert a Damage Minimisation team
+  tag: Media Team
+  tooltipText: Insert a Media team
   intendedActor: {fileID: 0}
   listOfEffects:
-  - {fileID: 11400000, guid: 30441e6c968c98c43b8de59b0dfe20d7, type: 2}
+  - {fileID: 11400000, guid: 75c5222b0758a26439f6188569469520, type: 2}
   special: {fileID: 0}
   coolDown: 0

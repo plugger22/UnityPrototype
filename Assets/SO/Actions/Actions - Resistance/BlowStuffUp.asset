@@ -9,13 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
-  m_Name: Obtain Gear
+  m_Name: BlowStuffUp
   m_EditorClassIdentifier: 
-  tooltipText: People who know people who have access to the goods are a gift
-  intendedActor: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
+  tag: Blow Stuff Up
+  tooltipText: The creative use of high explosives can do a lot for the cause
+  intendedActor: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: 91122dcbe98bfd540a745f4c0773a202, type: 2}
+  - {fileID: 11400000, guid: 23d772167638cca468623db27b96c8ea, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  special: {fileID: 11400000, guid: c05902b8bc37f9a488a3a5a7b0941190, type: 2}
+  special: {fileID: 0}
   coolDown: 0
