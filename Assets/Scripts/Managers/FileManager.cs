@@ -2127,7 +2127,7 @@ public class FileManager : MonoBehaviour
                     actor.isMale = readActor.isMale;
                     actor.actorName = readActor.actorName;
                     actor.firstName = readActor.firstName;
-                    actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcID);
+                    actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcName);
                     Trait trait = GameManager.instance.dataScript.GetTrait(readActor.traitName);
                     if (trait != null)
                     { actor.AddTrait(trait); }
@@ -2457,7 +2457,7 @@ public class FileManager : MonoBehaviour
                         if (saveNode.cureName != null)
                         {
                             Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureName);
-                            if (cure = null)
+                            if (cure == null)
                             { node.cure = cure; }
                             else
                             {
@@ -3117,7 +3117,7 @@ public class FileManager : MonoBehaviour
         saveActor.actorName = actor.actorName;
         saveActor.firstName = actor.firstName;
         saveActor.spriteName = actor.spriteName;
-        saveActor.arcID = actor.arc.ActorArcID;
+        saveActor.arcName = actor.arc.name;
         Trait trait = actor.GetTrait();
         if (trait != null)
         { saveActor.traitName = trait.name; }

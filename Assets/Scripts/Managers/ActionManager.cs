@@ -2230,7 +2230,7 @@ public class ActionManager : MonoBehaviour
                 else
                 {
                     //check correct actor arc for target is present in line up
-                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, GameManager.instance.globalScript.sideResistance);
+                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.name, GameManager.instance.globalScript.sideResistance);
                     if (slotID > -1)
                     {
                         //get actor
@@ -2246,7 +2246,7 @@ public class ActionManager : MonoBehaviour
                         { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); errorFlag = true; }
                     }
                     else
-                    { Debug.LogErrorFormat("Invalid slotID (-1) for target.actorArc.ActorArcID {0}", target.actorArc.ActorArcID); }
+                    { Debug.LogErrorFormat("Invalid slotID (-1) for target.actorArc.name {0}", target.actorArc.name); }
                 }
                 //Player/Actor captured (provided no errors, otherwise bypass)
                 if (errorFlag == false)

@@ -469,7 +469,7 @@ public class SaveActor
     public string actorName;
     public string firstName;
     public string spriteName;
-    public int arcID;
+    public string arcName;
     //public Trait trait;
     public string traitName;
 

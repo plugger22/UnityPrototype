@@ -159,8 +159,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, int> dictOfLookUpNodeArcs = new Dictionary<string, int>();                       //Key -> nodeArc name, Value -> nodeArcID
     private Dictionary<int, PathData> dictOfDijkstraUnweighted = new Dictionary<int, PathData>();               //Key -> nodeID, Value -> PathData
     private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();                 //Key -> nodeID, Value -> PathData
-    private Dictionary<int, ActorArc> dictOfActorArcs = new Dictionary<int, ActorArc>();                        //Key -> actorArcID, Value -> ActorArc
-    private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();                      //Key -> actorArc name, Value -> actorArcID
+    private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();                        //Key -> actorArcID, Value -> ActorArc
+    /*private Dictionary<string, int> dictOfLookUpActorArcs = new Dictionary<string, int>();                      //Key -> actorArc name, Value -> actorArcID*/
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                                 //Key -> actorID, Value -> Actor
     private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();                           //Key -> trait.name, Value -> Trait
     private Dictionary<string, TraitEffect> dictOfTraitEffects = new Dictionary<string, TraitEffect>();         //Key -> traitEffect.name, Value -> TraitEffect
@@ -765,46 +765,24 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets specified actor Arc, returns null if not found
+    /// Gets specified actor Arc based on arc name (Uppercase, eg. 'FIXER'), returns null if not found
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    public ActorArc GetActorArc(int actorArcID)
+    public ActorArc GetActorArc(string arcName)
     {
-        ActorArc arc = null;
-        if (dictOfActorArcs.TryGetValue(actorArcID, out arc))
-        { return arc; }
+        if (string.IsNullOrEmpty(arcName) != false)
+        {
+            if (dictOfActorArcs.ContainsKey(arcName) == true)
+            { return dictOfActorArcs[arcName]; }
+        }
+        else { Debug.LogError("Invalid arcName (Null)"); }
         return null;
     }
 
-    /// <summary>
-    /// Gets actor arc based on actor arc name (upper case), eg. "FIXER", returns null if not found
-    /// </summary>
-    /// <param name="actorArcName"></param>
-    /// <returns></returns>
-    public ActorArc GetActorArc(string arcName)
-    {
-        ActorArc arc = null;
-        if (string.IsNullOrEmpty(arcName) == false)
-        {
-            //get ID
-            if (dictOfLookUpActorArcs.ContainsKey(arcName) == true)
-            {
-                int actorArcID = dictOfLookUpActorArcs[arcName];
-                //get ActorArc
-                if (dictOfActorArcs.TryGetValue(actorArcID, out arc))
-                { return arc; }
-            }
-        }
-        else { Debug.LogWarning("Invalid arcName parameter (Null)"); }
-        return arc;
-    }
-
-    public Dictionary<int, ActorArc> GetDictOfActorArcs()
+    public Dictionary<string, ActorArc> GetDictOfActorArcs()
     { return dictOfActorArcs; }
 
-    public Dictionary<string, int> GetDictOfLookUpActorArcs()
-    { return dictOfLookUpActorArcs; }
 
     public List<ActorArc> GetListOfAuthorityActorArcs()
     { return authorityActorArcs; }
@@ -901,7 +879,7 @@ public class DataManager : MonoBehaviour
     /// Gets specified TraitEffect, returns null if not found
     /// NOTE: Null is an acceptable input value
     /// </summary>
-    /// <param name="actorArcID"></param>
+    /// <param name="effectName"></param>
     /// <returns></returns>
     public TraitEffect GetTraitEffect(string effectName)
     {
@@ -1854,61 +1832,6 @@ public class DataManager : MonoBehaviour
         Debug.Assert(dictOfNodeContactsResistance.Count == dictOfContactsByNodeResistance.Count, string.Format("Mismatched count between dictOfNodeContactsResistance {0} and dictOfContactsByNodeResistance {1}",
             dictOfNodeContactsResistance.Count, dictOfContactsByNodeResistance.Count));
     }
-
-    /*/// <summary> NOTE: made redundant byGetActiveContactsAtNodeAuthority/Resistance
-    /// Returns a list of ActorArc names (default Current side to enable both sides tooltips to work correctly while debugging) for all contacts at node. Returns empty string if none.
-    /// </summary>
-    /// <param name="nodeID"></param>
-    /// <returns></returns>
-    public List<string> GetListOfNodeContactActorArcs(int nodeID, bool isCurrentSide = true)
-    {
-        List<string> listOfNodeContacts = new List<string>();
-        //GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        GlobalSide side = GameManager.instance.turnScript.currentSide;
-        //If other side, flip sides to opposite side
-        if (isCurrentSide == false)
-        {
-            if (side.level == 1) { side = GameManager.instance.globalScript.sideResistance; }
-            else if (side.level == 2) { side = GameManager.instance.globalScript.sideAuthority; }
-        }
-        //find node in dict
-        Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();
-        if (side.level == GameManager.instance.sideScript.PlayerSide.level)
-        { dictOfNodeContacts = GetDictOfNodeContacts(); }
-        else { dictOfNodeContacts = GetDictOfNodeContacts(false); }
-        if (dictOfNodeContacts.ContainsKey(nodeID) == true)
-        {
-            List<int> listOfActors = dictOfNodeContacts[nodeID];
-            if (listOfActors != null)
-            {
-                int numOfActors = listOfActors.Count;
-                int actorID;
-                if (numOfActors > 0)
-                {
-                    for (int i = 0; i < numOfActors; i++)
-                    {
-                        actorID = listOfActors[i];
-                        Actor actor = GetActor(actorID);
-                        if (actor != null)
-                        {
-                            //add to list if actor same side as Player
-                            if (actor.side.level == side.level)
-                            { listOfNodeContacts.Add(actor.arc.name); }
-
-                            //add to list if actor same side as Current side
-                            //if (actor.side.level == side.level)
-                            //{ listOfNodeContacts.Add(actor.arc.name); }
-                        }
-                        else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}, nodeID {1}", actorID, nodeID); }
-                    }
-                }
-                else { Debug.LogWarningFormat("Invalid listOfActors (Empty) for nodeID {0}", nodeID); }
-            }
-            else { Debug.LogWarningFormat("Invalid listOfActors (Null) for nodeID {0}", nodeID); }
-        }
-        return listOfNodeContacts;
-    }*/
-
 
     /// <summary>
     /// Returns a list of ActorArc names for all Authority contacts at node. Returns empty string if none.
@@ -4041,18 +3964,18 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a list containing the actorArcID's of all current, OnMap, actors (active or inactive) for a side. Null if a problem.
+    /// returns a list containing the actorArc names of all current, OnMap, actors (active or inactive) for a side. Null if a problem.
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public List<int> GetAllCurrentActorArcIDs(GlobalSide side)
+    public List<string> GetAllCurrentActorArcs(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        List<int> tempList = new List<int>();
+        List<string> tempList = new List<string>();
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
         {
             if (CheckActorSlotStatus(i, side) == true)
-            { tempList.Add(arrayOfActors[side.level, i].arc.ActorArcID); }
+            { tempList.Add(arrayOfActors[side.level, i].arc.name); }
         }
         if (tempList.Count > 0) { return tempList; }
         return null;
@@ -4086,25 +4009,30 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns slotID of actor if present and available (live), '-1' if not
+    /// returns slotID of actor if present and available (live), '-1' if not, arcName uppercase, eg. 'FIXER'
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    public int CheckActorPresent(int actorArcID, GlobalSide side)
+    public int CheckActorPresent(string arcName, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         int slotID = -1;
-        int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        for (int i = 0; i < numOfActors; i++)
+        if (string.IsNullOrEmpty(arcName) == false)
         {
-            //check if there is an actor in the slot (not vacant)
-            if (CheckActorSlotStatus(i, side) == true)
+
+            int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+            for (int i = 0; i < numOfActors; i++)
             {
-                Actor actor = arrayOfActors[side.level, i];
-                if (actor.arc.ActorArcID == actorArcID && actor.Status == ActorStatus.Active)
-                { return actor.slotID; }
+                //check if there is an actor in the slot (not vacant)
+                if (CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[side.level, i];
+                    if (actor.arc.name.Equals(arcName) == true && actor.Status == ActorStatus.Active)
+                    { return actor.slotID; }
+                }
             }
         }
+        else { Debug.LogError("Invalid arcName (Null)"); }
         return slotID;
     }
 

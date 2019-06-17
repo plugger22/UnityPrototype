@@ -1340,7 +1340,7 @@ public class AIRebelManager : MonoBehaviour
                     if (GameManager.instance.dataScript.CheckActorArcPresent(arc, globalResistance, true) == true)
                     {
                         //check actor is Active
-                        if (GameManager.instance.dataScript.CheckActorPresent(arc.ActorArcID, globalResistance) < 0)
+                        if (GameManager.instance.dataScript.CheckActorPresent(arc.name, globalResistance) < 0)
                         {
                             //remove that arc from the list as actors who aren't currently active can't perform actions
                             Debug.LogFormat("[Rim] AIRebelManager.cs -> FilterActorArcList: {0} removed from pool as actor OnMap and NOT ACTIVE{1}", arc.name, "\n");
@@ -1975,7 +1975,7 @@ public class AIRebelManager : MonoBehaviour
                             //LIVE target
                             if (target.targetStatus == Status.Live)
                             {
-                                if (CheckActorArcPresent(target.actorArc.ActorArcID) == true)
+                                if (CheckActorArcPresent(target.actorArc.name) == true)
                                 {
                                     Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
                                     if (node != null)
@@ -1984,7 +1984,7 @@ public class AIRebelManager : MonoBehaviour
                                         if (CheckForBadNode(node.nodeID) == false)
                                         {
                                             //actor of that type present 
-                                            if (CheckActorArcPresent(target.actorArc.ActorArcID) == true)
+                                            if (CheckActorArcPresent(target.actorArc.name) == true)
                                             {
                                                 rnd = Random.Range(0, 100);
                                                 if (rnd < targetAttemptActorChance)
@@ -1998,7 +1998,7 @@ public class AIRebelManager : MonoBehaviour
                                                     if (targetTally >= targetAttemptMinOdds)
                                                     {
                                                         //which OnMap actor is used
-                                                        actorID = GetOnMapActor(target.actorArc.ActorArcID);
+                                                        actorID = GetOnMapActor(target.actorArc.name);
                                                         //generate task for Actor Attempt
                                                         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessTargetTask: {0} target attempt passed Odds check (threshold {1}, tally {2}){3}", target.actorArc.name,
                                                             targetAttemptMinOdds, targetTally, "\n");
@@ -4247,7 +4247,7 @@ public class AIRebelManager : MonoBehaviour
     private int FindActor(ActorArc arc)
     {
         //is there an actor of this type present and Active
-        int actorID = GameManager.instance.dataScript.CheckActorPresent(arc.ActorArcID, globalResistance);
+        int actorID = GameManager.instance.dataScript.CheckActorPresent(arc.name, globalResistance);
         if (actorID < 0)
         {
             //select a random onMap, Active, actor
@@ -4600,19 +4600,23 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns true if specific actor arc ID present in listOfArcs (the actor arcs chosen for this turns actions)
+    /// returns true if specific actor arc (uppercase, eg. 'FIXER') present in listOfArcs (the actor arcs chosen for this turns actions)
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    private bool CheckActorArcPresent(int actorArcID)
-    { return listOfArcs.Exists(x => x.ActorArcID == actorArcID); }
+    private bool CheckActorArcPresent(string arcName)
+    {
+        if (string.IsNullOrEmpty(arcName) == false)
+        { return listOfArcs.Exists(x => x.name == arcName); }
+        return false;
+    }
 
     /// <summary>
-    /// returns actorID of any OnMap, active, actor of the same type. If none, returns a random onMap, active, actor. Returns -1 if none that meet criteria
+    /// returns actorID of any OnMap, active, actor of the same type (uppercase, eg. 'FIXER'). If none, returns a random onMap, active, actor. Returns -1 if none that meet criteria
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    private int GetOnMapActor(int actorArcID)
+    private int GetOnMapActor(string arcName)
     {
         int actorID = -1;
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
@@ -4631,7 +4635,7 @@ public class AIRebelManager : MonoBehaviour
                         //Active actor
                         if (actor.Status == ActorStatus.Active)
                         {
-                            if (actor.arc.ActorArcID == actorArcID)
+                            if (actor.arc.name.Equals(arcName) == true)
                             { actorID = actor.actorID; break; }
                             else
                             {

@@ -4,12 +4,12 @@ using UnityEngine;
 using gameAPI;
 
 /// <summary>
-/// Actor archetype, eg. 'Fixer'
+/// Actor archetype, eg. 'FIXER', always UPPERCASE
 /// </summary>
 [CreateAssetMenu(menuName = "Actor / ActorArc")]
 public class ActorArc : ScriptableObject
 {
-    public int ActorArcID { get; set; }               //unique #, zero based -> assigned automatically by DataManager.Initialise
+    /*public int ActorArcID { get; set; }               //unique #, zero based -> assigned automatically by DataManager.Initialise*/
     public GlobalSide side;
     public string description;
     public string actorName;

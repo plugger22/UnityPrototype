@@ -696,38 +696,30 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Actor Arcs - - 
         //
-        Dictionary<int, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
-        Dictionary<string, int> dictOfLookUpActorArcs = GameManager.instance.dataScript.GetDictOfLookUpActorArcs();
+        Dictionary<string, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
         List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
         List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
-        int counterLookUp = 0;
         if (dictOfActorArcs != null)
         {
             if (authorityActorArcs != null)
             {
                 if (resistanceActorArcs != null)
                 {
-                    
                     counter = 0;
                     numArray = arrayOfActorArcs.Length;
                     for (int i = 0; i < numArray; i++)
                     {
                         //assign a zero based unique ID number
                         ActorArc arc = arrayOfActorArcs[i];
-                        arc.ActorArcID = counter++;
+                        counter++;
                         //add to dictionary
                         try
                         {
-                            dictOfActorArcs.Add(arc.ActorArcID, arc);
+                            dictOfActorArcs.Add(arc.name, arc);
                             //add to list
                             if (arc.side.level == globalAuthority.level) { authorityActorArcs.Add(arc); }
                             else if (arc.side.level == globalResistance.level) { resistanceActorArcs.Add(arc); }
                             else { Debug.LogWarning(string.Format("Invalid side \"{0}\", actorArc \"{1}\" NOT added to list", arc.side.name, arc.name)); }
-                            //add to lookup dictionary
-                            try
-                            { dictOfLookUpActorArcs.Add(arc.name, arc.ActorArcID); counterLookUp++; }
-                            catch (ArgumentException)
-                            { Debug.LogError(string.Format("Invalid actorArc.name (duplicate) \"{0}\" for \"{1}\"", counterLookUp, arc.name)); counterLookUp--; }
                         }
                         catch (ArgumentNullException)
                         { Debug.LogError("Invalid Actor Arc (Null)"); counter--; }
@@ -735,50 +727,18 @@ public class LoadManager : MonoBehaviour
                         { Debug.LogError(string.Format("Invalid actorArc (duplicate) ID \"{0}\" for \"{1}\"", counter, arc.name)); counter--; }
                     }
                     numDict = dictOfActorArcs.Count;
-                    int numDictLookup = dictOfLookUpActorArcs.Count;
                     Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActorArcs has {0} entries{1}", numDict, "\n");
-                    Debug.LogFormat("[Loa] InitialiseEarly -> dictOfLookUpActorArcs has {0} entries{1}", numDictLookup, "\n");
                     Debug.LogFormat("[Loa] InitialiseEarly -> listOfAuthorityActorArcs has {0} entries{1}", authorityActorArcs.Count, "\n");
                     Debug.LogFormat("[Loa] InitialiseEarly -> listOfResistanceActorArcs has {0} entries{1}", resistanceActorArcs.Count, "\n");
                     Debug.Assert(numDict == counter, "Mismatch on count");
-                    Debug.Assert(numDictLookup == counterLookUp, "Mismatch on Lookup Count");
                     Debug.Assert(numDict > 0, "No Actor Arcs have been imported");
-                    Debug.Assert(numDictLookup > 0, "No actorArc LookUps have been imported");
                     Debug.Assert(numArray == numDict, string.Format("Mismatch on ActorArcs count, array {0}, dict {1}", numArray, numDict));
-                    Debug.Assert(numArray == numDictLookup, string.Format("Mismatch on ActorArcs Lookup count, array {0}, dict {1}", numArray, numDictLookup));
                 }
                 else { Debug.LogError("Invalid resistanceActorArcs (Null) -> Import failed"); }
             }
             else { Debug.LogError("Invalid authorityActorArcs (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfActorArcs (Null) -> Import failed"); }
-        /*//
-        // - - - Effects - - - (not loaded into dict so a straight enum as above)
-        //
-        Dictionary<string, Effect> dictOfEffects = GameManager.instance.dataScript.GetDictOfEffects();
-        if (dictOfEffects != null)
-        {
-            counter = 0;
-            numArray = arrayOfEffects.Length;
-            for (int i = 0; i < numArray; i++)
-            {
-                Effect effect = arrayOfEffects[i];
-                counter++;
-                //add to dictionary
-                try
-                { dictOfEffects.Add(effect.name, effect); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Effect (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Effect (duplicate) effectID \"{0}\" for \"{1}\"", counter, effect.name)); counter--; }
-            }
-            numDict = dictOfEffects.Count;
-            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfEffects has {0} entries{1}", numDict, "\n");
-            Debug.Assert(numDict == counter, "Mismatch on count");
-            Debug.Assert(numDict > 0, "No Effects have been imported");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch on Effects count, array {0}, dict {1}", numArray, numDict));
-        }
-        else { Debug.LogError("Invalid dictOfEffects (Null) -> Import failed"); }*/
         //
         // - - - Targets - - -
         //            

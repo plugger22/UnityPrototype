@@ -1104,7 +1104,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     //check if actor present OnMap and Active (that actor is assumed to be tackling target, the target doesn't have to be part of a contact network)
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.name, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available
@@ -1285,7 +1285,7 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     Actor actor = null;
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.ActorArcID, globalResistance);
+                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.name, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor of the required actor Arc is present
