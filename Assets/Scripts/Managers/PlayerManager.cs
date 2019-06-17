@@ -475,14 +475,14 @@ public class PlayerManager : MonoBehaviour
                 {
                     ResetGearItem(gear);
                     listOfGear.Add(gearName);
-                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, ID {1}, added to Player inventory{2}", gear.tag, gear.gearID, "\n");
+                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, added to Player inventory{1}", gear.tag, "\n");
                     CheckForAIUpdate(gear);
                     //add to listOfCurrentGear (if not already present)
                     GameManager.instance.dataScript.AddGearNew(gear);
                     return true;
                 }
                 else
-                { Debug.LogWarningFormat("Gear \'{0}\", gearID {1} is already present in Player inventory", gear.tag, gear.gearID);  }
+                { Debug.LogWarningFormat("Gear \'{0}\", is already present in Player inventory", gear.tag);  }
             }
             else
             { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
@@ -511,7 +511,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError(string.Format("Gear \"{0}\", gearID {1} NOT removed from inventory", gear.tag, gear.gearID));
+                    Debug.LogError(string.Format("Gear \"{0}\" NOT removed from inventory", gear.tag));
                     return false;
                 }
             }
@@ -534,7 +534,7 @@ public class PlayerManager : MonoBehaviour
     {
         ResetGearItem(gear);
         listOfGear.Remove(gear.name);
-        Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, ID {1}, removed from inventory{2}", gear.tag, gear.gearID, "\n"));
+        Debug.Log(string.Format("[Gea] PlayerManager.cs -> RemoveGear: {0}, removed from inventory{1}", gear.tag, "\n"));
         CheckForAIUpdate(gear);
         //lost gear
         if (isLost == true)
@@ -542,7 +542,7 @@ public class PlayerManager : MonoBehaviour
             if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
             {
                 gear.statTurnLost = GameManager.instance.turnScript.Turn;
-                Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gear.tag, gear.gearID);
+                Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\"", gear.tag);
             }
         }
     }
@@ -1176,7 +1176,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
-                    { builder.Append(string.Format(" {0}, ID {1}, {2}{3}", gear.tag, gear.gearID, gear.type.name, "\n")); }
+                    { builder.Append(string.Format(" {0}, {1}{2}", gear.tag, gear.type.name, "\n")); }
                 }
             }
             else { builder.Append(" No gear in inventory"); }
@@ -1207,8 +1207,6 @@ public class PlayerManager : MonoBehaviour
                 builder.AppendLine();
                 builder.Append(string.Format(" {0}", gear.tag.ToUpper()));
                 builder.AppendLine();
-                builder.AppendLine();
-                builder.Append(string.Format(" gearID {0}", gear.gearID));
                 builder.AppendLine();
                 builder.Append(string.Format(" rarity \"{0}\"", gear.rarity.name));
                 builder.AppendLine();

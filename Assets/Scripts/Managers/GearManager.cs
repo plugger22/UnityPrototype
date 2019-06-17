@@ -390,7 +390,7 @@ public class GearManager : MonoBehaviour
                                     gear.statTimesCompromised++;
                                     //admin
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} COMPROMISED, need < {1}, rolled {2}{3}", gear.tag, chance, rnd, "\n");
-                                    Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1}, ID {2}, Compromised ({3}){4}", gear.tag, gear.type.name, gear.gearID, gear.reasonUsed, "\n");
+                                    Debug.LogFormat("[Gea] -> CheckForCompromisedGear: {0}, {1},  Compromised ({2}){3}", gear.tag, gear.type.name, gear.reasonUsed, "\n");
                                     string msgText = string.Format("Gear {0} COMPROMISED", gear.tag);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
                                     break;
@@ -917,7 +917,7 @@ public class GearManager : MonoBehaviour
                                 }
                                 optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
                                     colourDefault, gear.type.name, colourEnd);
-                                optionData.optionID = gear.gearID;
+                                /*optionData.optionID = gear.gearID;*/
                                 optionData.optionName = gear.name;
                                 //add to array
                                 data.arrayOfOptions[i] = optionData;
@@ -1033,7 +1033,8 @@ public class GearManager : MonoBehaviour
                             }
                             optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
                                 colourDefault, gear.type.name, colourEnd);
-                            optionData.optionID = gear.gearID;
+                            /*optionData.optionID = gear.gearID;*/
+                            optionData.optionName = gear.name;
                             //add to array
                             data.arrayOfOptions[i] = optionData;
                             data.arrayOfTooltips[i] = tooltipDetails;
@@ -1165,7 +1166,7 @@ public class GearManager : MonoBehaviour
                             {
                                 //remove gear from pool
                                 if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
-                                { Debug.LogWarningFormat("Invalid removal for \"{0}\", ID {1}", gear.tag, gear.gearID); }
+                                { Debug.LogWarningFormat("Invalid removal for \"{0}\"", gear.tag); }
                                 //stat
                                 gear.statTurnObtained = GameManager.instance.turnScript.Turn;
                                 //gear successfully acquired

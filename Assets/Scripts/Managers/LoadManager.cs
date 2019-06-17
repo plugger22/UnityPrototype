@@ -940,10 +940,8 @@ public class LoadManager : MonoBehaviour
             numArray = arrayOfGear.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Gear gear = arrayOfGear[i];
-                //set data
-                gear.gearID = counter++;
+                counter++;
                 //add to dictionary
                 try
                 { dictOfGear.Add(gear.name, gear); }

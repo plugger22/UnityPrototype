@@ -2692,8 +2692,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Given;
             message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
-            message.data1 = gear.gearID;
-            message.data2 = motivation;
+            message.data1 = motivation;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
@@ -2743,9 +2742,8 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Comprised;
             message.sideLevel = globalResistance.level;
             message.isPublic = true;
-            message.data0 = gear.gearID;
-            message.data1 = renownUsed;
-            message.data2 = nodeID;
+            message.data0 = renownUsed;
+            message.data1 = nodeID;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
@@ -2786,7 +2784,6 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.GEAR;
             message.subType = MessageSubType.Gear_Used;
             message.sideLevel = globalResistance.level;
-            message.data0 = gear.gearID;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
@@ -2828,8 +2825,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Lost;
             message.sideLevel = globalResistance.level;
             message.isPublic = true;
-            message.data0 = gear.gearID;
-            message.data1 = actor.actorID;
+            message.data0 = actor.actorID;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
@@ -2871,8 +2867,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Available;
             message.sideLevel = globalResistance.level;
             message.isPublic = true;
-            message.data0 = gear.gearID;
-            message.data1 = actor.actorID;
+            message.data0 = actor.actorID;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
@@ -2915,8 +2910,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Obtained;
             message.sideLevel = globalResistance.level;
             message.data0 = node.nodeID;
-            message.data1 = gear.gearID;
-            message.data2 = actorID;
+            message.data1 = actorID;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();

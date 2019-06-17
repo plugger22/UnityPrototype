@@ -57,11 +57,11 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                     //gear
                                     ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                     {
-                                        itemID = gear.gearID,
+                                        /*itemID = gear.gearID,*/
                                         itemName = gear.tag,
                                         modalLevel = 2,
                                         modalState = ModalSubState.Inventory,
-                                        itemDetails = string.Format("{0} ID {1}", gear.type.name, gear.gearID),
+                                        itemDetails = string.Format("{0}", gear.type.name),
                                         menuPos = position,
                                         listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.name),
                                         menuType = ActionMenuType.Gear

@@ -14,7 +14,6 @@ public class Gear : ScriptableObject
     public string tag;
 
     [Tooltip("Only select an option here if the Gear is restricted to a particular metaLevel, otherwise leave as None (null)")]
-    /*public GlobalMeta metaLevel;  //local / state / national*/
     public GearRarity rarity;       //common / rare / unique
     public GearType type;
 
@@ -29,7 +28,6 @@ public class Gear : ScriptableObject
     [Tooltip("Any effect for when gear is used by the Player while hacking AI. Ignore if none")]
     public Effect aiHackingEffect;
 
-    [HideInInspector] public int gearID;
 
     #region Save Data Compatible
     [HideInInspector] public int timesUsed;                     //# of times used in any given turn (reset to zero each turn)

@@ -708,7 +708,7 @@ namespace gameAPI
                     Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} given to HQ by {1}{2}", gearOld.name, arc.name, "\n");
                     //gear has been lost
                     if (GameManager.instance.dataScript.RemoveGearLost(gearOld) == false)
-                    { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gearID {1}", gearOld.name, gearOld.gearID); }
+                    { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\"", gearOld.name); }
                     //let player know that gear has been Lost
                     string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
                     GameManager.instance.messageScript.GearLost(msgText, gearOld, this, true);

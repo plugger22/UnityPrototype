@@ -534,7 +534,7 @@ public class ActionManager : MonoBehaviour
             }
             else
             {
-                Debug.LogErrorFormat("Invalid Gear (Null) for gearID {0}", gear.gearID);
+                Debug.LogErrorFormat("Invalid Gear (Null) for {0}", details.gearName);
                 errorFlag = true;
             }
         }
@@ -1709,7 +1709,7 @@ public class ActionManager : MonoBehaviour
                         {
                             //ongoing effect for gear ONLY player actions +/- (handled differently to other ongoing effects)
                             dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID(); ;
-                            dataInput.data = gear.gearID;
+                            /*dataInput.data = gear.gearID;*/
                             dataInput.ongoingText = string.Format("{0} gear", gear.tag);
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
@@ -1783,7 +1783,7 @@ public class ActionManager : MonoBehaviour
             { GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit");  }
             else
             {
-                Debug.LogErrorFormat("Invalid Gear (Null) for gearID {0}", gear.gearID);
+                Debug.LogErrorFormat("Invalid Gear (Null) for gear {0}", details.gearName);
                 errorFlag = true;
             }
             outcomeDetails.textTop = builderTop.ToString();

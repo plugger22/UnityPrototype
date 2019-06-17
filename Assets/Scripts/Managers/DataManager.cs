@@ -4598,7 +4598,7 @@ public class DataManager : MonoBehaviour
         {
             //remove from Current list
             if (listOfCurrentGear.Remove(gear.name) == false)
-            { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfCurrentGear", gear.tag, gear.gearID); }
+            { Debug.LogWarningFormat("Gear \"{0}\", not found in listOfCurrentGear", gear.tag); }
             //add to Lost list
             listOfLostGear.Add(gear.name);
         }
@@ -4621,17 +4621,17 @@ public class DataManager : MonoBehaviour
                 case 0:
                     //common
                     if (listOfCommonGear.Remove(gear.name) == false)
-                    { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfCommonGear", gear.tag, gear.gearID); }
+                    { Debug.LogWarningFormat("Gear \"{0}\", not found in listOfCommonGear", gear.tag); }
                     break;
                 case 1:
                     //rare
                     if (listOfRareGear.Remove(gear.name) == false)
-                    { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfRareGear", gear.tag, gear.gearID); }
+                    { Debug.LogWarningFormat("Gear \"{0}\", not found in listOfRareGear", gear.tag); }
                     break;
                 case 2:
                     //unique
                     if (listOfUniqueGear.Remove(gear.name) == false)
-                    { Debug.LogWarningFormat("Gear \"{0}\", ID {1}, not found in listOfUniqueGear", gear.tag, gear.gearID); }
+                    { Debug.LogWarningFormat("Gear \"{0}\", not found in listOfUniqueGear", gear.tag); }
                     break;
                 default:
                     Debug.LogWarningFormat("Invalid Gear rarity level {0} for \"{1}\"", gear.rarity.level, gear.tag);
@@ -4699,7 +4699,7 @@ public class DataManager : MonoBehaviour
                             gear.statTurnObtained = Random.Range(0, turn);
                             gear.statTurnLost = turn;
                             gear.statTimesUsed = Random.Range(0, 3);
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.tag, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  Gear Lost (used by Rebel AI){3}", gear.tag, gear.type.name, gear.rarity.name, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
                         isSuccess = true;
@@ -4729,7 +4729,7 @@ public class DataManager : MonoBehaviour
                             gear.statTurnObtained = Random.Range(0, turn);
                             gear.statTurnLost = turn;
                             gear.statTimesUsed = Random.Range(0, 3);
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  id {3} Gear Lost (used by Rebel AI){4}", gear.tag, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearLostOnRevert: {0}, {1}, {2},  Gear Lost (used by Rebel AI){3}", gear.tag, gear.type.name, gear.rarity.name, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
                         isSuccess = true;
@@ -4786,7 +4786,7 @@ public class DataManager : MonoBehaviour
                         {
                             gear.statTurnObtained = Random.Range(0, turn);
                             gear.statTimesUsed = Random.Range(0, 3);
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use{4}", gear.tag, gear.type.name, gear.rarity.name, gear.gearID, "\n");
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2}, Gear currently in use{3}", gear.tag, gear.type.name, gear.rarity.name, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
                         isSuccess = true;
@@ -4817,8 +4817,8 @@ public class DataManager : MonoBehaviour
                         {
                             gear.statTurnObtained = Random.Range(0, turn);
                             gear.statTimesUsed = Random.Range(0, 3);
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2},  id {3} Gear currently in use (used {4} times){5}", 
-                                gear.tag, gear.type.name, gear.rarity.name, gear.gearID, gear.statTimesUsed, "\n");
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2}, Gear currently in use (used {3} times){4}", 
+                                gear.tag, gear.type.name, gear.rarity.name, gear.statTimesUsed, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
                         isSuccess = true;
@@ -4886,7 +4886,7 @@ public class DataManager : MonoBehaviour
                 {
                     Gear gear = GetGear(listOfGear[index]);
                     if (gear != null)
-                    { builder.AppendFormat(" {0} ({1}), ID{2}, {3}, used {4} times (total {5}){6}", gear.tag, gear.type.name, gear.gearID, gear.rarity.name, gear.timesUsed, gear.statTimesUsed, "\n"); }
+                    { builder.AppendFormat(" {0} ({1}), {2}, used {3} times (total {4}){5}", gear.tag, gear.type.name, gear.rarity.name, gear.timesUsed, gear.statTimesUsed, "\n"); }
                     else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
                 }
             }
@@ -4910,7 +4910,7 @@ public class DataManager : MonoBehaviour
         if (message != null)
         {
             //Generate a Debug Message for the log
-            Debug.Log(string.Format("[Msg] {0}{1}", message.text, "\n"));
+            Debug.LogFormat("[Msg] {0}{1}", message.text, "\n");
             //auto sort
             switch (message.isPublic)
             {
