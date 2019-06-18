@@ -3411,13 +3411,13 @@ public class MessageManager : MonoBehaviour
             if (supportGiven > 0)
             {
                 //support Approved
-                data.itemText = string.Format("Support request to {0} APPROVED", faction.name);
+                data.itemText = string.Format("Support request to {0} APPROVED", faction.tag);
                 data.topText = "Support APPROVED";
             }
             else
             {
                 //support Declined
-                data.itemText = string.Format("Support request to {0} declined", faction.name);
+                data.itemText = string.Format("Support request to {0} declined", faction.tag);
                 data.topText = "Support Declined";
             }
             data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionApprovalLevel, supportGiven);
@@ -3470,9 +3470,9 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             if (change > 0)
-            { data.itemText = string.Format("{0} faction Approval INCREASES", faction.name); }
+            { data.itemText = string.Format("{0} faction Approval INCREASES", faction.tag); }
             else
-            {  data.itemText = string.Format("{0} faction Approval DECREASES", faction.name); }
+            {  data.itemText = string.Format("{0} faction Approval DECREASES", faction.tag); }
             data.topText = "Approval Changes";
             data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, change, newLevel);
             data.priority = ItemPriority.Medium;

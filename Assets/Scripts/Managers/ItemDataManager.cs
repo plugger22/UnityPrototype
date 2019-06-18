@@ -1035,7 +1035,7 @@ public class ItemDataManager : MonoBehaviour
         if (supportGiven > 0)
         {
             //support approved
-            builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.name, "\n", "\n");
+            builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.tag, "\n", "\n");
             builder.AppendFormat("{0}Renown +{1}{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4}</b> out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
                 factionApproval, GameManager.instance.factionScript.maxFactionApproval);
@@ -1043,7 +1043,7 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             //support declined
-            builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", faction.name, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", faction.tag, "\n", "\n", colourBad, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4} out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
                 factionApproval, GameManager.instance.factionScript.maxFactionApproval);
         }
@@ -1063,8 +1063,8 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (change > 0)
-        { builder.AppendFormat("{0} faction{1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.name, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
-        else { builder.AppendFormat("{0} faction{1}Approval {2}<b>{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.name, "\n", colourBad, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("{0} faction{1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("{0} faction{1}Approval {2}<b>{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourBad, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
         if (string.IsNullOrEmpty(reason) == false)
         {
             if (change > 0)

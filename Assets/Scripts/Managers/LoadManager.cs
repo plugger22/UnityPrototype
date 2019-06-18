@@ -218,6 +218,13 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
         //
+        // - - - City Arcs (not stored in a collection)
+        //
+        numArray = arrayOfCityArcs.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityArcs has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityArcs present"); }
+        //
         // - - - ContactType (not stored in a collection)
         //
         numArray = arrayOfContactTypes.Length;
@@ -1221,8 +1228,8 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Faction count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
-        //
-        // - - - City Arcs - - -
+        /*//
+        // - - - City Arcs - - - (done above as dictionary not required)
         //
         Dictionary<int, CityArc> dictOfCityArcs = GameManager.instance.dataScript.GetDictOfCityArcs();
         if (dictOfCityArcs != null)
@@ -1249,7 +1256,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict > 0, "No City Arcs have been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in CityArc count, array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }*/
         //
         // - - - Cities - - -
         //

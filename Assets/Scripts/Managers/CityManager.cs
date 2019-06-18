@@ -309,18 +309,6 @@ public class CityManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /*/// <summary>
-    /// returns a colour formatted string of current cities Faction. Used by cityInfoUI faction tooltip
-    /// </summary>
-    /// <returns></returns>
-    public string GetFactionName()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.faction.name, colourEnd);
-        if (string.IsNullOrEmpty(city.faction.descriptor) == false)
-        { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.descriptor, colourEnd); }
-        return builder.ToString();
-    }*/
 
     /// <summary>
     /// returns a colour formatted string of current city's faction details (preferred node Arc, disliked node Arc). Used by cityInfoUI faction tooltip.
