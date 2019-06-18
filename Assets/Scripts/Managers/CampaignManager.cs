@@ -244,7 +244,7 @@ public class CampaignManager : MonoBehaviour
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
-            { builder.AppendFormat(" {0}: \"{1}\", ID {2}, {3}, seed {4}{5}", i, campaign.listOfScenarios[i].tag, campaign.listOfScenarios[i].scenarioID, campaign.listOfScenarios[i].city.name, 
+            { builder.AppendFormat(" {0}: \"{1}\", ID {2}, {3}, seed {4}{5}", i, campaign.listOfScenarios[i].tag, campaign.listOfScenarios[i].scenarioID, campaign.listOfScenarios[i].city.tag, 
                 campaign.listOfScenarios[i].seedCity, "\n"); }
         }
         else

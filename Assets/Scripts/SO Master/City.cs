@@ -8,6 +8,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / City / City")]
 public class City : ScriptableObject
 {
+    [Tooltip("In game name")]
+    public string tag;
     [Tooltip("Short text summary that appears in city tooltip")]
     public string descriptor;
 

@@ -137,9 +137,9 @@ public class LevelManager : MonoBehaviour
         //reset to level specific random seed
         int seed = GameManager.instance.campaignScript.scenario.seedCity;
         Random.InitState(seed);
-        string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.name, city.country.name) + Environment.NewLine;
+        string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.tag, city.country.name) + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
-        Debug.LogFormat("[Cit] LevelManager.cs -> InitialiseLevelRandomSeed: City seed {0} -> {1}, {2}", seed, city.name, city.country.name);
+        Debug.LogFormat("[Cit] LevelManager.cs -> InitialiseLevelRandomSeed: City seed {0} -> {1}, {2}", seed, city.tag, city.country.name);
     }
 
     /// <summary>
@@ -1056,13 +1056,13 @@ public class LevelManager : MonoBehaviour
                     index = listOfNames.FindIndex(x => x == city.iconDistrict);
                     if (index > -1)
                     {
-                        Debug.LogWarningFormat("Duplicate Icon district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.name);
+                        Debug.LogWarningFormat("Duplicate Icon district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.tag);
                         listOfNames.RemoveAt(index);
                     }
                     index = listOfNames.FindIndex(x => x == city.airportDistrict);
                     if (index > -1)
                     {
-                        Debug.LogWarningFormat("Duplicate Airport district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.name);
+                        Debug.LogWarningFormat("Duplicate Airport district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.tag);
                         listOfNames.RemoveAt(index);
                     }
                     if (city.harbourDistrict != null)
@@ -1070,7 +1070,7 @@ public class LevelManager : MonoBehaviour
                         index = listOfNames.FindIndex(x => x == city.harbourDistrict);
                         if (index > -1)
                         {
-                            Debug.LogWarningFormat("Duplicate Harbour district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.name);
+                            Debug.LogWarningFormat("Duplicate Harbour district \"{0}\" in {1} DistrictTextList", listOfNames[index], city.tag);
                             listOfNames.RemoveAt(index);
                         }
                     }

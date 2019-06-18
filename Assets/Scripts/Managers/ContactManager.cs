@@ -177,7 +177,7 @@ public class ContactManager : MonoBehaviour
                 if (city != null)
                 {
                     nameSet = city.country.nameSet;
-                    if (nameSet == null) { Debug.LogErrorFormat("Invalid NameSet (Null) for {0} in {1}", city.name, city.country.name); }
+                    if (nameSet == null) { Debug.LogErrorFormat("Invalid NameSet (Null) for {0} in {1}", city.tag, city.country.name); }
                 }
                 else { Debug.LogError("Invalid City (Null)"); }
                 int counter = 0;

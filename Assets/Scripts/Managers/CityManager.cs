@@ -55,7 +55,7 @@ public class CityManager : MonoBehaviour
         set
         {
             _cityLoyalty = value;
-            Debug.LogFormat("[Cit] CityManager.cs: {0} loyalty now {1}{2}", city.name, _cityLoyalty, "\n");
+            Debug.LogFormat("[Cit] CityManager.cs: {0} loyalty now {1}{2}", city.tag, _cityLoyalty, "\n");
             //update top widget bar
             EventManager.instance.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty, "CityManager.cs -> CityLoyalty");
         }
@@ -134,7 +134,7 @@ public class CityManager : MonoBehaviour
         //Placeholder -> do early so factionManager.cs can have data in start sequence
         city.mayor = mayor;
         if (city.mayor != null)
-        { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.name, city.mayor.leaderName, city.mayor.trait.tag, "\n"); }
+        { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.tag, city.mayor.leaderName, city.mayor.trait.tag, "\n"); }
         else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
     }
     #endregion
@@ -166,7 +166,7 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseAllLate()
     {
         //set up base panel UI
-        GameManager.instance.basePanelScript.SetNames(city.name, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
+        GameManager.instance.basePanelScript.SetNames(city.tag, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
     }
     #endregion
 
@@ -237,7 +237,7 @@ public class CityManager : MonoBehaviour
         if (city != null)
         {
             this.city = city;
-            /*Debug.LogFormat("[Cit] CityManager.cs -> SetCity: {0}{1}", city.name, "\n");*/
+            /*Debug.LogFormat("[Cit] CityManager.cs -> SetCity: {0}{1}", city.tag, "\n");*/
         }
         else { Debug.LogError("Invalid city (Null)"); }
     }
@@ -247,7 +247,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetCityNameFormatted()
-    { return string.Format("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.name, colourEnd); }
+    { return string.Format("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.tag, colourEnd); }
 
     /// <summary>
     /// returns current city Arc name in 90% size, default white text format
@@ -414,9 +414,9 @@ public class CityManager : MonoBehaviour
                     //set timer
                     loyaltyMinTimer = loyaltyCountdownTimer;
                     //message
-                    msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
-                    itemText = string.Format("{0} Loyalty at ZERO", city.name);
-                    reason = string.Format("{0} Loyalty has Flat Lined", city.name);
+                    msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.tag, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
+                    itemText = string.Format("{0} Loyalty at ZERO", city.tag);
+                    reason = string.Format("{0} Loyalty has Flat Lined", city.tag);
                     warning = string.Format("Resistance wins in {0} turn{1}", loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
                     //good for Resistance, bad for Authority player
                     isBad = false;
@@ -431,16 +431,16 @@ public class CityManager : MonoBehaviour
                     if (loyaltyMinTimer == 0)
                     {
                         //message
-                        msgText = string.Format("{0} Loyalty at zero. Resistance wins", city.name);
-                        itemText = string.Format("{0} has aligned with Resistance", city.name);
-                        reason = string.Format("{0} Loyalty has been at ZERO for an extended period", city.name);
+                        msgText = string.Format("{0} Loyalty at zero. Resistance wins", city.tag);
+                        itemText = string.Format("{0} has aligned with Resistance", city.tag);
+                        reason = string.Format("{0} Loyalty has been at ZERO for an extended period", city.tag);
                         warning = "Resistance has Won";
                         //good for Resistance, bad for Authority player
                         isBad = false;
                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
                         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Resistance Wins", reason, warning, true, isBad);
                         //Loyalty at Min -> Resistance wins
-                        string textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.name, colourEnd);
+                        string textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.tag, colourEnd);
                         string textBottom = string.Format("{0}Resistance WINS{1}{2}{3}{4}Authority LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
                         GameManager.instance.turnScript.SetWinState(WinState.Resistance, WinReason.CityLoyaltyMin, textTop, textBottom);
 
@@ -449,9 +449,9 @@ public class CityManager : MonoBehaviour
                     else
                     {
                         //message
-                        msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.name, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
-                        itemText = string.Format("{0} Loyalty is wavering", city.name);
-                        reason = string.Format("{0} is considering aligning itself with the Resistance", city.name);
+                        msgText = string.Format("{0} Loyalty at zero. Resistance wins in {1} turn{2}", city.tag, loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
+                        itemText = string.Format("{0} Loyalty is wavering", city.tag);
+                        reason = string.Format("{0} is considering aligning itself with the Resistance", city.tag);
                         warning = string.Format("Resistance wins in {0} turn{1}", loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
                         //good for Resistance, bad for Authority player
                         isBad = false;
@@ -470,9 +470,9 @@ public class CityManager : MonoBehaviour
                     //set timer
                     loyaltyMaxTimer = loyaltyCountdownTimer;
                     //message
-                    msgText = string.Format("{0} Loyalty at MAX. Authority wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
-                    itemText = string.Format("{0} Loyalty is at MAXIMUM", city.name);
-                    reason = string.Format("{0} Loyalty to the Authority is overwhelming", city.name);
+                    msgText = string.Format("{0} Loyalty at MAX. Authority wins in {1} turn{2}", city.tag, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
+                    itemText = string.Format("{0} Loyalty is at MAXIMUM", city.tag);
+                    reason = string.Format("{0} Loyalty to the Authority is overwhelming", city.tag);
                     warning = string.Format("Authority wins in {0} turn{1}", loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
                     //good for Authority, bad for Resistance player
                     isBad = true;
@@ -487,25 +487,25 @@ public class CityManager : MonoBehaviour
                     if (loyaltyMaxTimer == 0)
                     {
                         //message
-                        msgText = string.Format("{0} Loyalty at MAX. Authority wins", city.name);
-                        itemText = string.Format("{0} has aligned fully with Authority", city.name);
-                        reason = string.Format("{0} Loyalty has been MAX for an extended period", city.name);
+                        msgText = string.Format("{0} Loyalty at MAX. Authority wins", city.tag);
+                        itemText = string.Format("{0} has aligned fully with Authority", city.tag);
+                        reason = string.Format("{0} Loyalty has been MAX for an extended period", city.tag);
                         warning = "Authority has Won";
                         //good for Authority, bad for Resistance player
                         isBad = true;
                         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = false; }
                         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Authority Wins", reason, warning, true, isBad);
                         //Loyalty at Max -> Authority wins
-                        string textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.name, colourEnd);
+                        string textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.tag, colourEnd);
                         string textBottom = string.Format("{0}Authority WINS{1}{2}{3}{4}Resistance LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
                         GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.CityLoyaltyMax, textTop, textBottom);
                     }
                     else
                     {
                         //message
-                        msgText = string.Format("{0} Loyalty at MAX. Authority wins in {1} turn{2}", city.name, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
-                        itemText = string.Format("{0} Loyalty is overwhelming", city.name);
-                        reason = string.Format("{0} is considering aligning itself fully with the Authority", city.name);
+                        msgText = string.Format("{0} Loyalty at MAX. Authority wins in {1} turn{2}", city.tag, loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
+                        itemText = string.Format("{0} Loyalty is overwhelming", city.tag);
+                        reason = string.Format("{0} is considering aligning itself fully with the Authority", city.tag);
                         warning = string.Format("Authority wins in {0} turn{1}", loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
                         //good for Authority, bad for Resistance player
                         isBad = true;

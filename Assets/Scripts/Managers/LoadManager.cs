@@ -1231,20 +1231,18 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Cities - - -
         //
-        Dictionary<int, City> dictOfCities = GameManager.instance.dataScript.GetDictOfCities();
+        Dictionary<string, City> dictOfCities = GameManager.instance.dataScript.GetDictOfCities();
         if (dictOfCities != null)
         {
             counter = 0;
             numArray = arrayOfCities.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 City city = arrayOfCities[i];
-                //set data
-                city.cityID = counter++;
+                counter++;
                 //add to dictionary
                 try
-                { dictOfCities.Add(city.cityID, city); }
+                { dictOfCities.Add(city.name, city); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid City (Null)"); counter--; }
                 catch (ArgumentException)

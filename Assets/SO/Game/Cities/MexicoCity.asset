@@ -9,18 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Mexico City
+  m_Name: MexicoCity
   m_EditorClassIdentifier: 
+  tag: Mexico City
   descriptor: Sprawling slums and barrios
-  baseLoyalty: 3
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: dc3ec61ba88ce664db67fa218372e96e, type: 2}
   iconDistrict: 
   airportDistrict: 
-  portDistrict: 
+  harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: 
   isTestOff: 1
   cityID: 6
   mayor: {fileID: 11400000, guid: 603cd93ccd903aa4f9ae2a4be6c581b3, type: 2}
-  faction: {fileID: 11400000, guid: 6041e87eef1508646ad96be985691ba5, type: 2}
+  faction: {fileID: 0}

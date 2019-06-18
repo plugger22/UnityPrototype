@@ -3466,7 +3466,7 @@ public class AIManager : MonoBehaviour
         //admin
         string msgText = string.Format("Authority implements {0} policy", policyTag);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.dataName, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
-        msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.name, loyaltyChange, policyTag);
+        msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.tag, loyaltyChange, policyTag);
         string reasonText = string.Format("{0} policy", policyTag);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
@@ -3533,7 +3533,7 @@ public class AIManager : MonoBehaviour
         //admin
         string msgText = string.Format("Authority implements {0} policy", task.name0);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, handoutDescription, task.dataName, 0, loyaltyChange);
-        msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.name, loyaltyChange, task.name0);
+        msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.tag, loyaltyChange, task.name0);
         string reasonText = string.Format("{0} policy", task.name0);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
@@ -4706,7 +4706,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("{0} policy is no longer in effect", policyTag);
         string cancelText = string.Format("{0} policy has been cancelled", policyTag);
         GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, cancelText, policyName, 0, policyEffectLoyalty);
-        msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.name, policyEffectLoyalty, policyTag);
+        msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.tag, policyEffectLoyalty, policyTag);
         string reasonText = string.Format("{0} policy being cancelled", policyTag);
         GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, policyEffectLoyalty);
         //reset vars

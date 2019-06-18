@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: New York
+  m_Name: NewYork
   m_EditorClassIdentifier: 
+  tag: New York
   descriptor: Dark and riddled with crime.
-  baseLoyalty: 5
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
   iconDistrict: Liberty Island
@@ -23,4 +23,4 @@ MonoBehaviour:
   isTestOff: 0
   cityID: 4
   mayor: {fileID: 11400000, guid: a6827a088f2e84f44bb86637e69ba42d, type: 2}
-  faction: {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}
+  faction: {fileID: 0}

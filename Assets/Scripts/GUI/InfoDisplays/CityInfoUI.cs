@@ -272,7 +272,7 @@ public class CityInfoUI : MonoBehaviour
             //close any Alert Message
             GameManager.instance.alertScript.CloseAlertUI(true);
             //populate data
-            cityName.text = city.name;
+            cityName.text = city.tag;
             cityArc.text = city.Arc.name;
             cityDescription.text = city.descriptor;
             //district details -> keep in this order (GetDistrictNames initialises data for GetDistrictTotals)

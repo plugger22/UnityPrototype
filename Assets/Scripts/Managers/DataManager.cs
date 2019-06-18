@@ -177,7 +177,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();                         //Key -> msgID, Value -> Message
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();      //Key -> ongoingID, Value -> Ongoing effect details
     private Dictionary<string, Faction> dictOfFactions = new Dictionary<string, Faction>();                     //Key -> faction.name, Value -> Faction
-    private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                                   //Key -> cityID, Value -> City
+    private Dictionary<string, City> dictOfCities = new Dictionary<string, City>();                             //Key -> city.name, Value -> City
     private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();                     //Key -> objectiveID, Value -> Objective
     private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();            //Key -> orgID, Value -> Organisation
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                                 //Key -> mayorID, Value -> Mayor
@@ -5690,7 +5690,7 @@ public class DataManager : MonoBehaviour
         return city;
     }
 
-    public Dictionary<int, City> GetDictOfCities()
+    public Dictionary<string, City> GetDictOfCities()
     { return dictOfCities; }
 
     //
@@ -5708,7 +5708,7 @@ public class DataManager : MonoBehaviour
         if (city != null)
         {
             //City data
-            builder.AppendFormat(" {0}, {1}{2}{3}", city.name, city.country.name, "\n", "\n");
+            builder.AppendFormat(" {0}, {1}{2}{3}", city.tag, city.country.name, "\n", "\n");
             builder.AppendFormat(" Size {0}, {1} districts ({2} rqd min #){3}", city.Arc.size.name, city.Arc.size.numOfNodes, city.Arc.size.minNum, "\n");
             builder.AppendFormat(" Spacing {0} ({1} min distance btwn nodes){2}", city.Arc.spacing.name, city.Arc.spacing.minDistance, "\n");
             builder.AppendFormat(" Connections {0} ({1}% chance of extra conn){2}", city.Arc.connections.name, city.Arc.connections.frequency, "\n");
