@@ -5785,6 +5785,23 @@ public class DataManager : MonoBehaviour
         return listOfRandom;
     }
 
+    /// <summary>
+    /// returns objective, null if not found
+    /// </summary>
+    /// <param name="objectiveName"></param>
+    /// <returns></returns>
+    public Objective GetObjective(string objectiveName)
+    {
+        if (string.IsNullOrEmpty(objectiveName) == false)
+        {
+            if (dictOfObjectives.ContainsKey(objectiveName) == true)
+            { return dictOfObjectives[objectiveName]; }
+        }
+        else { Debug.LogError("Invalid objectiveName (Null)"); }
+        return null;
+    }
+
+
     public Dictionary<string, Objective> GetDictOfObjectives()
     { return dictOfObjectives; }
 

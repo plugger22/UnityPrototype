@@ -185,7 +185,7 @@ public class SaveGameData
 
 #region SaveScenarioData
 /// <summary>
-/// City and Faction Manager.cs data
+/// City, Objective and Faction Manager.cs data
 /// </summary>
 [System.Serializable]
 public class SaveScenarioData
@@ -193,6 +193,9 @@ public class SaveScenarioData
     public int cityLoyalty;
     public int factionSupportAuthority;
     public int factionSupportResistance;
+    //ObjectiveManager.cs
+    public List<string> listOfObjectiveNames = new List<string>();
+    public List<int> listOfObjectiveProgress = new List<int>();
 }
 #endregion
 

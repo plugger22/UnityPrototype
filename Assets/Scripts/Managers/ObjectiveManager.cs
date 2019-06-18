@@ -116,10 +116,11 @@ public class ObjectiveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// clears list before adding new objectives. Only adds up to the maxNumOfObjectives, any extras are ignored.
+    /// clears list before adding new objectives. Only adds up to the maxNumOfObjectives, any extras are ignored. Sets progress of all nominated objectives to zero
+    /// Will reset objective progress meters back to zero by default
     /// </summary>
     /// <param name="listOfSetObjectives"></param>
-    public void SetObjectives(List<Objective> listOfSetObjectives)
+    public void SetObjectives(List<Objective> listOfSetObjectives, bool isZeroProgress = true)
     {
         if (listOfSetObjectives != null)
         {
@@ -129,16 +130,53 @@ public class ObjectiveManager : MonoBehaviour
             {
                 if (objective != null)
                 {
+                    //reset progress to zero
+                    if (isZeroProgress == true)
+                    { objective.progress = 0; }
+                    //add to list
                     listOfObjectives.Add(objective);
                     counter++;
+                    //can't have more than max objectives
                     if (counter >= maxNumOfObjectives)
                     { break; }
                 }
                 else { Debug.LogWarning("Invalid objective (Null) in listOfSetObjectives"); }
             }
+            objectivesCurrent = listOfObjectives.Count;
         }
         else { Debug.LogError("Invalid listOfSetObjectives (Null)"); }
     }
+
+
+    public List<Objective> GetListOfObjectives()
+    { return listOfObjectives; }
+
+
+    /// <summary>
+    /// Checks if objective of name present (ObjectiveSO.name) and, if so, adjusts progress by specified amount with min/max cap 0 and 100). Adjusts relevant Objective star in top widget UI as well.
+    /// </summary>
+    /// <param name="objectiveName"></param>
+    /// <param name="progressAdjust"></param>
+    public void SetObjectiverProgress(string objectiveName, int progressAdjust)
+    {
+        if (string.IsNullOrEmpty(objectiveName) == false)
+        {
+            //present?
+            Objective objective = listOfObjectives.Find(x => x.name == objectiveName);
+            if (objective != null)
+            {
+                objective.progress += progressAdjust;
+                Mathf.Clamp(objective.progress, 0, 100);
+            }
+            else { Debug.LogWarningFormat("Objective \"{0}\" not found in listOfObjectives", objectiveName); }
+        }
+        else { Debug.LogError("Invaiid objectiveName (Null)"); }
+    }
+
+
+    //
+    // - - - UI request methods for top Widget UI tooltip
+    //
 
     /// <summary>
     /// returns colour string based on Player side in format 'Resistance Objectives'
@@ -171,16 +209,16 @@ public class ObjectiveManager : MonoBehaviour
             case 1:
                 if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
                 {
-                    description = string.Format("{0}{1}{2}{3} of <b>{4}{5}</b> {6}Objectives have been completed{7}", colourNeutral, GetCompletedObjectives(),
-                        colourEnd, colourNormal, colourEnd, objectivesTotal, colourNormal, colourEnd);
+                    description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
+                        colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
                 }
                 else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
                 break;
             case 2:
                 if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
                 {
-                    description = string.Format("{0}{1}{2}{3} of <b>{4}{5}</b> {6}Objectives have been completed{7}", colourNeutral, GetCompletedObjectives(),
-                        colourEnd, colourNormal, colourEnd, objectivesTotal, colourNormal, colourEnd);
+                    description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
+                        colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
                 }
                 else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
                 break;
@@ -201,7 +239,7 @@ public class ObjectiveManager : MonoBehaviour
             if (objective != null)
             {
                 if (builder.Length > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0}{1}{2}  ", colourNormal, objective.name, colourEnd);
+                builder.AppendFormat("{0}{1}{2}  ", colourNormal, objective.tag, colourEnd);
                 //objective complete if progress 100% or above
                 if (objective.progress >= 100)
                 { builder.AppendFormat("{0}Done{1}", colourGood, colourEnd); }

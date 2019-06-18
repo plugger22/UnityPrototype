@@ -331,6 +331,22 @@ public class FileManager : MonoBehaviour
         //factionManager.cs
         write.scenarioData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
         write.scenarioData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
+        //objectiveManager.cs
+        List<Objective> tempList = GameManager.instance.objectiveScript.GetListOfObjectives();
+        if (tempList != null)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                Objective objective = tempList[i];
+                if (objective != null)
+                {
+                    write.scenarioData.listOfObjectiveNames.Add(objective.name);
+                    write.scenarioData.listOfObjectiveProgress.Add(objective.progress);
+                }
+                else { Debug.LogWarningFormat("Invalid objective (Null) for tempList[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfObjectives (Null)"); }
     }
     #endregion
 
@@ -1470,6 +1486,21 @@ public class FileManager : MonoBehaviour
         //factionManager.cs
         GameManager.instance.factionScript.LoadSetFactionApproval(globalAuthority, read.scenarioData.factionSupportAuthority);
         GameManager.instance.factionScript.LoadSetFactionApproval(globalResistance, read.scenarioData.factionSupportResistance);
+        //objectiveManager.cs
+        List<Objective> tempList = new List<Objective>();
+        for (int i = 0; i < read.scenarioData.listOfObjectiveNames.Count; i++)
+        {
+            Objective objective = GameManager.instance.dataScript.GetObjective(read.scenarioData.listOfObjectiveNames[i]);
+            if (objective != null)
+            {
+                objective.progress = read.scenarioData.listOfObjectiveProgress[i];
+                tempList.Add(objective);
+            }
+            else { Debug.LogWarningFormat("Invalid objective (Null) for {0}", read.scenarioData.listOfObjectiveNames[i]); }
+        }
+        //update objectives
+        if (tempList.Count > 0)
+        { GameManager.instance.objectiveScript.SetObjectives(tempList, false); }
     }
     #endregion
 
