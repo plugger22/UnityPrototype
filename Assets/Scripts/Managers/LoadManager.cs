@@ -1228,35 +1228,6 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Faction count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
-        /*//
-        // - - - City Arcs - - - (done above as dictionary not required)
-        //
-        Dictionary<int, CityArc> dictOfCityArcs = GameManager.instance.dataScript.GetDictOfCityArcs();
-        if (dictOfCityArcs != null)
-        {
-            counter = 0;
-            numArray = arrayOfCityArcs.Length;
-            for (int i = 0; i < numArray; i++)
-            {
-                //assign a zero based unique ID number
-                CityArc cityArc = arrayOfCityArcs[i];
-                //set data
-                cityArc.cityArcID = counter++;
-                //add to dictionary
-                try
-                { dictOfCityArcs.Add(cityArc.cityArcID, cityArc); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid CityArc (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid CityArc (duplicate) ID \"{0}\" for \"{1}\"", counter, cityArc.name)); counter--; }
-            }
-            numDict = dictOfCityArcs.Count;
-            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfCityArcs has {0} entries{1}", numDict, "\n");
-            Debug.Assert(numDict == counter, "Mismatch on count");
-            Debug.Assert(numDict > 0, "No City Arcs have been imported");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch in CityArc count, array {0}, dict {1}", numArray, numDict));
-        }
-        else { Debug.LogError("Invalid dictOfCityArcs (Null) -> Import failed"); }*/
         //
         // - - - Cities - - -
         //

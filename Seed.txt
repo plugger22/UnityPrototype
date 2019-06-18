@@ -3422,3 +3422,14 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 38508 -> Tuesday, 18 June 2019 11:23 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 24659 -> Tuesday, 18 June 2019 11:27 AM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 36758 -> Tuesday, 18 June 2019 11:27 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25429 -> Tuesday, 18 June 2019 11:28 AM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom

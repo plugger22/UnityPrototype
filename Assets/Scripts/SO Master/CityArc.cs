@@ -10,7 +10,6 @@ public class CityArc : ScriptableObject
 {
     public string descriptor;
 
-
     [Header("City Images")]
     public Sprite sprite;
 
