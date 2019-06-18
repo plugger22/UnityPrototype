@@ -1176,17 +1176,15 @@ public class LoadManager : MonoBehaviour
             numArray = arrayOfSecrets.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Secret secret = arrayOfSecrets[i];
-                //set data
-                secret.secretID = counter++;
+                counter++;
                 //add to dictionary
                 try
                 { dictOfSecrets.Add(secret.name, secret); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Secret (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Secret (duplicate) ID \"{0}\" for \"{1}\"", counter, secret.secretID)); counter--; }
+                { Debug.LogError(string.Format("Invalid Secret (duplicate) \"{0}\" for \"{1}\"", counter, secret.name)); counter--; }
                 //add to list
             }
             numDict = dictOfSecrets.Count;

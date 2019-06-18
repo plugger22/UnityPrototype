@@ -438,11 +438,11 @@ public class SecretManager : MonoBehaviour
                 {
                     if (secret.revealedWho > -1)
                     {
-                        builderTemp.AppendFormat("{0} ID {1}, {2} ({3}), {4} turn {5}, {6}", "\n", secret.secretID, secret.name, secret.tag,
+                        builderTemp.AppendFormat("{0} {1} ({2}), {3} turn {4}, {5}", "\n", secret.name, secret.tag,
                             GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen, secret.status);
                     }
                     else
-                    { builderTemp.AppendFormat("{0} ID {1}, {2} ({3}) {4}", "\n", secret.secretID, secret.name, secret.tag, secret.status ); }
+                    { builderTemp.AppendFormat("{0} {1} ({2}) {3}", "\n", secret.name, secret.tag, secret.status ); }
                 }
             }
             else { builderTemp.AppendFormat("{0} No records", "\n"); }

@@ -398,7 +398,6 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Secret;
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
-            message.data0 = secret.secretID;
             message.dataName = secret.name;
             message.isPublic = true;
             //ItemData
@@ -921,10 +920,7 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.data0 = actor.actorID;
             if (secret != null)
-            {
-                message.data1 = secret.secretID;
-                message.dataName = secret.name;
-            }
+            { message.dataName = secret.name; }
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Blackmail threat resolved", actor.arc.name);
@@ -966,7 +962,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secret.secretID;
             message.dataName = secret.name;
             //ItemData
             ItemData data = new ItemData();
@@ -1013,7 +1008,6 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
-            message.data1 = secret.secretID;
             message.dataName = secret.name;
             //ItemData
             ItemData data = new ItemData();

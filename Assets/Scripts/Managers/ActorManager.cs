@@ -5155,8 +5155,8 @@ public class ActorManager : MonoBehaviour
                                     Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                                     if (isPlayer == true)
                                     {
-                                        string text = string.Format("{0}, {1}, learn SECRET", actor.actorName, actor.arc.name);
-                                        GameManager.instance.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
+                                        string text = string.Format("{0}, {1}, learnt SECRET", actor.actorName, actor.arc.name);
+                                        GameManager.instance.messageScript.GeneralRandom(text, "Learnt Secret", chance, rnd, true);
                                     }
                                     //trait Blabbermouth
                                     if (actor.CheckTraitEffect(actorSecretTellAll) == true)
