@@ -178,7 +178,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();      //Key -> ongoingID, Value -> Ongoing effect details
     private Dictionary<string, Faction> dictOfFactions = new Dictionary<string, Faction>();                     //Key -> faction.name, Value -> Faction
     private Dictionary<string, City> dictOfCities = new Dictionary<string, City>();                             //Key -> city.name, Value -> City
-    private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();                     //Key -> objectiveID, Value -> Objective
+    private Dictionary<string, Objective> dictOfObjectives = new Dictionary<string, Objective>();               //Key -> objective.name, Value -> Objective
     private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();            //Key -> orgID, Value -> Organisation
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                                 //Key -> mayorID, Value -> Mayor
     private Dictionary<string, DecisionAI> dictOfAIDecisions = new Dictionary<string, DecisionAI>();            //Key -> DecisionAI.name, Value -> DecisionAI
@@ -5785,7 +5785,7 @@ public class DataManager : MonoBehaviour
         return listOfRandom;
     }
 
-    public Dictionary<int, Objective> GetDictOfObjectives()
+    public Dictionary<string, Objective> GetDictOfObjectives()
     { return dictOfObjectives; }
 
     //

@@ -19,10 +19,9 @@ public class Mission : ScriptableObject
 
 
     [Header("Objectives")]
-    [Tooltip("Primary objective (one) and optional secondary objectives (2 & 3)")]
-    public Objective objectiveOne;
-    public Objective objectiveTwo;
-    public Objective objectiveThree;
+    [Tooltip("Up to 3 possible objectives (can have more but they are ignored)")]
+    public List<Objective> listOfObjectives;
+
 
     [Header("Targets (Base)")]
     [Tooltip("Number of initial Live (visible) targets at start")]

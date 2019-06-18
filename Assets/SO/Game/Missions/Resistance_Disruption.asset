@@ -15,9 +15,10 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   briefing: 
   devNotes: Test mission
-  objectiveOne: {fileID: 0}
-  objectiveTwo: {fileID: 0}
-  objectiveThree: {fileID: 0}
+  listOfObjectives:
+  - {fileID: 11400000, guid: da26300d7cc8ec34aa0459017fdc2992, type: 2}
+  - {fileID: 11400000, guid: 5dfa5c1eb935a644b9d2ac8c11ca04d7, type: 2}
+  - {fileID: 11400000, guid: 6b32d486a3e705d4e929e8e279570f03, type: 2}
   targetsGenericLive: 3
   targetsGenericActive: 3
   targetBaseCityHall: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}

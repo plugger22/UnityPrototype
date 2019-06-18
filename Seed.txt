@@ -3439,3 +3439,7 @@ City seed 890 -> Arles, France
 
 Dev seed 41734 -> Tuesday, 18 June 2019 2:00 PM
 City seed 890 -> Arles, France
+
+Dev seed 36411 -> Tuesday, 18 June 2019 2:09 PM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia

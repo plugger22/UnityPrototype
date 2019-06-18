@@ -8,11 +8,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / Objective")]
 public class Objective : ScriptableObject
 {
+    [Tooltip("In game name")]
+    public string tag;
     [Tooltip("Short text summary")]
     public string descriptor;
     
     [HideInInspector] public int progress = 0;        //progress of objective, when it gets to 100 objective is complete
-    [HideInInspector] public int objectiveID;         //dynamically assigned by DataManager.cs on import
 
 
 

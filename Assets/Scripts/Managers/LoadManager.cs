@@ -1258,20 +1258,18 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Objectives - - -
         //
-        Dictionary<int, Objective> dictOfObjectives = GameManager.instance.dataScript.GetDictOfObjectives();
+        Dictionary<string, Objective> dictOfObjectives = GameManager.instance.dataScript.GetDictOfObjectives();
         if (dictOfObjectives != null)
         {
             counter = 0;
             numArray = arrayOfObjectives.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Objective objective = arrayOfObjectives[i];
-                //set data
-                objective.objectiveID = counter++;
+                counter++;
                 //add to dictionary
                 try
-                { dictOfObjectives.Add(objective.objectiveID, objective); }
+                { dictOfObjectives.Add(objective.name, objective); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Objective (Null)"); counter--; }
                 catch (ArgumentException)

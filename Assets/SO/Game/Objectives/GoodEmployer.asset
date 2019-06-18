@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a05881969d4b0394abd7b1d8c1afc495, type: 3}
-  m_Name: Good Employer
+  m_Name: GoodEmployer
   m_EditorClassIdentifier: 
+  tag: Good Employer
   descriptor: Don't fire anyone
   progress: 0
-  objectiveID: 0

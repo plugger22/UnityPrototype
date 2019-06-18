@@ -66,8 +66,9 @@ public class ObjectiveManager : MonoBehaviour
     #region SubInitialiseObjectives
     private void SubInitialiseObjectives()
     {
-        //Get objectives -> Placeholder
-        listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(maxNumOfObjectives));
+        /*//Get objectives -> Placeholder
+        listOfObjectives.Clear();
+        listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(maxNumOfObjectives));*/
         objectivesTotal = maxNumOfObjectives;
     }
     #endregion
@@ -112,6 +113,31 @@ public class ObjectiveManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
+    }
+
+    /// <summary>
+    /// clears list before adding new objectives. Only adds up to the maxNumOfObjectives, any extras are ignored.
+    /// </summary>
+    /// <param name="listOfSetObjectives"></param>
+    public void SetObjectives(List<Objective> listOfSetObjectives)
+    {
+        if (listOfSetObjectives != null)
+        {
+            int counter = 0;
+            listOfObjectives.Clear();
+            foreach(Objective objective in listOfSetObjectives)
+            {
+                if (objective != null)
+                {
+                    listOfObjectives.Add(objective);
+                    counter++;
+                    if (counter >= maxNumOfObjectives)
+                    { break; }
+                }
+                else { Debug.LogWarning("Invalid objective (Null) in listOfSetObjectives"); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfSetObjectives (Null)"); }
     }
 
     /// <summary>

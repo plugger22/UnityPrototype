@@ -37,6 +37,12 @@ public class MissionManager : MonoBehaviour
     private void SubInitialiseAll()
     {
         Debug.Assert(mission != null, "Invalid Mission (Null)");
+        //Assign Objectives if present, if not use random objectives
+        List<Objective> listOfObjectives = new List<Objective>();
+        if (mission.listOfObjectives.Count > 0)
+        { listOfObjectives.AddRange(mission.listOfObjectives); }
+        else { listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(GameManager.instance.objectiveScript.maxNumOfObjectives)); }
+        GameManager.instance.objectiveScript.SetObjectives(listOfObjectives);
         //initialise and assign targets
         GameManager.instance.targetScript.Initialise();
         GameManager.instance.targetScript.AssignTargets(mission);
