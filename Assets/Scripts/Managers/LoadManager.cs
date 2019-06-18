@@ -1195,26 +1195,24 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfSecrets (Null) -> Import failed"); }
         //
-        // - - - Factions - - -
+        // - - - Factions - - - (done higher as no dictionary requirement)
         //
-        Dictionary<int, Faction> dictOfFactions = GameManager.instance.dataScript.GetDictOfFactions();
+        Dictionary<string, Faction> dictOfFactions = GameManager.instance.dataScript.GetDictOfFactions();
         if (dictOfFactions != null)
         {
             counter = 0;
             numArray = arrayOfFactions.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Faction faction = arrayOfFactions[i];
-                //set data
-                faction.factionID = counter++;
+                counter++;
                 //add to dictionary
                 try
-                { dictOfFactions.Add(faction.factionID, faction); }
+                { dictOfFactions.Add(faction.name, faction); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Faction (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Faction (duplicate) ID \"{0}\" for \"{1}\"", counter, faction.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid Faction (duplicate) \"{0}\"", counter, faction.name)); counter--; }
             }
             numDict = dictOfFactions.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfFactions has {0} entries{1}", numDict, "\n");

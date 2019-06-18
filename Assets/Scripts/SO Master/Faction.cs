@@ -8,14 +8,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / Faction")]
 public class Faction : ScriptableObject
 {
+    [Tooltip("In game descriptor")]
+    public string tag;
+    [Tooltip("Tooltip descriptor")]
     public string descriptor;
+    [Tooltip("There is only a single faction for each side, specify side here")]
     public GlobalSide side;
-
     [Tooltip("Pictorial representation of faction (152 x 160 png)")]
     public Sprite sprite;
 
     
-    [HideInInspector] public int factionID;         //dynamically assigned by DataManager.cs on import
 
     /*private Trait trait;
     private List<int> listOfTraitEffects = new List<int>();*/             //list of all traitEffect.teffID's
@@ -23,6 +25,9 @@ public class Faction : ScriptableObject
     private void OnEnable()
     {
         Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        Debug.Assert(tag != null, "Invalid tag (Null)");
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(descriptor != null, "Invalid descriptor (Null)");
     }
 
     //

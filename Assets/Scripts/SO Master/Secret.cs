@@ -23,9 +23,7 @@ public class Secret : ScriptableObject
     public SecretType type;
 
     #region Save Data Compatible
-    /*[HideInInspector] public SecretStatus status;           //SO enum -> Inactive 0, Active 1, Revealed 2, Deleted 3*/
     [HideInInspector] public gameAPI.SecretStatus status;           //enum as dynamic data 
-    /*[HideInInspector] public int secretID;                  //dynamically assigned by DataManager.cs on import*/
     [HideInInspector] public int gainedWhen;                //turn player gains secret
     [HideInInspector] public int revealedWho;               //actorID of person who revealed the secret
     [HideInInspector] public int revealedWhen;              //turn revealed

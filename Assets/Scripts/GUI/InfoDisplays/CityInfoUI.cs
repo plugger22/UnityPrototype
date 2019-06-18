@@ -287,13 +287,6 @@ public class CityInfoUI : MonoBehaviour
                 else { mayorTrait.text = "Unknown"; }
             }
             else { mayorName.text = "Unknown"; }
-            /*if (city.faction != null)
-            {
-                factionName.text = city.faction.name;
-                if (city.faction.GetTrait() != null)
-                { factionTrait.text = city.faction.GetTrait().tagFormatted; }
-                else { factionTrait.text = "Unknown"; }
-            else { factionName.text = "Unknown"; }*/
             factionName.text = GameManager.instance.factionScript.GetFactionName(globalAuthority, false);
             factionTrait.text = GameManager.instance.factionScript.GetFactionDescription(globalAuthority);
             organisations.text = GameManager.instance.cityScript.GetNumOfOrganisations();

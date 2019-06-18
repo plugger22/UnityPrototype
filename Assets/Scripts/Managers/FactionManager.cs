@@ -141,11 +141,13 @@ public class FactionManager : MonoBehaviour
     private void SubInitialiseAll()
     {
         //Authority faction 
-        factionAuthority = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideAuthority);
-        Debug.Assert(factionAuthority != null, "Invalid factionAuthority (Null)");
+        factionAuthority = GameManager.instance.dataScript.GetFaction(GameManager.instance.globalScript.sideAuthority);
+        if (factionAuthority == null)
+        { Debug.LogError("Invalid factionAuthority (Null)"); }
         //Resistance faction
-        factionResistance = GameManager.instance.dataScript.GetRandomFaction(GameManager.instance.globalScript.sideResistance);
-        Debug.Assert(factionResistance != null, "Invalid factionResistance (Null)");
+        factionResistance = GameManager.instance.dataScript.GetFaction(GameManager.instance.globalScript.sideResistance);
+        if (factionResistance == null)
+        { Debug.LogError("Invalid factionResistance (Null)"); }
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
         int approval = GameManager.instance.campaignScript.scenario.approvalStartAuthorityHQ;
         if (approval == 0) { approval = Random.Range(2, 9); }
@@ -418,10 +420,10 @@ public class FactionManager : MonoBehaviour
                 switch (side.level)
                 {
                     case 1:
-                        description = string.Format("<b><size=115%>{0}</size></b>", factionAuthority.name);
+                        description = string.Format("<b><size=115%>{0}</size></b>", factionAuthority.tag);
                         break;
                     case 2:
-                        description = string.Format("<b><size=115%>{0}</size></b>", factionResistance.name);
+                        description = string.Format("<b><size=115%>{0}</size></b>", factionResistance.tag);
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));

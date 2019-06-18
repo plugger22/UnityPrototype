@@ -176,7 +176,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();                         //Key -> msgID, Value -> Message
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();      //Key -> ongoingID, Value -> Ongoing effect details
-    private Dictionary<int, Faction> dictOfFactions = new Dictionary<int, Faction>();                           //Key -> factionID, Value -> Faction
+    private Dictionary<string, Faction> dictOfFactions = new Dictionary<string, Faction>();                     //Key -> faction.name, Value -> Faction
     private Dictionary<int, City> dictOfCities = new Dictionary<int, City>();                                   //Key -> cityID, Value -> City
     private Dictionary<int, CityArc> dictOfCityArcs = new Dictionary<int, CityArc>();                           //Key -> cityArcID, Value -> CityArc
     private Dictionary<int, Objective> dictOfObjectives = new Dictionary<int, Objective>();                     //Key -> objectiveID, Value -> Objective
@@ -5640,33 +5640,29 @@ public class DataManager : MonoBehaviour
     //
 
     /// <summary>
-    /// returns a random faction for a side, null if a problem
+    /// returns faction for a side, null if a problem (NOTE: only one faction should be present for each side, if more present by mistake only first found is returned)
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Faction GetRandomFaction(GlobalSide sideRequired)
+    public Faction GetFaction(GlobalSide sideRequired)
     {
         Faction factionReturn = null;
-        List<Faction> listOfFactions = new List<Faction>();
-        switch (sideRequired.name)
+        if (sideRequired != null)
         {
-            case "Authority":
-            case "Resistance":
-                IEnumerable<Faction> factions =
-                    from faction in dictOfFactions
-                    where faction.Value.side.name.Equals(sideRequired.name, StringComparison.Ordinal) == true
-                    select faction.Value;
-                listOfFactions = factions.ToList();
-                factionReturn = listOfFactions[Random.Range(0, listOfFactions.Count)];
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", sideRequired));
-                break;
+            foreach (var faction in dictOfFactions)
+            {
+                if (faction.Value.side.level == sideRequired.level)
+                {
+                    factionReturn = faction.Value;
+                    break;
+                }
+            }
         }
+        else { Debug.LogError("Invalid sideRequired (Null)"); }
         return factionReturn;
     }
 
-    public Dictionary<int, Faction> GetDictOfFactions()
+    public Dictionary<string, Faction> GetDictOfFactions()
     { return dictOfFactions; }
 
     //

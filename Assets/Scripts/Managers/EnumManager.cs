@@ -141,7 +141,7 @@
         StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
         TargetAttempts, TargetSuccesses,
-        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts,
+        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret,
         NodeCrisis, NodeCrisisExplodes
     }
 

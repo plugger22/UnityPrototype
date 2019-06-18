@@ -5158,6 +5158,7 @@ public class ActorManager : MonoBehaviour
                                         string text = string.Format("{0}, {1}, learnt SECRET", actor.actorName, actor.arc.name);
                                         GameManager.instance.messageScript.GeneralRandom(text, "Learnt Secret", chance, rnd, true);
                                     }
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.ActorLearntSecret);
                                     //trait Blabbermouth
                                     if (actor.CheckTraitEffect(actorSecretTellAll) == true)
                                     {
@@ -5221,6 +5222,7 @@ public class ActorManager : MonoBehaviour
                             actor.AddSecret(secret);
                             secret.AddActor(actor.actorID);
                             numTold++;
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.ActorLearntSecret);
                         }
                     }
                 }
