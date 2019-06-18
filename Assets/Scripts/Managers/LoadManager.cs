@@ -1141,24 +1141,22 @@ public class LoadManager : MonoBehaviour
         //
         // - - - ActorConflicts - - -
         //
-        Dictionary<int, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
+        Dictionary<string, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
         if (dictOfActorConflicts != null)
         {
             counter = 0;
             numArray = arrayOfActorConflicts.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 ActorConflict conflict = arrayOfActorConflicts[i];
-                //set data
-                conflict.conflictID = counter++;
+                counter++;
                 //add to dictionary
                 try
-                { dictOfActorConflicts.Add(conflict.conflictID, conflict); }
+                { dictOfActorConflicts.Add(conflict.name, conflict); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid ActorConflict (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) ID \"{0}\" for \"{1}\"", counter, conflict.conflictID)); counter--; }
+                { Debug.LogError(string.Format("Invalid ActorConflict (duplicate) \"{0}\" for \"{1}\"", counter, conflict.name)); counter--; }
             }
             numDict = dictOfActorConflicts.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActorConflicts has {0} entries{1}", numDict, "\n");

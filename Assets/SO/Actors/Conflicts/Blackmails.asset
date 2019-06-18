@@ -9,17 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3daa61d489b7f6b4180b08b86754f456, type: 3}
-  m_Name: Actor Poisons
+  m_Name: Blackmails
   m_EditorClassIdentifier: 
-  description: Actor poisons your relationships with others
-  threatText: Poison your relationships with others
-  outcomeText: poisons your other relationships
+  description: Actor threatens to reveal a Player related Secret
+  threatText: Reveal one of your Secrets
+  outcomeText: threatens to reveal your secret
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  chance: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: ba1a9b8178a58d64ab3ea2e5103a7a87, type: 2}
+  - {fileID: 11400000, guid: dae35e80e83b6b24687c68f6103c188f, type: 2}
+  - {fileID: 11400000, guid: 9c2f0884f99c4014493ccf5936c54665, type: 2}
+  - {fileID: 11400000, guid: 7fab68a4454dcc34d96999b40e05ffc2, type: 2}
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  effect: {fileID: 11400000, guid: 4da3d34e0bfbaff43a8f0c78e754f041, type: 2}
+  effect: {fileID: 11400000, guid: de25f0e50afa19a4cb79a6af84e1f7c7, type: 2}
   isTestOff: 0
-  conflictID: 7
+  conflictID: 0

@@ -37,6 +37,9 @@ public class StatisticManager : MonoBehaviour
     #region Initialise SubMethods
 
     #region SubInitialiseSessionStart
+    /// <summary>
+    /// loops statType enum and initialises all statistics
+    /// </summary>
     private void SubInitialiseSessionStart()
     {
         //instantiate statistic trackers if a new sessession

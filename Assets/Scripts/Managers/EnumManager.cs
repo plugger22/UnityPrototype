@@ -138,10 +138,10 @@
     //
     public enum StatType                                //NOTE -> No 'None' or 'Count' (code loops enum and can't handle either)
     {
-        StressLeaveResistance, StressLeaveAuthority,        //tally of all stress leave taken for a side (player and actors)
+        StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
         TargetAttempts, TargetSuccesses,
-        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited,
+        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts,
         NodeCrisis, NodeCrisisExplodes
     }
 

@@ -389,17 +389,14 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="reason"></param>
     /// <returns></returns>
-    public string GetActorConflictDetails(Actor actor, int conflictID, string reasonNoConflict)
+    public string GetActorConflictDetails(Actor actor, ActorConflict conflict, string reasonNoConflict)
     {
         StringBuilder builder = new StringBuilder();
-        if (conflictID > -1)
+        if (conflict != null)
         {
             //CONFLICT
             builder.AppendFormat("{0}, {1}{2}{3} has a{4}Relationship Conflict with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
-            ActorConflict conflict = GameManager.instance.dataScript.GetActorConflict(conflictID);
-            if (conflict != null)
-            {  builder.AppendFormat("{0} threatens to{1}{2}<b>{3}</b>{4}", actor.actorName, "\n", colourBad, conflict.threatText, colourEnd); }
-            else { Debug.LogWarningFormat("Invalid actorConflict (Null) for conflictID {0}", conflictID); }
+            builder.AppendFormat("{0} threatens to{1}{2}<b>{3}</b>{4}", actor.actorName, "\n", colourBad, conflict.threatText, colourEnd);
         }
         else
         {

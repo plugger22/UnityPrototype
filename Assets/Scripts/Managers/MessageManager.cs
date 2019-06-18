@@ -1089,7 +1089,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="conflictID"></param>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Message ActorConflict(string text, Actor actor, int conflictID = -1, string reasonNoConflict = null)
+    public Message ActorConflict(string text, Actor actor, ActorConflict conflict = null, string reasonNoConflict = null)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -1100,12 +1100,12 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Actor_Conflict;
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
-            message.data1 = conflictID;
+            if (conflict != null) { message.dataName = conflict.name; }
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Relationship Conflict", actor.arc.name);
             data.topText = "Relationship Conflict";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorConflictDetails(actor, conflictID, reasonNoConflict);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorConflictDetails(actor, conflict, reasonNoConflict);
             data.priority = ItemPriority.High;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;

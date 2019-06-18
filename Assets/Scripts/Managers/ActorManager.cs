@@ -3590,7 +3590,7 @@ public class ActorManager : MonoBehaviour
                 
                 GlobalType typeGood = GameManager.instance.globalScript.typeGood;
                 List<ActorConflict> listSelectionPool = new List<ActorConflict>();
-                Dictionary<int, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
+                Dictionary<string, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
                 if (dictOfActorConflicts != null)
                 {
                     if (dictOfActorConflicts.Count > 0)
@@ -3697,7 +3697,7 @@ public class ActorManager : MonoBehaviour
                             //
                             switch (actorConflict.name)
                             {
-                                case "Actor Resigns":
+                                case "Resigns":
                                     if (actor.CheckTraitEffect(actorNeverResigns) == true)
                                     {
                                         outputMsg = string.Format("{0}does NOT Resign{1}", colourGood, colourEnd);
@@ -3722,17 +3722,18 @@ public class ActorManager : MonoBehaviour
                                     }
                                     break;
                             }
-                            //Implement effect
+                            //Statistics (counts conflict regardless of outcome of conflict)
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
+                            //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
                                 //data packages
                                 effectReturn = new EffectDataReturn();
                                 EffectDataInput effectInput = new EffectDataInput();
                                 effectInput.originText = "Relationship Conflict";
-
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1})", actor.arc.name, threatMsg);
-                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict.conflictID);
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor, actorConflict);
                                 //
                                 // - - - Effect - - -
                                 //
@@ -3781,7 +3782,7 @@ public class ActorManager : MonoBehaviour
                                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                                 //message
                                 string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                                GameManager.instance.messageScript.ActorConflict(msgText, actor, -1, "DO NOTHING");
+                                GameManager.instance.messageScript.ActorConflict(msgText, actor, null, "DO NOTHING");
                             }
                         }
                         else
@@ -3791,7 +3792,7 @@ public class ActorManager : MonoBehaviour
                             builder.AppendFormat("{0}{1} Nothing happens{2}", "\n", colourGood, colourEnd);
                             //message
                             string msgText = string.Format("{0} Relationship Conflict ({1}Nothing Happens{2})", actor.arc.name, colourGood, colourEnd);
-                            GameManager.instance.messageScript.ActorConflict(msgText, actor, -1, "DO NOTHING");
+                            GameManager.instance.messageScript.ActorConflict(msgText, actor, null, "DO NOTHING");
                         }
                     }
                     else { Debug.LogWarning("No records in dictOfActorConflicts"); }
@@ -3806,7 +3807,7 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}Nothing happens{2}", "\n", colourGood, colourEnd);
                 //message
                 string msgText = string.Format("{0} Relationship Conflict (Nothing Happens)", actor.arc.name, colourGood, colourEnd);
-                GameManager.instance.messageScript.ActorConflict(msgText, actor, -1, "Do Nothing because they are a TEAM PLAYER");
+                GameManager.instance.messageScript.ActorConflict(msgText, actor, null, "Do Nothing because they are a TEAM PLAYER");
             }
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }

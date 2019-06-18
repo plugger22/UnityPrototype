@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3daa61d489b7f6b4180b08b86754f456, type: 3}
-  m_Name: Actor Stressed
+  m_Name: Kills
   m_EditorClassIdentifier: 
-  description: Actor become Stressed
-  threatText: Collapse in a ball of stress
-  outcomeText: tears their hair out in frustration
+  description: Actor kills random actor
+  threatText: Kill somebody. Anybody
+  outcomeText: kills in a fit of rage
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  chance: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
   who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 1cc335ecd9c738f4ab5aef7fd5a9557c, type: 2}
+  - {fileID: 11400000, guid: 136d5123dfdfe4f4699bdd94bdc445e2, type: 2}
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  effect: {fileID: 11400000, guid: 87d2fedea6a715c49bd7002173e8a566, type: 2}
+  effect: {fileID: 11400000, guid: a4ca57f88fc59a2418ba0d04163879ff, type: 2}
   isTestOff: 0
-  conflictID: 10
+  conflictID: 2

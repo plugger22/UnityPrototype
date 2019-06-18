@@ -29,6 +29,5 @@ public class ActorConflict : ScriptableObject
     [Tooltip("Used for testing purposes only. If ON the conflict is ignored (fails criteria check). Leave as OFF")]
     public bool isTestOff = false;
 
-    [HideInInspector] public int conflictID;
-
+  
 }

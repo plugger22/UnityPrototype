@@ -183,7 +183,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Organisation> dictOfOrganisations = new Dictionary<int, Organisation>();            //Key -> orgID, Value -> Organisation
     private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                                 //Key -> mayorID, Value -> Mayor
     private Dictionary<string, DecisionAI> dictOfAIDecisions = new Dictionary<string, DecisionAI>();            //Key -> DecisionAI.name, Value -> DecisionAI
-    private Dictionary<int, ActorConflict> dictOfActorConflicts = new Dictionary<int, ActorConflict>();         //Key -> actBreakID, Value -> ActorBreakdown
+    private Dictionary<string, ActorConflict> dictOfActorConflicts = new Dictionary<string, ActorConflict>();   //Key -> actorConflict.name, Value -> ActorBreakdown
     private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
     private Dictionary<string, NodeCrisis> dictOfNodeCrisis = new Dictionary<string, NodeCrisis>();                   //Key -> nodeCrisisID, Value -> NodeCrisis
@@ -779,7 +779,7 @@ public class DataManager : MonoBehaviour
     // - - -  Actor Breakdowns
     //
 
-    public Dictionary<int, ActorConflict> GetDictOfActorConflicts()
+    public Dictionary<string, ActorConflict> GetDictOfActorConflicts()
     { return dictOfActorConflicts; }
 
     /// <summary>
@@ -787,11 +787,15 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorArcID"></param>
     /// <returns></returns>
-    public ActorConflict GetActorConflict(int conflictID)
+    public ActorConflict GetActorConflict(string conflictName)
     {
-        ActorConflict conflict = null;
-        if (dictOfActorConflicts.TryGetValue(conflictID, out conflict))
-        { return conflict; }
+        if (string.IsNullOrEmpty(conflictName) == false)
+        {
+            ActorConflict conflict = null;
+            if (dictOfActorConflicts.TryGetValue(conflictName, out conflict))
+            { return conflict; }
+        }
+        else { Debug.LogError("Invalid conflictName (Null or Empty)"); }
         return null;
     }
 
