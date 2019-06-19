@@ -769,7 +769,7 @@ public class GameManager : MonoBehaviour
     {
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
-        //remove redundant events
+        //remove redundant events (just in case, shouldn't be any)
         EventManager.instance.RemoveRedundancies();
         //start sequence
         if (isPerformanceLog == false)

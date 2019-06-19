@@ -3528,3 +3528,52 @@ City seed 5678 -> London, United Kingdom
 Dev seed 50620 -> Wednesday, 19 June 2019 12:25 PM
 City seed 5678 -> London, United Kingdom
 City seed 890 -> Arles, France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 1:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 890 -> Arles, France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 1:34 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 2:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 2:04 PM
+City seed 890 -> Arles, France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 2:09 PM
+City seed 890 -> Arles, France
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+
+Dev seed 50620 -> Wednesday, 19 June 2019 2:11 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 46713 -> Wednesday, 19 June 2019 2:14 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:504)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:253)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+OptionManager.OnDisable () (at Assets/Scripts/Managers/OptionManager.cs:50)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 17041 -> Wednesday, 19 June 2019 2:26 PM
+ERROR Invalid editor window UnityEditor.ConsoleWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	
+Dev seed 27186 -> Wednesday, 19 June 2019 2:26 PM
+ERROR Invalid editor window UnityEditor.ConsoleWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	

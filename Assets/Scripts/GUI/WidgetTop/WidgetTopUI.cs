@@ -96,14 +96,13 @@ public class WidgetTopUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.StopSecurityFlash, OnEvent, "WidgetTopUI");
-
+        /*EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");*/
     }
     #endregion
 
@@ -124,10 +123,10 @@ public class WidgetTopUI : MonoBehaviour
         tempColor.a = 0.0f;
         flashRedOuter.color = tempColor;
         isFading = false;
-        /*//dim down objective stars -> Done in ObjectiveManager.cs -> SetObjectives
+        // dim down objective stars to default values -> Otherwise done in ObjectiveManager.cs -> SetObjectives / UpdateObjectiveProgress
         SetStar(10f, AlignHorizontal.Left);
         SetStar(10f, AlignHorizontal.Centre);
-        SetStar(10f, AlignHorizontal.Right);*/
+        SetStar(10f, AlignHorizontal.Right);
     }
     #endregion
 
@@ -171,7 +170,7 @@ public class WidgetTopUI : MonoBehaviour
             case EventType.ChangeFactionBar:
                 SetFactionBar((int)Param);
                 break;
-            case EventType.ChangeStarLeft:
+            /*case EventType.ChangeStarLeft: -> Done directly by ObjectiveManager.cs methods, issues with events at level start (sequencing)
                 SetStar((float)Param, AlignHorizontal.Left);
                 break;
             case EventType.ChangeStarMiddle:
@@ -179,7 +178,7 @@ public class WidgetTopUI : MonoBehaviour
                 break;
             case EventType.ChangeStarRight:
                 SetStar((float)Param, AlignHorizontal.Right);
-                break;
+                break;*/
             case EventType.StartSecurityFlash:
                 SetSecurityFlasher(true);
                 break;
@@ -194,7 +193,18 @@ public class WidgetTopUI : MonoBehaviour
 
 
     /// <summary>
-    /// Set city loyalty bar colour for the appropriate side
+    /// Changes Turn number display
+    /// </summary>
+    /// <param name="points"></param>
+    private void SetTurn(int turn)
+    {
+        Debug.Assert(turn > -1, "Invalid Turn number");
+        turnNumber.text = Convert.ToString(turn);
+    }
+
+
+    /// <summary>
+    /// Set city loyalty, faction bar colour & action points for the appropriate side
     /// </summary>
     /// <param name="side"></param>
     private void SetSides(GlobalSide side)
@@ -202,12 +212,14 @@ public class WidgetTopUI : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         SetCityBar(GameManager.instance.cityScript.CityLoyalty);
         SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
-        switch(side.level)
+        switch (side.level)
         {
             case 1:
+                //authority
                 SetFactionBar(GameManager.instance.factionScript.ApprovalAuthority);
                 break;
             case 2:
+                //resistance
                 SetFactionBar(GameManager.instance.factionScript.ApprovalResistance);
                 break;
         }
@@ -224,15 +236,6 @@ public class WidgetTopUI : MonoBehaviour
         actionPoints.text = Convert.ToString(points);
     }
 
-    /// <summary>
-    /// Changes Turn number display
-    /// </summary>
-    /// <param name="points"></param>
-    private void SetTurn(int turn)
-    {
-        Debug.Assert(turn > -1, "Invalid Turn number");
-        turnNumber.text = Convert.ToString(turn);
-    }
 
     /// <summary>
     /// Sets length and colour of city bar based on size (0 to 10)
@@ -249,9 +252,11 @@ public class WidgetTopUI : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
             case 1:
+                //authority
                 barCity.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
                 break;
             case 2:
+                //resistance
                 barCity.color = new Color(2.0f * factor, 1.0f * (1 - factor), 0);
                 break;
         }

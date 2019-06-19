@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / ObjectiveTarget")]
 public class ObjectiveTarget : ScriptableObject
 {
-    [Tooltip("When this target is complete (eg. status Done, doesn't matter if it has ongoing effects) the objective has it's progress adjusted")]
+    [Tooltip("When this target is complete (eg. status.OUTSTANDING, doesn't matter if it has ongoing effects) the objective has it's progress adjusted")]
     public Target target;
     public Objective objective;
     [Tooltip("Adjustment to objective progress, could be +/-, with progress on a % scale, 0 to 100")]

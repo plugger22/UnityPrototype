@@ -66,9 +66,6 @@ public class ObjectiveManager : MonoBehaviour
     #region SubInitialiseObjectives
     private void SubInitialiseObjectives()
     {
-        /*//Get objectives -> Placeholder
-        listOfObjectives.Clear();
-        listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(maxNumOfObjectives));*/
         objectivesTotal = maxNumOfObjectives;
     }
     #endregion
@@ -117,13 +114,14 @@ public class ObjectiveManager : MonoBehaviour
 
     /// <summary>
     /// clears list before adding new objectives. Only adds up to the maxNumOfObjectives, any extras are ignored. Sets progress of all nominated objectives to zero
-    /// Will reset objective progress meters back to zero by default
+    /// Will reset objective progress meters back to zero by default. Set's TopWidgetStars
     /// </summary>
     /// <param name="listOfSetObjectives"></param>
     public void SetObjectives(List<Objective> listOfSetObjectives, bool isZeroProgress = true)
     {
         if (listOfSetObjectives != null)
-        {
+        {        
+            //loop objectives
             int counter = 0;
             listOfObjectives.Clear();
             foreach(Objective objective in listOfSetObjectives)
@@ -170,7 +168,7 @@ public class ObjectiveManager : MonoBehaviour
             {
                 objective.progress += progressAdjust;
                 objective.progress = Mathf.Clamp(objective.progress, 0, 100);
-                Debug.LogFormat("[Obj] ObjectiveManager.cs -> SetObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
+                Debug.LogFormat("[Obj] ObjectiveManager.cs -> UpdateObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
                 //set appropriate star opacity in top widget UI
                 int index = listOfObjectives.FindIndex(x => x.name == objectiveName);
                 //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
@@ -214,7 +212,7 @@ public class ObjectiveManager : MonoBehaviour
 
     /// <summary>
     /// checks whether a successfully completed target has a progress effect on a current objective
-    /// called by TargetManager.cs -> SetTargetDone automatically whenever a target is 'done' (doesn't matter if there are ongoing effects and target is outstanding)
+    /// called by TargetManager.cs -> SetTargetDone automatically whenever a target is status.OUTSTANDING (doesn't matter if there are ongoing effects and target is outstanding)
     /// </summary>
     /// <param name="targetName"></param>
     public void CheckObjectiveTarget(string targetName)

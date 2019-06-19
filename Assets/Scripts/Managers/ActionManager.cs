@@ -2282,6 +2282,8 @@ public class ActionManager : MonoBehaviour
                     isSuccessful = true;
                     GameManager.instance.dataScript.StatisticIncrement(StatType.TargetSuccesses);
                     target.turnSuccess = GameManager.instance.turnScript.Turn;
+                    //objective
+                    GameManager.instance.objectiveScript.CheckObjectiveTarget(target.name);
                     //Ongoing effects then target moved to completed pool
                     if (target.OngoingEffect != null)
                     {
@@ -2289,9 +2291,11 @@ public class ActionManager : MonoBehaviour
                         GameManager.instance.dataScript.AddTargetToPool(target, Status.Outstanding);
                         target.targetStatus = Status.Outstanding;
                     }
-                    //NO ongoing effects -> target  done with. 
                     else
-                    { GameManager.instance.targetScript.SetTargetDone(target, node); }
+                    {
+                        //NO ongoing effects -> target  done with. 
+                        GameManager.instance.targetScript.SetTargetDone(target, node);
+                    }
                     text = string.Format("Target \"{0}\" successfully attempted", target.targetName, "\n");
                     GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
                     //random roll

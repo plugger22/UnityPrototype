@@ -1623,11 +1623,6 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogError("Invalid node (Null)"); isSuccess = false; }
         if (isSuccess == false)
         { Debug.LogWarningFormat("TargetManager.cs -> SetTargetDone: Target \"{0}\", DONE admin FAILED", target.targetName); }
-        else
-        {
-            //Objectives
-            GameManager.instance.objectiveScript.CheckObjectiveTarget(target.name);
-        }
         return isSuccess;
     }
 

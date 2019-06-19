@@ -52,9 +52,9 @@ public enum EventType
     ChangeActionPoints,
     ChangeCityBar,
     ChangeFactionBar,
-    ChangeStarLeft,
+    /*ChangeStarLeft,
     ChangeStarMiddle,
-    ChangeStarRight,
+    ChangeStarRight,*/
     ChangeTurn,
     StartSecurityFlash,
     StopSecurityFlash,
