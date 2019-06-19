@@ -135,6 +135,9 @@ public class ObjectiveManager : MonoBehaviour
                     { objective.progress = 0; }
                     //add to list
                     listOfObjectives.Add(objective);
+                    Debug.LogFormat("[Obj] ObjectiveManager.cs -> SetObjectives: {0} progress {1}{2}", objective.tag, objective.progress, "\n");
+                    //objectives correspond to widget stars (top UI) depending on their index position in the list ([0] is first, [1] is second, etc.)
+                    SetObjectiveStar(counter, objective.progress);
                     counter++;
                     //can't have more than max objectives
                     if (counter >= maxNumOfObjectives)
@@ -157,7 +160,7 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     /// <param name="objectiveName"></param>
     /// <param name="progressAdjust"></param>
-    public void SetObjectiverProgress(string objectiveName, int progressAdjust)
+    public void UpdateObjectiveProgress(string objectiveName, int progressAdjust)
     {
         if (string.IsNullOrEmpty(objectiveName) == false)
         {
@@ -167,31 +170,46 @@ public class ObjectiveManager : MonoBehaviour
             {
                 objective.progress += progressAdjust;
                 Mathf.Clamp(objective.progress, 0, 100);
+                Debug.LogFormat("[Obj] ObjectiveManager.cs -> SetObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
                 //set appropriate star opacity in top widget UI
                 int index = listOfObjectives.FindIndex(x => x.name == objectiveName);
                 //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
-                switch (index)
-                {
-                    case 0:
-                        //left hand, first star/objective
-                        EventManager.instance.PostNotification(EventType.ChangeStarLeft, this, objective.progress, "ObjectiveManager.cs -> SetObjectiveProgress");
-                        break;
-                    case 1:
-                        //middle, second star/objective
-                        EventManager.instance.PostNotification(EventType.ChangeStarMiddle, this, objective.progress, "ObjectiveManager.cs -> SetObjectiveProgress");
-                        break;
-                    case 2:
-                        //right hand, third star/objective
-                        EventManager.instance.PostNotification(EventType.ChangeStarRight, this, objective.progress, "ObjectiveManager.cs -> SetObjectiveProgress");
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Index not valid, {0}, for objective {1}", index, objectiveName);
-                        break;
-                }
+                SetObjectiveStar(index, objective.progress);
             }
             else { Debug.LogWarningFormat("Objective \"{0}\" not found in listOfObjectives", objectiveName); }
         }
         else { Debug.LogError("Invaiid objectiveName (Null)"); }
+    }
+
+    /// <summary>
+    /// SubMethod to set objective stars to an opacity level corresponding to objective progress (% scale) with a default 10% value for 0 progress (so star can be seen as empty)
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="opacity"></param>
+    private void SetObjectiveStar(int index, int progress)
+    {
+        float opacity = progress;
+        //min cap 10% in order to keep star faintly visibile in background)
+        Mathf.Clamp(opacity, 10.0f, 100.0f);
+        //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
+        switch (index)
+        {
+            case 0:
+                //left hand, first star/objective
+                EventManager.instance.PostNotification(EventType.ChangeStarLeft, this, opacity, "ObjectiveManager.cs -> SetObjectiveProgress");
+                break;
+            case 1:
+                //middle, second star/objective
+                EventManager.instance.PostNotification(EventType.ChangeStarMiddle, this, opacity, "ObjectiveManager.cs -> SetObjectiveProgress");
+                break;
+            case 2:
+                //right hand, third star/objective
+                EventManager.instance.PostNotification(EventType.ChangeStarRight, this, opacity, "ObjectiveManager.cs -> SetObjectiveProgress");
+                break;
+            default:
+                Debug.LogWarningFormat("Index not valid, {0}", index);
+                break;
+        }
     }
 
     /// <summary>
@@ -213,7 +231,7 @@ public class ObjectiveManager : MonoBehaviour
                 if (objectiveTarget != null)
                 {
                     //update progress of objective
-                    SetObjectiverProgress(objectiveTarget.objective.name, objectiveTarget.adjustment);
+                    UpdateObjectiveProgress(objectiveTarget.objective.name, objectiveTarget.adjustment);
                 }
             }
         }

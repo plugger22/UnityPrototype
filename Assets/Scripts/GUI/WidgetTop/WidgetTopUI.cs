@@ -124,10 +124,10 @@ public class WidgetTopUI : MonoBehaviour
         tempColor.a = 0.0f;
         flashRedOuter.color = tempColor;
         isFading = false;
-        //dim down objective stars
+        /*//dim down objective stars -> Done in ObjectiveManager.cs -> SetObjectives
         SetStar(10f, AlignHorizontal.Left);
         SetStar(10f, AlignHorizontal.Centre);
-        SetStar(10f, AlignHorizontal.Right);
+        SetStar(10f, AlignHorizontal.Right);*/
     }
     #endregion
 

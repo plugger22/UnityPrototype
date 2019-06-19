@@ -264,7 +264,9 @@ public class EventManager : MonoBehaviour
         {
             if (ListenList[i] != null)
             {
-                Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, sender: {1}{2}", eventType, methodName, "\n"));
+                if (Param != null)
+                { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, param: {1}, sender: {2}{3}", eventType, Param.GetType(), methodName,  "\n")); }
+                else { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, NO param, sender: {1}{2}", eventType, methodName, "\n")); }
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
             }
@@ -294,7 +296,10 @@ public class EventManager : MonoBehaviour
             {
                 //If null, then remove item
                 if (Item.Value[i] == null)
+                {
+                    Debug.LogWarningFormat("EventManager.cs -> RemoveRedundancies: eventType {0} removed from dict as Null", Item.Key);
                     Item.Value.RemoveAt(i);
+                }
             }
 
             //If items remain in list for this notification, then add this to tmp dictionary

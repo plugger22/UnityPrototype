@@ -3482,3 +3482,36 @@ City seed 890 -> , France
 
 Dev seed 59156 -> Wednesday, 19 June 2019 9:36 AM
 City seed 890 -> , France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 10:48 AM
+City seed 890 -> , France
+ASSERT InvalidCastException: Specified cast is not valid.
+WidgetTopUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	ObjectiveManager.UpdateObjectiveProgress (System.String objectiveName, System.Int32 progressAdjust) (at Assets/Scripts/Managers/ObjectiveManager.cs:183)
+	ObjectiveManager.CheckObjectiveTarget (System.String targetName) (at Assets/Scripts/Managers/ObjectiveManager.cs:218)
+	TargetManager.SetTargetDone (Target target, Node node) (at Assets/Scripts/Managers/TargetManager.cs:1629)
+	TargetManager.CheckTargets () (at Assets/Scripts/Managers/TargetManager.cs:337)
+	TargetManager.StartTurnEarly () (at Assets/Scripts/Managers/TargetManager.cs:265)
+	TargetManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TargetManager.cs:226)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:269)
+	TurnManager.StartTurnEarly () (at Assets/Scripts/Managers/TurnManager.cs:346)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:270)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:345)
+	
+Dev seed 50620 -> Wednesday, 19 June 2019 11:05 AM
+City seed 890 -> , France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 11:13 AM
+City seed 890 -> , France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 11:15 AM
+City seed 5678 -> , United Kingdom
+City seed 890 -> , France
+
+Dev seed 50620 -> Wednesday, 19 June 2019 11:29 AM
+City seed 5678 -> , United Kingdom
+
+Dev seed 50620 -> Wednesday, 19 June 2019 11:35 AM
+City seed 5678 -> London, United Kingdom

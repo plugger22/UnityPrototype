@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
   m_Name: Sydney
   m_EditorClassIdentifier: 
+  tag: Sydney
   descriptor: Famous for it's beaches and Opera House
-  baseLoyalty: 8
   Arc: {fileID: 11400000, guid: 9ceafc034aa45664a9c4b564298e540e, type: 2}
   country: {fileID: 11400000, guid: cb6627e1333c21341a08bf4228c40d48, type: 2}
   iconDistrict: Bennelong
@@ -23,4 +23,4 @@ MonoBehaviour:
   isTestOff: 0
   cityID: 8
   mayor: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
-  faction: {fileID: 11400000, guid: bceab10738a333d448540192a04a2c60, type: 2}
+  faction: {fileID: 0}

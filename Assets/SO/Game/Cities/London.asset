@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
   m_Name: London
   m_EditorClassIdentifier: 
+  tag: London
   descriptor: Big business Incarnate. Financial capital of the world
-  baseLoyalty: 9
   Arc: {fileID: 11400000, guid: 7477b2f0457361945bc8d4d50fe0c0da, type: 2}
   country: {fileID: 11400000, guid: 06aba64a4706524499b9c130097e711f, type: 2}
   iconDistrict: Westminister
@@ -22,5 +22,5 @@ MonoBehaviour:
   iconName: Big Ben
   isTestOff: 0
   cityID: 5
-  mayor: {fileID: 11400000, guid: ab2076eb4bf30fa4e95af2473114bd5e, type: 2}
-  faction: {fileID: 11400000, guid: bceab10738a333d448540192a04a2c60, type: 2}
+  mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
+  faction: {fileID: 0}

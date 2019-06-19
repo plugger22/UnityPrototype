@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
   m_Name: Arles
   m_EditorClassIdentifier: 
+  tag: Arles
   descriptor: Art and culture in the south of France
-  baseLoyalty: 8
   Arc: {fileID: 11400000, guid: 26d83090982f6de4ea21b688a86b5fb9, type: 2}
   country: {fileID: 11400000, guid: a6f419d252b97e8488a6d059e9777121, type: 2}
   iconDistrict: Arles Centre
@@ -22,5 +22,5 @@ MonoBehaviour:
   iconName: Foundation Van Gogh
   isTestOff: 0
   cityID: 0
-  mayor: {fileID: 11400000, guid: 3507257dca470024697693b51935336f, type: 2}
-  faction: {fileID: 11400000, guid: 6041e87eef1508646ad96be985691ba5, type: 2}
+  mayor: {fileID: 11400000, guid: e48a18091be2462438cacdcd3c612b7d, type: 2}
+  faction: {fileID: 0}

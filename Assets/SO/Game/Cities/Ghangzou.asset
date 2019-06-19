@@ -11,16 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
   m_Name: Ghangzou
   m_EditorClassIdentifier: 
+  tag: Ghangzou
   descriptor: Factories, factories, factories
-  baseLoyalty: 8
   Arc: {fileID: 11400000, guid: 6fe0e6932109b7f4fbc5a5821c63d7da, type: 2}
   country: {fileID: 11400000, guid: c1dbc50598d0c7d499991f3461f9ba43, type: 2}
   iconDistrict: 
   airportDistrict: 
-  portDistrict: 
+  harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: 
   isTestOff: 1
   cityID: 3
   mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
-  faction: {fileID: 11400000, guid: 91ae82ec64402fa4f8c2893b779a33fc, type: 2}
+  faction: {fileID: 0}
