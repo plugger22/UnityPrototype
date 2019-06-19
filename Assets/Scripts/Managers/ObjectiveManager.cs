@@ -14,7 +14,8 @@ public class ObjectiveManager : MonoBehaviour
     [Range(0, 3)] public int maxNumOfObjectives = 3;
 
     [HideInInspector] public int objectivesTotal;                               //how many objectives the human side has this level in total
-    [HideInInspector] public int objectivesCurrent;                             //how many objectives the human side currently has remaining to be completed   
+    [HideInInspector] public int objectivesCurrent;                             //how many objectives the human side currently has remaining to be completed 
+    [HideInInspector] public Mission mission;                                   //current mission, passed on by CampaignManager.cs -> SubInitialiseAlllate
 
     private List<Objective> listOfObjectives = new List<Objective>();           //Objectives for the playable side (only the human side has objectives)
 
@@ -219,12 +220,11 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(targetName) == false)
         {
-            List<ObjectiveTarget> listOfObjectiveTargets = GameManager.instance.missionScript.mission.listOfObjectiveTargets;
             //no need for error as list may well be null (no targets in this mission relate to objectives)
-            if (listOfObjectiveTargets != null)
+            if (mission.listOfObjectiveTargets != null)
             {
                 //target present
-                ObjectiveTarget objectiveTarget = listOfObjectiveTargets.Find(x => x.target.name == targetName);
+                ObjectiveTarget objectiveTarget = mission.listOfObjectiveTargets.Find(x => x.target.name == targetName);
                 //no need for error check as a match may not be present
                 if (objectiveTarget != null)
                 {
@@ -234,6 +234,32 @@ public class ObjectiveManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid targetName (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// checks if a specified target has any associated objective and returns a string '[Objective.tag] Objective +20%', null if none. String is uncoloured.
+    /// </summary>
+    /// <param name="targetName"></param>
+    /// <returns></returns>
+    public string CheckObjectiveInfo(string targetName)
+    {
+        if (string.IsNullOrEmpty(targetName) == false)
+        {
+            //no need for error as list may well be null (no targets in this mission relate to objectives)
+            if (mission.listOfObjectiveTargets != null)
+            {
+                //target present
+                ObjectiveTarget objectiveTarget = mission.listOfObjectiveTargets.Find(x => x.target.name == targetName);
+                //no need for error check as a match may not be present
+                if (objectiveTarget != null)
+                {
+                    //compose info string
+                    return string.Format("{0} {1}{2}%", objectiveTarget.objective.tag, objectiveTarget.adjustment > 0 ? "+" : "", objectiveTarget.adjustment);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid targetName (Null)"); }
+        return null;
     }
 
 

@@ -22,9 +22,9 @@ MonoBehaviour:
   seedCity: 5678
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
   leaderAuthority: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
-  approvalStartRebelHQ: 5
-  approvalStartAuthorityHQ: 5
-  cityStartLoyalty: 5
+  approvalStartRebelHQ: 4
+  approvalStartAuthorityHQ: 4
+  cityStartLoyalty: 4
   missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
   missionAuthority: {fileID: 0}
   challengeResistance: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b,

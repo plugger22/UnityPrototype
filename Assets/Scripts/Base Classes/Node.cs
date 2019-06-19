@@ -383,16 +383,6 @@ public class Node : MonoBehaviour
                     //
                     // - - - CONTACTS vary depending on whether viewing player side or debug viewing other side
                     //
-                    /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.turnScript.currentSide.level)
-                    {
-                        contactListCurrent = GetNodeContacts();
-                        contactListOther = GetNodeContacts(false);
-                    }
-                    else
-                    {
-                        contactListCurrent = GetNodeContacts(false);
-                        contactListOther = GetNodeContacts();
-                    }*/
                     switch (GameManager.instance.turnScript.currentSide.level)
                     {
                         case 1:

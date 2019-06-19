@@ -107,6 +107,7 @@ public class CampaignManager : MonoBehaviour
             if (scenario.missionResistance != null)
             {
                 GameManager.instance.missionScript.mission = scenario.missionResistance;
+                GameManager.instance.objectiveScript.mission = scenario.missionResistance;
                 if (GameManager.instance.inputScript.GameState != GameState.LoadGame)
                 { GameManager.instance.missionScript.Initialise(); }
             }

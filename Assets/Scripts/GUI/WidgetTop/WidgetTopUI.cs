@@ -127,6 +127,8 @@ public class WidgetTopUI : MonoBehaviour
         SetStar(10f, AlignHorizontal.Left);
         SetStar(10f, AlignHorizontal.Centre);
         SetStar(10f, AlignHorizontal.Right);
+        //set bars to starting values
+        SetSides(GameManager.instance.sideScript.PlayerSide);
     }
     #endregion
 
@@ -244,7 +246,7 @@ public class WidgetTopUI : MonoBehaviour
     private void SetCityBar(int size)
     {
         Debug.Assert(size > -1 && size < 11, string.Format("Invalid size {0}", size));
-        float floatSize = (float)size;
+        float floatSize = size;
         transformCity.sizeDelta = new Vector2(floatSize * 10f, transformCity.sizeDelta.y);
         //set colour
         float factor = floatSize * 0.1f;
@@ -273,7 +275,7 @@ public class WidgetTopUI : MonoBehaviour
         transformFaction.sizeDelta = new Vector2(floatSize * 10f, transformFaction.sizeDelta.y);
         //set colour
         float factor = floatSize * 0.1f;
-        barFaction.color = new Color(2.0f * (1 - factor), 2.0f * factor, 0);
+        barFaction.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
     }
 
     /// <summary>
