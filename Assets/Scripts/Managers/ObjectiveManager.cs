@@ -167,10 +167,57 @@ public class ObjectiveManager : MonoBehaviour
             {
                 objective.progress += progressAdjust;
                 Mathf.Clamp(objective.progress, 0, 100);
+                //set appropriate star opacity in top widget UI
+                int index = listOfObjectives.FindIndex(x => x.name == objectiveName);
+                //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
+                switch (index)
+                {
+                    case 0:
+                        //left hand, first star/objective
+                        EventManager.instance.PostNotification(EventType.ChangeStarLeft, this, objective.progress, "ObjectiveManager.cs -> SetObjectiveProgress");
+                        break;
+                    case 1:
+                        //middle, second star/objective
+                        EventManager.instance.PostNotification(EventType.ChangeStarMiddle, this, objective.progress, "ObjectiveManager.cs -> SetObjectiveProgress");
+                        break;
+                    case 2:
+                        //right hand, third star/objective
+                        EventManager.instance.PostNotification(EventType.ChangeStarRight, this, objective.progress, "ObjectiveManager.cs -> SetObjectiveProgress");
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Index not valid, {0}, for objective {1}", index, objectiveName);
+                        break;
+                }
             }
             else { Debug.LogWarningFormat("Objective \"{0}\" not found in listOfObjectives", objectiveName); }
         }
         else { Debug.LogError("Invaiid objectiveName (Null)"); }
+    }
+
+    /// <summary>
+    /// checks whether a successfully completed target has a progress effect on a current objective
+    /// called by TargetManager.cs -> SetTargetDone automatically whenever a target is 'done' (doesn't matter if there are ongoing effects and target is outstanding)
+    /// </summary>
+    /// <param name="targetName"></param>
+    public void CheckObjectiveTarget(string targetName)
+    {
+        if (string.IsNullOrEmpty(targetName) == false)
+        {
+            List<ObjectiveTarget> listOfObjectiveTargets = GameManager.instance.missionScript.mission.listOfObjectiveTargets;
+            //no need for error as list may well be null (no targets in this mission relate to objectives)
+            if (listOfObjectiveTargets != null)
+            {
+                //target present
+                ObjectiveTarget objectiveTarget = listOfObjectiveTargets.Find(x => x.target.name == targetName);
+                //no need for error check as a match may not be present
+                if (objectiveTarget != null)
+                {
+                    //update progress of objective
+                    SetObjectiverProgress(objectiveTarget.objective.name, objectiveTarget.adjustment);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid targetName (Null or Empty)"); }
     }
 
 

@@ -17,11 +17,9 @@ public class Mission : ScriptableObject
     [TextArea] public string briefing;
     [TextArea] public string devNotes;
 
-
     [Header("Objectives")]
     [Tooltip("Up to 3 possible objectives (can have more but they are ignored)")]
     public List<Objective> listOfObjectives;
-
 
     [Header("Targets (Base)")]
     [Tooltip("Number of initial Live (visible) targets at start")]
@@ -51,54 +49,9 @@ public class Mission : ScriptableObject
     [Tooltip("All followOn Generic targets will use this profile. If ignored, the targets own profile will be used")]
     public TargetProfile profileGenericFollowOn;
 
-    /*[Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseCityHall;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseIcon;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseAirport;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseHarbour;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseVIP;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseStory;
-    [Tooltip("If a profile is specified here it will override the Target's profile. Can be ignored")]
-    public TargetProfile profileBaseGoal;
-
-    [Header("Follow-On Target Overrides")]
-    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
-    public Target targetFollowCityHall;
-    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
-    public Target targetFollowIcon;
-    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
-    public Target targetFollowAirport;
-    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
-    public Target targetFollowHarbour;
-    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
-    public Target targetFollowStory;
-    [Tooltip("If a target is specified here it will override any Target's follow-on. Can be ignored")]
-    public Target targetFollowGoal;
-
-    [Header("Target Follow-On Profile Overrides")]
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowGenericLive;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowGenericActive;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowCityHall;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowIcon;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowAirport;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowHarbour;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowVIP;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowStory;
-    [Tooltip("If a profile is specified here it will override the Follow-On Target's profile. Can be ignored")]
-    public TargetProfile profileFollowGoal;*/
+    [Header("Objective Targets")]
+    [Tooltip("Targets that are connected to Objectives. Maximum ONE target per ONE objective")]
+    public List<ObjectiveTarget> listOfObjectiveTargets;
 
     [HideInInspector] public int missionID;
 }

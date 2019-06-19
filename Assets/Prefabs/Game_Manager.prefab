@@ -1571,6 +1571,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 831506a23c08c9149b7c8263d95850ee, type: 2}
   - {fileID: 11400000, guid: fc96d47689aa62240870c0871b31107f, type: 2}
   - {fileID: 11400000, guid: 62c70334b98b16d479bdad9c548c3570, type: 2}
+  arrayOfObjectiveTargets:
+  - {fileID: 11400000, guid: dc46705a5f1694746b570557cf8c0b78, type: 2}
+  - {fileID: 11400000, guid: f06dede69d3430e468030d796787a9ae, type: 2}
+  - {fileID: 11400000, guid: 9f16e63d837fd86418dfcb3cfb999a92, type: 2}
+  - {fileID: 11400000, guid: 7424e5f517352b044b708f594b64db62, type: 2}
+  - {fileID: 11400000, guid: fbeafd059b61b1e448a0f13652d985d9, type: 2}
   arrayOfOrganisations:
   - {fileID: 11400000, guid: 61755f069c6a2fd4f83a0a372d5d1b1c, type: 2}
   - {fileID: 11400000, guid: 8b81229763d9cde4e810f0b34a0d8aee, type: 2}

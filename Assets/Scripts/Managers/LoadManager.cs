@@ -90,6 +90,7 @@ public class LoadManager : MonoBehaviour
     public CityArc[] arrayOfCityArcs;
     public City[] arrayOfCities;
     public Objective[] arrayOfObjectives;
+    public ObjectiveTarget[] arrayOfObjectiveTargets;
     public Organisation[] arrayOfOrganisations;
     public Mayor[] arrayOfMayors;
     public DecisionAI[] arrayOfDecisionAI;
@@ -224,6 +225,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityArcs has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityArcs present"); }
+        //
+        // - - - ObjectiveTargets (not stored in a collection)
+        //
+        numArray = arrayOfObjectiveTargets.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfObjectiveTargets has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ObjectiveArcs present"); }
         //
         // - - - ContactType (not stored in a collection)
         //
