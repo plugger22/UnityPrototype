@@ -3515,3 +3515,16 @@ City seed 5678 -> , United Kingdom
 
 Dev seed 50620 -> Wednesday, 19 June 2019 11:35 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 50620 -> Wednesday, 19 June 2019 12:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50620 -> Wednesday, 19 June 2019 12:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50620 -> Wednesday, 19 June 2019 12:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50620 -> Wednesday, 19 June 2019 12:25 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France

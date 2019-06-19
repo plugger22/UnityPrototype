@@ -276,7 +276,7 @@ public class WidgetTopUI : MonoBehaviour
     /// </summary>
     /// <param name="opacity"></param>
     /// <param name="uiPosition"></param>
-    private void SetStar(float opacity, AlignHorizontal uiPosition)
+    public void SetStar(float opacity, AlignHorizontal uiPosition)
     {
         Debug.Assert(opacity >= 0 && opacity <= 100f, string.Format("Invalid opacity \"{0}\"", opacity));
         //convert opacity to 0 to 1.0

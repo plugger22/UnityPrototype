@@ -169,7 +169,7 @@ public class ObjectiveManager : MonoBehaviour
             if (objective != null)
             {
                 objective.progress += progressAdjust;
-                Mathf.Clamp(objective.progress, 0, 100);
+                objective.progress = Mathf.Clamp(objective.progress, 0, 100);
                 Debug.LogFormat("[Obj] ObjectiveManager.cs -> SetObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
                 //set appropriate star opacity in top widget UI
                 int index = listOfObjectives.FindIndex(x => x.name == objectiveName);
@@ -190,21 +190,21 @@ public class ObjectiveManager : MonoBehaviour
     {
         float opacity = progress;
         //min cap 10% in order to keep star faintly visibile in background)
-        Mathf.Clamp(opacity, 10.0f, 100.0f);
-        //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
+        opacity = Mathf.Clamp(opacity, 10.0f, 100.0f);
+        //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.). Call method directly as event doesn't appear to work at game start
         switch (index)
         {
             case 0:
                 //left hand, first star/objective
-                EventManager.instance.PostNotification(EventType.ChangeStarLeft, this, opacity, "ObjectiveManager.cs -> SetObjectiveProgress");
+                GameManager.instance.widgetTopScript.SetStar(opacity, AlignHorizontal.Left);
                 break;
             case 1:
                 //middle, second star/objective
-                EventManager.instance.PostNotification(EventType.ChangeStarMiddle, this, opacity, "ObjectiveManager.cs -> SetObjectiveProgress");
+                GameManager.instance.widgetTopScript.SetStar(opacity, AlignHorizontal.Centre);
                 break;
             case 2:
                 //right hand, third star/objective
-                EventManager.instance.PostNotification(EventType.ChangeStarRight, this, opacity, "ObjectiveManager.cs -> SetObjectiveProgress");
+                GameManager.instance.widgetTopScript.SetStar(opacity, AlignHorizontal.Right);
                 break;
             default:
                 Debug.LogWarningFormat("Index not valid, {0}", index);
