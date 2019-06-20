@@ -925,7 +925,7 @@ public class TargetManager : MonoBehaviour
                     //target has an objective?
                     string objectiveInfo = GameManager.instance.objectiveScript.CheckObjectiveInfo(target.name);
                     if (objectiveInfo != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourTarget, objectiveInfo, colourEnd)); }
+                    { tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourTarget, objectiveInfo, colourEnd)); }
                     tempList.Add(string.Format("Available for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.timerWindow, colourEnd, target.timerWindow != 1 ? "s" : ""));
                 }
                 else
@@ -981,6 +981,10 @@ public class TargetManager : MonoBehaviour
                     else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\"{1}", target.targetName, "\n")); }
                 }
             }
+            //target has an objective?
+            string objectiveInfo = GameManager.instance.objectiveScript.CheckObjectiveInfo(target.name);
+            if (objectiveInfo != null)
+            { tempList.Add(string.Format("{0}{1}{2}", colourGood, objectiveInfo, colourEnd)); }
             //bad effects
             if (target.listOfBadEffects.Count > 0)
             {
