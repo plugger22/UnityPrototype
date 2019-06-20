@@ -4607,7 +4607,7 @@ public class AIRebelManager : MonoBehaviour
     private bool CheckActorArcPresent(string arcName)
     {
         if (string.IsNullOrEmpty(arcName) == false)
-        { return listOfArcs.Exists(x => x.name == arcName); }
+        { return listOfArcs.Exists(x => x.name.Equals(arcName, StringComparison.Ordinal)); }
         return false;
     }
 

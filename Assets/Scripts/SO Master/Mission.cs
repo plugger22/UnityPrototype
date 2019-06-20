@@ -53,4 +53,12 @@ public class Mission : ScriptableObject
     [Tooltip("Targets that are connected to Objectives. Maximum ONE target per ONE objective")]
     public List<ObjectiveTarget> listOfObjectiveTargets;
 
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Mission {0} has Invalid descriptor (Null or Empty)", name);
+        Debug.AssertFormat(side != null, "Mission {0} has Invalid side (Null)");
+        Debug.Assert(listOfObjectives.Count > 0, "Mission {0} has Invalid listOfObjectives (Empty)");
+    }
+
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using gameAPI;
+using System;
 
 /// <summary>
 /// handles all Objective related matters (both sides)
@@ -164,14 +165,14 @@ public class ObjectiveManager : MonoBehaviour
         if (string.IsNullOrEmpty(objectiveName) == false)
         {
             //present?
-            Objective objective = listOfObjectives.Find(x => x.name == objectiveName);
+            Objective objective = listOfObjectives.Find(x => x.name.Equals(objectiveName, StringComparison.Ordinal));
             if (objective != null)
             {
                 objective.progress += progressAdjust;
                 objective.progress = Mathf.Clamp(objective.progress, 0, 100);
                 Debug.LogFormat("[Obj] ObjectiveManager.cs -> UpdateObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
                 //set appropriate star opacity in top widget UI
-                int index = listOfObjectives.FindIndex(x => x.name == objectiveName);
+                int index = listOfObjectives.FindIndex(x => x.name.Equals(objectiveName, StringComparison.Ordinal));
                 //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
                 SetObjectiveStar(index, objective.progress);
             }

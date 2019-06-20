@@ -15,19 +15,23 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   briefing: 
   devNotes: 
-  objectiveOne: {fileID: 0}
-  objectiveTwo: {fileID: 0}
-  objectiveThree: {fileID: 0}
+  listOfObjectives:
+  - {fileID: 11400000, guid: fc96d47689aa62240870c0871b31107f, type: 2}
+  - {fileID: 11400000, guid: 5dfa5c1eb935a644b9d2ac8c11ca04d7, type: 2}
+  - {fileID: 11400000, guid: 62c70334b98b16d479bdad9c548c3570, type: 2}
   targetsGenericLive: 0
   targetsGenericActive: 0
-  targetBaseCityHall: {fileID: 0}
-  targetBaseIcon: {fileID: 0}
-  targetBaseAirport: {fileID: 0}
-  targetBaseHarbour: {fileID: 0}
-  targetBaseVIP: {fileID: 0}
-  targetBaseStory: {fileID: 0}
-  targetBaseGoal: {fileID: 0}
+  targetBaseCityHall: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
+  targetBaseIcon: {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
+  targetBaseAirport: {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  targetBaseHarbour: {fileID: 11400000, guid: 0709a03dbe8855c4ca63596a7fa53fb7, type: 2}
+  targetBaseVIP: {fileID: 11400000, guid: 975a5596bd2e1fa45a2dd74b585282c4, type: 2}
+  targetBaseStory: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  targetBaseGoal: {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   profileGenericLive: {fileID: 0}
   profileGenericActive: {fileID: 0}
   profileGenericFollowOn: {fileID: 0}
-  missionID: 4
+  listOfObjectiveTargets:
+  - {fileID: 11400000, guid: dc46705a5f1694746b570557cf8c0b78, type: 2}
+  - {fileID: 11400000, guid: f06dede69d3430e468030d796787a9ae, type: 2}
+  - {fileID: 11400000, guid: fbeafd059b61b1e448a0f13652d985d9, type: 2}

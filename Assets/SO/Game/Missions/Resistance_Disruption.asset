@@ -17,8 +17,8 @@ MonoBehaviour:
   devNotes: Test mission
   listOfObjectives:
   - {fileID: 11400000, guid: da26300d7cc8ec34aa0459017fdc2992, type: 2}
-  - {fileID: 11400000, guid: 5dfa5c1eb935a644b9d2ac8c11ca04d7, type: 2}
-  - {fileID: 11400000, guid: 6b32d486a3e705d4e929e8e279570f03, type: 2}
+  - {fileID: 11400000, guid: fc96d47689aa62240870c0871b31107f, type: 2}
+  - {fileID: 11400000, guid: 62c70334b98b16d479bdad9c548c3570, type: 2}
   targetsGenericLive: 3
   targetsGenericActive: 3
   targetBaseCityHall: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
@@ -33,4 +33,7 @@ MonoBehaviour:
     type: 2}
   profileGenericFollowOn: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e,
     type: 2}
-  missionID: 1
+  listOfObjectiveTargets:
+  - {fileID: 11400000, guid: dc46705a5f1694746b570557cf8c0b78, type: 2}
+  - {fileID: 11400000, guid: 9f16e63d837fd86418dfcb3cfb999a92, type: 2}
+  - {fileID: 11400000, guid: 7424e5f517352b044b708f594b64db62, type: 2}

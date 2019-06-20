@@ -44,3 +44,173 @@ City seed 890 -> Arles, France
 
 Dev seed 13580 -> Thursday, 20 June 2019 11:36 AM
 City seed 890 -> Arles, France
+
+Dev seed 6919 -> Thursday, 20 June 2019 2:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 20458 -> Thursday, 20 June 2019 2:07 PM
+City seed 890 -> Arles, France
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ValidationManager.CheckListForDuplicates[T] (System.Collections.Generic.List`1[T] listToCheck, System.String typeOfObject, System.String nameOfObject, System.String nameOfList) (at Assets/Scripts/Managers/ValidationManager.cs:271)
+	ValidationManager.ValidateMissions () (at Assets/Scripts/Managers/ValidationManager.cs:189)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:22)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:694)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:749)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:343)
+	
+Dev seed 6004 -> Thursday, 20 June 2019 2:07 PM
+City seed 890 -> Arles, France
+
+Dev seed 62752 -> Thursday, 20 June 2019 2:12 PM
+City seed 890 -> Arles, France
+
+Dev seed 15911 -> Thursday, 20 June 2019 2:36 PM
+City seed 890 -> Arles, France
+
+Dev seed 43130 -> Thursday, 20 June 2019 2:37 PM
+City seed 890 -> Arles, France
+
+Dev seed 36768 -> Thursday, 20 June 2019 2:38 PM
+City seed 890 -> Arles, France
+
+Dev seed 15148 -> Thursday, 20 June 2019 2:39 PM
+City seed 890 -> Arles, France
+
+Dev seed 30551 -> Thursday, 20 June 2019 2:49 PM
+City seed 890 -> Arles, France
+
+Dev seed 20143 -> Thursday, 20 June 2019 2:51 PM
+City seed 890 -> Arles, France
+
+Dev seed 63320 -> Thursday, 20 June 2019 2:53 PM
+City seed 890 -> Arles, France
+
+Dev seed 7704 -> Thursday, 20 June 2019 2:57 PM
+City seed 890 -> Arles, France
+
+Dev seed 41390 -> Thursday, 20 June 2019 3:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 19128 -> Thursday, 20 June 2019 3:02 PM
+City seed 890 -> Arles, France
+
+Dev seed 29064 -> Thursday, 20 June 2019 3:11 PM
+City seed 890 -> Arles, France
+WARNING Duplicate secret already in list, secretID Secret_R2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1008)
+	PlayerManager:GetRandomStartSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1077)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:225)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:148)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	City seed 234 -> Sydney, Australia
+
+Dev seed 3637 -> Thursday, 20 June 2019 3:17 PM
+City seed 890 -> Arles, France
+WARNING Duplicate secret already in list, secretID Secret_R1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1007)
+	PlayerManager:GetRandomStartSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1076)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:224)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:148)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	
+Dev seed 34634 -> Thursday, 20 June 2019 3:18 PM
+City seed 890 -> Arles, France
+WARNING Duplicate secret already in list, secretID Secret_R0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1007)
+	PlayerManager:GetRandomStartSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1076)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:224)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:148)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	
+Dev seed 41799 -> Thursday, 20 June 2019 3:20 PM
+City seed 890 -> Arles, France
+WARNING Duplicate secret already in list, secretID Secret_R0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddSecret(Secret) (at Assets/Scripts/Managers/PlayerManager.cs:1007)
+	PlayerManager:GetRandomStartSecret() (at Assets/Scripts/Managers/PlayerManager.cs:1076)
+	PlayerManager:SubInitialiseLevelAll() (at Assets/Scripts/Managers/PlayerManager.cs:224)
+	PlayerManager:Initialise(GameState) (at Assets/Scripts/Managers/PlayerManager.cs:148)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:747)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:343)
+	
+Dev seed 27981 -> Thursday, 20 June 2019 3:22 PM
+City seed 890 -> Arles, France
+WARNING Duplicate secret already in list, secret Secret_R0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddSecret(Secret) (at Assets/Scripts/Base Classes/Actor.cs:530)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:5152)
+	ActorManager:CheckActiveResistanceActorsAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:4596)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:426)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:371)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:271)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:363)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:345)
+	WARNING Duplicate secret already in list, secret Secret_R0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddSecret(Secret) (at Assets/Scripts/Base Classes/Actor.cs:530)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:5152)
+	ActorManager:CheckActiveResistanceActorsAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:4596)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:426)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:371)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:271)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:363)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:345)
+	
+Dev seed 27981 -> Thursday, 20 June 2019 3:29 PM
+City seed 890 -> Arles, France
+
+Dev seed 27981 -> Thursday, 20 June 2019 3:29 PM
+City seed 890 -> Arles, France
+WARNING Duplicate secret already in list, secret Secret_R0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddSecret(Secret) (at Assets/Scripts/Base Classes/Actor.cs:530)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:5152)
+	ActorManager:CheckActiveResistanceActorsAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:4596)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:426)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:371)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:271)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:363)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:345)
+	
+Dev seed 27981 -> Thursday, 20 June 2019 3:31 PM
+City seed 890 -> Arles, France
+
+Dev seed 27981 -> Thursday, 20 June 2019 3:36 PM
+City seed 890 -> Arles, France
+
+Dev seed 27981 -> Thursday, 20 June 2019 3:36 PM
+City seed 890 -> Arles, France
+
+Dev seed 27981 -> Thursday, 20 June 2019 3:36 PM
+City seed 890 -> Arles, France
+
+Dev seed 27981 -> Thursday, 20 June 2019 3:39 PM
+City seed 890 -> Arles, France
+
+Dev seed 27981 -> Thursday, 20 June 2019 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57466 -> Thursday, 20 June 2019 3:41 PM
+City seed 5678 -> London, United Kingdom

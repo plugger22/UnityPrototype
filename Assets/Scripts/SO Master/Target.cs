@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using System;
 
 /// <summary>
 /// Target SO. Name of SO is the name of the Target, eg. "Power Grid"
@@ -20,8 +21,6 @@ public class Target : ScriptableObject
     public string reasonText;
     [Tooltip("Rumour text in format '[they'll be a chance soon to]....")]
     public string rumourText;
-    [Tooltip("Only select an option here if the Target is restricted to a particular metaLevel, otherwise leave as None (null)")]
-    public GlobalMeta metaLevel;
     [Tooltip("Base targets are level 1, follow-on targets in a sequence are numbered consecutively higher")]
     [Range(1, 5)] public int targetLevel = 1;
 
@@ -64,7 +63,6 @@ public class Target : ScriptableObject
     #region Save Compatible Data
     [HideInInspector] public Status targetStatus;                   //default status of Dormant
     [HideInInspector] public int intel;                             //from 1 to 3, default 0. Gained by Planner action
-    /*[HideInInspector] public int targetID;*/
     [HideInInspector] public int ongoingID;                         //unique ID used to link to ongoing effects, default '0', only valid if > -1
     [HideInInspector] public bool isKnownByAI;                      //is known by the AI?
     [HideInInspector] public int nodeID;                            //assigned once target is live, -1 otherwise
@@ -89,10 +87,25 @@ public class Target : ScriptableObject
     /// </summary>
     public void OnEnable()
     {
-        Debug.Assert(string.IsNullOrEmpty(descriptorResistance) == false, "Invalid description (Null or Empty)");
-        Debug.Assert(string.IsNullOrEmpty(descriptorAuthority) == false, "Invalid descriptorAuthority (Null or Empty)");
-        Debug.Assert(profileBase != null, string.Format("Target {0} has no profileBase (Null)", targetName));
+        Debug.AssertFormat(string.IsNullOrEmpty(targetName) == false, "Target {0} Invalid targetName (Null or Empty)", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptorResistance) == false, "Target {0} Invalid description (Null or Empty)", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptorAuthority) == false, "Target {0} Invalid descriptorAuthority (Null or Empty)", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(reasonText) == false, "Target {0} Invalid reasonText (Null or Empty)", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(rumourText) == false, "Target {0} Invalid rumourText (Null or Empty)", name);
+        Debug.AssertFormat(actorArc != null, "Target {0} Invalid actorArc (Null)", name);
+        Debug.AssertFormat(gear != null, "Target {0} Invalid gear (Null)", name);
+        Debug.AssertFormat(sprite != null, "Target {0} Invalid sprite (Null)", name);
+        Debug.AssertFormat(targetType != null, "Target {0} Invalid targetType (Null)", name);
+        //nodeArc needed only if targetType Generic
+        if (targetType.name.Equals("Generic", StringComparison.Ordinal) == true)
+        { Debug.AssertFormat(nodeArc != null, "Target {0} Invalid nodeArc (Null)", name); }
 
+        /*//list of effects
+        Debug.AssertFormat(listOfGoodEffects.Count > 0, "Target {0} Invalid listOfGoodEffects (Empty)", name);
+        Debug.AssertFormat(listOfBadEffects.Count > 0, "Target {0} Invalid listOfBadEffects (Empty)", name);
+        Debug.AssertFormat(listOfFailEffects.Count > 0, "Target {0} Invalid listOfFailEffects (Empty)", name);*/
+
+        Debug.AssertFormat(profileBase != null, "Target {0} has no profileBase (Null)", name);
         //NOTE: No need to check profile for Null as handled in TargetManager.cs -> SetTargetDetails (assigns defaultProfile if null)
     }
 

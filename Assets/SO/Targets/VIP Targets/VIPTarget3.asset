@@ -16,10 +16,9 @@ MonoBehaviour:
   descriptorAuthority: V.I.P Schedule leaked
   reasonText: Killing the Mayor
   rumourText: Assassinate the Mayor
-  metaLevel: {fileID: 0}
   targetLevel: 1
-  actorArc: {fileID: 0}
-  gear: {fileID: 0}
+  actorArc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 00209517fd7d8b9428fc7aaaf74d6d88, type: 2}
   nodeArc: {fileID: 0}
@@ -33,7 +32,6 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   targetStatus: 0
   intel: 0
-  targetID: 23
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1

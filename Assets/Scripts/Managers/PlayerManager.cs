@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -153,7 +154,6 @@ public class PlayerManager : MonoBehaviour
                 SubInitialiseLevelStart();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
-                SubInitialiseLevelAll();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -989,7 +989,8 @@ public class PlayerManager : MonoBehaviour
         if (secret != null)
         {
             //check same secret doesn't already exist
-            if (listOfSecrets.Exists(x => x.name == secret.name) == false)
+            /*if (listOfSecrets.Exists(x => x.name == secret.name) == false)*/
+            if (listOfSecrets.Exists(x => x.name.Equals(secret.name, StringComparison.Ordinal)) == false)
             {
                 //check space for a new secret
                 if (listOfSecrets.Count < maxNumOfSecrets)
@@ -1016,12 +1017,12 @@ public class PlayerManager : MonoBehaviour
     public bool RemoveSecret(string secretName)
     {
         bool isSuccess = false;
-        if (listOfSecrets.Exists(x => x.name == secretName) == true)
+        if (listOfSecrets.Exists(x => x.name.Equals(secretName, StringComparison.Ordinal)) == true)
         {
             //reverse loop through and remove secret
             for (int i = listOfSecrets.Count - 1; i >= 0; i--)
             {
-                if (listOfSecrets[i].name.Equals(secretName, System.StringComparison.Ordinal) == true)
+                if (listOfSecrets[i].name.Equals(secretName, StringComparison.Ordinal) == true)
                 {
                     Secret secret = listOfSecrets[i];
                     //reset secret known

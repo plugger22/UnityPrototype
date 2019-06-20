@@ -493,7 +493,7 @@ namespace gameAPI
         public bool CheckSecretPresent(string secretName)
         {
             if (string.IsNullOrEmpty(secretName) == false)
-            { return listOfSecrets.Exists(x => x.name == secretName); }
+            { return listOfSecrets.Exists(x => x.name.Equals(secretName, StringComparison.Ordinal)); }
             else
             {
                 Debug.LogError("Invalid secretName (Null)");
@@ -513,7 +513,7 @@ namespace gameAPI
             if (secret != null)
             {
                 //check same secret doesn't already exist
-                if (listOfSecrets.Exists(x => x.name == secret.name) == false)
+                if (listOfSecrets.Exists(x => x.name.Equals(secret.name, StringComparison.Ordinal)) == false)
                 {
                     //check space for a new secret
                     if (listOfSecrets.Count < maxNumOfSecrets)

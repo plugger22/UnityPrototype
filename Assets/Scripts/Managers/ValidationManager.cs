@@ -35,19 +35,6 @@ public class ValidationManager : MonoBehaviour
         {
             if (target.Value != null)
             {
-                //fields
-                if (string.IsNullOrEmpty(target.Value.descriptorResistance) == true)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid description field (Null or Empty)", target.Value.targetName); }
-                if (target.Value.profile.activation == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid activation field (Null)", target.Value.targetName); }
-                if (target.Value.nodeArc == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid NodeArc field (Null)", target.Value.targetName); }
-                if (target.Value.actorArc == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid ActorArc field (Null)", target.Value.targetName); }
-                if (target.Value.gear == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid Gear field (Null)", target.Value.targetName); }
-                if (target.Value.sprite == null)
-                { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" Invalid sprite field (Null)", target.Value.targetName); }
                 //Good effects
                 if (target.Value.listOfGoodEffects.Count > 0)
                 {
@@ -199,7 +186,58 @@ public class ValidationManager : MonoBehaviour
                     for (int i = 0; i < listOfTargets.Count; i++)
                     { listOfNames.Add(listOfTargets[i].name); }
                     //check for duplicates
-                    CheckListForDuplicates(listOfNames, "Targets");
+                    CheckListForDuplicates(listOfNames, "Mission", mission.name, "Targets");
+                    //
+                    // - - - Objectives
+                    //
+                    if (mission.listOfObjectives.Count > 0)
+                    {
+                        //check for duplicates
+                        listOfNames.Clear();
+                        for (int i = 0; i < mission.listOfObjectives.Count; i++)
+                        { listOfNames.Add(mission.listOfObjectives[i].name); }
+                        //check for duplicates
+                        CheckListForDuplicates(listOfNames, "Mission", mission.name, "Objectives");
+                    }
+                    //
+                    // - - - ObjectiveTargets
+                    //
+                    if (mission.listOfObjectiveTargets.Count > 0)
+                    {
+                        //check for duplicates
+                        listOfNames.Clear();
+                        for (int i = 0; i < mission.listOfObjectiveTargets.Count; i++)
+                        { listOfNames.Add(mission.listOfObjectiveTargets[i].name); }
+                        //check for duplicates
+                        CheckListForDuplicates(listOfNames, "Mission", mission.name, "ObjectiveTargets");
+                        //check no more than there are objectives
+                        if (mission.listOfObjectiveTargets.Count > mission.listOfObjectives.Count)
+                        {
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMssion: Mission \"{0}\", there are more ObjectiveTargets than Objectives ({1} vs. {2}){3}", mission.name, 
+                                mission.listOfObjectiveTargets.Count, mission.listOfObjectives.Count, "\n");
+                        }
+                        //check for presence of related data
+                        foreach(ObjectiveTarget objTarget in mission.listOfObjectiveTargets)
+                        {
+                            if (objTarget != null)
+                            {
+                                //corresponding target present
+                                if (listOfTargets.Exists(x => x.name.Equals(objTarget.target.name, StringComparison.Ordinal)) == false)
+                                {
+                                    Debug.LogFormat("[Val] ValidationMission: Mission \"{0}\", objectiveTarget \"{1}\", target \"{2}\", has no corresponding target{3}", mission.name, objTarget.name,
+                                        objTarget.target.name, "\n");
+                                }
+                                //corresponding objective present
+                                if (mission.listOfObjectives.Exists(x => x.name.Equals(objTarget.objective.name, StringComparison.Ordinal)) == false)
+                                {
+                                    Debug.LogFormat("[Val] ValidationMission: Mission \"{0}\", objectiveTarget \"{1}\", objective \"{2}\", has no corresponding objective{3}", mission.name, objTarget.name,
+                                        objTarget.objective.name, "\n");
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid objectiveTarget (Null) for mission {0}", mission.name); }
+                        }
+
+                    }
                 }
                 else { Debug.LogError("Invalid mission (Null) in arrayOfMissions"); }
             }
@@ -264,7 +302,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="listToCheck"></param>
-    private void CheckListForDuplicates<T>(List<T> listToCheck, string nameOfList = "Unknown")  where T : IComparable
+    private void CheckListForDuplicates<T>(List<T> listToCheck, string typeOfObject = "Unknown", string nameOfObject = "Unknown", string nameOfList = "Unknown")  where T : IComparable
     {
         if (listToCheck != null)
         {
@@ -281,8 +319,8 @@ public class ValidationManager : MonoBehaviour
                     foreach(var item in query)
                     {
                         numOfDuplicates = item.Counter - 1;
-                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: \"{0}\" list, \"{1}\" has {2} duplicate{3}{4}", nameOfList, item.Element, numOfDuplicates, 
-                        numOfDuplicates != 1 ? "s" : "", "\n"); }
+                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: {0} \"{1}\" , list \"{2}\", record \"{3}\" has {4} duplicate{5}{6}", typeOfObject, nameOfObject, nameOfList, 
+                            item.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n"); }
                 }
             }
         }
