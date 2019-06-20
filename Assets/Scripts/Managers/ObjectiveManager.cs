@@ -255,7 +255,7 @@ public class ObjectiveManager : MonoBehaviour
                 if (objectiveTarget != null)
                 {
                     //compose info string
-                    return string.Format("\"{0}\" {1}{2}%", objectiveTarget.objective.tag, objectiveTarget.adjustment > 0 ? "+" : "", objectiveTarget.adjustment);
+                    return string.Format("\'{0}\' {1}{2}%", objectiveTarget.objective.tag, objectiveTarget.adjustment > 0 ? "+" : "", objectiveTarget.adjustment);
                 }
             }
         }
