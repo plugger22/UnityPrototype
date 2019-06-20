@@ -192,7 +192,6 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();         //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<int>> dictOfNodeContactsAuthority = new Dictionary<int, List<int>>();          //Key -> NodeID, Value -> list of actorID's who have a contact at node
     private Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = new Dictionary<int, List<Contact>>(); //Key -> NodeID, Value -> list of Contacts at the node (resistance only)
-    private Dictionary<int, Mission> dictOfMissions = new Dictionary<int, Mission>();                           //Key -> missionID, Value -> Mission
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();                   //Key -> tag, Value -> HelpData
     private Dictionary<StatType, int> dictOfStatisticsLevel = new Dictionary<StatType, int>();                  //Key -> (int)StatType, Value -> statistic
     private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();               //Key -> (int)StatType, Value -> statistic
@@ -5995,12 +5994,6 @@ public class DataManager : MonoBehaviour
     public List<Image> GetListOfActorPortraits()
     { return listOfActorPortraits; }
 
-    //
-    // - - - Missions - - -
-    //
-
-    public Dictionary<int, Mission> GetDictOfMissions()
-    { return dictOfMissions; }
 
     //
     // - - - Help  - - -

@@ -2182,9 +2182,9 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 63814
   isAuthority: 0
-  autoRunTurns: 0
+  autoRunTurns: 10
   isPerformanceLog: 1
   isValidateData: 0
   isValidateSO: 1
@@ -2270,6 +2270,7 @@ MonoBehaviour:
   maxNumOfObjectives: 3
   objectivesTotal: 0
   objectivesCurrent: 0
+  mission: {fileID: 0}
 --- !u!114 &114843761391076242
 MonoBehaviour:
   m_ObjectHideFlags: 1

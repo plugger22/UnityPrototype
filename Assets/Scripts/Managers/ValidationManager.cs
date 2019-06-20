@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class ValidationManager : MonoBehaviour
     {
         ValidateTargets();
         ValidateGear();
+        ValidateMissions();
         ValidateTextLists();
     }
 
@@ -150,6 +152,62 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region ValidateMissions
+    /// <summary>
+    /// check for unique targets and objectives and check that all ObjectveTargets have matching targets/objectives present
+    /// </summary>
+    private void ValidateMissions()
+    {
+        Mission[] arrayOfMissions = GameManager.instance.loadScript.arrayOfMissions;
+        if (arrayOfMissions != null)
+        {
+            List<string> listOfNames = new List<string>();
+            List<Target> listOfTargets = new List<Target>();
+            //loop missions
+            foreach(Mission mission in arrayOfMissions)
+            {
+                if (mission != null)
+                {
+                    //
+                    // - - - Targets
+                    //
+                    listOfTargets.Clear();
+                    //populate list with targets
+                    if (mission.targetBaseCityHall != null)
+                    { listOfTargets.Add(mission.targetBaseCityHall); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseCityHall{1}", mission.name, "\n"); }
+                    if (mission.targetBaseIcon != null)
+                    { listOfTargets.Add(mission.targetBaseIcon); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseIcon{1}", mission.name, "\n"); }
+                    if (mission.targetBaseAirport != null)
+                    { listOfTargets.Add(mission.targetBaseAirport); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseAirport{1}", mission.name, "\n"); }
+                    if (mission.targetBaseHarbour != null)
+                    { listOfTargets.Add(mission.targetBaseHarbour); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseHarbour{1}", mission.name, "\n"); }
+                    if (mission.targetBaseVIP != null)
+                    { listOfTargets.Add(mission.targetBaseVIP); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseVIP{1}", mission.name, "\n"); }
+                    if (mission.targetBaseStory != null)
+                    { listOfTargets.Add(mission.targetBaseStory); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseStory{1}", mission.name, "\n"); }
+                    if (mission.targetBaseGoal != null)
+                    { listOfTargets.Add(mission.targetBaseGoal); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseGoal{1}", mission.name, "\n"); }
+                    //create a list of target.name
+                    listOfNames.Clear();
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                    { listOfNames.Add(listOfTargets[i].name); }
+                    //check for duplicates
+                    CheckListForDuplicates(listOfNames, "Targets");
+                }
+                else { Debug.LogError("Invalid mission (Null) in arrayOfMissions"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfMissions (Null)"); }
+    }
+    #endregion
+
     #region ValidateTextLists
     /// <summary>
     /// checks all textlists for duplicates
@@ -195,6 +253,42 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid textList (Null) for arrayOfTextLists[{0}]", i); }
         }
     }
+
+    #endregion
+
+    #region Utilities
+
+    #region CheckListForDuplicates
+    /// <summary>
+    /// generic method that takes any list of IComparables, eg. int, string, but NOT SO's, and checks for duplicates. Debug.LogFormat("[Val]"...) messages generated for dupes.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="listToCheck"></param>
+    private void CheckListForDuplicates<T>(List<T> listToCheck, string nameOfList = "Unknown")  where T : IComparable
+    {
+        if (listToCheck != null)
+        {
+            if (listToCheck.Count > 0)
+            {
+                var query = listToCheck.GroupBy(x => x)
+                                .Where(g => g.Count() > 1)
+                                .Select(y => new { Element = y.Key, Counter = y.Count() })
+                                .ToList();
+                if (query.Count > 0)
+                {
+                    //generate message for each set of duplicates in list
+                    int numOfDuplicates = 0;
+                    foreach(var item in query)
+                    {
+                        numOfDuplicates = item.Counter - 1;
+                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: \"{0}\" list, \"{1}\" has {2} duplicate{3}{4}", nameOfList, item.Element, numOfDuplicates, 
+                        numOfDuplicates != 1 ? "s" : "", "\n"); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listToCheck (Null)"); }
+    }
+    #endregion
 
     #endregion
 

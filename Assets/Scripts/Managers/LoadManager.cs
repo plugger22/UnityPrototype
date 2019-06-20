@@ -218,13 +218,7 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
-        //
-        // - - - City Arcs (not stored in a collection)
-        //
-        numArray = arrayOfCityArcs.Length;
-        if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityArcs has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityArcs present"); }
+
         //
         // - - - ObjectiveTargets (not stored in a collection)
         //
@@ -313,6 +307,13 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNameSet (Null)"); }
         //
+        // - - - City Arcs (not stored in a collection)
+        //
+        numArray = arrayOfCityArcs.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityArcs has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityArcs present"); }
+        //
         // - - - CitySize (not stored in a collection)
         //
         numArray = arrayOfCitySize.Length;
@@ -368,6 +369,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
+        //
+        // - - - Mission (not stored in a collection)
+        //
+        numArray = arrayOfMissions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfMissions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Missions present"); }
         //
         // - - - Quality
         //
@@ -1380,35 +1388,6 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in DecisionAI count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfAIDecisions (Null) -> Import failed"); }
-        //
-        // - - - Missions - - -
-        //
-        Dictionary<int, Mission> dictOfMissions = GameManager.instance.dataScript.GetDictOfMissions();
-        if (dictOfMissions != null)
-        {
-            counter = 0;
-            numArray = arrayOfMissions.Length;
-            for (int i = 0; i < numArray; i++)
-            {
-                //assign a zero based unique ID number
-                Mission mission = arrayOfMissions[i];
-                //set data
-                mission.missionID = counter++;
-                //add to dictionary
-                try
-                { dictOfMissions.Add(mission.missionID, mission); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid Mission (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Mission (duplicate) ID \"{0}\" for \"{1}\"", counter, mission.name)); counter--; }
-            }
-            numDict = dictOfMissions.Count;
-            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfMissions has {0} entries{1}", numDict, "\n");
-            Debug.Assert(numDict == counter, "Mismatch on Count");
-            Debug.Assert(numDict > 0, "No Missions have been imported");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch in Mission count, array {0}, dict {1}", numArray, numDict));
-        }
-        else { Debug.LogError("Invalid dictOfMissions (Null) -> Import failed"); }
         //
         // - - - Scenarios - - -
         //

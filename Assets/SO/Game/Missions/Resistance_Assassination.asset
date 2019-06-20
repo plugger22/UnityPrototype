@@ -15,19 +15,17 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   briefing: 
   devNotes: 
-  objectiveOne: {fileID: 0}
-  objectiveTwo: {fileID: 0}
-  objectiveThree: {fileID: 0}
+  listOfObjectives: []
   targetsGenericLive: 0
   targetsGenericActive: 0
-  targetBaseCityHall: {fileID: 0}
-  targetBaseIcon: {fileID: 0}
-  targetBaseAirport: {fileID: 0}
-  targetBaseHarbour: {fileID: 0}
-  targetBaseVIP: {fileID: 0}
-  targetBaseStory: {fileID: 0}
-  targetBaseGoal: {fileID: 0}
+  targetBaseCityHall: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
+  targetBaseIcon: {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
+  targetBaseAirport: {fileID: 11400000, guid: 140c85a14f0a66949b65ea6e7236d6c2, type: 2}
+  targetBaseHarbour: {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  targetBaseVIP: {fileID: 11400000, guid: 0709a03dbe8855c4ca63596a7fa53fb7, type: 2}
+  targetBaseStory: {fileID: 11400000, guid: 2e4f8c5604ff85e46ac0cc21cb3d2bf2, type: 2}
+  targetBaseGoal: {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
   profileGenericLive: {fileID: 0}
   profileGenericActive: {fileID: 0}
   profileGenericFollowOn: {fileID: 0}
-  missionID: 0
+  listOfObjectiveTargets: []

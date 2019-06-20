@@ -53,5 +53,4 @@ public class Mission : ScriptableObject
     [Tooltip("Targets that are connected to Objectives. Maximum ONE target per ONE objective")]
     public List<ObjectiveTarget> listOfObjectiveTargets;
 
-    [HideInInspector] public int missionID;
 }
