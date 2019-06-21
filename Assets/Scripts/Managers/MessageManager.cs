@@ -151,7 +151,7 @@ public class MessageManager : MonoBehaviour
         List<ItemData> listOfDelayedItemData = GameManager.instance.dataScript.GetListOfDelayedItemData();
         if (listOfDelayedItemData != null)
         {
-            for (int index = listOfDelayedItemData.Count - 1; index >= 0; index-- )
+            for (int index = listOfDelayedItemData.Count - 1; index >= 0; index--)
             {
                 ItemData data = listOfDelayedItemData[index];
                 //decrement delay
@@ -323,7 +323,7 @@ public class MessageManager : MonoBehaviour
             if (isReversed == false)
             { if (numRolled >= numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }
             else { if (numRolled < numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }
-            
+
             GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -340,7 +340,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <returns></returns>
-    public Message PlayerMove(string text, Node node, int changeInvisibility = 0, int aiDelay = 0,  bool isStart = false)
+    public Message PlayerMove(string text, Node node, int changeInvisibility = 0, int aiDelay = 0, bool isStart = false)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -471,7 +471,7 @@ public class MessageManager : MonoBehaviour
             bool isResistance = true;
             if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
             { isResistance = false; }
-                Message message = new Message();
+            Message message = new Message();
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Damage;
@@ -968,9 +968,9 @@ public class MessageManager : MonoBehaviour
             data.topText = secret.tag;
             data.bottomText = GameManager.instance.itemDataScript.GetActorSecretDetails(actor, secret, isLearnt);
             if (isLearnt == true)
-            { data.itemText = string.Format("{0}, {1}, learns one of your Secrets", actor.actorName, actor.arc.name);  }
+            { data.itemText = string.Format("{0}, {1}, learns one of your Secrets", actor.actorName, actor.arc.name); }
             else
-            {  data.itemText = string.Format("{0}, {1}, forgets one of your Secrets", actor.actorName, actor.arc.name);  }
+            { data.itemText = string.Format("{0}, {1}, forgets one of your Secrets", actor.actorName, actor.arc.name); }
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -2958,7 +2958,7 @@ public class MessageManager : MonoBehaviour
             message.dataName = target.name;
             //ItemData
             ItemData data = new ItemData();
-            if(message.sideLevel == globalResistance.level)
+            if (message.sideLevel == globalResistance.level)
             {
                 //resistance player
                 data.itemText = string.Format("Rebel HQ have identified an OPPORTUNITY at {0}", node.nodeName);
@@ -2981,7 +2981,7 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
-            data.help = 1;          
+            data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -3472,7 +3472,7 @@ public class MessageManager : MonoBehaviour
             if (change > 0)
             { data.itemText = string.Format("{0} faction Approval INCREASES", faction.tag); }
             else
-            {  data.itemText = string.Format("{0} faction Approval DECREASES", faction.tag); }
+            { data.itemText = string.Format("{0} faction Approval DECREASES", faction.tag); }
             data.topText = "Approval Changes";
             data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, change, newLevel);
             data.priority = ItemPriority.Medium;
@@ -3616,6 +3616,65 @@ public class MessageManager : MonoBehaviour
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
+
+    
+    //
+    // - - - Objectives - - -
+    //
+
+    /// <summary>
+    /// Objective has progressed (handles completion). Reason is '[due to]...'
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="reason"></param>
+    /// <param name="adjustment"></param>
+    /// <param name="objective"></param>
+    /// <returns></returns>
+    public Message ObjectiveProgress(string text, string reason, int adjustment, Objective objective)
+    {
+        Debug.Assert(objective != null, "Invalid objective (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.OBJECTIVE;
+            message.subType = MessageSubType.Objective_Progress;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = adjustment;
+            message.data1 = objective.progress;
+            message.dataName = objective.name;
+            //ItemData
+            ItemData data = new ItemData();
+            if (objective.progress < 100)
+            {
+                //progress made
+                data.itemText = string.Format("Objective \'{0}\' PROGRESSES", objective.tag);
+                data.topText = "Objective Progress";
+            }
+            else
+            {
+                //objective completed
+                data.topText = "Objective Achieved";
+                data.itemText = string.Format("Objective \'{0}\' COMPLETED", objective.tag);
+            }
+            data.bottomText = GameManager.instance.itemDataScript.GetObjectiveProgressDetails(reason, adjustment, objective);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.objectiveSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
 
     //new methods above here
 }

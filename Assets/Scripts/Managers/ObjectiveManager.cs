@@ -160,7 +160,7 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     /// <param name="objectiveName"></param>
     /// <param name="progressAdjust"></param>
-    public void UpdateObjectiveProgress(string objectiveName, int progressAdjust)
+    public void UpdateObjectiveProgress(string objectiveName, int progressAdjust, string reason = "Unknown")
     {
         if (string.IsNullOrEmpty(objectiveName) == false)
         {
@@ -175,6 +175,9 @@ public class ObjectiveManager : MonoBehaviour
                 int index = listOfObjectives.FindIndex(x => x.name.Equals(objectiveName, StringComparison.Ordinal));
                 //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
                 SetObjectiveStar(index, objective.progress);
+                //message
+                string text = string.Format("{0} progressed +{1}% due to {2}, progress now {3}%", objective.tag, progressAdjust, reason, objective.progress);
+                GameManager.instance.messageScript.ObjectiveProgress(text, reason, progressAdjust, objective);
             }
             else { Debug.LogWarningFormat("Objective \"{0}\" not found in listOfObjectives", objectiveName); }
         }
@@ -217,24 +220,25 @@ public class ObjectiveManager : MonoBehaviour
     /// called by TargetManager.cs -> SetTargetDone automatically whenever a target is status.OUTSTANDING (doesn't matter if there are ongoing effects and target is outstanding)
     /// </summary>
     /// <param name="targetName"></param>
-    public void CheckObjectiveTarget(string targetName)
+    public void CheckObjectiveTarget(Target target)
     {
-        if (string.IsNullOrEmpty(targetName) == false)
+        if (target != null)
         {
             //no need for error as list may well be null (no targets in this mission relate to objectives)
             if (mission.listOfObjectiveTargets != null)
             {
+                string targetName = target.name;
                 //target present
                 ObjectiveTarget objectiveTarget = mission.listOfObjectiveTargets.Find(x => x.target.name == targetName);
                 //no need for error check as a match may not be present
                 if (objectiveTarget != null)
                 {
                     //update progress of objective
-                    UpdateObjectiveProgress(objectiveTarget.objective.name, objectiveTarget.adjustment);
+                    UpdateObjectiveProgress(objectiveTarget.objective.name, objectiveTarget.adjustment, target.reasonText);
                 }
             }
         }
-        else { Debug.LogError("Invalid targetName (Null or Empty)"); }
+        else { Debug.LogError("Invalid target (Null)"); }
     }
 
     /// <summary>

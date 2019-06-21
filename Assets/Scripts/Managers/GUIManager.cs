@@ -91,6 +91,8 @@ public class GUIManager : MonoBehaviour
     public Sprite priorityLowSprite;
     [Tooltip("Used for action adjustment infoAPP effect notifications")]
     public Sprite actionSprite;
+    [Tooltip("Used for Objectives")]
+    public Sprite objectiveSprite;
 
     private bool[] arrayIsBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -133,6 +135,7 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(priorityMediumSprite != null, "Invalid priorityMediumSprite (Null)");
         Debug.Assert(priorityLowSprite != null, "Invalid priorityLowSprite (Null)");
         Debug.Assert(actionSprite != null, "Invalid actionSprite (Null)");
+        Debug.Assert(objectiveSprite != null, "Invalid objectiveSprite (Null)");
     }
 
     /// <summary>

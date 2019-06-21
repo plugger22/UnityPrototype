@@ -155,7 +155,7 @@
     // - - - Messages - - -
     //
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE }
     public enum MessageSubType
     {
         None,
@@ -244,7 +244,9 @@
         City_Loyalty,
         //Faction
         Faction_Support,
-        Faction_Approval
+        Faction_Approval,
+        //Objective
+        Objective_Progress
 
     }
 

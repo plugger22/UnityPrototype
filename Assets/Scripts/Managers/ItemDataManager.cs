@@ -89,7 +89,7 @@ public class ItemDataManager : MonoBehaviour
         //colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -1671,7 +1671,7 @@ public class ItemDataManager : MonoBehaviour
             builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}attempt {5}<b>SUCCEEDED</b>{6}{7}{8}", actorName, colourAlert, actorArc, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
             //effects
             targetEffects = GameManager.instance.targetScript.GetTargetEffects(target.name);
-            builder.AppendFormat(targetEffects);
+            builder.AppendFormat("<b>{0}</b>", targetEffects);
         }
         return builder.ToString();
     }
@@ -1887,6 +1887,37 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd);
         builder.AppendFormat("{0}{1}{2}<b>Neutralised by Resistance and withdrawn</b>{3}", "\n", "\n", colourBad, colourEnd);
+        return builder.ToString();
+    }
+
+    //
+    // - - - Objectives
+    //
+
+    /// <summary>
+    /// Progress made towards an Objective (or Objective completed if progress 100%)
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="adjustment"></param>
+    /// <param name="objective"></param>
+    /// <returns></returns>
+    public string GetObjectiveProgressDetails(string reason, int adjustment, Objective objective)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>Objective {0}\'{1}\'</b>{2}{3}", colourAlert, objective.tag, colourEnd, "\n");
+        if (objective.progress < 100)
+        {
+            //progress made
+            builder.AppendFormat("<b>Progress {0}+{1}%{2}</b>{3}", colourNeutral, adjustment, colourEnd, "\n");
+            builder.AppendFormat("<b>Now {0}{1}%{2} Complete{3}", colourNeutral, objective.progress, colourEnd, "\n");
+        }
+        else
+        {
+            //objective complete
+            builder.AppendFormat("{0}<b>COMPLETED</b>{1}{2}", colourNeutral, colourEnd, "\n");
+        }
+        //reason
+        builder.AppendFormat("{0}<b>Due to {1}{2}</b>{3}", "\n", colourAlert, reason, colourEnd);
         return builder.ToString();
     }
 
