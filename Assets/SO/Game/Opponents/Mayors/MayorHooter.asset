@@ -9,14 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e50d487c3fd67d948b8a3707946f2387, type: 3}
-  m_Name: Mayor Saurez
+  m_Name: MayorHooter
   m_EditorClassIdentifier: 
-  leaderName: Mayor Saurez
+  mayorName: Mayor Hooter
   motto: Good times and girls for all
   sprite: {fileID: 21300000, guid: 09d09c53ef073954a812844a47b4bf57, type: 3}
-  trait: {fileID: 11400000, guid: 58418ef4095a6574a8063513a3a089a4, type: 2}
+  trait: {fileID: 11400000, guid: 4522b593a5d6f994b950325f427dc947, type: 2}
   preferredArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   actionsPerTurn: 2
   resourcesStarting: 5
-  mayorID: 10
   isTestOff: 0

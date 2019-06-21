@@ -12,7 +12,7 @@ public class Mayor : ScriptableObject
     /*[Tooltip("Faction that the Mayor belongs to. If Mayor in a city this is will be the faction of the city")]
     public Faction faction;*/
     [Tooltip("Name used in game")]
-    public string leaderName;
+    public string mayorName;
     [Tooltip("Motto of Mayor in 6 words or less")]
     public string motto;
     [Tooltip("Portrait sprite (152 x 160 png)")]
@@ -33,7 +33,6 @@ public class Mayor : ScriptableObject
     [Range(1, 10)] public int resourcesStarting = 5;
 
 
-    [HideInInspector] public int mayorID;
 
 
 
@@ -47,8 +46,12 @@ public class Mayor : ScriptableObject
     /// </summary>
     private void OnEnable()
     {
-        Debug.Assert(sprite != null, "Invalid sprite (Null)");
-        Debug.Assert(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2)");
+        Debug.AssertFormat(string.IsNullOrEmpty(mayorName) == false, "Invalid mayorName (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(motto) == false, "Invalid motto (Null or Empty) for {0}", name);
+        Debug.AssertFormat(trait != null, "Invalid trait (Null) for {0}", name);
+        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
+        Debug.AssertFormat(actionsPerTurn == 2, "Invalid actionsPerTurn (should be 2) for {0}", name);
+        Debug.AssertFormat(resourcesStarting > 0 && resourcesStarting < 20, "Invalid resourcesStarting (should be between 0 and 20) for {0}", name);
     }
 
     //

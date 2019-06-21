@@ -134,7 +134,7 @@ public class CityManager : MonoBehaviour
         //Placeholder -> do early so factionManager.cs can have data in start sequence
         city.mayor = mayor;
         if (city.mayor != null)
-        { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.tag, city.mayor.leaderName, city.mayor.trait.tag, "\n"); }
+        { Debug.LogFormat("[Cit] CityManager.cs -> City {0}, {1},  Trait {2}{3}", city.tag, city.mayor.mayorName, city.mayor.trait.tag, "\n"); }
         else { Debug.LogError("Invalid city Mayor (Null) -> Issues with authority faction not initialising"); }
     }
     #endregion
@@ -340,7 +340,7 @@ public class CityManager : MonoBehaviour
     public string GetMayorNameFormatted()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<size=115%><b>{1}</size></b>{2}", colourSide, city.mayor.leaderName, colourEnd);
+        builder.AppendFormat("{0}<size=115%><b>{1}</size></b>{2}", colourSide, city.mayor.mayorName, colourEnd);
         if (string.IsNullOrEmpty(city.mayor.motto) == false)
         { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.mayor.motto, colourEnd); }
         return builder.ToString();
@@ -351,7 +351,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetMayorName()
-    { return city.mayor.leaderName; }
+    { return city.mayor.mayorName; }
 
     /// <summary>
     /// returns a colour formatted string of Mayor's faction alignment. Used by cityInfoUI mayor tooltip

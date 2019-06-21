@@ -180,7 +180,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, City> dictOfCities = new Dictionary<string, City>();                             //Key -> city.name, Value -> City
     private Dictionary<string, Objective> dictOfObjectives = new Dictionary<string, Objective>();               //Key -> objective.name, Value -> Objective
     private Dictionary<string, Organisation> dictOfOrganisations = new Dictionary<string, Organisation>();      //Key -> organisation.name, Value -> Organisation
-    private Dictionary<int, Mayor> dictOfMayors = new Dictionary<int, Mayor>();                                 //Key -> mayorID, Value -> Mayor
+    private Dictionary<string, Mayor> dictOfMayors = new Dictionary<string, Mayor>();                           //Key -> mayor.name, Value -> Mayor
     private Dictionary<string, DecisionAI> dictOfAIDecisions = new Dictionary<string, DecisionAI>();            //Key -> DecisionAI.name, Value -> DecisionAI
     private Dictionary<string, ActorConflict> dictOfActorConflicts = new Dictionary<string, ActorConflict>();   //Key -> actorConflict.name, Value -> ActorBreakdown
     private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
@@ -5815,7 +5815,7 @@ public class DataManager : MonoBehaviour
     // - - - Mayors - - -
     //
 
-    public Dictionary<int, Mayor> GetDictOfMayors()
+    public Dictionary<string, Mayor> GetDictOfMayors()
     { return dictOfMayors; }
 
     /// <summary>

@@ -2489,12 +2489,8 @@ public class FileManager : MonoBehaviour
                         {
                             Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureName);
                             if (cure == null)
-                            { node.cure = cure; }
-                            else
-                            {
-                                Debug.LogWarningFormat("Invalid Cure (Null) for {0}, nodeID {1}, {2}, {3}", saveNode.cureName, node.nodeID, node.nodeName, node.Arc.name);
-                                node.cure = null;
-                            }
+                            { Debug.LogWarningFormat("Invalid cure (Null) for saveNode.cureName {0}", saveNode.cureName); }
+                            node.cure = cure;
                         }
                         else { node.cure = null; }
                     }

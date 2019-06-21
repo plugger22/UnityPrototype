@@ -9,14 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e50d487c3fd67d948b8a3707946f2387, type: 3}
-  m_Name: Mayor Gunther
+  m_Name: MayorSchomlo
   m_EditorClassIdentifier: 
-  leaderName: Mayor Gunther
-  motto: Automated Precision and Perfection
+  mayorName: Mayor Schomlo
+  motto: The Bitcoin Billionaire
   sprite: {fileID: 21300000, guid: 09d09c53ef073954a812844a47b4bf57, type: 3}
-  trait: {fileID: 11400000, guid: 16fc7db479cd3284e85e904add2b5bb4, type: 2}
+  trait: {fileID: 11400000, guid: 79673239b760c7e4cb293bbba2c8b944, type: 2}
   preferredArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   actionsPerTurn: 2
   resourcesStarting: 5
-  mayorID: 5
   isTestOff: 0

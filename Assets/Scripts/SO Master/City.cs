@@ -42,11 +42,11 @@ public class City : ScriptableObject
 
 
     //dynamically assigned data
-    [HideInInspector] public Mayor mayor;                                         //alignment of mayor determines which faction is in charge of the city
-    [HideInInspector] public Faction faction;                                     //ruling faction of current city (derived from mayor)
+    [HideInInspector] public Mayor mayor;                                           //alignment of mayor determines which faction is in charge of the city
+    [HideInInspector] public Faction faction;                                       //ruling faction of current city (derived from mayor)
 
-    private List<Organisation> listOfOrganisations = new List<Organisation>();    //organisations present in the city
-    private List<int> listOfDistrictTotals = new List<int>();       //cityManager.cs assigns this data (needs to be in the same order as DataManager.cs -> dictOfNodeArc's)
+    private List<Organisation> listOfOrganisations = new List<Organisation>();      //organisations present in the city
+    private List<int> listOfDistrictTotals = new List<int>();                       //cityManager.cs assigns this data (needs to be in the same order as DataManager.cs -> dictOfNodeArc's)
 
 
     public void OnEnable()
@@ -56,6 +56,7 @@ public class City : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(iconDistrict) == false, "Invalid iconDistrict (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(airportDistrict) == false, "Invalid airportDistrict (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(iconName) == false, "Invalid iconName (Null or Empty) for {0}", name);
+        Debug.AssertFormat(mayor != null, "Invalid mayor (Null) for {0}", name);
         Debug.AssertFormat(districtNames != null, "Invalid TextList of DistrictNames (Null) for {0}", name);
         Debug.AssertFormat(districtNames.category.name.Equals("Districts", System.StringComparison.Ordinal) == true, "Invalid districtNames TextList (wrong Category) for {0}", name);
         
@@ -77,7 +78,7 @@ public class City : ScriptableObject
                 counter++;
             }
             Debug.Assert(counter > 0, "No records in listOfDistrictTotals");
-            Debug.LogFormat("City \"{0}\" added {1} records to listOfDistrictTotals", name, listOfDistrictTotals.Count);
+            Debug.LogFormat("[Cit] CityManager.cs -> SetDistrictsTotals: City \"{0}\" added {1} records to listOfDistrictTotals", name, listOfDistrictTotals.Count);
         }
     }
 

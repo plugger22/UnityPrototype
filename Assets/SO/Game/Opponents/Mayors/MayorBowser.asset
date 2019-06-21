@@ -9,14 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e50d487c3fd67d948b8a3707946f2387, type: 3}
-  m_Name: Mayor Philippe
+  m_Name: MayorBowser
   m_EditorClassIdentifier: 
-  leaderName: Mayor Philippe
-  motto: The Gene Machine
+  mayorName: Mayor Bowser
+  motto: Meat space meets AI
   sprite: {fileID: 21300000, guid: 09d09c53ef073954a812844a47b4bf57, type: 3}
-  trait: {fileID: 11400000, guid: fd4154a70074f6047a62e6202e894d88, type: 2}
+  trait: {fileID: 11400000, guid: efb963588c684c24c976937b83901841, type: 2}
   preferredArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   actionsPerTurn: 2
   resourcesStarting: 5
-  mayorID: 9
   isTestOff: 0

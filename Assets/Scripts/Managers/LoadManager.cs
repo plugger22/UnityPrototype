@@ -1328,21 +1328,20 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Mayors - - -
         //
-        Dictionary<int, Mayor> dictOfMayors = GameManager.instance.dataScript.GetDictOfMayors();
+        Dictionary<string, Mayor> dictOfMayors = GameManager.instance.dataScript.GetDictOfMayors();
         if (dictOfMayors != null)
         {
             counter = 0;
             numArray = arrayOfMayors.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Mayor mayor = arrayOfMayors[i];
                 //set data
-                mayor.mayorID = counter++;
+                counter++;
                 //add to dictionary
                 try
                 {
-                    dictOfMayors.Add(mayor.mayorID, mayor);
+                    dictOfMayors.Add(mayor.name, mayor);
                     //initialise trait
                     if (mayor.trait != null)
                     { mayor.AddTrait(mayor.trait); }
@@ -1350,7 +1349,7 @@ public class LoadManager : MonoBehaviour
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Mayor (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Mayor (duplicate) ID \"{0}\" for \"{1}\"", counter, mayor.leaderName)); counter--; }
+                { Debug.LogError(string.Format("Invalid Mayor (duplicate) \"{0}\" for \"{1}\"", counter, mayor.mayorName)); counter--; }
             }
             numDict = dictOfMayors.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfMayors has {0} entries{1}", numDict, "\n");

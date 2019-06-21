@@ -13,3 +13,77 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 36624 -> Friday, 21 June 2019 1:46 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 58575 -> Friday, 21 June 2019 1:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4439 -> Friday, 21 June 2019 1:58 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	CityInfoUI.GetDistrictNames (City city) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:352)
+	CityInfoUI.SetCityInfo (City city) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:279)
+	CityInfoUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:163)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:271)
+	WidgetCityMouseUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:75)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 35629 -> Friday, 21 June 2019 2:05 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	CityInfoUI.GetDistrictNames (City city) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:352)
+	CityInfoUI.SetCityInfo (City city) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:279)
+	CityInfoUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:163)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:271)
+	WidgetCityMouseUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:75)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 44450 -> Friday, 21 June 2019 2:10 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	CityInfoUI.GetDistrictNames (City city) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:353)
+	CityInfoUI.SetCityInfo (City city) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:280)
+	CityInfoUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/InfoDisplays/CityInfoUI.cs:164)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:271)
+	WidgetCityMouseUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:75)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 63809 -> Friday, 21 June 2019 2:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16682 -> Friday, 21 June 2019 2:11 PM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Cure (Null) for Reskin, nodeID 5, Queensway, CORPORATE
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	FileManager:ReadNodeData() (at Assets/Scripts/Managers/FileManager.cs:2495)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:188)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:297)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:271)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 16959 -> Friday, 21 June 2019 2:15 PM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom

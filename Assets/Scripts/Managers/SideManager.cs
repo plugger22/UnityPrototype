@@ -174,7 +174,7 @@ public class SideManager : MonoBehaviour
                 authorityCurrent = SideState.AI;
                 //names
                 GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.leaderName);
+                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.mayorName);
             }
             else
             {

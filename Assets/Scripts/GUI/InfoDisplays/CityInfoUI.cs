@@ -87,13 +87,14 @@ public class CityInfoUI : MonoBehaviour
         {
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
-                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
-                SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
                 break;
             case GameState.FollowOnInitialisation:
+                SubInitialiseLevelStart();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -105,8 +106,8 @@ public class CityInfoUI : MonoBehaviour
 
     #region Initialise SubMethods
 
-    #region SubInitialiseSessionStart
-    private void SubInitialiseSessionStart()
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
     {
         int counter = 0;
         //cache list of District names
@@ -281,7 +282,7 @@ public class CityInfoUI : MonoBehaviour
             //centre panel -> mayor / faction / organisation
             if (city.mayor != null)
             {
-                mayorName.text = city.mayor.leaderName;
+                mayorName.text = city.mayor.mayorName;
                 if (city.mayor.GetTrait() != null)
                 { mayorTrait.text = city.mayor.GetTrait().tagFormatted; }
                 else { mayorTrait.text = "Unknown"; }
