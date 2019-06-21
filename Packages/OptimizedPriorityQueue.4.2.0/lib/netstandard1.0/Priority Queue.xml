@@ -37,14 +37,17 @@
         </member>
         <member name="M:Priority_Queue.FastPriorityQueue`1.Contains(`0)">
             <summary>
-            Returns (in O(1)!) whether the given node is in the queue.  O(1)
+            Returns (in O(1)!) whether the given node is in the queue.
+            If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
+            O(1)
             </summary>
         </member>
         <member name="M:Priority_Queue.FastPriorityQueue`1.Enqueue(`0,System.Single)">
             <summary>
-            Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
+            Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken arbitrarily.
             If the queue is full, the result is undefined.
             If the node is already enqueued, the result is undefined.
+            If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
             O(log n)
             </summary>
         </member>
@@ -52,6 +55,12 @@
             <summary>
             Returns true if 'higher' has higher priority than 'lower', false otherwise.
             Note that calling HasHigherPriority(node, node) (ie. both arguments the same node) will return false
+            </summary>
+        </member>
+        <member name="M:Priority_Queue.FastPriorityQueue`1.HasHigherOrEqualPriority(`0,`0)">
+            <summary>
+            Returns true if 'higher' has higher priority than 'lower', false otherwise.
+            Note that calling HasHigherOrEqualPriority(node, node) (ie. both arguments the same node) will return true
             </summary>
         </member>
         <member name="M:Priority_Queue.FastPriorityQueue`1.Dequeue">
@@ -90,6 +99,13 @@
             O(log n)
             </summary>
         </member>
+        <member name="M:Priority_Queue.FastPriorityQueue`1.ResetNode(`0)">
+            <summary>
+            By default, nodes that have been previously added to one queue cannot be added to another queue.
+            If you need to do this, please call originalQueue.ResetNode(node) before attempting to add it in the new queue
+            If the node is currently in the queue or belongs to another queue, the result is undefined
+            </summary>
+        </member>
         <member name="M:Priority_Queue.FastPriorityQueue`1.IsValidQueue">
             <summary>
             <b>Should not be called in production code.</b>
@@ -111,7 +127,7 @@
             <summary>
             A copy of StablePriorityQueue which also has generic priority-type
             </summary>
-            <typeparam name="TItem">The values in the queue.  Must extend the GenericPriorityQueue class</typeparam>
+            <typeparam name="TItem">The values in the queue.  Must extend the GenericPriorityQueueNode class</typeparam>
             <typeparam name="TPriority">The priority-type.  Must extend IComparable&lt;TPriority&gt;</typeparam>
         </member>
         <member name="M:Priority_Queue.GenericPriorityQueue`2.#ctor(System.Int32)">
@@ -154,7 +170,9 @@
         </member>
         <member name="M:Priority_Queue.GenericPriorityQueue`2.Contains(`0)">
             <summary>
-            Returns (in O(1)!) whether the given node is in the queue.  O(1)
+            Returns (in O(1)!) whether the given node is in the queue.
+            If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
+            O(1)
             </summary>
         </member>
         <member name="M:Priority_Queue.GenericPriorityQueue`2.Enqueue(`0,`1)">
@@ -162,6 +180,7 @@
             Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
             If the queue is full, the result is undefined.
             If the node is already enqueued, the result is undefined.
+            If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
             O(log n)
             </summary>
         </member>
@@ -207,6 +226,12 @@
             O(log n)
             </summary>
         </member>
+        <member name="M:Priority_Queue.GenericPriorityQueue`2.ResetNode(`0)">
+            <summary>
+            By default, nodes that have been previously added to one queue cannot be added to another queue.
+            If you need to do this, please call originalQueue.ResetNode(node) before attempting to add it in the new queue
+            </summary>
+        </member>
         <member name="M:Priority_Queue.GenericPriorityQueue`2.IsValidQueue">
             <summary>
             <b>Should not be called in production code.</b>
@@ -244,6 +269,12 @@
             <summary>
             Returns the maximum number of items that can be enqueued at once in this queue.  Once you hit this number (ie. once Count == MaxSize),
             attempting to enqueue another item will cause undefined behavior.
+            </summary>
+        </member>
+        <member name="M:Priority_Queue.IFixedSizePriorityQueue`2.ResetNode(`0)">
+            <summary>
+            By default, nodes that have been previously added to one queue cannot be added to another queue.
+            If you need to do this, please call originalQueue.ResetNode(node) before attempting to add it in the new queue
             </summary>
         </member>
         <member name="T:Priority_Queue.IPriorityQueue`2">
@@ -312,17 +343,37 @@
             <summary>
             Instantiate a new Priority Queue
             </summary>
-            <param name="comparer">The comparer used to compare TPriority values.  Defaults to Comparer&lt;TPriority&gt;.default</param>
+            <param name="priorityComparer">The comparer used to compare TPriority values.  Defaults to Comparer&lt;TPriority&gt;.default</param>
         </member>
         <member name="M:Priority_Queue.SimplePriorityQueue`2.#ctor(System.Comparison{`1})">
             <summary>
             Instantiate a new Priority Queue
             </summary>
-            <param name="comparer">The comparison function to use to compare TPriority values</param>
+            <param name="priorityComparer">The comparison function to use to compare TPriority values</param>
+        </member>
+        <member name="M:Priority_Queue.SimplePriorityQueue`2.#ctor(System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Instantiate a new Priority Queue       
+            </summary>
+            <param name="itemEquality">The equality comparison function to use to compare TItem values</param>
+        </member>
+        <member name="M:Priority_Queue.SimplePriorityQueue`2.#ctor(System.Collections.Generic.IComparer{`1},System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Instantiate a new Priority Queue
+            </summary>
+            <param name="priorityComparer">The comparer used to compare TPriority values.  Defaults to Comparer&lt;TPriority&gt;.default</param>
+            <param name="itemEquality">The equality comparison function to use to compare TItem values</param>
+        </member>
+        <member name="M:Priority_Queue.SimplePriorityQueue`2.#ctor(System.Comparison{`1},System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>
+            Instantiate a new Priority Queue
+            </summary>
+            <param name="priorityComparer">The comparison function to use to compare TPriority values</param>
+            <param name="itemEquality">The equality comparison function to use to compare TItem values</param>
         </member>
         <member name="M:Priority_Queue.SimplePriorityQueue`2.GetExistingNode(`0)">
             <summary>
-            Given an item of type T, returns the exist SimpleNode in the queue
+            Given an item of type T, returns the existing SimpleNode in the queue
             </summary>
         </member>
         <member name="M:Priority_Queue.SimplePriorityQueue`2.AddToNodeCache(Priority_Queue.SimplePriorityQueue{`0,`1}.SimpleNode)">
@@ -367,10 +418,13 @@
             O(log n)
             </summary>
         </member>
-        <member name="M:Priority_Queue.SimplePriorityQueue`2.EnqueueNoLock(`0,`1)">
+        <member name="M:Priority_Queue.SimplePriorityQueue`2.EnqueueNoLockOrCache(`0,`1)">
             <summary>
-            Enqueue the item with the given priority, without calling lock(_queue)
+            Enqueue the item with the given priority, without calling lock(_queue) or AddToNodeCache(node)
             </summary>
+            <param name="item"></param>
+            <param name="priority"></param>
+            <returns></returns>
         </member>
         <member name="M:Priority_Queue.SimplePriorityQueue`2.Enqueue(`0,`1)">
             <summary>
@@ -520,7 +574,9 @@
         </member>
         <member name="M:Priority_Queue.StablePriorityQueue`1.Contains(`0)">
             <summary>
-            Returns (in O(1)!) whether the given node is in the queue.  O(1)
+            Returns (in O(1)!) whether the given node is in the queue.
+            If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
+            O(1)
             </summary>
         </member>
         <member name="M:Priority_Queue.StablePriorityQueue`1.Enqueue(`0,System.Single)">
@@ -528,6 +584,7 @@
             Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
             If the queue is full, the result is undefined.
             If the node is already enqueued, the result is undefined.
+            If node is or has been previously added to another queue, the result is undefined unless oldQueue.ResetNode(node) has been called
             O(log n)
             </summary>
         </member>
@@ -571,6 +628,12 @@
             Removes a node from the queue.  The node does not need to be the head of the queue.  
             If the node is not in the queue, the result is undefined.  If unsure, check Contains() first
             O(log n)
+            </summary>
+        </member>
+        <member name="M:Priority_Queue.StablePriorityQueue`1.ResetNode(`0)">
+            <summary>
+            By default, nodes that have been previously added to one queue cannot be added to another queue.
+            If you need to do this, please call originalQueue.ResetNode(node) before attempting to add it in the new queue
             </summary>
         </member>
         <member name="M:Priority_Queue.StablePriorityQueue`1.IsValidQueue">
