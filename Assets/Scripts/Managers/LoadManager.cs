@@ -692,9 +692,8 @@ public class LoadManager : MonoBehaviour
                 numArray = arrayOfTraits.Length;
                 for (int i = 0; i < numArray; i++)
                 {
-                    //assign a zero based unique ID number
                     Trait trait = arrayOfTraits[i];
-                    trait.traitID = counter++;
+                    counter++;
                     //add to dictionary
                     try
                     {
@@ -1301,24 +1300,23 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Organisations - - -
         //
-        Dictionary<int, Organisation> dictOfOrganisations = GameManager.instance.dataScript.GetDictOfOrganisations();
+        Dictionary<string, Organisation> dictOfOrganisations = GameManager.instance.dataScript.GetDictOfOrganisations();
         if (dictOfOrganisations != null)
         {
             counter = 0;
             numArray = arrayOfOrganisations.Length;
             for (int i = 0; i < numArray; i++)
             {
-                //assign a zero based unique ID number
                 Organisation organisation = arrayOfOrganisations[i];
                 //set data
-                organisation.orgID = counter++;
+                counter++;
                 //add to dictionary
                 try
-                { dictOfOrganisations.Add(organisation.orgID, organisation); }
+                { dictOfOrganisations.Add(organisation.name, organisation); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid Organisation (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Organisation (duplicate) ID \"{0}\" for \"{1}\"", counter, organisation.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid Organisation (duplicate) \"{0}\" for \"{1}\"", counter, organisation.name)); counter--; }
             }
             numDict = dictOfOrganisations.Count;
             Debug.LogFormat("[Loa] InitialiseEarly -> dictOfOrganisations has {0} entries{1}", numDict, "\n");

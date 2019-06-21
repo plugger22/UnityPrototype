@@ -27,7 +27,7 @@ public class OrganisationManager : MonoBehaviour
             List<int> listOfDistrictTotals = city.GetListOfDistrictTotals();
             if (listOfDistrictTotals != null)
             {
-                Dictionary<int, Organisation> dictOfOrganisations = GameManager.instance.dataScript.GetDictOfOrganisations();
+                Dictionary<string, Organisation> dictOfOrganisations = GameManager.instance.dataScript.GetDictOfOrganisations();
                 if (dictOfOrganisations != null)
                 {
                     int index, chance;

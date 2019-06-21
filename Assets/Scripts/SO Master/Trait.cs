@@ -23,6 +23,5 @@ public class Trait : ScriptableObject
     public List<TraitEffect> listOfTraitEffects;
 
     [HideInInspector] public string tagFormatted;                     //pre-formatted (TextMeshPro) string ready for trait display (initialised on import)
-    [HideInInspector] public int traitID;           //unique #, zero based -> assigned automatically by DataManager.Initialise
-
+   
 }

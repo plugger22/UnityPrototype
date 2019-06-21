@@ -1139,7 +1139,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Actor_Trait;
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
-            message.data1 = trait.traitID;
+            message.dataName = trait.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} uses {1} trait", actor.arc.name, trait.tag);

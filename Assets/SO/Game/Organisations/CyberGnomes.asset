@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 446397c5c30374140aff27c52faddb2d, type: 3}
-  m_Name: Matta Cartel
+  m_Name: CyberGnomes
   m_EditorClassIdentifier: 
-  descriptor: International synth drug cartel
-  nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
-  orgID: 3
+  descriptor: Independant Blockchain financiers
+  tag: Cyber Gnomes
+  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}

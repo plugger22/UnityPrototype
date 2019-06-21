@@ -296,7 +296,7 @@ public class CityManager : MonoBehaviour
             foreach (Organisation org in listOfOrganisations)
             {
                 if (builder.Length > 0) { builder.AppendLine(); }
-                builder.AppendFormat("<b>{0}{1}{2}</b>", colourNormal, org.name, colourEnd);
+                builder.AppendFormat("<b>{0}{1}{2}</b>", colourNormal, org.tag, colourEnd);
                 if (string.IsNullOrEmpty(org.descriptor) == false)
                 { builder.AppendFormat("{0}{1}<size=95%>{2}</size>{3}", "\n", colourAlert, org.descriptor, colourEnd); }
             }

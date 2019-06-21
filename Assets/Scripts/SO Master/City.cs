@@ -23,24 +23,23 @@ public class City : ScriptableObject
     public Country country;
 
     [Header("Districts")]
-    [Tooltip("Name of the district where the icon is located. NOTE: Same name can't be in District TextList")]
+    [Tooltip("Name of the district where the icon is located. NOTE: All cities have an icon. Same name can't be in District TextList")]
     public string iconDistrict;
-    [Tooltip("Name of the district where the city airport is located. NOTE: Same name can't be in District TextList")]
+    [Tooltip("Name of the district where the city airport is located. All cities have airports. NOTE: Same name can't be in District TextList")]
     public string airportDistrict;
-    [Tooltip("Name of the district where the working port (if any) is located. NOTE: Same name can't be in District TextList")]
+    [Tooltip("Name of the district where the working port (if any) is located. Optional (not all cities have harbours). NOTE: Same name can't be in District TextList")]
     public string harbourDistrict;
     [Tooltip("List of district names to be randomly assigned to city nodes, min 28 required")]
     public TextList districtNames;
 
     [Header("Features")]
-    [Tooltip("Name of a distinctive cultural icon for the city, eg 'The Eiffel Tower' or 'The Statue of Liberty'")]
+    [Tooltip("Name of a distinctive cultural icon for the city, eg 'The Eiffel Tower' or 'The Statue of Liberty'. All cities have an icon.")]
     public string iconName;
     
     [Header("Debugging")]
     [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
     public bool isTestOff = false;
 
-    [HideInInspector] public int cityID;         //dynamically assigned by ImportManager.cs
 
     //dynamically assigned data
     [HideInInspector] public Mayor mayor;                                         //alignment of mayor determines which faction is in charge of the city
@@ -52,12 +51,14 @@ public class City : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.Assert(Arc != null, "Invalid CityArc (Null)");
-        Debug.Assert(country != null, "Invalid Country (Null)");
-        Debug.Assert(iconDistrict != null, "Invalid iconDistrict (Null)");
-        Debug.Assert(airportDistrict != null, "Invalid airportDistrict (Null)");
-        Debug.Assert(districtNames != null, "Invalid TextList of DistrictNames (Null)");
-        Debug.Assert(districtNames.category.name.Equals("Districts", System.StringComparison.Ordinal) == true, "Invalid districtNames TextList (wrong Category)");
+        Debug.AssertFormat(Arc != null, "Invalid CityArc (Null) for {0}", name);
+        Debug.AssertFormat(country != null, "Invalid Country (Null) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(iconDistrict) == false, "Invalid iconDistrict (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(airportDistrict) == false, "Invalid airportDistrict (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(iconName) == false, "Invalid iconName (Null or Empty) for {0}", name);
+        Debug.AssertFormat(districtNames != null, "Invalid TextList of DistrictNames (Null) for {0}", name);
+        Debug.AssertFormat(districtNames.category.name.Equals("Districts", System.StringComparison.Ordinal) == true, "Invalid districtNames TextList (wrong Category) for {0}", name);
+        
     }
 
     /// <summary>
@@ -96,7 +97,7 @@ public class City : ScriptableObject
         if (organisation != null)
         {
             listOfOrganisations.Add(organisation);
-            Debug.LogFormat("[Org] CityManager.cs -> AddOrganisation: {0} present in {1}{2}", organisation.name, this.name, "\n");
+            Debug.LogFormat("[Org] CityManager.cs -> AddOrganisation: {0} present in {1}{2}", organisation.tag, this.name, "\n");
         }
         else { Debug.LogWarning("Invalid organisation (Null)"); }
     }

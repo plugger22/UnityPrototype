@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 446397c5c30374140aff27c52faddb2d, type: 3}
-  m_Name: Bacon Brothers
+  m_Name: MattaCartel
   m_EditorClassIdentifier: 
-  descriptor: Loosely networked urban gangs
-  nodeArc: {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
-  orgID: 0
+  descriptor: International synth drug cartel
+  tag: Matta Cartel
+  nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}

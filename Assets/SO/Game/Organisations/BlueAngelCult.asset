@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 446397c5c30374140aff27c52faddb2d, type: 3}
-  m_Name: Cyber Gnomes
+  m_Name: BlueAngelCult
   m_EditorClassIdentifier: 
-  descriptor: Independant Blockchain financiers
-  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  orgID: 2
+  descriptor: A holy Venus fly trap
+  tag: Blue Angel Cult
+  nodeArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
