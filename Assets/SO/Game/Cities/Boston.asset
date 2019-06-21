@@ -15,12 +15,11 @@ MonoBehaviour:
   descriptor: University and Research hub
   Arc: {fileID: 11400000, guid: feb7adb53f679cd43b5de63683ef184a, type: 2}
   country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
-  iconDistrict: 
-  airportDistrict: 
-  harbourDistrict: 
+  iconDistrict: Charlestown
+  airportDistrict: Logan International
+  harbourDistrict: Boston Harbour
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
-  iconName: 
+  iconName: Bunker Hill
   isTestOff: 1
-  cityID: 1
   mayor: {fileID: 11400000, guid: 9768b5680a5445847b2a3e54b3577cc1, type: 2}
   faction: {fileID: 0}
