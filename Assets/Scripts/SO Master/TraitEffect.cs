@@ -15,5 +15,11 @@ public class TraitEffect : ScriptableObject
     [Tooltip("Specifically mention here what the effect does (used in tooltips)")]
     public string descriptor;
 
-    [HideInInspector] public int teffID;
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+    }
 }
+
+

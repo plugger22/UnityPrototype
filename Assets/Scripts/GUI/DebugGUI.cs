@@ -141,17 +141,20 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), ""))
-            {
-                Debug.Log("[Dbg] Button -> Unused");
-            }
-
-            // fourth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Campaign Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Campaign Data"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Campaign Data");
                 if (debugDisplay != 55)
                 { debugDisplay = 55; }
+                else { debugDisplay = 0; }
+            }
+
+            // fourth button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Scenario Data"))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Scenario Data");
+                if (debugDisplay != 56)
+                { debugDisplay = 56; }
                 else { debugDisplay = 0; }
             }
 
@@ -1370,6 +1373,11 @@ public class DebugGUI : MonoBehaviour
                     case 55:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.campaignScript.DebugDisplayCampaignData();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    case 56:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.campaignScript.DebugDisplayScenarioData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }

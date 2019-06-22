@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using gameAPI;
+using System;
 using System.Text;
-using gameAPI;
 using UnityEngine;
 
 /// <summary>
@@ -83,7 +81,7 @@ public class CampaignManager : MonoBehaviour
         //Assign a scenario
         scenario = GetCurrentScenario();
         if (scenario != null)
-        { Debug.LogFormat("[Cam] CampaignManager.cs -> InitialiseEarly: Current scenario \"{0}\", ID {1}{2}", scenario.tag, scenario.scenarioID, "\n"); }
+        { Debug.LogFormat("[Cam] CampaignManager.cs -> InitialiseEarly: Current scenario \"{0}\", {1}{2}", scenario.tag, scenario.descriptor, "\n"); }
         else { Debug.LogError("Invalid scenario (Null)"); }
         // City (Early)
         if (scenario.city != null)
@@ -238,14 +236,14 @@ public class CampaignManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- CampaignData{0}{1}", "\n", "\n");
         builder.AppendFormat(" campaign: \"{0}\", {1}{2}", campaign.tag, campaign.descriptor, "\n");
-        builder.AppendFormat(" current scenario: index {0}, \"{1}\"{2}", scenarioIndex, scenario.tag, "\n");
+        builder.AppendFormat(" current scenario: index {0}, \"{1}\", {2}{3}", scenarioIndex, scenario.tag, scenario.descriptor, "\n");
         //campaign scenario list in order
         builder.AppendFormat("{0} ListOfScenarios{1}", "\n", "\n");
         int count = campaign.listOfScenarios.Count;
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
-            { builder.AppendFormat(" {0}: \"{1}\", ID {2}, {3}, seed {4}{5}", i, campaign.listOfScenarios[i].tag, campaign.listOfScenarios[i].scenarioID, campaign.listOfScenarios[i].city.tag, 
+            { builder.AppendFormat(" {0}: \"{1}\", {2}, seed {3}{4}", i, campaign.listOfScenarios[i].tag, campaign.listOfScenarios[i].city.tag, 
                 campaign.listOfScenarios[i].seedCity, "\n"); }
         }
         else
@@ -254,6 +252,43 @@ public class CampaignManager : MonoBehaviour
         builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
         for (int i = 0; i < arrayOfStoryStatus.Length; i++)
         { builder.AppendFormat(" {0} status: {1}{2}", i, arrayOfStoryStatus[i], "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of current scenario
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayScenarioData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- ScenarioData{0}{1}", "\n", "\n");
+        builder.AppendFormat(" Scenario: \"{0}\", {1}{2}", scenario.tag, scenario.descriptor, "\n");
+        builder.AppendFormat(" Side: {0}{1}", scenario.side.name, "\n");
+        builder.AppendFormat(" City: {0}{1}", scenario.city.tag, "\n");
+        builder.AppendFormat(" Seed: {0}{1}", scenario.seedCity, "\n");
+        builder.AppendFormat(" Leader Resistance: {0}{1}", scenario.leaderResistance.tag, "\n");
+        builder.AppendFormat(" Leader Authority: {0}{1}", scenario.leaderAuthority.mayorName, "\n");
+        builder.AppendFormat(" RebelHQ Approval: {0}{1}", scenario.approvalStartRebelHQ, "\n");
+        builder.AppendFormat(" AuthorityHQ Approval: {0}{1}", scenario.approvalStartAuthorityHQ, "\n");
+        builder.AppendFormat(" City Start Loyalty: {0}{1}", scenario.cityStartLoyalty, "\n");
+        builder.AppendFormat(" Mission Resistance: {0}{1}", scenario.missionResistance.name, "\n");
+        builder.AppendFormat(" Challenge Resistance: {0}{1}", scenario.challengeResistance.name, "\n");
+        builder.AppendFormat(" Number of Turns: {0}{1}", scenario.timer, "\n");
+
+        Mission mission = scenario.missionResistance;
+        builder.AppendFormat("{0}-Mission Resistance \"{1}\"{2}", "\n", mission.descriptor, "\n");
+        foreach(Objective objective in mission.listOfObjectives)
+        { builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"); }
+        builder.AppendFormat(" Generic Targets: Live {0}, Active {1}{2}", mission.targetsGenericLive, mission.targetsGenericActive, "\n");
+        builder.AppendFormat(" Target City Hall: {0}{1}", mission.targetBaseCityHall.targetName, "\n");
+        builder.AppendFormat(" Target Icon: {0}{1}", mission.targetBaseIcon.targetName, "\n");
+        builder.AppendFormat(" Target Airport: {0}{1}", mission.targetBaseAirport.targetName, "\n");
+        builder.AppendFormat(" Target Harbour: {0}{1}", mission.targetBaseHarbour.targetName, "\n");
+        builder.AppendFormat(" Target VIP: {0}{1}", mission.targetBaseVIP.targetName, "\n");
+        builder.AppendFormat(" Target Story: {0}{1}", mission.targetBaseStory.targetName, "\n");
+        builder.AppendFormat(" Target Goal: {0}{1}", mission.targetBaseGoal.targetName, "\n");
+
         return builder.ToString();
     }
 

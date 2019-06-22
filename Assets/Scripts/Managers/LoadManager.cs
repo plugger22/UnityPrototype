@@ -519,9 +519,7 @@ public class LoadManager : MonoBehaviour
                 {
                     for (int i = 0; i < numArray; i++)
                     {
-                        //assign a zero based unique ID number
                         TraitEffect traitEffect = arrayOfTraitEffects[i];
-                        traitEffect.teffID = counter;
                         counter++;
                         //add to dictionaries
                         try

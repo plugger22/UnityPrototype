@@ -185,7 +185,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, ActorConflict> dictOfActorConflicts = new Dictionary<string, ActorConflict>();   //Key -> actorConflict.name, Value -> ActorBreakdown
     private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
-    private Dictionary<string, NodeCrisis> dictOfNodeCrisis = new Dictionary<string, NodeCrisis>();                   //Key -> nodeCrisisID, Value -> NodeCrisis
+    private Dictionary<string, NodeCrisis> dictOfNodeCrisis = new Dictionary<string, NodeCrisis>();             //Key -> nodeCrisisID, Value -> NodeCrisis
     private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();                  //Key -> turn, Value -> MainInfoData set for turn
     private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                           //Key -> contactID, Value -> Contact
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();                  //Key -> ActorID, Value -> list of nodeID's where actor has contacts
