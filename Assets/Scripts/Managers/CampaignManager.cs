@@ -33,7 +33,7 @@ public class CampaignManager : MonoBehaviour
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
         //collections
         arrayOfStoryStatus = new int[numOfFlags];
-        Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign, ID {2}{3}", campaign.listOfScenarios.Count, campaign.tag, campaign.campaignID, "\n");
+        Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign{2}", campaign.listOfScenarios.Count, campaign.tag, "\n");
     }
 
     /// <summary>
@@ -237,7 +237,7 @@ public class CampaignManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- CampaignData{0}{1}", "\n", "\n");
-        builder.AppendFormat(" campaign: ID {0}, \"{1}\"{2}", campaign.campaignID, campaign.tag, "\n");
+        builder.AppendFormat(" campaign: \"{0}\", {1}{2}", campaign.tag, campaign.descriptor, "\n");
         builder.AppendFormat(" current scenario: index {0}, \"{1}\"{2}", scenarioIndex, scenario.tag, "\n");
         //campaign scenario list in order
         builder.AppendFormat("{0} ListOfScenarios{1}", "\n", "\n");

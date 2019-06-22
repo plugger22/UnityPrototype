@@ -214,7 +214,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteCampaignData()
     {
-        write.campaignData.campaignID = GameManager.instance.campaignScript.campaign.campaignID;
+        write.campaignData.campaignName = GameManager.instance.campaignScript.campaign.name;
         write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
     }
@@ -1353,10 +1353,10 @@ public class FileManager : MonoBehaviour
     private void ReadCampaignData()
     {
         //campaign
-        Campaign campaign = GameManager.instance.dataScript.GetCampaign(read.campaignData.campaignID);
+        Campaign campaign = GameManager.instance.dataScript.GetCampaign(read.campaignData.campaignName);
         if (campaign != null)
         { GameManager.instance.campaignScript.campaign = campaign; }
-        else { Debug.LogErrorFormat("Invalid campaign (Null) for campaignID {0}", read.campaignData.campaignID); }
+        else { Debug.LogErrorFormat("Invalid campaign (Null) for campaign {0}", read.campaignData.campaignName); }
         //scenario
         GameManager.instance.campaignScript.SetScenario(read.campaignData.scenarioIndex);
         //arrayOfStoryStatus
