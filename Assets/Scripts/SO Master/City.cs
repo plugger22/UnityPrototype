@@ -78,7 +78,7 @@ public class City : ScriptableObject
                 counter++;
             }
             Debug.Assert(counter > 0, "No records in listOfDistrictTotals");
-            Debug.LogFormat("[Cit] CityManager.cs -> SetDistrictsTotals: City \"{0}\" added {1} records to listOfDistrictTotals", name, listOfDistrictTotals.Count);
+            /*Debug.LogFormat("[Cit] CityManager.cs -> SetDistrictsTotals: City \"{0}\" added {1} records to listOfDistrictTotals", name, listOfDistrictTotals.Count);*/
         }
     }
 

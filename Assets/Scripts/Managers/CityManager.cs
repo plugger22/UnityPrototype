@@ -155,16 +155,16 @@ public class CityManager : MonoBehaviour
         int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
         if (loyalty == 0) { loyalty = Random.Range(2, 9); }
         CityLoyalty = loyalty;
-        //initialise number of districts
-        city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
-        //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
-        GameManager.instance.orgScript.SetOrganisationsInCity(city);
     }
     #endregion
 
     #region SubInitialiseAllLate
     private void SubInitialiseAllLate()
     {
+        //initialise number of districts
+        city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
+        //organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
+        GameManager.instance.orgScript.SetOrganisationsInCity(city);
         //set up base panel UI
         GameManager.instance.basePanelScript.SetNames(city.tag, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
     }

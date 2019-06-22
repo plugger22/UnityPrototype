@@ -195,8 +195,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, HelpData> dictOfHelpData = new Dictionary<string, HelpData>();                   //Key -> tag, Value -> HelpData
     private Dictionary<StatType, int> dictOfStatisticsLevel = new Dictionary<StatType, int>();                  //Key -> (int)StatType, Value -> statistic
     private Dictionary<StatType, int> dictOfStatisticsCampaign = new Dictionary<StatType, int>();               //Key -> (int)StatType, Value -> statistic
-    private Dictionary<int, Scenario> dictOfScenarios = new Dictionary<int, Scenario>();                        //Key -> scenarioID, Value -> Scenario
-    private Dictionary<int, Campaign> dictOfCampaigns = new Dictionary<int, Campaign>();                        //Key -> campaignID, Value -> Campaign
+    private Dictionary<string, Campaign> dictOfCampaigns = new Dictionary<string, Campaign>();                  //Key -> campaign.name, Value -> Campaign
     private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                              //Key -> cure.name, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
 
@@ -6222,30 +6221,30 @@ public class DataManager : MonoBehaviour
     { return dictOfStatisticsCampaign; }
 
 
-    //
+    /*//
     // - - - Scenarios - - -
     //
 
     public Dictionary<int, Scenario> GetDictOfScenarios()
-    { return dictOfScenarios; }
+    { return dictOfScenarios; }*/
 
     //
     // - - - Campaigns - - -
     //
 
-    public Dictionary<int, Campaign> GetDictOfCampaigns()
+    public Dictionary<string, Campaign> GetDictOfCampaigns()
     { return dictOfCampaigns; }
 
     /// <summary>
     /// returns campaign for a given campaignID, null if a problem
     /// </summary>
-    /// <param name="campaignID"></param>
+    /// <param name="campaignName"></param>
     /// <returns></returns>
-    public Campaign GetCampaign(int campaignID)
+    public Campaign GetCampaign(string campaignName)
     {
         Campaign campaign = null;
-        if (dictOfCampaigns.ContainsKey(campaignID) == true)
-        { campaign = dictOfCampaigns[campaignID]; }
+        if (dictOfCampaigns.ContainsKey(campaignName) == true)
+        { campaign = dictOfCampaigns[campaignName]; }
         return campaign;
     }
 
