@@ -213,6 +213,19 @@ public class DataManager : MonoBehaviour
     // - - - Initialisation - - -
     //
 
+    public void InitialiseEarly(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.StartUp:
+                SubInitialiseStartUp();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseEarly)", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
     /// <summary>
     /// Stuff that is done after level Manager.SetUp. Called by GameManager.cs -> LEVEL startup sequenc
     /// </summary>
@@ -229,13 +242,25 @@ public class DataManager : MonoBehaviour
                 { SubInitialiseStartSession(); }
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.instance.inputScript.GameState);
                 break;
         }
     }
 
 
     #region Initialisation SubMethods
+
+    #region SubInitialiseStartUp
+    private void SubInitialiseStartUp()
+    {
+        //array Of ItemData
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+        {
+            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+            { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
+        }
+    }
+    #endregion
 
     #region SubInitialiseAll
     private void SubInitialiseAll()
@@ -290,12 +315,7 @@ public class DataManager : MonoBehaviour
             Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
         }
         else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
-        //array Of ItemData
-        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
-        {
-            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
-            { arrayOfItemDataByPriority[outer, inner] = new List<ItemData>(); }
-        }
+
     }
     #endregion
 

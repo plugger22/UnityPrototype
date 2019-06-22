@@ -75,7 +75,6 @@ public class TeamManager : MonoBehaviour
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();
-                SubInitialiseLevelStart();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);

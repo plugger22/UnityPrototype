@@ -11,24 +11,33 @@ using UnityEngine;
 public class StatisticManager : MonoBehaviour
 {
 
+    public void InitialiseEarly(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.StartUp:
+                SubInitialiseSessionStart();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseEarly)", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
     /// <summary>
     /// Not for GameState.LoadGame
     /// </summary>
-    public void Initialise(GameState state)
+    public void InitialiseLate(GameState state)
     {
         switch (state)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
-                //instantiate statistic trackers if a new session, reset if not (eg. new game started from within an existing game session)
-                if (GameManager.instance.isSession == false)
-                { SubInitialiseSessionStart(); }
-                else
-                { SubInitialiseSessionInProgress(); }
+                SubInitialiseSessionInProgress();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.instance.inputScript.GameState);
                 break;
         }
     }

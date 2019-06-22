@@ -287,7 +287,10 @@ public class ControlManager : MonoBehaviour
             { GameManager.instance.connScript.RestoreConnections(); }
         }
         else
-        { GameManager.instance.inputScript.GameState = GameState.LoadAtStart; }
+        {
+            //load game at start
+            GameManager.instance.inputScript.GameState = GameState.LoadAtStart;
+        }
         //Debug -> time load game process
         GameManager.instance.testScript.StartTimer();
         //read data from file

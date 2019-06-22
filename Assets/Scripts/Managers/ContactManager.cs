@@ -66,7 +66,6 @@ public class ContactManager : MonoBehaviour
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();
-                SubInitialiseLevelStart();
                 SubInitialiseEvents();
                 break;
             default:

@@ -281,13 +281,28 @@ public class CampaignManager : MonoBehaviour
         foreach(Objective objective in mission.listOfObjectives)
         { builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"); }
         builder.AppendFormat(" Generic Targets: Live {0}, Active {1}{2}", mission.targetsGenericLive, mission.targetsGenericActive, "\n");
-        builder.AppendFormat(" Target City Hall: {0}{1}", mission.targetBaseCityHall.targetName, "\n");
-        builder.AppendFormat(" Target Icon: {0}{1}", mission.targetBaseIcon.targetName, "\n");
-        builder.AppendFormat(" Target Airport: {0}{1}", mission.targetBaseAirport.targetName, "\n");
-        builder.AppendFormat(" Target Harbour: {0}{1}", mission.targetBaseHarbour.targetName, "\n");
-        builder.AppendFormat(" Target VIP: {0}{1}", mission.targetBaseVIP.targetName, "\n");
-        builder.AppendFormat(" Target Story: {0}{1}", mission.targetBaseStory.targetName, "\n");
-        builder.AppendFormat(" Target Goal: {0}{1}", mission.targetBaseGoal.targetName, "\n");
+        if (mission.targetBaseCityHall != null)
+        { builder.AppendFormat(" Target City Hall: {0}{1}", mission.targetBaseCityHall.targetName, "\n"); }
+        if (mission.targetBaseIcon != null)
+        { builder.AppendFormat(" Target Icon: {0}{1}", mission.targetBaseIcon.targetName, "\n"); }
+        if (mission.targetBaseAirport != null)
+        { builder.AppendFormat(" Target Airport: {0}{1}", mission.targetBaseAirport.targetName, "\n"); }
+        if (mission.targetBaseHarbour != null)
+        { builder.AppendFormat(" Target Harbour: {0}{1}", mission.targetBaseHarbour.targetName, "\n"); }
+        if (mission.targetBaseVIP != null)
+        { builder.AppendFormat(" Target VIP: {0}{1}", mission.targetBaseVIP.targetName, "\n"); }
+        if (mission.targetBaseStory != null)
+        { builder.AppendFormat(" Target Story: {0}{1}", mission.targetBaseStory.targetName, "\n"); }
+        if (mission.targetBaseGoal != null)
+        { builder.AppendFormat(" Target Goal: {0}{1}", mission.targetBaseGoal.targetName, "\n"); }
+        if (mission.profileGenericLive != null)
+        { builder.AppendFormat(" Profile Generic Live: {0}{1}", mission.profileGenericLive.name, "\n"); }
+        if (mission.profileGenericActive != null)
+        { builder.AppendFormat(" Profile Generic Active: {0}{1}", mission.profileGenericActive.name, "\n"); }
+        if (mission.profileGenericFollowOn != null)
+        { builder.AppendFormat(" Profile Generic FollowOn: {0}{1}", mission.profileGenericFollowOn.name, "\n"); }
+        foreach(ObjectiveTarget objectiveTarget in mission.listOfObjectiveTargets)
+        { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }
 
         return builder.ToString();
     }

@@ -440,6 +440,14 @@ public class GameManager : MonoBehaviour
         startMethod.handler = fileScript.Initialise;
         startMethod.className = "FileManager";
         listOfGlobalMethods.Add(startMethod);
+        //Statistic Manager -> InitialiseEarly
+        startMethod.handler = statScript.InitialiseEarly;
+        startMethod.className = "StatisticManager Early";
+        listOfGlobalMethods.Add(startMethod);
+        //Data Manager -> InitialiseEarly
+        startMethod.handler = dataScript.InitialiseEarly;
+        startMethod.className = "DataManager Early";
+        listOfGlobalMethods.Add(startMethod);
         #endregion
         #region Game Methods
         //
@@ -508,8 +516,8 @@ public class GameManager : MonoBehaviour
         startMethod.className = "DataManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
-        //Statistic Manager -> Initialise -> after DataManager
-        startMethod.handler = statScript.Initialise;
+        //Statistic Manager -> InitialiseLate
+        startMethod.handler = statScript.InitialiseLate;
         startMethod.className = "StatisticManager";
         listOfLevelMethods.Add(startMethod);
         //Dijkstra Manager -> Initialise -> after dataScript & LevelScript

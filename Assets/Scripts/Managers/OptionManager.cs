@@ -36,8 +36,11 @@ public class OptionManager : MonoBehaviour
         {
             _colourOption = value;
             //Post notification - colour scheme has been changed
-            EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
-            Debug.Log("OptionManager -> Colour Scheme: now " + _colourOption + "\n");
+            if (GameManager.instance.inputScript.GameState != GameState.LoadAtStart)
+            {
+                EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
+                Debug.Log("OptionManager -> Colour Scheme: now " + _colourOption + "\n");
+            }
         }
     }  
 

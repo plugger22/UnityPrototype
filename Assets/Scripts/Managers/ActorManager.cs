@@ -223,7 +223,7 @@ public class ActorManager : MonoBehaviour
                 SubInitialiseAllLate();
                 break;
             case GameState.LoadAtStart:
-                SubInitialiseAllLate();
+                //do nothing
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
