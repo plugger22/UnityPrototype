@@ -19,7 +19,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Maxium number of actors (Active or Inactive) that can be onMap (eg. 'Onscreen') at any one time")]
     [Range(1, 4)] public int maxNumOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
     [Tooltip("Maximum number of actors that can be in the replacement pool (applies to both sides)")]
-    [Range(1, 6)] public int maxNumOfReserveActors = 4;  
+    [Range(1, 6)] public int maxNumOfReserveActors = 4;
     [Tooltip("Maximum value of an actor datapoint stat")]
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
@@ -115,7 +115,7 @@ public class ActorManager : MonoBehaviour
     private bool isNewActionResistancePlayer;                                   //set to true after resistance player makes a recruit choice at own node
     private bool isNewActionResistanceActor;                                    //set to true after resistance player makes a recruit choice at an actor contact's node
     private bool isNewActionAuthority;                                          //set to true after autority makes a recruit choice
-   
+
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -482,7 +482,7 @@ public class ActorManager : MonoBehaviour
                         CheckPlayerAuthorityAI(isPlayer);
                         CheckInactiveAuthorityActorsAI(isPlayer);
                         CheckActiveAuthorityActorsAI(isPlayer);
-                        
+
                     }
                     break;
                 default:
@@ -679,7 +679,7 @@ public class ActorManager : MonoBehaviour
                 Actor actor = new Actor();
                 //data
                 actor.actorID = actorIDCounter++;
-                actor.slotID = slotID;                
+                actor.slotID = slotID;
                 actor.level = level;
                 actor.side = side;
                 actor.arc = arc;
@@ -711,11 +711,11 @@ public class ActorManager : MonoBehaviour
                 if (side.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
-                    switch(actor.level)
+                    switch (actor.level)
                     {
                         case 3: actor.datapoint2 = 3; break;
-                        case 2: 
-                            if (Random.Range(0,100) <= 25) { actor.datapoint2 = 2; }
+                        case 2:
+                            if (Random.Range(0, 100) <= 25) { actor.datapoint2 = 2; }
                             else { actor.datapoint2 = 3; }
                             break;
                         case 1:
@@ -723,7 +723,7 @@ public class ActorManager : MonoBehaviour
                             else { actor.datapoint2 = 3; }
                             break;
                     }
-                    
+
                 }
                 else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
                 { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
@@ -762,7 +762,7 @@ public class ActorManager : MonoBehaviour
         Actor[] arrayOfActors;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
-        if ( playerSide.level == globalAuthority.level)
+        if (playerSide.level == globalAuthority.level)
         { sideColour = colourAuthority; }
         else { sideColour = colourResistance; }
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
@@ -1115,7 +1115,7 @@ public class ActorManager : MonoBehaviour
                     if (listOfTeams != null)
                     {
                         StringBuilder builder = new StringBuilder();
-                        foreach(Team team in listOfTeams)
+                        foreach (Team team in listOfTeams)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
                             builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, team.arc.name, team.teamName, colourEnd);
@@ -1732,7 +1732,7 @@ public class ActorManager : MonoBehaviour
                             { infoBuilder.AppendFormat("Stress Leave requires {0}{1}{2} Renown", colourNeutral, stressLeaveRenownCostAuthority, colourEnd); }
                         }
                         else
-                        { infoBuilder.AppendFormat("Need to be {0}Stressed{1} in order to take Leave", colourNeutral, colourEnd);  }
+                        { infoBuilder.AppendFormat("Need to be {0}Stressed{1} in order to take Leave", colourNeutral, colourEnd); }
                     }
                     break;
                 //
@@ -1832,7 +1832,7 @@ public class ActorManager : MonoBehaviour
             {
                 buttonTitle = "CANCEL",
                 buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                buttonTooltipMain = string.Format("{0}Invalid Actor{1}",colourBad, colourEnd),
+                buttonTooltipMain = string.Format("{0}Invalid Actor{1}", colourBad, colourEnd),
                 //use a Lambda to pass arguments to the action
                 action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "ActorManager.cs -> GetActorActions"); }
             };
@@ -2058,7 +2058,7 @@ public class ActorManager : MonoBehaviour
                             else
                             {
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance, 
+                                infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance,
                                     colourEnd, colourAlert, colourEnd);
                             }
                         }
@@ -2199,7 +2199,7 @@ public class ActorManager : MonoBehaviour
     /// Resistance only -> up to 4 x 'Give Gear to Actor', 1 x 'Use' (if there is a viable use gear action), 1 x Cancel
     /// </summary>
     public List<EventButtonDetails> GetGearInventoryActions(string gearName)
-    {            
+    {
         //return list of button details
         List<EventButtonDetails> eventList = new List<EventButtonDetails>();
         if (string.IsNullOrEmpty(gearName) == false)
@@ -3093,7 +3093,7 @@ public class ActorManager : MonoBehaviour
                 }
             }
         }
-     
+
     }
 
     /// <summary>
@@ -3106,7 +3106,7 @@ public class ActorManager : MonoBehaviour
         bool errorFlag = false;
         //close node tooltip -> safety check
         GameManager.instance.tooltipNodeScript.CloseTooltip("ActorManager.cs -> InitialiseReservePoolInventory");
-        numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve(); 
+        numOfActors = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
         //check for presence of actors in reserve pool
         if (numOfActors > 0)
         {
@@ -3115,9 +3115,9 @@ public class ActorManager : MonoBehaviour
             data.side = GameManager.instance.sideScript.PlayerSide;
             data.textHeader = "Reserve Actor Pool";
             data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
-                colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral, 
+                colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral,
                 maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
-            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault, 
+            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault,
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
             data.handler = RefreshReservePool;
             data.state = InventoryState.ReservePool;
@@ -3140,8 +3140,10 @@ public class ActorManager : MonoBehaviour
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
                             { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
                             else
-                            { unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer, 
-                                actor.unhappyTimer != 1 ? "s" : "", colourEnd); }
+                            {
+                                unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
+                                  actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                            }
                             //combined text string
                             optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
                             optionData.optionID = actor.actorID;
@@ -3175,7 +3177,7 @@ public class ActorManager : MonoBehaviour
                                 List<string> listOfSecrets = actor.GetSecretsTooltipList();
                                 if (listOfSecrets != null)
                                 {
-                                    foreach(string secret in listOfSecrets)
+                                    foreach (string secret in listOfSecrets)
                                     { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, secret, colourEnd); }
                                 }
                                 else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
@@ -3310,7 +3312,7 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
-                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=1em>", actor.GetTrait().tagFormatted, 
+                        tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=1em>", actor.GetTrait().tagFormatted,
                             "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i] = optionData;
@@ -3587,7 +3589,7 @@ public class ActorManager : MonoBehaviour
             //trait -> Team Player (avoids conflicts)
             if (actor.CheckTraitEffect(actorConflictNone) == false)
             {
-                
+
                 GlobalType typeGood = GameManager.instance.globalScript.typeGood;
                 List<ActorConflict> listSelectionPool = new List<ActorConflict>();
                 Dictionary<string, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
@@ -3856,9 +3858,9 @@ public class ActorManager : MonoBehaviour
                     if (actorKiller.CheckTraitEffect(actorConflictKill) == true)
                     {
                         //add trait to output
-                        outputMsg = string.Format("{0}{1} killed by {2}{3}{4}{5}{6} {7}{8}  ", colourBad, actorVictim.arc.name, colourEnd, colourNeutral, actorKiller.GetTrait().tag, 
+                        outputMsg = string.Format("{0}{1} killed by {2}{3}{4}{5}{6} {7}{8}  ", colourBad, actorVictim.arc.name, colourEnd, colourNeutral, actorKiller.GetTrait().tag,
                             colourEnd, colourBad, actorKiller.arc.name, colourEnd);
-                        TraitLogMessage(actorKiller, "for a Relationship Conflict outcome",  "to kill a fellow Subordinate");
+                        TraitLogMessage(actorKiller, "for a Relationship Conflict outcome", "to kill a fellow Subordinate");
                     }
                     else
                     { outputMsg = string.Format("{0}{1} killed by {2}{3}", colourBad, actorVictim.arc.name, actorKiller.arc.name, colourEnd); }
@@ -4105,7 +4107,7 @@ public class ActorManager : MonoBehaviour
         int i;
         if (int.TryParse(who, out i) == true)
         {
-            
+
             int actorSlotID = Convert.ToInt32(who);
             //Trait
             Trait trait = GameManager.instance.dataScript.GetTrait(what);
@@ -4493,8 +4495,8 @@ public class ActorManager : MonoBehaviour
                                                 string msgText = string.Format("{0} gear Compromised (Target attempt) by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
                                                 GameManager.instance.messageScript.GearLost(msgText, gear, actor);
                                             }
-                                            else {actor.ResetGearItem(gear); }
-                                            
+                                            else { actor.ResetGearItem(gear); }
+
                                         }
                                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearName); }
                                     }
@@ -5334,7 +5336,7 @@ public class ActorManager : MonoBehaviour
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         string itemText = string.Format("{0} at risk of Capture", actor.arc.name);
-        string detailsTop = string.Format("{0}<b>{1}, {2}{3}{4}</b>{5}{6}<b>Invisibility</b> at {7}<b>Zero</b>{8}", "\n", actor.actorName, colourAlert, actor.arc.name, colourEnd, 
+        string detailsTop = string.Format("{0}<b>{1}, {2}{3}{4}</b>{5}{6}<b>Invisibility</b> at {7}<b>Zero</b>{8}", "\n", actor.actorName, colourAlert, actor.arc.name, colourEnd,
             "\n", "\n", colourNeutral, colourEnd);
         string detailsBottom = string.Format("{0}<b>Can be CAPTURED</b>{1}", colourAlert, colourEnd);
         GameManager.instance.messageScript.ActorWarningOngoing(itemText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
@@ -5512,9 +5514,9 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
-                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown", 
+                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown",
                             playerID, playerSide);
-                        Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, has recovered from their stress induced Breakdown{1}", 
+                        Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, has recovered from their stress induced Breakdown{1}",
                             GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         if (playerSide.level == globalResistance.level)
                         {
@@ -5545,7 +5547,7 @@ public class ActorManager : MonoBehaviour
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else
-                        {  GameManager.instance.playerScript.Invisibility = invis; }
+                        { GameManager.instance.playerScript.Invisibility = invis; }
                         break;
                     case ActorInactive.StressLeave:
                         if (GameManager.instance.playerScript.isStressLeave == false)
@@ -5557,7 +5559,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.instance.playerScript.GetPlayerName(globalAuthority));
                             GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority);
-                            GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide,"Stress Leave");
+                            GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Stress Leave");
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, returns from Stress Leave{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else { GameManager.instance.playerScript.isStressLeave = false; }
@@ -5587,7 +5589,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //check player with the stressed condition for a breakdown
                             rnd = Random.Range(0, 100);
-                            if ( rnd < breakdownChance)
+                            if (rnd < breakdownChance)
                             {
                                 //player Breakdown
                                 GameManager.instance.playerScript.status = ActorStatus.Inactive;
@@ -5651,7 +5653,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     GameManager.instance.messageScript.AINodeActivity("Resistance Activity \"IMAGED\" (Player)", node, playerID, 0);
                                     //AI Immediate message
-                                   GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"IMAGED\" (Player)", "Facial Recognition Scan", node.nodeID, -1, playerID);
+                                    GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"IMAGED\" (Player)", "Facial Recognition Scan", node.nodeID, -1, playerID);
                                 }
                                 else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
                             }
@@ -5660,7 +5662,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.messageScript.GeneralRandom("Player IMAGED Recognition check SUCCESS", "Facial Recognition Scan", playerRecognisedChance, rnd, true);
                         }
                         else { GameManager.instance.messageScript.GeneralRandom("Player IMAGED Recognition check FAILED", "Facial Recognition Scan", playerRecognisedChance, rnd, true); }
-                        
+
                     }
                     //
                     // - - - QUESTIONABLE condition. 
@@ -5705,7 +5707,7 @@ public class ActorManager : MonoBehaviour
                     }
                     GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
                 }
-                else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName,  GameManager.instance.playerScript.actorID); }
+                else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName, GameManager.instance.playerScript.actorID); }
             }
         }
         //
@@ -5725,11 +5727,15 @@ public class ActorManager : MonoBehaviour
                         text = "Your available ACTIONS have changed";
                         topText = "Actions Adjustment";
                         if (adjustment.value > 0)
-                        { detailsTop = string.Format("{0}<b>{1}</b>{2}{3}{4}gives {5}<b>{6}{7} EXTRA</b> Action{8}", colourGood, adjustment.descriptor, colourEnd, "\n", "\n", colourNeutral, adjustment.value, colourEnd,
-                            adjustment.value != 1 ? "s" : ""); }
+                        {
+                            detailsTop = string.Format("{0}<b>{1}</b>{2}{3}{4}gives {5}<b>{6}{7} EXTRA</b> Action{8}", colourGood, adjustment.descriptor, colourEnd, "\n", "\n", colourNeutral, adjustment.value, colourEnd,
+                              adjustment.value != 1 ? "s" : "");
+                        }
                         else
-                        { detailsTop = string.Format("{0}{1}{2}{3}{4}gives {5}<b>{6}{7} LESS</b> Action{8}", colourBad, adjustment.descriptor, colourEnd, "\n", "\n", colourNeutral, adjustment.value, colourEnd,
-                            adjustment.value != 1 ? "s" : ""); }
+                        {
+                            detailsTop = string.Format("{0}{1}{2}{3}{4}gives {5}<b>{6}{7} LESS</b> Action{8}", colourBad, adjustment.descriptor, colourEnd, "\n", "\n", colourNeutral, adjustment.value, colourEnd,
+                              adjustment.value != 1 ? "s" : "");
+                        }
                         detailsBottom = string.Format("Lasts for {0}<b>{1}{2} turn</b>{3}", colourNeutral, adjustment.timer, colourEnd, adjustment.timer != 1 ? "s" : "");
                         GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.guiScript.alarmSprite, 999);
                     }
@@ -5954,8 +5960,8 @@ public class ActorManager : MonoBehaviour
                         //Random chance of losing HQ approval
                         rnd = Random.Range(0, 100);
                         if (rnd < playerQuestionableChance)
-                        {  GameManager.instance.factionScript.ChangeFactionApproval(-1, globalResistance, "due to QUESTIONABLE loyalty"); }
-                        
+                        { GameManager.instance.factionScript.ChangeFactionApproval(-1, globalResistance, "due to QUESTIONABLE loyalty"); }
+
                     }
                 }
                 break;
@@ -6216,10 +6222,10 @@ public class ActorManager : MonoBehaviour
                             if (actor.isPromised == true)
                             { chance = 100; }
                             rnd = Random.Range(0, 100);
-                            if ( rnd < chance)
+                            if (rnd < chance)
                             {
                                 actor.datapoint1--;
-                                Debug.LogFormat("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name, 
+                                Debug.LogFormat("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name,
                                     actor.actorName, actor.datapoint1, chance, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
@@ -6256,7 +6262,7 @@ public class ActorManager : MonoBehaviour
                             if (actor.isReassured == true)
                             { chance *= 2; }
                             rnd = Random.Range(0, 100);
-                            if ( rnd < chance)
+                            if (rnd < chance)
                             {
                                 //random message
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Action check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
@@ -6329,7 +6335,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //loop effects
                             foreach (Effect effect in secret.listOfEffects)
-                            {  GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);  }
+                            { GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput); }
                         }
                         else { Debug.LogWarning("Invalid player node (Null)"); }
                     }
