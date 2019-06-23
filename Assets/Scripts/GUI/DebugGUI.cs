@@ -1365,16 +1365,19 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
+                    //actor dictionary
                     case 54:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayActorDict();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
                         break;
+                    //campaign data
                     case 55:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.campaignScript.DebugDisplayCampaignData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
+                    //scenario data
                     case 56:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.campaignScript.DebugDisplayScenarioData();

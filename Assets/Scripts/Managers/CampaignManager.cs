@@ -257,6 +257,25 @@ public class CampaignManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /*public string DeubgDisplayScenarioDataFunctional()
+    {
+        return new StringBuilder()
+            .AppendFormat("- ScenarioData{0}{1}", "\n", "\n")
+            .AppendFormat(" Scenario: \"{0}\", {1}{2}", scenario.tag, scenario.descriptor, "\n")
+            .AppendFormat(" Side: {0}{1}", scenario.side.name, "\n")
+            .AppendFormat(" City: {0}{1}", scenario.city.tag, "\n")
+            .AppendFormat(" Seed: {0}{1}", scenario.seedCity, "\n")
+            .AppendFormat(" Leader Resistance: {0}{1}", scenario.leaderResistance.tag, "\n")
+            .AppendFormat(" Leader Authority: {0}{1}", scenario.leaderAuthority.mayorName, "\n")
+            .AppendFormat(" RebelHQ Approval: {0}{1}", scenario.approvalStartRebelHQ, "\n")
+            .AppendFormat(" AuthorityHQ Approval: {0}{1}", scenario.approvalStartAuthorityHQ, "\n")
+            .AppendFormat(" City Start Loyalty: {0}{1}", scenario.cityStartLoyalty, "\n")
+            .AppendFormat(" Mission Resistance: {0}{1}", scenario.missionResistance.name, "\n")
+            .AppendFormat(" Challenge Resistance: {0}{1}", scenario.challengeResistance.name, "\n")
+            .AppendFormat(" Number of Turns: {0}{1}", scenario.timer, "\n")
+            .ToString();
+    }*/
+
     /// <summary>
     /// Debug display of current scenario
     /// </summary>

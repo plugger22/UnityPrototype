@@ -254,8 +254,7 @@ public class EventManager : MonoBehaviour
         //If no event entry exists, then exit because there are no listeners to notify
         if (!dictOfListeners.TryGetValue(eventType, out ListenList))
         {
-            /*DEBUG purposes only
-            Debug.LogError(string.Format("EventManager: There are no listeners for {0}", eventType));*/
+            Debug.LogWarningFormat("EventManager: Invalid event (No listeners present in dictOfListeners) for \"{0}\"", eventType);
             return;
         }
 

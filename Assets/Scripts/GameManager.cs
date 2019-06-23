@@ -726,7 +726,9 @@ public class GameManager : MonoBehaviour
     {
         ModalMainMenuDetails detailsMain = new ModalMainMenuDetails() {
             alignHorizontal = AlignHorizontal.Centre,
-            background = Background.Start
+            background = Background.Start,
+            isResume = false,
+            isCancel = false
         };
         //activate menu
         mainMenuScript.InitialiseMainMenu(detailsMain);
