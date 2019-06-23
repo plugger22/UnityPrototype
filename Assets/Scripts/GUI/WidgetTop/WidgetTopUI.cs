@@ -36,6 +36,15 @@ public class WidgetTopUI : MonoBehaviour
 
     private static WidgetTopUI widgetTopUI;
 
+    public void Awake()
+    {
+        //cache components -> needs to be here instead of initialise sub method as a loadAtStart references it prior to the subInitialisation method assigning it
+        transformCity = barCity.GetComponent<RectTransform>();
+        transformFaction = barFaction.GetComponent<RectTransform>();
+        Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
+        Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
+    }
+
 
     /// <summary>
     /// provide a static reference to widgetTopUI that can be accessed from any script
@@ -109,11 +118,6 @@ public class WidgetTopUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        //cache components
-        transformCity = barCity.GetComponent<RectTransform>();
-        transformFaction = barFaction.GetComponent<RectTransform>();
-        Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
-        Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
         //flash red inner opacity set to 0
         Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;

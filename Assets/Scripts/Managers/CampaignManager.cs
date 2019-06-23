@@ -242,16 +242,18 @@ public class CampaignManager : MonoBehaviour
         int count = campaign.listOfScenarios.Count;
         if (count > 0)
         {
-            for (int i = 0; i < count; i++)
-            { builder.AppendFormat(" {0}: \"{1}\", {2}, seed {3}{4}", i, campaign.listOfScenarios[i].tag, campaign.listOfScenarios[i].city.tag, 
-                campaign.listOfScenarios[i].seedCity, "\n"); }
+            int index = 0;
+            campaign.listOfScenarios.ForEach(scenario => builder.AppendFormat(" {0}: \"{1}\", {2}, seed {3}{4}", index++, scenario.tag, scenario.city.tag,
+                scenario.seedCity, "\n"));
         }
         else
         { builder.AppendFormat(" No scenarios found{0}", "\n"); }
         //story Status array
         builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
-        for (int i = 0; i < arrayOfStoryStatus.Length; i++)
-        { builder.AppendFormat(" {0} status: {1}{2}", i, arrayOfStoryStatus[i], "\n"); }
+        /*for (int i = 0; i < arrayOfStoryStatus.Length; i++)
+        { builder.AppendFormat(" {0} status: {1}{2}", i, arrayOfStoryStatus[i], "\n"); }*/
+        count = 0;
+        Array.ForEach(arrayOfStoryStatus, status => builder.AppendFormat(" {0} status: {1}{2}", count++, status, "\n"));
         return builder.ToString();
     }
 
@@ -278,8 +280,9 @@ public class CampaignManager : MonoBehaviour
 
         Mission mission = scenario.missionResistance;
         builder.AppendFormat("{0}-Mission Resistance \"{1}\"{2}", "\n", mission.descriptor, "\n");
-        foreach(Objective objective in mission.listOfObjectives)
-        { builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"); }
+        /*foreach(Objective objective in mission.listOfObjectives)
+        { builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"); }*/
+        mission.listOfObjectives.ForEach(objective => builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"));
         builder.AppendFormat(" Generic Targets: Live {0}, Active {1}{2}", mission.targetsGenericLive, mission.targetsGenericActive, "\n");
         if (mission.targetBaseCityHall != null)
         { builder.AppendFormat(" Target City Hall: {0}{1}", mission.targetBaseCityHall.targetName, "\n"); }
@@ -301,8 +304,9 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" Profile Generic Active: {0}{1}", mission.profileGenericActive.name, "\n"); }
         if (mission.profileGenericFollowOn != null)
         { builder.AppendFormat(" Profile Generic FollowOn: {0}{1}", mission.profileGenericFollowOn.name, "\n"); }
-        foreach(ObjectiveTarget objectiveTarget in mission.listOfObjectiveTargets)
-        { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }
+        /*foreach(ObjectiveTarget objectiveTarget in mission.listOfObjectiveTargets)
+        { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
+        mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
 
         return builder.ToString();
     }

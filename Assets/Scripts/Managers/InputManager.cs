@@ -191,6 +191,7 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.LoadGame:
+                        case GameState.LoadAtStart:
                             EventManager.instance.PostNotification(EventType.CloseLoadGame, this, null, "InputManager.cs -> ProcessInput \"Multipurpose (SPACE)\"");
                             break;
                         case GameState.SaveGame:
