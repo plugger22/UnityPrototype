@@ -625,6 +625,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = mainInfoScript.Initialise;
         startMethod.className = "MainInfoUI";
         listOfUIMethods.Add(startMethod);
+        listOfConditionalMethods.Add(startMethod);
         //AI Display UI 
         startMethod.handler = aiDisplayScript.Initialise;
         startMethod.className = "AIDisplayUI";

@@ -309,6 +309,12 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void CloseLoadGame()
     {
+        //LoadAtStart
+        if (GameManager.instance.inputScript.GameState == GameState.LoadAtStart)
+        {
+            //update colours (not done with FileManager.cs -> ReadOptionData due to sequencing issues (colour changes to objects that aren't yet initialised)
+            EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
+        }
         //Close any open background
         GameManager.instance.modalGUIScript.CloseBackgrounds();
         //toggle of modal block

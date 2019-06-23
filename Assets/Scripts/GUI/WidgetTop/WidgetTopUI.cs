@@ -334,25 +334,25 @@ public class WidgetTopUI : MonoBehaviour
                 }
                 break;
             case false:
+                //normally false and not null but could be LoadAtStart and coroutine null
                 if (myCoroutine != null)
                 {
                     StopCoroutine(myCoroutine);
                     myCoroutine = null;
-                    isFading = false;
-                    isSecurityFlash = false;
-                    //reset opacity back to zero -> inner
-                    Color tempColor = flashRedInner.color;
-                    tempColor.a = 0.0f;
-                    flashRedInner.color = tempColor;
-                    //reset opacity back to zero -> outer
-                    tempColor = flashRedOuter.color;
-                    tempColor.a = 0.0f;
-                    flashRedOuter.color = tempColor;
                 }
+                isFading = false;
+                isSecurityFlash = false;
+                //reset opacity back to zero -> inner
+                Color tempColor = flashRedInner.color;
+                tempColor.a = 0.0f;
+                flashRedInner.color = tempColor;
+                //reset opacity back to zero -> outer
+                tempColor = flashRedOuter.color;
+                tempColor.a = 0.0f;
+                flashRedOuter.color = tempColor;
                 break;
         }
     }
-
 
     /// <summary>
     /// Coroutine to display a flashing red alarm at action point display indicating Security Measures in place
