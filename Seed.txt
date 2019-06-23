@@ -1,143 +1,6 @@
-
-Dev seed 39187 -> Sunday, 23 June 2019 9:51 AM
+Dev seed 50887 -> Monday, 24 June 2019 9:09 AM
 City seed 5678 -> London, United Kingdom
-
-Dev seed 49911 -> Sunday, 23 June 2019 10:04 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 21092 -> Sunday, 23 June 2019 10:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29834 -> Sunday, 23 June 2019 11:15 AM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-WidgetTopUI.SetCityBar (System.Int32 size) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:250)
-	WidgetTopUI.SetSides (GlobalSide side) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:215)
-	WidgetTopUI.LoadSavedData (packageAPI.TopWidgetData data) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:399)
-	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:2994)
-	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:199)
-	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:49)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:271)
-	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
-	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
-	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
-	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 35050 -> Sunday, 23 June 2019 11:20 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55694 -> Sunday, 23 June 2019 11:21 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 501 -> Sunday, 23 June 2019 11:27 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 32997 -> Sunday, 23 June 2019 1:59 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 14233 -> Sunday, 23 June 2019 2:08 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-
-Dev seed 34417 -> Sunday, 23 June 2019 2:19 PM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: routine is null
-UnityEngine.MonoBehaviour.StopCoroutine (UnityEngine.Coroutine routine) (at C:/buildslave/unity/build/Runtime/Export/MonoBehaviour.bindings.cs:116)
-	WidgetTopUI.StopFlasher () (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:350)
-	WidgetTopUI.SetSecurityFlasher (System.Boolean isStart) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:340)
-	WidgetTopUI.LoadSavedData (packageAPI.TopWidgetData data) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:416)
-	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:2994)
-	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:199)
-	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:49)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:271)
-	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
-	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
-	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
-	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 23650 -> Sunday, 23 June 2019 2:21 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 8878 -> Sunday, 23 June 2019 2:25 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45493 -> Sunday, 23 June 2019 2:30 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50170 -> Sunday, 23 June 2019 2:33 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 23280 -> Sunday, 23 June 2019 5:03 PM
-City seed 5678 -> London, United Kingdom
-WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NodeDisplay"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	LevelManager:SubInitialiseEvents() (at Assets/Scripts/Managers/LevelManager.cs:124)
-	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:83)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:703)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:756)
-	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	FactionManager:set_ApprovalResistance(Int32) (at Assets/Scripts/Managers/FactionManager.cs:79)
-	FactionManager:SubInitialiseAll() (at Assets/Scripts/Managers/FactionManager.cs:158)
-	FactionManager:Initialise(GameState) (at Assets/Scripts/Managers/FactionManager.cs:94)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:703)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:756)
-	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeCityBar"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	CityManager:set_CityLoyalty(Int32) (at Assets/Scripts/Managers/CityManager.cs:60)
-	CityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/CityManager.cs:157)
-	CityManager:InitialiseLate() (at Assets/Scripts/Managers/CityManager.cs:101)
-	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:101)
-	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:68)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:703)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:756)
-	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	
-Dev seed 56892 -> Sunday, 23 June 2019 5:34 PM
-
-Dev seed 53712 -> Sunday, 23 June 2019 5:34 PM
-City seed 5678 -> London, United Kingdom
-WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NodeDisplay"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	LevelManager:SubInitialiseEvents() (at Assets/Scripts/Managers/LevelManager.cs:124)
-	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:83)
-	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:678)
-	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:823)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
 	FactionManager:set_ApprovalResistance(Int32) (at Assets/Scripts/Managers/FactionManager.cs:79)
@@ -190,60 +53,17 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
 	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
 	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeCityBar"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	CityManager:set_CityLoyalty(Int32) (at Assets/Scripts/Managers/CityManager.cs:60)
-	AIManager:CancelPolicy() (at Assets/Scripts/Managers/AIManager.cs:4704)
-	AIManager:UpdateCounterMeasureTimers() (at Assets/Scripts/Managers/AIManager.cs:4006)
-	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:652)
-	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:403)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeActionPoints"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	TurnManager:EndTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:438)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:268)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeTurn"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:351)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:270)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
 	
-Dev seed 29626 -> Sunday, 23 June 2019 5:35 PM
+Dev seed 43668 -> Monday, 24 June 2019 9:16 AM
 City seed 890 -> Arles, France
-WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NodeDisplay"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	LevelManager:SubInitialiseEvents() (at Assets/Scripts/Managers/LevelManager.cs:124)
-	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:83)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:703)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:758)
-	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
 	FactionManager:set_ApprovalResistance(Int32) (at Assets/Scripts/Managers/FactionManager.cs:79)
 	FactionManager:SubInitialiseAll() (at Assets/Scripts/Managers/FactionManager.cs:158)
 	FactionManager:Initialise(GameState) (at Assets/Scripts/Managers/FactionManager.cs:94)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:703)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:758)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:704)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:759)
 	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
 	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
@@ -257,111 +77,64 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	CityManager:InitialiseLate() (at Assets/Scripts/Managers/CityManager.cs:101)
 	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:101)
 	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:68)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:703)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:758)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:704)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:759)
 	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
 	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
 	
-Dev seed 22664 -> Sunday, 23 June 2019 5:36 PM
-City seed 5678 -> London, United Kingdom
-WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "NodeDisplay"
+Dev seed 18319 -> Monday, 24 June 2019 9:18 AM
+WARNING Unrecognised GameState "StartUp"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	LevelManager:SubInitialiseEvents() (at Assets/Scripts/Managers/LevelManager.cs:124)
-	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:83)
-	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:678)
-	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:823)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
+	WidgetTopUI:Initialise(GameState) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:85)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:704)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:335)
+	City seed 890 -> Arles, France
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
 	FactionManager:set_ApprovalResistance(Int32) (at Assets/Scripts/Managers/FactionManager.cs:79)
 	FactionManager:SubInitialiseAll() (at Assets/Scripts/Managers/FactionManager.cs:158)
-	FactionManager:Initialise(GameState) (at Assets/Scripts/Managers/FactionManager.cs:103)
-	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:678)
-	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:823)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
+	FactionManager:Initialise(GameState) (at Assets/Scripts/Managers/FactionManager.cs:94)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:704)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:759)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.EventSystems.EventSystem:Update()
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
 	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeCityBar"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
 	CityManager:set_CityLoyalty(Int32) (at Assets/Scripts/Managers/CityManager.cs:60)
 	CityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/CityManager.cs:157)
-	CityManager:InitialiseLate() (at Assets/Scripts/Managers/CityManager.cs:109)
+	CityManager:InitialiseLate() (at Assets/Scripts/Managers/CityManager.cs:101)
 	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:101)
 	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:68)
-	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:678)
-	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:823)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:704)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:759)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeCityBar"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	CityManager:set_CityLoyalty(Int32) (at Assets/Scripts/Managers/CityManager.cs:60)
-	FileManager:ReadScenarioData() (at Assets/Scripts/Managers/FileManager.cs:1485)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:187)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeFactionBar"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	FactionManager:set_ApprovalResistance(Int32) (at Assets/Scripts/Managers/FactionManager.cs:79)
-	FactionManager:LoadSetFactionApproval(GlobalSide, Int32) (at Assets/Scripts/Managers/FactionManager.cs:611)
-	FileManager:ReadScenarioData() (at Assets/Scripts/Managers/FileManager.cs:1488)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:187)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:369)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeCityBar"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	CityManager:set_CityLoyalty(Int32) (at Assets/Scripts/Managers/CityManager.cs:60)
-	AIManager:CancelPolicy() (at Assets/Scripts/Managers/AIManager.cs:4704)
-	AIManager:UpdateCounterMeasureTimers() (at Assets/Scripts/Managers/AIManager.cs:4006)
-	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:652)
-	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:403)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:266)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeActionPoints"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	TurnManager:EndTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:438)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:268)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
-	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "ChangeTurn"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:257)
-	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:351)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:270)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
 	
+Dev seed 20447 -> Monday, 24 June 2019 9:19 AM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTopUI.SetCityBar (System.Int32 size) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:259)
+	WidgetTopUI.SetSides (GlobalSide side) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:220)
+	WidgetTopUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:136)
+	WidgetTopUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/WidgetTop/WidgetTopUI.cs:73)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:704)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:335)
+	
+Dev seed 9840 -> Monday, 24 June 2019 9:22 AM
+City seed 890 -> Arles, France
+
+Dev seed 4798 -> Monday, 24 June 2019 9:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46877 -> Monday, 24 June 2019 9:27 AM
+City seed 890 -> Arles, France

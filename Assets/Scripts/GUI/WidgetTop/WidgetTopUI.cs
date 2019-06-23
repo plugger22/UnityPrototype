@@ -66,6 +66,7 @@ public class WidgetTopUI : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.StartUp:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
@@ -406,8 +407,7 @@ public class WidgetTopUI : MonoBehaviour
             SetCityBar(data.cityLoyalty);
             SetFactionBar(data.factionSupport);
             SetSecurityFlasher(data.isSecurityFlash);
-
-            //Objectives -> TO DO
+            //Objectives -> handled by ObjectiveManager.cs
         }
         else { Debug.LogError("Invalid data (Null)"); }
     }

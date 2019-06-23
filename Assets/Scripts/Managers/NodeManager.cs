@@ -243,7 +243,7 @@ public class NodeManager : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        //find specific SO's and assign to outcome fields
+        //find specific EffectOutcome SO's and assign to outcome fields
         EffectOutcome[] arrayOfEffectOutcome = GameManager.instance.loadScript.arrayOfEffectOutcome;
         if (arrayOfEffectOutcome != null)
         {

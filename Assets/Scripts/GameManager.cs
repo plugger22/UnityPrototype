@@ -484,6 +484,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = sideScript.Initialise;
         startMethod.className = "SideManager";
         listOfLevelMethods.Add(startMethod);
+        //Widget Top UI -> after SideManager.cs (sequence issues) 
+        startMethod.handler = widgetTopScript.Initialise;
+        startMethod.className = "WidgetTopUI";
+        listOfLevelMethods.Add(startMethod);
         //Objective Manager
         startMethod.handler = objectiveScript.Initialise;
         startMethod.className = "ObjectiveManager";
@@ -636,10 +640,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "AISideTabUI";
         listOfUIMethods.Add(startMethod);
         listOfConditionalMethods.Add(startMethod);
-        //Widget Top UI
-        startMethod.handler = widgetTopScript.Initialise;
-        startMethod.className = "WidgetTopUI";
-        listOfUIMethods.Add(startMethod);
+
         #endregion
         #region Debug Methods
         //

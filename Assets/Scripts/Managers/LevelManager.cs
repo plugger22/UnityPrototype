@@ -80,7 +80,6 @@ public class LevelManager : MonoBehaviour
             case GameState.LoadGame:
                 SubInitialiseFastAccess();
                 SubInitialiseAll();
-                SubInitialiseEvents();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -115,13 +114,6 @@ public class LevelManager : MonoBehaviour
         AssignSecurityLevels();
         InitialiseDistrictNames();
         GameManager.instance.RestoreRandomDevState();
-    }
-    #endregion
-
-    #region SubInitialiseEvents
-    private void SubInitialiseEvents()
-    {
-        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "LevelManager.cs -> Initialise");
     }
     #endregion
 
