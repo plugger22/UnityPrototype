@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
     #endregion
 
     private bool allowQuitting = false;
-    private Coroutine myCoroutineInfoPipeline;
+    private Coroutine myCoroutineCompromisedGear;
 
     //autorun
     private int numOfTurns = 0;
@@ -283,7 +283,7 @@ public class TurnManager : MonoBehaviour
                             //switch off any node Alerts
                             GameManager.instance.alertScript.CloseAlertUI(true);
                             //info App displayed AFTER any end of turn Player interactions
-                            myCoroutineInfoPipeline = StartCoroutine("InfoPipeline", playerSide);
+                            myCoroutineCompromisedGear = StartCoroutine("CompromisedGear", playerSide);
                         }
                     }
                 }
@@ -299,11 +299,11 @@ public class TurnManager : MonoBehaviour
 
 
     /// <summary>
-    /// Coroutine to control start of turn Information Pipeline (waits until compromised gear taken care off)
+    /// Coroutine to wait until Compromised Gear interactive dialogue is complete
     /// </summary>
     /// <param name="playerSide"></param>
     /// <returns></returns>
-    IEnumerator InfoPipeline(GlobalSide playerSide)
+    IEnumerator CompromisedGear(GlobalSide playerSide)
     {
         yield return new WaitUntil(() => haltExecution == false);
         GameManager.instance.guiScript.InfoPipelineStart(playerSide);
@@ -865,8 +865,8 @@ public class TurnManager : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ExitGame;
         //switch off main info app if running
-        if (myCoroutineInfoPipeline != null)
-        { StopCoroutine(myCoroutineInfoPipeline); }
+        if (myCoroutineCompromisedGear != null)
+        { StopCoroutine(myCoroutineCompromisedGear); }
         //show thank you splash screen before quitting
         if (SceneManager.GetActiveScene().name != "End_Game")
         { StartCoroutine("DelayedQuit"); }

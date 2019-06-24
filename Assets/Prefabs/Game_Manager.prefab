@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxNumOfGear: 3
   chanceOfRareGear: 5
-  chanceOfCompromise: 50
+  chanceOfCompromise: 71
   gearSwapBaseAmount: 1
   gearSwapPreferredAmount: 1
   gearSaveBaseCost: 2
@@ -2101,6 +2101,7 @@ MonoBehaviour:
   priorityLowSprite: {fileID: 21300000, guid: 7417508bc8dc8c04b944767d032e7a5e, type: 3}
   actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
   objectiveSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:
   m_ObjectHideFlags: 1

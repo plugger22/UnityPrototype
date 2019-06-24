@@ -232,8 +232,10 @@ public class ModalOutcome : MonoBehaviour
         //end of turn check
         if (isAction == true)
         { EventManager.instance.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome"); }
-        //auto set haltExecution to false (in case execution halted at end of turn, waiting on Outcome dialogue to be sorted)
+        //auto set haltExecution to false (in case execution halted at end of turn, waiting on Compromised Gear Outcome dialogue to be sorted)
         GameManager.instance.turnScript.haltExecution = false;
+        //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)
+        GameManager.instance.guiScript.waitUntilDone = false;
     }
 
 

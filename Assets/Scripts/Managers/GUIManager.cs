@@ -101,7 +101,7 @@ public class GUIManager : MonoBehaviour
     private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
     [HideInInspector] public bool waitUntilDone;                        //flag to ensure nothing happens until
     private Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = new Dictionary<MsgPipelineType, ModalOutcomeDetails>();           //handles message queue for start of turn information pipeline
-
+    private Coroutine myCoroutineInfoPipeline;
     //colour palette 
     private string colourAlert;
     private string colourGood;
@@ -447,11 +447,8 @@ public class GUIManager : MonoBehaviour
     {
         if (playerSide != null)
         {
-
+            //process all messages in pipeline (waits until each message done)
             ProcessInfoPipeline();
-
-
-            //wait until pipeline complete (coroutine)
 
             //decision
 
@@ -478,6 +475,7 @@ public class GUIManager : MonoBehaviour
             if ((MsgPipelineType)msgType != MsgPipelineType.None)
             {
                 waitUntilDone = false;
+
                 //find entry (if any) in dictionary
                 if (dictOfPipeline.ContainsKey((MsgPipelineType)msgType) == true)
                 {
@@ -488,6 +486,13 @@ public class GUIManager : MonoBehaviour
                         waitUntilDone = true;
                         //display outcome message
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
+                        //suspend operation until message complete
+                        /*myCoroutineInfoPipeline = StartCoroutine("InfoPipeline");*/
+                        while (waitUntilDone == true)
+                        { }
+                        //switch off coroutine
+                        if (myCoroutineInfoPipeline != null)
+                        { StopCoroutine(myCoroutineInfoPipeline); }
                     }
                     else { Debug.LogWarningFormat("Invalid ModalOutcomeDetails (Null) for \"{0}\"", (MsgPipelineType)msgType); }
                 }
@@ -496,12 +501,20 @@ public class GUIManager : MonoBehaviour
                     //not found
                     continue;
                 }
-
-
-
-                //wait until message is done
             }
         }
+    }
+
+
+    /// <summary>
+    /// Coroutine to wait until Compromised Gear interactive dialogue is complete
+    /// </summary>
+    /// <param name="playerSide"></param>
+    /// <returns></returns>
+    IEnumerator InfoPipeline()
+    {
+        yield return new WaitUntil(() => waitUntilDone == false);
+        yield return null;
     }
 
     /// <summary>
