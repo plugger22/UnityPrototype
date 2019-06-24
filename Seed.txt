@@ -1,0 +1,21 @@
+
+Dev seed 42413 -> Monday, 24 June 2019 2:39 PM
+City seed 890 -> Arles, France
+
+Dev seed 4966 -> Monday, 24 June 2019 2:40 PM
+City seed 890 -> Arles, France
+
+Dev seed 10772 -> Monday, 24 June 2019 3:19 PM
+City seed 890 -> Arles, France
+WARNING Gear Not found Work Permit, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4504)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1234)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1048)
+	
+Dev seed 59230 -> Monday, 24 June 2019 3:25 PM
+City seed 890 -> Arles, France
+
+Dev seed 20053 -> Monday, 24 June 2019 3:29 PM
+City seed 890 -> Arles, France

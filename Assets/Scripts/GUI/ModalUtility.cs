@@ -122,6 +122,7 @@ namespace modalAPI
         public ModalSubState modalState;       //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public bool isAction;               //true if an action has been used
         public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
+        public MsgPipelineType type;        //used for start of turn messages in message Queue (ignore for messages displayed during turn)
 
         public ModalOutcomeDetails()
         {
@@ -131,6 +132,7 @@ namespace modalAPI
             reason = "Unknown";
             side = GameManager.instance.sideScript.PlayerSide;
             sprite = GameManager.instance.guiScript.infoSprite;
+            type = MsgPipelineType.None;
         }
     }
 

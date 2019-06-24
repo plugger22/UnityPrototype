@@ -398,8 +398,6 @@ public class CityManager : MonoBehaviour
         //check if loyalty at limit
         if (_cityLoyalty == 0) { isAtLimit = true; isMinLoyalty = true; }
         else if (_cityLoyalty >= maxCityLoyalty) { isAtLimit = true; isMaxLoyalty = true; }
-
-
         //only check once per turn
         if (isAtLimit == true && isLoyaltyCheckedThisTurn == false)
         {

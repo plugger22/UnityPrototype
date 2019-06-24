@@ -6,6 +6,7 @@ using gameAPI;
 using TMPro;
 using modalAPI;
 using packageAPI;
+using System;
 
 /// <summary>
 /// Customises and Manages the main GUI
@@ -94,10 +95,12 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Used for Objectives")]
     public Sprite objectiveSprite;
 
-    private bool[] arrayIsBlocked;                                         //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
+    private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
                                                                       //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
     private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
+    [HideInInspector] public bool waitUntilDone;                        //flag to ensure nothing happens until
+    private Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = new Dictionary<MsgPipelineType, ModalOutcomeDetails>();           //handles message queue for start of turn information pipeline
 
     //colour palette 
     private string colourAlert;
@@ -399,6 +402,154 @@ public class GUIManager : MonoBehaviour
         { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
         //reactivate calling UI element
         EventManager.instance.PostNotification(showMeData.restoreEvent, this, null,  "GUIManager.cs -> ShowMeRestore");
+    }
+
+    //
+    // - - - Start of Turn Information Pipeline
+    //
+
+    /// <summary>
+    /// Empties out dictOfPipeline. Called by TurnManager.cs NewTurn prior to any endOfTurn/NewTurn processing
+    /// </summary>
+    public void InfoPipelineClear()
+    { dictOfPipeline.Clear(); }
+
+    /// <summary>
+    /// add a message to the pipeline. Note that only one message per MsgPipeLineType can be added to dict. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="details"></param>
+    public bool InfoPipeLineAdd(ModalOutcomeDetails details)
+    {
+        if (details != null)
+        {
+            if (details.type != MsgPipelineType.None)
+                {
+                //add to dictionary
+                try
+                {
+                    dictOfPipeline.Add(details.type, details);
+                    return true;
+                }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid details (Duplicate) for \"{0}\"", details.type); }
+            }
+            else { Debug.LogWarning("Invalid ModalOutcomeDetails (type of None)"); }
+        }
+        else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
+        return false;
+    }
+
+    /// <summary>
+    /// Commence processing info Pipeline (compromised gear has been taken care off)
+    /// </summary>
+    /// <param name="playerSide"></param>
+    public void InfoPipelineStart(GlobalSide playerSide)
+    {
+        if (playerSide != null)
+        {
+
+            ProcessInfoPipeline();
+
+
+            //wait until pipeline complete (coroutine)
+
+            //decision
+
+            //wait until decision complete
+
+            //Main info app
+            InitialiseInfoApp(playerSide);
+        }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
+    }
+
+    /// <summary>
+    /// Process message queue one by one in enum MsgPipelineType order
+    /// </summary>
+    private void ProcessInfoPipeline()
+    {
+        //process 
+        foreach (var msg in dictOfPipeline)
+        { Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineStart: \"{0}\" ModalOutcomeDetails in dictOfPipeline{1}", msg.Key, "\n"); }
+
+        //process pipeline -> loop enum list (messages displayed in enum order)
+        foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))
+        {
+            if ((MsgPipelineType)msgType != MsgPipelineType.None)
+            {
+                waitUntilDone = false;
+                //find entry (if any) in dictionary
+                if (dictOfPipeline.ContainsKey((MsgPipelineType)msgType) == true)
+                {
+                    ModalOutcomeDetails details = dictOfPipeline[(MsgPipelineType)msgType];
+                    if (details != null)
+                    {
+                        //Found
+                        waitUntilDone = true;
+                        //display outcome message
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
+                    }
+                    else { Debug.LogWarningFormat("Invalid ModalOutcomeDetails (Null) for \"{0}\"", (MsgPipelineType)msgType); }
+                }
+                else
+                {
+                    //not found
+                    continue;
+                }
+
+
+
+                //wait until message is done
+            }
+        }
+    }
+
+    /// <summary>
+    /// sets up and runs info app at start of turn
+    /// </summary>
+    /// <returns></returns>
+    public void InitialiseInfoApp(GlobalSide playerSide)
+    {
+        MainInfoData data = GameManager.instance.dataScript.UpdateCurrentItemData();
+        //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
+        ActorStatus playerStatus = GameManager.instance.playerScript.status;
+        if (playerStatus == ActorStatus.Active)
+        { EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
+        else
+        {
+            Sprite sprite = GameManager.instance.guiScript.errorSprite;
+            string text = "Unknown";
+            switch (playerStatus)
+            {
+                case ActorStatus.Captured:
+                    text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
+                    sprite = GameManager.instance.guiScript.capturedSprite;
+                    break;
+                case ActorStatus.Inactive:
+                    switch (GameManager.instance.playerScript.inactiveStatus)
+                    {
+                        case ActorInactive.Breakdown:
+                            text = string.Format("You are undergoing a {0}STRESS BREAKDOWN{1}", colourBad, colourEnd);
+                            sprite = GameManager.instance.guiScript.infoSprite;
+                            break;
+                        case ActorInactive.LieLow:
+                            text = string.Format("You are {0}LYING LOW{1}", colourNeutral, colourEnd);
+                            sprite = GameManager.instance.guiScript.infoSprite;
+                            break;
+                        case ActorInactive.StressLeave:
+                            text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
+                            sprite = GameManager.instance.guiScript.infoSprite;
+                            break;
+                    }
+                    break;
+            }
+            //Non-active status -> generate a message
+            ModalOutcomeDetails details = new ModalOutcomeDetails();
+            details.textTop = text;
+            details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
+            details.sprite = sprite;
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
     }
 
 }

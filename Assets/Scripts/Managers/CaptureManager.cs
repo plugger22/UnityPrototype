@@ -456,7 +456,9 @@ public class CaptureManager : MonoBehaviour
                     {
                         //update actor alpha
                         GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
-                        //actor released outcome window
+
+                        /* NO outcome message for release actor, infoApp and actor alpha change only (messes with end of turn messages otherwise)
+                         //actor released outcome window
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                         {
                             textTop = text,
@@ -465,7 +467,7 @@ public class CaptureManager : MonoBehaviour
                             isAction = false,
                             side = GameManager.instance.globalScript.sideResistance
                         };
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleaseActor");
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleaseActor");*/
                     }
                     else
                     {

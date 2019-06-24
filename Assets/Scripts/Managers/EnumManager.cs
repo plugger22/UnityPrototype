@@ -30,6 +30,7 @@
     public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     public enum DebugRegister { None, Ongoing, Actions }
+    public enum MsgPipelineType { None, CompromisedGear, Nemesis, ReleasePlayer, WinLose }            //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order)
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,

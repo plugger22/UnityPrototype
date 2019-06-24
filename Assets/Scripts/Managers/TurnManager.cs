@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
     #endregion
 
     private bool allowQuitting = false;
-    private Coroutine myCoroutineInfoApp;
+    private Coroutine myCoroutineInfoPipeline;
 
     //autorun
     private int numOfTurns = 0;
@@ -261,8 +261,10 @@ public class TurnManager : MonoBehaviour
             if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
             {
                 
-                //end the current turn
+                //pre-processing admin
                 haltExecution = false;
+                GameManager.instance.guiScript.InfoPipelineClear();
+                //end the current turn
                 EndTurnAI();
                 EndTurnEarly();
                 EndTurnLate();
@@ -281,7 +283,7 @@ public class TurnManager : MonoBehaviour
                             //switch off any node Alerts
                             GameManager.instance.alertScript.CloseAlertUI(true);
                             //info App displayed AFTER any end of turn Player interactions
-                            myCoroutineInfoApp = StartCoroutine("InfoApp", playerSide);
+                            myCoroutineInfoPipeline = StartCoroutine("InfoPipeline", playerSide);
                         }
                     }
                 }
@@ -295,15 +297,16 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+
     /// <summary>
-    /// Coroutine to delay initialisation and display of InfoApp until any end of turn player interaction is resolved, eg. Generic Picker for Compromised Gear
+    /// Coroutine to control start of turn Information Pipeline (waits until compromised gear taken care off)
     /// </summary>
     /// <param name="playerSide"></param>
     /// <returns></returns>
-    IEnumerator InfoApp(GlobalSide playerSide)
+    IEnumerator InfoPipeline(GlobalSide playerSide)
     {
         yield return new WaitUntil(() => haltExecution == false);
-        InitialiseInfoApp(playerSide);
+        GameManager.instance.guiScript.InfoPipelineStart(playerSide);
         yield return null;
     }
 
@@ -439,53 +442,7 @@ public class TurnManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.EndTurnLate, this, null, "TurnManager.cs -> EndTurnFinal");
     }
 
-    /// <summary>
-    /// sets up and runs info app at start of turn
-    /// </summary>
-    /// <returns></returns>
-    public void InitialiseInfoApp(GlobalSide playerSide)
-    {
-        MainInfoData data = GameManager.instance.dataScript.UpdateCurrentItemData();
-        //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
-        ActorStatus playerStatus = GameManager.instance.playerScript.status;
-        if ( playerStatus == ActorStatus.Active)
-        { EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
-        else
-        {
-            Sprite sprite = GameManager.instance.guiScript.errorSprite;
-            string text = "Unknown";
-            switch(playerStatus)
-            {
-                case ActorStatus.Captured:
-                    text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
-                    sprite = GameManager.instance.guiScript.capturedSprite;
-                    break;
-                case ActorStatus.Inactive:
-                    switch(GameManager.instance.playerScript.inactiveStatus)
-                    {
-                        case ActorInactive.Breakdown:
-                            text = string.Format("You are undergoing a {0}STRESS BREAKDOWN{1}", colourBad, colourEnd);
-                            sprite = GameManager.instance.guiScript.infoSprite;
-                            break;
-                        case ActorInactive.LieLow:
-                            text = string.Format("You are {0}LYING LOW{1}", colourNeutral, colourEnd);
-                            sprite = GameManager.instance.guiScript.infoSprite;
-                            break;
-                        case ActorInactive.StressLeave:
-                            text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
-                            sprite = GameManager.instance.guiScript.infoSprite;
-                            break;
-                    }
-                    break;
-            }
-            //Non-active status -> generate a message
-            ModalOutcomeDetails details = new ModalOutcomeDetails();
-            details.textTop = text;
-            details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
-            details.sprite = sprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
-        }
-    }
+
 
     public void ChangeSide(GlobalSide side)
     {
@@ -908,8 +865,8 @@ public class TurnManager : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ExitGame;
         //switch off main info app if running
-        if (myCoroutineInfoApp != null)
-        { StopCoroutine(myCoroutineInfoApp); }
+        if (myCoroutineInfoPipeline != null)
+        { StopCoroutine(myCoroutineInfoPipeline); }
         //show thank you splash screen before quitting
         if (SceneManager.GetActiveScene().name != "End_Game")
         { StartCoroutine("DelayedQuit"); }
