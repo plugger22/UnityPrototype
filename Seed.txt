@@ -167,3 +167,45 @@ City seed 890 -> Arles, France
 
 Dev seed 10542 -> Monday, 24 June 2019 10:40 AM
 City seed 890 -> Arles, France
+
+Dev seed 36250 -> Monday, 24 June 2019 11:18 AM
+City seed 890 -> Arles, France
+
+Dev seed 14349 -> Monday, 24 June 2019 11:20 AM
+City seed 5678 -> London, United Kingdom
+WARNING Duplicate Harbour district "Bank" in London DistrictTextList
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	LevelManager:InitialiseDistrictNames() (at Assets/Scripts/Managers/LevelManager.cs:1065)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:115)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:683)
+	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:827)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:416)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54128 -> Monday, 24 June 2019 11:22 AM
+City seed 890 -> Arles, France
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ValidationManager.ValidateCities () (at Assets/Scripts/Managers/ValidationManager.cs:323)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:24)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:708)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:764)
+	ControlManager.CloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:61)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 532 -> Monday, 24 June 2019 11:23 AM
+City seed 890 -> Arles, France

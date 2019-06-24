@@ -21,6 +21,7 @@ public class ValidationManager : MonoBehaviour
         ValidateGear();
         ValidateMissions();
         ValidateTextLists();
+        ValidateCities();
     }
 
     #region ValidateTargets
@@ -292,6 +293,41 @@ public class ValidationManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region ValidateCities
+    //checks that city speciality district names (icon, airport, harbour) aren't present in the cities list of DistrictNames
+    private void ValidateCities()
+    {
+        City[] arrayOfCities = GameManager.instance.loadScript.arrayOfCities;
+        if (arrayOfCities != null)
+        {
+            for (int i = 0; i < arrayOfCities.Length; i++)
+            {
+                City city = arrayOfCities[i];
+                if (city != null)
+                {
+                    if (city.iconDistrict != null)
+                    {
+                        if (city.districtNames.CheckItemPresent(city.iconDistrict) == true)
+                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCities: {0} iconDistrict \"{1}\", present in textList {2}{3}", city.tag, city.iconDistrict, city.districtNames.name, "\n"); }
+                    }
+                    if (city.airportDistrict != null)
+                    {
+                        if (city.districtNames.CheckItemPresent(city.airportDistrict) == true)
+                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCities: {0} airportDistrict \"{1}\", present in textList {2}{3}", city.tag, city.airportDistrict, city.districtNames.name, "\n"); }
+                    }
+                    if (city.harbourDistrict != null)
+                    {
+                        if (city.districtNames.CheckItemPresent(city.harbourDistrict) == true)
+                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCities: {0} harbourDistrict \"{1}\", present in textList {2}{3}", city.tag, city.harbourDistrict, city.districtNames.name, "\n"); }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid city (Null) in arrayOfCities[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfCities (Null)"); }
+    }
     #endregion
 
     #region Utilities

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,9 +25,18 @@ public class TextList : ScriptableObject
         int numOfRecords = randomList.Count;
         if (numOfRecords > 0)
         { return randomList[Random.Range(0, numOfRecords)]; }
-        else { Debug.LogErrorFormat("Invalid TextList Count (zero) for {0}", this.name); }
+        else { Debug.LogErrorFormat("Invalid TextList Count (zero) for {0}", name); }
         if (isNull == false)
         { return "Unknown"; }
         return null;
     }
+
+    /// <summary>
+    /// checks if a given item string is present in list. True if so, false otherwise
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool CheckItemPresent(string item)
+    { return randomList.Exists(x => x.Equals(item, System.StringComparison.Ordinal)); }
+
 }

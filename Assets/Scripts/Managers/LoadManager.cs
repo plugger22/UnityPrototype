@@ -37,7 +37,7 @@ public class LoadManager : MonoBehaviour
     public Nemesis[] arrayOfNemesis;
     public RebelLeader[] arrayOfRebelLeaders;
     
-    [Header("InitialiseStart -> ADD TO END OF ARRAYS ONLY")]
+    [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
     public Cure[] arrayOfCures;
     public TraitCategory[] arrayOfTraitCategories;
@@ -45,16 +45,16 @@ public class LoadManager : MonoBehaviour
     public SecretType[] arrayOfSecretTypes;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
-    [Header("TextLists -> Not stored. Do whatever")]
+    [Header("TextLists")]
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
     public TextList[] arrayOfShortTextLists;
 
-    [Header("TextList -> ADD TO END OF ARRAYS ONLY")]
+    [Header("TextList")]
     public NameSet[] arrayOfNameSets;
 
-    [Header("InitialiseEarly -> ADD TO END OF ARRAYS ONLY")]
+    [Header("InitialiseEarly")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
@@ -66,14 +66,14 @@ public class LoadManager : MonoBehaviour
     public GearRarity[] arrayOfGearRarity;
     public GearType[] arrayOfGearType;
 
-    [Header("Targets -> NAME is key")]
+    [Header("Targets")]
     public Target[] arrayOfTargetsGeneric;
     public Target[] arrayOfTargetsCity;
     public Target[] arrayOfTargetsVIP;
     public Target[] arrayOfTargetsStory;
     public Target[] arrayOfTargetsGoal;
 
-    [Header("Sprites -> NAME is key")]
+    [Header("Sprites")]
     public Sprite[] arrayOfGearSprites;
     public Sprite[] arrayOfGlobalSprites;
     public Sprite[] arrayOfNodeArcSprites;
@@ -81,7 +81,7 @@ public class LoadManager : MonoBehaviour
     public Sprite[] arrayOfTargetSprites;
     public Sprite[] arrayOfTeamSprites;
 
-    [Header("InitialiseEarly -> ADD TO END OF ARRAYS ONLY")]
+    [Header("InitialiseEarly")]
     public ManageActor[] arrayOfManageActors;
     public ManageAction[] arrayOfManageActions;
     public ActorConflict[] arrayOfActorConflicts;

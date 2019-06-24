@@ -744,7 +744,7 @@ public class ActorManager : MonoBehaviour
         return null;
     }
 
-
+    #region GetNodeActions
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
     /// Resistance -> Max 4 Actor + 1 Target actions with an additional 'Cancel' buttnn added last automatically -> total six buttons (hardwired into GUI design)
@@ -777,6 +777,8 @@ public class ActorManager : MonoBehaviour
             List<Effect> listOfEffects = new List<Effect>();
             Action tempAction;
             EventButtonDetails details;
+
+            #region Resistance
             //
             // - - - Resistance - - -
             //
@@ -1092,6 +1094,9 @@ public class ActorManager : MonoBehaviour
                     infoBuilder.Append("No Subordinates present");
                 }
             }
+            #endregion
+
+            #region Authority
             //
             // - - - Authority - - -
             //
@@ -1306,6 +1311,9 @@ public class ActorManager : MonoBehaviour
                     infoBuilder.Append("No Ministers present");
                 }
             }
+            #endregion
+
+            #region Cancel
             //
             // - - - Cancel
             //
@@ -1337,12 +1345,16 @@ public class ActorManager : MonoBehaviour
             }
             //add Cancel button to list
             tempList.Add(cancelDetails);
+            #endregion
+
         }
         else { Debug.LogError(string.Format("Invalid Node (null), ID {0}{1}", nodeID, "\n")); }
         return tempList;
     }
+    #endregion
 
 
+    #region GetActorActions
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
     /// Resistance only -> up to 3 x 'Give (or Take) Gear to Actor', 1 x'Activate' / Lie Low', 1 x 'Manage' and an automatic Cancel button (6 total)
@@ -1352,6 +1364,8 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetActorActions(int actorSlotID)
     {
+
+        #region SetUp
         string sideColour, tooltipText, title;
         string cancelText = null;
         int benefit;
@@ -1371,6 +1385,8 @@ public class ActorManager : MonoBehaviour
         else { sideColour = colourResistance; isResistance = true; }
         //get actor
         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, playerSide);
+        #endregion
+
         //if actor is Null, a single button (Cancel) menu is still provided
         if (actor != null)
         {
@@ -1379,6 +1395,8 @@ public class ActorManager : MonoBehaviour
             switch (actor.Status)
             {
                 case ActorStatus.Active:
+
+                    #region Manage (both sides)
                     //
                     // - - - Manage (both sides) - - - 
                     //
@@ -1398,6 +1416,9 @@ public class ActorManager : MonoBehaviour
                     };
                     //add Manage button to list
                     tempList.Add(dismissDetails);
+                    #endregion
+
+                    #region Resistance
                     //
                     // - - - Resistance - - -
                     //
@@ -1451,6 +1472,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //actor invisiblity at max
                             infoBuilder.AppendFormat("{0} Invisibility at Max and can't Lie Low", actor.arc.name);
+
                             //
                             // - - - Stress Leave - - -
                             //
@@ -1699,6 +1721,9 @@ public class ActorManager : MonoBehaviour
                             }
                         }
                     }
+                    #endregion
+
+                    #region Authority
                     //
                     // - - - Authority - - -
                     //
@@ -1734,11 +1759,15 @@ public class ActorManager : MonoBehaviour
                         else
                         { infoBuilder.AppendFormat("Need to be {0}Stressed{1} in order to take Leave", colourNeutral, colourEnd); }
                     }
+                    #endregion
+
                     break;
                 //
                 // - - - Actor Inactive - - -
                 //
                 case ActorStatus.Inactive:
+
+                    #region Resistance
                     //
                     // - - - Resistance - - -
                     //
@@ -1779,17 +1808,25 @@ public class ActorManager : MonoBehaviour
                         else
                         { infoBuilder.AppendFormat("Won't Activate as {0}Spooked{1} (Trait) due to Security Measures", colourNeutral, colourEnd); }
                     }
+                    #endregion
+
                     break;
-                //
-                // - - - Actor Captured or other - - -
-                //
+
                 default:
+
+                    #region Actor Captured or other
+                    //
+                    // - - - Actor Captured or other - - -
+                    //
                     cancelText = string.Format("{0}Actor is \"{1}\" and out of contact{2}", colourBad, actor.Status, colourEnd);
+                    #endregion
+
                     break;
             }
         }
         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }
 
+        #region Cancel
         //Debug
         if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
         //
@@ -1839,9 +1876,12 @@ public class ActorManager : MonoBehaviour
         }
         //add Cancel button to list
         tempList.Add(cancelDetails);
+        #endregion
 
         return tempList;
     }
+    #endregion
+
 
     /// <summary>
     /// Right click Player sprite Action menu
