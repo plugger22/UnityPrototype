@@ -487,9 +487,9 @@ public class GUIManager : MonoBehaviour
                         //display outcome message
                         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
                         //suspend operation until message complete
-                        /*myCoroutineInfoPipeline = StartCoroutine("InfoPipeline");*/
-                        while (waitUntilDone == true)
-                        { }
+                        myCoroutineInfoPipeline = StartCoroutine("InfoPipeline");
+                        /*while (waitUntilDone == true)
+                        { }*/
                         //switch off coroutine
                         if (myCoroutineInfoPipeline != null)
                         { StopCoroutine(myCoroutineInfoPipeline); }
