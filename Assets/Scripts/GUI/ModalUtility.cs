@@ -89,8 +89,8 @@ namespace modalAPI
         public bool isCustomise;
         public bool isFeedback;
         public bool isCredits;
+        public bool isInformation;
         public bool isExit;
-        public bool isCancel;
 
         public ModalMainMenuDetails()
         {
@@ -103,8 +103,8 @@ namespace modalAPI
             isFeedback = true;
             isCustomise = true;
             isCredits = true;
+            isInformation = true;
             isExit = true;
-            isCancel = true;
         }
     }
 

@@ -47,9 +47,11 @@ public class ModalMainMenu : MonoBehaviour
     private GameState gameState;                                //GameState to return to if main menu closed
     private ModalSubState modalState;                          //modal state to return to if main menu closed
 
-    //colour palette
-    /*private string colourEffects;
-    private string colourEnd;*/
+    //colours
+    string colourNormal;
+    string colourAlert;
+    string colourSide;
+    string colourEnd;
 
     private static ModalMainMenu modalMainMenu;
 
@@ -82,17 +84,6 @@ public class ModalMainMenu : MonoBehaviour
         Debug.Assert(button10Text != null, "Invalid button10Text (Null)");
     }
 
-    /// <summary>
-    /// initialisation
-    /// </summary>
-    private void Start()
-    {
-        /*offset = GameManager.instance.tooltipScript.tooltipOffset * 2;*/
-
-        //register listener
-        EventManager.instance.AddListener(EventType.OpenMainMenu, OnEvent, "ModalMainMenu");
-        EventManager.instance.AddListener(EventType.CloseMainMenu, OnEvent, "ModalMainMenu");
-    }
 
     /// <summary>
     /// Static instance so the Modal Menu can be accessed from any script
@@ -110,6 +101,46 @@ public class ModalMainMenu : MonoBehaviour
     }
 
     /// <summary>
+    /// Initialise (Global method)
+    /// </summary>
+    /// <param name="state"></param>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.StartUp:
+                SubInitialiseAll();
+                SubInitialiseEvents();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
+        SetColours();
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.instance.AddListener(EventType.OpenMainMenu, OnEvent, "ModalMainMenu");
+        EventManager.instance.AddListener(EventType.CloseMainMenu, OnEvent, "ModalMainMenu");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NodeManager");
+    }
+    #endregion
+
+    #endregion
+
+    /// <summary>
     /// Event Handler
     /// </summary>
     /// <param name="eventType"></param>
@@ -120,6 +151,9 @@ public class ModalMainMenu : MonoBehaviour
         //select event type
         switch(eventType)
         {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             case EventType.OpenMainMenu:
                 CreateDefaultMainMenu();
                 break;
@@ -130,6 +164,17 @@ public class ModalMainMenu : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// Set colour palette for tooltip
+    /// </summary>
+    public void SetColours()
+    {
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -144,7 +189,9 @@ public class ModalMainMenu : MonoBehaviour
             ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
             {
                 alignHorizontal = AlignHorizontal.Centre,
-                background = Background.None
+                background = Background.None,
+                isCustomise = false,
+                isCredits = false
             };
             //activate menu
             InitialiseMainMenu(detailsMain);
@@ -337,9 +384,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button0 = new EventButtonDetails()
             {
                 buttonTitle = "Resume",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Resume{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Return to Game{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}HQ are wondering where you've gone{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.ResumeGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button0);
@@ -350,9 +397,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button1 = new EventButtonDetails()
             {
                 buttonTitle = "New Game",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}New Game{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Start a new game{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}HQ are keen to get moving{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.CreateNewGame, this, null, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button1);
@@ -363,9 +410,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button2 = new EventButtonDetails()
             {
                 buttonTitle = "Load Game",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Load Game{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Load a saved game{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}HQ would like now how you manage that trick?{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.LoadGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button2);
@@ -376,9 +423,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button3 = new EventButtonDetails()
             {
                 buttonTitle = "Save Game",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Save Game{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Save your current game{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}HQ are working on uploading memories{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.SaveGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button3);
@@ -389,9 +436,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button4 = new EventButtonDetails()
             {
                 buttonTitle = "Options",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Options{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Game Options{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}It's good to have options{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.CreateOptions, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button4);
@@ -402,9 +449,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button5 = new EventButtonDetails()
             {
                 buttonTitle = "Feedback",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Feedback{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Send Feedback on bugs or design{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}All feedback, good or bad, is much appreciated{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button5);
@@ -415,9 +462,9 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button6 = new EventButtonDetails()
             {
                 buttonTitle = "Customise",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Customise{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Personalise the game environment in an easy to use manner{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}Who doesn't like to do things there way?{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button6);
@@ -428,36 +475,36 @@ public class ModalMainMenu : MonoBehaviour
             EventButtonDetails button7 = new EventButtonDetails()
             {
                 buttonTitle = "Credits",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
+                buttonTooltipHeader = string.Format("{0}Credits{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}The cast of thousands who made this mighty game{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}Make yourself a cuppa and then sit back and roll the Credits{1}", colourAlert, colourEnd),
                 action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button7);
         }
         //Exit button
-        if (detailsMain.isExit == true)
+        if (detailsMain.isInformation == true)
         {
             EventButtonDetails button8 = new EventButtonDetails()
             {
-                buttonTitle = "EXIT",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.ExitGame, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                buttonTitle = "Information",
+                buttonTooltipHeader = string.Format("{0}Information{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Find info on Game Mechanics and Game Design{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}Information is Power{1}", colourAlert, colourEnd),
+                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button8);
         }
         //Cancel button
-        if (detailsMain.isCancel == true)
+        if (detailsMain.isExit == true)
         {
             EventButtonDetails button9 = new EventButtonDetails()
             {
-                buttonTitle = "CANCEL",
-                buttonTooltipHeader = "Placeholder",
-                buttonTooltipMain = "Placeholder",
-                buttonTooltipDetail = "Placeholder",
-                action = () => { EventManager.instance.PostNotification(EventType.CloseMainMenu, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                buttonTitle = "EXIT",
+                buttonTooltipHeader = string.Format("{0}EXIT{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Leave the game and exit to the desktop{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}HQ will hold the fort until you return{1}", colourAlert, colourEnd),
+                action = () => { EventManager.instance.PostNotification(EventType.ExitGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button9);
         }

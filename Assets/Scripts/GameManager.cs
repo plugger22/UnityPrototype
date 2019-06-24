@@ -412,6 +412,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = modalGUIScript.Initialise;
         startMethod.className = "ModalGUI";
         listOfGlobalMethods.Add(startMethod);
+        //ModalMainMenu Manager -> after Colour Manager
+        startMethod.handler = mainMenuScript.Initialise;
+        startMethod.className = "MainMenuManager";
+        listOfGlobalMethods.Add(startMethod);
         //Actor Manager -> PreInitialise
         startMethod.handler = actorScript.PreInitialiseActors;
         startMethod.className = "ActorManager";
@@ -729,7 +733,6 @@ public class GameManager : MonoBehaviour
             alignHorizontal = AlignHorizontal.Centre,
             background = Background.Start,
             isResume = false,
-            isCancel = false
         };
         //activate menu
         mainMenuScript.InitialiseMainMenu(detailsMain);

@@ -138,3 +138,32 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 46877 -> Monday, 24 June 2019 9:27 AM
 City seed 890 -> Arles, France
+
+Dev seed 5405 -> Monday, 24 June 2019 9:55 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54944 -> Monday, 24 June 2019 10:03 AM
+City seed 890 -> Arles, France
+
+Dev seed 13663 -> Monday, 24 June 2019 10:17 AM
+ERROR No colour present for normalText with ColourScheme Normal (Null). Return default WHITE
+UnityEngine.Debug:LogError(Object)
+	ColourManager:GetColour(ColourType) (at Assets/Scripts/Managers/ColourManager.cs:139)
+	ModalMainMenu:SetColours() (at Assets/Scripts/GUI/ModalMainMenu.cs:145)
+	ModalMainMenu:Start() (at Assets/Scripts/GUI/ModalMainMenu.cs:96)
+	ERROR No colour present for alertText with ColourScheme Normal (Null). Return default WHITE
+UnityEngine.Debug:LogError(Object)
+	ColourManager:GetColour(ColourType) (at Assets/Scripts/Managers/ColourManager.cs:139)
+	ModalMainMenu:SetColours() (at Assets/Scripts/GUI/ModalMainMenu.cs:146)
+	ModalMainMenu:Start() (at Assets/Scripts/GUI/ModalMainMenu.cs:96)
+	ERROR No colour present for sideRebel with ColourScheme Normal (Null). Return default WHITE
+UnityEngine.Debug:LogError(Object)
+	ColourManager:GetColour(ColourType) (at Assets/Scripts/Managers/ColourManager.cs:139)
+	ModalMainMenu:SetColours() (at Assets/Scripts/GUI/ModalMainMenu.cs:147)
+	ModalMainMenu:Start() (at Assets/Scripts/GUI/ModalMainMenu.cs:96)
+	
+Dev seed 9882 -> Monday, 24 June 2019 10:27 AM
+City seed 890 -> Arles, France
+
+Dev seed 10542 -> Monday, 24 June 2019 10:40 AM
+City seed 890 -> Arles, France
