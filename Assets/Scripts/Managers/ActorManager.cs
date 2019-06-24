@@ -754,6 +754,8 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetNodeActions(int nodeID)
     {
+
+        #region SetUp
         string sideColour;
         string cancelText = null;
         string effectCriteria;
@@ -770,6 +772,8 @@ public class ActorManager : MonoBehaviour
         StringBuilder infoBuilder = new StringBuilder();
         //player's current node
         int playerID = GameManager.instance.nodeScript.nodePlayer;
+        #endregion
+
         //Get Node
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
@@ -1883,12 +1887,14 @@ public class ActorManager : MonoBehaviour
     #endregion
 
 
+    #region GetPlayerActions
     /// <summary>
     /// Right click Player sprite Action menu
     /// </summary>
     /// <returns></returns>
     public List<EventButtonDetails> GetPlayerActions()
     {
+        #region SetUp
         string sideColour, colourEffect, tooltipText, effectCriteria;
         string playerName = GameManager.instance.playerScript.PlayerName;
         int numOfTurns;
@@ -1905,6 +1911,9 @@ public class ActorManager : MonoBehaviour
         if (playerSide.level == globalAuthority.level)
         { sideColour = colourAuthority; isResistance = false; }
         else { sideColour = colourResistance; isResistance = true; }
+        #endregion
+
+        #region Resistance
         //
         // - - - Resistance - - -
         //
@@ -2135,6 +2144,9 @@ public class ActorManager : MonoBehaviour
                     break;
             }
         }
+        #endregion
+
+        #region Authority
         //
         // - - - Authority actions - - -
         //
@@ -2198,6 +2210,9 @@ public class ActorManager : MonoBehaviour
             { infoBuilder.AppendFormat("{0}No Leave possible as not Stressed{1}", colourAlert, colourEnd); }
 
         }
+        #endregion
+
+        #region Cancel
         //
         // - - - Cancel - - - (both sides)
         //
@@ -2230,10 +2245,14 @@ public class ActorManager : MonoBehaviour
         }
         //add Cancel button to list
         tempList.Add(cancelDetails);
+        #endregion
+
         return tempList;
     }
+    #endregion
 
 
+    #region GetGearInventoryActions
     /// <summary>
     /// Returns a list of all relevant actions for Gear in the player's Inventory (right click gear sprite in inventory)
     /// Resistance only -> up to 4 x 'Give Gear to Actor', 1 x 'Use' (if there is a viable use gear action), 1 x Cancel
@@ -2253,6 +2272,7 @@ public class ActorManager : MonoBehaviour
             Gear gear = GameManager.instance.dataScript.GetGear(gearName);
             if (gear != null)
             {
+                #region Use
                 //
                 // - - - Use - - -
                 //
@@ -2340,6 +2360,9 @@ public class ActorManager : MonoBehaviour
                 }
                 else
                 { infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd); }
+                #endregion
+
+                #region Give To
                 //
                 // - - - Give to - - -
                 //
@@ -2426,11 +2449,14 @@ public class ActorManager : MonoBehaviour
                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                     infoBuilder.AppendFormat("{0}{1}{2} can't be gifted{3}{4}(Used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
                 }
+                #endregion
             }
             else
             {
                 Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName));
             }
+
+            #region Cancel
             //Debug
             if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
             //
@@ -2480,12 +2506,15 @@ public class ActorManager : MonoBehaviour
             }
             //add Cancel button to list
             eventList.Add(cancelDetails);
+            #endregion
         }
         else { Debug.LogError("Invalid gearName (Null)"); }
         return eventList;
     }
+    #endregion
 
 
+    #region GetReservePoolActions
     /// <summary>
     /// Returns a list of all relevant actions an Actor in the Reserve Pool (right click actor sprite in inventory)
     /// Both sides -> 1 x Active Duty, 1 x Let Go / Fire (unhappy), 1 x Reassure,  1 x Cancel
@@ -2494,6 +2523,7 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     public List<EventButtonDetails> GetReservePoolActions(int actorID)
     {
+        #region SetUp
         //return list of button details
         List<EventButtonDetails> eventList = new List<EventButtonDetails>();
         //Cancel button tooltip (handles all no go cases)
@@ -2514,11 +2544,15 @@ public class ActorManager : MonoBehaviour
         actorActionDetails.modalLevel = 2;
         actorActionDetails.modalState = ModalSubState.Inventory;
         actorActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+        #endregion
+
         //actor
         Actor actor = GameManager.instance.dataScript.GetActor(actorID);
         if (actor != null)
         {
             cancelText = string.Format("{0} {1}", actor.arc.name, actor.actorName);
+
+            #region ActiveDuty
             //
             // - - - Active Duty - - -
             //
@@ -2571,6 +2605,9 @@ public class ActorManager : MonoBehaviour
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.AppendFormat("{0}Active Duty not possible as there are no vacancies.{1}", colourCancel, colourEnd);
             }
+            #endregion
+
+            #region Reassure
             //
             // - - - Reassure - - -
             //
@@ -2625,6 +2662,9 @@ public class ActorManager : MonoBehaviour
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.AppendFormat("{0}Can't Reassure if Unhappy.{1}", colourBad, colourEnd);
             }
+            #endregion
+
+            #region Let Go
             //
             // - - - Let go - - -
             //
@@ -2660,6 +2700,9 @@ public class ActorManager : MonoBehaviour
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.AppendFormat("{0}Can't Let Go if Unhappy.{1}", colourBad, colourEnd);
             }
+            #endregion
+
+            #region Bully
             //
             // - - - Bully - - -
             //
@@ -2711,7 +2754,9 @@ public class ActorManager : MonoBehaviour
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.AppendFormat("{0}Can't Bully if Unhappy.{1}", colourBad, colourEnd);
             }
+            #endregion
 
+            #region Fire/Dismiss
             //
             // - - - Fire (Dismiss) - - -
             //
@@ -2751,12 +2796,15 @@ public class ActorManager : MonoBehaviour
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                 infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}{3})", colourBad, renownCost, playerRenown, colourEnd);
             }
+            #endregion
+
         }
         else
         { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+
+        #region Cancel
         //Debug
         if (string.IsNullOrEmpty(cancelText)) { cancelText = "Unknown"; }
-
         //
         // - - - Cancel - - - (both sides)
         //
@@ -2805,8 +2853,11 @@ public class ActorManager : MonoBehaviour
         }
         //add Cancel button to list
         eventList.Add(cancelDetails);
+        #endregion
+
         return eventList;
     }
+    #endregion
 
 
     /// <summary>
