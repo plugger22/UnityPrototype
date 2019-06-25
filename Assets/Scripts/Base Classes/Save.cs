@@ -150,7 +150,7 @@ public class SavePlayerData
     public bool isEndOfTurnGearCheck;
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
-    public int[] personality;
+    public List<int> listOfPersonalityFactors = new List<int>();
     public List<string> listOfGear = new List<string>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditionsResistance = new List<string>();
@@ -476,7 +476,6 @@ public class SaveActor
     public string arcName;
     //public Trait trait;
     public string traitName;
-    public int[] personality;
     //data that can be ignored if actor is in Recruit Pool
     public int Renown;
     public int unhappyTimer;
@@ -499,6 +498,7 @@ public class SaveActor
     public int gearTimer;
     public int gearTimesTaken;
     //collections
+    public List<int> listOfPersonalityFactors = new List<int>();
     public List<int> listOfTeams = new List<int>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditions = new List<string>();   

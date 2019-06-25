@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionWounded;
     private Condition conditionImaged;
 
-    
+
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
@@ -483,7 +483,7 @@ public class PlayerManager : MonoBehaviour
                     return true;
                 }
                 else
-                { Debug.LogWarningFormat("Gear \'{0}\", is already present in Player inventory", gear.tag);  }
+                { Debug.LogWarningFormat("Gear \'{0}\", is already present in Player inventory", gear.tag); }
             }
             else
             { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
@@ -762,7 +762,7 @@ public class PlayerManager : MonoBehaviour
                         case "IMAGED":
                             GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
                             break;
-                    }               
+                    }
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                     {
@@ -1029,7 +1029,7 @@ public class PlayerManager : MonoBehaviour
                     //reset secret known
                     secret.ResetSecret();
                     //add to correct list
-                    switch(secret.status)
+                    switch (secret.status)
                     {
                         case gameAPI.SecretStatus.Revealed:
                             //revealed secret
@@ -1062,7 +1062,7 @@ public class PlayerManager : MonoBehaviour
         {
             //copy all Inactive secrets across to another list
             List<Secret> tempList = new List<Secret>();
-            foreach(Secret secret in listOfPlayerSecrets)
+            foreach (Secret secret in listOfPlayerSecrets)
             {
                 if (secret != null)
                 { tempList.Add(secret); }
@@ -1090,7 +1090,7 @@ public class PlayerManager : MonoBehaviour
     {
         Secret secret = null;
         int numOfSecrets = listOfSecrets.Count;
-        if ( numOfSecrets > 0)
+        if (numOfSecrets > 0)
         { secret = listOfSecrets[Random.Range(0, numOfSecrets)]; }
         return secret;
     }
@@ -1109,7 +1109,7 @@ public class PlayerManager : MonoBehaviour
         if (listOfSecrets.Count > 0)
         {
             foreach (Secret secret in listOfSecrets)
-                { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.name, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
+            { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.name, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
         }
         else { builder.AppendFormat("{0} No records", "\n"); }
         return builder.ToString();
@@ -1266,7 +1266,7 @@ public class PlayerManager : MonoBehaviour
         {
             List<Secret> tempList = new List<Secret>();
             //put all inactive player secrets into the list to enable a random pick
-            foreach(var secret in listOfSecrets)
+            foreach (var secret in listOfSecrets)
             {
                 if (secret.status == gameAPI.SecretStatus.Inactive)
                 { tempList.Add(secret); }
@@ -1344,6 +1344,21 @@ public class PlayerManager : MonoBehaviour
         else { Debug.LogError("Invalid side (Null)"); }
         return "Unknown Name";
     }
+
+
+    //
+    // - - - Personality
+    //
+
+    public Personality GetPersonality()
+    { return personality; }
+
+    /// <summary>
+    /// Set personality factors (SetFactors handles all error and range checks)
+    /// </summary>
+    /// <param name="personality"></param>
+    public void SetPersonalityFactors(List<int> listOfFactors)
+    { personality.SetFactors(listOfFactors.ToArray()); }
 
     //place new methods above here
 }

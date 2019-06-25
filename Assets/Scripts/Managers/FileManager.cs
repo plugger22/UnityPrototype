@@ -267,6 +267,10 @@ public class FileManager : MonoBehaviour
         write.playerData.isEndOfTurnGearCheck = GameManager.instance.playerScript.isEndOfTurnGearCheck;
         write.playerData.isLieLowFirstturn = GameManager.instance.playerScript.isLieLowFirstturn;
         write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
+        Personality personality = GameManager.instance.playerScript.GetPersonality();
+        if (personality != null)
+        { write.playerData.listOfPersonalityFactors = personality.GetFactors().ToList(); }
+        else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //secrets
         List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
         foreach (Secret secret in listOfSecrets)
@@ -1411,6 +1415,9 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
         GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
         GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
+        if (GameManager.instance.playerScript.GetPersonality() != null)
+        { GameManager.instance.playerScript.SetPersonalityFactors(read.playerData.listOfPersonalityFactors); }
+        else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //gear
         List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
         listOfGear.Clear();
@@ -2177,7 +2184,9 @@ public class FileManager : MonoBehaviour
                     actor.actorBlackmailTimerHigh = read.actorData.actorBlackmailTimerHigh;
                     actor.actorBlackmailTimerLow = read.actorData.actorBlackmailTimerLow;
                     actor.maxNumOfSecrets = read.actorData.maxNumOfSecrets;
-
+                    if (actor.GetPersonality() != null)
+                    { actor.SetPersonalityFactors(readActor.listOfPersonalityFactors); }
+                    else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
                     //data which can be ignored (default values O.K) if actor is in the Recruit Pool
                     if (actor.Status != ActorStatus.RecruitPool)
                     {
@@ -3145,6 +3154,10 @@ public class FileManager : MonoBehaviour
         saveActor.firstName = actor.firstName;
         saveActor.spriteName = actor.spriteName;
         saveActor.arcName = actor.arc.name;
+        Personality personality = actor.GetPersonality();
+        if (personality != null)
+        { saveActor.listOfPersonalityFactors = personality.GetFactors().ToList(); }
+        else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }
         Trait trait = actor.GetTrait();
         if (trait != null)
         { saveActor.traitName = trait.name; }
