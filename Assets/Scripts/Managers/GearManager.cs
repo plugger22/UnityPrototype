@@ -421,7 +421,8 @@ public class GearManager : MonoBehaviour
                     else
                     {
                         //not enough renown -> remove gear and reset stats
-                        ProcessCompromisedGear(null);
+                        /*ProcessCompromisedGear(null);*/
+                        GameManager.instance.playerScript.UpdateGear();
                         //outcome dialogue
                         ModalOutcomeDetails details = new ModalOutcomeDetails();
                         StringBuilder builderTop = new StringBuilder();
@@ -437,6 +438,7 @@ public class GearManager : MonoBehaviour
                             builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
                         }
                         details.textBottom = builderBottom.ToString();
+                        /*EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> ProcessCompromisedGear");*/
 
                         //add to start of turn info Pipeline
                         details.type = MsgPipelineType.CompromisedGear;
@@ -1089,7 +1091,7 @@ public class GearManager : MonoBehaviour
                 builderTop.AppendFormat("{0}You used {1}{2}{3}{4}{5} Renown to Save gear{6}", colourNormal, colourEnd, colourNeutral, gearSaveCurrentCost, colourEnd,
                     colourNormal, colourEnd);
                 details.textTop = builderTop.ToString();
-                StringBuilder builderBottom = new StringBuilder();                
+                StringBuilder builderBottom = new StringBuilder();
                 foreach (string gearName in listOfCompromisedGear)
                 {
                     //listOfCompromisedGear is gear.tag.ToUpper(), not gear.name
@@ -1114,6 +1116,20 @@ public class GearManager : MonoBehaviour
         {
             //End of turn compromised Gear dialogue has been Cancelled
             GameManager.instance.playerScript.UpdateGear();
+            //outcome dialogue
+            ModalOutcomeDetails details = new ModalOutcomeDetails();
+            StringBuilder builderTop = new StringBuilder();
+            builderTop.AppendFormat("{0}Gear used this turn has been {1}{2}COMPROMISED{3}{4}", colourNormal, colourEnd, colourBad, colourEnd, "\n");
+            builderTop.AppendFormat("{0}You have {1}{2}{3}chosen NOT to save gear{4}{5}", colourNormal, colourEnd, "\n", colourAlert, colourEnd, "\n");
+            details.textTop = builderTop.ToString();
+            StringBuilder builderBottom = new StringBuilder();
+            foreach (string gearName in listOfCompromisedGear)
+            {
+                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
+            }
+            details.textBottom = builderBottom.ToString();
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> ProcessCompromisedGear");
         }
     }
 

@@ -56,3 +56,53 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 24410 -> Tuesday, 25 June 2019 3:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 24 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:514)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 22 records for tab 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:514)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Duplicate record exists for MainInfoData turn 25
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:535)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 36580 -> Tuesday, 25 June 2019 3:17 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:514)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Duplicate record exists for MainInfoData turn 22
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:535)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 48090 -> Tuesday, 25 June 2019 3:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19319 -> Tuesday, 25 June 2019 3:24 PM
+City seed 890 -> Arles, France
+
+Dev seed 11819 -> Tuesday, 25 June 2019 3:28 PM
+City seed 890 -> Arles, France
+WARNING Gear "Work Permit", not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4645)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1241)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1048)
+	

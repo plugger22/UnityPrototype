@@ -328,7 +328,7 @@ public class TurnManager : MonoBehaviour
         //outcome dialogue -> Compromised Gear
         details = new ModalOutcomeDetails();
         builderTop = new StringBuilder();
-        builderTop.AppendFormat("{0}Gear used this turn has been {1}{2}COMPROMISED{3}{4}", colourNormal, colourEnd, colourBad, colourEnd, "\n");
+        builderTop.AppendFormat("{0}Gear used this turn has been {1}{2}WIN!!!{3}{4}", colourNormal, colourEnd, colourBad, colourEnd, "\n");
         builderTop.AppendFormat("{0}You have {1}{2}{3}Insufficient Renown{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
         builderTop.AppendFormat("<size=85%>({0}{1}{2} needed)</size>{3}", colourNeutral, "2", colourEnd, "\n");
         builderTop.AppendFormat("{0}to {1}{2}Save{3}{4} any gear{5}", colourNormal, colourEnd, colourGood, colourEnd, colourNormal, colourEnd);
@@ -338,7 +338,7 @@ public class TurnManager : MonoBehaviour
         builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, "Work Permit", colourEnd, colourBad, colourEnd);
         details.textBottom = builderBottom.ToString();
         //add to start of turn info Pipeline
-        details.type = MsgPipelineType.CompromisedGear;
+        details.type = MsgPipelineType.WinLose;
         if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
         { Debug.LogWarningFormat("Compromised Gear infoPipeline message FAILED to be added to dictOfPipeline"); }
     }
