@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 114843761391076242}
   - component: {fileID: 114258654278774664}
   - component: {fileID: 114183753687402266}
+  - component: {fileID: 114309057188216108}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -579,6 +580,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a001b68021fc9314fad7786c5b9fa288, type: 2}
   actorAction:
   - {fileID: 11400000, guid: ef292ef9ea6cd594188c88c76ba62540, type: 2}
+--- !u!114 &114309057188216108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e845b2dac7af34c87408ccfde15679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1738,7 +1750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxNumOfGear: 3
   chanceOfRareGear: 5
-  chanceOfCompromise: 71
+  chanceOfCompromise: 50
   gearSwapBaseAmount: 1
   gearSwapPreferredAmount: 1
   gearSaveBaseCost: 2
@@ -2186,7 +2198,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   seedDev: 0
   isAuthority: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   isPerformanceLog: 1
   isValidateData: 1
   isValidateSO: 1

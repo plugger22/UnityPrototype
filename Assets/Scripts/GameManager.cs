@@ -25,80 +25,80 @@ public class GameManager : MonoBehaviour
 {
 
     #region Components
-    public static GameManager instance = null;      //static instance of GameManager which allows it to be accessed by any other script
-    [HideInInspector] public StartManager startScript;                //Start Manager
-    [HideInInspector] public LevelManager levelScript;                //Level Manager
-    [HideInInspector] public PreLoadManager preloadScript;            //PreLoad Manager
-    [HideInInspector] public LoadManager loadScript;                  //Load Manager
-    [HideInInspector] public MetaManager metaScript;                  //Meta Manager
-    [HideInInspector] public DataManager dataScript;                  //Data Manager
-    [HideInInspector] public StatisticManager statScript;             //Statistics Manager
-    [HideInInspector] public GUIManager guiScript;                    //GUI Manager
-    [HideInInspector] public GlobalManager globalScript;              //Global Manager
-    [HideInInspector] public TooltipManager tooltipScript;            //Tooltip Manager
-    //[HideInInspector] public ScenarioManager scenarioScript;          //Scenario Manager
-    [HideInInspector] public CampaignManager campaignScript;          //Campaign Manager
-    [HideInInspector] public ControlManager controlScript;            //Control Manager
-    [HideInInspector] public FileManager fileScript;                  //File Manager
-    [HideInInspector] public NewsManager newsScript;                  //News Manager
-    [HideInInspector] public ActorManager actorScript;                //Actor Manager 
-    [HideInInspector] public ContactManager contactScript;            //Contact Manager
-    [HideInInspector] public ActionManager actionScript;              //Action Manager
-    [HideInInspector] public SideManager sideScript;                  //Side Manager
-    [HideInInspector] public HelpManager helpScript;                  //Help Manager
-    [HideInInspector] public TurnManager turnScript;                  //Turn Manager
-    [HideInInspector] public InputManager inputScript;                //Input Manager
-    [HideInInspector] public EffectManager effectScript;              //Effect Manager
-    [HideInInspector] public TargetManager targetScript;              //Target Manager
-    [HideInInspector] public OptionManager optionScript;              //Option Manager
-    [HideInInspector] public PlayerManager playerScript;              //Player Manager
-    [HideInInspector] public TraitManager traitScript;                //Trait Manager
-    [HideInInspector] public FactionManager factionScript;            //Faction Manager
-    [HideInInspector] public SecretManager secretScript;              //Secret Manager
-    [HideInInspector] public OrganisationManager orgScript;           //Organisation Manager
-    [HideInInspector] public CityManager cityScript;                  //City Manager
-    [HideInInspector] public ObjectiveManager objectiveScript;        //Objectives Manager
-    [HideInInspector] public NodeManager nodeScript;                  //Node Manager
-    [HideInInspector] public DijkstraManager dijkstraScript;          //Dijkstra Manager
-    [HideInInspector] public TeamManager teamScript;                  //Team Manager
-    [HideInInspector] public GearManager gearScript;                  //Gear Manager
-    [HideInInspector] public CaptureManager captureScript;            //Capture Manager
-    [HideInInspector] public AIManager aiScript;                      //AI Manager
-    [HideInInspector] public AIRebelManager aiRebelScript;            //AI Resistance Manager
-    [HideInInspector] public NemesisManager nemesisScript;            //Nemesis Manager
-    [HideInInspector] public ResistanceManager rebelScript;           //Resistance Manager
-    [HideInInspector] public AuthorityManager authorityScript;        //Authority Manager
-    [HideInInspector] public MessageManager messageScript;            //Message Manager
-    [HideInInspector] public ItemDataManager itemDataScript;          //ItemData Manager
-    [HideInInspector] public ConnectionManager connScript;            //Connection Manager
-    [HideInInspector] public MissionManager missionScript;            //Mission Manager
-    [HideInInspector] public ColourManager colourScript;              //Colour Manager
-    [HideInInspector] public TestManager testScript;                  //Test Manager
-    [HideInInspector] public ValidationManager validateScript;        //Validation Manager
-    [HideInInspector] public TooltipNode tooltipNodeScript;           //node tooltip static instance
-    [HideInInspector] public TooltipConnection tooltipConnScript;     //connection tooltip static instance
-    [HideInInspector] public TooltipActor tooltipActorScript;         //actor tooltip static instance
-    [HideInInspector] public TooltipPlayer tooltipPlayerScript;       //player tooltip static instance
-    [HideInInspector] public TooltipGeneric tooltipGenericScript;     //generic tooltip static instance
-    [HideInInspector] public TooltipHelp tooltipHelpScript;           //help tooltip static instance
-    [HideInInspector] public ModalActionMenu actionMenuScript;        //Modal Action Menu (node)
-    [HideInInspector] public ModalMainMenu mainMenuScript;            //Modal Main Menu
-    [HideInInspector] public ModalOutcome outcomeScript;              //Modal Outcome window
-    [HideInInspector] public ModalTeamPicker teamPickerScript;        //Modal Team Picker window
-    [HideInInspector] public ModalGenericPicker genericPickerScript;  //Modal Generic Picker window
-    [HideInInspector] public ModalInventoryUI inventoryScript;        //Modal InventoryUI window
-    /*[HideInInspector] public ModalDiceUI diceScript;                //Modal Dice UI window*/
-    [HideInInspector] public ModalGUI modalGUIScript;                 //Modal GUI 
-    [HideInInspector] public AlertUI alertScript;                     //Alert UI text display
-    [HideInInspector] public WidgetTopUI widgetTopScript;             //Widget Top UI
-    [HideInInspector] public CityInfoUI cityInfoScript;               //City Info UI
-    [HideInInspector] public MainInfoUI mainInfoScript;               //Main Info UI
-    [HideInInspector] public AIDisplayUI aiDisplayScript;             //AI Display UI
-    [HideInInspector] public AISideTabUI aiSideTabScript;             //AI SideTab UI
-    [HideInInspector] public ActorPanelUI actorPanelScript;           //Actor Panel UI
-    [HideInInspector] public BasePanelUI basePanelScript;             //Base Panel UI
-    [HideInInspector] public DebugGraphics debugGraphicsScript;       //Debug only Graphics
-    [HideInInspector] public DebugGUI debugScript;                    //Debug GUI
+    public static GameManager instance = null;                          //static instance of GameManager which allows it to be accessed by any other script
+    [HideInInspector] public StartManager startScript;                  //Start Manager
+    [HideInInspector] public LevelManager levelScript;                  //Level Manager
+    [HideInInspector] public PreLoadManager preloadScript;              //PreLoad Manager
+    [HideInInspector] public LoadManager loadScript;                    //Load Manager
+    [HideInInspector] public MetaManager metaScript;                    //Meta Manager
+    [HideInInspector] public DataManager dataScript;                    //Data Manager
+    [HideInInspector] public StatisticManager statScript;               //Statistics Manager
+    [HideInInspector] public GUIManager guiScript;                      //GUI Manager
+    [HideInInspector] public GlobalManager globalScript;                //Global Manager
+    [HideInInspector] public TooltipManager tooltipScript;              //Tooltip Manager
+    [HideInInspector] public CampaignManager campaignScript;            //Campaign Manager
+    [HideInInspector] public ControlManager controlScript;              //Control Manager
+    [HideInInspector] public FileManager fileScript;                    //File Manager
+    [HideInInspector] public NewsManager newsScript;                    //News Manager
+    [HideInInspector] public ActorManager actorScript;                  //Actor Manager 
+    [HideInInspector] public PersonalityManager personScript;           //Personality Manager
+    [HideInInspector] public ContactManager contactScript;              //Contact Manager
+    [HideInInspector] public ActionManager actionScript;                //Action Manager
+    [HideInInspector] public SideManager sideScript;                    //Side Manager
+    [HideInInspector] public HelpManager helpScript;                    //Help Manager
+    [HideInInspector] public TurnManager turnScript;                    //Turn Manager
+    [HideInInspector] public InputManager inputScript;                  //Input Manager
+    [HideInInspector] public EffectManager effectScript;                //Effect Manager
+    [HideInInspector] public TargetManager targetScript;                //Target Manager
+    [HideInInspector] public OptionManager optionScript;                //Option Manager
+    [HideInInspector] public PlayerManager playerScript;                //Player Manager
+    [HideInInspector] public TraitManager traitScript;                  //Trait Manager
+    [HideInInspector] public FactionManager factionScript;              //Faction Manager
+    [HideInInspector] public SecretManager secretScript;                //Secret Manager
+    [HideInInspector] public OrganisationManager orgScript;             //Organisation Manager
+    [HideInInspector] public CityManager cityScript;                    //City Manager
+    [HideInInspector] public ObjectiveManager objectiveScript;          //Objectives Manager
+    [HideInInspector] public NodeManager nodeScript;                    //Node Manager
+    [HideInInspector] public DijkstraManager dijkstraScript;            //Dijkstra Manager
+    [HideInInspector] public TeamManager teamScript;                    //Team Manager
+    [HideInInspector] public GearManager gearScript;                    //Gear Manager
+    [HideInInspector] public CaptureManager captureScript;              //Capture Manager
+    [HideInInspector] public AIManager aiScript;                        //AI Manager
+    [HideInInspector] public AIRebelManager aiRebelScript;              //AI Resistance Manager
+    [HideInInspector] public NemesisManager nemesisScript;              //Nemesis Manager
+    [HideInInspector] public ResistanceManager rebelScript;             //Resistance Manager
+    [HideInInspector] public AuthorityManager authorityScript;          //Authority Manager
+    [HideInInspector] public MessageManager messageScript;              //Message Manager
+    [HideInInspector] public ItemDataManager itemDataScript;            //ItemData Manager
+    [HideInInspector] public ConnectionManager connScript;              //Connection Manager
+    [HideInInspector] public MissionManager missionScript;              //Mission Manager
+    [HideInInspector] public ColourManager colourScript;                //Colour Manager
+    [HideInInspector] public TestManager testScript;                    //Test Manager
+    [HideInInspector] public ValidationManager validateScript;          //Validation Manager
+    [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
+    [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
+    [HideInInspector] public TooltipActor tooltipActorScript;           //actor tooltip static instance
+    [HideInInspector] public TooltipPlayer tooltipPlayerScript;         //player tooltip static instance
+    [HideInInspector] public TooltipGeneric tooltipGenericScript;       //generic tooltip static instance
+    [HideInInspector] public TooltipHelp tooltipHelpScript;             //help tooltip static instance
+    [HideInInspector] public ModalActionMenu actionMenuScript;          //Modal Action Menu (node)
+    [HideInInspector] public ModalMainMenu mainMenuScript;              //Modal Main Menu
+    [HideInInspector] public ModalOutcome outcomeScript;                //Modal Outcome window
+    [HideInInspector] public ModalTeamPicker teamPickerScript;          //Modal Team Picker window
+    [HideInInspector] public ModalGenericPicker genericPickerScript;    //Modal Generic Picker window
+    [HideInInspector] public ModalInventoryUI inventoryScript;          //Modal InventoryUI window
+    /*[HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window*/
+    [HideInInspector] public ModalGUI modalGUIScript;                   //Modal GUI 
+    [HideInInspector] public AlertUI alertScript;                       //Alert UI text display
+    [HideInInspector] public WidgetTopUI widgetTopScript;               //Widget Top UI
+    [HideInInspector] public CityInfoUI cityInfoScript;                 //City Info UI
+    [HideInInspector] public MainInfoUI mainInfoScript;                 //Main Info UI
+    [HideInInspector] public AIDisplayUI aiDisplayScript;               //AI Display UI
+    [HideInInspector] public AISideTabUI aiSideTabScript;               //AI SideTab UI
+    [HideInInspector] public ActorPanelUI actorPanelScript;             //Actor Panel UI
+    [HideInInspector] public BasePanelUI basePanelScript;               //Base Panel UI
+    [HideInInspector] public DebugGraphics debugGraphicsScript;         //Debug only Graphics
+    [HideInInspector] public DebugGUI debugScript;                      //Debug GUI
     #endregion
 
 
@@ -171,11 +171,11 @@ public class GameManager : MonoBehaviour
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
         globalScript = GetComponent<GlobalManager>();
-        //scenarioScript = GetComponent<ScenarioManager>();
         campaignScript = GetComponent<CampaignManager>();
         controlScript = GetComponent<ControlManager>();
         fileScript = GetComponent<FileManager>();
         actorScript = GetComponent<ActorManager>();
+        personScript = GetComponent<PersonalityManager>();
         contactScript = GetComponent<ContactManager>();
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
@@ -246,11 +246,11 @@ public class GameManager : MonoBehaviour
         Debug.Assert(dataScript != null, "Invalid dataScript (Null)");
         Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
-        //Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
         Debug.Assert(campaignScript != null, "Invalid campaignScript (Null)");
         Debug.Assert(controlScript != null, "Invalid controlScript (Null)");
         Debug.Assert(fileScript != null, "Invalid fileScript (Null)");
         Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
+        Debug.Assert(personScript != null, "Invalid personScript (Null)");
         Debug.Assert(contactScript != null, "Invalid contactScript (Null)");
         Debug.Assert(actionScript != null, "Invalid actionScript (Null)");
         Debug.Assert(playerScript != null, "Invalid playerScript (Null)");

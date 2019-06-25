@@ -49,6 +49,7 @@ namespace gameAPI
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)
         //trait
         private Trait trait;
+        private Personality personality;
         //gear
         private string gearName;                                                            //can only have one piece of gear at a time, default null
         private int gearTimer;                                                              //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)

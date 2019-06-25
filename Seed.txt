@@ -106,3 +106,5 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1241)
 	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1048)
 	
+Dev seed 34074 -> Tuesday, 25 June 2019 5:38 PM
+City seed 890 -> Arles, France
