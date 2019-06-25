@@ -101,7 +101,6 @@ public class GUIManager : MonoBehaviour
     private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
     [HideInInspector] public bool waitUntilDone;                        //flag to ensure nothing happens until
     private Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = new Dictionary<MsgPipelineType, ModalOutcomeDetails>();           //handles message queue for start of turn information pipeline
-    private Coroutine myCoroutineInfoPipeline;
     //colour palette 
     private string colourAlert;
     private string colourGood;
@@ -440,88 +439,107 @@ public class GUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Commence processing info Pipeline (compromised gear has been taken care off)
+    /// Commence processing info Pipeline (compromised gear has already been taken care off in TurnManager.cs -> ProcessNewTurn)
+    /// Process the information pipeline in order -> Message Queue -> Decision -> MainInfoApp
     /// </summary>
     /// <param name="playerSide"></param>
     public void InfoPipelineStart(GlobalSide playerSide)
     {
         if (playerSide != null)
         {
+            waitUntilDone = false;
             //process all messages in pipeline (waits until each message done)
-            ProcessInfoPipeline();
-
-            //decision
-
-            //wait until decision complete
-
-            //Main info app
-            InitialiseInfoApp(playerSide);
+            StartCoroutine("InfoPipeline", playerSide);
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
 
     /// <summary>
-    /// Process message queue one by one in enum MsgPipelineType order
-    /// </summary>
-    private void ProcessInfoPipeline()
-    {
-        //process 
-        foreach (var msg in dictOfPipeline)
-        { Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineStart: \"{0}\" ModalOutcomeDetails in dictOfPipeline{1}", msg.Key, "\n"); }
-
-        //process pipeline -> loop enum list (messages displayed in enum order)
-        foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))
-        {
-            if ((MsgPipelineType)msgType != MsgPipelineType.None)
-            {
-                waitUntilDone = false;
-
-                //find entry (if any) in dictionary
-                if (dictOfPipeline.ContainsKey((MsgPipelineType)msgType) == true)
-                {
-                    ModalOutcomeDetails details = dictOfPipeline[(MsgPipelineType)msgType];
-                    if (details != null)
-                    {
-                        //Found
-                        waitUntilDone = true;
-                        //display outcome message
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
-                        //suspend operation until message complete
-                        myCoroutineInfoPipeline = StartCoroutine("InfoPipeline");
-                        /*while (waitUntilDone == true)
-                        { }*/
-                        //switch off coroutine
-                        if (myCoroutineInfoPipeline != null)
-                        { StopCoroutine(myCoroutineInfoPipeline); }
-                    }
-                    else { Debug.LogWarningFormat("Invalid ModalOutcomeDetails (Null) for \"{0}\"", (MsgPipelineType)msgType); }
-                }
-                else
-                {
-                    //not found
-                    continue;
-                }
-            }
-        }
-    }
-
-
-    /// <summary>
-    /// Coroutine to wait until Compromised Gear interactive dialogue is complete
+    /// Master coroutine that controls movement through the pipeline
     /// </summary>
     /// <param name="playerSide"></param>
     /// <returns></returns>
-    IEnumerator InfoPipeline()
+    IEnumerator InfoPipeline(GlobalSide playerSide)
+    {
+        //loop through each message type and display in enum order, if present, one at a time.
+        foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))
+        {
+            if ((MsgPipelineType)msgType != MsgPipelineType.None)
+            { yield return StartCoroutine("InfoPipelineMessage", (MsgPipelineType)msgType); }
+        }
+        yield return StartCoroutine("Decision");
+        yield return StartCoroutine("MainInfoApp", playerSide);
+    }
+
+    /// <summary>
+    /// generates individual message and waits until it is closed (ModalOutcome.cs -> CloseModalOutcome sets waitUntilDone to false)
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    IEnumerator InfoPipelineMessage(MsgPipelineType type)
+    {
+        InfoPipelineProcess(type);
+        yield return new WaitUntil(() => waitUntilDone == false);
+    }
+
+    /// <summary>
+    /// Process  message
+    /// Each waits until it's closed before the next one starts
+    /// </summary>
+    /// <param name="type"></param>
+    private void InfoPipelineProcess(MsgPipelineType type)
+    {
+        //find entry (if any) in dictionary
+        if (dictOfPipeline.ContainsKey(type) == true)
+        {
+            ModalOutcomeDetails details = dictOfPipeline[type];
+            if (details != null)
+            {
+                waitUntilDone = true;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
+            }
+        }
+
+    }
+
+
+
+
+    /// <summary>
+    /// Sets up and displays Decision
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator Decision()
+    {
+        InitialiseDecision();
+        yield return new WaitUntil(() => waitUntilDone == false);
+    }
+
+    /// <summary>
+    /// sets up and displays mainInfoApp
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator MainInfoApp(GlobalSide playerSide)
     {
         yield return new WaitUntil(() => waitUntilDone == false);
+        InitialiseInfoApp(playerSide);
         yield return null;
+    }
+
+    /// <summary>
+    /// sets up and runs decision prior to info app at start of turn
+    /// </summary>
+    private void InitialiseDecision()
+    {
+        //debug
+        waitUntilDone = false;
     }
 
     /// <summary>
     /// sets up and runs info app at start of turn
     /// </summary>
     /// <returns></returns>
-    public void InitialiseInfoApp(GlobalSide playerSide)
+    private void InitialiseInfoApp(GlobalSide playerSide)
     {
         MainInfoData data = GameManager.instance.dataScript.UpdateCurrentItemData();
         //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)

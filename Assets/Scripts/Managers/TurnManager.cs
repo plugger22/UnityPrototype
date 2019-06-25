@@ -47,7 +47,7 @@ public class TurnManager : MonoBehaviour
     #endregion
 
     private bool allowQuitting = false;
-    private Coroutine myCoroutineCompromisedGear;
+    private Coroutine myCoroutineStartPipeline;
 
     //autorun
     private int numOfTurns = 0;
@@ -282,8 +282,10 @@ public class TurnManager : MonoBehaviour
                         {
                             //switch off any node Alerts
                             GameManager.instance.alertScript.CloseAlertUI(true);
+                            //debug
+                            DebugCreatePipelineMessages();
                             //info App displayed AFTER any end of turn Player interactions
-                            myCoroutineCompromisedGear = StartCoroutine("CompromisedGear", playerSide);
+                            myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
                         }
                     }
                 }
@@ -297,13 +299,53 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// debug program to generate fake messages in order to test the pipeline mechanics
+    /// </summary>
+    private void DebugCreatePipelineMessages()
+    {
+        //outcome dialogue -> Nemesis
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        StringBuilder builderTop = new StringBuilder();
+        builderTop.AppendFormat("{0}NEMESIS used this turn has been {1}{2}COMPROMISED{3}{4}", colourNormal, colourEnd, colourBad, colourEnd, "\n");
+        builderTop.AppendFormat("{0}You have {1}{2}{3}Insufficient Renown{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
+        builderTop.AppendFormat("<size=85%>({0}{1}{2} needed)</size>{3}", colourNeutral, "2", colourEnd, "\n");
+        builderTop.AppendFormat("{0}to {1}{2}Save{3}{4} any gear{5}", colourNormal, colourEnd, colourGood, colourEnd, colourNormal, colourEnd);
+        details.textTop = builderTop.ToString();
+        StringBuilder builderBottom = new StringBuilder();
+        if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+        builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, "Work Permit", colourEnd, colourBad, colourEnd);
+        details.textBottom = builderBottom.ToString();
+        details.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
+        //add to start of turn info Pipeline
+        details.type = MsgPipelineType.Nemesis;
+        if (GameManager.instance.guiScript.InfoPipeLineAdd(details) == false)
+        { Debug.LogWarningFormat("Nemesis infoPipeline message FAILED to be added to dictOfPipeline"); }
+        //outcome dialogue -> Compromised Gear
+        details = new ModalOutcomeDetails();
+        builderTop = new StringBuilder();
+        builderTop.AppendFormat("{0}Gear used this turn has been {1}{2}COMPROMISED{3}{4}", colourNormal, colourEnd, colourBad, colourEnd, "\n");
+        builderTop.AppendFormat("{0}You have {1}{2}{3}Insufficient Renown{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
+        builderTop.AppendFormat("<size=85%>({0}{1}{2} needed)</size>{3}", colourNeutral, "2", colourEnd, "\n");
+        builderTop.AppendFormat("{0}to {1}{2}Save{3}{4} any gear{5}", colourNormal, colourEnd, colourGood, colourEnd, colourNormal, colourEnd);
+        details.textTop = builderTop.ToString();
+        builderBottom = new StringBuilder();
+        if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+        builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, "Work Permit", colourEnd, colourBad, colourEnd);
+        details.textBottom = builderBottom.ToString();
+        //add to start of turn info Pipeline
+        details.type = MsgPipelineType.CompromisedGear;
+        if (GameManager.instance.guiScript.InfoPipeLineAdd(details) == false)
+        { Debug.LogWarningFormat("Compromised Gear infoPipeline message FAILED to be added to dictOfPipeline"); }
+    }
+
 
     /// <summary>
     /// Coroutine to wait until Compromised Gear interactive dialogue is complete
     /// </summary>
     /// <param name="playerSide"></param>
     /// <returns></returns>
-    IEnumerator CompromisedGear(GlobalSide playerSide)
+    IEnumerator StartPipeline(GlobalSide playerSide)
     {
         yield return new WaitUntil(() => haltExecution == false);
         GameManager.instance.guiScript.InfoPipelineStart(playerSide);
@@ -865,8 +907,8 @@ public class TurnManager : MonoBehaviour
         //set game state
         GameManager.instance.inputScript.GameState = GameState.ExitGame;
         //switch off main info app if running
-        if (myCoroutineCompromisedGear != null)
-        { StopCoroutine(myCoroutineCompromisedGear); }
+        if (myCoroutineStartPipeline != null)
+        { StopCoroutine(myCoroutineStartPipeline); }
         //show thank you splash screen before quitting
         if (SceneManager.GetActiveScene().name != "End_Game")
         { StartCoroutine("DelayedQuit"); }

@@ -25,3 +25,66 @@ City seed 890 -> Arles, France
 
 Dev seed 48382 -> Monday, 24 June 2019 8:28 PM
 City seed 890 -> Arles, France
+
+Dev seed 52478 -> Tuesday, 25 June 2019 9:30 AM
+City seed 890 -> Arles, France
+
+Dev seed 54650 -> Tuesday, 25 June 2019 9:35 AM
+City seed 890 -> Arles, France
+ERROR Failed to call function MainInfoApp of class GUIManager
+Calling function MainInfoApp with no parameters but the function requires 1.
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+	GUIManager:InfoPipelineStart(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:457)
+	<CompromisedGear>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 38128 -> Tuesday, 25 June 2019 9:37 AM
+City seed 890 -> Arles, France
+ERROR Duplicate record exists for MainInfoData turn 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:535)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:536)
+	<MainInfoApp>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:526)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 10110 -> Tuesday, 25 June 2019 9:40 AM
+City seed 890 -> Arles, France
+
+Dev seed 63042 -> Tuesday, 25 June 2019 9:45 AM
+City seed 890 -> Arles, France
+
+Dev seed 30417 -> Tuesday, 25 June 2019 9:48 AM
+City seed 890 -> Arles, France
+
+Dev seed 41122 -> Tuesday, 25 June 2019 9:52 AM
+City seed 890 -> Arles, France
+
+Dev seed 53299 -> Tuesday, 25 June 2019 9:56 AM
+City seed 890 -> Arles, France
+
+Dev seed 48338 -> Tuesday, 25 June 2019 9:58 AM
+City seed 890 -> Arles, France
+
+Dev seed 41835 -> Tuesday, 25 June 2019 10:04 AM
+City seed 890 -> Arles, France
+
+Dev seed 24357 -> Tuesday, 25 June 2019 10:09 AM
+City seed 890 -> Arles, France
+
+Dev seed 63870 -> Tuesday, 25 June 2019 10:13 AM
+City seed 890 -> Arles, France
+
+Dev seed 10972 -> Tuesday, 25 June 2019 10:37 AM
+City seed 890 -> Arles, France
+
+Dev seed 54998 -> Tuesday, 25 June 2019 10:42 AM
+City seed 890 -> Arles, France
+
+Dev seed 51556 -> Tuesday, 25 June 2019 10:56 AM
+City seed 890 -> Arles, France
+
+Dev seed 24195 -> Tuesday, 25 June 2019 10:57 AM
+City seed 890 -> Arles, France
+
+Dev seed 20785 -> Tuesday, 25 June 2019 11:09 AM
+City seed 890 -> Arles, France
