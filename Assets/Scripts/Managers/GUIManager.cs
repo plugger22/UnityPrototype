@@ -417,7 +417,7 @@ public class GUIManager : MonoBehaviour
     /// add a message to the pipeline. Note that only one message per MsgPipeLineType can be added to dict. Returns true if successful, false otherwise
     /// </summary>
     /// <param name="details"></param>
-    public bool InfoPipeLineAdd(ModalOutcomeDetails details)
+    public bool InfoPipelineAdd(ModalOutcomeDetails details)
     {
         if (details != null)
         {
@@ -427,6 +427,7 @@ public class GUIManager : MonoBehaviour
                 try
                 {
                     dictOfPipeline.Add(details.type, details);
+                    Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineAdd: \"{0}\" added{1}", details.type, "\n");
                     return true;
                 }
                 catch (ArgumentException)
@@ -501,9 +502,6 @@ public class GUIManager : MonoBehaviour
         }
 
     }
-
-
-
 
     /// <summary>
     /// Sets up and displays Decision

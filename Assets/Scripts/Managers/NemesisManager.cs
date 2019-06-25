@@ -1535,10 +1535,10 @@ public class NemesisManager : MonoBehaviour
             //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
             if (isOutcomeModalNormal == false)
             {
-                outcomeDetails.modalLevel = 2;
-                outcomeDetails.modalState = ModalSubState.InfoDisplay;
+                outcomeDetails.type = MsgPipelineType.Nemesis;
+                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
             }
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NemesisManager.cs -> ProcessPlayerDamage");
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }
     }

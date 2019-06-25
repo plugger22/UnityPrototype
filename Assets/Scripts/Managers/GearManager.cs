@@ -440,13 +440,8 @@ public class GearManager : MonoBehaviour
 
                         //add to start of turn info Pipeline
                         details.type = MsgPipelineType.CompromisedGear;
-                        if (GameManager.instance.guiScript.InfoPipeLineAdd(details) == false)
+                        if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
                         { Debug.LogWarningFormat("Compromised Gear infoPipeline message FAILED to be added to dictOfPipeline"); }
-
-                        /*//will overlay InfoAPP so needs to handle this
-                        details.modalLevel = 2;
-                        details.modalState = ModalSubState.InfoDisplay;
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> CheckForCompromisedGear");*/
                     }
                 }
             }
@@ -1119,21 +1114,6 @@ public class GearManager : MonoBehaviour
         {
             //End of turn compromised Gear dialogue has been Cancelled
             GameManager.instance.playerScript.UpdateGear();
-
-            /*//outcome -> all gear lost -> NOT needed as duplicated message from the one in the calling method, CheckForCompromisedGear
-            ModalOutcomeDetails details = new ModalOutcomeDetails();
-            StringBuilder builderTop = new StringBuilder();
-            builderTop.AppendFormat("{0}Gear used this turn has been{1}{2}{3}COMPROMISED{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
-            builderTop.AppendFormat("{0}You can {1}{2}Save{3}{4} gear with Renown{5}", colourNormal, colourEnd, colourGood, colourEnd, colourNormal, colourEnd);
-            details.textTop = builderTop.ToString();
-            StringBuilder builderBottom = new StringBuilder();
-            foreach (string gearName in listOfCompromisedGear)
-            {
-                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
-            }
-            details.textBottom = builderBottom.ToString();
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> ProcessCompromisedGear");*/
         }
     }
 

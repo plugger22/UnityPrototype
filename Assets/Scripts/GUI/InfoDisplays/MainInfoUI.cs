@@ -238,6 +238,7 @@ public class MainInfoUI : MonoBehaviour
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();
                 break;
+            case GameState.LoadGame:
             case GameState.FollowOnInitialisation:
                 break;
             default:

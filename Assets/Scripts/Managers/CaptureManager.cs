@@ -379,11 +379,10 @@ public class CaptureManager : MonoBehaviour
                     sprite = GameManager.instance.guiScript.errorSprite,
                     isAction = false,
                     side = GameManager.instance.globalScript.sideResistance,
-                    //modal 2 as will be generated over the top of the infoApp
-                    modalLevel = 2,
-                    modalState = ModalSubState.InfoDisplay
+                    type = MsgPipelineType.ReleasePlayer
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> ReleasePlayer");
+                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                { Debug.LogWarningFormat("Player Released from Captivity infoPipeline message FAILED to be added to dictOfPipeline"); }
             }
             else
             {

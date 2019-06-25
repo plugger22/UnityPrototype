@@ -282,8 +282,10 @@ public class TurnManager : MonoBehaviour
                         {
                             //switch off any node Alerts
                             GameManager.instance.alertScript.CloseAlertUI(true);
+
                             //debug
-                            DebugCreatePipelineMessages();
+                            /*DebugCreatePipelineMessages();*/
+
                             //info App displayed AFTER any end of turn Player interactions
                             myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
                         }
@@ -299,6 +301,8 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+
+    #region DebugCreatePipelineMessages
     /// <summary>
     /// debug program to generate fake messages in order to test the pipeline mechanics
     /// </summary>
@@ -319,7 +323,7 @@ public class TurnManager : MonoBehaviour
         details.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
         //add to start of turn info Pipeline
         details.type = MsgPipelineType.Nemesis;
-        if (GameManager.instance.guiScript.InfoPipeLineAdd(details) == false)
+        if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
         { Debug.LogWarningFormat("Nemesis infoPipeline message FAILED to be added to dictOfPipeline"); }
         //outcome dialogue -> Compromised Gear
         details = new ModalOutcomeDetails();
@@ -335,9 +339,10 @@ public class TurnManager : MonoBehaviour
         details.textBottom = builderBottom.ToString();
         //add to start of turn info Pipeline
         details.type = MsgPipelineType.CompromisedGear;
-        if (GameManager.instance.guiScript.InfoPipeLineAdd(details) == false)
+        if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
         { Debug.LogWarningFormat("Compromised Gear infoPipeline message FAILED to be added to dictOfPipeline"); }
     }
+    #endregion
 
 
     /// <summary>
@@ -368,7 +373,9 @@ public class TurnManager : MonoBehaviour
                 details.textBottom = winTextBottom;
                 details.side = GameManager.instance.sideScript.PlayerSide;
                 details.sprite = winSprite;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "TurnManager.cs -> ProcessLevelOver");
+                details.type = MsgPipelineType.WinLose;
+                if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+                { Debug.LogWarningFormat("Win or Lose infoPipeline message FAILED to be added to dictOfPipeline"); }
                 break;
             default:
                 Debug.LogWarningFormat("Invalid winState \"{0}\"", winStateLevel);

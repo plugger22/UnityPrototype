@@ -1,90 +1,58 @@
 
-Dev seed 42413 -> Monday, 24 June 2019 2:39 PM
+Dev seed 16819 -> Tuesday, 25 June 2019 1:10 PM
 City seed 890 -> Arles, France
 
-Dev seed 4966 -> Monday, 24 June 2019 2:40 PM
+Dev seed 59331 -> Tuesday, 25 June 2019 1:25 PM
 City seed 890 -> Arles, France
-
-Dev seed 10772 -> Monday, 24 June 2019 3:19 PM
-City seed 890 -> Arles, France
-WARNING Gear Not found Work Permit, in dict 
-
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised GameState "LoadGame"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4504)
-	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1234)
-	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1048)
+	MainInfoUI:Initialise(GameState) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:244)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:683)
+	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:823)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:300)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:416)
+	UnityEngine.EventSystems.EventSystem:Update()
 	
-Dev seed 59230 -> Monday, 24 June 2019 3:25 PM
-City seed 890 -> Arles, France
-
-Dev seed 20053 -> Monday, 24 June 2019 3:29 PM
-City seed 890 -> Arles, France
-
-Dev seed 32029 -> Monday, 24 June 2019 8:12 PM
-City seed 890 -> Arles, France
-
-Dev seed 48382 -> Monday, 24 June 2019 8:28 PM
-City seed 890 -> Arles, France
-
-Dev seed 52478 -> Tuesday, 25 June 2019 9:30 AM
-City seed 890 -> Arles, France
-
-Dev seed 54650 -> Tuesday, 25 June 2019 9:35 AM
-City seed 890 -> Arles, France
-ERROR Failed to call function MainInfoApp of class GUIManager
-Calling function MainInfoApp with no parameters but the function requires 1.
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-	GUIManager:InfoPipelineStart(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:457)
-	<CompromisedGear>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TurnManager.cs:334)
+Dev seed 48089 -> Tuesday, 25 June 2019 1:30 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:514)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 38128 -> Tuesday, 25 June 2019 9:37 AM
-City seed 890 -> Arles, France
-ERROR Duplicate record exists for MainInfoData turn 1
+	ERROR Duplicate record exists for MainInfoData turn 23
 UnityEngine.Debug:LogErrorFormat(String, Object[])
 	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:535)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:536)
-	<MainInfoApp>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:526)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
-Dev seed 10110 -> Tuesday, 25 June 2019 9:40 AM
-City seed 890 -> Arles, France
+Dev seed 11710 -> Tuesday, 25 June 2019 1:33 PM
+City seed 5678 -> London, United Kingdom
 
-Dev seed 63042 -> Tuesday, 25 June 2019 9:45 AM
-City seed 890 -> Arles, France
-
-Dev seed 30417 -> Tuesday, 25 June 2019 9:48 AM
-City seed 890 -> Arles, France
-
-Dev seed 41122 -> Tuesday, 25 June 2019 9:52 AM
-City seed 890 -> Arles, France
-
-Dev seed 53299 -> Tuesday, 25 June 2019 9:56 AM
-City seed 890 -> Arles, France
-
-Dev seed 48338 -> Tuesday, 25 June 2019 9:58 AM
-City seed 890 -> Arles, France
-
-Dev seed 41835 -> Tuesday, 25 June 2019 10:04 AM
-City seed 890 -> Arles, France
-
-Dev seed 24357 -> Tuesday, 25 June 2019 10:09 AM
-City seed 890 -> Arles, France
-
-Dev seed 63870 -> Tuesday, 25 June 2019 10:13 AM
-City seed 890 -> Arles, France
-
-Dev seed 10972 -> Tuesday, 25 June 2019 10:37 AM
-City seed 890 -> Arles, France
-
-Dev seed 54998 -> Tuesday, 25 June 2019 10:42 AM
-City seed 890 -> Arles, France
-
-Dev seed 51556 -> Tuesday, 25 June 2019 10:56 AM
-City seed 890 -> Arles, France
-
-Dev seed 24195 -> Tuesday, 25 June 2019 10:57 AM
-City seed 890 -> Arles, France
-
-Dev seed 20785 -> Tuesday, 25 June 2019 11:09 AM
-City seed 890 -> Arles, France
+Dev seed 59604 -> Tuesday, 25 June 2019 1:37 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 30 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:514)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 31 records for tab 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:514)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Duplicate record exists for MainInfoData turn 26
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:535)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
