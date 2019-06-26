@@ -143,6 +143,7 @@ public class PlayerManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
+                SubInitialiseSessionStart();
                 SubInitialiseLevelStart();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
@@ -164,6 +165,15 @@ public class PlayerManager : MonoBehaviour
 
 
     #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+        //Debug assign random personality
+        personality.SetFactors(GameManager.instance.personScript.SetPersonality());
+    }
+
+    #endregion
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()

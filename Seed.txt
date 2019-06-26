@@ -13,3 +13,14 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 
 Dev seed 44128 -> Wednesday, 26 June 2019 10:25 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 40913 -> Wednesday, 26 June 2019 11:41 AM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.CreateActor (GlobalSide side, System.String arcName, System.Int32 level, gameAPI.ActorStatus status, System.Int32 slotID) (at Assets/Scripts/Managers/ActorManager.cs:687)
+	ActorManager.InitialiseActors (System.Int32 num, GlobalSide side) (at Assets/Scripts/Managers/ActorManager.cs:547)
+	ActorManager.SubInitialiseLevelStart () (at Assets/Scripts/Managers/ActorManager.cs:336)
+	ActorManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ActorManager.cs:193)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:708)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:762)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:343)
+	
