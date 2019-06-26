@@ -9,20 +9,37 @@ using UnityEngine;
 public class Personality
 {
     private int[] arrayOfFactors;
-    private int compatibilityPlayer;  
+    private int compatibilityWithPlayer;  
 
     /// <summary>
     /// constructor
     /// </summary>
     public Personality()
     {
-        arrayOfFactors = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-        compatibilityPlayer = 0;
+        arrayOfFactors = new int[] { 0, 0, 0, 0, 0 };
+        compatibilityWithPlayer = 0;
     }
 
 
     public int[] GetFactors()
     { return arrayOfFactors; }
+
+    public int GetCompatibilityWithPlayer()
+    { return compatibilityWithPlayer; }
+
+    /// <summary>
+    /// Set compatibility with player (checks if within acceptable range of -3 to +3 and auto clamps if not)
+    /// </summary>
+    /// <param name="compatibility"></param>
+    public void SetCompatibilityWithPlayer(int compatibility)
+    {
+        if (compatibility < -3 || compatibility > 3)
+        {
+            Debug.LogWarningFormat("Invalid compatibility \"{0}\" (needs to be within -3 to +3). Auto clamped to range", compatibility);
+            compatibility = Mathf.Clamp(compatibility, -3, 3);
+        }
+        compatibilityWithPlayer = compatibility;
+    }
 
 
     /// <summary>
@@ -57,67 +74,6 @@ public class Personality
     }
 
 
-    /// <summary>
-    /// Checks this personality with another for compatibility and returns a value from -3 (extremely incompatible) to +3 (extremely compatible) based on a mathematical comparison of the first 5 factors
-    /// NOTE: Currently the dark triad has an no effect, only the standard Five Factor Model ones are taken into account
-    /// </summary>
-    /// <param name="arrayOfCompareFactors"></param>
-    /// <returns></returns>
-    public int CheckCompatibility(int[] arrayOfCompareFactors)
-    {
-        int difference;
-        int compatibility = 0;
-        int tally = 0;
-        //both arrays must be off the same length
-        int length = arrayOfCompareFactors.Length;
-        if (length != arrayOfFactors.Length)
-        { Debug.LogErrorFormat("Invalid arrayOfCompareFactors (incorrect length \"{0}\")", length); }
-        else
-        {
-            //tally up differences (
-            for (int i = 0; i < 5; i++)
-            {
-                //difference is ABS value where the closer a personality factor is to each other, the more compatible they are and the further apart they are the more incompatible they are.
-                difference = Mathf.Abs(arrayOfFactors[i] - arrayOfCompareFactors[i]);
-                tally += difference;
-            }
-            //convert compatibility into one of 7 bands
-            switch (tally)
-            {
-                case 0:
-                case 1:
-                case 2:
-                    compatibility = 3; break;
-                case 3:
-                case 4:
-                case 5:
-                    compatibility = 2; break;
-                case 6:
-                case 7:
-                case 8:
-                    compatibility = 1; break;
-                case 9:
-                case 10:
-                case 11:
-                    compatibility = 0; break;
-                case 12:
-                case 13:
-                case 14:
-                    compatibility = -1; break;
-                case 15:
-                case 16:
-                case 17:
-                    compatibility = -2; break;
-                case 18:
-                case 19:
-                case 20:
-                    compatibility = -3; break;
-                default:
-                    Debug.LogWarningFormat("Invalid compatibility \"{0}\" (band, should be between 0 and 20) ", compatibility);
-                    break;
-            }
-        }
-        return compatibility;
-    }
+
 
 }

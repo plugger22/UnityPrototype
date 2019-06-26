@@ -2171,6 +2171,12 @@ public class FileManager : MonoBehaviour
                     { actor.AddTrait(trait); }
                     else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitName); }
                     actor.Status = readActor.status; //needs to be after SetGear
+                    if (actor.GetPersonality() != null)
+                    {
+                        actor.SetPersonalityFactors(readActor.listOfPersonalityFactors);
+                        actor.GetPersonality().SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
+                    }
+                    else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
                     //sprite
                     actor.spriteName = readActor.spriteName;
                     actor.sprite = GameManager.instance.dataScript.GetSprite(actor.spriteName);
@@ -2184,9 +2190,6 @@ public class FileManager : MonoBehaviour
                     actor.actorBlackmailTimerHigh = read.actorData.actorBlackmailTimerHigh;
                     actor.actorBlackmailTimerLow = read.actorData.actorBlackmailTimerLow;
                     actor.maxNumOfSecrets = read.actorData.maxNumOfSecrets;
-                    if (actor.GetPersonality() != null)
-                    { actor.SetPersonalityFactors(readActor.listOfPersonalityFactors); }
-                    else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
                     //data which can be ignored (default values O.K) if actor is in the Recruit Pool
                     if (actor.Status != ActorStatus.RecruitPool)
                     {
@@ -3156,7 +3159,10 @@ public class FileManager : MonoBehaviour
         saveActor.arcName = actor.arc.name;
         Personality personality = actor.GetPersonality();
         if (personality != null)
-        { saveActor.listOfPersonalityFactors = personality.GetFactors().ToList(); }
+        {
+            saveActor.listOfPersonalityFactors = personality.GetFactors().ToList();
+            saveActor.compatibilityWithPlayer = personality.GetCompatibilityWithPlayer();
+        }
         else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }
         Trait trait = actor.GetTrait();
         if (trait != null)

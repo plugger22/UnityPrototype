@@ -56,7 +56,7 @@ public class LoadManager : MonoBehaviour
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
-    public Factor[] arrayOfDarkTriad;
+    /*public Factor[] arrayOfDarkTriad;*/
 
 
     [Header("InitialiseEarly")]
@@ -114,7 +114,7 @@ public class LoadManager : MonoBehaviour
         //
         List<Factor> listOfFactors = new List<Factor>();
         listOfFactors.AddRange(arrayOfFiveFactorModel);
-        listOfFactors.AddRange(arrayOfDarkTriad);
+        /*listOfFactors.AddRange(arrayOfDarkTriad);*/
         GameManager.instance.dataScript.SetFactorArrays(listOfFactors);
         Debug.LogFormat("[Loa] LoadManager.cs -> InitialiseStart: listOfFactors has {0} entries{1}", listOfFactors.Count, "\n");
         //

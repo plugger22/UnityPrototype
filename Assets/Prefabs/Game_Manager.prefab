@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e845b2dac7af34c87408ccfde15679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfFactors: 5
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1035,6 +1036,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
   - {fileID: 11400000, guid: f935e371ffa59e745bad0891ea7997dd, type: 2}
   - {fileID: 11400000, guid: 544bfb4bf9f66cb48869c829e7173599, type: 2}
+  arrayOfFiveFactorModel:
+  - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
+  - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}
+  - {fileID: 11400000, guid: f0ed59d9e8c74cf418de096e9e9d9ac8, type: 2}
+  - {fileID: 11400000, guid: 6bcf2aef1d8d6284dbf191af1e7dd863, type: 2}
+  - {fileID: 11400000, guid: e15758b807f44f3478ca0da2c7926f6e, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -1957,7 +1964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c5f4638fef720428f1b6683d94e2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
+  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   numOfFlags: 10
   arrayOfStoryStatus: 
   scenario: {fileID: 0}

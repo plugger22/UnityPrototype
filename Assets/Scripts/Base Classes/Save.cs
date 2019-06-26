@@ -474,6 +474,7 @@ public class SaveActor
     public string firstName;
     public string spriteName;
     public string arcName;
+    public int compatibilityWithPlayer;
     //public Trait trait;
     public string traitName;
     //data that can be ignored if actor is in Recruit Pool
