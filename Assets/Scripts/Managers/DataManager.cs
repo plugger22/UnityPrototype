@@ -26,6 +26,8 @@ public class DataManager : MonoBehaviour
     private Actor[,] arrayOfActors;                                                             //array with two sets of 4 actors, one for each side (Side.None-> 4 x Null) LoadManager.cs InitialiseEarly
     private bool[,] arrayOfActorsPresent;                                                       //array determining if an actorSlot is filled (True) or vacant (False) LoadManager.cs -> InitialiseEarly
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
+    private Factor[] arrayOfFactors;                                                            //personality factors (indexes correspond to Actor/Player personality arrays)
+    private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
 
     private Graph graph;
 
@@ -6400,6 +6402,46 @@ public class DataManager : MonoBehaviour
     }
 
 
+    //
+    // - - - Personality - - -
+    //
+
+    public Factor[] GetArrayOfFactors()
+    { return arrayOfFactors; }
+
+    public string[] GetArrayOfFactorTags()
+    { return arrayOfFactorTags; }
+
+    /// <summary>
+    /// Initialise Factor arrays with data from LoadManager.cs
+    /// </summary>
+    /// <param name="listOfFactors"></param>
+    public void SetFactorArrays(List<Factor> listOfFactors)
+    {
+        if (listOfFactors != null)
+        {
+            int numOfFactors = GameManager.instance.personScript.numOfFactors;
+            //initialise arrays
+            arrayOfFactors = new Factor[numOfFactors];
+            arrayOfFactorTags = new string[numOfFactors];
+            //check list is the same size
+            if (listOfFactors.Count == numOfFactors)
+            {
+                for (int i = 0; i < numOfFactors; i++)
+                {
+                    Factor factor = listOfFactors[i];
+                    if (factor != null)
+                    {
+                        arrayOfFactors[i] = factor;
+                        arrayOfFactorTags[i] = factor.tag;
+                    }
+                    else { Debug.LogErrorFormat("Invalid factor (Null) in listOfFactors[{0}]", i); }
+                }
+            }
+            else { Debug.LogErrorFormat("Mismatch on size, listOfFactors has {0} records, should be {1}", listOfFactors.Count, numOfFactors); }
+        }
+        else { Debug.LogError("Invalid listOfFactors (Null)"); }
+    }
 
 
     #endregion

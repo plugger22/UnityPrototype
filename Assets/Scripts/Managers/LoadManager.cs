@@ -54,6 +54,11 @@ public class LoadManager : MonoBehaviour
     [Header("TextList")]
     public NameSet[] arrayOfNameSets;
 
+    [Header("Personality Factors - ORDER MATTERS")]
+    public Factor[] arrayOfFiveFactorModel;
+    public Factor[] arrayOfDarkTriad;
+
+
     [Header("InitialiseEarly")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
@@ -104,6 +109,14 @@ public class LoadManager : MonoBehaviour
     public void InitialiseStart(GameState state)
     {
         int numArray, numDict, counter;
+        //
+        // - - - Personality Factors
+        //
+        List<Factor> listOfFactors = new List<Factor>();
+        listOfFactors.AddRange(arrayOfFiveFactorModel);
+        listOfFactors.AddRange(arrayOfDarkTriad);
+        GameManager.instance.dataScript.SetFactorArrays(listOfFactors);
+        Debug.LogFormat("[Loa] LoadManager.cs -> InitialiseStart: listOfFactors has {0} entries{1}", listOfFactors.Count, "\n");
         //
         // - - - GlobalMeta (not stored in a collection)
         //
