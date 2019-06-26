@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
     private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
-    private Personality personality;
+    private Personality personality = new Personality();
     #endregion
 
     //private backing fields, need to track separately to handle AI playing both sides
@@ -172,7 +172,6 @@ public class PlayerManager : MonoBehaviour
         //Debug assign random personality
         personality.SetFactors(GameManager.instance.personScript.SetPersonality());
     }
-
     #endregion
 
     #region SubInitialiseFastAccess

@@ -350,8 +350,18 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+
             //twentysecond button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 21 + button_height * 21, button_width, button_height), "Rebel Tracker"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 21 + button_height * 21, button_width, button_height), "Personality Data"))
+            {
+                Debug.Log("[Dbg] Button -> Personality Data");
+                if (debugDisplay != 57)
+                { debugDisplay = 57; }
+                else { debugDisplay = 0; }
+            }
+
+            //twentysecond button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Rebel Tracker"))
             {
                 Debug.Log("[Dbg] Button -> Rebel Tracker");
                 if (debugDisplay != 44)
@@ -360,7 +370,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentythird button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Nemesis Tracker"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Nemesis Tracker"))
             {
                 Debug.Log("[Dbg] Button -> Nemesis Tracker");
                 if (debugDisplay != 45)
@@ -1381,6 +1391,12 @@ public class DebugGUI : MonoBehaviour
                     case 56:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.campaignScript.DebugDisplayScenarioData();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //Personality data
+                    case 57:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.personScript.DebugDisplayAllPersonalities();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }

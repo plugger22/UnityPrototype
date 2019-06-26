@@ -119,6 +119,7 @@ namespace gameAPI
             //call only if a new session
             if (GameManager.instance.isSession == false)
             {
+                personality = new Personality();
                 //fast access & cached
                 actorStressNone = "ActorStressNone";
                 actorCorruptNone = "ActorCorruptNone";

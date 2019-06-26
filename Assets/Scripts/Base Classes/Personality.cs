@@ -8,7 +8,17 @@ using UnityEngine;
 /// </summary>
 public class Personality
 {
-    private int[] arrayOfFactors = new int[8];
+    private int[] arrayOfFactors;
+    private int compatibilityPlayer;  
+
+    /// <summary>
+    /// constructor
+    /// </summary>
+    public Personality()
+    {
+        arrayOfFactors = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+        compatibilityPlayer = 0;
+    }
 
 
     public int[] GetFactors()

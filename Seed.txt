@@ -1,26 +1,9 @@
 
-Dev seed 27983 -> Wednesday, 26 June 2019 9:53 AM
-City seed 5678 -> London, United Kingdom
+Dev seed 38421 -> Wednesday, 26 June 2019 1:59 PM
+City seed 890 -> Arles, France
 
-Dev seed 53916 -> Wednesday, 26 June 2019 10:22 AM
-ERROR Mismatch on size, listOfFactors has 0 records, should be 8
-UnityEngine.Debug:LogErrorFormat(String, Object[])
-	DataManager:SetFactorArrays(List`1) (at Assets/Scripts/Managers/DataManager.cs:6441)
-	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:118)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:708)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:334)
-	City seed 5678 -> London, United Kingdom
+Dev seed 28392 -> Wednesday, 26 June 2019 2:47 PM
+City seed 890 -> Arles, France
 
-Dev seed 44128 -> Wednesday, 26 June 2019 10:25 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 40913 -> Wednesday, 26 June 2019 11:41 AM
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorManager.CreateActor (GlobalSide side, System.String arcName, System.Int32 level, gameAPI.ActorStatus status, System.Int32 slotID) (at Assets/Scripts/Managers/ActorManager.cs:687)
-	ActorManager.InitialiseActors (System.Int32 num, GlobalSide side) (at Assets/Scripts/Managers/ActorManager.cs:547)
-	ActorManager.SubInitialiseLevelStart () (at Assets/Scripts/Managers/ActorManager.cs:336)
-	ActorManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ActorManager.cs:193)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:708)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:762)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:343)
-	
+Dev seed 30884 -> Wednesday, 26 June 2019 2:54 PM
+City seed 890 -> Arles, France

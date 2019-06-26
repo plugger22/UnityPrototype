@@ -601,6 +601,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = playerScript.Initialise;
         startMethod.className = "PlayerManager";
         listOfLevelMethods.Add(startMethod);
+        //Personality Manager -> after Actor/PlayerManager.cs
+        startMethod.handler = personScript.Initialise;
+        startMethod.className = "PersonalityManager";
+        listOfLevelMethods.Add(startMethod);
         //Rebel AI Manager -> after Player Manager
         startMethod.handler = aiRebelScript.Initialise;
         startMethod.className = "AIRebelManager";
