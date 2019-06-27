@@ -200,6 +200,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Campaign> dictOfCampaigns = new Dictionary<string, Campaign>();                  //Key -> campaign.name, Value -> Campaign
     private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                              //Key -> cure.name, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
+    private Dictionary<string, PersonProfile> dictOfProfiles = new Dictionary<string, PersonProfile>();         //Key -> personProfile.name, Value -> personProfile
 
     #region SO enum Dictionaries
     //global SO's (enum equivalents)
@@ -6411,6 +6412,9 @@ public class DataManager : MonoBehaviour
 
     public string[] GetArrayOfFactorTags()
     { return arrayOfFactorTags; }
+
+    public Dictionary<string, PersonProfile> GetDictOfProfiles()
+    { return dictOfProfiles; }
 
     /// <summary>
     /// Initialise Factor arrays with data from LoadManager.cs

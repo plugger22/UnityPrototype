@@ -56,3 +56,9 @@ City seed 890 -> Arles, France
 
 Dev seed 59890 -> Thursday, 27 June 2019 4:09 PM
 City seed 890 -> Arles, France
+
+Dev seed 37570 -> Thursday, 27 June 2019 7:46 PM
+City seed 890 -> Arles, France
+
+Dev seed 56685 -> Thursday, 27 June 2019 8:00 PM
+City seed 890 -> Arles, France

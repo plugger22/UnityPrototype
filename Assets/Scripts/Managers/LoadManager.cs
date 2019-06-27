@@ -57,8 +57,9 @@ public class LoadManager : MonoBehaviour
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
-    /*public Factor[] arrayOfDarkTriad;*/
 
+    [Header("Personality Profiles")]
+    public PersonProfile[] arrayOfPersonProfiles;
 
     [Header("InitialiseEarly")]
     public NodeArc[] arrayOfNodeArcs;
@@ -118,6 +119,31 @@ public class LoadManager : MonoBehaviour
         /*listOfFactors.AddRange(arrayOfDarkTriad);*/
         GameManager.instance.dataScript.SetFactorArrays(listOfFactors);
         Debug.LogFormat("[Loa] LoadManager.cs -> InitialiseStart: listOfFactors has {0} entries{1}", listOfFactors.Count, "\n");
+        //
+        // - - - PersonProfile
+        //
+        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
+        if (dictOfProfiles != null)
+        {
+            numArray = arrayOfPersonProfiles.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfPersonProfiles has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No PersonProfile present"); }
+            //add to dictionary
+            for (int i = 0; i < numArray; i++)
+            {
+                PersonProfile profile = arrayOfPersonProfiles[i];
+                if (profile != null)
+                {
+                    try
+                    { dictOfProfiles.Add(profile.name, profile); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfProfiles for {0}", profile); }
+                }
+                else { Debug.LogWarningFormat("Invalid Profile (Null) for arrayOfProfile[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
         //
         // - - - GlobalMeta (not stored in a collection)
         //
