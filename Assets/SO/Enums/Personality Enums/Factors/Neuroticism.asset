@@ -14,3 +14,5 @@ MonoBehaviour:
   tag: Neuroticism
   descriptor: Tendency towards unstable emotions
   type: {fileID: 11400000, guid: 4c5119a8a0cd4d546bb226b1b78e9c5d, type: 2}
+  positiveDescriptor: {fileID: 11400000, guid: ee8aeafd1ed8c04459401c686196d4f1, type: 2}
+  negativeDescriptor: {fileID: 11400000, guid: 0ca563b32662370488e01cd3b672cd99, type: 2}

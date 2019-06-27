@@ -1031,6 +1031,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
   - {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
   - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
+  arrayOfFactorTextLists:
+  - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
+  - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
+  - {fileID: 11400000, guid: 582490fbaee147342855f5740ec4bd07, type: 2}
+  - {fileID: 11400000, guid: 5214a83be919f3940bcdb7acd668b938, type: 2}
+  - {fileID: 11400000, guid: 550b2dea6252d6f46980a750773e74e8, type: 2}
+  - {fileID: 11400000, guid: ef0d35cfe6c0b104e9c4df884dc28e03, type: 2}
+  - {fileID: 11400000, guid: ee8aeafd1ed8c04459401c686196d4f1, type: 2}
+  - {fileID: 11400000, guid: 0ca563b32662370488e01cd3b672cd99, type: 2}
+  - {fileID: 11400000, guid: 390c078c7561879469d78164dea8f4f6, type: 2}
+  - {fileID: 11400000, guid: 7ad610f79786d994aa5985503ce7f18b, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}

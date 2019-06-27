@@ -14,3 +14,5 @@ MonoBehaviour:
   tag: Extroversion
   descriptor: Sociability, assertiveness, emotional expression
   type: {fileID: 11400000, guid: 4c5119a8a0cd4d546bb226b1b78e9c5d, type: 2}
+  positiveDescriptor: {fileID: 11400000, guid: 550b2dea6252d6f46980a750773e74e8, type: 2}
+  negativeDescriptor: {fileID: 11400000, guid: ef0d35cfe6c0b104e9c4df884dc28e03, type: 2}

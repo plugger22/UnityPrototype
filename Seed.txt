@@ -53,3 +53,6 @@ PersonalityManager.GetDescriptor (System.Int32 index, System.Int32 value) (at As
 	
 Dev seed 2399 -> Thursday, 27 June 2019 3:04 PM
 City seed 890 -> Arles, France
+
+Dev seed 59890 -> Thursday, 27 June 2019 4:09 PM
+City seed 890 -> Arles, France

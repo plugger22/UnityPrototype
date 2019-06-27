@@ -14,3 +14,5 @@ MonoBehaviour:
   tag: Agreeableness
   descriptor: "Cooperative, trustworthy, good-natured\t"
   type: {fileID: 11400000, guid: 4c5119a8a0cd4d546bb226b1b78e9c5d, type: 2}
+  positiveDescriptor: {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
+  negativeDescriptor: {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}

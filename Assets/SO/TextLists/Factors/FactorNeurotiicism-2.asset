@@ -9,17 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: FactorNeurotiicism+2
+  m_Name: FactorNeurotiicism-2
   m_EditorClassIdentifier: 
   descriptor: 
   category: {fileID: 11400000, guid: fef2ecbea1e30dd45a7b334a46f48515, type: 2}
   randomList:
-  - Nervous
-  - Moody
-  - Emotional
-  - Insecure
-  - Jealous
-  - Unstable
-  - Anxious
-  - Unhappy
-  - Prone to negative emotions
+  - Calm
+  - Steady
+  - Relaxed
+  - At Ease
+  - Secure
+  - Contented
+  - Even-tempered
+  - Nonchalant

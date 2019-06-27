@@ -14,3 +14,5 @@ MonoBehaviour:
   tag: Conscientiousness
   descriptor: "Competence, self-discipline, thoughtfulness, \tgoal-driven\t"
   type: {fileID: 11400000, guid: 4c5119a8a0cd4d546bb226b1b78e9c5d, type: 2}
+  positiveDescriptor: {fileID: 11400000, guid: 582490fbaee147342855f5740ec4bd07, type: 2}
+  negativeDescriptor: {fileID: 11400000, guid: 5214a83be919f3940bcdb7acd668b938, type: 2}
