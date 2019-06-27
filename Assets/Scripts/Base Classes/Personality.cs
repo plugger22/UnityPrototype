@@ -9,7 +9,8 @@ using UnityEngine;
 public class Personality
 {
     private int[] arrayOfFactors;
-    private int compatibilityWithPlayer;  
+    private int compatibilityWithPlayer;
+    private List<string> listOfDescriptors = new List<string>();
 
     /// <summary>
     /// constructor
@@ -73,7 +74,18 @@ public class Personality
         else { Debug.LogError("Invalid arrayOfSetFactors (Null)"); }
     }
 
+    /// <summary>
+    /// Add descriptor to listOfDescriptors
+    /// </summary>
+    /// <param name="item"></param>
+    public void AddDescriptor(string item)
+    {
+        if (string.IsNullOrEmpty(item) == false)
+        { listOfDescriptors.Add(item); }
+        else { Debug.LogError("Invalid item (Null or Empty)"); }
+    }
 
-
+    public List<string> GetListOfDescriptors()
+    { return listOfDescriptors; }
 
 }

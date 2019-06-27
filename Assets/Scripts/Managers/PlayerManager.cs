@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
-                SubInitialiseSessionStart();
+                SubInitialiseSessionStartEarly();
                 SubInitialiseLevelStart();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
@@ -164,14 +164,31 @@ public class PlayerManager : MonoBehaviour
     }
 
 
+    public void InitialiseLate(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                //debug purposes only 
+                SubInitialiseSessionStartLate();
+                break;
+        }
+    }
+
+
     #region Initialise SubMethods
 
     #region SubInitialiseSessionStart
-    private void SubInitialiseSessionStart()
+    private void SubInitialiseSessionStartEarly()
     {
         //Debug assign random personality
-        personality.SetFactors(GameManager.instance.personScript.SetPersonality());
+        personality.SetFactors(GameManager.instance.personScript.SetPersonalityFactors());
     }
+    #endregion
+
+    #region SubInitialiseSessionStartLate
+    private void SubInitialiseSessionStartLate()
+    { GameManager.instance.personScript.SetDescriptors(personality);}
     #endregion
 
     #region SubInitialiseFastAccess

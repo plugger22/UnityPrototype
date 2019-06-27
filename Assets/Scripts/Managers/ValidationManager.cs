@@ -259,6 +259,7 @@ public class ValidationManager : MonoBehaviour
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
         //NOTE: add extra text lists here (as above)
         TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
         //loop textlists
@@ -491,6 +492,7 @@ public class ValidationManager : MonoBehaviour
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
         //NOTE: add extra text lists here (as above)
         TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
         ValidateSOGeneric<TextList>(arrayOfTextLists);

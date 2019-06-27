@@ -50,6 +50,7 @@ public class LoadManager : MonoBehaviour
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
     public TextList[] arrayOfShortTextLists;
+    public TextList[] arrayOfFactorTextLists;
 
     [Header("TextList")]
     public NameSet[] arrayOfNameSets;
@@ -294,6 +295,13 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfShortTextLists.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfShortTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
+        //
+        // - - - Text Lists Factors (not stored in a collection)
+        //
+        numArray = arrayOfFactorTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfFactorTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
         //
         // - - - NameSets (not stored in a collection)

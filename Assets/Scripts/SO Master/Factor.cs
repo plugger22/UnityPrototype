@@ -15,6 +15,11 @@ public class Factor : ScriptableObject
     [Tooltip("Type of Factor")]
     public FactorType type;
 
+    [Tooltip("Text list of descriptors if +2 in factor")]
+    public TextList positiveDescriptor;
+    [Tooltip("Text list of descriptors if -2 in factor")]
+    public TextList negativeDescriptor;
+
 
     public void OnEnable()
     {

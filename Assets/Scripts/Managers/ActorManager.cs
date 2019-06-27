@@ -684,7 +684,7 @@ public class ActorManager : MonoBehaviour
                 actor.side = side;
                 actor.arc = arc;
                 actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory, side));
-                actor.GetPersonality().SetFactors(GameManager.instance.personScript.SetPersonality());
+                actor.GetPersonality().SetFactors(GameManager.instance.personScript.SetPersonalityFactors());
                 actor.Status = status;
                 //TO DO -> currently actor sprite is derived from actorArc sprite
                 actor.sprite = arc.sprite;

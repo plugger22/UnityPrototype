@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 128fb0addeb982c4d87e2a7aec756c7e, type: 3}
-  m_Name: Openness
+  m_Name: Narcissism
   m_EditorClassIdentifier: 
-  tag: Openness
-  descriptor: Imagination, feelings, actions, ideas
-  type: {fileID: 11400000, guid: 4c5119a8a0cd4d546bb226b1b78e9c5d, type: 2}
-  positiveDescriptor: {fileID: 11400000, guid: 390c078c7561879469d78164dea8f4f6, type: 2}
-  negativeDescriptor: {fileID: 11400000, guid: 7ad610f79786d994aa5985503ce7f18b, type: 2}
+  tag: Narcissism
+  descriptor: Grandiosity, entitlement, dominance, superiority, self-love
+  type: {fileID: 11400000, guid: db4c19b09a4c75b4b90c9d5c987e92ad, type: 2}
+  positiveDescriptor: {fileID: 0}
+  negativeDescriptor: {fileID: 0}

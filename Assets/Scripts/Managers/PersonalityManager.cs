@@ -65,7 +65,7 @@ public class PersonalityManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //set compatibility of all actors in level right at level start
-        SetAllActorsCompatibilityWithPlayer();
+        SetAllActorsPersonality();
     }
     #endregion
 
@@ -76,7 +76,7 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     /// <param name="arrayOfCriteria"></param>
     /// <returns></returns>
-    public int[] SetPersonality(int[] arrayOfCriteria = null)
+    public int[] SetPersonalityFactors(int[] arrayOfCriteria = null)
     {
         int rndNum, modifier, factorValue;
         int[] arrayOfFactors = new int[numOfFactors];
@@ -84,12 +84,12 @@ public class PersonalityManager : MonoBehaviour
         if (arrayOfCriteria == null)
         { arrayOfCriteria = new int[] { 0, 0, 0, 0, 0 }; }
         //do all factors TO DO -> modify rolls for dark triad traits based on five factor model results
-        for (int i = 0; i < numOfFactors; i++)
+        for (int index = 0; index < numOfFactors; index++)
         {
             //assign a neutral value
             factorValue = 0;
             rndNum = Random.Range(0, 5);
-            modifier = arrayOfCriteria[i];
+            modifier = arrayOfCriteria[index];
             if (modifier != 0)
             {
                 //clamp modifier to a range of -2 to +2
@@ -106,15 +106,73 @@ public class PersonalityManager : MonoBehaviour
                 case 4: factorValue = 2; break;
                 default: Debug.LogWarningFormat("Unrecognised rndNum \"{0}\", default Zero value assigned", rndNum); break;
             }
-            arrayOfFactors[i] = factorValue;
+            arrayOfFactors[index] = factorValue;
         }
         return arrayOfFactors;
     }
 
+
     /// <summary>
-    /// loop through entire suite of actors in a level (even those in reserve pools) and set their compatibility with the player
+    /// Checks listOfFactors for any that are +2/-2 and adds a descriptor to personality.listOfDescriptors
+    /// NOTE: personality checked for Null by calling method
     /// </summary>
-    private void SetAllActorsCompatibilityWithPlayer()
+    /// <param name="personality"></param>
+    public void SetDescriptors(Personality personality)
+    {
+        string descriptor;
+        int[] arrayOfFactors = personality.GetFactors();
+        if (arrayOfFactors != null)
+        {
+            for (int i = 0; i < arrayOfFactors.Length; i++)
+            {
+                descriptor = null;
+                switch (arrayOfFactors[i])
+                {
+                    case 2:
+                    case -2:
+                        descriptor = GetDescriptor(i, arrayOfFactors[i]);
+                        break;
+                }
+                if (string.IsNullOrEmpty(descriptor) == false)
+                { personality.AddDescriptor(descriptor); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfFactors (Null)"); }
+    }
+
+    /// <summary>
+    /// subMethod for PersonalityManager.cs -> SetDescriptors. Gets a random descriptor from the appropriate factor textlist which is then added to Personality.listOfDescriptors.
+    /// Index if personality factor index (eg. 0 to 4) and value is value of the factor, eg. +2 or -2 (shouldn't be called otherwise)
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name=""></param>
+    private string GetDescriptor(int index, int value)
+    {
+        string descriptor = "Unknown";
+        if (index > -1 && index < numOfFactors)
+        {
+            //get factor
+            Factor factor = arrayOfFactors[index];
+            if (factor != null)
+            {
+                //+2 or -2
+                switch(value)
+                {
+                    case 2: descriptor = factor.positiveDescriptor.GetRandomRecord(); break;
+                    case -2: descriptor = factor.negativeDescriptor.GetRandomRecord(); break;
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid factor (Null) for arrayOfFactors[{0}]", index); }
+        }
+        else { Debug.LogFormat("Invalid index \"{0}\" (should be within 0 to 4)", index); }
+        return descriptor;
+    }
+
+    /// <summary>
+    /// loop through entire suite of actors in a level (even those in reserve pools) and set their compatibility with the player and their factor descriptors 
+    /// Note: factors are determined by ActorManager.cs -> CreateActor
+    /// </summary>
+    private void SetAllActorsPersonality()
     {
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
         if (dictOfActors != null)
@@ -124,8 +182,16 @@ public class PersonalityManager : MonoBehaviour
             {
                 if (actor.Value != null)
                 {
-                    compatibility = CheckCompatibilityWithPlayer(actor.Value.GetPersonality().GetFactors());
-                    actor.Value.GetPersonality().SetCompatibilityWithPlayer(compatibility);
+                    Personality personality = actor.Value.GetPersonality();
+                    if (personality != null)
+                    {
+                        //compatibility with Player
+                        compatibility = CheckCompatibilityWithPlayer(personality.GetFactors());
+                        personality.SetCompatibilityWithPlayer(compatibility);
+                        //descriptors
+                        SetDescriptors(personality);
+                    }
+                    else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.Value.actorName, actor.Value.actorID); }
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actor.Key); }
             }
@@ -271,21 +337,39 @@ public class PersonalityManager : MonoBehaviour
     public string DebugDisplayIndividualPersonality(Personality personality)
     {
         StringBuilder builder = new StringBuilder();
+        int count;
+        List<string> listOfDescriptors;
         if (personality != null)
         {
             int[] arrayOfFactors = personality.GetFactors();
             if (arrayOfFactors != null)
             {
+                //factors
                 for (int i = 0; i < arrayOfFactors.Length; i++)
                 { builder.AppendFormat(" {0} {1}{2}", arrayOfFactorTags[i].Substring(0, 6), arrayOfFactors[i] > 0 ? "+" : "", arrayOfFactors[i]); }
                 builder.AppendLine();
+                //compatibility
                 int compatibility = personality.GetCompatibilityWithPlayer();
                 builder.AppendFormat(" Compatibility with Player {0}{1}{2}", compatibility > 0 ? "+" : "", compatibility, "\n");
+                //descriptors
+                listOfDescriptors = personality.GetListOfDescriptors();
+                if (listOfDescriptors != null)
+                {
+                    count = listOfDescriptors.Count;
+                    if (count > 0)
+                    {
+                        foreach(string item in listOfDescriptors)
+                        { builder.AppendFormat("   {0}{1}", item, "\n"); }
+                    }
+                }
+                else { Debug.LogWarning("Invalid listOfDescriptors (Null)"); }
             }
             else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
         }
         else { Debug.LogError("Invalid personality (Null)"); }
         return builder.ToString();
     }
+
+
 
 }
