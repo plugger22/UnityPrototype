@@ -2176,6 +2176,7 @@ public class FileManager : MonoBehaviour
                     {
                         personality.SetFactors(readActor.listOfPersonalityFactors.ToArray());
                         personality.SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
+                        personality.SetDescriptors(readActor.listOfDescriptors);
                         personality.SetProfiles(readActor.listOfProfiles);
                     }
                     else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
@@ -3164,6 +3165,7 @@ public class FileManager : MonoBehaviour
         {
             saveActor.listOfPersonalityFactors = personality.GetFactors().ToList();
             saveActor.compatibilityWithPlayer = personality.GetCompatibilityWithPlayer();
+            saveActor.listOfDescriptors = personality.GetListOfDescriptors();
             saveActor.listOfProfiles = personality.GetListOfProfiles();
         }
         else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }

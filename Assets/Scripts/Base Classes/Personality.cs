@@ -90,6 +90,20 @@ public class Personality
     { return listOfDescriptors; }
 
     /// <summary>
+    /// clears and adds saved load game profiles
+    /// </summary>
+    /// <param name="listOfDescriptors"></param>
+    public void SetDescriptors(List<string> listOfDescriptors)
+    {
+        if (listOfDescriptors != null)
+        {
+            this.listOfDescriptors.Clear();
+            this.listOfDescriptors.AddRange(listOfDescriptors);
+        }
+        else { Debug.LogError("Invalid listOfDescriptors (Null)"); }
+    }
+
+    /// <summary>
     /// Add profile to listOfProfiles
     /// </summary>
     /// <param name="item"></param>

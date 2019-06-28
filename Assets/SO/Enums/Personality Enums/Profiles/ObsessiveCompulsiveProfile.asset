@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: ObsessiveCompulsiveProfile
   m_EditorClassIdentifier: 
   tag: Obsessive Compulsive
+  isAn: 1
   descriptor: d
   AgreePrimary: 0
   ConscPrimary: 2

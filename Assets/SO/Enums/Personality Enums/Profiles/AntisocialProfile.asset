@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: AntisocialProfile
   m_EditorClassIdentifier: 
   tag: Antisocial
+  isAn: 1
   descriptor: d
   AgreePrimary: -2
   ConscPrimary: -1

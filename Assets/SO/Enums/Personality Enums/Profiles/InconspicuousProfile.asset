@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: InconspicuousProfile
   m_EditorClassIdentifier: 
   tag: Inconspicuous
+  isAn: 1
   descriptor: d
   AgreePrimary: 0
   ConscPrimary: 1

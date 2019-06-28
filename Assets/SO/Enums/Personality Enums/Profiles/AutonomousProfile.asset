@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: AutonomousProfile
   m_EditorClassIdentifier: 
   tag: Autonomous
+  isAn: 1
   descriptor: d
   AgreePrimary: -2
   ConscPrimary: 0
