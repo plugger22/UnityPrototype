@@ -175,28 +175,35 @@ public class PersonalityManager : MonoBehaviour
     private void SetAllActorsPersonality()
     {
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
-        if (dictOfActors != null)
+        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
+        if (dictOfProfiles != null)
         {
-            int compatibility;
-            foreach(var actor in dictOfActors)
+            if (dictOfActors != null)
             {
-                if (actor.Value != null)
+                foreach (var actor in dictOfActors)
                 {
-                    Personality personality = actor.Value.GetPersonality();
-                    if (personality != null)
+                    if (actor.Value != null)
                     {
-                        //compatibility with Player
-                        compatibility = CheckCompatibilityWithPlayer(personality.GetFactors());
-                        personality.SetCompatibilityWithPlayer(compatibility);
-                        //descriptors
-                        SetDescriptors(personality);
+                        int compatibility;
+                        Personality personality = actor.Value.GetPersonality();
+                        if (personality != null)
+                        {
+                            //compatibility with Player
+                            compatibility = CheckCompatibilityWithPlayer(personality.GetFactors());
+                            personality.SetCompatibilityWithPlayer(compatibility);
+                            //descriptors
+                            SetDescriptors(personality);
+                            //profile
+                            CheckPersonalityProfile(dictOfProfiles, personality);
+                        }
+                        else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.Value.actorName, actor.Value.actorID); }
                     }
-                    else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.Value.actorName, actor.Value.actorID); }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actor.Key); }
                 }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actor.Key); }
             }
+            else { Debug.LogError("Invalid dictOfActors (Null)"); }
         }
-        else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
     }
 
 
@@ -266,6 +273,73 @@ public class PersonalityManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid playerPersonality.arrayOfFactors (Null)"); }
         return compatibility;
+    }
+
+    /// <summary>
+    /// Searches dictOfProfiles for a match
+    /// </summary>
+    /// <param name="personality"></param>
+    private void CheckPersonalityProfile(Dictionary<string, PersonProfile> dictOfProfiles, Personality personality)
+    {
+        if (personality != null)
+        {
+            if (dictOfProfiles != null)
+            {
+                bool isProceed = true;
+                int[] arrayOfProfile;
+                int[] arrayOfFactors = personality.GetFactors();
+                //loop dictionary trying to find a profile match
+                foreach(var profile in dictOfProfiles)
+                {
+                    arrayOfProfile = profile.Value.GetArrayOfPrimaryFactors();
+                    if (arrayOfProfile != null)
+                    {
+                        //attempt to match primary criteria
+                        for (int i = 0; i < arrayOfProfile.Length; i++)
+                        {
+                            if (arrayOfProfile[i] != 0)
+                            {
+                                if (arrayOfProfile[i] != arrayOfFactors[i])
+                                { isProceed = false;  break; }
+                            }
+                        }
+                        //attempt to match secondary criteria
+                        if (isProceed == true)
+                        {
+                            Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: Primary match for \"{0}\"", profile.Value.name);
+                            arrayOfProfile = profile.Value.GetArrayOfSecondaryFactors();
+                            if (arrayOfProfile != null)
+                            {
+                                for (int i = 0; i < arrayOfProfile.Length; i++)
+                                {
+                                    if (arrayOfProfile[i] != 0)
+                                    {
+                                        //should be a positive value if criteria > 0, negative if < 0
+                                        if (arrayOfProfile[i] > 0)
+                                        {
+                                            if (arrayOfFactors[i] < 1)
+                                            { isProceed = false; break; }
+                                        }
+                                        else if (arrayOfFactors[i] > -1)
+                                        { isProceed = false;  break; }
+                                    }
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid arrayOfSecondaryFactors (Null) for {0}", profile.Value.name); }
+                        }
+                        //match found
+                        if (isProceed == true)
+                        {
+                            Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: Secondary match for \"{0}\"", profile.Value.name);
+                            personality.AddProfile(profile.Value.tag);
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid arrayOfPrimaryFactors (Null) for {0}", profile.Value.name); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
+        }
+        else { Debug.LogError("Invalid personality (Null)"); }
     }
 
     //
@@ -339,6 +413,7 @@ public class PersonalityManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         int count;
         List<string> listOfDescriptors;
+        List<string> listOfProfiles;
         if (personality != null)
         {
             int[] arrayOfFactors = personality.GetFactors();
@@ -351,6 +426,14 @@ public class PersonalityManager : MonoBehaviour
                 //compatibility
                 int compatibility = personality.GetCompatibilityWithPlayer();
                 builder.AppendFormat(" Compatibility with Player {0}{1}{2}", compatibility > 0 ? "+" : "", compatibility, "\n");
+                //profile
+                listOfProfiles = personality.GetListOfProfiles();
+                if (listOfProfiles != null)
+                {
+                    foreach(string item in listOfProfiles)
+                    { builder.AppendFormat(" {0} Profile{1}", item, "\n"); }
+                }
+                else { Debug.LogWarning("Invalid listOfProfiles (Null)"); }
                 //descriptors
                 listOfDescriptors = personality.GetListOfDescriptors();
                 if (listOfDescriptors != null)

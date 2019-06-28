@@ -53,4 +53,10 @@ public class PersonProfile : ScriptableObject
     }
 
 
+    public int[] GetArrayOfPrimaryFactors()
+    { return arrayOfFactorsPrimary; }
+
+    public int[] GetArrayOfSecondaryFactors()
+    { return arrayOfFactorsSecondary; }
+
 }

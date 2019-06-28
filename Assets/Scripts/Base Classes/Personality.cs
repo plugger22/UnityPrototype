@@ -11,6 +11,7 @@ public class Personality
     private int[] arrayOfFactors;
     private int compatibilityWithPlayer;
     private List<string> listOfDescriptors = new List<string>();
+    private List<string> listOfProfiles = new List<string>();
 
     /// <summary>
     /// constructor
@@ -82,10 +83,24 @@ public class Personality
     {
         if (string.IsNullOrEmpty(item) == false)
         { listOfDescriptors.Add(item); }
-        else { Debug.LogError("Invalid item (Null or Empty)"); }
+        else { Debug.LogError("Invalid descriptor (Null or Empty)"); }
     }
 
     public List<string> GetListOfDescriptors()
     { return listOfDescriptors; }
+
+    /// <summary>
+    /// Add profile to listOfProfiles
+    /// </summary>
+    /// <param name="item"></param>
+    public void AddProfile(string item)
+    {
+        if (string.IsNullOrEmpty(item) == false)
+        { listOfProfiles.Add(item); }
+        else { Debug.LogError("Invalid profile (Null or Empty)"); }
+    }
+
+    public List<string> GetListOfProfiles()
+    { return listOfProfiles; }
 
 }
