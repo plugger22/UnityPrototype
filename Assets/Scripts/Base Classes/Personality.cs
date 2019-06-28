@@ -11,7 +11,7 @@ public class Personality
     private int[] arrayOfFactors;
     private int compatibilityWithPlayer;
     private List<string> listOfDescriptors = new List<string>();
-    private List<string> listOfProfiles = new List<string>();
+    private List<string> listOfProfiles = new List<string>();                   //stored as 'an Inert', or 'a Responsible'  [personality]
 
     /// <summary>
     /// constructor
@@ -102,5 +102,19 @@ public class Personality
 
     public List<string> GetListOfProfiles()
     { return listOfProfiles; }
+
+    /// <summary>
+    /// clears and adds saved load game profiles
+    /// </summary>
+    /// <param name="listOfProfiles"></param>
+    public void SetProfiles(List<string> listOfProfiles)
+    {
+        if (listOfProfiles != null)
+        {
+            this.listOfProfiles.Clear();
+            this.listOfProfiles.AddRange(listOfProfiles);
+        }
+        else { Debug.LogError("Invalid listOfProfiles (Null)"); }
+    }
 
 }

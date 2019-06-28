@@ -130,18 +130,24 @@ public class LoadManager : MonoBehaviour
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfPersonProfiles has {0} entries{1}", numArray, "\n"); }
             else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No PersonProfile present"); }
             //add to dictionary
+            counter = 0;
             for (int i = 0; i < numArray; i++)
             {
                 PersonProfile profile = arrayOfPersonProfiles[i];
                 if (profile != null)
                 {
                     try
-                    { dictOfProfiles.Add(profile.name, profile); }
+                    { dictOfProfiles.Add(profile.name, profile); counter++; }
                     catch (ArgumentException)
                     { Debug.LogWarningFormat("Duplicate record exists in dictOfProfiles for {0}", profile); }
                 }
                 else { Debug.LogWarningFormat("Invalid Profile (Null) for arrayOfProfile[{0}]", i); }
             }
+            numDict = dictOfProfiles.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfProfiles has {0} entries{1}", numDict, "\n");
+            Debug.Assert(dictOfProfiles.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfProfiles.Count > 0, "No PersonProfiles imported to dictionary");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in PersonProfiles count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
         //

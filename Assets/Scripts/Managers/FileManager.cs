@@ -2171,10 +2171,12 @@ public class FileManager : MonoBehaviour
                     { actor.AddTrait(trait); }
                     else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitName); }
                     actor.Status = readActor.status; //needs to be after SetGear
-                    if (actor.GetPersonality() != null)
+                    Personality personality = actor.GetPersonality();
+                    if (personality != null)
                     {
-                        actor.SetPersonalityFactors(readActor.listOfPersonalityFactors);
-                        actor.GetPersonality().SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
+                        personality.SetFactors(readActor.listOfPersonalityFactors.ToArray());
+                        personality.SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
+                        personality.SetProfiles(readActor.listOfProfiles);
                     }
                     else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
                     //sprite
@@ -3162,8 +3164,10 @@ public class FileManager : MonoBehaviour
         {
             saveActor.listOfPersonalityFactors = personality.GetFactors().ToList();
             saveActor.compatibilityWithPlayer = personality.GetCompatibilityWithPlayer();
+            saveActor.listOfProfiles = personality.GetListOfProfiles();
         }
         else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }
+       
         Trait trait = actor.GetTrait();
         if (trait != null)
         { saveActor.traitName = trait.name; }

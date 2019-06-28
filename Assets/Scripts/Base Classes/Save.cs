@@ -151,6 +151,7 @@ public class SavePlayerData
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
     public List<int> listOfPersonalityFactors = new List<int>();
+    public List<string> listOfProfiles = new List<string>();
     public List<string> listOfGear = new List<string>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditionsResistance = new List<string>();
@@ -500,6 +501,7 @@ public class SaveActor
     public int gearTimesTaken;
     //collections
     public List<int> listOfPersonalityFactors = new List<int>();
+    public List<string> listOfProfiles = new List<string>();
     public List<int> listOfTeams = new List<int>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditions = new List<string>();   

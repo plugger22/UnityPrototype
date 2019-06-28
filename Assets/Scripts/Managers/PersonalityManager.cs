@@ -279,18 +279,19 @@ public class PersonalityManager : MonoBehaviour
     /// Searches dictOfProfiles for a match
     /// </summary>
     /// <param name="personality"></param>
-    private void CheckPersonalityProfile(Dictionary<string, PersonProfile> dictOfProfiles, Personality personality)
+    public void CheckPersonalityProfile(Dictionary<string, PersonProfile> dictOfProfiles, Personality personality)
     {
         if (personality != null)
         {
             if (dictOfProfiles != null)
             {
-                bool isProceed = true;
+                bool isProceed;
                 int[] arrayOfProfile;
                 int[] arrayOfFactors = personality.GetFactors();
                 //loop dictionary trying to find a profile match
                 foreach(var profile in dictOfProfiles)
                 {
+                    isProceed = true;
                     arrayOfProfile = profile.Value.GetArrayOfPrimaryFactors();
                     if (arrayOfProfile != null)
                     {
@@ -300,13 +301,12 @@ public class PersonalityManager : MonoBehaviour
                             if (arrayOfProfile[i] != 0)
                             {
                                 if (arrayOfProfile[i] != arrayOfFactors[i])
-                                { isProceed = false;  break; }
+                                { isProceed = false; break; }
                             }
                         }
                         //attempt to match secondary criteria
                         if (isProceed == true)
                         {
-                            Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: Primary match for \"{0}\"", profile.Value.name);
                             arrayOfProfile = profile.Value.GetArrayOfSecondaryFactors();
                             if (arrayOfProfile != null)
                             {
@@ -321,7 +321,7 @@ public class PersonalityManager : MonoBehaviour
                                             { isProceed = false; break; }
                                         }
                                         else if (arrayOfFactors[i] > -1)
-                                        { isProceed = false;  break; }
+                                        { isProceed = false; break; }
                                     }
                                 }
                             }
@@ -330,8 +330,8 @@ public class PersonalityManager : MonoBehaviour
                         //match found
                         if (isProceed == true)
                         {
-                            Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: Secondary match for \"{0}\"", profile.Value.name);
-                            personality.AddProfile(profile.Value.tag);
+                            Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);
+                            personality.AddProfile(string.Format("{0} {1}", profile.Value.isAn == true ? "an" : "a", profile.Value.tag));
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid arrayOfPrimaryFactors (Null) for {0}", profile.Value.name); }
@@ -426,14 +426,6 @@ public class PersonalityManager : MonoBehaviour
                 //compatibility
                 int compatibility = personality.GetCompatibilityWithPlayer();
                 builder.AppendFormat(" Compatibility with Player {0}{1}{2}", compatibility > 0 ? "+" : "", compatibility, "\n");
-                //profile
-                listOfProfiles = personality.GetListOfProfiles();
-                if (listOfProfiles != null)
-                {
-                    foreach(string item in listOfProfiles)
-                    { builder.AppendFormat(" {0} Profile{1}", item, "\n"); }
-                }
-                else { Debug.LogWarning("Invalid listOfProfiles (Null)"); }
                 //descriptors
                 listOfDescriptors = personality.GetListOfDescriptors();
                 if (listOfDescriptors != null)
@@ -446,6 +438,14 @@ public class PersonalityManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogWarning("Invalid listOfDescriptors (Null)"); }
+                //profile
+                listOfProfiles = personality.GetListOfProfiles();
+                if (listOfProfiles != null)
+                {
+                    foreach(string item in listOfProfiles)
+                    { builder.AppendFormat(" Exhibits signs of {0} personality{1}", item, "\n"); }
+                }
+                else { Debug.LogWarning("Invalid listOfProfiles (Null)"); }
             }
             else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
         }

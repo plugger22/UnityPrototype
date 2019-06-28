@@ -77,3 +77,57 @@ City seed 890 -> Arles, France
 
 Dev seed 4917 -> Friday, 28 June 2019 3:07 PM
 City seed 890 -> Arles, France
+
+Dev seed 15657 -> Friday, 28 June 2019 3:21 PM
+City seed 890 -> Arles, France
+
+Dev seed 60499 -> Friday, 28 June 2019 3:22 PM
+City seed 890 -> Arles, France
+
+Dev seed 27253 -> Friday, 28 June 2019 3:27 PM
+City seed 890 -> Arles, France
+
+Dev seed 3419 -> Friday, 28 June 2019 3:38 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 13740 -> Friday, 28 June 2019 3:50 PM
+City seed 890 -> Arles, France
+
+Dev seed 28150 -> Friday, 28 June 2019 3:56 PM
+WARNING Invalid Profile (Null) for arrayOfProfile[20]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:144)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:716)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:334)
+	
+Dev seed 49 -> Friday, 28 June 2019 3:57 PM
+City seed 890 -> Arles, France
+
+Dev seed 34986 -> Friday, 28 June 2019 3:59 PM
+City seed 890 -> Arles, France
+
+Dev seed 52961 -> Friday, 28 June 2019 4:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 24344 -> Friday, 28 June 2019 4:04 PM
+City seed 890 -> Arles, France
+
+Dev seed 20484 -> Friday, 28 June 2019 4:07 PM
+City seed 890 -> Arles, France
+
+Dev seed 50846 -> Friday, 28 June 2019 4:20 PM
+City seed 890 -> Arles, France
+
+Dev seed 10388 -> Friday, 28 June 2019 4:21 PM
+City seed 890 -> Arles, France
+
+Dev seed 29292 -> Friday, 28 June 2019 4:22 PM
+City seed 890 -> Arles, France
+
+Dev seed 39701 -> Friday, 28 June 2019 4:33 PM
+City seed 890 -> Arles, France
+
+Dev seed 42818 -> Friday, 28 June 2019 4:33 PM
+City seed 890 -> Arles, France

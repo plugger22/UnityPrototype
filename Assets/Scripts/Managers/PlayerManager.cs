@@ -188,7 +188,10 @@ public class PlayerManager : MonoBehaviour
 
     #region SubInitialiseSessionStartLate
     private void SubInitialiseSessionStartLate()
-    { GameManager.instance.personScript.SetDescriptors(personality);}
+    {
+        GameManager.instance.personScript.SetDescriptors(personality);
+        GameManager.instance.personScript.CheckPersonalityProfile(GameManager.instance.dataScript.GetDictOfProfiles(), personality);
+    }
     #endregion
 
     #region SubInitialiseFastAccess

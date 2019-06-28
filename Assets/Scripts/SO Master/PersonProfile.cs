@@ -10,6 +10,8 @@ public class PersonProfile : ScriptableObject
 {
     [Tooltip("In game name")]
     public string tag;
+    [Tooltip("Exhibits signs of [a/an] personality, True if 'an' needed instead of 'a'")]
+    public bool isAn;
     [Tooltip("In game descriptor")]
     [TextArea] public string descriptor;
 
