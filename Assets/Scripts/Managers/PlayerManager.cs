@@ -1382,12 +1382,5 @@ public class PlayerManager : MonoBehaviour
     public Personality GetPersonality()
     { return personality; }
 
-    /// <summary>
-    /// Set personality factors (SetFactors handles all error and range checks)
-    /// </summary>
-    /// <param name="personality"></param>
-    public void SetPersonalityFactors(List<int> listOfFactors)
-    { personality.SetFactors(listOfFactors.ToArray()); }
-
     //place new methods above here
 }

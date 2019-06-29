@@ -843,13 +843,6 @@ namespace gameAPI
         public Personality GetPersonality()
         { return personality; }
 
-        /// <summary>
-        /// Sets factors based on loaded save game data. SubMethod handles all error and range checking
-        /// </summary>
-        /// <param name="listOfFactors"></param>
-        public void SetPersonalityFactors(List<int> listOfFactors)
-        { personality.SetFactors(listOfFactors.ToArray()); }
-
 
         //place methods above here
     }

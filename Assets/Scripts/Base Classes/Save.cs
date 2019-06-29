@@ -151,6 +151,7 @@ public class SavePlayerData
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
     public List<int> listOfPersonalityFactors = new List<int>();
+    public List<string> listOfDescriptors = new List<string>();
     public List<string> listOfProfiles = new List<string>();
     public List<string> listOfGear = new List<string>();
     public List<string> listOfSecrets = new List<string>();

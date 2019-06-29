@@ -156,7 +156,7 @@ public class PersonalityManager : MonoBehaviour
             if (factor != null)
             {
                 //+2 or -2
-                switch(value)
+                switch (value)
                 {
                     case 2: descriptor = factor.positiveDescriptor.GetRandomRecord(); break;
                     case -2: descriptor = factor.negativeDescriptor.GetRandomRecord(); break;
@@ -286,53 +286,55 @@ public class PersonalityManager : MonoBehaviour
             if (dictOfProfiles != null)
             {
                 bool isProceed;
-                int[] arrayOfProfile;
+                int[] arrayOfProfilePrimary;
+                int[] arrayOfProfileSecondary;
                 int[] arrayOfFactors = personality.GetFactors();
                 //loop dictionary trying to find a profile match
-                foreach(var profile in dictOfProfiles)
+                foreach (var profile in dictOfProfiles)
                 {
                     isProceed = true;
-                    arrayOfProfile = profile.Value.GetArrayOfPrimaryFactors();
-                    if (arrayOfProfile != null)
+                    arrayOfProfilePrimary = profile.Value.GetArrayOfPrimaryFactors();
+                    arrayOfProfileSecondary = profile.Value.GetArrayOfSecondaryFactors();
+                    if (arrayOfProfilePrimary != null)
                     {
-                        //attempt to match primary criteria
-                        for (int i = 0; i < arrayOfProfile.Length; i++)
+                        if (arrayOfProfileSecondary != null)
                         {
-                            if (arrayOfProfile[i] != 0)
+                            //attempt to match primary criteria
+                            for (int i = 0; i < arrayOfProfilePrimary.Length; i++)
                             {
-                                if (arrayOfProfile[i] != arrayOfFactors[i])
+                                if (arrayOfProfilePrimary[i] == 0)
+                                {
+                                
+
+                                }
+                                if (arrayOfProfilePrimary[i] != arrayOfFactors[i])
                                 { isProceed = false; break; }
                             }
-                        }
-                        //attempt to match secondary criteria
-                        if (isProceed == true)
-                        {
-                            arrayOfProfile = profile.Value.GetArrayOfSecondaryFactors();
-                            if (arrayOfProfile != null)
+                            //attempt to match secondary criteria
+                            if (isProceed == true)
                             {
-                                for (int i = 0; i < arrayOfProfile.Length; i++)
+
+                                for (int i = 0; i < arrayOfProfileSecondary.Length; i++)
                                 {
-                                    if (arrayOfProfile[i] != 0)
+                                    //should be a positive value if criteria > 0, negative if < 0
+                                    if (arrayOfProfileSecondary[i] > 0)
                                     {
-                                        //should be a positive value if criteria > 0, negative if < 0
-                                        if (arrayOfProfile[i] > 0)
-                                        {
-                                            if (arrayOfFactors[i] < 1)
-                                            { isProceed = false; break; }
-                                        }
-                                        else if (arrayOfFactors[i] > -1)
+                                        if (arrayOfFactors[i] < 1)
                                         { isProceed = false; break; }
                                     }
+                                    else if (arrayOfFactors[i] > -1)
+                                    { isProceed = false; break; }
                                 }
+
                             }
-                            else { Debug.LogWarningFormat("Invalid arrayOfSecondaryFactors (Null) for {0}", profile.Value.name); }
+                            //match found
+                            if (isProceed == true)
+                            {
+                                Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);
+                                personality.AddProfile(string.Format("{0} {1}", profile.Value.isAn == true ? "an" : "a", profile.Value.tag));
+                            }
                         }
-                        //match found
-                        if (isProceed == true)
-                        {
-                            Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);
-                            personality.AddProfile(string.Format("{0} {1}", profile.Value.isAn == true ? "an" : "a", profile.Value.tag));
-                        }
+                        else { Debug.LogWarningFormat("Invalid arrayOfSecondaryFactors (Null) for {0}", profile.Value.name); }
                     }
                     else { Debug.LogWarningFormat("Invalid arrayOfPrimaryFactors (Null) for {0}", profile.Value.name); }
                 }
@@ -433,7 +435,7 @@ public class PersonalityManager : MonoBehaviour
                     count = listOfDescriptors.Count;
                     if (count > 0)
                     {
-                        foreach(string item in listOfDescriptors)
+                        foreach (string item in listOfDescriptors)
                         { builder.AppendFormat("   {0}{1}", item, "\n"); }
                     }
                 }
@@ -442,7 +444,7 @@ public class PersonalityManager : MonoBehaviour
                 listOfProfiles = personality.GetListOfProfiles();
                 if (listOfProfiles != null)
                 {
-                    foreach(string item in listOfProfiles)
+                    foreach (string item in listOfProfiles)
                     { builder.AppendFormat(" Exhibits signs of {0} personality{1}", item, "\n"); }
                 }
                 else { Debug.LogWarning("Invalid listOfProfiles (Null)"); }

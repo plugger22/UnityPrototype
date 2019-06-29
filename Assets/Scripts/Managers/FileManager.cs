@@ -269,7 +269,11 @@ public class FileManager : MonoBehaviour
         write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)
-        { write.playerData.listOfPersonalityFactors = personality.GetFactors().ToList(); }
+        {
+            write.playerData.listOfPersonalityFactors = personality.GetFactors().ToList();
+            write.playerData.listOfDescriptors.AddRange(personality.GetListOfDescriptors());
+            write.playerData.listOfProfiles.AddRange(personality.GetListOfProfiles());
+        }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //secrets
         List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
@@ -1415,8 +1419,13 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
         GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
         GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
-        if (GameManager.instance.playerScript.GetPersonality() != null)
-        { GameManager.instance.playerScript.SetPersonalityFactors(read.playerData.listOfPersonalityFactors); }
+        Personality personality = GameManager.instance.playerScript.GetPersonality();
+        if ( personality != null)
+        {
+            personality.SetFactors(read.playerData.listOfPersonalityFactors.ToArray());
+            personality.SetDescriptors(read.playerData.listOfDescriptors);
+            personality.SetProfiles(read.playerData.listOfProfiles);
+        }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //gear
         List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
