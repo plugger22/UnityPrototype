@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: ParanoidProfile
   m_EditorClassIdentifier: 
   tag: Paranoid
-  descriptor: jj
+  isAn: 0
+  descriptor: paranoia, suspiciousness and generalized mistrust of others
   AgreePrimary: -2
   ConscPrimary: 0
   NeuroPrimary: 1

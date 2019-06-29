@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: SchizoidProfile
   m_EditorClassIdentifier: 
   tag: Schizoid
-  descriptor: d
+  isAn: 0
+  descriptor: lack of interest in social relationships, solitary lifestyle without
+    intimate attachments
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0

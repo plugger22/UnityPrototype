@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: DeterminedProfile
   m_EditorClassIdentifier: 
   tag: Determined
-  descriptor: d
+  isAn: 0
+  descriptor: calm, stable relationships with society and other people
   AgreePrimary: 1
   ConscPrimary: 1
   NeuroPrimary: -2

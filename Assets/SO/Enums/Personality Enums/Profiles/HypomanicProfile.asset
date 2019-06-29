@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: HypomanicProfile
   m_EditorClassIdentifier: 
   tag: Hypomanic
-  descriptor: d
+  isAn: 0
+  descriptor: high energy, disinhibited and elevated behaviour, combined with high
+    levels of euphoria or irritation
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: PragmaticProfile
   m_EditorClassIdentifier: 
   tag: Pragmatic
-  descriptor: d
+  isAn: 0
+  descriptor: conventional beliefs featured by social confidence with sane ideation
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: -1

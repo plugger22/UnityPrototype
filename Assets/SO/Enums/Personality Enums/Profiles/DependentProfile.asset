@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: DependentProfile
   m_EditorClassIdentifier: 
   tag: Dependent
-  descriptor: d
+  isAn: 0
+  descriptor: psychological depending on others to meet own emotional and physical
+    needs
   AgreePrimary: 2
   ConscPrimary: 0
   NeuroPrimary: 1

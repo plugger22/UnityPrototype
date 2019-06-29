@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: SelfDefeatingProfile
   m_EditorClassIdentifier: 
   tag: Self Defeating
-  descriptor: d
+  isAn: 0
+  descriptor: self-defeating behaviour, undermining of pleasurable experiences and
+    rejection of help offered by others
   AgreePrimary: 2
   ConscPrimary: -1
   NeuroPrimary: 2

@@ -302,30 +302,34 @@ public class PersonalityManager : MonoBehaviour
                             //attempt to match primary criteria
                             for (int i = 0; i < arrayOfProfilePrimary.Length; i++)
                             {
+                                //primary Zero
                                 if (arrayOfProfilePrimary[i] == 0)
                                 {
-                                
-
-                                }
-                                if (arrayOfProfilePrimary[i] != arrayOfFactors[i])
-                                { isProceed = false; break; }
-                            }
-                            //attempt to match secondary criteria
-                            if (isProceed == true)
-                            {
-
-                                for (int i = 0; i < arrayOfProfileSecondary.Length; i++)
-                                {
-                                    //should be a positive value if criteria > 0, negative if < 0
-                                    if (arrayOfProfileSecondary[i] > 0)
+                                    //no primary, secondary requirement exists
+                                    if (arrayOfProfileSecondary[i] != 0)
                                     {
-                                        if (arrayOfFactors[i] < 1)
+                                        //should be a positive value if criteria > 0, negative if < 0
+                                        if (arrayOfProfileSecondary[i] > 0)
+                                        {
+                                            if (arrayOfFactors[i] < 1)
+                                            { isProceed = false; break; }
+                                        }
+                                        else if (arrayOfFactors[i] > -1)
                                         { isProceed = false; break; }
                                     }
-                                    else if (arrayOfFactors[i] > -1)
+                                    else
+                                    {
+                                        //No secondary, primary requirement to equal Zero
+                                        if (arrayOfFactors[i] != 0)
+                                        { isProceed = false; break; }
+                                    }
+                                }
+                                else
+                                {
+                                    //non zero primary, must be a match
+                                    if (arrayOfProfilePrimary[i] != arrayOfFactors[i])
                                     { isProceed = false; break; }
                                 }
-
                             }
                             //match found
                             if (isProceed == true)

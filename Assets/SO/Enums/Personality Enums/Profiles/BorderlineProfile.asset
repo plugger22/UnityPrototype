@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: BorderlineProfile
   m_EditorClassIdentifier: 
   tag: Borderline
-  descriptor: d
+  isAn: 0
+  descriptor: intense unstable relationships with other people
   AgreePrimary: -1
   ConscPrimary: -1
   NeuroPrimary: 2

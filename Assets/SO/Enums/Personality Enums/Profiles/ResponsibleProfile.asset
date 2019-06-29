@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: ResponsibleProfile
   m_EditorClassIdentifier: 
   tag: Responsible
-  descriptor: d
+  isAn: 0
+  descriptor: respecting the rights of others with a high moral sense and/or conscience
   AgreePrimary: 2
   ConscPrimary: 1
   NeuroPrimary: 0

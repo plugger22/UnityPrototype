@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: TrustingProfile
   m_EditorClassIdentifier: 
   tag: Trusting
-  descriptor: d
+  isAn: 0
+  descriptor: creduility, unsuspiciousness and generalized trust of others
   AgreePrimary: 2
   ConscPrimary: 0
   NeuroPrimary: 0

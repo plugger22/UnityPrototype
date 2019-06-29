@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: TolerantProfile
   m_EditorClassIdentifier: 
   tag: Tolerant
-  descriptor: d
+  isAn: 0
+  descriptor: efficient interest in orderliness and details, above average openness
+    to experience and flexibility
   AgreePrimary: 0
   ConscPrimary: -2
   NeuroPrimary: 0

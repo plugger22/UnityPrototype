@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Antisocial
   isAn: 1
-  descriptor: d
+  descriptor: disregard for the rights of others with a low moral sense or conscience
   AgreePrimary: -2
   ConscPrimary: -1
   NeuroPrimary: 0

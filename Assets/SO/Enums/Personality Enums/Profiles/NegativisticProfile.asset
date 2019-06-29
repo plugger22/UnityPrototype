@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: NegativisticProfile
   m_EditorClassIdentifier: 
   tag: Negativistic
-  descriptor: d
+  isAn: 0
+  descriptor: passive-aggressive attitudes plus passive resistance to demands manifesting
+    in social and occupational situations
   AgreePrimary: -1
   ConscPrimary: 0
   NeuroPrimary: 2

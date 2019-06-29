@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: NarcissisticProfile
   m_EditorClassIdentifier: 
   tag: Narcissistic
-  descriptor: d
+  isAn: 0
+  descriptor: exaggerated feelings of self-importance with need for admiration, lack
+    of empathy
   AgreePrimary: -2
   ConscPrimary: 0
   NeuroPrimary: 0

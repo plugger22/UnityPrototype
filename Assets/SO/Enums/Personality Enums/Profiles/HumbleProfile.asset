@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: HumbleProfile
   m_EditorClassIdentifier: 
   tag: Humble
-  descriptor: d
+  isAn: 0
+  descriptor: modest feelings of self-importance wihtout need for admiration, combined
+    wiht high empathy
   AgreePrimary: 2
   ConscPrimary: 0
   NeuroPrimary: 0
