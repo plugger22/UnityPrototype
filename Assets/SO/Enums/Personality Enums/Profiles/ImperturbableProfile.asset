@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: ImperturbableProfile
   m_EditorClassIdentifier: 
   tag: Imperturbable
-  descriptor: d
+  isAn: 0
+  descriptor: high self-directedness, attentive behaviour and/or inactive behaviour
   AgreePrimary: 1
   ConscPrimary: 2
   NeuroPrimary: -2

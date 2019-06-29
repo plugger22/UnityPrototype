@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: SadisticProfile
   m_EditorClassIdentifier: 
   tag: Sadistic
-  descriptor: d
+  isAn: 0
+  descriptor: deliberate cruelty, either mental or physical, to other people (or to
+    animals)
   AgreePrimary: -2
   ConscPrimary: -1
   NeuroPrimary: 0

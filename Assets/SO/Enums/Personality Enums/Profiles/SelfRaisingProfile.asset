@@ -9,10 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9306b58b6d14c047886ee95d0aa1aef, type: 3}
-  m_Name: SelfRisingProfile
+  m_Name: SelfRaisingProfile
   m_EditorClassIdentifier: 
-  tag: Self Rising
-  descriptor: d
+  tag: Self Raising
+  isAn: 0
+  descriptor: self-raising behaviour, cherishing pleasurable experiences and accepting
+    of help offered by others
   AgreePrimary: -2
   ConscPrimary: 1
   NeuroPrimary: -2

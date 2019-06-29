@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Inert
   isAn: 1
-  descriptor: d
+  descriptor: high energy, disinhibited and elevated behaviour, combined with high
+    levels of euphoria or irritation
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0

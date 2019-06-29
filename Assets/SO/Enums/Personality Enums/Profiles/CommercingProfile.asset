@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: CommercingProfile
   m_EditorClassIdentifier: 
   tag: Commercing
-  descriptor: d
+  isAn: 0
+  descriptor: skills for etablishing and maintaining conversations and relationships,
+    effective behaviours
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0

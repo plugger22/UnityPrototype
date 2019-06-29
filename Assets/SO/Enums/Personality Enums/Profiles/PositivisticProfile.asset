@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: PositivisticProfile
   m_EditorClassIdentifier: 
   tag: Positivistic
-  descriptor: d
+  isAn: 0
+  descriptor: active-postive attitudes plus active aiding to demands manifesting in
+    social and occupational situations
   AgreePrimary: 1
   ConscPrimary: 0
   NeuroPrimary: -2
