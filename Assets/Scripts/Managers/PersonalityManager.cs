@@ -285,13 +285,21 @@ public class PersonalityManager : MonoBehaviour
         {
             if (dictOfProfiles != null)
             {
-                bool isProceed;
+                bool isProceed; 
+                bool isMatch = false;
+                int counter = 0;
+                int difference = 0;
+                int threshold = 4;
                 int[] arrayOfProfilePrimary;
                 int[] arrayOfProfileSecondary;
                 int[] arrayOfFactors = personality.GetFactors();
+                //calculate alpha & beta of personality
+                int alpha = personality.GetAlpha();
+                int beta = personality.GetBeta();
                 //loop dictionary trying to find a profile match
                 foreach (var profile in dictOfProfiles)
                 {
+                    difference = 0;
                     isProceed = true;
                     arrayOfProfilePrimary = profile.Value.GetArrayOfPrimaryFactors();
                     arrayOfProfileSecondary = profile.Value.GetArrayOfSecondaryFactors();
@@ -312,23 +320,23 @@ public class PersonalityManager : MonoBehaviour
                                         if (arrayOfProfileSecondary[i] > 0)
                                         {
                                             if (arrayOfFactors[i] < 1)
-                                            { isProceed = false; break; }
+                                            { isProceed = false; difference += Mathf.Abs(arrayOfFactors[i]); }
                                         }
                                         else if (arrayOfFactors[i] > -1)
-                                        { isProceed = false; break; }
+                                        { isProceed = false; difference += Mathf.Abs(arrayOfFactors[i]); }
                                     }
                                     else
                                     {
                                         //No secondary, primary requirement to equal Zero
                                         if (arrayOfFactors[i] != 0)
-                                        { isProceed = false; break; }
+                                        { isProceed = false; difference += Mathf.Abs(arrayOfFactors[i]); }
                                     }
                                 }
                                 else
                                 {
-                                    //non zero primary, must be a match
+                                    //non zero primary, must be a match, calculate difference otherwise
                                     if (arrayOfProfilePrimary[i] != arrayOfFactors[i])
-                                    { isProceed = false; break; }
+                                    { isProceed = false; difference += Mathf.Abs(arrayOfProfilePrimary[i] - arrayOfFactors[i]); }
                                 }
                             }
                             //match found
@@ -337,11 +345,20 @@ public class PersonalityManager : MonoBehaviour
                                 Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);
                                 personality.AddProfile(string.Format("{0} {1}", profile.Value.isAn == true ? "an" : "a", profile.Value.tag));
                             }
+                            //is there a match for alpha or beta?
+                            if (alpha == profile.Value.alpha || beta == profile.Value.beta)
+                            {
+                                /*Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: Match, profile A: {0}, B: {1}, actor A: {2}, B: {3} for \"{4}\"{5}", profile.Value.alpha,
+                                  profile.Value.beta, alpha, beta, profile.Value.tag, "\n");*/
+                                isMatch = true; counter++;
+                            }
                         }
                         else { Debug.LogWarningFormat("Invalid arrayOfSecondaryFactors (Null) for {0}", profile.Value.name); }
                     }
                     else { Debug.LogWarningFormat("Invalid arrayOfPrimaryFactors (Null) for {0}", profile.Value.name); }
                 }
+                if (isMatch == true)
+                { Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match on Alpha/Beta {0} times, difference {1}{2}", counter, difference, "\n"); }
             }
             else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
         }

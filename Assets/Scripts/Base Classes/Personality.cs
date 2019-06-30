@@ -131,4 +131,19 @@ public class Personality
         else { Debug.LogError("Invalid listOfProfiles (Null)"); }
     }
 
+    /// <summary>
+    /// A + C + reversed N
+    /// </summary>
+    /// <returns></returns>
+    public int GetAlpha()
+    { return arrayOfFactors[3] + arrayOfFactors[1] - arrayOfFactors[4]; }
+
+
+    /// <summary>
+    /// E + O
+    /// </summary>
+    /// <returns></returns>
+    public int GetBeta()
+    { return arrayOfFactors[0] + arrayOfFactors[2]; }
+
 }

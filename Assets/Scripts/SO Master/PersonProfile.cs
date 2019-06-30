@@ -40,6 +40,8 @@ public class PersonProfile : ScriptableObject
     [Range(-1, 1)] public int OpenSecondary = 0;
 
 
+    [HideInInspector] public int alpha;                     //A + C + reversed N
+    [HideInInspector] public int beta;                      //E + 0             
 
     private int[] arrayOfFactorsPrimary;                    //must be identical
     private int[] arrayOfFactorsSecondary;                  //must be positive (+1/+2) or negative (-1/-2)
@@ -47,6 +49,10 @@ public class PersonProfile : ScriptableObject
 
     public void OnEnable()
     {
+        //auto calc alpha and beta
+        alpha = AgreePrimary + AgreeSecondary + ConscPrimary + ConscSecondary - NeuroPrimary - NeuroSecondary;
+        beta = ExtraPrimary + ExtraSecondary + OpenPrimary + OpenSecondary;
+        //error check
         Debug.Assert(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty)");
         //assemble arrayOfFactors
