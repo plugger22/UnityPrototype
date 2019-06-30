@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -285,17 +286,19 @@ public class PersonalityManager : MonoBehaviour
         {
             if (dictOfProfiles != null)
             {
-                bool isProceed; 
-                bool isMatch = false;
-                int counter = 0;
+                bool isProceed;
+                bool hasProfile = false;
                 int difference = 0;
                 int threshold = 4;
                 int[] arrayOfProfilePrimary;
                 int[] arrayOfProfileSecondary;
                 int[] arrayOfFactors = personality.GetFactors();
+                Dictionary<string, int> dictOfDifferences = new Dictionary<string, int>();
                 //calculate alpha & beta of personality
                 int alpha = personality.GetAlpha();
                 int beta = personality.GetBeta();
+
+
                 //loop dictionary trying to find a profile match
                 foreach (var profile in dictOfProfiles)
                 {
@@ -344,21 +347,36 @@ public class PersonalityManager : MonoBehaviour
                             {
                                 Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);
                                 personality.AddProfile(string.Format("{0} {1}", profile.Value.isAn == true ? "an" : "a", profile.Value.tag));
+                                hasProfile = true;
                             }
                             //is there a match for alpha or beta?
-                            if (alpha == profile.Value.alpha || beta == profile.Value.beta)
+                            else if (alpha == profile.Value.alpha || beta == profile.Value.beta)
                             {
                                 /*Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: Match, profile A: {0}, B: {1}, actor A: {2}, B: {3} for \"{4}\"{5}", profile.Value.alpha,
                                   profile.Value.beta, alpha, beta, profile.Value.tag, "\n");*/
-                                isMatch = true; counter++;
+                                if (difference <= threshold)
+                                {
+                                    dictOfDifferences.Add(profile.Value.name, difference);
+                                    Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: add to dictOfDifferences, \"{0}\", difference {1}{2}", profile.Value.name, difference, "\n");
+                                }
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid arrayOfSecondaryFactors (Null) for {0}", profile.Value.name); }
                     }
                     else { Debug.LogWarningFormat("Invalid arrayOfPrimaryFactors (Null) for {0}", profile.Value.name); }
                 }
-                if (isMatch == true)
-                { Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match on Alpha/Beta {0} times, difference {1}{2}", counter, difference, "\n"); }
+
+                //if records in dict then find nearest match
+                if (hasProfile == false)
+                {
+                    if (dictOfDifferences.Count > 0)
+                    {
+                        //sort with the smallest difference at top
+                        var sortedDict = from entry in dictOfDifferences orderby entry.Value ascending select entry;
+                        List<string> listOfResults = sortedDict.Keys.ToList();
+                        personality.AddProfile(string.Format("{0} {1}", sortedDict[.Value.isAn == true ? "an" : "a", profile.Value.tag));
+                    }
+                }
             }
             else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
         }
