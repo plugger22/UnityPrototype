@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9306b58b6d14c047886ee95d0aa1aef, type: 3}
   m_Name: AutisticProfile
   m_EditorClassIdentifier: 
-  tag: Autisiform
+  tag: Autisticform
   isAn: 1
   descriptor: difficulties in establishing and maintaining relationships and conversations,
     unusual behaviours
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: -1
+  alpha: -3
+  beta: -3

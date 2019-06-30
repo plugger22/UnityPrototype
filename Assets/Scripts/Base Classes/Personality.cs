@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -11,7 +10,9 @@ public class Personality
     private int[] arrayOfFactors;
     private int compatibilityWithPlayer;
     private List<string> listOfDescriptors = new List<string>();
-    private List<string> listOfProfiles = new List<string>();                   //stored as 'an Inert', or 'a Responsible'  [personality]
+    private string profile;                                             //dict key name of profile
+    private string profileDescriptor;                                   //in-game descriptor, eg. 'Weak indication of a AntiSocial
+    private string profileExplanation;                                  //psychological explanation of profile
 
     /// <summary>
     /// constructor
@@ -103,32 +104,47 @@ public class Personality
         else { Debug.LogError("Invalid listOfDescriptors (Null)"); }
     }
 
-    /// <summary>
-    /// Add profile to listOfProfiles
-    /// </summary>
-    /// <param name="item"></param>
-    public void AddProfile(string item)
-    {
-        if (string.IsNullOrEmpty(item) == false)
-        { listOfProfiles.Add(item); }
-        else { Debug.LogError("Invalid profile (Null or Empty)"); }
-    }
 
-    public List<string> GetListOfProfiles()
-    { return listOfProfiles; }
+    public string GetProfile()
+    { return profile; }
+
+    public string GetProfileDescriptor()
+    { return profileDescriptor; }
+
+    public string GetProfileExplanation()
+    { return profileExplanation; }
 
     /// <summary>
-    /// clears and adds saved load game profiles
+    /// sets profile
     /// </summary>
     /// <param name="listOfProfiles"></param>
-    public void SetProfiles(List<string> listOfProfiles)
+    public void SetProfile(string profile)
     {
-        if (listOfProfiles != null)
-        {
-            this.listOfProfiles.Clear();
-            this.listOfProfiles.AddRange(listOfProfiles);
-        }
-        else { Debug.LogError("Invalid listOfProfiles (Null)"); }
+        if (string.IsNullOrEmpty(profile) == false)
+        { this.profile = profile; }
+        else { Debug.LogError("Invalid profile (Null)"); }
+    }
+
+    /// <summary>
+    /// sets profile descriptor
+    /// </summary>
+    /// <param name="listOfProfiles"></param>
+    public void SetProfileDescriptor(string descriptor)
+    {
+        if (string.IsNullOrEmpty(descriptor) == false)
+        { profileDescriptor = descriptor; }
+        else { Debug.LogError("Invalid profileDescriptor (Null)"); }
+    }
+
+    /// <summary>
+    /// sets profile explanation
+    /// </summary>
+    /// <param name="listOfProfiles"></param>
+    public void SetProfileExplanation(string explanation)
+    {
+        if (string.IsNullOrEmpty(explanation) == false)
+        { profileExplanation = explanation; }
+        else { Debug.LogError("Invalid profileExplanation (Null)"); }
     }
 
     /// <summary>

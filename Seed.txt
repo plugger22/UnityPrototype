@@ -172,3 +172,86 @@ City seed 890 -> Arles, France
 
 Dev seed 18386 -> Sunday, 30 June 2019 2:37 PM
 City seed 890 -> Arles, France
+
+Dev seed 29647 -> Sunday, 30 June 2019 5:13 PM
+City seed 890 -> Arles, France
+WARNING Unrecognised difference "0" for an Autisiform
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckPersonalityProfile(Dictionary`2, Personality) (at Assets/Scripts/Managers/PersonalityManager.cs:394)
+	PersonalityManager:SetAllActorsPersonality() (at Assets/Scripts/Managers/PersonalityManager.cs:198)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:69)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:33)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:716)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:770)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised difference "0" for a ShizotypalProflie
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckPersonalityProfile(Dictionary`2, Personality) (at Assets/Scripts/Managers/PersonalityManager.cs:394)
+	PersonalityManager:SetAllActorsPersonality() (at Assets/Scripts/Managers/PersonalityManager.cs:198)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:69)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:33)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:716)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:770)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised difference "0" for a Commercing
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckPersonalityProfile(Dictionary`2, Personality) (at Assets/Scripts/Managers/PersonalityManager.cs:394)
+	PersonalityManager:SetAllActorsPersonality() (at Assets/Scripts/Managers/PersonalityManager.cs:198)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:69)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:33)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:716)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:770)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised difference "0" for an Histrionic
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckPersonalityProfile(Dictionary`2, Personality) (at Assets/Scripts/Managers/PersonalityManager.cs:394)
+	PersonalityManager:SetAllActorsPersonality() (at Assets/Scripts/Managers/PersonalityManager.cs:198)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:69)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:33)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:716)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:770)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	WARNING Unrecognised difference "0" for a Sociable
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckPersonalityProfile(Dictionary`2, Personality) (at Assets/Scripts/Managers/PersonalityManager.cs:394)
+	PersonalityManager:SetAllActorsPersonality() (at Assets/Scripts/Managers/PersonalityManager.cs:198)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:69)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:33)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:716)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:770)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:141)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:61)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:191)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 54395 -> Sunday, 30 June 2019 5:30 PM
+City seed 890 -> Arles, France
+
+Dev seed 39494 -> Sunday, 30 June 2019 5:32 PM
+City seed 890 -> Arles, France
+
+Dev seed 32074 -> Sunday, 30 June 2019 5:35 PM
+City seed 890 -> Arles, France
+
+Dev seed 11275 -> Sunday, 30 June 2019 5:37 PM
+City seed 890 -> Arles, France
+
+Dev seed 19293 -> Sunday, 30 June 2019 5:39 PM
+City seed 890 -> Arles, France
