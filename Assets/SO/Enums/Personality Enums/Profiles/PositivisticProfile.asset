@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Positivistic
   isAn: 0
-  descriptor: active-postive attitudes plus active aiding to demands manifesting in
-    social and occupational situations
+  descriptor: active-positive attitudes plus active aiding to demands manifesting
+    in social and occupational situations
   AgreePrimary: 1
   ConscPrimary: 0
   NeuroPrimary: -2
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 1
   OpenSecondary: 0
+  alpha: 4
+  beta: 1

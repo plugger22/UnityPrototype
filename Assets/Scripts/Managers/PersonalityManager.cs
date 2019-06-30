@@ -240,28 +240,28 @@ public class PersonalityManager : MonoBehaviour
                 {
                     case 0:
                     case 1:
-                    case 2:
                         compatibility = 3; break;
+                    case 2:
                     case 3:
+                        compatibility = 2; break;
                     case 4:
                     case 5:
-                        compatibility = 2; break;
+                        compatibility = 1; break;
                     case 6:
                     case 7:
                     case 8:
-                        compatibility = 1; break;
+                        compatibility = 0; break;
                     case 9:
                     case 10:
+                        compatibility = -1; break;
                     case 11:
-                        compatibility = 0; break;
                     case 12:
                     case 13:
+                        compatibility = -2; break;
                     case 14:
-                        compatibility = -1; break;
                     case 15:
                     case 16:
                     case 17:
-                        compatibility = -2; break;
                     case 18:
                     case 19:
                     case 20:
@@ -345,7 +345,7 @@ public class PersonalityManager : MonoBehaviour
                             //match found
                             if (isProceed == true)
                             {
-                                Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);
+                                /*Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: match for \"{0}\"", profile.Value.name);*/
                                 personality.SetProfile(profile.Value.name);
                                 personality.SetProfileDescriptor(string.Format("Has a strongly defined {0}", profile.Value.tag));
                                 personality.SetProfileExplanation(profile.Value.descriptor);
@@ -357,8 +357,8 @@ public class PersonalityManager : MonoBehaviour
                                 //if has either an alpha or beta match and difference is less than or equal to the threshold then place in dictionary for sorting and possible selection at end of loop
                                 if (difference <= threshold)
                                 {
-                                    dictOfDifferences.Add(string.Format("{0} {1}", profile.Value.isAn == true ? "an" : "a", profile.Value.tag), difference);
-                                    Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: add to dictOfDifferences, \"{0}\", difference {1}{2}", profile.Value.name, difference, "\n");
+                                    dictOfDifferences.Add(profile.Value.name, difference);
+                                    /*Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: add to dictOfDifferences, \"{0}\", difference {1}{2}", profile.Value.name, difference, "\n");*/
                                 }
                             }
                         }
@@ -372,6 +372,7 @@ public class PersonalityManager : MonoBehaviour
                 {
                     if (dictOfDifferences.Count > 0)
                     {
+                        string profileName = "Unknown";
                         string prefix = "Unknown";
                         //sort with the smallest difference at top
                         var sortedDict = from entry in dictOfDifferences orderby entry.Value ascending select entry;
@@ -381,26 +382,43 @@ public class PersonalityManager : MonoBehaviour
                             switch (record.Value)
                             {
                                 case 0:
+                                    prefix = "Definite indicators of";
+                                    profileName = record.Key;
+                                    break;
                                 case 1:
-                                    prefix = string.Format("Definite indicators of {0}", record.Key);
+                                    prefix = "Strong indicators of";
+                                    profileName = record.Key;
                                     break;
                                 case 2:
-                                    prefix = string.Format("Strong indicators of {0}", record.Key);
+                                    prefix = "Moderate indicators of";
+                                    profileName = record.Key;
                                     break;
                                 case 3:
-                                    prefix = string.Format("Moderate indicators of {0}", record.Key);
+                                    prefix = "Weak indicators of";
+                                    profileName = record.Key;
                                     break;
                                 case 4:
-                                    prefix = string.Format("Weak indicators of {0}", record.Key);
+                                    prefix = "Faint indicators of";
+                                    profileName = record.Key;
                                     break;
                                 default:
                                     Debug.LogWarningFormat("Unrecognised difference \"{0}\" for {1} profile", record.Value, record.Key);
                                     break;
                             }
+                            //only want the first entry in sorted dict
+                            break;
                         }
-                        personality.SetProfile(prefix);
+                        //Get profile and add to personality
+                        PersonProfile profile = GameManager.instance.dataScript.GetProfile(profileName);
+                        if (profile != null)
+                        {
+                            personality.SetProfile(profileName);
+                            personality.SetProfileDescriptor(string.Format("{0} {1} {2}", prefix, profile.isAn == true ? "an" : "a", profile.tag));
+                            personality.SetProfileExplanation(profile.descriptor);
+                        }
+                        else { Debug.LogWarningFormat("Invalid profile (Null) for \"{0}\"", profileName); }
                     }
-                    else { Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: NO MATCH{0}", "\n"); }
+                    /*else { Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: NO MATCH{0}", "\n"); }*/
                 }
             }
             else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
@@ -479,7 +497,6 @@ public class PersonalityManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         int count;
         List<string> listOfDescriptors;
-        List<string> listOfProfiles;
         if (personality != null)
         {
             int[] arrayOfFactors = personality.GetFactors();
@@ -504,9 +521,14 @@ public class PersonalityManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogWarning("Invalid listOfDescriptors (Null)"); }
-                //profile
-                builder.AppendFormat(" {0} personality{1}", personality.GetProfileDescriptor(), "\n");
-
+                if (string.IsNullOrEmpty(personality.GetProfile()) == false)
+                {
+                    //profile
+                    builder.AppendFormat(" {0} personality{1}", personality.GetProfileDescriptor(), "\n");
+                    //profile explanation
+                    builder.AppendFormat("  \"{0}\"{1}", personality.GetProfileExplanation(), "\n");
+                }
+                else { builder.AppendFormat(" No matching Personality Profile{0}", "\n"); }
             }
             else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
         }

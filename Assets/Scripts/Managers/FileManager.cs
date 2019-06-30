@@ -272,7 +272,9 @@ public class FileManager : MonoBehaviour
         {
             write.playerData.listOfPersonalityFactors = personality.GetFactors().ToList();
             write.playerData.listOfDescriptors.AddRange(personality.GetListOfDescriptors());
-            write.playerData.listOfProfiles.AddRange(personality.GetListOfProfiles());
+            write.playerData.profile = personality.GetProfile();
+            write.playerData.profileDescriptor = personality.GetProfileDescriptor();
+            write.playerData.profileExplanation = personality.GetProfileExplanation();
         }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //secrets
@@ -1424,7 +1426,12 @@ public class FileManager : MonoBehaviour
         {
             personality.SetFactors(read.playerData.listOfPersonalityFactors.ToArray());
             personality.SetDescriptors(read.playerData.listOfDescriptors);
-            personality.SetProfiles(read.playerData.listOfProfiles);
+            if (string.IsNullOrEmpty(read.playerData.profile) == false)
+            {
+                personality.SetProfile(read.playerData.profile);
+                personality.SetProfileDescriptor(read.playerData.profileDescriptor);
+                personality.SetProfileExplanation(read.playerData.profileExplanation);
+            }
         }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //gear
@@ -2186,7 +2193,12 @@ public class FileManager : MonoBehaviour
                         personality.SetFactors(readActor.listOfPersonalityFactors.ToArray());
                         personality.SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
                         personality.SetDescriptors(readActor.listOfDescriptors);
-                        personality.SetProfiles(readActor.listOfProfiles);
+                        if (string.IsNullOrEmpty(readActor.profile) == false)
+                        {
+                            personality.SetProfile(readActor.profile);
+                            personality.SetProfileDescriptor(readActor.profileDescriptor);
+                            personality.SetProfileExplanation(readActor.profileExplanation);
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
                     //sprite
@@ -3175,7 +3187,9 @@ public class FileManager : MonoBehaviour
             saveActor.listOfPersonalityFactors = personality.GetFactors().ToList();
             saveActor.compatibilityWithPlayer = personality.GetCompatibilityWithPlayer();
             saveActor.listOfDescriptors = personality.GetListOfDescriptors();
-            saveActor.listOfProfiles = personality.GetListOfProfiles();
+            saveActor.profile = personality.GetProfile();
+            saveActor.profileDescriptor = personality.GetProfileDescriptor();
+            saveActor.profileExplanation = personality.GetProfileExplanation();
         }
         else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }
        

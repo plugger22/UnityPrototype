@@ -6417,6 +6417,23 @@ public class DataManager : MonoBehaviour
     { return dictOfProfiles; }
 
     /// <summary>
+    /// Returns profile based on profileName, eg. 'AntisocialProfile'. Returns Null if a problem or not found.
+    /// </summary>
+    /// <param name="profileName"></param>
+    /// <returns></returns>
+    public PersonProfile GetProfile(string profileName)
+    {
+        PersonProfile profile = null;
+        if (String.IsNullOrEmpty(profileName) == false)
+        {
+            if (dictOfProfiles.ContainsKey(profileName) == true)
+            { profile = dictOfProfiles[profileName]; }
+        }
+        else { Debug.LogError("Invalid profileName (Null)"); }
+        return profile;
+    }
+
+    /// <summary>
     /// Initialise Factor arrays with data from LoadManager.cs
     /// </summary>
     /// <param name="listOfFactors"></param>

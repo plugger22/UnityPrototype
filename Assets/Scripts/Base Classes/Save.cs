@@ -150,9 +150,11 @@ public class SavePlayerData
     public bool isEndOfTurnGearCheck;
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
+    public string profile;
+    public string profileDescriptor;
+    public string profileExplanation;
     public List<int> listOfPersonalityFactors = new List<int>();
     public List<string> listOfDescriptors = new List<string>();
-    public List<string> listOfProfiles = new List<string>();
     public List<string> listOfGear = new List<string>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditionsResistance = new List<string>();
@@ -477,6 +479,9 @@ public class SaveActor
     public string spriteName;
     public string arcName;
     public int compatibilityWithPlayer;
+    public string profile;
+    public string profileDescriptor;
+    public string profileExplanation;
     //public Trait trait;
     public string traitName;
     //data that can be ignored if actor is in Recruit Pool
@@ -503,7 +508,6 @@ public class SaveActor
     //collections
     public List<int> listOfPersonalityFactors = new List<int>();
     public List<string> listOfDescriptors = new List<string>();
-    public List<string> listOfProfiles = new List<string>();
     public List<int> listOfTeams = new List<int>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditions = new List<string>();   
