@@ -14,9 +14,13 @@ MonoBehaviour:
   tag: Untouchable
   description: Honest to a fault
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
-  side: {fileID: 0}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: c7ce789905f730048bc974977799dc04, type: 2}
+  openness: 99
+  conscientiousness: 2
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 99
   tagFormatted: <color=#7FFF00>Untouchable</color>
-  traitID: 24

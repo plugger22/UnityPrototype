@@ -14,9 +14,13 @@ MonoBehaviour:
   tag: Blabbermouth
   description: Will pass secrets onto others
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  side: {fileID: 0}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: 072cda3635ab62347b25e002cd0d5bad, type: 2}
+  openness: 99
+  conscientiousness: -2
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 99
   tagFormatted: <color=#FF4500>Blabbermouth</color>
-  traitID: 2

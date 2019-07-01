@@ -18,5 +18,9 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: e51e5884d109b0844b7385bf6d2a301b, type: 2}
+  openness: 99
+  conscientiousness: -2
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 99
   tagFormatted: <color=#FF4500>Coward</color>
-  traitID: 27

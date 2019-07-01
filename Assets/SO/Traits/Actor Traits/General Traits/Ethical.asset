@@ -14,9 +14,13 @@ MonoBehaviour:
   tag: Ethical
   description: Expects high standards of you
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  side: {fileID: 0}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: b686792b594763c4f813e1ed29a98388, type: 2}
+  openness: 99
+  conscientiousness: 99
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 99
   tagFormatted: <color=#FF4500>Ethical</color>
-  traitID: 6

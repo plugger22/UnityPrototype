@@ -18,5 +18,9 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: d74174bdca6bbf348bf4c5a273ad7792, type: 2}
+  openness: 99
+  conscientiousness: 99
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 2
   tagFormatted: <color=#FF4500>Spooked</color>
-  traitID: 33

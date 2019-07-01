@@ -18,5 +18,9 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: 92b87a5f79debad45b12ae60ce66119a, type: 2}
+  openness: 99
+  conscientiousness: 99
+  extraversion: 99
+  agreeableness: 2
+  neuroticism: 99
   tagFormatted: <color=#7FFF00>Inspiring</color>
-  traitID: 28

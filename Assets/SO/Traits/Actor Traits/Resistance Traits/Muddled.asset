@@ -18,5 +18,9 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: 65f597aea76bb0d44b6f3fc21f49a3dc, type: 2}
+  openness: 99
+  conscientiousness: -2
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 99
   tagFormatted: <color=#FF4500>Muddled</color>
-  traitID: 30

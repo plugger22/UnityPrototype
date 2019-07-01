@@ -14,9 +14,13 @@ MonoBehaviour:
   tag: Bedazzled
   description: No chance of learning Secrets
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
-  side: {fileID: 0}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: 8528b478fb337f34dac298183e3c07d7, type: 2}
+  openness: 99
+  conscientiousness: 99
+  extraversion: 99
+  agreeableness: 2
+  neuroticism: 99
   tagFormatted: <color=#7FFF00>Bedazzled</color>
-  traitID: 1

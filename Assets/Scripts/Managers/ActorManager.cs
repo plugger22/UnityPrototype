@@ -4216,6 +4216,9 @@ public class ActorManager : MonoBehaviour
                         //add trait
                         actor.AddTrait(trait);
                         text = string.Format("Trait {0} added to {1}, {2}", trait.tag, actor.arc.name, actor.actorName);
+                        //redo personality as trait may have changed things
+                        actor.GetPersonality().SetFactors(GameManager.instance.personScript.SetPersonalityFactors(trait.GetArrayOfCriteria()));
+                        GameManager.instance.personScript.SetIndividualPersonality(actor.GetPersonality());
                     }
                     else { text = string.Format("There is no valid Actor (Null) in Slot {0}", actorSlotID); }
                 }

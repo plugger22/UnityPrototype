@@ -18,5 +18,9 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: f04c7601366377a46ba07bcd8618f980, type: 2}
+  openness: 99
+  conscientiousness: 99
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 2
   tagFormatted: <color=#FF4500>Nervous</color>
-  traitID: 31

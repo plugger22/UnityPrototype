@@ -1,7 +1,7 @@
 ﻿using gameAPI;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -86,18 +86,21 @@ public class PersonalityManager : MonoBehaviour
             {
                 //valid criteria present
                 if (arrayOfCriteria[index] != 99)
-                { rndNum = arrayOfCriteria[index]; }
+                { factorValue = arrayOfCriteria[index]; }
                 //invalid criteria (ignore) -> use random number instead
-                else { rndNum = Random.Range(0, 5); }
-                factorValue = 0;
-                switch (rndNum)
+                else
                 {
-                    case 0: factorValue = -2; break;
-                    case 1: factorValue = -1; break;
-                    case 2: factorValue = 0; break;
-                    case 3: factorValue = 1; break;
-                    case 4: factorValue = 2; break;
-                    default: Debug.LogWarningFormat("Unrecognised rndNum \"{0}\", default Zero value assigned", rndNum); break;
+                    rndNum = Random.Range(0, 5);
+                    factorValue = 0;
+                    switch (rndNum)
+                    {
+                        case 0: factorValue = -2; break;
+                        case 1: factorValue = -1; break;
+                        case 2: factorValue = 0; break;
+                        case 3: factorValue = 1; break;
+                        case 4: factorValue = 2; break;
+                        default: Debug.LogWarningFormat("Unrecognised rndNum \"{0}\", default Zero value assigned", rndNum); break;
+                    }
                 }
                 arrayOfFactors[index] = factorValue;
             }
@@ -199,6 +202,26 @@ public class PersonalityManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfActors (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
+    }
+
+    /// <summary>
+    /// Set individual personality (excluding factors, assumed to have already been done). Not performant. Use sparingly.
+    /// </summary>
+    /// <param name="personality"></param>
+    public void SetIndividualPersonality(Personality personality)
+    {
+        int compatibility;
+        if (personality != null)
+        {
+            //compatibility with Player
+            compatibility = CheckCompatibilityWithPlayer(personality.GetFactors());
+            personality.SetCompatibilityWithPlayer(compatibility);
+            //descriptors
+            SetDescriptors(personality);
+            //profile
+            CheckPersonalityProfile(GameManager.instance.dataScript.GetDictOfProfiles(), personality);
+        }
+        else { Debug.LogError("Invalid personality (Null)"); }
     }
 
 
@@ -449,6 +472,22 @@ public class PersonalityManager : MonoBehaviour
                     {
                         //display actor personality
                         builder.AppendFormat("-{0}, {1}, ID {2}, On Map{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                        Trait trait = actor.GetTrait();
+                        if (trait != null)
+                        {
+                            int[] arrayOfCriteria = trait.GetArrayOfCriteria();
+                            if (arrayOfCriteria != null)
+                            {
+                                builder.AppendFormat(" {0} trait, criteria | {1} | {2} | {3} | {4} | {5} | {6}", trait.tag, arrayOfCriteria[0], arrayOfCriteria[1], arrayOfCriteria[2],
+                                    arrayOfCriteria[3], arrayOfCriteria[4], "\n");
+                            }
+                            else { Debug.LogErrorFormat("Invalid arrayOfCriteria (Null) for {0} trait", trait.tag); }
+                        }
+                        else
+                        {
+                            builder.AppendFormat(" ERROR: INVALID TRAIT (NULL){0}", "\n");
+                            Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
+                        }
                         builder.Append(DebugDisplayIndividualPersonality(actor.GetPersonality()));
                         builder.AppendLine();
                     }
@@ -542,11 +581,11 @@ public class PersonalityManager : MonoBehaviour
             float tally = 0.0f;
             int compatibility;
             builder.AppendFormat("- Compatibility with Player (All Actors){0}", "\n");
-            foreach(var actor in dictOfActors)
+            foreach (var actor in dictOfActors)
             {
                 compatibility = actor.Value.GetPersonality().GetCompatibilityWithPlayer();
                 tally += compatibility;
-                builder.AppendFormat(" {0}, {1}, actorID {2}, C: {3}{4}", actor.Value.actorName, actor.Value.arc.name, actor.Key, compatibility, "\n");
+                builder.AppendFormat(" {0}, {1}, Compatibility: {2}{3}", actor.Value.actorName, actor.Value.arc.name, compatibility, "\n");
             }
             //average value
             builder.AppendFormat(" {0}{1}Average Compatibility: {2}", "\n", "\n", tally / dictOfActors.Count);

@@ -592,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numOfFactors: 5
+  profileThreshold: 4
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2250,7 +2251,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 42258
   isAuthority: 0
   autoRunTurns: 0
   isPerformanceLog: 1

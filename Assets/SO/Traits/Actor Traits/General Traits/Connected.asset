@@ -14,9 +14,13 @@ MonoBehaviour:
   tag: Connected
   description: Politically connected. Expensive to get rid of
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
-  side: {fileID: 0}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   listOfTraitEffects:
   - {fileID: 11400000, guid: ea70c7c0eb02ab64495bc81ff4d2856e, type: 2}
+  openness: 99
+  conscientiousness: 99
+  extraversion: 99
+  agreeableness: 99
+  neuroticism: 99
   tagFormatted: <color=#FF4500>Connected</color>
-  traitID: 3
