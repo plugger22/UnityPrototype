@@ -46,7 +46,9 @@ public class PersonProfile : ScriptableObject
     private int[] arrayOfFactorsPrimary;                    //must be identical
     private int[] arrayOfFactorsSecondary;                  //must be positive (+1/+2) or negative (-1/-2)
 
-
+    /// <summary>
+    /// OnEnable
+    /// </summary>
     public void OnEnable()
     {
         //auto calc alpha and beta

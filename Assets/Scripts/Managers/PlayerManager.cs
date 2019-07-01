@@ -181,8 +181,19 @@ public class PlayerManager : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStartEarly()
     {
-        //Debug assign random personality
-        personality.SetFactors(GameManager.instance.personScript.SetPersonalityFactors(new int[] { 99, 99, 99, 99, 99 }));
+        int[] arrayOfFactors = new int[5];
+        if (GameManager.instance.testScript.testPersonality == null)
+        {
+            //Debug assign random personality
+            arrayOfFactors = GameManager.instance.personScript.SetPersonalityFactors(new int[] { 99, 99, 99, 99, 99 });
+        }
+        else
+        {
+            //use a test personality
+            arrayOfFactors = GameManager.instance.testScript.testPersonality.GetFactors();
+        }
+        //set personality factors
+        personality.SetFactors(arrayOfFactors);
     }
     #endregion
 

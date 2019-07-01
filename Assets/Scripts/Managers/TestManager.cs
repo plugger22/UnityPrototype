@@ -10,6 +10,10 @@ using UnityEngine;
 /// </summary>
 public class TestManager : MonoBehaviour
 {
+    [Header("Player Personality")]
+    [Tooltip("Test personality for player. Leave as 'None' if you want a random personality")]
+    public TestPersonality testPersonality;
+
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (within autorun) where the indicated Condition will be given to the Authority player")]
     public int conditionTurnAuthority = -1;
