@@ -825,29 +825,54 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// return a random trait (could be good, bad or neutral) specific to a category of traits. Null if a problem
-    /// include a GlobalSide if required for 'Actor' category (eg. Authority traits only -> this would also include traits with side 'None')
+    /// include a GlobalSide if required for 'Actor' category (eg. Authority traits only -> this would also include general actor traits with side 'Both')
     /// </summary>
     /// <returns></returns>
-    public Trait GetRandomTrait(TraitCategory category, GlobalSide side = null)
+    public Trait GetRandomTrait(TraitCategory category, GlobalSide side)
     {
         Trait trait = null;
         List<Trait> tempList = new List<Trait>();
-        //filter list by category
-        if (side == null)
-        { tempList = listOfAllTraits.FindAll(x => x.category.name == category.name); }
-        //filter list by category and side (includes traits with no side specified which are assummed to apply to all
-        else
+        if (side != null)
         {
-            IEnumerable<Trait> traitList =
-                from traitTemp in listOfAllTraits
-                where traitTemp.category.name == category.name
-                where traitTemp.side == null || traitTemp.side.level == side.level
-                select traitTemp;
-            tempList = traitList.ToList();
+            switch (category.name)
+            {
+                case "Actor":
+                    //specified side plus general actor traits ('both' sides)
+                    IEnumerable<Trait> traitList =
+                        from traitTemp in listOfAllTraits
+                        where traitTemp.category.name == category.name
+                        where traitTemp.side.level == 3 || traitTemp.side.level == side.level
+                        select traitTemp;
+                    tempList = traitList.ToList();
+                    break;
+                case "Mayor":
+                    //specified category, all
+                    tempList = listOfAllTraits.FindAll(x => x.category.name.Equals(category.name, StringComparison.Ordinal));
+                    break;
+                default:
+                    Debug.LogErrorFormat("Unrecognised category \"{0}\"", category.name);
+                    break;
+            }
+
+            /*//filter list by category
+            if (side = null)
+            { tempList = listOfAllTraits.FindAll(x => x.category.name == category.name); }
+            //filter list by category and side (includes traits with no side specified which are assummed to apply to all
+            else
+            {
+                IEnumerable<Trait> traitList =
+                    from traitTemp in listOfAllTraits
+                    where traitTemp.category.name == category.name
+                    where traitTemp.side == null || traitTemp.side.level == side.level
+                    select traitTemp;
+                tempList = traitList.ToList();
+            }*/
+
+            //get trait
+            if (tempList.Count > 0)
+            { trait = tempList[Random.Range(0, tempList.Count)]; }
         }
-        //get trait
-        if (tempList.Count > 0)
-        { trait = tempList[Random.Range(0, tempList.Count)]; }
+        else { Debug.LogError("Invalid side (Null)"); }
         return trait;
     }
 

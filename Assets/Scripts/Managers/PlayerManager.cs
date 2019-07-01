@@ -182,7 +182,7 @@ public class PlayerManager : MonoBehaviour
     private void SubInitialiseSessionStartEarly()
     {
         //Debug assign random personality
-        personality.SetFactors(GameManager.instance.personScript.SetPersonalityFactors());
+        personality.SetFactors(GameManager.instance.personScript.SetPersonalityFactors(new int[] { 99, 99, 99, 99, 99 }));
     }
     #endregion
 

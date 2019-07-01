@@ -43,6 +43,7 @@ public class DebugGUI : MonoBehaviour
     private int box_level; 
     private int button_width;
     private int targetToggle = 0;
+    private int personalityToggle = 0;
     private int contactToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
@@ -355,9 +356,13 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 21 + button_height * 21, button_width, button_height), "Personality Data"))
             {
                 Debug.Log("[Dbg] Button -> Personality Data");
-                if (debugDisplay != 57)
-                { debugDisplay = 57; }
-                else { debugDisplay = 0; }
+                //toggles sequentially through personality info displays and then switches off
+                switch (personalityToggle)
+                {
+                    case 0: debugDisplay = 57; personalityToggle = 1; break;
+                    case 1: debugDisplay = 58; personalityToggle = 2; break;
+                    case 2: debugDisplay = 0; personalityToggle = 0; break;
+                }
             }
 
             //twentysecond button
@@ -1397,6 +1402,12 @@ public class DebugGUI : MonoBehaviour
                     case 57:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayAllPersonalities();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        break;
+                    //Actor Compatibility Range
+                    case 58:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.personScript.DebugCheckActorCompatibilityRange();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
                         break;
                 }

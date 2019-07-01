@@ -12,10 +12,8 @@ public class PersonalityManager : MonoBehaviour
 
     [Tooltip("Number of personality factors present")]
     [Range(5, 5)] public int numOfFactors = 5;
-    /*[Tooltip("Number of Five Factor Model personality factors present")]
-    [Range(5, 5)] public int numOfFiveFactorModel = 5;
-    [Tooltip("Number of Dark Triad personality factors present")]
-    [Range(3, 3)] public int numOfDarkTriad = 3;*/
+    [Tooltip("Difference threshold less than or equal for a profile to make it into the temporary dictionary from which a partial match is chosen from (lowest difference)")]
+    [Range(4, 4)] public int profileThreshold = 4;
 
     //Fast access
     private Factor[] arrayOfFactors;
@@ -73,42 +71,38 @@ public class PersonalityManager : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// Set an array of personality factors. Any criteria input will be taken into account. Criteria can be -2 to +2 and acts as a DM. If no criteria ignore.
+    /// Set an array of personality factors. Criteria input can be -2 to +2 and, if present, define the value ('99' ignored). If no criteria present ('99') then Randomise.
     /// </summary>
     /// <param name="arrayOfCriteria"></param>
     /// <returns></returns>
-    public int[] SetPersonalityFactors(int[] arrayOfCriteria = null)
+    public int[] SetPersonalityFactors(int[] arrayOfCriteria)
     {
-        int rndNum, modifier, factorValue;
+        int rndNum, factorValue;
         int[] arrayOfFactors = new int[numOfFactors];
-        //handle default of no criteria, convert to an array of neutral values
-        if (arrayOfCriteria == null)
-        { arrayOfCriteria = new int[] { 0, 0, 0, 0, 0 }; }
-        //do all factors TO DO -> modify rolls for dark triad traits based on five factor model results
-        for (int index = 0; index < numOfFactors; index++)
+        if (arrayOfCriteria != null)
         {
-            //assign a neutral value
-            factorValue = 0;
-            rndNum = Random.Range(0, 5);
-            modifier = arrayOfCriteria[index];
-            if (modifier != 0)
+            //do all factors
+            for (int index = 0; index < numOfFactors; index++)
             {
-                //clamp modifier to a range of -2 to +2
-                modifier = Mathf.Clamp(modifier, -2, 2);
+                //valid criteria present
+                if (arrayOfCriteria[index] != 99)
+                { rndNum = arrayOfCriteria[index]; }
+                //invalid criteria (ignore) -> use random number instead
+                else { rndNum = Random.Range(0, 5); }
+                factorValue = 0;
+                switch (rndNum)
+                {
+                    case 0: factorValue = -2; break;
+                    case 1: factorValue = -1; break;
+                    case 2: factorValue = 0; break;
+                    case 3: factorValue = 1; break;
+                    case 4: factorValue = 2; break;
+                    default: Debug.LogWarningFormat("Unrecognised rndNum \"{0}\", default Zero value assigned", rndNum); break;
+                }
+                arrayOfFactors[index] = factorValue;
             }
-            rndNum += modifier;
-            rndNum = Mathf.Clamp(rndNum, 0, 4);
-            switch (rndNum)
-            {
-                case 0: factorValue = -2; break;
-                case 1: factorValue = -1; break;
-                case 2: factorValue = 0; break;
-                case 3: factorValue = 1; break;
-                case 4: factorValue = 2; break;
-                default: Debug.LogWarningFormat("Unrecognised rndNum \"{0}\", default Zero value assigned", rndNum); break;
-            }
-            arrayOfFactors[index] = factorValue;
         }
+        else { Debug.LogError("Invalid arrayOfCriteria (Null)"); }
         return arrayOfFactors;
     }
 
@@ -246,19 +240,19 @@ public class PersonalityManager : MonoBehaviour
                         compatibility = 2; break;
                     case 4:
                     case 5:
-                        compatibility = 1; break;
                     case 6:
+                        compatibility = 1; break;
                     case 7:
                     case 8:
                         compatibility = 0; break;
                     case 9:
                     case 10:
-                        compatibility = -1; break;
                     case 11:
+                        compatibility = -1; break;
                     case 12:
                     case 13:
-                        compatibility = -2; break;
                     case 14:
+                        compatibility = -2; break;
                     case 15:
                     case 16:
                     case 17:
@@ -289,7 +283,6 @@ public class PersonalityManager : MonoBehaviour
                 bool isProceed;
                 bool hasProfile = false;
                 int difference = 0;
-                int threshold = 4;
                 int[] arrayOfProfilePrimary;
                 int[] arrayOfProfileSecondary;
                 int[] arrayOfFactors = personality.GetFactors();
@@ -355,7 +348,7 @@ public class PersonalityManager : MonoBehaviour
                             else if (alpha == profile.Value.alpha || beta == profile.Value.beta)
                             {
                                 //if has either an alpha or beta match and difference is less than or equal to the threshold then place in dictionary for sorting and possible selection at end of loop
-                                if (difference <= threshold)
+                                if (difference <= profileThreshold)
                                 {
                                     dictOfDifferences.Add(profile.Value.name, difference);
                                     /*Debug.LogFormat("[Tst] PersonalityManager.cs -> CheckPersonalityProfile: add to dictOfDifferences, \"{0}\", difference {1}{2}", profile.Value.name, difference, "\n");*/
@@ -536,6 +529,30 @@ public class PersonalityManager : MonoBehaviour
         return builder.ToString();
     }
 
-
+    /// <summary>
+    /// display all actors in dictionary along with compatibility with player for balancing purposes
+    /// </summary>
+    /// <returns></returns>
+    public string DebugCheckActorCompatibilityRange()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+        if (dictOfActors != null)
+        {
+            float tally = 0.0f;
+            int compatibility;
+            builder.AppendFormat("- Compatibility with Player (All Actors){0}", "\n");
+            foreach(var actor in dictOfActors)
+            {
+                compatibility = actor.Value.GetPersonality().GetCompatibilityWithPlayer();
+                tally += compatibility;
+                builder.AppendFormat(" {0}, {1}, actorID {2}, C: {3}{4}", actor.Value.actorName, actor.Value.arc.name, actor.Key, compatibility, "\n");
+            }
+            //average value
+            builder.AppendFormat(" {0}{1}Average Compatibility: {2}", "\n", "\n", tally / dictOfActors.Count);
+        }
+        else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        return builder.ToString();
+    }
 
 }
