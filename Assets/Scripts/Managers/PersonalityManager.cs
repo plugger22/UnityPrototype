@@ -478,8 +478,14 @@ public class PersonalityManager : MonoBehaviour
                             int[] arrayOfCriteria = trait.GetArrayOfCriteria();
                             if (arrayOfCriteria != null)
                             {
-                                builder.AppendFormat(" {0} trait, criteria | {1} | {2} | {3} | {4} | {5} | {6}", trait.tag, arrayOfCriteria[0], arrayOfCriteria[1], arrayOfCriteria[2],
-                                    arrayOfCriteria[3], arrayOfCriteria[4], "\n");
+                                builder.AppendFormat(" \"{0}\" trait, criteria | {1}{2} | {3}{4} | {5}{6} | {7}{8} | {9}{10} | {11}", 
+                                    trait.tag, 
+                                    arrayOfCriteria[0] != 99 && arrayOfCriteria[0] > 0 ? "+" : "", arrayOfCriteria[0] != 99 ? arrayOfCriteria[0].ToString() : ".",
+                                    arrayOfCriteria[1] != 99 && arrayOfCriteria[1] > 0 ? "+" : "", arrayOfCriteria[1] != 99 ? arrayOfCriteria[1].ToString() : ".", 
+                                    arrayOfCriteria[2] != 99 && arrayOfCriteria[2] > 0 ? "+" : "", arrayOfCriteria[2] != 99 ? arrayOfCriteria[2].ToString() : ".",
+                                    arrayOfCriteria[3] != 99 && arrayOfCriteria[3] > 0 ? "+" : "", arrayOfCriteria[3] != 99 ? arrayOfCriteria[3].ToString() : ".", 
+                                    arrayOfCriteria[4] != 99 && arrayOfCriteria[4] > 0 ? "+" : "", arrayOfCriteria[4] != 99 ? arrayOfCriteria[4].ToString() : ".", 
+                                    "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid arrayOfCriteria (Null) for {0} trait", trait.tag); }
                         }
