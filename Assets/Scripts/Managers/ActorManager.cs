@@ -3091,7 +3091,7 @@ public class ActorManager : MonoBehaviour
                             }
                             //trait and action
                             tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted,
-                                "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                                "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
                             //add to master arrays
                             genericDetails.arrayOfOptions[i] = optionDetails;
                             genericDetails.arrayOfTooltips[i] = tooltipDetails;
@@ -3261,7 +3261,7 @@ public class ActorManager : MonoBehaviour
                             //trait and action
                             StringBuilder builderDetails = new StringBuilder();
                             builderDetails.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
-                                actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                                actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
                             //secrets
                             int numOfSecrets = actor.CheckNumOfSecrets();
                             if (numOfSecrets > 0)
@@ -3406,7 +3406,7 @@ public class ActorManager : MonoBehaviour
                         }
                         //trait and action
                         tooltipDetails.textDetails = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=1em>", actor.GetTrait().tagFormatted,
-                            "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.name, colourEnd);
+                            "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i] = optionData;
                         data.arrayOfTooltips[i] = tooltipDetails;

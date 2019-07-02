@@ -306,7 +306,7 @@ public class ContactManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialises contacts for a new actor
+    /// Initialises contacts for a new actor (Both sides)
     /// </summary>
     /// <param name="actor"></param>
     public void SetActorContacts(Actor actor)
@@ -355,7 +355,7 @@ public class ContactManager : MonoBehaviour
                 else
                 {
                     //generate a new set of contacts for the actor
-                    int contactLevel = actor.GetDatapoint(ActorDatapoint.Connections0);
+                    int contactLevel = actor.GetDatapoint(ActorDatapoint.Datapoint0);
                     int totalContacts = contactLevel * contactsPerLevel;
                     List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
                     List<int> listOfContactNodes = new List<int>();
