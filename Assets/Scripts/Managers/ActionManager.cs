@@ -1563,7 +1563,7 @@ public class ActionManager : MonoBehaviour
             int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
             motivation += motivationBoost;
             motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
-            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Give {0} gear", gear.tag));
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
@@ -1656,7 +1656,7 @@ public class ActionManager : MonoBehaviour
                 //deduct motivation
                 motivation -= motivationCost;
                 motivation = Mathf.Max(0, motivation);
-                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Take {0} gear", gear.tag));
             }
             else
             {

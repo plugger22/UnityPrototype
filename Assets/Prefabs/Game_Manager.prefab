@@ -593,6 +593,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfFactors: 5
   profileThreshold: 4
+  compatibilityChanceOne: 50
+  compatibilityChanceTwo: 50
+  compatibilityChanceThree: 60
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1770,7 +1773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPersonality: {fileID: 11400000, guid: 69dd1532267625549b2af2eca7cb59a4, type: 2}
+  testPersonality: {fileID: 0}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -2012,7 +2015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c5f4638fef720428f1b6683d94e2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
+  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
   numOfFlags: 10
   arrayOfStoryStatus: 
   scenario: {fileID: 0}
@@ -2254,7 +2257,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   seedDev: 0
   isAuthority: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   isPerformanceLog: 1
   isValidateData: 1
   isValidateSO: 1

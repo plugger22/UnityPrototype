@@ -2731,3 +2731,52 @@ Dev seed 52549 -> Tuesday, 2 July 2019 2:21 PM
 City seed 890 -> Arles, France
 City seed 234 -> Sydney, Australia
 City seed 890 -> Arles, France
+
+Dev seed 62225 -> Tuesday, 2 July 2019 7:45 PM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found ChaosBomb, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4535)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1275)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1063)
+	WARNING tempList has 33 records for tab 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:517)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 35914 -> Tuesday, 2 July 2019 8:00 PM
+City seed 5678 -> London, United Kingdom
+ERROR Gear "Blocker" NOT removed from inventory
+UnityEngine.Debug:LogError(Object)
+	PlayerManager:RemoveGear(String, Boolean) (at Assets/Scripts/Managers/PlayerManager.cs:555)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1559)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:194)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2435)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 64269 -> Tuesday, 2 July 2019 8:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14159 -> Tuesday, 2 July 2019 8:11 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:504)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:254)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+OptionManager.OnDisable () (at Assets/Scripts/Managers/OptionManager.cs:53)
+	
+Dev seed 32585 -> Tuesday, 2 July 2019 8:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47128 -> Tuesday, 2 July 2019 8:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30083 -> Tuesday, 2 July 2019 8:24 PM
+City seed 5678 -> London, United Kingdom

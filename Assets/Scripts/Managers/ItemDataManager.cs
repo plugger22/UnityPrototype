@@ -575,7 +575,7 @@ public class ItemDataManager : MonoBehaviour
             .AppendFormat("{0}<b>{1}{2}{3} change in {4}Motivation{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat("due to <b>{0}</b>{1}{2}", reason, "\n", "\n")
             .AppendFormat("As a result of their{0}", "\n")
-            .AppendFormat("{0}{1}{2} opinion of you", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd)
+            .AppendFormat("{0}<b>{1}{2} opinion of you</b>", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd)
             .ToString();
     }
 
