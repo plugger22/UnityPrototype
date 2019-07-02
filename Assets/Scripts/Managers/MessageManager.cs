@@ -1376,6 +1376,50 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Actor negates a change in motivation due to their compatibility with the Player
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="motivationChangeNegated"></param>
+    /// <returns></returns>
+    public Message ActorCompatibility(string text, Actor actor, int motivationChangeNegated, string reasonForChange)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(motivationChangeNegated != 0, "Invalid motivationChangeNegated (Zero)");
+        Debug.Assert(string.IsNullOrEmpty(reasonForChange) == false, "Invalid reasonForChange (Null or Empty)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ACTOR;
+            message.subType = MessageSubType.Actor_Compatibility;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.data0 = actor.actorID;
+            message.data1 = motivationChangeNegated;
+            message.data2 = actor.GetPersonality().GetCompatibilityWithPlayer();
+            message.dataName = reasonForChange;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0} ignores change to MOTIVATION", actor.arc.name);
+            data.topText = "No change to Motivation";
+            data.bottomText = GameManager.instance.itemDataScript.GetActorCompatibilityDetails(actor, motivationChangeNegated, reasonForChange);
+            data.priority = ItemPriority.Medium;
+            data.sprite = actor.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Resistance Actor gains or loses a single contact (resistance side message). 'Reason' is self contained
     /// </summary>
     /// <param name="text"></param>

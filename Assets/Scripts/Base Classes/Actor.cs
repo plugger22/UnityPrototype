@@ -190,76 +190,99 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// Set value of a datapoint
+        /// Set value of a datapoint. 'reasonForChange' needed if a Motivational shift that may be negated due to actor's compatibility with player. Ignore otherwise.
         /// </summary>
         /// <param name="datapoint"></param>
         /// <param name="value"></param>
-        public void SetDatapoint(ActorDatapoint datapoint, int value)
+        public void SetDatapoint(ActorDatapoint datapoint, int value, string reasonForChange = "Unknown")
         {
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
                 case ActorDatapoint.Connections0:
                 case ActorDatapoint.Datapoint0:
-                    if ((datapoint0 - value) == 0)
+                    if ((value - datapoint0) == 0)
                     { Debug.LogWarningFormat("SetDatapoint change Datapoint0 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     datapoint0 = value;
                     break;
                 case ActorDatapoint.Motivation1:
                 case ActorDatapoint.Datapoint1:
-                    //motivation is special as actor compatibility with player can negate the change
-                    int difference = Mathf.Abs(datapoint1 - value);
-                    int rndNum = Random.Range(0, 100);
-                    bool isProceed = true;
-                    if (difference > 0)
+                    //player side actor, take into account actor's compatibility with the player
+                    if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                     {
-                        int compatibility = personality.GetCompatibilityWithPlayer();
-                        switch (compatibility)
+                        //motivation is special as actor compatibility with player can negate the change
+                        int difference = value - datapoint1;
+                        int rndNum = Random.Range(0, 100);
+                        int numNeeded = 0;
+                        bool isProceed = true;
+                        bool isBadOutcome = false;
+                        if (difference > 0)
                         {
-                            case 3:
-                                if (difference < 0)
-                                {
-                                    if (rndNum < compatibilityThree)
+                            int compatibility = personality.GetCompatibilityWithPlayer();
+                            switch (compatibility)
+                            {
+                                case 3:
+                                    if (difference < 0)
                                     {
-                                        //negative shift is negated due to good relationship with the player
-                                        isProceed = false;
+                                        if (rndNum < compatibilityThree)
+                                        {
+                                            //negative shift is negated due to good relationship with the player
+                                            numNeeded = compatibilityThree;
+                                            isProceed = false;
+                                        }
                                     }
-                                }
-                                break;
-                            case 2:
+                                    break;
+                                case 2:
 
-                                break;
-                            case 1:
+                                    break;
+                                case 1:
 
-                                break;
-                            case 0: 
-                                //do nothing 
-                                break;
-                            case -1:
-                                if (difference > 0)
-                                {
-                                    if (rndNum < compatibilityOne)
+                                    break;
+                                case 0:
+                                    //do nothing 
+                                    break;
+                                case -1:
+                                    if (difference > 0)
                                     {
-                                        //positive shift is negated due to poor relationship with the player
-                                        isProceed = false;
+                                        if (rndNum < compatibilityOne)
+                                        {
+                                            //positive shift is negated due to poor relationship with the player
+                                            numNeeded = compatibilityOne;
+                                            isProceed = false;
+                                            isBadOutcome = true;
+                                        }
                                     }
-                                }
-                                break;
-                            case -2:
+                                    break;
+                                case -2:
 
-                                break;
-                            case -3:
+                                    break;
+                                case -3:
 
-                                break;
-                            default:
-                                Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}, ID {3}", compatibility, actorName, arc.name, actorID);
-                                break;
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}, ID {3}", compatibility, actorName, arc.name, actorID);
+                                    break;
+                            }
+                            //does the change hold?
+                            if (isProceed == true)
+                            { datapoint1 = value; }
+                            else
+                            {
+                                //Motivational shift negated due to compatibility
+                                string text = string.Format("{0}, {1}, ID {2}, negates Motivational change of {3}{4} due to compatibility with Player{5}", actorName, arc.name, actorID,
+                                    difference > 0 ? "+" : "", difference, "\n");
+                                GameManager.instance.messageScript.ActorCompatibility(text, this, difference, reasonForChange);
+                            }
+                            //random roll message regardless
+                            GameManager.instance.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome);
                         }
-                        //does the change hold?
-                        if (isProceed == true)
-                        { datapoint1 = value; }
+                        else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     }
-                    else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
+                    else
+                    {
+                        //non-Player side, do normally
+                        datapoint1 = value;
+                    }
                     break;
                 case ActorDatapoint.Ability2:
                 case ActorDatapoint.Invisibility2:

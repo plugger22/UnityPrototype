@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using gameAPI;
-using packageAPI;
 
 /// <summary>
 /// holds all methods required for generating ItemData.bottomText's (called by MessageManager.cs methods)
@@ -524,7 +523,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}{2}{3}{4}has been Recruited{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
-        builder.AppendFormat("{0} awaits your command in the Reserves{1}{2}{3}{4} Unhappy in {5} turn{6}{7}", actor.actorName, "\n", "\n", colourBad, actor.arc.name, 
+        builder.AppendFormat("{0} awaits your command in the Reserves{1}{2}{3}{4} Unhappy in {5} turn{6}{7}", actor.actorName, "\n", "\n", colourBad, actor.arc.name,
             unhappyTimer, unhappyTimer != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }
@@ -549,6 +548,35 @@ public class ItemDataManager : MonoBehaviour
             builder.Append(detailsBottom);
         }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// Actor negates a motivational shift due to their relationship with the player
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="difference"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public string GetActorCompatibilityDetails(Actor actor, int difference, string reason)
+    {
+        int comp = actor.GetPersonality().GetCompatibilityWithPlayer();
+        /*StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
+        builder.AppendFormat("has ignored a{0}", "\n");
+        builder.AppendFormat("{0}<b>{1}{2}{3} change in {4}Motivation{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n");
+        builder.AppendFormat("due to <b>{0}</b>{1}{2}", reason, "\n", "\n");
+        builder.AppendFormat("As a result of their{0}", "\n");
+        builder.AppendFormat("{0}{1}{2} opinion of you", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd);
+        return builder.ToString();*/
+
+        return new StringBuilder()
+            .AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n")
+            .AppendFormat("has ignored a{0}", "\n")
+            .AppendFormat("{0}<b>{1}{2}{3} change in {4}Motivation{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat("due to <b>{0}</b>{1}{2}", reason, "\n", "\n")
+            .AppendFormat("As a result of their{0}", "\n")
+            .AppendFormat("{0}{1}{2} opinion of you", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd)
+            .ToString();
     }
 
     /// <summary>
@@ -634,7 +662,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         //only add a time stamp if nemesis is capable of multiple moves within a single turn
         if (nemesis.movement > 1)
-        { builder.AppendFormat(" at <b>{0}</b> hrs", GetContactTime(moveNumber) ); }
+        { builder.AppendFormat(" at <b>{0}</b> hrs", GetContactTime(moveNumber)); }
         /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(contact.effectiveness));*/
         return builder.ToString();
     }
@@ -770,7 +798,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="nemesis"></param>
     /// <param name="search"></param>
     /// <returns></returns>
-    public string  GetNemesisNewModeDetails(Nemesis nemesis, int search)
+    public string GetNemesisNewModeDetails(Nemesis nemesis, int search)
     {
         StringBuilder builder = new StringBuilder();
         //find on invis 1 or 2, colourNeutral, if 3 or less, colourBad
@@ -819,7 +847,7 @@ public class ItemDataManager : MonoBehaviour
                 builder.AppendFormat("<b>CONTROL</b> remaining for {0}<b>{1} turn{2}</b>{3}", colourNeutral, controlTimer, controlTimer != 1 ? "s" : "", colourEnd);
                 if (controlNode != null)
                 {
-                    builder.AppendFormat("{0}{1}Nemesis ordered to{2}<b>{3}, {4}{5}</b>{6} district{7}{8}<b>{9}</b>{10} on arrival <b>(Show)</b>", "\n", "\n", "\n", controlNode.nodeName, colourAlert, controlNode.Arc.name, 
+                    builder.AppendFormat("{0}{1}Nemesis ordered to{2}<b>{3}, {4}{5}</b>{6} district{7}{8}<b>{9}</b>{10} on arrival <b>(Show)</b>", "\n", "\n", "\n", controlNode.nodeName, colourAlert, controlNode.Arc.name,
                         colourEnd, "\n", colourNeutral, GameManager.instance.nemesisScript.GetGoal(true), colourEnd);
                 }
                 if (currentNode != null)
@@ -1384,7 +1412,7 @@ public class ItemDataManager : MonoBehaviour
         if (duration > 0)
         { builder.AppendFormat("{0}{1}<b>Duration {2}{3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (protocolLevelNew > 0)
-        { builder.AppendFormat("{0}{1}{2} AI Security Protocol now <b>Level {3}</b>{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd);  }
+        { builder.AppendFormat("{0}{1}{2} AI Security Protocol now <b>Level {3}</b>{4}", "\n", "\n", colourNeutral, protocolLevelNew, colourEnd); }
         return builder.ToString();
     }
 
@@ -1652,7 +1680,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         //who did it?
         if (actorID == 999)
-        { actorName = GameManager.instance.playerScript.GetPlayerNameResistance();  actorArc = "Player"; }
+        { actorName = GameManager.instance.playerScript.GetPlayerNameResistance(); actorArc = "Player"; }
         else
         {
             Actor actor = GameManager.instance.dataScript.GetActor(actorID);
@@ -1770,7 +1798,7 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(ongoing.description) == false)
         {
             string colourEffect;
-            switch(ongoing.typeLevel)
+            switch (ongoing.typeLevel)
             {
                 case 0: colourEffect = colourBad; break;
                 case 1: colourEffect = colourNeutral; break;
@@ -1833,7 +1861,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}, {1}{2}{3}{4}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n");
         builder.AppendFormat("{0}{1} {2}{3} AutoRecalled{4}{5}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0} {1}, {2}{3}{4} has recalled the team, which has completed their task, back to the Reserves", GameManager.instance.metaScript.GetAuthorityTitle(), 
+        builder.AppendFormat("{0} {1}, {2}{3}{4} has recalled the team, which has completed their task, back to the Reserves", GameManager.instance.metaScript.GetAuthorityTitle(),
             actor.actorName, colourAlert, actor.arc.name, colourEnd);
         return builder.ToString();
     }

@@ -216,6 +216,7 @@
         Actor_Conflict,
         Actor_Trait,
         Actor_Captured,
+        Actor_Compatibility,
         //Contact
         Contact_Change,
         Contact_Target_Rumour,
