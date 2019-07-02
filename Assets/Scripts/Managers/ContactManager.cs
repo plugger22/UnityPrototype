@@ -355,7 +355,7 @@ public class ContactManager : MonoBehaviour
                 else
                 {
                     //generate a new set of contacts for the actor
-                    int contactLevel = actor.datapoint0;
+                    int contactLevel = actor.GetDatapoint(ActorDatapoint.Connections0);
                     int totalContacts = contactLevel * contactsPerLevel;
                     List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
                     List<int> listOfContactNodes = new List<int>();

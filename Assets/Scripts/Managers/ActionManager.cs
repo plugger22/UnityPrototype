@@ -1133,7 +1133,7 @@ public class ActionManager : MonoBehaviour
                 actor.inactiveStatus = ActorInactive.LieLow;
                 actor.tooltipStatus = ActorTooltip.LieLow;
                 actor.isLieLowFirstturn = true;
-                numOfTurns = 3 - actor.datapoint2;
+                numOfTurns = 3 - actor.GetDatapoint(ActorDatapoint.Invisibility2);
                 outcomeDetails.textTop = string.Format("{0}{1}{2} has been ordered to {3}Lie Low{4}", colourAlert, actor.actorName, colourEnd, colourNeutral, colourEnd);
                 outcomeDetails.sprite = actor.sprite;
                 isStressed = actor.CheckConditionPresent(conditionStressed);
@@ -1560,8 +1560,10 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.sprite = actor.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //give actor motivation boost
-            actor.datapoint1 += motivationBoost;
-            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+            motivation += motivationBoost;
+            motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
@@ -1643,16 +1645,18 @@ public class ActionManager : MonoBehaviour
             //deduct motivation from actor
             if (motivationCost > 0)
             {
+                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                 //relationship Conflict  (ActorConflict)
-                if (actor.datapoint1 < motivationCost)
+                if (motivation < motivationCost)
                 {
                     builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
                     builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                     builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
                 }
                 //deduct motivation
-                actor.datapoint1 -= motivationCost;
-                actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                motivation -= motivationCost;
+                motivation = Mathf.Max(0, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
             }
             else
             {
@@ -1936,8 +1940,10 @@ public class ActionManager : MonoBehaviour
                     numOfTeams = GameManager.instance.teamScript.TeamCleanUp(actor);
                 }
                 //lower actors motivation
-                actor.datapoint1 -= motivationLoss;
-                actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                motivation -= motivationLoss;
+                motivation = Mathf.Max(0, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                 builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);
                 //change actors status
                 actor.Status = ActorStatus.RecruitPool;
@@ -2111,8 +2117,10 @@ public class ActionManager : MonoBehaviour
                 if (actorSlotID > -1)
                 {
                     //raise actors motivation
-                    actor.datapoint1 += motivationGain;
-                    actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    motivation += motivationGain;
+                    motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                     builder.AppendFormat("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd);
                     //was actor threatening
                     if (actor.isThreatening == true)
@@ -2241,7 +2249,7 @@ public class ActionManager : MonoBehaviour
                         {
                             details = GameManager.instance.captureScript.CheckCaptured(nodeID, actor.actorID);
                             actorID = actor.actorID;
-                            if (actor.datapoint2 == 0)
+                            if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
                             { isZeroInvisibility = true; }
                         }
                         else

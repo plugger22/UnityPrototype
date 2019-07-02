@@ -413,7 +413,7 @@ public class SideManager : MonoBehaviour
                                         //
                                         // - - - Motivation Warning - - -
                                         //
-                                        if (actor.datapoint1 == 0)
+                                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
                                         { GameManager.instance.actorScript.ProcessMotivationWarning(actor); }
                                         break;
                                     case ActorStatus.Captured:

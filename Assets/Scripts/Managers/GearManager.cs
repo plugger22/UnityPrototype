@@ -710,14 +710,14 @@ public class GearManager : MonoBehaviour
                     //any rare gear available?
                     if (tempRareGear.Count > 0)
                     {
-                        //chance of rare gear -> base chance * actor ability (or 1 if player)
+                        //chance of rare gear -> base chance * actor connections (or 1 if player)
                         int chance = chanceOfRareGear;
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                         if (actor != null)
                         {
                             //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
                             if (isPlayer == false)
-                            { chance *= actor.datapoint0; }
+                            { chance *= actor.GetDatapoint(ActorDatapoint.Connections0); }
                         }
                         else
                         {

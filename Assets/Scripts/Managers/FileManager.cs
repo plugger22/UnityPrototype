@@ -2167,9 +2167,9 @@ public class FileManager : MonoBehaviour
                     //copy over data from saveActor
 
                     actor.actorID = readActor.actorID;
-                    actor.datapoint0 = readActor.datapoint0;
-                    actor.datapoint1 = readActor.datapoint1;
-                    actor.datapoint2 = readActor.datapoint2;
+                    actor.SetDatapoint(ActorDatapoint.Datapoint0, readActor.datapoint0);
+                    actor.SetDatapoint(ActorDatapoint.Datapoint1, readActor.datapoint1);
+                    actor.SetDatapoint(ActorDatapoint.Datapoint2, readActor.datapoint2);
                     GlobalSide actorSide = GameManager.instance.dataScript.GetGlobalSide(readActor.side);
                     if (actorSide != null)
                     { actor.side = actorSide; }
@@ -3168,9 +3168,9 @@ public class FileManager : MonoBehaviour
         //
         saveActor.status = actor.Status;
         saveActor.actorID = actor.actorID;
-        saveActor.datapoint0 = actor.datapoint0;
-        saveActor.datapoint1 = actor.datapoint1;
-        saveActor.datapoint2 = actor.datapoint2;
+        saveActor.datapoint0 = actor.GetDatapoint(ActorDatapoint.Datapoint0);
+        saveActor.datapoint1 = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+        saveActor.datapoint2 = actor.GetDatapoint(ActorDatapoint.Datapoint2);
         saveActor.side = actor.side.name;
         saveActor.slotID = actor.slotID;
         saveActor.level = actor.level;

@@ -941,7 +941,7 @@ public class TeamManager : MonoBehaviour
             if (actor != null)
             {
                 builder.AppendLine();
-                builder.Append(string.Format("{0}  Ability {1}", actor.arc.name, actor.datapoint2));
+                builder.Append(string.Format("{0}  Ability {1}", actor.arc.name, actor.GetDatapoint(ActorDatapoint.Ability2)));
                 builder.AppendLine();
                 listOfTeams.Clear();
                 listOfTeams.AddRange(actor.GetListOfTeams());
@@ -1044,11 +1044,11 @@ public class TeamManager : MonoBehaviour
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
-                            if (deployedTeams < actor.datapoint2) { dataColour = colourGood; } else { dataColour = colourBad; }
+                            if (deployedTeams < actor.GetDatapoint(ActorDatapoint.Ability2)) { dataColour = colourGood; } else { dataColour = colourBad; }
                             tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
                                 colourNormal, GameManager.instance.metaScript.GetAuthorityTitle(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal, 
                                 colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
-                                dataColour, actor.datapoint2, colourEnd, colourNormal, colourEnd);
+                                dataColour, actor.GetDatapoint(ActorDatapoint.Ability2), colourEnd, colourNormal, colourEnd);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.actorSlotID)); }
                         //add to master arrays
@@ -1603,7 +1603,7 @@ public class TeamManager : MonoBehaviour
                             if (actor != null)
                             {
                                 //one entry per actor for each spare team slot they have available
-                                availableTeamSlots = actor.datapoint2 - actor.CheckNumOfTeams();
+                                availableTeamSlots = actor.GetDatapoint(ActorDatapoint.Ability2) - actor.CheckNumOfTeams();
                                 for(int j = 0; j < availableTeamSlots; j++)
                                 { listOfActorSlots.Add(actor.slotID); }
                             }

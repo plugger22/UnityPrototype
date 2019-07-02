@@ -286,7 +286,7 @@ public class CaptureManager : MonoBehaviour
         cause = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cause);
         GameManager.instance.cityScript.CityLoyalty = cause;
         //invisibility set to zero (most likely already is)
-        details.actor.datapoint2 = 0;
+        details.actor.SetDatapoint(ActorDatapoint.Invisibility2, 0);
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //update contacts
@@ -424,7 +424,7 @@ public class CaptureManager : MonoBehaviour
                     builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
                     //invisibility
                     int invisibilityNew = releaseInvisibility;
-                    actor.datapoint2 = invisibilityNew;
+                    actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibilityNew);
                     builder.AppendFormat("{0}{1} Invisibility +{2}{3}", colourGood, actor.actorName, invisibilityNew, colourEnd);
                     //update contacts
                     GameManager.instance.contactScript.UpdateNodeContacts();
@@ -548,7 +548,7 @@ public class CaptureManager : MonoBehaviour
                     if (actor != null)
                     {
                         //Erasure team picks up player/actor immediately if invisibility 0
-                        if (CheckCaptureVisibility(actor.datapoint2) == true)
+                        if (CheckCaptureVisibility(actor.GetDatapoint(ActorDatapoint.Invisibility2)) == true)
                         {
                             int teamID = node.CheckTeamPresent(teamErasureID);
                             if (teamID > -1)

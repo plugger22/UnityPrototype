@@ -4024,8 +4024,10 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
-        int[] arrayOfStats = new int[]{ arrayOfActors[side.level, slotID].datapoint0, arrayOfActors[side.level, slotID].datapoint1,
-            arrayOfActors[side.level, slotID].datapoint2};
+        int[] arrayOfStats = new int[]{
+            arrayOfActors[side.level, slotID].GetDatapoint(ActorDatapoint.Datapoint0),
+            arrayOfActors[side.level, slotID].GetDatapoint(ActorDatapoint.Datapoint1),
+            arrayOfActors[side.level, slotID].GetDatapoint(ActorDatapoint.Datapoint2)};
         return arrayOfStats;
     }
 
@@ -4270,7 +4272,8 @@ public class DataManager : MonoBehaviour
                 if (actor != null)
                 {
                     builder.Append(string.Format(" {0}, ", actor.actorName));
-                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} U {6} {7}", actor.actorID, actor.arc.name, actor.level, actor.datapoint0, actor.datapoint1, actor.datapoint2, actor.unhappyTimer, "\n"));
+                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} U {6} {7}", actor.actorID, actor.arc.name, actor.level, 
+                        actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, "\n"));
                 }
                 else { builder.Append(string.Format("Error for actorID {0}", listOfActors[i])); }
             }

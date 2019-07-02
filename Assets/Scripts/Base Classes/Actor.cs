@@ -15,9 +15,6 @@ namespace gameAPI
     {
 
         #region Save Data compatible
-        [HideInInspector] public int datapoint0;               //higher the number (1 to 3), see DM: arrayOfStats for string tags
-        [HideInInspector] public int datapoint1;               //higher the better (1 to 3)
-        [HideInInspector] public int datapoint2;               //higher the better (1 to 3)
         [HideInInspector] public GlobalSide side;
         [HideInInspector] public int slotID;                    //actor slot ID (eg, 0 to 3)
         [HideInInspector] public int actorID;
@@ -50,6 +47,10 @@ namespace gameAPI
         //trait
         private Trait trait;
         private Personality personality;
+        //datapoints
+        private int datapoint0;                                                             //higher the number (1 to 3), see DM: arrayOfStats for string tags
+        private int datapoint1;                                                             //higher the better (1 to 3)
+        private int datapoint2;                                                             //higher the better (1 to 3)
         //gear
         private string gearName;                                                            //can only have one piece of gear at a time, default null
         private int gearTimer;                                                              //number of turns the actor has had the gear (NOTE: includes turn gear given as incremented at EndTurnEarly)
@@ -142,6 +143,70 @@ namespace gameAPI
             isReassured = false;
             isThreatening = false;
             isComplaining = false;
+        }
+
+        //
+        // - - - Datapoints - - - 
+        //
+
+        /// <summary>
+        /// get value of Datapoint, returns -1 if a problem
+        /// </summary>
+        /// <param name="datapoint"></param>
+        /// <returns></returns>
+        public int GetDatapoint(ActorDatapoint datapoint)
+        {
+            int value = -1;
+            switch (datapoint)
+            {
+                case ActorDatapoint.Influence0:
+                case ActorDatapoint.Connections0:
+                case ActorDatapoint.Datapoint0:
+                    value = datapoint0;
+                    break;
+                case ActorDatapoint.Motivation1:
+                case ActorDatapoint.Datapoint1:
+                    value = datapoint1;
+                    break;
+                case ActorDatapoint.Ability2:
+                case ActorDatapoint.Invisibility2:
+                case ActorDatapoint.Datapoint2:
+                    value = datapoint2;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised ActorDatapoint \"{0}\"", datapoint);
+                    break;
+            }
+            return value;
+        }
+
+        /// <summary>
+        /// Set value of a datapoint
+        /// </summary>
+        /// <param name="datapoint"></param>
+        /// <param name="value"></param>
+        public void SetDatapoint(ActorDatapoint datapoint, int value)
+        {
+            switch (datapoint)
+            {
+                case ActorDatapoint.Influence0:
+                case ActorDatapoint.Connections0:
+                case ActorDatapoint.Datapoint0:
+                    datapoint0 = value;
+                    break;
+                case ActorDatapoint.Motivation1:
+                case ActorDatapoint.Datapoint1:
+                    datapoint1 = value;
+                    break;
+                case ActorDatapoint.Ability2:
+                case ActorDatapoint.Invisibility2:
+                case ActorDatapoint.Datapoint2:
+                    datapoint2 = value;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised ActorDatapoint \"{0}\"", datapoint);
+                    break;
+            }
         }
 
         //

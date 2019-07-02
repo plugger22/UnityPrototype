@@ -275,8 +275,8 @@ public class PersonalityManager : MonoBehaviour
                     case 12:
                     case 13:
                     case 14:
-                        compatibility = -2; break;
                     case 15:
+                        compatibility = -2; break;
                     case 16:
                     case 17:
                     case 18:

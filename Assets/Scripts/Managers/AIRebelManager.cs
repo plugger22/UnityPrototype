@@ -1256,7 +1256,7 @@ public class AIRebelManager : MonoBehaviour
                                 if (resources >= stressLeaveCost)
                                 {
                                     //must have max invis for stress leave
-                                    if (actor.datapoint2 == maxStatValue)
+                                    if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == maxStatValue)
                                     {
                                         //take first instance found
                                         stressedActorID = actor.actorID;
@@ -1560,7 +1560,7 @@ public class AIRebelManager : MonoBehaviour
                                         if (actor != null)
                                         {
                                             //below threshold
-                                            if (actor.datapoint2 < lieLowThresholdActor)
+                                            if (actor.GetDatapoint(ActorDatapoint.Invisibility2) < lieLowThresholdActor)
                                             {
                                                 if (actor.CheckConditionPresent(conditionStressed) == true)
                                                 {
@@ -3748,7 +3748,7 @@ public class AIRebelManager : MonoBehaviour
                     }
                     else
                     {
-                        if (actor.datapoint2 == 0)
+                        if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
                         { isZeroInvisibility = true; }
                     }
                 }
@@ -4127,7 +4127,7 @@ public class AIRebelManager : MonoBehaviour
             actorID = actor.actorID;
             actorName = actor.actorName;
             actorArc = actor.arc.name;
-            aiInvisibility = actor.datapoint2;
+            aiInvisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
             //actor did an action with invisibility zero
             if (aiInvisibility == 0)
             {
@@ -4147,7 +4147,7 @@ public class AIRebelManager : MonoBehaviour
             //min cap zero
             aiInvisibility = Mathf.Max(0, aiInvisibility);
             //update actor Invisibility
-            actor.datapoint2 = aiInvisibility;
+            actor.SetDatapoint(ActorDatapoint.Invisibility2, aiInvisibility);
             //capture check
             if (aiInvisibility <= 1)
             {

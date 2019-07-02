@@ -2252,9 +2252,9 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 42258
+  seedDev: 0
   isAuthority: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   isPerformanceLog: 1
   isValidateData: 1
   isValidateSO: 1

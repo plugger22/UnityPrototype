@@ -329,7 +329,7 @@ public class EffectManager : MonoBehaviour
                                                     //actor can only have a number of teams OnMap equal to their ability at any time
                                                     if (actor != null)
                                                     {
-                                                        if (actor.CheckNumOfTeams() >= actor.datapoint2)
+                                                        if (actor.CheckNumOfTeams() >= actor.GetDatapoint(ActorDatapoint.Ability2))
                                                         { BuildString(result, "Actor Ability exceeded"); }
                                                     }
                                                     else
@@ -731,7 +731,7 @@ public class EffectManager : MonoBehaviour
                                             case "InvisibilityNOTMax":
                                                 //check invisibility is less than the max value -> Actor / Player
                                                 if (actor != null)
-                                                { val = actor.datapoint2; }
+                                                { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
                                                 else { val = GameManager.instance.playerScript.Invisibility; }
                                                 if (val == GameManager.instance.actorScript.maxStatValue)
                                                 { BuildString(result, "Invisibility at Max"); }
@@ -739,7 +739,7 @@ public class EffectManager : MonoBehaviour
                                             case "InvisibilityNOTZero":
                                                 //check invisibility greater than Zero -> Actor / Player
                                                 if (actor != null)
-                                                { val = actor.datapoint2; }
+                                                { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
                                                 else { val = GameManager.instance.playerScript.Invisibility; }
                                                 if (val == 0)
                                                 { BuildString(result, "Invisibility Zero"); }
@@ -1103,8 +1103,10 @@ public class EffectManager : MonoBehaviour
                             switch (effect.apply.name)
                             {
                                 case "ActorCurrent":
-                                    actor.datapoint1 += effect.value;
-                                    actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+                                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    motivation += effect.value;
+                                    motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                                     effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                     break;
                                 case "ActorAll":
@@ -1121,8 +1123,10 @@ public class EffectManager : MonoBehaviour
                             switch (effect.apply.name)
                             {
                                 case "ActorCurrent":
-                                    actor.datapoint1 -= effect.value;
-                                    actor.datapoint1 = Mathf.Max(0, actor.datapoint1);
+                                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    motivation -= effect.value;
+                                    motivation = Mathf.Max(0, motivation);
+                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                                     effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                     break;
                                 case "ActorAll":
@@ -1387,17 +1391,17 @@ public class EffectManager : MonoBehaviour
                             //
                             if (actor != null)
                             {
-                                int invisibility = actor.datapoint2;
-                                dataBefore = actor.datapoint2;
+                                int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
+                                dataBefore = actor.GetDatapoint(ActorDatapoint.Invisibility2);
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
-                                        if (actor.datapoint2 < GameManager.instance.actorScript.maxStatValue)
+                                        if (invisibility < GameManager.instance.actorScript.maxStatValue)
                                         {
                                             //adds a variable amount
                                             invisibility += effect.value;
                                             invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
-                                            actor.datapoint2 = invisibility;
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
                                             Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                                 dataBefore, invisibility, "\n");
                                         }
@@ -1433,7 +1437,7 @@ public class EffectManager : MonoBehaviour
                                         }
                                         //mincap zero
                                         invisibility = Mathf.Max(0, invisibility);
-                                        actor.datapoint2 = invisibility;
+                                        actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
                                         Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                             dataBefore, invisibility, "\n");
                                         //AI activity message
@@ -1693,11 +1697,11 @@ public class EffectManager : MonoBehaviour
         if (actor != null)
         {
             string colourNumbers = colourGoodSide;
-            if (actor.CheckNumOfTeams() == actor.datapoint2)
+            if (actor.CheckNumOfTeams() == actor.GetDatapoint(ActorDatapoint.Ability2))
             { colourNumbers = colourBadSide; }
             return string.Format("{0}, {1} of {2}{3}{4} has now deployed {5}{6}{7} of {8}{9}{10} teams",
                 actor.actorName, GameManager.instance.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
-                colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.datapoint2, colourEnd);
+                colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.GetDatapoint(ActorDatapoint.Ability2), colourEnd);
         }
         else
         {
@@ -1739,15 +1743,18 @@ public class EffectManager : MonoBehaviour
                             switch (effect.outcome.name)
                             {
                                 case "Motivation":
+                                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                     switch (effect.operand.name)
                                     {
                                         case "Add":
-                                            actor.datapoint1 += effect.value;
-                                            actor.datapoint1 = Mathf.Min(GameManager.instance.actorScript.maxStatValue, actor.datapoint1);
+                                            motivation += effect.value;
+                                            motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                                             break;
                                         case "Subtract":
-                                            actor.datapoint1 -= effect.value;
-                                            actor.datapoint1 = Mathf.Max(GameManager.instance.actorScript.minStatValue, actor.datapoint1);
+                                            motivation -= effect.value;
+                                            motivation = Mathf.Max(GameManager.instance.actorScript.minStatValue, motivation);
+                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);

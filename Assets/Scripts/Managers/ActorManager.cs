@@ -548,9 +548,10 @@ public class ActorManager : MonoBehaviour
                 if (actor != null)
                 {
                     Debug.LogFormat("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
-                        GameManager.instance.dataScript.GetQuality(side, 0), actor.datapoint0,
-                        GameManager.instance.dataScript.GetQuality(side, 1), actor.datapoint1,
-                        GameManager.instance.dataScript.GetQuality(side, 2), actor.datapoint2, actor.level, "\n");
+                        GameManager.instance.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
+                        GameManager.instance.dataScript.GetQuality(side, 1), actor.GetDatapoint(ActorDatapoint.Datapoint1),
+                        GameManager.instance.dataScript.GetQuality(side, 2), actor.GetDatapoint(ActorDatapoint.Datapoint2), 
+                        actor.level, "\n");
                 }
                 else { Debug.LogWarning("Actor not created"); }
             }
@@ -707,27 +708,27 @@ public class ActorManager : MonoBehaviour
                 if (level == 3) { limitLower = 2; }
                 int limitUpper = Math.Min(4, level + 2);
                 //level -> assign
-                actor.datapoint0 = Random.Range(limitLower, limitUpper); //connections and influence
-                actor.datapoint1 = Random.Range(limitLower, limitUpper); //motivation and support
+                actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
+                actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support
                 if (side.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
                     switch (actor.level)
                     {
-                        case 3: actor.datapoint2 = 3; break;
+                        case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3);  break;
                         case 2:
-                            if (Random.Range(0, 100) <= 25) { actor.datapoint2 = 2; }
-                            else { actor.datapoint2 = 3; }
+                            if (Random.Range(0, 100) <= 25) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
+                            else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
                             break;
                         case 1:
-                            if (Random.Range(0, 100) <= 50) { actor.datapoint2 = 2; }
-                            else { actor.datapoint2 = 3; }
+                            if (Random.Range(0, 100) <= 50) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
+                            else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
                             break;
                     }
 
                 }
                 else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
-                { actor.datapoint2 = Random.Range(limitLower, limitUpper); /*Ability*/}
+                { actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper)); }
                 //OnMap actor (pool actors already in dictionary)
                 if (slotID > -1)
                 {
@@ -1433,7 +1434,7 @@ public class ActorManager : MonoBehaviour
                         // - - - Lie Low - - -
                         //
                         //Invisibility must be less than max
-                        if (actor.datapoint2 < maxStatValue)
+                        if (actor.GetDatapoint(ActorDatapoint.Invisibility2) < maxStatValue)
                         {
                             //can't lie low if a Surveillance Crackdown is in place
                             if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
@@ -1444,8 +1445,8 @@ public class ActorManager : MonoBehaviour
                                     lielowActionDetails.side = playerSide;
                                     lielowActionDetails.actorDataID = actor.slotID;
                                     if (actor.isLieLowFirstturn == true)
-                                    { numOfTurns = 4 - actor.datapoint2; }
-                                    else { numOfTurns = 3 - actor.datapoint2; }
+                                    { numOfTurns = 4 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                                    else { numOfTurns = 3 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
                                     tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
                                         colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
                                     EventButtonDetails lielowDetails = new EventButtonDetails()
@@ -1670,7 +1671,7 @@ public class ActorManager : MonoBehaviour
                                                 Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                             }
                                             //relationship conflict
-                                            if (actor.datapoint1 < benefit)
+                                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) < benefit)
                                             {
                                                 builder.AppendFormat("{0}{1} Motivation too Low!{2}", "\n", colourAlert, colourEnd);
                                                 builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
@@ -1794,8 +1795,8 @@ public class ActorManager : MonoBehaviour
                             activateActionDetails.side = playerSide;
                             activateActionDetails.actorDataID = actor.slotID;
                             if (actor.isLieLowFirstturn == true)
-                            { numOfTurns = 4 - actor.datapoint2; }
-                            else { numOfTurns = 3 - actor.datapoint2; }
+                            { numOfTurns = 4 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                            else { numOfTurns = 3 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
                             tooltipText = string.Format("{0} is Lying Low and will automatically return in {1} turn{2} if not Activated", actor.actorName, numOfTurns,
                                 numOfTurns != 1 ? "s" : "");
                             EventButtonDetails activateDetails = new EventButtonDetails()
@@ -3080,12 +3081,12 @@ public class ActorManager : MonoBehaviour
                             StringBuilder builder = new StringBuilder();
                             if (arrayOfQualities.Length > 0)
                             {
-                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
-                                    actor.datapoint0, colourEnd, "\n");
-                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
-                                    actor.datapoint1, colourEnd, "\n");
-                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
-                                    actor.datapoint2, colourEnd);
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint0)),
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint0), colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint1)),
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint2)),
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
@@ -3249,12 +3250,12 @@ public class ActorManager : MonoBehaviour
                             StringBuilder builder = new StringBuilder();
                             if (arrayOfQualities.Length > 0)
                             {
-                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
-                                    actor.datapoint0, colourEnd, "\n");
-                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
-                                    actor.datapoint1, colourEnd, "\n");
-                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
-                                    actor.datapoint2, colourEnd);
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint0)),
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint0), colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint1)),
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n");
+                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint2)),
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
@@ -3395,12 +3396,12 @@ public class ActorManager : MonoBehaviour
                         StringBuilder builder = new StringBuilder();
                         if (arrayOfQualities.Length > 0)
                         {
-                            builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.datapoint0),
-                                actor.datapoint0, colourEnd, "\n");
-                            builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.datapoint1),
-                                actor.datapoint1, colourEnd, "\n");
-                            builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.datapoint2),
-                                actor.datapoint2, colourEnd);
+                            builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint0)),
+                                actor.GetDatapoint(ActorDatapoint.Datapoint0), colourEnd, "\n");
+                            builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint1)),
+                                actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n");
+                            builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint2)),
+                                actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);
                             tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                         }
                         //trait and action
@@ -4005,7 +4006,7 @@ public class ActorManager : MonoBehaviour
         {
             Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
             subBuilder.AppendFormat(" {0}, ID {1}, {2}, L{3}, {4}-{5}-{6}{7}", actor.actorName, actor.actorID, actor.arc.name, actor.level,
-                actor.datapoint0, actor.datapoint1, actor.datapoint2, "\n");
+                actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), "\n");
         }
         subBuilder.AppendLine();
         return subBuilder.ToString();
@@ -4257,7 +4258,7 @@ public class ActorManager : MonoBehaviour
                                 switch (actor.inactiveStatus)
                                 {
                                     case ActorInactive.LieLow:
-                                        int invis = actor.datapoint2;
+                                        int invis = actor.GetDatapoint(ActorDatapoint.Invisibility2);
                                         //increment invisibility (not the first turn)
                                         if (actor.isLieLowFirstturn == false)
                                         { invis++; }
@@ -4265,7 +4266,7 @@ public class ActorManager : MonoBehaviour
                                         if (invis >= maxStatValue)
                                         {
                                             //actor has recovered from lying low, needs to be activated
-                                            actor.datapoint2 = Mathf.Min(maxStatValue, invis);
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, Mathf.Min(maxStatValue, invis));
                                             actor.Status = ActorStatus.Active;
                                             actor.inactiveStatus = ActorInactive.None;
                                             actor.tooltipStatus = ActorTooltip.None;
@@ -4283,7 +4284,7 @@ public class ActorManager : MonoBehaviour
                                             GameManager.instance.contactScript.UpdateNodeContacts();*/
                                         }
                                         else
-                                        { actor.datapoint2 = invis; }
+                                        { actor.SetDatapoint(ActorDatapoint.Invisibility2, invis); }
                                         break;
                                     case ActorInactive.Breakdown:
                                         //restore actor (one stress turn only)
@@ -4385,7 +4386,7 @@ public class ActorManager : MonoBehaviour
                                 switch (actor.inactiveStatus)
                                 {
                                     case ActorInactive.LieLow:
-                                        int invis = actor.datapoint2;
+                                        int invis = actor.GetDatapoint(ActorDatapoint.Invisibility2);
                                         //increment invisibility (not the first turn)
                                         if (actor.isLieLowFirstturn == false)
                                         { invis++; }
@@ -4393,7 +4394,8 @@ public class ActorManager : MonoBehaviour
                                         if (invis >= maxStatValue)
                                         {
                                             //actor has recovered from lying low, needs to be activated
-                                            actor.datapoint2 = Mathf.Min(maxStatValue, actor.datapoint2);
+                                            invis = Mathf.Min(maxStatValue, invis);
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, invis);
                                             actor.Status = ActorStatus.Active;
                                             actor.inactiveStatus = ActorInactive.None;
                                             actor.tooltipStatus = ActorTooltip.None;
@@ -4409,12 +4411,9 @@ public class ActorManager : MonoBehaviour
                                             if (actor.CheckConditionPresent(conditionStressed) == true)
                                             { actor.RemoveCondition(conditionStressed, "Lying Low removes Stress"); }
                                             GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
-
-                                            /*//update contacts
-                                            GameManager.instance.contactScript.UpdateNodeContacts();*/
                                         }
                                         else
-                                        { actor.datapoint2 = invis; }
+                                        { actor.SetDatapoint(ActorDatapoint.Invisibility2, invis); }
                                         break;
                                     case ActorInactive.Breakdown:
                                         //restore actor (one stress turn only)
@@ -4533,12 +4532,12 @@ public class ActorManager : MonoBehaviour
                                 //
                                 // - - - Invisibility Zero warning - - -
                                 //
-                                if (actor.datapoint2 == 0)
+                                if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
                                 { ProcessInvisibilityWarning(actor); }
                                 //
                                 // - - - Motivation Warning - - -
                                 //
-                                if (actor.datapoint1 == 0)
+                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
                                 { ProcessMotivationWarning(actor); }
                                 //
                                 // - - - Info App conditions (any)
@@ -4805,7 +4804,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 // - - - Motivation Warning - - -
                                 //
-                                if (actor.datapoint1 == 0)
+                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
                                 { ProcessMotivationWarning(actor); }
                                 //
                                 // - - - Info App conditions (any)
@@ -5113,7 +5112,7 @@ public class ActorManager : MonoBehaviour
         bool isResolved = false;
         //decrement timer
         actor.blackmailTimer--;
-        if (actor.datapoint1 == maxStatValue)
+        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == maxStatValue)
         {
             //trait Vindictive (won't be appeased)
             if (actor.CheckTraitEffect(actorAppeaseNone) == false)
@@ -6190,7 +6189,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         //unhappy timer has reached zero. Is actor's motivation > 0?
-                        if (actor.datapoint1 > 0)
+                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) > 0)
                         {
                             //chance of decrementing motivation each turn till it reaches zero
                             chance = unhappyLoseMotivationChance;
@@ -6200,9 +6199,11 @@ public class ActorManager : MonoBehaviour
                             rnd = Random.Range(0, 100);
                             if (rnd < chance)
                             {
-                                actor.datapoint1--;
+                                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                motivation--;
+                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                                 Debug.LogFormat("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName,
-                                    actor.datapoint1, "\n");
+                                    motivation, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
@@ -6309,7 +6310,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         //unhappy timer has reached zero. Is actor's motivation > 0?
-                        if (actor.datapoint1 > 0)
+                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) > 0)
                         {
                             //chance of decrementing motivation each turn till it reaches zero
                             chance = unhappyLoseMotivationChance;
@@ -6319,9 +6320,11 @@ public class ActorManager : MonoBehaviour
                             rnd = Random.Range(0, 100);
                             if (rnd < chance)
                             {
-                                actor.datapoint1--;
+                                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                motivation--;
+                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
                                 Debug.LogFormat("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name,
-                                    actor.actorName, actor.datapoint1, chance, "\n");
+                                    actor.actorName, motivation, chance, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
