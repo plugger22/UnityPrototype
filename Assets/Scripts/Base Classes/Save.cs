@@ -246,7 +246,10 @@ public class SaveActorData
     public string actorBlackmailNone;
     public string actorBlackmailTimerHigh;
     public string actorBlackmailTimerLow;
-    public int maxNumOfSecrets;     
+    public int maxNumOfSecrets;
+    public int compatibilityOne;
+    public int compatibilityTwo;
+    public int compatibilityThree;
 }
 #endregion
 

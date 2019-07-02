@@ -71,6 +71,9 @@ namespace gameAPI
         [HideInInspector] public string actorBlackmailTimerHigh;
         [HideInInspector] public string actorBlackmailTimerLow;
         [HideInInspector] public int maxNumOfSecrets = -1;
+        [HideInInspector] public int compatibilityOne = -1;
+        [HideInInspector] public int compatibilityTwo = -1;
+        [HideInInspector] public int compatibilityThree = -1;
 
         //private backing field
         private ActorStatus _status;
@@ -129,7 +132,13 @@ namespace gameAPI
                 actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
                 actorBlackmailTimerLow = "ActorBlackmailTimerLow";
                 maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
+                compatibilityOne = GameManager.instance.personScript.compatibilityChanceOne;
+                compatibilityTwo = GameManager.instance.personScript.compatibilityChanceTwo;
+                compatibilityThree = GameManager.instance.personScript.compatibilityChanceThree;
                 Debug.Assert(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
+                Debug.Assert(compatibilityOne > -1, "Invalid compatibilityOne (-1)");
+                Debug.Assert(compatibilityTwo > -1, "Invalid compatibilityTwo (-1)");
+                Debug.Assert(compatibilityThree > -1, "Invalid compatibilityThree (-1)");
             }
         }
 
@@ -192,15 +201,71 @@ namespace gameAPI
                 case ActorDatapoint.Influence0:
                 case ActorDatapoint.Connections0:
                 case ActorDatapoint.Datapoint0:
+                    if ((datapoint0 - value) == 0)
+                    { Debug.LogWarningFormat("SetDatapoint change Datapoint0 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     datapoint0 = value;
                     break;
                 case ActorDatapoint.Motivation1:
                 case ActorDatapoint.Datapoint1:
-                    datapoint1 = value;
+                    //motivation is special as actor compatibility with player can negate the change
+                    int difference = Mathf.Abs(datapoint1 - value);
+                    int rndNum = Random.Range(0, 100);
+                    bool isProceed = true;
+                    if (difference > 0)
+                    {
+                        int compatibility = personality.GetCompatibilityWithPlayer();
+                        switch (compatibility)
+                        {
+                            case 3:
+                                if (difference < 0)
+                                {
+                                    if (rndNum < compatibilityThree)
+                                    {
+                                        //negative shift is negated due to good relationship with the player
+                                        isProceed = false;
+                                    }
+                                }
+                                break;
+                            case 2:
+
+                                break;
+                            case 1:
+
+                                break;
+                            case 0: 
+                                //do nothing 
+                                break;
+                            case -1:
+                                if (difference > 0)
+                                {
+                                    if (rndNum < compatibilityOne)
+                                    {
+                                        //positive shift is negated due to poor relationship with the player
+                                        isProceed = false;
+                                    }
+                                }
+                                break;
+                            case -2:
+
+                                break;
+                            case -3:
+
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}, ID {3}", compatibility, actorName, arc.name, actorID);
+                                break;
+                        }
+                        //does the change hold?
+                        if (isProceed == true)
+                        { datapoint1 = value; }
+                    }
+                    else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     break;
                 case ActorDatapoint.Ability2:
                 case ActorDatapoint.Invisibility2:
                 case ActorDatapoint.Datapoint2:
+                    if ((datapoint2 - value) == 0)
+                    { Debug.LogWarningFormat("SetDatapoint change Datapoint2 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     datapoint2 = value;
                     break;
                 default:

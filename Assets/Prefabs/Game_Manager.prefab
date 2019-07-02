@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPersonality: {fileID: 11400000, guid: c49065ef357a4604892f0d9cbe718ba1, type: 2}
+  testPersonality: {fileID: 11400000, guid: 69dd1532267625549b2af2eca7cb59a4, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

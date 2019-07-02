@@ -885,7 +885,11 @@ public class FileManager : MonoBehaviour
         write.actorData.actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
         write.actorData.actorBlackmailTimerLow = "ActorBlackmailTimerLow";
         write.actorData.maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
+        write.actorData.compatibilityOne = GameManager.instance.personScript.compatibilityChanceOne;
+        write.actorData.compatibilityTwo = GameManager.instance.personScript.compatibilityChanceTwo;
+        write.actorData.compatibilityThree = GameManager.instance.personScript.compatibilityChanceThree;
         Debug.Assert(write.actorData.maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
+        Debug.Assert(write.actorData.compatibilityOne > 0, "Invalid compatibilityOne (Zero)");
     }
 
     #endregion
@@ -2214,6 +2218,9 @@ public class FileManager : MonoBehaviour
                     actor.actorBlackmailTimerHigh = read.actorData.actorBlackmailTimerHigh;
                     actor.actorBlackmailTimerLow = read.actorData.actorBlackmailTimerLow;
                     actor.maxNumOfSecrets = read.actorData.maxNumOfSecrets;
+                    actor.compatibilityOne = read.actorData.compatibilityOne;
+                    actor.compatibilityTwo = read.actorData.compatibilityTwo;
+                    actor.compatibilityThree = read.actorData.compatibilityThree;
                     //data which can be ignored (default values O.K) if actor is in the Recruit Pool
                     if (actor.Status != ActorStatus.RecruitPool)
                     {

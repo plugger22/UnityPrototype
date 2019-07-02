@@ -9,11 +9,19 @@ using UnityEngine;
 /// </summary>
 public class PersonalityManager : MonoBehaviour
 {
-
+    [Header("Factors")]
     [Tooltip("Number of personality factors present")]
     [Range(5, 5)] public int numOfFactors = 5;
     [Tooltip("Difference threshold less than or equal for a profile to make it into the temporary dictionary from which a partial match is chosen from (lowest difference)")]
     [Range(4, 4)] public int profileThreshold = 4;
+
+    [Header("Compatibility Effect")]
+    [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 1")]
+    [Range(1, 100)] public int compatibilityChanceOne = 20;
+    [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 2")]
+    [Range(1, 100)] public int compatibilityChanceTwo = 40;
+    [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 3")]
+    [Range(1, 100)] public int compatibilityChanceThree = 60;
 
     //Fast access
     private Factor[] arrayOfFactors;
@@ -501,7 +509,7 @@ public class PersonalityManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-        //Reserve actors
+        /*//Reserve actors
         List<int> listOfReservePool = GameManager.instance.dataScript.GetListOfReserveActors(GameManager.instance.sideScript.PlayerSide);
         if (listOfReservePool != null)
         {
@@ -521,7 +529,7 @@ public class PersonalityManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogError("Invalid listOfReservePool (Null)"); }
+        else { Debug.LogError("Invalid listOfReservePool (Null)"); }*/
         return builder.ToString();
     }
 
