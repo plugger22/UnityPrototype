@@ -60,6 +60,7 @@ namespace gameAPI
         private List<Secret> listOfSecrets = new List<Secret>();                            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();                   //list of all conditions currently affecting the actor
         private List<string> listOfTraitEffects = new List<string>();                       //list of all traitEffect.teffID's
+        private List<HistoryMotivation> listOfMotivationHistory = new List<HistoryMotivation>();    //list of all motivational changes
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         #endregion
 
@@ -1048,6 +1049,20 @@ namespace gameAPI
 
         public Personality GetPersonality()
         { return personality; }
+
+        public List<HistoryMotivation> GetListOfHistoryMotivations()
+        { return listOfMotivationHistory; }
+
+
+        public void AddMotivationHistory(HistoryMotivation history)
+        {
+            if (history != null)
+            {
+
+            }
+            else { Debug.LogError("Invalid history (Null)"); }
+        }
+
 
 
         //place methods above here

@@ -360,6 +360,10 @@ namespace packageAPI
         public string text;
     }
 
+    //
+    // - - - History packages
+    //
+
     /// <summary>
     /// tracks Resistance player or AI. One entry made every time player moves (eg. per action expended)
     /// </summary>
@@ -385,6 +389,19 @@ namespace packageAPI
         public int targetNodeID;
         public int searchRating;
         public int playerNodeID;
+    }
+
+    /// <summary>
+    /// history of actor's motivational changes
+    /// </summary>
+    [System.Serializable]
+    public class HistoryMotivation
+    {
+        public int change;              //positive change is good, negative bad
+        public int turn;
+        public int motivation;          //motivation AFTER then change
+        public bool isNegated;          //True if change negated by actor's compatibility with player, false otherwise
+        public string desriptor;        //FORMATTED string, eg. 'Gear HoloPorn Given +1' displayed in green, red if negative, grey if negated
     }
 
     //
