@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using modalAPI;
+﻿using delegateAPI;
 using gameAPI;
+using modalAPI;
 using packageAPI;
+using System.Collections.Generic;
 using System.Text;
-using delegateAPI;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 
@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class ActionManager : MonoBehaviour
 {
-    
+
     //fast access -> target
     private int failedTargetChance;
     //lie low
@@ -43,6 +43,7 @@ public class ActionManager : MonoBehaviour
     private string colourInvalid;
     private string colourResistance;
     private string colourAuthority;
+    private string colourGrey;
     private string colourEnd;
 
     /// <summary>
@@ -89,7 +90,7 @@ public class ActionManager : MonoBehaviour
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
         Debug.Assert(lieLowPeriod > 0, "Invalid lieLowCooldDownPeriod (Zero)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
-          Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
+        Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
     }
@@ -269,6 +270,7 @@ public class ActionManager : MonoBehaviour
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -752,11 +754,15 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textMain = manageAction.tooltipMain;
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd, 
-                                    "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd); }
+                                {
+                                    tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd,
+                                      "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
+                                }
                                 else
-                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n", 
-                                    colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd); }
+                                {
+                                    tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n",
+                                      colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
+                                }
                             }
                             else
                             {
@@ -768,8 +774,10 @@ public class ActionManager : MonoBehaviour
                                 if (manageAction.isRenownCost == true)
                                 { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
-                                { tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
-                                    colourEnd); }
+                                {
+                                    tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
+                                      colourEnd);
+                                }
                             }
                         }
                         else
@@ -783,11 +791,13 @@ public class ActionManager : MonoBehaviour
                             if (manageAction.isRenownCost == true)
                             {
                                 tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd,
-                                  "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "",  traitText, colourEnd);
+                                  "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
                             }
                             else
-                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer, 
-                                unhappyTimer != 1 ? "s" : "", traitText, colourEnd); }
+                            {
+                                tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer,
+                                  unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
+                            }
                         }
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
@@ -911,7 +921,7 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd);  }
+                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
                                 {
                                     tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
@@ -1139,7 +1149,7 @@ public class ActionManager : MonoBehaviour
                 isStressed = actor.CheckConditionPresent(conditionStressed);
                 //message
                 string text = string.Format("{0}, {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
-                string reason = string.Format("is currently <b>Lying Low</b> and {0}{1}{2}<b>cut off from all communications</b>{3}","\n", "\n", colourBad, colourEnd);
+                string reason = string.Format("is currently <b>Lying Low</b> and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
 
                 /*//update contacts
@@ -1221,7 +1231,7 @@ public class ActionManager : MonoBehaviour
     private string GetLieLowMessage(int numOfTurns, string actorName, string actorArc, bool isStressed)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}, will be Inactive for {4}{5} turn{6}{7} or until Activated", actorName, colourAlert, actorArc, colourEnd, 
+        builder.AppendFormat("{0}, {1}{2}{3}, will be Inactive for {4}{5} turn{6}{7} or until Activated", actorName, colourAlert, actorArc, colourEnd,
             colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat("{0}Invisibility +1{1} each turn {2}Inactive{3}", colourNeutral, colourEnd, colourAlert, colourEnd);
@@ -1335,20 +1345,20 @@ public class ActionManager : MonoBehaviour
         if (details != null)
         {
 
-                string title = "";
-                if (details.side == GameManager.instance.globalScript.sideAuthority)
-                { title = string.Format(" {0} ", GameManager.instance.metaScript.GetAuthorityTitle()); }
+            string title = "";
+            if (details.side == GameManager.instance.globalScript.sideAuthority)
+            { title = string.Format(" {0} ", GameManager.instance.metaScript.GetAuthorityTitle()); }
 
-                //Reactivate Player
-                GameManager.instance.playerScript.status = ActorStatus.Active;
-                GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
-                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
-                outcomeDetails.textTop = string.Format(" {0} has emerged from hiding early", playerName);
-                outcomeDetails.textBottom = string.Format("{0}{1} is now fully Activated{2}", colourNeutral, playerName, title, colourEnd);
-                outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
-                //message
-                string text = string.Format("{0} has emerged from hiding early. Status: {1}", playerName, GameManager.instance.playerScript.status);
-                GameManager.instance.messageScript.ActorStatus(text, "Recalled", "has been Recalled", GameManager.instance.playerScript.actorID, details.side);
+            //Reactivate Player
+            GameManager.instance.playerScript.status = ActorStatus.Active;
+            GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+            GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+            outcomeDetails.textTop = string.Format(" {0} has emerged from hiding early", playerName);
+            outcomeDetails.textBottom = string.Format("{0}{1} is now fully Activated{2}", colourNeutral, playerName, title, colourEnd);
+            outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
+            //message
+            string text = string.Format("{0} has emerged from hiding early. Status: {1}", playerName, GameManager.instance.playerScript.status);
+            GameManager.instance.messageScript.ActorStatus(text, "Recalled", "has been Recalled", GameManager.instance.playerScript.actorID, details.side);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         if (errorFlag == false)
@@ -1397,7 +1407,7 @@ public class ActionManager : MonoBehaviour
             string reason = "has taken a break in order to recover from their <b>STRESS</b>";
             string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
             GameManager.instance.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details);
-            Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLeavePlayerAction: {0}, {1} Player, commences STRESS LEAVE", GameManager.instance.playerScript.GetPlayerName(modalDetails.side), 
+            Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLeavePlayerAction: {0}, {1} Player, commences STRESS LEAVE", GameManager.instance.playerScript.GetPlayerName(modalDetails.side),
                 modalDetails.side.name);
             //statistics
             StressLeaveStatistics(modalDetails.side);
@@ -1406,7 +1416,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Player Stress Leave";
             outcomeDetails.textBottom = string.Format("You, {0}{1}{2}, have taken Stress Leave and will return a better person, {3}free of Stress{4}{5}{6}{7}You cannot be captured while on Leave{8}",
-                colourAlert, playerName,  colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, colourEnd);
+                colourAlert, playerName, colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, colourEnd);
             //generate a create modal window event
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeavePlayerAction");
         }
@@ -1452,7 +1462,7 @@ public class ActionManager : MonoBehaviour
                 ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
                 outcomeDetails.isAction = true;
                 outcomeDetails.reason = "Actor Stress Leave";
-                outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}{6}{7}{8}{9} cannot be Captured while on Leave{10}", 
+                outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}{6}{7}{8}{9} cannot be Captured while on Leave{10}",
                     actor.actorName, colourAlert, actor.arc.name, colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, actor.actorName, colourEnd);
                 //generate a create modal window event
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeaveActorAction");
@@ -1512,6 +1522,7 @@ public class ActionManager : MonoBehaviour
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
                     {
+                        bool isPreferred = false;
                         motivationBoost = gearSwapBaseAmount;
                         builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.tag, colourEnd);
                         //motivation loss more if preferred gear
@@ -1519,11 +1530,22 @@ public class ActionManager : MonoBehaviour
                         {
                             //Preferred gear (extra motivation)
                             motivationBoost += gearSwapPreferredAmount;
-                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}(Preferred Gear){7}", "\n", "\n", colourGood, actor.arc.name, motivationBoost, colourEnd,
+                            isPreferred = true;
+                        }
+                        //give actor motivation boost
+                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                        motivation += motivationBoost;
+                        motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                        string colourMotivation = colourGood;
+                        if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Give {0} gear", gear.tag)) == false)
+                        { colourMotivation = colourGrey; }
+                        //motivation message
+                        if (isPreferred == true)
+                        {
+                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}(Preferred Gear){7}", "\n", "\n", colourMotivation, actor.arc.name, motivationBoost, colourEnd,
                                 colourNeutral, colourEnd);
                         }
-                        else
-                        { builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourGood, actor.arc.name, gearSwapBaseAmount, colourEnd); }
+                        else { builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourMotivation, actor.arc.name, gearSwapBaseAmount, colourEnd); }
                         //grace period note
                         if (actor.CheckTraitEffect(actorKeepGear) == false)
                         {
@@ -1559,11 +1581,6 @@ public class ActionManager : MonoBehaviour
             { GameManager.instance.playerScript.RemoveGear(gear.name); }
             outcomeDetails.sprite = actor.sprite;
             outcomeDetails.textBottom = builder.ToString();
-            //give actor motivation boost
-            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-            motivation += motivationBoost;
-            motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
-            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Give {0} gear", gear.tag));
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
@@ -1615,16 +1632,44 @@ public class ActionManager : MonoBehaviour
                     GearType preferredGear = actor.arc.preferredGear;
                     if (preferredGear != null)
                     {
+                        bool isPreferred = false;
                         builder.AppendFormat("{0}{1} is available{2}", colourGood, gear.tag, colourEnd);
                         if (preferredGear.name.Equals(gear.type.name, System.StringComparison.Ordinal) == true)
                         {
                             //Preferred gear (extra motivation)
                             motivationCost += gearSwapPreferredAmount;
-                            builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}{6}{7}(Preferred Gear){8}", "\n", "\n", colourBad, actor.arc.name, motivationCost, colourEnd, "\n",
-                            colourNeutral, colourEnd);
+                            isPreferred = true;
+                        }
+                        //deduct motivation from actor
+                        if (motivationCost > 0)
+                        {
+                            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                            //deduct motivation
+                            motivation -= motivationCost;
+                            motivation = Mathf.Max(0, motivation);
+                            string colourMotivation = colourBad;
+                            if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Take {0} gear", gear.tag)) == false)
+                            { colourMotivation = colourGrey; }
+                            else if (motivation < motivationCost)
+                            {
+                                //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
+                                builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
+                                builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
+                                builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
+                            }
+                            //motivation message
+                            if (isPreferred == true)
+                            {
+                                builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}{6}{7}(Preferred Gear){8}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd, "\n",
+                                colourNeutral, colourEnd);
+                            }
+                            else { builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd); }
                         }
                         else
-                        { builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}", "\n", "\n", colourBad, actor.arc.name, motivationCost, colourEnd); }
+                        {
+                            //no motivation cost
+                            builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
+                        }
                     }
                     else
                     { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
@@ -1636,33 +1681,10 @@ public class ActionManager : MonoBehaviour
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         if (errorFlag == false)
         {
-            //Transfer Gear
-
-            //remove gear from actor
+            //Transfer Gear -> remove gear from actor
             actor.RemoveGear(GearRemoved.Taken);
             //Give Gear to Player
             GameManager.instance.playerScript.AddGear(gear.name);
-            //deduct motivation from actor
-            if (motivationCost > 0)
-            {
-                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                //relationship Conflict  (ActorConflict)
-                if (motivation < motivationCost)
-                {
-                    builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
-                    builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
-                }
-                //deduct motivation
-                motivation -= motivationCost;
-                motivation = Mathf.Max(0, motivation);
-                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Take {0} gear", gear.tag));
-            }
-            else
-            {
-                //no motivation cost
-                builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
-            }
             outcomeDetails.sprite = gear.sprite;
             outcomeDetails.textBottom = builder.ToString();
             //message
@@ -1678,11 +1700,11 @@ public class ActionManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
 
-        /// <summary>
-        /// Process Use Gear (Player use) action (Resistance only)
-        /// </summary>
-        /// <param name="details"></param>
-        public void ProcessUseGearAction(ModalActionDetails details)
+    /// <summary>
+    /// Process Use Gear (Player use) action (Resistance only)
+    /// </summary>
+    /// <param name="details"></param>
+    public void ProcessUseGearAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         bool isAction = false;
@@ -1786,7 +1808,7 @@ public class ActionManager : MonoBehaviour
             //Gear Used            
             Gear gear = GameManager.instance.dataScript.GetGear(details.gearName);
             if (gear != null)
-            { GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit");  }
+            { GameManager.instance.gearScript.SetGearUsed(gear, "provide Player with a benefit"); }
             else
             {
                 Debug.LogErrorFormat("Invalid Gear (Null) for gear {0}", details.gearName);
@@ -1796,7 +1818,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = builderBottom.ToString();
             //is there a delegate method that needs processing?
             details.handler?.Invoke();
-        }            
+        }
         //generate a create modal window event
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessUseGearAction");
     }
@@ -1843,7 +1865,7 @@ public class ActionManager : MonoBehaviour
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         //outcome
         if (errorFlag == false)
-        { 
+        {
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Reassure Actor";
             //is there a delegate method that needs processing?
@@ -1884,7 +1906,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textTop = string.Format("{0} {1} has been pulled into line and told to smarten up their attitude",
                     actor.arc.name, actor.actorName);
                 StringBuilder builder = new StringBuilder();
-                builder.AppendFormat("{0}{1}'s{2}Unhappy timer +{3}{4}{5}", colourGood, actor.actorName,"\n", benefit, traitText, colourEnd);
+                builder.AppendFormat("{0}{1}'s{2}Unhappy timer +{3}{4}{5}", colourGood, actor.actorName, "\n", benefit, traitText, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
@@ -1957,7 +1979,7 @@ public class ActionManager : MonoBehaviour
                     builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
                 else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }
-               
+
                 /*//remove actor from reserve list
                 List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
                 if (reservePoolList != null)
@@ -2162,7 +2184,7 @@ public class ActionManager : MonoBehaviour
                                     GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Total, +1);
                                     //message
                                     string msgText = string.Format("{0} {1} added to Reserves", team.arc.name, team.teamName);
-                                    string reason = string.Format("Due to {0} {1}, {2}{3}{4}, being recalled for active duty", GameManager.instance.metaScript.GetAuthorityTitle(), 
+                                    string reason = string.Format("Due to {0} {1}, {2}{3}{4}, being recalled for active duty", GameManager.instance.metaScript.GetAuthorityTitle(),
                                         actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                     GameManager.instance.messageScript.TeamAdd(msgText, reason, team);
                                     builder.AppendFormat(string.Format("{0}{1}{2}{3}{4}", "\n", "\n", colourGood, msgText, colourEnd));
@@ -2550,7 +2572,7 @@ public class ActionManager : MonoBehaviour
                                         EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, null, dataInput, actor);
                                         if (effectReturn != null)
                                         {
-                                            if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0)  { builderTop.AppendLine(); }
+                                            if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0) { builderTop.AppendLine(); }
                                             builderTop.Append(effectReturn.topText);
                                             if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                             builderBottom.Append(effectReturn.bottomText);
@@ -2660,7 +2682,7 @@ public class ActionManager : MonoBehaviour
                                         actor.actorName, colourEnd);
                                     msgTextStatus = "Promoted";
                                     msgReason = "Promoted";
-                                    msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName, 
+                                    msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName,
                                         GameManager.instance.factionScript.GetCurrentFaction().name);
                                     break;
                                 case "DismissIncompetent":
@@ -2845,7 +2867,7 @@ public class ActionManager : MonoBehaviour
                                 numOfTeams != 1 ? "s" : "", colourEnd);
                             }
                             //message
-                            GameManager.instance.messageScript.ActorStatus(msgTextMain, "Disposed Off",  string.Format("has been disposed off ({0})", msgReason), actor.actorID, playerSide);
+                            GameManager.instance.messageScript.ActorStatus(msgTextMain, "Disposed Off", string.Format("has been disposed off ({0})", msgReason), actor.actorID, playerSide);
                             //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
                             ManageAction manageAction = GameManager.instance.dataScript.GetManageAction(data.optionNested);
                             if (manageAction != null)
@@ -2993,7 +3015,7 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            
+
             if (handler != null)
             {
                 //activate Back button to enable user to flip back a window

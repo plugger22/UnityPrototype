@@ -2780,3 +2780,41 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 30083 -> Tuesday, 2 July 2019 8:24 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 28185 -> Wednesday, 3 July 2019 9:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17203 -> Wednesday, 3 July 2019 9:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63818 -> Wednesday, 3 July 2019 10:49 AM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found Holoporn, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4535)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1275)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1063)
+	
+Dev seed 23364 -> Wednesday, 3 July 2019 11:17 AM
+City seed 5678 -> London, United Kingdom
+ERROR Gear "Work Permit" NOT removed from inventory
+UnityEngine.Debug:LogError(Object)
+	PlayerManager:RemoveGear(String, Boolean) (at Assets/Scripts/Managers/PlayerManager.cs:555)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1581)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2435)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 58165 -> Wednesday, 3 July 2019 11:19 AM
+City seed 5678 -> London, United Kingdom
+ERROR Gear "Work Permit" NOT removed from inventory
+UnityEngine.Debug:LogError(Object)
+	PlayerManager:RemoveGear(String, Boolean) (at Assets/Scripts/Managers/PlayerManager.cs:555)
+	ActionManager:ProcessGiveGearAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:1581)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:195)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2435)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

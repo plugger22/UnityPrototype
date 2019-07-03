@@ -517,12 +517,11 @@ public class GearManager : MonoBehaviour
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                     //remove gear AFTER message
                                     actor.RemoveGear(GearRemoved.Lost);
-
                                 }
                                 else
                                 {
                                     //random
-                                    string msgText = string.Format("{0} gear, {1}, retained", actor.arc.name, gear.tag);
+                                    string msgText = string.Format("{0} gear, {1}, not lost", actor.arc.name, gear.tag);
                                     GameManager.instance.messageScript.GeneralRandom(msgText, "Gear Lost", chance, rnd, true);
                                 }
                             }

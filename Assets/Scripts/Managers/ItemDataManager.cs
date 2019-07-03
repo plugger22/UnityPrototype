@@ -560,22 +560,13 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorCompatibilityDetails(Actor actor, int difference, string reason)
     {
         int comp = actor.GetPersonality().GetCompatibilityWithPlayer();
-        /*StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
-        builder.AppendFormat("has ignored a{0}", "\n");
-        builder.AppendFormat("{0}<b>{1}{2}{3} change in {4}Motivation{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n");
-        builder.AppendFormat("due to <b>{0}</b>{1}{2}", reason, "\n", "\n");
-        builder.AppendFormat("As a result of their{0}", "\n");
-        builder.AppendFormat("{0}{1}{2} opinion of you", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd);
-        return builder.ToString();*/
-
         return new StringBuilder()
             .AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n")
             .AppendFormat("has ignored a{0}", "\n")
             .AppendFormat("{0}<b>{1}{2}{3} change in {4}Motivation{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat("due to <b>{0}</b>{1}{2}", reason, "\n", "\n")
             .AppendFormat("As a result of their{0}", "\n")
-            .AppendFormat("{0}<b>{1}{2} opinion of you</b>", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd)
+            .AppendFormat("{0}<b>{1} opinion of you</b>{2}", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd)
             .ToString();
     }
 

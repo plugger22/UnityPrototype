@@ -191,11 +191,13 @@ namespace gameAPI
 
         /// <summary>
         /// Set value of a datapoint. 'reasonForChange' needed if a Motivational shift that may be negated due to actor's compatibility with player. Ignore otherwise.
+        /// Returns true if Motivation change accepted, false if actor compatibility negates it and true for all other datapoint cases (ignore, it's only for datapoint1, motivation)
         /// </summary>
         /// <param name="datapoint"></param>
         /// <param name="value"></param>
-        public void SetDatapoint(ActorDatapoint datapoint, int value, string reasonForChange = "Unknown")
+        public bool SetDatapoint(ActorDatapoint datapoint, int value, string reasonForChange = "Unknown")
         {
+            bool isSuccess = true;
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
@@ -310,6 +312,7 @@ namespace gameAPI
                                     text = string.Format("{0}, {1}, ID {2}, negates Motivational change of {3}{4} due to compatibility with Player{5}", actorName, arc.name, actorID,
                                         difference > 0 ? "+" : "", difference, "\n");
                                     GameManager.instance.messageScript.ActorCompatibility(text, this, difference, reasonForChange);
+                                    isSuccess = false;
                                 }
                                 //random roll message regardless, provided a check was made
                                 if (numNeeded > 0)
@@ -344,6 +347,7 @@ namespace gameAPI
                     Debug.LogWarningFormat("Unrecognised ActorDatapoint \"{0}\"", datapoint);
                     break;
             }
+            return isSuccess;
         }
 
         //
