@@ -299,6 +299,7 @@ public class ModalInventoryUI : MonoBehaviour
                                 arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                                 arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
                                 arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
+                                arrayOfInteractions[i].optionName = details.arrayOfOptions[i].optionName;
                                 //tooltip data
                                 if (arrayOfTooltips[i] != null)
                                 {

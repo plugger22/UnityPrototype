@@ -1589,7 +1589,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                                                 if (gearOld != null)
-                                                { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
+                                                { builderTooltip.AppendFormat("{0}{1}{2} will be Lost{3}", "\n", colourBad, gearOld.name, colourEnd); }
                                                 else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearName()); }
                                             }
                                             EventButtonDetails gearDetails = new EventButtonDetails()
@@ -2421,7 +2421,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             Gear gearOld = GameManager.instance.dataScript.GetGear(actor.GetGearName());
                                             if (gearOld != null)
-                                            { builderTooltip.AppendFormat("{0}{1}{2}{3}{4} will be Lost{5}", "\n", colourNeutral, gearOld.name, colourEnd, colourBad, colourEnd); }
+                                            { builderTooltip.AppendFormat("{0}{1}{2} will be Lost{3}", "\n", colourBad, gearOld.name, colourEnd); }
                                             else { Debug.LogWarningFormat("Invalid gearOld (Null) for gearID {0}", actor.GetGearName()); }
                                         }
                                         EventButtonDetails gearDetails = new EventButtonDetails()

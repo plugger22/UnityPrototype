@@ -2818,3 +2818,8 @@ UnityEngine.Debug:LogError(Object)
 	<GetGearInventoryActions>c__AnonStorey11:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2435)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 26697 -> Wednesday, 3 July 2019 2:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19040 -> Wednesday, 3 July 2019 2:12 PM
+City seed 5678 -> London, United Kingdom

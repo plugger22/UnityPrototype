@@ -991,7 +991,7 @@ public class ItemDataManager : MonoBehaviour
             //gear given
             builder.AppendFormat("has been given{0}", "\n");
             builder.AppendFormat("to <b>{0}, {1}{2}</b>{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}{1} Motivation +{2}{3}", actor.actorName, colourGood, motivation, colourEnd);
+            builder.AppendFormat("{0}{1} <b>Motivation +{2}</b>{3}", actor.actorName, colourGood, motivation, colourEnd);
         }
         else
         {
