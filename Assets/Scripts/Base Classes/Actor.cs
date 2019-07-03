@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -199,6 +200,7 @@ namespace gameAPI
         public bool SetDatapoint(ActorDatapoint datapoint, int value, string reasonForChange = "Unknown")
         {
             bool isSuccess = true;
+            int turn = GameManager.instance.turnScript.Turn;
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
@@ -214,7 +216,7 @@ namespace gameAPI
                     if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                     {
                         //doesn't apply on first turn (creating actors)
-                        if (GameManager.instance.turnScript.Turn > 0)
+                        if ( turn > 0)
                         {
                             //motivation is special as actor compatibility with player can negate the change
                             int difference = value - datapoint1;
@@ -322,6 +324,22 @@ namespace gameAPI
                                     GameManager.instance.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome);
                                     Debug.LogFormat("[Rnd] Actor.cs -> SetDatapoint: {0} need < {1}, rolled {2}{3}", isProceed == true ? "FAILED" : "SUCCESS", numNeeded, rndNum, "\n");
                                 }
+                                //motivational History
+                                HistoryMotivation history = new HistoryMotivation();
+                                history.change = difference;
+                                history.turn = turn;
+                                history.motivation = datapoint1;
+                                history.isNormal = isProceed;
+                                text = string.Format("{0} {1}{2}", reasonForChange, difference > 0 ? "+" : "", difference);
+                                if (isProceed == false)
+                                { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText); }
+                                else
+                                {
+                                    if (difference > 0) { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
+                                    else { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); }
+                                }
+                                //add to list
+                                listOfMotivationHistory.Add(history);
                             }
                             else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                         }
@@ -1053,14 +1071,15 @@ namespace gameAPI
         public List<HistoryMotivation> GetListOfHistoryMotivations()
         { return listOfMotivationHistory; }
 
-
-        public void AddMotivationHistory(HistoryMotivation history)
+        /// <summary>
+        /// returns list of pre-formatted strings, each being a item of motivational history, eg. 'Give HoloPorn gear +1' (coloured)
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetMotivationHistory()
         {
-            if (history != null)
-            {
-
-            }
-            else { Debug.LogError("Invalid history (Null)"); }
+            return listOfMotivationHistory
+                .Select(x => x.descriptor)
+                .ToList();
         }
 
 

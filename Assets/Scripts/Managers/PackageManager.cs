@@ -400,8 +400,8 @@ namespace packageAPI
         public int change;              //positive change is good, negative bad
         public int turn;
         public int motivation;          //motivation AFTER then change
-        public bool isNegated;          //True if change negated by actor's compatibility with player, false otherwise
-        public string desriptor;        //FORMATTED string, eg. 'Gear HoloPorn Given +1' displayed in green, red if negative, grey if negated
+        public bool isNormal;           //True if motivation change occured normally, False if negated by actor's compatibility with player
+        public string descriptor;       //FORMATTED string, eg. 'Gear HoloPorn Given +1' displayed in green, red if negative, grey if negated
     }
 
     //

@@ -608,4 +608,50 @@ public class PersonalityManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// display emotional history for all OnMap actors (Player Side)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorMotivationHistory()
+    {
+        StringBuilder builder = new StringBuilder();
+        int count;
+        builder.AppendFormat("- Emotional History{0}{1}", "\n", "\n");
+        //loop OnMap actors
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //display actor along with history
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Compatibility {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.GetPersonality().GetCompatibilityWithPlayer(), "\n");
+                        List<string> listOfHistory = actor.GetMotivationHistory();
+                        if (listOfHistory != null)
+                        {
+                            count = listOfHistory.Count;
+                            if (count > 0)
+                            {
+                                foreach(string text in listOfHistory)
+                                { builder.AppendFormat("  {0}{1}", text, "\n"); }
+                            }
+                            else { builder.AppendFormat("  No records present{0}", "\n"); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid MotivationHistory (Null) for {0}, ID {1}", actor.actorName, actor.actorID); }
+                        builder.AppendLine();
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+
+        return builder.ToString();
+    }
+
 }

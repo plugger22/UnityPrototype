@@ -361,7 +361,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 57; personalityToggle = 1; break;
                     case 1: debugDisplay = 58; personalityToggle = 2; break;
-                    case 2: debugDisplay = 0; personalityToggle = 0; break;
+                    case 2: debugDisplay = 59; personalityToggle = 3; break;
+                    case 3: debugDisplay = 0; personalityToggle = 0; break;
                 }
             }
 
@@ -1408,6 +1409,12 @@ public class DebugGUI : MonoBehaviour
                     case 58:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugCheckActorCompatibilityRange();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        break;
+                    //Actor Emotional History
+                    case 59:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.personScript.DebugDisplayActorMotivationHistory();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
                         break;
                 }
