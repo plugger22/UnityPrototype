@@ -435,6 +435,12 @@ namespace gameAPI
         public List<int> GetListOfTeams()
         { return listOfTeams; }
 
+        /// <summary>
+        /// Empty out listOfTeams
+        /// </summary>
+        public void ClearAllTeams()
+        { listOfTeams.Clear(); }
+
         //
         // - - - Contacts - - -
         //

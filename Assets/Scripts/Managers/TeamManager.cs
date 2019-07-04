@@ -1,19 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using modalAPI;
 using packageAPI;
-using System.Text;
-using Random = UnityEngine.Random;
 using System;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all team related matters
 /// </summary>
 public class TeamManager : MonoBehaviour
 {
-    
+
     [Tooltip("The maximum number of teams that may be present at a node at any one time")]
     [Range(1, 4)] public int maxTeamsAtNode = 3;
     [HideInInspector] public int minTeamsAtNode = 0;
@@ -214,7 +213,7 @@ public class TeamManager : MonoBehaviour
         List<int> teamPool = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
         if (teamPool != null)
         {
-            for(int i = 0; i < teamPool.Count; i++)
+            for (int i = 0; i < teamPool.Count; i++)
             {
                 Team team = GameManager.instance.dataScript.GetTeam(teamPool[i]);
                 if (team != null)
@@ -342,7 +341,7 @@ public class TeamManager : MonoBehaviour
         else { Debug.LogError("Invalid teamPool (Null) -> no teams with expired timers recalled from OnMap"); }
     }
 
-    
+
     /// <summary>
     /// Message notification of contact spotting an Erasure team (only have messages for erasure teams). Returns true if a valid Erasure team sighting
     /// NOTE: calling method has checked team and node for Null
@@ -699,51 +698,51 @@ public class TeamManager : MonoBehaviour
                         {
                             if (actor.Status == ActorStatus.Active)
                             {*/
-                                if (node != null)
+                        if (node != null)
+                        {
+                            //pools
+                            if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, teamID) == true)
+                            {
+                                GameManager.instance.dataScript.AddTeamToPool(TeamPool.InTransit, teamID);
+                                //adjust tallies
+                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
+                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, +1);
+                                //remove from node list
+                                node.RemoveTeam(team.teamID);
+                                //update team status
+                                team.ResetTeamData(TeamPool.InTransit);
+                                //Get Actor
+                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
+                                if (actor != null)
                                 {
-                                    //pools
-                                    if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, teamID) == true)
-                                    {
-                                        GameManager.instance.dataScript.AddTeamToPool(TeamPool.InTransit, teamID);
-                                        //adjust tallies
-                                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
-                                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, +1);
-                                        //remove from node list
-                                        node.RemoveTeam(team.teamID);
-                                        //update team status
-                                        team.ResetTeamData(TeamPool.InTransit);
-                                        //Get Actor
-                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
-                                        if (actor != null)
-                                        {
-                                            //remove team from actor list (if actor not present O.K as actor could have just been sent OffMap)
-                                            actor.RemoveTeam(team.teamID);
-                                        }
-                                        //confirmation
-                                        Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
-                                        destinationPool, node.nodeID, "\n");
-                                    }
-                                    else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
-
+                                    //remove team from actor list (if actor not present O.K as actor could have just been sent OffMap)
+                                    actor.RemoveTeam(team.teamID);
                                 }
-                                else
-                                {
-                                    Debug.LogError("Invalid node (Null) for InTransit -> move Cancelled");
-                                    successFlag = false;
-                                }
-                            /*}
-                            else
-                            {   EDIT -> Nonsense, going from OnMap to reserve
-                                Debug.LogWarning(string.Format("{0}, ID {1} can't be deployed to {2} as Actor {3}, slotID {4} isn't Live{5}", team.arc.name, teamID, destinationPool,
-                                  actor.actorName, actorSlotID, "\n")); 
-                                successFlag = false;
+                                //confirmation
+                                Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
+                                destinationPool, node.nodeID, "\n");
                             }
+                            else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
+
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
+                            Debug.LogError("Invalid node (Null) for InTransit -> move Cancelled");
                             successFlag = false;
-                        }*/
+                        }
+                        /*}
+                        else
+                        {   EDIT -> Nonsense, going from OnMap to reserve
+                            Debug.LogWarning(string.Format("{0}, ID {1} can't be deployed to {2} as Actor {3}, slotID {4} isn't Live{5}", team.arc.name, teamID, destinationPool,
+                              actor.actorName, actorSlotID, "\n")); 
+                            successFlag = false;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
+                        successFlag = false;
+                    }*/
                     }
                     else
                     {
@@ -762,7 +761,8 @@ public class TeamManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID)); return false; }
+            Debug.LogError(string.Format("Invalid Team (null) for TeamID {0}", teamID)); return false;
+        }
         return true;
     }
 
@@ -941,7 +941,7 @@ public class TeamManager : MonoBehaviour
         builder.Append(" OnMap Teams by Actor");
         builder.AppendLine();
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
-        foreach(Actor actor in arrayOfActors)
+        foreach (Actor actor in arrayOfActors)
         {
             if (actor != null)
             {
@@ -990,7 +990,7 @@ public class TeamManager : MonoBehaviour
             builder.AppendLine();
             foreach (var teamData in teamDict)
             {
-                builder.Append(string.Format(" ID {0}  {1} {2}  P: {3}  N: {4}  T: {5}  A: {6}", teamData.Key, teamData.Value.arc.name, teamData.Value.teamName, 
+                builder.Append(string.Format(" ID {0}  {1} {2}  P: {3}  N: {4}  T: {5}  A: {6}", teamData.Key, teamData.Value.arc.name, teamData.Value.teamName,
                     teamData.Value.pool, teamData.Value.nodeID, teamData.Value.timer, teamData.Value.actorSlotID));
                 builder.AppendLine();
             }
@@ -1022,11 +1022,11 @@ public class TeamManager : MonoBehaviour
                 genericDetails.actorSlotID = -1;
                 //picker text
                 genericDetails.textTop = string.Format("{0}Recall{1} {2}team{3}", colourEffect, colourEnd, colourNormal, colourEnd);
-                genericDetails.textMiddle = string.Format("{0}Procedures are in place to Recall a team. Any team effects will be cancelled. We await your orders{1}", 
+                genericDetails.textMiddle = string.Format("{0}Procedures are in place to Recall a team. Any team effects will be cancelled. We await your orders{1}",
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Team to Select. Press CONFIRM to Recall team. Mouseover teams for more information.";
                 //loop teams present at node
-                int turnsAgo, deployedTeams; 
+                int turnsAgo, deployedTeams;
                 string dataColour;
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
@@ -1043,16 +1043,16 @@ public class TeamManager : MonoBehaviour
                         tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourTeam, team.arc.name, colourEnd, colourNormal, team.teamName, colourEnd);
                         turnsAgo = GameManager.instance.turnScript.Turn - team.turnDeployed;
                         if (team.timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
-                        tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}", 
+                        tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}",
                             dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.timer, colourEnd, team.timer != 1 ? "s" : "");
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
                             if (deployedTeams < actor.GetDatapoint(ActorDatapoint.Ability2)) { dataColour = colourGood; } else { dataColour = colourBad; }
-                            tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}", 
-                                colourNormal, GameManager.instance.metaScript.GetAuthorityTitle(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal, 
-                                colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd, 
+                            tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}",
+                                colourNormal, GameManager.instance.metaScript.GetAuthorityTitle(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal,
+                                colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd,
                                 dataColour, actor.GetDatapoint(ActorDatapoint.Ability2), colourEnd, colourNormal, colourEnd);
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) fro team.ActorSlotID {0}", team.actorSlotID)); }
@@ -1216,7 +1216,7 @@ public class TeamManager : MonoBehaviour
                         if (MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node) == true)
                         {
                             //message
-                            string text = string.Format("{0} {1}, ID {2}, RECALLED from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, 
+                            string text = string.Format("{0} {1}, ID {2}, RECALLED from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                 node.nodeName, node.nodeID);
                             string reason = string.Format("{0} has done so on your orders", actor.actorName);
                             GameManager.instance.messageScript.TeamWithdraw(text, reason, node, team, actor);
@@ -1292,7 +1292,7 @@ public class TeamManager : MonoBehaviour
                                 Debug.LogFormat("[Tea] TeamManager.cs -> ProcessNeutraliseTeam: {0}{1}", text, "\n");
                                 //team successfully removed
                                 builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
-                                builderBottom.Append(string.Format("{0}{1}{2}{3} team removed{4}", colourTeam, team.arc.name, colourEnd, 
+                                builderBottom.Append(string.Format("{0}{1}{2}{3} team removed{4}", colourTeam, team.arc.name, colourEnd,
                                     colourEffect, colourEnd));
 
                                 //Process any other effects, if Neutralise was successfull, ignore otherwise
@@ -1363,7 +1363,7 @@ public class TeamManager : MonoBehaviour
         string text, itemText, effectText;
         Effect teamEffect = team.arc.activeEffect;
         EffectDataReturn effectReturn = new EffectDataReturn();
-        switch(team.arc.name)
+        switch (team.arc.name)
         {
             case "CONTROL":
             case "CIVIL":
@@ -1412,7 +1412,7 @@ public class TeamManager : MonoBehaviour
                     node.isSpider = true;
                     node.spiderTimer = GameManager.instance.nodeScript.observerTimer;
                     //check if same node as a Tracer
-                    if(node.isTracer == true)
+                    if (node.isTracer == true)
                     { node.isSpiderKnown = true; }
                     else { node.isSpiderKnown = false; }
                     //message
@@ -1569,6 +1569,8 @@ public class TeamManager : MonoBehaviour
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}, actor {1}, ID {2}", listOfTeams[i], actor.arc.name, actor.actorID)); }
                 }
+                //empty list
+                actor.ClearAllTeams(); ;
             }
         }
         else { Debug.LogError("Invalid actor (Null)"); }
@@ -1576,7 +1578,7 @@ public class TeamManager : MonoBehaviour
         return counter;
     }
 
- 
+
     /// <summary>
     /// method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
     /// errors will occur otherwise.
@@ -1595,6 +1597,8 @@ public class TeamManager : MonoBehaviour
             {
                 //make a list of actors (slotID) with spare slots for teams (each actor can only have one team per ability level)
                 List<int> listOfActorSlots = new List<int>();
+                /*//make a list of all slots with current OnMap actors in them, eg. 0 to 3, ignore any that are empty. Used for random actor allocation
+                List<int> listOfRandomSlots = new List<int>();*/
                 //loop actors
                 Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors != null)
@@ -1609,15 +1613,17 @@ public class TeamManager : MonoBehaviour
                             {
                                 //one entry per actor for each spare team slot they have available
                                 availableTeamSlots = actor.GetDatapoint(ActorDatapoint.Ability2) - actor.CheckNumOfTeams();
-                                for(int j = 0; j < availableTeamSlots; j++)
+                                for (int j = 0; j < availableTeamSlots; j++)
                                 { listOfActorSlots.Add(actor.slotID); }
+                                /*//add to listOfRandomSlots (one entry per occupied slot)
+                                listOfRandomSlots.Add(i);*/
                             }
                         }
                     }
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 //assign teams to a random actor slot chosen from list of available ones or to a random actor slot if the list is empty
-                int index, rndNum;
+                int index, slotID;
                 int listCount;
                 for (int i = 0; i < count; i++)
                 {
@@ -1635,88 +1641,90 @@ public class TeamManager : MonoBehaviour
                                 {
                                     //available actors
                                     index = Random.Range(0, listCount);
-                                    team.actorSlotID = listOfActorSlots[index];
-                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(listOfActorSlots[index], globalAuthority);
+                                    slotID = listOfActorSlots[index];
+                                    team.actorSlotID = slotID;
+                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
                                     if (actor != null)
                                     {
                                         //Add team to actor's list of Teams
                                         actor.AddTeam(team.teamID);
-                                        Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
+                                        Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, slotID, "\n");
                                     }
-                                    else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", listOfActorSlots[index]); }
+                                    else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", slotID); }
                                     //delete list entry to prevent dupes
                                     listOfActorSlots.RemoveAt(index);
                                 }
                             }
-                            else
+                            /*else
                             {
-                                if (listOfActorSlots.Count > 0)
+                                if (listCount == 0)
                                 {
                                     //only do for onMap teams
                                     if (team.pool == TeamPool.OnMap)
                                     {
-                                        //out of actors, assign to a random actor slot (0 to 3)
-                                        rndNum = Random.Range(0, 3);
-                                        team.actorSlotID = rndNum;
-                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(listOfActorSlots[rndNum], globalAuthority);
+                                        //out of actors, assign to a random actor slot (0 to 3) where an OnMap actor is present
+                                        index = Random.Range(0, listOfRandomSlots.Count);
+                                        slotID = listOfRandomSlots[index];
+                                        team.actorSlotID = slotID;
+                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
                                         if (actor != null)
                                         {
                                             //Add team to actor's list of Teams
                                             actor.AddTeam(team.teamID);
-                                            Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
+                                            Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, slotID, "\n");
                                         }
-                                        else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", listOfActorSlots[index]); }
-                                        Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", rndNum);
+                                        else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", slotID); }
+                                        Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", slotID);
                                     }
-                                }
-                                else
+                                }*/
+                            else
+                            {
+                                //no more actors present. Team auto sent to Reserves (avoid using MoveTeamAI as this bypasses the normal sequence of OnMap -> Transit -> Reserve)
+                                switch (team.pool)
                                 {
-                                    //no more actors present. Team auto sent to Reserves (avoid using MoveTeamAI as this bypasses the normal sequence of OnMap -> Transit -> Reserve)
-                                    switch(team.pool)
-                                    {
-                                        case TeamPool.InTransit:
-                                            if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
+                                    case TeamPool.InTransit:
+                                        if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
+                                        {
+                                            GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                                            //adjust tallies
+                                            GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                                            GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
+                                            //update team status
+                                            team.ResetTeamData(TeamPool.Reserve);
+                                            Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0}, {1}, ID {2}, moved to Reserve (NO ACTOR available){3}",
+                                                team.arc.name, team.teamName, team.teamID, "\n");
+                                        }
+                                        else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
+                                        break;
+                                    case TeamPool.OnMap:
+                                        Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                                        if (node != null)
+                                        {
+                                            if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
                                             {
-                                                GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+
                                                 //adjust tallies
                                                 GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
-                                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
+                                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
+                                                GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                                                //remove from node list
+                                                node.RemoveTeam(team.teamID);
                                                 //update team status
                                                 team.ResetTeamData(TeamPool.Reserve);
-                                                Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0}, {1}, ID {2}, moved to Reserve (NO ACTOR available){3}",
-                                                    team.arc.name, team.teamName, team.teamID, "\n");
+                                                //confirmation
+                                                Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0} {1}, ID {2}, moved to Reserve, from nodeID {3} (NO ACTOR available){4}",
+                                                    team.arc.name, team.teamName, team.teamID, node.nodeID, "\n");
                                             }
-                                            else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
-                                            break;
-                                        case TeamPool.OnMap:
-                                            Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
-                                            if (node != null)
-                                            {
-                                                if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
-                                                {
-
-                                                    //adjust tallies
-                                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
-                                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
-                                                    GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
-                                                    //remove from node list
-                                                    node.RemoveTeam(team.teamID);
-                                                    //update team status
-                                                    team.ResetTeamData(TeamPool.Reserve);
-                                                    //confirmation
-                                                    Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0} {1}, ID {2}, moved to Reserve, from nodeID {3} (NO ACTOR available){4}", 
-                                                        team.arc.name, team.teamName, team.teamID, node.nodeID, "\n");
-                                                }
-                                                else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
-                                            }
-                                            else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} (Team not moved to reserves)", team.nodeID); }
-                                            break;
-                                        default:
-                                            Debug.LogErrorFormat("Unrecognised team.pool \"[0}\"", team.pool);
-                                            break;
-                                    }
+                                            else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0} (Team not moved to reserves)", team.nodeID); }
+                                        break;
+                                    default:
+                                        Debug.LogErrorFormat("Unrecognised team.pool \"[0}\"", team.pool);
+                                        break;
                                 }
                             }
+                            /*}*/
                             numUpdated++;
                         }
                         else { Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} ALREADY HAS actorSlotID {2}{3}", team.arc.name, team.teamID, team.actorSlotID, "\n"); }
