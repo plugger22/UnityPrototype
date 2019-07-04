@@ -3007,3 +3007,31 @@ DataManager.CheckActorSlotStatus (System.Int32 slotID, GlobalSide side) (at Asse
 	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
 	
+Dev seed 59656 -> Thursday, 4 July 2019 4:30 PM
+City seed 890 -> Arles, France
+
+Dev seed 1591 -> Thursday, 4 July 2019 5:19 PM
+City seed 890 -> Arles, France
+
+Dev seed 29259 -> Thursday, 4 July 2019 5:22 PM
+City seed 890 -> Arles, France
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.CheckActorSlotStatus (System.Int32 slotID, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4124)
+	TeamManager.StartTurnEarly () (at Assets/Scripts/Managers/TeamManager.cs:299)
+	TeamManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TeamManager.cs:161)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager.StartTurnEarly () (at Assets/Scripts/Managers/TurnManager.cs:398)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 29259 -> Thursday, 4 July 2019 5:31 PM
+City seed 890 -> Arles, France
+
+Dev seed 29259 -> Thursday, 4 July 2019 5:44 PM
+City seed 890 -> Arles, France
+
+Dev seed 29259 -> Thursday, 4 July 2019 5:51 PM
+City seed 890 -> Arles, France

@@ -342,7 +342,7 @@ public class SideManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 //teams need actors assigned
-                GameManager.instance.teamScript.DebugAssignActors();
+                GameManager.instance.teamScript.AutoRunAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
                 break;
             case 2:

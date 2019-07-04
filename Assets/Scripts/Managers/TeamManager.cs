@@ -934,7 +934,7 @@ public class TeamManager : MonoBehaviour
     /// Debug method to show which actors xurrently have which teams OnMap
     /// </summary>
     /// <returns></returns>
-    public string DisplayTeamActorAnalysis()
+    public string DebugDisplayTeamActorAnalysis()
     {
         List<int> listOfTeams = new List<int>();
         StringBuilder builder = new StringBuilder();
@@ -976,7 +976,7 @@ public class TeamManager : MonoBehaviour
     /// Debug function -> Gets data on all individual teams residing in dictOfTeams
     /// </summary>
     /// <returns></returns>
-    public string DisplayIndividualTeams()
+    public string DebugDisplayIndividualTeams()
     {
         StringBuilder builder = new StringBuilder();
         //get dictionary of team arcs
@@ -1578,10 +1578,10 @@ public class TeamManager : MonoBehaviour
 
  
     /// <summary>
-    /// Debug method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
+    /// method run when an AI vs AI auto run is complete and control reverts to the Authority side. Need to do so as OnMap and InTransit teams aren't associated with an actor (AI doesn't need to) and
     /// errors will occur otherwise.
     /// </summary>
-    public void DebugAssignActors()
+    public void AutoRunAssignActors()
     {
         List<int> listOfTeams = new List<int>();
         listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap));
@@ -1630,21 +1630,44 @@ public class TeamManager : MonoBehaviour
                             listCount = listOfActorSlots.Count;
                             if (listCount > 0)
                             {
-                                //available actors
-                                index = Random.Range(0, listCount);
-                                team.actorSlotID = listOfActorSlots[index];
-                                Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
-                                //delete list entry to prevent dupes
-                                listOfActorSlots.RemoveAt(index);
+                                //only do for onMap teams
+                                if (team.pool == TeamPool.OnMap)
+                                {
+                                    //available actors
+                                    index = Random.Range(0, listCount);
+                                    team.actorSlotID = listOfActorSlots[index];
+                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(listOfActorSlots[index], globalAuthority);
+                                    if (actor != null)
+                                    {
+                                        //Add team to actor's list of Teams
+                                        actor.AddTeam(team.teamID);
+                                        Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", listOfActorSlots[index]); }
+                                    //delete list entry to prevent dupes
+                                    listOfActorSlots.RemoveAt(index);
+                                }
                             }
                             else
                             {
                                 if (listOfActorSlots.Count > 0)
                                 {
-                                    //out of actors, assign to a random actor slot (0 to 3)
-                                    rndNum = Random.Range(0, 3);
-                                    team.actorSlotID = rndNum;
-                                    Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", rndNum);
+                                    //only do for onMap teams
+                                    if (team.pool == TeamPool.OnMap)
+                                    {
+                                        //out of actors, assign to a random actor slot (0 to 3)
+                                        rndNum = Random.Range(0, 3);
+                                        team.actorSlotID = rndNum;
+                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(listOfActorSlots[rndNum], globalAuthority);
+                                        if (actor != null)
+                                        {
+                                            //Add team to actor's list of Teams
+                                            actor.AddTeam(team.teamID);
+                                            Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", listOfActorSlots[index]); }
+                                        Debug.LogWarningFormat("Out of available actors, assigned to random actor slotID {0}", rndNum);
+                                    }
                                 }
                                 else
                                 {
@@ -1660,7 +1683,7 @@ public class TeamManager : MonoBehaviour
                                                 GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
                                                 //update team status
                                                 team.ResetTeamData(TeamPool.Reserve);
-                                                Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActor: {0}, {1}, ID {2}, moved to Reserve (NO ACTOR available){3}",
+                                                Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0}, {1}, ID {2}, moved to Reserve (NO ACTOR available){3}",
                                                     team.arc.name, team.teamName, team.teamID, "\n");
                                             }
                                             else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
@@ -1681,7 +1704,7 @@ public class TeamManager : MonoBehaviour
                                                     //update team status
                                                     team.ResetTeamData(TeamPool.Reserve);
                                                     //confirmation
-                                                    Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActor: {0} {1}, ID {2}, moved to Reserve, from nodeID {3} (NO ACTOR available){4}", 
+                                                    Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0} {1}, ID {2}, moved to Reserve, from nodeID {3} (NO ACTOR available){4}", 
                                                         team.arc.name, team.teamName, team.teamID, node.nodeID, "\n");
                                                 }
                                                 else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from OnMap pool", team.arc.name, team.teamID); }
@@ -1696,12 +1719,12 @@ public class TeamManager : MonoBehaviour
                             }
                             numUpdated++;
                         }
-                        else { Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} ALREADY HAS actorSlotID {2}{3}", team.arc.name, team.teamID, team.actorSlotID, "\n"); }
+                        else { Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} ALREADY HAS actorSlotID {2}{3}", team.arc.name, team.teamID, team.actorSlotID, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid Team (null) for teamID {0}", listOfTeams[i]); }
                 }
             }
-            Debug.LogFormat("[Tea] TeamManager.cs -> DebugAssignActors: {0} teams of {1} have had Actors assigned{2}", numUpdated, count, "\n");
+            Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActors: {0} teams of {1} have had Actors assigned{2}", numUpdated, count, "\n");
         }
         else { Debug.LogError("Invalid listOfTeams (Null)"); }
     }

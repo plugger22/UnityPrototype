@@ -935,11 +935,11 @@ public class DebugGUI : MonoBehaviour
                                 GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                                 break;
                             case TeamDebug.Roster:
-                                analysis = GameManager.instance.teamScript.DisplayIndividualTeams();
+                                analysis = GameManager.instance.teamScript.DebugDisplayIndividualTeams();
                                 GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);
                                 break;
                             case TeamDebug.Actors:
-                                analysis = GameManager.instance.teamScript.DisplayTeamActorAnalysis();
+                                analysis = GameManager.instance.teamScript.DebugDisplayTeamActorAnalysis();
                                 GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
                                 break;
                         }
