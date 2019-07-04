@@ -6203,7 +6203,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                 motivation--;
-                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Unhappy in Reserves");
                                 Debug.LogFormat("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName,
                                     motivation, "\n");
                                 //lost motivation warning
@@ -6324,7 +6324,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                 motivation--;
-                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Unhappy in Reserves");
                                 Debug.LogFormat("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name,
                                     actor.actorName, motivation, chance, "\n");
                                 //lost motivation warning

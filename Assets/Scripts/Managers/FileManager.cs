@@ -2171,9 +2171,9 @@ public class FileManager : MonoBehaviour
                     //copy over data from saveActor
 
                     actor.actorID = readActor.actorID;
-                    actor.SetDatapoint(ActorDatapoint.Datapoint0, readActor.datapoint0);
-                    actor.SetDatapoint(ActorDatapoint.Datapoint1, readActor.datapoint1);
-                    actor.SetDatapoint(ActorDatapoint.Datapoint2, readActor.datapoint2);
+                    actor.SetDatapointLoad(ActorDatapoint.Datapoint0, readActor.datapoint0);
+                    actor.SetDatapointLoad(ActorDatapoint.Datapoint1, readActor.datapoint1);
+                    actor.SetDatapointLoad(ActorDatapoint.Datapoint2, readActor.datapoint2);
                     GlobalSide actorSide = GameManager.instance.dataScript.GetGlobalSide(readActor.side);
                     if (actorSide != null)
                     { actor.side = actorSide; }

@@ -199,6 +199,7 @@ namespace gameAPI
         public bool SetDatapoint(ActorDatapoint datapoint, int value, string reasonForChange = "Unknown")
         {
             bool isSuccess = true;
+            string text;
             int turn = GameManager.instance.turnScript.Turn;
             switch (datapoint)
             {
@@ -221,7 +222,6 @@ namespace gameAPI
                             int difference = value - datapoint1;
                             int rndNum = Random.Range(0, 100);
                             int numNeeded = 0;
-                            string text;
                             bool isProceed = true;
                             bool isBadOutcome = false;
                             if (difference != 0)
@@ -346,6 +346,15 @@ namespace gameAPI
                         {
                             //turn 0, CreateActors
                             datapoint1 = value;
+                            //Starting Motivation
+                            HistoryMotivation history = new HistoryMotivation();
+                            history.change = 0;
+                            history.turn = turn;
+                            history.motivation = datapoint1;
+                            history.isNormal = true;
+                            text = string.Format("Starting Motivation {0}", datapoint1);
+                            history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect);
+                            personality.AddMotivation(history);
                         }
                     }
                     else
@@ -357,8 +366,8 @@ namespace gameAPI
                 case ActorDatapoint.Ability2:
                 case ActorDatapoint.Invisibility2:
                 case ActorDatapoint.Datapoint2:
-                    if ((datapoint2 - value) == 0)
-                    { Debug.LogWarningFormat("SetDatapoint change Datapoint2 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
+                    /*if ((datapoint2 - value) == 0)
+                    { Debug.LogWarningFormat("SetDatapoint change Datapoint2 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }*/
                     datapoint2 = value;
                     break;
                 default:
@@ -368,15 +377,46 @@ namespace gameAPI
             return isSuccess;
         }
 
-        //
-        // - - - Teams - - -
-        //
-
         /// <summary>
-        /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap
+        /// Set datapoint's using loaded save game data ONLY (straight assignment, no motivation compatibility checks)
         /// </summary>
+        /// <param name="datapoint"></param>
+        /// <param name="value"></param>
+        /// <param name="reasonForChange"></param>
         /// <returns></returns>
-        public bool CheckCanDeployTeam()
+        public void SetDatapointLoad(ActorDatapoint datapoint, int value)
+        {
+            switch (datapoint)
+            {
+                case ActorDatapoint.Influence0:
+                case ActorDatapoint.Connections0:
+                case ActorDatapoint.Datapoint0:
+                    datapoint0 = value;
+                    break;
+                case ActorDatapoint.Motivation1:
+                case ActorDatapoint.Datapoint1:
+                    datapoint1 = value;
+                    break;
+                case ActorDatapoint.Ability2:
+                case ActorDatapoint.Invisibility2:
+                case ActorDatapoint.Datapoint2:
+                    datapoint2 = value;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised ActorDatapoint \"{0}\" in loaded save game data", datapoint);
+                    break;
+            }
+        }
+
+            //
+            // - - - Teams - - -
+            //
+
+            /// <summary>
+            /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap
+            /// </summary>
+            /// <returns></returns>
+            public bool CheckCanDeployTeam()
         {
             if (listOfTeams.Count < datapoint2)
             { return true; }

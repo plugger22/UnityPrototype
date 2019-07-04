@@ -2,6 +2,7 @@
 using gameAPI;
 using modalAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -326,14 +327,14 @@ public class ActionManager : MonoBehaviour
                             StringBuilder builderBottom = new StringBuilder();
                             //pass through data package
                             EffectDataInput dataInput = new EffectDataInput();
-                            dataInput.originText = action.name;
+                            dataInput.originText = action.tag;
                             //
                             // - - - Process effects
                             //
                             foreach (Effect effect in listOfEffects)
                             {
                                 //ongoing effect?
-                                if (effect.duration.name == "Ongoing")
+                                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == true)
                                 {
                                     //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
                                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
@@ -1965,7 +1966,7 @@ public class ActionManager : MonoBehaviour
                 int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                 motivation -= motivationLoss;
                 motivation = Mathf.Max(0, motivation);
-                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Let Go from Reserves");
                 builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);
                 //change actors status
                 actor.Status = ActorStatus.RecruitPool;
@@ -2142,7 +2143,7 @@ public class ActionManager : MonoBehaviour
                     int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                     motivation += motivationGain;
                     motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
-                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Recalled for Active Duty");
                     builder.AppendFormat("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd);
                     //was actor threatening
                     if (actor.isThreatening == true)

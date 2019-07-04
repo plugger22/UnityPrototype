@@ -1106,12 +1106,12 @@ public class EffectManager : MonoBehaviour
                                     int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                     motivation += effect.value;
                                     motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
-                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                                     effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                     break;
                                 case "ActorAll":
                                     //all actors have their motivation raised
-                                    ResolveGroupActorEffect(effect, actor);
+                                    ResolveGroupActorEffect(effect, dataInput, actor);
                                     effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                     break;
                                 default:
@@ -1126,12 +1126,12 @@ public class EffectManager : MonoBehaviour
                                     int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                     motivation -= effect.value;
                                     motivation = Mathf.Max(0, motivation);
-                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                                     effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                     break;
                                 case "ActorAll":
                                     //all actors have their motivation lowered
-                                    ResolveGroupActorEffect(effect, actor);
+                                    ResolveGroupActorEffect(effect, dataInput, actor);
                                     effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                     break;
                                 default:
@@ -1712,12 +1712,12 @@ public class EffectManager : MonoBehaviour
 
     /// <summary>
     /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect
-    /// NOTE: Effect and Actor are checked for null by the calling method
+    /// NOTE: Effect, dataInput and Actor are checked for null by the calling method
     /// </summary>
     /// <param name="datapoint"></param>
     /// <param name="value"></param>
     /// <param name="actor"></param>
-    private void ResolveGroupActorEffect(Effect effect, Actor actorExclude = null)
+    private void ResolveGroupActorEffect(Effect effect, EffectDataInput dataInput, Actor actorExclude = null)
     {
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
@@ -1749,12 +1749,12 @@ public class EffectManager : MonoBehaviour
                                         case "Add":
                                             motivation += effect.value;
                                             motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
-                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                                             break;
                                         case "Subtract":
                                             motivation -= effect.value;
                                             motivation = Mathf.Max(GameManager.instance.actorScript.minStatValue, motivation);
-                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation);
+                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
