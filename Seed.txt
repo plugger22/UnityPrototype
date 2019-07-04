@@ -2934,3 +2934,76 @@ City seed 890 -> Arles, France
 Dev seed 46835 -> Thursday, 4 July 2019 2:53 PM
 City seed 890 -> Arles, France
 City seed 5678 -> London, United Kingdom
+
+Dev seed 26194 -> Thursday, 4 July 2019 3:03 PM
+City seed 890 -> Arles, France
+WARNING Duplicate actorID 5 found in dictOfContacts for nodeID 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddContacts(Int32, List`1, Boolean) (at Assets/Scripts/Managers/DataManager.cs:1303)
+	ContactManager:SetActorContacts(Actor) (at Assets/Scripts/Managers/ContactManager.cs:329)
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:3410)
+	ActionManager:ProcessActiveDutyActor(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:2166)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:208)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetReservePoolActions>c__AnonStorey12:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2593)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Duplicate actorID 5 found in dictOfContacts for nodeID 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddContacts(Int32, List`1, Boolean) (at Assets/Scripts/Managers/DataManager.cs:1303)
+	ContactManager:SetActorContacts(Actor) (at Assets/Scripts/Managers/ContactManager.cs:329)
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:3410)
+	ActionManager:ProcessActiveDutyActor(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:2166)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:208)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetReservePoolActions>c__AnonStorey12:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2593)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Duplicate actorID 5 found in dictOfContacts for nodeID 8
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddContacts(Int32, List`1, Boolean) (at Assets/Scripts/Managers/DataManager.cs:1303)
+	ContactManager:SetActorContacts(Actor) (at Assets/Scripts/Managers/ContactManager.cs:329)
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:3410)
+	ActionManager:ProcessActiveDutyActor(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:2166)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:208)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetReservePoolActions>c__AnonStorey12:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2593)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Duplicate actorID 5 found in dictOfContacts for nodeID 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddContacts(Int32, List`1, Boolean) (at Assets/Scripts/Managers/DataManager.cs:1303)
+	ContactManager:SetActorContacts(Actor) (at Assets/Scripts/Managers/ContactManager.cs:329)
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:3410)
+	ActionManager:ProcessActiveDutyActor(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:2166)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:208)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetReservePoolActions>c__AnonStorey12:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:2593)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 29259 -> Thursday, 4 July 2019 3:24 PM
+City seed 890 -> Arles, France
+ERROR Invalid actor (Null) for actorSlotID 3
+UnityEngine.Debug:LogError(Object)
+	TeamManager:MoveTeam(TeamPool, Int32, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:739)
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:287)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:161)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:398)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 1591 -> Thursday, 4 July 2019 3:33 PM
+City seed 890 -> Arles, France
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.CheckActorSlotStatus (System.Int32 slotID, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4124)
+	TeamManager.StartTurnEarly () (at Assets/Scripts/Managers/TeamManager.cs:299)
+	TeamManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TeamManager.cs:161)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager.StartTurnEarly () (at Assets/Scripts/Managers/TurnManager.cs:398)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:366)
+	

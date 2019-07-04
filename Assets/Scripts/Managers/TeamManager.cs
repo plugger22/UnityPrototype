@@ -693,12 +693,12 @@ public class TeamManager : MonoBehaviour
                 case TeamPool.InTransit:
                     if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors)
                     {
-                        //Get Actor
+                        /*//Get Actor
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             if (actor.Status == ActorStatus.Active)
-                            {
+                            {*/
                                 if (node != null)
                                 {
                                     //pools
@@ -712,8 +712,13 @@ public class TeamManager : MonoBehaviour
                                         node.RemoveTeam(team.teamID);
                                         //update team status
                                         team.ResetTeamData(TeamPool.InTransit);
-                                        //remove team from actor list
-                                        actor.RemoveTeam(team.teamID);
+                                        //Get Actor
+                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
+                                        if (actor != null)
+                                        {
+                                            //remove team from actor list (if actor not present O.K as actor could have just been sent OffMap)
+                                            actor.RemoveTeam(team.teamID);
+                                        }
                                         //confirmation
                                         Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0} {1}, ID {2}, moved to {3}, from Node ID {4}{5}", team.arc.name, team.teamName, team.teamID,
                                         destinationPool, node.nodeID, "\n");
@@ -726,11 +731,11 @@ public class TeamManager : MonoBehaviour
                                     Debug.LogError("Invalid node (Null) for InTransit -> move Cancelled");
                                     successFlag = false;
                                 }
-                            }
+                            /*}
                             else
-                            {
+                            {   EDIT -> Nonsense, going from OnMap to reserve
                                 Debug.LogWarning(string.Format("{0}, ID {1} can't be deployed to {2} as Actor {3}, slotID {4} isn't Live{5}", team.arc.name, teamID, destinationPool,
-                                  actor.actorName, actorSlotID, "\n"));
+                                  actor.actorName, actorSlotID, "\n")); 
                                 successFlag = false;
                             }
                         }
@@ -738,7 +743,7 @@ public class TeamManager : MonoBehaviour
                         {
                             Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID));
                             successFlag = false;
-                        }
+                        }*/
                     }
                     else
                     {
@@ -1628,7 +1633,7 @@ public class TeamManager : MonoBehaviour
                                 //available actors
                                 index = Random.Range(0, listCount);
                                 team.actorSlotID = listOfActorSlots[index];
-                                /*Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");*/
+                                Debug.LogFormat("[Tst] TeamManager.cs -> DebugAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, listOfActorSlots[index], "\n");
                                 //delete list entry to prevent dupes
                                 listOfActorSlots.RemoveAt(index);
                             }

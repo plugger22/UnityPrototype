@@ -22,6 +22,7 @@ public class ActionManager : MonoBehaviour
     private int lieLowPeriod;
     //conditions
     private Condition conditionStressed;
+    private Condition conditionUnhappy;
     //gear
     private int gearGracePeriod = -1;
     private int gearSwapBaseAmount = -1;
@@ -80,6 +81,7 @@ public class ActionManager : MonoBehaviour
         failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
         lieLowPeriod = GameManager.instance.actorScript.lieLowCooldownPeriod;
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        conditionUnhappy = GameManager.instance.dataScript.GetCondition("UNHAPPY");
         actorStressedDuringSecurity = "ActorStressSecurity";
         actorKeepGear = "ActorKeepGear";
         actorReserveTimerDoubled = "ActorReserveTimerDoubled";
@@ -91,6 +93,7 @@ public class ActionManager : MonoBehaviour
         Debug.Assert(failedTargetChance > 0, string.Format("Invalid failedTargetChance {0}", failedTargetChance));
         Debug.Assert(lieLowPeriod > 0, "Invalid lieLowCooldDownPeriod (Zero)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(conditionUnhappy != null, "Invalid conditionUnhappy (Null)");
         Debug.Assert(gearGracePeriod > -1, "Invalid gearGracePeriod (-1)");
         Debug.Assert(gearSwapBaseAmount > -1, "Invalid gearSwapBaseAmount (-1)");
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
@@ -2151,17 +2154,12 @@ public class ActionManager : MonoBehaviour
                         builder.AppendLine(); builder.AppendLine();
                         builder.AppendFormat("{0}{1} is no longer Threatening{2}", colourGood, actor.actorName, colourEnd);
                     }
-                    Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                    if (condition != null)
+                    //was actor unhappy
+                    if (actor.RemoveCondition(conditionUnhappy, string.Format("{0} is no longer Unhappy", actor.actorName)) == true)
                     {
-                        if (GameManager.instance.playerScript.RemoveCondition(condition, details.side, string.Format("{0} is no longer Unhappy", actor.actorName)) == true)
-                        {
-                            builder.AppendLine(); builder.AppendLine();
-                            builder.AppendFormat("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd);
-                        }
+                        builder.AppendLine(); builder.AppendLine();
+                        builder.AppendFormat("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd);
                     }
-                    else
-                    { Debug.LogError("Unhappy condition not found (Null)"); errorFlag = true; }
                     //place actor on Map (reset states)
                     GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
                     //remove actor from reserve list

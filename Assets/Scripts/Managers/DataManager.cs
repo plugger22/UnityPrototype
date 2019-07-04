@@ -1299,8 +1299,8 @@ public class DataManager : MonoBehaviour
                             listOfActorID = dictOfNodeContacts[nodeID];
                             if (listOfActorID.Exists(id => id == actorID) == true)
                             {
-                                //already present, warning message
-                                Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);
+                                /*//already present, warning message -> dictOfNodeContacts retains entries when actor removed from OnMap so entries will be present when they return
+                                Debug.LogWarningFormat("Duplicate actorID {0} found in dictOfContacts for nodeID {1}", actorID, nodeID);*/
                             }
                             else
                             {
@@ -4120,7 +4120,7 @@ public class DataManager : MonoBehaviour
     public bool CheckActorSlotStatus(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        Debug.AssertFormat(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input, \"{0}\"", slotID);
         return arrayOfActorsPresent[side.level, slotID];
     }
 
