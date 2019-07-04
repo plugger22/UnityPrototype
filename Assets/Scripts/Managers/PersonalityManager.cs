@@ -632,7 +632,7 @@ public class PersonalityManager : MonoBehaviour
                     {
                         //display actor along with history
                         builder.AppendFormat(" {0}, {1}, ID {2}, Compatibility {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.GetPersonality().GetCompatibilityWithPlayer(), "\n");
-                        List<string> listOfHistory = actor.GetMotivationHistory();
+                        List<string> listOfHistory = actor.GetPersonality().GetMotivationDescriptors();
                         if (listOfHistory != null)
                         {
                             count = listOfHistory.Count;

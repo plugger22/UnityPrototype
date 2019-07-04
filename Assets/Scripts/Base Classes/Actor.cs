@@ -60,8 +60,7 @@ namespace gameAPI
         private List<int> listOfTeams = new List<int>();                                    //teamID of all teams that the actor has currently deployed OnMap
         private List<Secret> listOfSecrets = new List<Secret>();                            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();                   //list of all conditions currently affecting the actor
-        private List<string> listOfTraitEffects = new List<string>();                       //list of all traitEffect.teffID's
-        private List<HistoryMotivation> listOfMotivationHistory = new List<HistoryMotivation>();    //list of all motivational changes
+        private List<string> listOfTraitEffects = new List<string>();                       //list of all traitEffect.teffID's       
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         #endregion
 
@@ -339,7 +338,7 @@ namespace gameAPI
                                     else { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); }
                                 }
                                 //add to list
-                                listOfMotivationHistory.Add(history);
+                                personality.AddMotivation(history);
                             }
                             else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                         }
@@ -1068,19 +1067,7 @@ namespace gameAPI
         public Personality GetPersonality()
         { return personality; }
 
-        public List<HistoryMotivation> GetListOfHistoryMotivations()
-        { return listOfMotivationHistory; }
 
-        /// <summary>
-        /// returns list of pre-formatted strings, each being a item of motivational history, eg. 'Give HoloPorn gear +1' (coloured)
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetMotivationHistory()
-        {
-            return listOfMotivationHistory
-                .Select(x => x.descriptor)
-                .ToList();
-        }
 
 
 

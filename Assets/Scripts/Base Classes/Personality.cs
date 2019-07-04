@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using packageAPI;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -9,10 +11,12 @@ public class Personality
 {
     private int[] arrayOfFactors;
     private int compatibilityWithPlayer;
-    private List<string> listOfDescriptors = new List<string>();
     private string profile;                                             //dict key name of profile
     private string profileDescriptor;                                   //in-game descriptor, eg. 'Weak indication of a AntiSocial
     private string profileExplanation;                                  //psychological explanation of profile
+    //collections
+    private List<string> listOfDescriptors = new List<string>();                                //list of personality descriptors
+    private List<HistoryMotivation> listOfMotivation = new List<HistoryMotivation>();           //list of all motivational changes
 
     /// <summary>
     /// constructor
@@ -161,5 +165,46 @@ public class Personality
     /// <returns></returns>
     public int GetBeta()
     { return arrayOfFactors[0] + arrayOfFactors[2]; }
+
+
+    public List<HistoryMotivation> GetListOfMotivation()
+    { return listOfMotivation; }
+
+
+    /// <summary>
+    /// returns list of pre-formatted strings, each being a item of motivational history, eg. 'Give HoloPorn gear +1' (coloured)
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetMotivationDescriptors()
+    {
+        return listOfMotivation
+            .Select(x => x.descriptor)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Add a record to the listOfMotivation (History)
+    /// </summary>
+    /// <param name="history"></param>
+    public void AddMotivation(HistoryMotivation history)
+    {
+        if (history != null)
+        { listOfMotivation.Add(history); }
+        else { Debug.LogError("Invalid history (Null)"); }
+    }
+
+    /// <summary>
+    /// set listOfMotivation (History) from saved load game data. Clears any existing data beforehand.
+    /// </summary>
+    /// <param name="listOfMotivation"></param>
+    public void SetMotivation(List<HistoryMotivation> listOfMotivation)
+    {
+        if (listOfMotivation != null)
+        {
+            this.listOfMotivation.Clear();
+            this.listOfMotivation.AddRange(listOfMotivation);
+        }
+        else { Debug.LogError("Invalid listOfMotivation (Null)"); }
+    }
 
 }
