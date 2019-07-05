@@ -593,8 +593,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfFactors: 5
   profileThreshold: 4
-  compatibilityChanceOne: 50
-  compatibilityChanceTwo: 50
+  compatibilityChanceOne: 20
+  compatibilityChanceTwo: 40
   compatibilityChanceThree: 60
 --- !u!114 &114333061750755962
 MonoBehaviour:
@@ -2255,9 +2255,9 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 29259
-  isAuthority: 1
-  autoRunTurns: 20
+  seedDev: 0
+  isAuthority: 0
+  autoRunTurns: 0
   isPerformanceLog: 1
   isValidateData: 1
   isValidateSO: 1

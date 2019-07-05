@@ -30,7 +30,6 @@
     public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     public enum DebugRegister { None, Ongoing, Actions }
-    public enum MsgPipelineType { None, CompromisedGear, Nemesis, ReleasePlayer, WinLose }            //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order)
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,
@@ -143,7 +142,7 @@
         StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
         TargetAttempts, TargetSuccesses,
-        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret,
+        ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
         NodeCrisis, NodeCrisisExplodes
     }
 
@@ -156,6 +155,7 @@
     //
     // - - - Messages - - -
     //
+    public enum MsgPipelineType { None, CompromisedGear, Nemesis, CapturePlayer, ReleasePlayer, WinLose }            //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order)
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
     public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE }
     public enum MessageSubType

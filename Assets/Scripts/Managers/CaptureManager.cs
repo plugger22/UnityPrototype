@@ -241,14 +241,20 @@ public class CaptureManager : MonoBehaviour
                 textBottom = builder.ToString(),
                 sprite = GameManager.instance.guiScript.capturedSprite,
                 isAction = false,
-                side = GameManager.instance.globalScript.sideResistance
+                side = GameManager.instance.globalScript.sideResistance,
+                type = MsgPipelineType.CapturePlayer
             };
-            //happened during turn processing (outcome window will overlay InfoApp)
+            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+            { Debug.LogWarningFormat("Player Captured infoPipeline message FAILED to be added to dictOfPipeline"); }
+
+
+            /*//happened during turn processing (outcome window will overlay InfoApp)
             if (isStartOfTurn == true)
             {
                 outcomeDetails.modalLevel = 2;
                 outcomeDetails.modalState = ModalSubState.InfoDisplay;
-            }
+            }*/
+
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CapturePlayer");
         }
         else

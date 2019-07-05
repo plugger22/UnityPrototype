@@ -3975,6 +3975,11 @@ public class ActorManager : MonoBehaviour
         return outputMsg;
     }
 
+    //
+    // - - - Debug - - -
+    //
+   
+
     /// <summary>
     /// Debug method to display actor pools (both sides)
     /// </summary>
@@ -4233,6 +4238,37 @@ public class ActorManager : MonoBehaviour
         return string.Format("{0}{1}Press ESC to Exit", text, "\n");
     }
 
+    /// <summary>
+    /// Provides a random motivational shift (+1/-1), 50% chance, for the actor for testing purposes
+    /// NOTE: actor checked for Null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    private void DebugRandomMotivationShift(Actor actor)
+    {
+        //50% chance of happening
+        if (Random.Range(0, 100) < 50)
+        {
+            int shift = 0;
+            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+            switch (motivation)
+            {
+                case 3: shift = -1; break;
+                case 2:
+                case 1:
+                    shift = 1;
+                    if (Random.Range(0, 100) < 50) { shift = -1; }
+                    break;
+                case 0: shift = 1; break;
+                default: Debug.LogErrorFormat("Unrecognised motivation \"{0}\"", motivation); break;
+            }
+            actor.SetDatapoint(ActorDatapoint.Motivation1, shift, "Debug Purposes");
+        }
+    }
+
+
+    //
+    // - - - Inactive Actors - - -
+    //
 
 
     /// <summary>
@@ -4670,6 +4706,8 @@ public class ActorManager : MonoBehaviour
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
                         {
+                            //DEBUG
+                            DebugRandomMotivationShift(actor);
                             //Checks all actors -> can inform on Player regardless of their status
                             if (actor.isTraitor == true)
                             { numOfTraitors++; }
