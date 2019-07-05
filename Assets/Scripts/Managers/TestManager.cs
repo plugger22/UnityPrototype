@@ -10,9 +10,11 @@ using UnityEngine;
 /// </summary>
 public class TestManager : MonoBehaviour
 {
-    [Header("Player Personality")]
+    [Header("Test Game State")]
     [Tooltip("Test personality for player. Leave as 'None' if you want a random personality")]
     public TestPersonality testPersonality;
+    [Tooltip("Test campaign to run")]
+    public Campaign campaign;
 
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (within autorun) where the indicated Condition will be given to the Authority player")]
@@ -36,11 +38,18 @@ public class TestManager : MonoBehaviour
     private long totalElapsedTime;                      //start tally with 'TimerTallyStart', finish with 'TimerTallyStop'
     private bool isTimerTallyActive;                    //timers add to tally only if true (set by 'TimerTallyStart'
 
+
+    /// <summary>
+    /// NOTE: Initialised in GameManager.cs -> InitialiseNewSession BEFORE the normal Startup Sequence (including Global and Game methods)
+    /// </summary>
     public void Initialise()
     {
         //needed for performance monitoring
         timer = new Stopwatch();
         isTimerTallyActive = false;
+        //campaign
+        UnityEngine.Debug.Assert(campaign != null, "Invalid campaign (Null)");
+        GameManager.instance.campaignScript.campaign = campaign;
     }
 
     //

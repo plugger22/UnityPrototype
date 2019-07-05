@@ -1411,6 +1411,10 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 1;
+            data.tag0 = "compatibility_0";
+            data.tag1 = "compatibility_1";
+            data.tag2 = "compatibility_2";
+            data.tag3 = "compatibility_3";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

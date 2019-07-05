@@ -9,8 +9,6 @@ using UnityEngine;
 public class CampaignManager : MonoBehaviour
 {
 
-    [Tooltip("Current Campaign (this is the default campaign at game start)")]
-    public Campaign campaign;
     [Tooltip("Number of story status flags used to track stuff story developments across a multi-scenario campaign (size of the array)")]
     public int numOfFlags = 10;
 
@@ -23,6 +21,7 @@ public class CampaignManager : MonoBehaviour
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
     #endregion
 
+    [HideInInspector] public Campaign campaign;
     [HideInInspector] public Scenario scenario;
 
 

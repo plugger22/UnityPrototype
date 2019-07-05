@@ -193,7 +193,6 @@ namespace gameAPI
         /// <summary>
         /// Set value of a datapoint. 'reasonForChange' needed if a Motivational shift that may be negated due to actor's compatibility with player. Ignore otherwise.
         /// Returns true if Motivation change accepted, false if actor compatibility negates it and true for all other datapoint cases (ignore, it's only for datapoint1, motivation)
-        /// Range checks adjusted datapoint to be within 0 and 3
         /// </summary>
         /// <param name="datapoint"></param>
         /// <param name="value"></param>
@@ -210,7 +209,6 @@ namespace gameAPI
                     if ((value - datapoint0) == 0)
                     { Debug.LogWarningFormat("SetDatapoint change Datapoint0 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     datapoint0 = value;
-                    datapoint0 = Mathf.Clamp(datapoint0, 0, 3);
                     break;
                 case ActorDatapoint.Motivation1:
                 case ActorDatapoint.Datapoint1:
@@ -221,7 +219,7 @@ namespace gameAPI
                         if ( turn > 0)
                         {
                             //motivation is special as actor compatibility with player can negate the change
-                            int difference = Mathf.Abs(value - datapoint1);
+                            int difference = value - datapoint1;
                             int rndNum = Random.Range(0, 100);
                             int numNeeded = 0;
                             bool isProceed = true;
@@ -232,7 +230,7 @@ namespace gameAPI
                                 switch (compatibility)
                                 {
                                     case 3:
-                                        if (value < 0)
+                                        if (difference < 0)
                                         {
                                             numNeeded = compatibilityThree;
                                             if (rndNum < compatibilityThree)
@@ -243,7 +241,7 @@ namespace gameAPI
                                         }
                                         break;
                                     case 2:
-                                        if (value < 0)
+                                        if (difference < 0)
                                         {
                                             numNeeded = compatibilityTwo;
                                             if (rndNum < compatibilityTwo)
@@ -254,7 +252,7 @@ namespace gameAPI
                                         }
                                         break;
                                     case 1:
-                                        if (value < 0)
+                                        if (difference < 0)
                                         {
                                             numNeeded = compatibilityOne;
                                             if (rndNum < compatibilityOne)
@@ -268,7 +266,7 @@ namespace gameAPI
                                         //do nothing 
                                         break;
                                     case -1:
-                                        if (value > 0)
+                                        if (difference > 0)
                                         {
                                             numNeeded = compatibilityOne;
                                             if (rndNum < compatibilityOne)
@@ -280,7 +278,7 @@ namespace gameAPI
                                         }
                                         break;
                                     case -2:
-                                        if (value > 0)
+                                        if (difference > 0)
                                         {
                                             numNeeded = compatibilityTwo;
                                             if (rndNum < compatibilityTwo)
@@ -292,7 +290,7 @@ namespace gameAPI
                                         }
                                         break;
                                     case -3:
-                                        if (value > 0)
+                                        if (difference > 0)
                                         {
                                             numNeeded = compatibilityThree;
                                             if (rndNum < compatibilityThree)
@@ -314,8 +312,8 @@ namespace gameAPI
                                 {
                                     //Motivational shift negated due to compatibility
                                     text = string.Format("{0}, {1}, ID {2}, negates Motivational change of {3}{4} due to compatibility with Player{5}", actorName, arc.name, actorID,
-                                        value > 0 ? "+" : "", value, "\n");
-                                    GameManager.instance.messageScript.ActorCompatibility(text, this, value, reasonForChange);
+                                        difference > 0 ? "+" : "", difference, "\n");
+                                    GameManager.instance.messageScript.ActorCompatibility(text, this, difference, reasonForChange);
                                     isSuccess = false;
                                     //Stats
                                     if (isBadOutcome == true)
@@ -335,12 +333,12 @@ namespace gameAPI
                                 history.turn = turn;
                                 history.motivation = datapoint1;
                                 history.isNormal = isProceed;
-                                text = string.Format("{0} {1}{2}", reasonForChange, value > 0 ? "+" : "", value);
+                                text = string.Format("{0} {1}{2}", reasonForChange, difference > 0 ? "+" : "", difference);
                                 if (isProceed == false)
                                 { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText); }
                                 else
                                 {
-                                    if (value > 0) { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
+                                    if (difference > 0) { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
                                     else { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); }
                                 }
                                 //add to list
@@ -368,15 +366,13 @@ namespace gameAPI
                         //non-Player side, do normally
                         datapoint1 = value;
                     }
-                    datapoint1 = Mathf.Clamp(datapoint1, 0, 3);
                     break;
                 case ActorDatapoint.Ability2:
                 case ActorDatapoint.Invisibility2:
                 case ActorDatapoint.Datapoint2:
-                    /*if ((datapoint2 - value) == 0)
+                    /*if ((datapoint2 - value) == 0) EDIT -> Sometimes this happens with invisibility
                     { Debug.LogWarningFormat("SetDatapoint change Datapoint2 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }*/
                     datapoint2 = value;
-                    datapoint2 = Mathf.Clamp(datapoint2, 0, 3);
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised ActorDatapoint \"{0}\"", datapoint);

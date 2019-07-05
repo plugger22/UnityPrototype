@@ -4261,7 +4261,8 @@ public class ActorManager : MonoBehaviour
                 case 0: shift = 1; break;
                 default: Debug.LogErrorFormat("Unrecognised motivation \"{0}\"", motivation); break;
             }
-            actor.SetDatapoint(ActorDatapoint.Motivation1, shift, "Debug Purposes");
+            motivation += shift;
+            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Debug Purposes");
         }
     }
 
@@ -4706,8 +4707,9 @@ public class ActorManager : MonoBehaviour
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
                         {
-                            //DEBUG
-                            DebugRandomMotivationShift(actor);
+                            /*//DEBUG
+                            DebugRandomMotivationShift(actor);*/
+
                             //Checks all actors -> can inform on Player regardless of their status
                             if (actor.isTraitor == true)
                             { numOfTraitors++; }

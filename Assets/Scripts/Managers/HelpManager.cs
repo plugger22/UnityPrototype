@@ -134,7 +134,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "info_app_2";
         data.header = "News Ticker";
-        builder = new StringBuilder(); 
+        builder = new StringBuilder();
         builder.AppendFormat("The news ticker at the bottom of the App gives daily highlights of events in the city. ", colourAlert, colourEnd);
         builder.AppendFormat("You can adjust the {0}text scroll speed{1} using the '+' and '-' keys", colourAlert, colourEnd);
         data.text = builder.ToString();
@@ -198,13 +198,57 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "roll_1";
         data.header = "Good Rolls";
-        data.text = string.Format("If a successful roll indicates a {0}GOOD{1} outcome from the Player's point of view, the header is shown in {2}GREEN{3}.", colourAlert, colourEnd, colourAlert, colourEnd);;
+        data.text = string.Format("If a successful roll indicates a {0}GOOD{1} outcome from the Player's point of view, the header is shown in {2}GREEN{3}.", colourAlert, colourEnd, colourAlert, colourEnd); ;
         listOfHelp.Add(data);
         //bad rolls
         data = new HelpData();
         data.tag = "roll_2";
         data.header = "Bad Rolls";
         data.text = string.Format("If a successful roll indicates a {0}BAD{1} outcome from the Player's point of view, the header is shown in {2}RED{3}.", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //
+        // - - - Actor Compatibility
+        //
+        //Motivation
+        data = new HelpData();
+        data.tag = "compatibility_0";
+        data.header = "Motivation";
+        data.text = new StringBuilder()
+            .AppendFormat("Indicates how {0}Enthusiastic{1} a person is. It ranges from {2}0 to 3{3} stars, the more the better. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("A person's Motivation effects many game mechanics and is something to {0}keep an eye on{1}. As in real life, a person who has lost all enthusiasm will be a problem",
+                colourAlert, colourEnd)
+            .ToString();
+        listOfHelp.Add(data);
+        //Compatibiity
+        data = new HelpData();
+        data.tag = "compatibility_1";
+        data.header = "Compatibility";
+        data.text = new StringBuilder()
+            .AppendFormat("Is a measure of the {0}Relationship{1} between the individual and yourself. It can range from {2}0 to 3{3} stars. ", colourAlert, colourEnd,
+                colourAlert, colourEnd)
+            .AppendFormat("{0}Green{1} stars indicate a {2}Positive{3} relationship, {4}Red{5} stars a {6}Negative{7} relationship. ", colourAlert, colourEnd, colourAlert, colourEnd,
+                colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("The number of stars indicate the {0}Intensity{1} of your relationship (if they are Green then more the better, if Red then the more, the worse your relationship).",
+                colourAlert, colourEnd)
+            .ToString();
+        listOfHelp.Add(data);
+        //Positive Compatibility
+        data = new HelpData();
+        data.tag = "compatibility_2";
+        data.header = "Positive Compatibility";
+        data.text = new StringBuilder()
+            .AppendFormat("An individual who has a positive opinion of you has a {0}chance of ignoring{1} any {2}BAD{3} Motivational outcomes. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("The more {0}Green stars{1} (better your relationship), the more likely this is to happen", colourAlert, colourEnd)
+            .ToString();
+        listOfHelp.Add(data);
+        //Negative Compatibility
+        data = new HelpData();
+        data.tag = "compatibility_3";
+        data.header = "Negative Compatibility";
+        data.text = new StringBuilder()
+            .AppendFormat("An individual who has a negative opinion of you has a {0}chance of ignoring{1} any {2}GOOD{3} Motivational outcomes. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("The more {0}Red stars{1} (worse your relationship), the more likely this is to happen", colourAlert, colourEnd)
+            .ToString();
         listOfHelp.Add(data);
         //
         // - - - Actor Conflict
@@ -226,7 +270,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "betrayal_0";
         data.header = "Betrayed";
-        data.text = string.Format("At any point there is a chance of you being Betrayed, {0}losing Invisibility{1} and possibly having the Authority immediately know your position (Invisibility {2}Zero{3})", 
+        data.text = string.Format("At any point there is a chance of you being Betrayed, {0}losing Invisibility{1} and possibly having the Authority immediately know your position (Invisibility {2}Zero{3})",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Who
@@ -240,14 +284,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "betrayal_2";
         data.header = "Chance of Betrayal";
-        data.text = string.Format("A check is made every turn. There is a base chance representing Rebel HQ and this {0}increases with traitorous subordinates{1} (doubles if one, triples if two, etc.)", 
+        data.text = string.Format("A check is made every turn. There is a base chance representing Rebel HQ and this {0}increases with traitorous subordinates{1} (doubles if one, triples if two, etc.)",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
         data = new HelpData();
         data.tag = "betrayal_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("A {0}QUESTIONABLE subordinate{1} may NOT be a traitor. On the other hand if you're being betrayed {2}often{3}, don't take any chances", 
+        data.text = string.Format("A {0}QUESTIONABLE subordinate{1} may NOT be a traitor. On the other hand if you're being betrayed {2}often{3}, don't take any chances",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //
@@ -308,7 +352,7 @@ public class HelpManager : MonoBehaviour
         //return help
         return listOfHelp;
 
-    
+
     }
 
     /// <summary>
@@ -316,10 +360,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "info_app_0";
-        string tag1 = "info_app_1";
-        string tag2 = "info_app_2";
-        string tag3 = "";
+        string tag0 = "compatibility_0";
+        string tag1 = "compatibility_1";
+        string tag2 = "compatibility_2";
+        string tag3 = "compatibility_3";
         List<HelpData> listOfHelp = GameManager.instance.mainInfoScript.GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

@@ -164,3 +164,48 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:345)
 	
+Dev seed 3606 -> Friday, 5 July 2019 1:03 PM
+City seed 890 -> Arles, France
+
+Dev seed 16578 -> Friday, 5 July 2019 1:04 PM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 115 -> Friday, 5 July 2019 1:17 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 20399 -> Friday, 5 July 2019 1:20 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 26779 -> Friday, 5 July 2019 1:23 PM
+City seed 5678 -> London, United Kingdom
+City seed 890 -> Arles, France
+
+Dev seed 38219 -> Friday, 5 July 2019 1:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58659 -> Friday, 5 July 2019 1:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37244 -> Friday, 5 July 2019 2:06 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	HelpManager.CreateItemDataHelp () (at Assets/Scripts/Managers/HelpManager.cs:218)
+	LoadManager.InitialiseLate (gameAPI.GameState state) (at Assets/Scripts/Managers/LoadManager.cs:1532)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:716)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:770)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:343)
+	
+Dev seed 31299 -> Friday, 5 July 2019 2:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 617 -> Friday, 5 July 2019 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39523 -> Friday, 5 July 2019 2:16 PM
+City seed 5678 -> London, United Kingdom
