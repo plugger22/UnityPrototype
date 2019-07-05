@@ -93,8 +93,8 @@ public class NemesisManager : MonoBehaviour
 
     //Authority player control
     private bool isPlayerControl;
-    private int controlNodeID = -1;           //player designated target node
-    private int controlTimer;            //player control is for a finite time
+    private int controlNodeID = -1;         //player designated target node
+    private int controlTimer;               //player control is for a finite time
     private int controlCooldownTimer;       //player control has a cooldown interim period
     private NemesisGoal controlGoal;        //what the player asks the Nemesis to do once it reaches the specified node (controlledNodeID)
 
@@ -172,7 +172,7 @@ public class NemesisManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid node (Null)"); }
         //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
+        durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodFirst;
         if (durationDelay > 0)
         {
             //grace period, start inactive

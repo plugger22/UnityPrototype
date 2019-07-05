@@ -31,8 +31,8 @@ public class TurnManager : MonoBehaviour
     public float showSplashTimeout = 1.0f;
 
     #region Save Compatible Data
-    [HideInInspector] public WinState winStateLevel = WinState.None;          //set if somebody has won
-    [HideInInspector] public WinReason winReasonLevel = WinReason.None;  //why a win (from POV of winner)
+    [HideInInspector] public WinState winStateLevel = WinState.None;            //set if somebody has won
+    [HideInInspector] public WinReason winReasonLevel = WinReason.None;         //why a win (from POV of winner)
     /*[HideInInspector] public ResistanceState resistanceState;*/
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI). Change value ONLY here in TurnManager.cs
@@ -120,7 +120,7 @@ public class TurnManager : MonoBehaviour
                 break;
         }
     }
-    
+
 
     #region Initialise SubMethods
 
@@ -260,7 +260,6 @@ public class TurnManager : MonoBehaviour
             //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
             if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
             {
-                
                 //pre-processing admin
                 haltExecution = false;
                 GameManager.instance.guiScript.InfoPipelineClear();
@@ -271,33 +270,34 @@ public class TurnManager : MonoBehaviour
                 //start the new turn
                 StartTurnEarly();
                 StartTurnLate();
-                //Nobody has yet won
-                if (winStateLevel == WinState.None)
+                //only do for player
+                if (playerSide != null && currentSide.level == playerSide.level)
                 {
-                    //only do for player
-                    if (playerSide != null && currentSide.level == playerSide.level)
+                    //turn on info App (only if not autorunning)
+                    if (isAutoRun == false)
                     {
-                        //turn on info App (only if not autorunning)
-                        if (isAutoRun == false)
-                        {
-                            //switch off any node Alerts
-                            GameManager.instance.alertScript.CloseAlertUI(true);
+                        //switch off any node Alerts
+                        GameManager.instance.alertScript.CloseAlertUI(true);
 
-                            //debug
-                            /*DebugCreatePipelineMessages();*/
+                        //debug
+                        /*DebugCreatePipelineMessages();*/
 
-                            //info App displayed AFTER any end of turn Player interactions
-                            myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
-                        }
+                        //info App displayed AFTER any end of turn Player interactions
+                        myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
                     }
+
                 }
-                else
+                if (winStateLevel != WinState.None)
                 {
                     //There is a winner
                     isLevelOver = true;
                     ProcessLevelOver();
                 }
             }
+        }
+        else
+        {
+            //level over
         }
     }
 
@@ -748,10 +748,10 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities issue a city wide All Points Bulletin";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");}
+                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
                         GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.APB);
-                        
+
                         break;
                     case "sec":
                     case "SEC":
@@ -783,10 +783,10 @@ public class TurnManager : MonoBehaviour
                         break;
                 }
                 break;
-            /*case "r":
-            case "R":
-                //ResistanceState
-                break;*/
+                /*case "r":
+                case "R":
+                    //ResistanceState
+                    break;*/
         }
         return string.Format("{0}{1}Press ESC to exit", text, "\n");
     }

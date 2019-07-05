@@ -196,7 +196,7 @@ public class MainInfoUI : MonoBehaviour
     string colourNeutral;
     string colourGrey;
     string colourAlert;
-    string colourRebel;
+    string colourSide;
     /*string colourNormal;
     string colourGood;
     string colourError;
@@ -513,6 +513,7 @@ public class MainInfoUI : MonoBehaviour
         flashTimer = GameManager.instance.guiScript.flashInfoTabTime;
         Debug.Assert(flashTimer > -1.0f, "Invalid flashTimer (-1f)");
         //Set starting Initialisation states
+        SetColours();
         InitialiseCanvases();
         InitialiseItems();
         InitialiseTooltips();
@@ -589,7 +590,7 @@ public class MainInfoUI : MonoBehaviour
     private void InitialiseTooltips()
     {
         //itemButton
-        itemButtonTooltip.tooltipHeader = string.Format("{0}Show Me{1}", colourRebel, colourEnd);
+        itemButtonTooltip.tooltipHeader = string.Format("{0}Show Me{1}", colourSide, colourEnd);
         itemButtonTooltip.tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
         itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
         itemButtonTooltip.x_offset = 125;
@@ -681,7 +682,9 @@ public class MainInfoUI : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+        { colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority); }
+        else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel); }
         /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
@@ -1053,6 +1056,7 @@ public class MainInfoUI : MonoBehaviour
             }
             //if no sprite, switch off default info sprite and leave blak
             else { details_image.gameObject.SetActive(false); }
+
             /*//display button if event & data present
             if (data.buttonEvent > EventType.None && data.buttonData != -1)
             {
@@ -1062,6 +1066,7 @@ public class MainInfoUI : MonoBehaviour
                 buttonDecision.gameObject.SetActive(true);
                 buttonHelp.gameObject.SetActive(false);
             }*/
+
             //Show me data
             currentItemNodeID = data.nodeID;
             currentItemConnID = data.connID;
