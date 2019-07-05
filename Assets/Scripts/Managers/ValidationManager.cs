@@ -559,5 +559,55 @@ public class ValidationManager : MonoBehaviour
 
 #endif
 
+
+    //
+    // - - - Integrity Check - - -
+    //
+
+    /// <summary>
+    /// Master method to run all data Integrity checks
+    /// </summary>
+    public void ExecuteIntegrityCheck()
+    {
+        string prefix = "[Val] ValidationManager.cs -> ";
+        if (string.IsNullOrEmpty(prefix) == false)
+        {
+            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - - - -{1}", prefix, "\n");
+            CheckNodeData(prefix);
+        }
+    }
+
+    /// <summary>
+    /// Integrity check on all node related data collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckNodeData(string prefix)
+    {
+        string start = string.Format("{0}{1}", prefix, "CheckNodeData: ");
+        Debug.LogFormat("{0}commence checks - - -{1}", start, "\n");
+        int highestNode = GameManager.instance.nodeScript.nodeCounter;
+        //check dictionaries all have the same number of entries
+        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        if (dictOfNodes != null)
+        {
+            //check count
+            if (dictOfNodes.Count != highestNode)
+            { Debug.LogFormat("{0}Incorrect count, dictOfNodes has {1} records, highestNode {2}{3}", start, dictOfNodes.Count, highestNode, "\n"); }
+            foreach(var node in dictOfNodes)
+            {
+                //null check record
+                if (node.Value != null)
+                {
+                    //range check nodeID
+                    if (node.Key < 0 || node.Key > highestNode)
+                    { Debug.LogFormat("{0}Node {1}, {2} has incorrect ID {3} (should be >= 0 and <= {4}){5}", start, node.Value.nodeName, node.Value.Arc.name, node.Key, highestNode, "\n"); }
+                }
+                else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+    }
+
+
     //new methods above here
 }

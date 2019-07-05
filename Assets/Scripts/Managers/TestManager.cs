@@ -96,11 +96,8 @@ public class TestManager : MonoBehaviour
     }
 
 
-    //
-    // - - - Autorun tests
-    //
 
-
+    
 
 
 }

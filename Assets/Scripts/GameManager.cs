@@ -111,16 +111,19 @@ public class GameManager : MonoBehaviour
     public int autoRunTurns = 0;
 
     [Header("Debug Options")]
-    [Tooltip("Switch ON to get a performance log of initialisation ")]
+    [Tooltip("Switch ON to get a performance log of initialisation at Session Start")]
     public bool isPerformanceLog;
-    [Tooltip("Runs ValidationManager.cs to check data at game start")]
-    public bool isValidateData;
-    [Tooltip("Runs SO Validator to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
+    [Tooltip("Runs ValidationManager.cs to check data at Session Start")]
+    public bool isDataValidation;
+    [Tooltip("Runs SO Validator at Session Start to cross reference SO's in assets vs. those in LoadManager.cs arrays. Editor only. Slow")]
     public bool isValidateSO;
-    [Tooltip("If true will choose a random city, otherwise will be the one specified by the Scenario")]
+    [Tooltip("Runs Data Integrity checks at completion of an autorun, at the start of a followOn level or once a save game has been loaded")]
+    public bool isIntegrityCheck;
+    [Tooltip("If true Data Validation tests are run ")]
     public bool isRandomCity;
     [Tooltip("If true then save files are encrypted")]
     public bool isEncrypted;
+
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
@@ -663,7 +666,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "DebugGraphicManager";
         listOfDebugMethods.Add(startMethod);
         //data Validation (Last / Optional)
-        if (isValidateData == true)
+        if (isDataValidation == true)
         {
             startMethod.handler = validateScript.Initialise;
             startMethod.className = "ValidationManager (Content)";

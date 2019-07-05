@@ -229,6 +229,9 @@ public class ControlManager : MonoBehaviour
             GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
             //create new followOn level
             GameManager.instance.InitialiseNewLevel();
+            //data Integrity check
+            if (GameManager.instance.isIntegrityCheck == true)
+            { GameManager.instance.validateScript.ExecuteIntegrityCheck(); }
             //revert to playGame state by default
             GameManager.instance.inputScript.GameState = GameState.PlayGame;
             //close background
@@ -319,6 +322,9 @@ public class ControlManager : MonoBehaviour
         GameManager.instance.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
         GameManager.instance.guiScript.SetIsBlocked(false);
+        //Integrity check 
+        if (GameManager.instance.isIntegrityCheck == true)
+        { GameManager.instance.validateScript.ExecuteIntegrityCheck(); }
         //change game state
         GameManager.instance.inputScript.GameState = GameState.PlayGame;
     }

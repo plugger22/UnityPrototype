@@ -237,6 +237,10 @@ public class TurnManager : MonoBehaviour
             //in case of AI vs AI revert the player side to human control
             GameManager.instance.sideScript.RevertToHumanPlayer();
             currentSide = GameManager.instance.sideScript.PlayerSide;
+            //Data Integrity check
+            if (GameManager.instance.isIntegrityCheck == true)
+            { GameManager.instance.validateScript.ExecuteIntegrityCheck(); }
+
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
     }
