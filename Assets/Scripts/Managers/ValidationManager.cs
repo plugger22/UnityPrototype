@@ -572,7 +572,7 @@ public class ValidationManager : MonoBehaviour
         string prefix = "[Val] ValidationManager.cs -> ";
         if (string.IsNullOrEmpty(prefix) == false)
         {
-            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - - - -{1}", prefix, "\n");
+            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - - - - {1}", prefix, "\n");
             CheckNodeData(prefix);
         }
     }
@@ -584,7 +584,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckNodeData(string prefix)
     {
         string start = string.Format("{0}{1}", prefix, "CheckNodeData: ");
-        Debug.LogFormat("{0}commence checks - - -{1}", start, "\n");
+        Debug.LogFormat("{0}commencing checks . . . {1}", start, "\n");
         int highestNode = GameManager.instance.nodeScript.nodeCounter;
         //check dictionaries all have the same number of entries
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
@@ -601,6 +601,36 @@ public class ValidationManager : MonoBehaviour
                     //range check nodeID
                     if (node.Key < 0 || node.Key > highestNode)
                     { Debug.LogFormat("{0}Node {1}, {2} has incorrect ID {3} (should be >= 0 and <= {4}){5}", start, node.Value.nodeName, node.Value.Arc.name, node.Key, highestNode, "\n"); }
+                    //valid nodeName
+                    if (string.IsNullOrEmpty(node.Value.nodeName) == true)
+                    { Debug.LogFormat("{0}Invalid nodeName (Null or Empty) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //valid Arc
+                    if (node.Value.Arc == null)
+                    { Debug.LogFormat("{0}Invalid Arc (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //valid particle launcher
+                    if (node.Value.launcher == null)
+                    { Debug.LogFormat("{0}Invalid Particle launcher (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //valid position
+                    if (node.Value.nodePosition == null)
+                    { Debug.LogFormat("{0}Invalid nodePosition (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //valid loiter data package
+                    if (node.Value.loiter == null)
+                    { Debug.LogFormat("{0}Invalid loiter data package (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //valid listOfTeams
+                    if (node.Value.GetListOfTeams() == null)
+                    { Debug.LogFormat("{0}Invalid listOfTeams (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //listOfOngoingEffects
+                    if (node.Value.GetListOfOngoingEffects() == null)
+                    { Debug.LogFormat("{0}Invalid listOfOngoingEffects (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //listOfNeighbourNodes
+                    if (node.Value.GetNeighbouringNodes() == null)
+                    { Debug.LogFormat("{0}Invalid listOfNeighbouringNodes (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //listOfNearNeighbours
+                    if (node.Value.GetNearNeighbours() == null)
+                    { Debug.LogFormat("{0}Invalid listOfNearNeighbourings (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    //listOfConnections
+                    if (node.Value.GetListOfConnections() == null)
+                    { Debug.LogFormat("{0}Invalid listOfConnections (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
