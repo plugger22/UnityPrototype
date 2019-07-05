@@ -583,54 +583,35 @@ public class ValidationManager : MonoBehaviour
     /// <param name="prefix"></param>
     private void CheckNodeData(string prefix)
     {
-        string start = string.Format("{0}{1}", prefix, "CheckNodeData: ");
-        Debug.LogFormat("{0}commencing checks . . . {1}", start, "\n");
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckNodeData: ");
         int highestNode = GameManager.instance.nodeScript.nodeCounter;
+        Debug.LogFormat("{0}commencing checks . . . {1}", tag, "\n");
         //check dictionaries all have the same number of entries
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             //check count
             if (dictOfNodes.Count != highestNode)
-            { Debug.LogFormat("{0}Incorrect count, dictOfNodes has {1} records, highestNode {2}{3}", start, dictOfNodes.Count, highestNode, "\n"); }
+            { Debug.LogFormat("{0}Incorrect count, dictOfNodes has {1} records, highestNode {2}{3}", tag, dictOfNodes.Count, highestNode, "\n"); }
             foreach(var node in dictOfNodes)
             {
                 //null check record
                 if (node.Value != null)
                 {
+                    key = node.Key.ToString();
                     //range check nodeID
-                    if (node.Key < 0 || node.Key > highestNode)
-                    { Debug.LogFormat("{0}Node {1}, {2} has incorrect ID {3} (should be >= 0 and <= {4}){5}", start, node.Value.nodeName, node.Value.Arc.name, node.Key, highestNode, "\n"); }
-                    //valid nodeName
-                    if (string.IsNullOrEmpty(node.Value.nodeName) == true)
-                    { Debug.LogFormat("{0}Invalid nodeName (Null or Empty) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //valid Arc
-                    if (node.Value.Arc == null)
-                    { Debug.LogFormat("{0}Invalid Arc (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //valid particle launcher
-                    if (node.Value.launcher == null)
-                    { Debug.LogFormat("{0}Invalid Particle launcher (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //valid position
-                    if (node.Value.nodePosition == null)
-                    { Debug.LogFormat("{0}Invalid nodePosition (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //valid loiter data package
-                    if (node.Value.loiter == null)
-                    { Debug.LogFormat("{0}Invalid loiter data package (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //valid listOfTeams
-                    if (node.Value.GetListOfTeams() == null)
-                    { Debug.LogFormat("{0}Invalid listOfTeams (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //listOfOngoingEffects
-                    if (node.Value.GetListOfOngoingEffects() == null)
-                    { Debug.LogFormat("{0}Invalid listOfOngoingEffects (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //listOfNeighbourNodes
-                    if (node.Value.GetNeighbouringNodes() == null)
-                    { Debug.LogFormat("{0}Invalid listOfNeighbouringNodes (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //listOfNearNeighbours
-                    if (node.Value.GetNearNeighbours() == null)
-                    { Debug.LogFormat("{0}Invalid listOfNearNeighbourings (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
-                    //listOfConnections
-                    if (node.Value.GetListOfConnections() == null)
-                    { Debug.LogFormat("{0}Invalid listOfConnections (Null) for nodeID {1}{2}", start, node.Key, "\n"); }
+                    CheckRange(node.Key, 0, highestNode, tag, key);
+                    CheckString(node.Value.nodeName, tag, key);
+                    CheckObject(node.Value.Arc, tag, key);
+                    CheckObject(node.Value.launcher, tag, key);
+                    CheckObject(node.Value.nodePosition, tag, key);
+                    CheckObject(node.Value.loiter, tag, key);
+                    CheckList(node.Value.GetListOfTeams(), tag, key);
+                    CheckList(node.Value.GetListOfOngoingEffects(), tag, key);
+                    CheckList(node.Value.GetNeighbouringNodes(), tag, key);
+                    CheckList(node.Value.GetNearNeighbours(), tag, key);
+                    CheckList(node.Value.GetListOfConnections(), tag, key);
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
@@ -638,6 +619,62 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
     }
 
+
+    //
+    // - - - SubMethods
+    //
+
+    /// <summary>
+    /// Checks that an int value is inside specified range (inclusive)
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="lower"></param>
+    /// <param name="upper"></param>
+    /// <param name="tag"></param>
+    /// <param name="key"></param>
+    private void CheckRange(int value, int lower, int upper, string tag, string key)
+    {
+        if (value < lower || value > upper)
+        { Debug.LogFormat("{0}dictKey \"{1}\" outside of range ({2} to {3}){4}", tag, key, lower, upper, key, "\n"); }
+    }
+
+    /// <summary>
+    /// Checks string for Null and Empty
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="tag"></param>
+    /// <param name="key"></param>
+    private void CheckString(string text, string tag, string key)
+    {
+        if (string.IsNullOrEmpty(text) == true)
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, text, key, "\n"); }
+    }
+
+    /// <summary>
+    /// Checks any object for null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="thing"></param>
+    /// <param name="tag"></param>
+    /// <param name="key"></param>
+    private void CheckObject<T>(T thing, string tag, string key)
+    {
+        if (thing == null)
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+    }
+
+    /// <summary>
+    /// Check list for Null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="key"></param>
+    /// <param name="tag"></param>
+    private void CheckList<T>(List<T> list, string key, string tag)
+    {
+        if (list == null)
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+    }
 
     //new methods above here
 }
