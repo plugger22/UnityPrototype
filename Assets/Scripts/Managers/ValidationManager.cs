@@ -607,22 +607,22 @@ public class ValidationManager : MonoBehaviour
                 {
                     key = node.Key.ToString();
                     //range check nodeID
-                    CheckRange(node.Key, 0, highestNode, tag, key);
-                    CheckRange(node.Value.Stability, 0, maxStatValue, tag, key);
-                    CheckRange(node.Value.Support, 0, maxStatValue, tag, key);
-                    CheckRange(node.Value.Security, 0, maxStatValue, tag, key);
-                    CheckString(node.Value.nodeName, tag, key);
-                    CheckObject(node.Value._Material, tag, key);
-                    CheckObject(node.Value.gameObject, tag, key);
-                    CheckObject(node.Value.Arc, tag, key);
-                    CheckObject(node.Value.launcher, tag, key);
-                    CheckObject(node.Value.nodePosition, tag, key);
-                    CheckObject(node.Value.loiter, tag, key);
-                    CheckList(node.Value.GetListOfTeams(), tag, key);
-                    CheckList(node.Value.GetListOfOngoingEffects(), tag, key);
-                    CheckList(node.Value.GetNeighbouringNodes(), tag, key);
-                    CheckList(node.Value.GetNearNeighbours(), tag, key);
-                    CheckList(node.Value.GetListOfConnections(), tag, key);
+                    CheckDictRange(node.Key, 0, highestNode, tag, key);
+                    CheckDictRange(node.Value.Stability, 0, maxStatValue, tag, key);
+                    CheckDictRange(node.Value.Support, 0, maxStatValue, tag, key);
+                    CheckDictRange(node.Value.Security, 0, maxStatValue, tag, key);
+                    CheckDictString(node.Value.nodeName, tag, key);
+                    CheckDictObject(node.Value._Material, tag, key);
+                    CheckDictObject(node.Value.gameObject, tag, key);
+                    CheckDictObject(node.Value.Arc, tag, key);
+                    CheckDictObject(node.Value.launcher, tag, key);
+                    CheckDictObject(node.Value.nodePosition, tag, key);
+                    CheckDictObject(node.Value.loiter, tag, key);
+                    CheckDictList(node.Value.GetListOfTeams(), tag, key);
+                    CheckDictList(node.Value.GetListOfOngoingEffects(), tag, key);
+                    CheckDictList(node.Value.GetNeighbouringNodes(), tag, key);
+                    CheckDictList(node.Value.GetNearNeighbours(), tag, key);
+                    CheckDictList(node.Value.GetListOfConnections(), tag, key);
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
@@ -637,8 +637,8 @@ public class ValidationManager : MonoBehaviour
             foreach(var node in dictOfNodeObjects)
             {
                 key = node.Key.ToString();
-                CheckRange(node.Key, 0, highestNode, tag, key);
-                CheckObject(node.Value, tag, key);
+                CheckDictRange(node.Key, 0, highestNode, tag, key);
+                CheckDictObject(node.Value, tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeObjects (Null)"); }
@@ -651,9 +651,9 @@ public class ValidationManager : MonoBehaviour
             foreach(var arc in dictOfNodeArcs)
             {
                 key = arc.Key.ToString();
-                CheckRange(arc.Value.nodeArcID, 0, 99, tag, key);
-                CheckObject(arc.Value.sprite, tag, key);
-                CheckArray(arc.Value.contactTypes, tag, key);
+                CheckDictRange(arc.Value.nodeArcID, 0, 99, tag, key);
+                CheckDictObject(arc.Value.sprite, tag, key);
+                CheckDictArray(arc.Value.contactTypes, tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
@@ -666,12 +666,12 @@ public class ValidationManager : MonoBehaviour
             foreach(var nodeD in dictOfNodeUnweighted)
             {
                 key = nodeD.Key.ToString();
-                CheckRange(nodeD.Key, 0, highestNode, tag, key);
-                CheckObject(nodeD.Value, tag, key);
-                CheckRange(nodeD.Value.Distance, 0, 99, tag, key);
-                CheckString(nodeD.Value.Name, tag, key);
-                CheckList(nodeD.Value.Weights, tag, key);
-                CheckList(nodeD.Value.Adjacency, tag, key);
+                CheckDictRange(nodeD.Key, 0, highestNode, tag, key);
+                CheckDictObject(nodeD.Value, tag, key);
+                CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
+                CheckDictString(nodeD.Value.Name, tag, key);
+                CheckDictList(nodeD.Value.Weights, tag, key);
+                CheckDictList(nodeD.Value.Adjacency, tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeUnweighted (Null)"); }
@@ -684,15 +684,23 @@ public class ValidationManager : MonoBehaviour
             foreach (var nodeD in dictOfNodeWeighted)
             {
                 key = nodeD.Key.ToString();
-                CheckRange(nodeD.Key, 0, highestNode, tag, key);
-                CheckObject(nodeD.Value, tag, key);
-                CheckRange(nodeD.Value.Distance, 0, 99, tag, key);
-                CheckString(nodeD.Value.Name, tag, key);
-                CheckList(nodeD.Value.Weights, tag, key);
-                CheckList(nodeD.Value.Adjacency, tag, key);
+                CheckDictRange(nodeD.Key, 0, highestNode, tag, key);
+                CheckDictObject(nodeD.Value, tag, key);
+                CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
+                CheckDictString(nodeD.Value.Name, tag, key);
+                CheckDictList(nodeD.Value.Weights, tag, key);
+                CheckDictList(nodeD.Value.Adjacency, tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeWeighted (Null)"); }
+        //
+        // - - - Node lists
+        //
+        CheckList(GameManager.instance.dataScript.GetListOfAllNodes(), tag, highestNode);
+        CheckList(GameManager.instance.dataScript.GetListOfMostConnectedNodes(), tag);
+        CheckList(GameManager.instance.dataScript.GetListOfDecisionNodes(), tag);
+        CheckList(GameManager.instance.dataScript.GetListOfLoiterNodes(), tag);
+        CheckList(GameManager.instance.dataScript.GetListOfCureNodes(), tag);
     }
     #endregion
 
@@ -702,69 +710,95 @@ public class ValidationManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Checks that an int value is inside specified range (inclusive)
+    /// Checks that a dictionary int value is inside specified range (inclusive)
     /// </summary>
     /// <param name="value"></param>
     /// <param name="lower"></param>
     /// <param name="upper"></param>
     /// <param name="tag"></param>
     /// <param name="key"></param>
-    private void CheckRange(int value, int lower, int upper, string tag, string key)
+    private void CheckDictRange(int value, int lower, int upper, string tag, string key)
     {
         if (value < lower || value > upper)
         { Debug.LogFormat("{0}dictKey \"{1}\" outside of range ({2} to {3}){4}", tag, key, lower, upper, key, "\n"); }
     }
 
     /// <summary>
-    /// Checks string for Null and Empty
+    /// Checks dictionary string for Null and Empty
     /// </summary>
     /// <param name="text"></param>
     /// <param name="tag"></param>
     /// <param name="key"></param>
-    private void CheckString(string text, string tag, string key)
+    private void CheckDictString(string text, string tag, string key)
     {
         if (string.IsNullOrEmpty(text) == true)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, text, key, "\n"); }
     }
 
     /// <summary>
-    /// Checks any object for null
+    /// Checks any dictionary object/field for null
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="thing"></param>
     /// <param name="tag"></param>
     /// <param name="key"></param>
-    private void CheckObject<T>(T thing, string tag, string key)
+    private void CheckDictObject<T>(T thing, string tag, string key)
     {
         if (thing == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
     }
 
     /// <summary>
-    /// Check list for Null
+    /// Check dictionary list for Null
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckList<T>(List<T> list, string key, string tag)
+    private void CheckDictList<T>(List<T> list, string key, string tag)
     {
         if (list == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
     }
 
     /// <summary>
-    /// Check array for Null
+    /// Check dictionary array for Null
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="array"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckArray<T>(T[] array, string key, string tag)
+    private void CheckDictArray<T>(T[] array, string key, string tag)
     {
         if (array == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
     }
 
+    /// <summary>
+    /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null
+    /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="tag"></param>
+    private void CheckList<T>(List<T> list, string tag, int expectedCount = 0)
+    {
+        if (list != null)
+        {
+            //check number of records in list (optional)
+            if (expectedCount > 0)
+            {
+                if (list.Count != expectedCount)
+                { Debug.LogFormat("{0}Mismatch for {1} on count (was {2}, expected {3}){4}", tag, nameof(list), list.Count, expectedCount, "\n"); }
+            }
+            //check for null records in list
+            foreach(T item in list)
+            {
+                if (item == null)
+                { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), nameof(list), "\n"); }
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid {0} (Null)", nameof(list)); }
+    }
     //new methods above here
 }

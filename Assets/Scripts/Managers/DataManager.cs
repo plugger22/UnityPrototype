@@ -2418,6 +2418,7 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
+
     /// <summary>
     /// returns a random Node Crisis from the appropriate pick list, null if none found
     /// </summary>
