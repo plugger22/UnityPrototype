@@ -586,7 +586,8 @@ public class ValidationManager : MonoBehaviour
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckNodeData: ");
         int highestNode = GameManager.instance.nodeScript.nodeCounter;
-        Debug.LogFormat("{0}commencing checks . . . {1}", tag, "\n");
+        int maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //check dictionaries all have the same number of entries
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
@@ -602,7 +603,12 @@ public class ValidationManager : MonoBehaviour
                     key = node.Key.ToString();
                     //range check nodeID
                     CheckRange(node.Key, 0, highestNode, tag, key);
+                    CheckRange(node.Value.Stability, 0, maxStatValue, tag, key);
+                    CheckRange(node.Value.Support, 0, maxStatValue, tag, key);
+                    CheckRange(node.Value.Security, 0, maxStatValue, tag, key);
                     CheckString(node.Value.nodeName, tag, key);
+                    CheckObject(node.Value._Material, tag, key);
+                    CheckObject(node.Value.gameObject, tag, key);
                     CheckObject(node.Value.Arc, tag, key);
                     CheckObject(node.Value.launcher, tag, key);
                     CheckObject(node.Value.nodePosition, tag, key);
