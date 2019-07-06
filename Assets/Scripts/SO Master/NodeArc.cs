@@ -24,7 +24,8 @@ public class NodeArc : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.Assert(contactTypes != null, string.Format("Invalid array of contactTypes (Null) for NodeArc \"{0}\"", this.name));
+        Debug.AssertFormat(contactTypes != null, "Invalid array of contactTypes (Null) for NodeArc \"{0}\"", name);
+        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
     }
 
     /// <summary>

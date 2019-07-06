@@ -2046,6 +2046,9 @@ public class DataManager : MonoBehaviour
     // - - - Nodes - - -
     //
 
+    public Dictionary<int, GameObject> GetDictOfNodeObjects()
+    { return dictOfNodeObjects; }
+
     /// <summary>
     /// returns a GameObject node from dictionary based on nodeID, Null if not found
     /// </summary>
@@ -2058,6 +2061,7 @@ public class DataManager : MonoBehaviour
         { return obj; }
         return null;
     }
+
 
     /// <summary>
     /// returns a Node from dictionary based on nodeID, Null if not found

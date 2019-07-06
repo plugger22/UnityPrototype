@@ -1,4 +1,5 @@
-﻿using gameAPI;
+﻿using dijkstraAPI;
+using gameAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -577,6 +578,7 @@ public class ValidationManager : MonoBehaviour
         }
     }
 
+    #region CheckNodeData
     /// <summary>
     /// Integrity check on all node related data collections
     /// </summary>
@@ -588,6 +590,9 @@ public class ValidationManager : MonoBehaviour
         int highestNode = GameManager.instance.nodeScript.nodeCounter;
         int maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
         Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfNodes
+        //
         //check dictionaries all have the same number of entries
         Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
@@ -623,7 +628,73 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
+        //
+        // - - - dictOfNodeObjects
+        //
+        Dictionary<int, GameObject> dictOfNodeObjects = GameManager.instance.dataScript.GetDictOfNodeObjects();
+        if (dictOfNodeObjects != null)
+        {
+            foreach(var node in dictOfNodeObjects)
+            {
+                key = node.Key.ToString();
+                CheckRange(node.Key, 0, highestNode, tag, key);
+                CheckObject(node.Value, tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeObjects (Null)"); }
+        //
+        // - - - dictOfNodeArcs
+        //
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        if (dictOfNodeArcs != null)
+        {
+            foreach(var arc in dictOfNodeArcs)
+            {
+                key = arc.Key.ToString();
+                CheckRange(arc.Value.nodeArcID, 0, 99, tag, key);
+                CheckObject(arc.Value.sprite, tag, key);
+                CheckArray(arc.Value.contactTypes, tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
+        //
+        // - - - dictOfNodeDUnweighted
+        //
+        Dictionary<int, NodeD> dictOfNodeUnweighted = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
+        if (dictOfNodeUnweighted != null)
+        {
+            foreach(var nodeD in dictOfNodeUnweighted)
+            {
+                key = nodeD.Key.ToString();
+                CheckRange(nodeD.Key, 0, highestNode, tag, key);
+                CheckObject(nodeD.Value, tag, key);
+                CheckRange(nodeD.Value.Distance, 0, 99, tag, key);
+                CheckString(nodeD.Value.Name, tag, key);
+                CheckList(nodeD.Value.Weights, tag, key);
+                CheckList(nodeD.Value.Adjacency, tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeUnweighted (Null)"); }
+        //
+        // - - - dictOfNodeDWeighted
+        //
+        Dictionary<int, NodeD> dictOfNodeWeighted = GameManager.instance.dataScript.GetDictOfNodeDWeighted();
+        if (dictOfNodeWeighted != null)
+        {
+            foreach (var nodeD in dictOfNodeWeighted)
+            {
+                key = nodeD.Key.ToString();
+                CheckRange(nodeD.Key, 0, highestNode, tag, key);
+                CheckObject(nodeD.Value, tag, key);
+                CheckRange(nodeD.Value.Distance, 0, 99, tag, key);
+                CheckString(nodeD.Value.Name, tag, key);
+                CheckList(nodeD.Value.Weights, tag, key);
+                CheckList(nodeD.Value.Adjacency, tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeWeighted (Null)"); }
     }
+    #endregion
 
 
     //
@@ -679,6 +750,19 @@ public class ValidationManager : MonoBehaviour
     private void CheckList<T>(List<T> list, string key, string tag)
     {
         if (list == null)
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+    }
+
+    /// <summary>
+    /// Check array for Null
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array"></param>
+    /// <param name="key"></param>
+    /// <param name="tag"></param>
+    private void CheckArray<T>(T[] array, string key, string tag)
+    {
+        if (array == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
     }
 
