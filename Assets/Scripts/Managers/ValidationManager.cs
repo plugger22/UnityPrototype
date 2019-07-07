@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -764,19 +765,27 @@ public class ValidationManager : MonoBehaviour
             //check for duplicates
             if (isDuplicates == true)
             {
+                int numOfDuplicates;
                 var query = list.GroupBy(x => x)
                     .Where(g => g.Count() > 1)
                     .Select(y => new { Element = y.Key, Counter = y.Count() })
                     .ToList();
                 foreach(var record in query)
-                { Debug.LogFormat("{0}{1}, for dictKey {2}, record {3} has {4} duplicate{5}{6}", tag, GetParameterName(nameof(list)), key, record.Element, record.Counter, record.Counter != 1 ? "s" : "", "\n"); }
+                {
+                    numOfDuplicates = record.Counter - 1;
+                    MethodInfo info = this;
+                    Debug.LogFormat("{0}{1}, for dictKey {2}, record {3} has {4} duplicate{5}{6}", tag, GetParameterName(), key, record.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
+                }
             }
         }
     }
 
 
-    private string GetParameterName<T>(T parameter)
-    { return parameter.ToString(); }
+    private string GetParameterName()
+    {
+        MethodInfo info = typeof(ValidationManager).GetMethod("CheckDictList");
+        return info.GetParameters()[0].Name;
+    }
 
 
 

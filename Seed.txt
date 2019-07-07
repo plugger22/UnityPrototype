@@ -254,3 +254,17 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 4638 -> Sunday, 7 July 2019 10:08 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 54532 -> Sunday, 7 July 2019 5:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8159 -> Sunday, 7 July 2019 6:04 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.GetParameterName () (at Assets/Scripts/Managers/ValidationManager.cs:786)
+	ValidationManager.CheckDictList[T] (System.Collections.Generic.List`1[T] list, System.String tag, System.String key, System.Boolean isDuplicates) (at Assets/Scripts/Managers/ValidationManager.cs:776)
+	ValidationManager.CheckNodeData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:674)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:578)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:242)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:348)
+	
