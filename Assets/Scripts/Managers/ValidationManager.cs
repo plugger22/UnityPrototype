@@ -607,11 +607,12 @@ public class ValidationManager : MonoBehaviour
                 if (node.Value != null)
                 {
                     key = node.Key.ToString();
-                    //range check nodeID
+                    //range checks
                     CheckDictRange(node.Key, 0, highestNode, tag, key);
                     CheckDictRange(node.Value.Stability, 0, maxStatValue, tag, key);
                     CheckDictRange(node.Value.Support, 0, maxStatValue, tag, key);
                     CheckDictRange(node.Value.Security, 0, maxStatValue, tag, key);
+                    //null checks
                     CheckDictString(node.Value.nodeName, tag, key);
                     CheckDictObject(node.Value._Material, tag, key);
                     CheckDictObject(node.Value.gameObject, tag, key);
@@ -619,11 +620,13 @@ public class ValidationManager : MonoBehaviour
                     CheckDictObject(node.Value.launcher, tag, key);
                     CheckDictObject(node.Value.nodePosition, tag, key);
                     CheckDictObject(node.Value.loiter, tag, key);
-                    CheckDictList(node.Value.GetListOfTeams(), "dictOfNodes: listOfTeams", tag, key, true);
-                    CheckDictList(node.Value.GetListOfOngoingEffects(), "dictOfNodes: listOfOngoingEffects", tag, key, true);
-                    CheckDictList(node.Value.GetNeighbouringNodes(), "dictOfNodes: listOfNeighbouringNodes", tag, key, true);
-                    CheckDictList(node.Value.GetNearNeighbours(), "dictOfNodes: listOfNearNeighbours", tag, key, true);
-                    CheckDictList(node.Value.GetListOfConnections(), "dictOfNodes: listOfConnections", tag, key, true);
+                    CheckDictList(node.Value.GetListOfTeams(), "dictOfNodes: listOfTeams", tag, key);
+                    CheckDictList(node.Value.GetListOfOngoingEffects(), "dictOfNodes: listOfOngoingEffects", tag, key);
+                    CheckDictList(node.Value.GetNeighbouringNodes(), "dictOfNodes: listOfNeighbouringNodes", tag, key);
+                    CheckDictList(node.Value.GetNearNeighbours(), "dictOfNodes: listOfNearNeighbours", tag, key);
+                    CheckDictList(node.Value.GetListOfConnections(), "dictOfNodes: listOfConnections", tag, key);
+                    //duplicate checks
+                    CheckListForDuplicates(node.Value.GetListOfTeamID(), string.Format("dictOfNodes: dictKey {0}", key, "TeamID", "listOfTeams"));
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
@@ -671,8 +674,8 @@ public class ValidationManager : MonoBehaviour
                 CheckDictObject(nodeD.Value, tag, key);
                 CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
                 CheckDictString(nodeD.Value.Name, tag, key);
-                CheckDictList(nodeD.Value.Weights, "NodeDUnWeighted: weights", tag, key, true);
-                CheckDictList(nodeD.Value.Adjacency, "NodeDUnWeighted: adjaceny", tag, key, true);
+                CheckDictList(nodeD.Value.Weights, "NodeDUnWeighted: weights", tag, key);
+                CheckDictList(nodeD.Value.Adjacency, "NodeDUnWeighted: adjaceny", tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeUnweighted (Null)"); }
@@ -756,27 +759,10 @@ public class ValidationManager : MonoBehaviour
     /// <param name="list"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckDictList<T>(List<T> list, string listName, string tag, string key, bool isDuplicates = false)
+    private void CheckDictList<T>(List<T> list, string listName, string tag, string key)
     {
         if (list == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
-        else
-        {
-            //check for duplicates
-            if (isDuplicates == true)
-            {
-                int numOfDuplicates;
-                var query = list.GroupBy(x => x)
-                    .Where(g => g.Count() > 1)
-                    .Select(y => new { Element = y.Key, Counter = y.Count() })
-                    .ToList();
-                foreach (var record in query)
-                {
-                    numOfDuplicates = record.Counter - 1;
-                    Debug.LogFormat("{0}{1}, for dictKey {2}, record {3} has {4} duplicate{5}{6}", tag, listName, key, record.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
-                }
-            }
-        }
     }
 
 
@@ -797,12 +783,11 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null
     /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise.
-    /// Set 'isDuplicates' to true to check for dupes, false otherwise
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="tag"></param>
-    private void CheckList<T>(List<T> list, string tag, int expectedCount = 0, bool isDuplicates = false)
+    private void CheckList<T>(List<T> list, string tag, int expectedCount = 0)
     {
         if (list != null)
         {
@@ -818,21 +803,30 @@ public class ValidationManager : MonoBehaviour
                 if (item == null)
                 { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), nameof(list), "\n"); }
             }
-            //Dupliciate check
-            //check for duplicates
-            if (isDuplicates == true)
-            {
-                var query = list.GroupBy(x => x)
-                    .Where(g => g.Count() > 1)
-                    .Select(y => new { Element = y.Key, Counter = y.Count() })
-                    .ToList();
-                foreach (var record in query)
-                { Debug.LogFormat("{0}{1}, record {2} has {3} duplicate{4}{5}", tag, nameof(T), record.Element, record.Counter, record.Counter != 1 ? "s" : "", "\n"); }
-            }
         }
         else { Debug.LogErrorFormat("Invalid {0} (Null)", nameof(list)); }
     }
 
+    /*/// <summary>
+    /// Check a list (value types only, eg. int) for duplicates and optional check for size of list (ignore otherwise)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="tag"></param>
+    /// <param name="expectedCount"></param>
+    private void CheckListForDuplicates<T>(List<T> list, string tag, int expectedCount = 0)
+    {
+        int numOfDuplicates;
+        var query = list.GroupBy(x => x)
+            .Where(g => g.Count() > 1)
+            .Select(y => new { Element = y.Key, Counter = y.Count() })
+            .ToList();
+        foreach (var record in query)
+        {
+            numOfDuplicates = record.Counter - 1;
+            Debug.LogFormat("{0}, record {1} has {2} duplicate{3}{4}", tag,  record.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
+        }
+    }*/
 
 
 

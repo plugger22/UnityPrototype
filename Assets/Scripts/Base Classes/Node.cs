@@ -995,6 +995,18 @@ public class Node : MonoBehaviour
     { return listOfTeams; }
 
     /// <summary>
+    /// returns list of TeamID's only from listOfTeams
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfTeamID()
+    {
+        List<int> listOfID = new List<int>();
+        foreach (Team team in listOfTeams)
+        { listOfID.Add(team.teamID); }
+        return listOfID;
+    }
+
+    /// <summary>
     /// returns the effect of the relevant team (Civil/Control/Media) for the node Datapoints (Stability/Security/Support)
     /// </summary>
     /// <param name="type"></param>

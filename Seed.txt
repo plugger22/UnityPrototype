@@ -270,3 +270,6 @@ ValidationManager.GetParameterName () (at Assets/Scripts/Managers/ValidationMana
 	
 Dev seed 31098 -> Sunday, 7 July 2019 7:58 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 56565 -> Monday, 8 July 2019 8:57 AM
+City seed 5678 -> London, United Kingdom
