@@ -1,10 +1,8 @@
 ﻿using dijkstraAPI;
 using gameAPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,7 +32,7 @@ public class ValidationManager : MonoBehaviour
     {
         Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         /*for (int index = 0; index < dictOfTargets.Count; index++)*/
-        foreach(var target in dictOfTargets)
+        foreach (var target in dictOfTargets)
         {
             if (target.Value != null)
             {
@@ -93,7 +91,7 @@ public class ValidationManager : MonoBehaviour
                     if (target.Value.gear.name.Equals("Infiltration", StringComparison.Ordinal) == true)
                     { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>is using INFILTRATION gear</b> (doubled up as can be used automatically on any target)", target.Value.targetName); }
                 }
-                else {Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Gear (Null)", target.Value.targetName); }
+                else { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\"  invalid Gear (Null)", target.Value.targetName); }
             }
             else { Debug.LogErrorFormat("Invalid target (Null) for target {0}", target.Key); }
         }
@@ -117,7 +115,7 @@ public class ValidationManager : MonoBehaviour
                     if (gear.Value.listOfPersonalEffects.Count > 0)
                     {
                         //personal effects
-                        foreach(var effect in gear.Value.listOfPersonalEffects)
+                        foreach (var effect in gear.Value.listOfPersonalEffects)
                         {
                             if (effect != null)
                             {
@@ -136,7 +134,7 @@ public class ValidationManager : MonoBehaviour
                         }
                     }
                 }
-                else{ Debug.LogFormat("[Val] ValidateGar: Invalid Gear (Null) for gearID {0}", gear.Key); }
+                else { Debug.LogFormat("[Val] ValidateGar: Invalid Gear (Null) for gearID {0}", gear.Key); }
             }
         }
     }
@@ -154,7 +152,7 @@ public class ValidationManager : MonoBehaviour
             List<string> listOfNames = new List<string>();
             List<Target> listOfTargets = new List<Target>();
             //loop missions
-            foreach(Mission mission in arrayOfMissions)
+            foreach (Mission mission in arrayOfMissions)
             {
                 if (mission != null)
                 {
@@ -216,11 +214,11 @@ public class ValidationManager : MonoBehaviour
                         //check no more than there are objectives
                         if (mission.listOfObjectiveTargets.Count > mission.listOfObjectives.Count)
                         {
-                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMssion: Mission \"{0}\", there are more ObjectiveTargets than Objectives ({1} vs. {2}){3}", mission.name, 
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMssion: Mission \"{0}\", there are more ObjectiveTargets than Objectives ({1} vs. {2}){3}", mission.name,
                                 mission.listOfObjectiveTargets.Count, mission.listOfObjectives.Count, "\n");
                         }
                         //check for presence of related data
-                        foreach(ObjectiveTarget objTarget in mission.listOfObjectiveTargets)
+                        foreach (ObjectiveTarget objTarget in mission.listOfObjectiveTargets)
                         {
                             if (objTarget != null)
                             {
@@ -277,7 +275,7 @@ public class ValidationManager : MonoBehaviour
                 if (tempList != null)
                 {
                     //loop temp list and check against master text list
-                    foreach(String item in tempList)
+                    foreach (String item in tempList)
                     {
                         findList.Clear();
                         findList = textList.randomList.FindAll(x => x == item);
@@ -287,7 +285,8 @@ public class ValidationManager : MonoBehaviour
                         {
                             //ignore first, legit, copy
                             count--;
-                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");                }
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");
+                        }
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
@@ -341,7 +340,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="listToCheck"></param>
-    private void CheckListForDuplicates<T>(List<T> listToCheck, string typeOfObject = "Unknown", string nameOfObject = "Unknown", string nameOfList = "Unknown")  where T : IComparable
+    private void CheckListForDuplicates<T>(List<T> listToCheck, string typeOfObject = "Unknown", string nameOfObject = "Unknown", string nameOfList = "Unknown") where T : IComparable
     {
         if (listToCheck != null)
         {
@@ -355,11 +354,12 @@ public class ValidationManager : MonoBehaviour
                 {
                     //generate message for each set of duplicates in list
                     int numOfDuplicates = 0;
-                    foreach(var item in query)
+                    foreach (var item in query)
                     {
                         numOfDuplicates = item.Counter - 1;
-                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: {0} \"{1}\" , list \"{2}\", record \"{3}\" has {4} duplicate{5}{6}", typeOfObject, nameOfObject, nameOfList, 
-                            item.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n"); }
+                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: {0} \"{1}\" , list \"{2}\", record \"{3}\" has {4} duplicate{5}{6}", typeOfObject, nameOfObject, nameOfList,
+                            item.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
+                    }
                 }
             }
         }
@@ -601,7 +601,7 @@ public class ValidationManager : MonoBehaviour
             //check count
             if (dictOfNodes.Count != highestNode)
             { Debug.LogFormat("{0}Incorrect count, dictOfNodes has {1} records, highestNode {2}{3}", tag, dictOfNodes.Count, highestNode, "\n"); }
-            foreach(var node in dictOfNodes)
+            foreach (var node in dictOfNodes)
             {
                 //null check record
                 if (node.Value != null)
@@ -619,11 +619,11 @@ public class ValidationManager : MonoBehaviour
                     CheckDictObject(node.Value.launcher, tag, key);
                     CheckDictObject(node.Value.nodePosition, tag, key);
                     CheckDictObject(node.Value.loiter, tag, key);
-                    CheckDictList(node.Value.GetListOfTeams(), tag, key, true);
-                    CheckDictList(node.Value.GetListOfOngoingEffects(), tag, key, true);
-                    CheckDictList(node.Value.GetNeighbouringNodes(), tag, key, true);
-                    CheckDictList(node.Value.GetNearNeighbours(), tag, key, true);
-                    CheckDictList(node.Value.GetListOfConnections(), tag, key, true);
+                    CheckDictList(node.Value.GetListOfTeams(), "dictOfNodes: listOfTeams", tag, key, true);
+                    CheckDictList(node.Value.GetListOfOngoingEffects(), "dictOfNodes: listOfOngoingEffects", tag, key, true);
+                    CheckDictList(node.Value.GetNeighbouringNodes(), "dictOfNodes: listOfNeighbouringNodes", tag, key, true);
+                    CheckDictList(node.Value.GetNearNeighbours(), "dictOfNodes: listOfNearNeighbours", tag, key, true);
+                    CheckDictList(node.Value.GetListOfConnections(), "dictOfNodes: listOfConnections", tag, key, true);
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
@@ -635,7 +635,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, GameObject> dictOfNodeObjects = GameManager.instance.dataScript.GetDictOfNodeObjects();
         if (dictOfNodeObjects != null)
         {
-            foreach(var node in dictOfNodeObjects)
+            foreach (var node in dictOfNodeObjects)
             {
                 key = node.Key.ToString();
                 CheckDictRange(node.Key, 0, highestNode, tag, key);
@@ -649,7 +649,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
         if (dictOfNodeArcs != null)
         {
-            foreach(var arc in dictOfNodeArcs)
+            foreach (var arc in dictOfNodeArcs)
             {
                 key = arc.Key.ToString();
                 CheckDictRange(arc.Value.nodeArcID, 0, 99, tag, key);
@@ -664,15 +664,15 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, NodeD> dictOfNodeUnweighted = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
         if (dictOfNodeUnweighted != null)
         {
-            foreach(var nodeD in dictOfNodeUnweighted)
+            foreach (var nodeD in dictOfNodeUnweighted)
             {
                 key = nodeD.Key.ToString();
                 CheckDictRange(nodeD.Key, 0, highestNode, tag, key);
                 CheckDictObject(nodeD.Value, tag, key);
                 CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
                 CheckDictString(nodeD.Value.Name, tag, key);
-                CheckDictList(nodeD.Value.Weights, tag, key, true);
-                CheckDictList(nodeD.Value.Adjacency, tag, key, true);
+                CheckDictList(nodeD.Value.Weights, "NodeDUnWeighted: weights", tag, key, true);
+                CheckDictList(nodeD.Value.Adjacency, "NodeDUnWeighted: adjaceny", tag, key, true);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeUnweighted (Null)"); }
@@ -689,8 +689,8 @@ public class ValidationManager : MonoBehaviour
                 CheckDictObject(nodeD.Value, tag, key);
                 CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
                 CheckDictString(nodeD.Value.Name, tag, key);
-                CheckDictList(nodeD.Value.Weights, tag, key);
-                CheckDictList(nodeD.Value.Adjacency, tag, key);
+                CheckDictList(nodeD.Value.Weights, "NodeDWeighted: weights", tag, key);
+                CheckDictList(nodeD.Value.Adjacency, "NodeDWeighted: adjaceny", tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeWeighted (Null)"); }
@@ -756,7 +756,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="list"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckDictList<T>(List<T> list, string tag, string key, bool isDuplicates = false)
+    private void CheckDictList<T>(List<T> list, string listName, string tag, string key, bool isDuplicates = false)
     {
         if (list == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
@@ -770,21 +770,13 @@ public class ValidationManager : MonoBehaviour
                     .Where(g => g.Count() > 1)
                     .Select(y => new { Element = y.Key, Counter = y.Count() })
                     .ToList();
-                foreach(var record in query)
+                foreach (var record in query)
                 {
                     numOfDuplicates = record.Counter - 1;
-                    MethodInfo info = this;
-                    Debug.LogFormat("{0}{1}, for dictKey {2}, record {3} has {4} duplicate{5}{6}", tag, GetParameterName(), key, record.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
+                    Debug.LogFormat("{0}{1}, for dictKey {2}, record {3} has {4} duplicate{5}{6}", tag, listName, key, record.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
                 }
             }
         }
-    }
-
-
-    private string GetParameterName()
-    {
-        MethodInfo info = typeof(ValidationManager).GetMethod("CheckDictList");
-        return info.GetParameters()[0].Name;
     }
 
 
@@ -821,7 +813,7 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("{0}Mismatch for {1} on count (was {2}, expected {3}){4}", tag, nameof(list), list.Count, expectedCount, "\n"); }
             }
             //check for null records in list
-            foreach(T item in list)
+            foreach (T item in list)
             {
                 if (item == null)
                 { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), nameof(list), "\n"); }

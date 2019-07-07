@@ -268,3 +268,5 @@ ValidationManager.GetParameterName () (at Assets/Scripts/Managers/ValidationMana
 	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:242)
 	GameManager.Start () (at Assets/Scripts/GameManager.cs:348)
 	
+Dev seed 31098 -> Sunday, 7 July 2019 7:58 PM
+City seed 5678 -> London, United Kingdom
