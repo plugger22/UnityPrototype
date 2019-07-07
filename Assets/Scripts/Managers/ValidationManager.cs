@@ -618,11 +618,11 @@ public class ValidationManager : MonoBehaviour
                     CheckDictObject(node.Value.launcher, tag, key);
                     CheckDictObject(node.Value.nodePosition, tag, key);
                     CheckDictObject(node.Value.loiter, tag, key);
-                    CheckDictList(node.Value.GetListOfTeams(), tag, key);
-                    CheckDictList(node.Value.GetListOfOngoingEffects(), tag, key);
-                    CheckDictList(node.Value.GetNeighbouringNodes(), tag, key);
-                    CheckDictList(node.Value.GetNearNeighbours(), tag, key);
-                    CheckDictList(node.Value.GetListOfConnections(), tag, key);
+                    CheckDictList(node.Value.GetListOfTeams(), tag, key, true);
+                    CheckDictList(node.Value.GetListOfOngoingEffects(), tag, key, true);
+                    CheckDictList(node.Value.GetNeighbouringNodes(), tag, key, true);
+                    CheckDictList(node.Value.GetNearNeighbours(), tag, key, true);
+                    CheckDictList(node.Value.GetListOfConnections(), tag, key, true);
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
@@ -670,8 +670,8 @@ public class ValidationManager : MonoBehaviour
                 CheckDictObject(nodeD.Value, tag, key);
                 CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
                 CheckDictString(nodeD.Value.Name, tag, key);
-                CheckDictList(nodeD.Value.Weights, tag, key);
-                CheckDictList(nodeD.Value.Adjacency, tag, key);
+                CheckDictList(nodeD.Value.Weights, tag, key, true);
+                CheckDictList(nodeD.Value.Adjacency, tag, key, true);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeUnweighted (Null)"); }
@@ -749,17 +749,36 @@ public class ValidationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Check dictionary list for Null
+    /// Check dictionary list for Null and duplicates (optional, default false)
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckDictList<T>(List<T> list, string key, string tag)
+    private void CheckDictList<T>(List<T> list, string tag, string key, bool isDuplicates = false)
     {
         if (list == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+        else
+        {
+            //check for duplicates
+            if (isDuplicates == true)
+            {
+                var query = list.GroupBy(x => x)
+                    .Where(g => g.Count() > 1)
+                    .Select(y => new { Element = y.Key, Counter = y.Count() })
+                    .ToList();
+                foreach(var record in query)
+                { Debug.LogFormat("{0}{1}, for dictKey {2}, record {3} has {4} duplicate{5}{6}", tag, GetParameterName(nameof(list)), key, record.Element, record.Counter, record.Counter != 1 ? "s" : "", "\n"); }
+            }
+        }
     }
+
+
+    private string GetParameterName<T>(T parameter)
+    { return parameter.ToString(); }
+
+
 
     /// <summary>
     /// Check dictionary array for Null
@@ -768,7 +787,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="array"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckDictArray<T>(T[] array, string key, string tag)
+    private void CheckDictArray<T>(T[] array, string tag, string key)
     {
         if (array == null)
         { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
@@ -777,11 +796,12 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null
     /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise.
+    /// Set 'isDuplicates' to true to check for dupes, false otherwise
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="tag"></param>
-    private void CheckList<T>(List<T> list, string tag, int expectedCount = 0)
+    private void CheckList<T>(List<T> list, string tag, int expectedCount = 0, bool isDuplicates = false)
     {
         if (list != null)
         {
@@ -797,8 +817,23 @@ public class ValidationManager : MonoBehaviour
                 if (item == null)
                 { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), nameof(list), "\n"); }
             }
+            //Dupliciate check
+            //check for duplicates
+            if (isDuplicates == true)
+            {
+                var query = list.GroupBy(x => x)
+                    .Where(g => g.Count() > 1)
+                    .Select(y => new { Element = y.Key, Counter = y.Count() })
+                    .ToList();
+                foreach (var record in query)
+                { Debug.LogFormat("{0}{1}, record {2} has {3} duplicate{4}{5}", tag, nameof(T), record.Element, record.Counter, record.Counter != 1 ? "s" : "", "\n"); }
+            }
         }
         else { Debug.LogErrorFormat("Invalid {0} (Null)", nameof(list)); }
     }
+
+
+
+
     //new methods above here
 }
