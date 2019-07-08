@@ -4,6 +4,7 @@ using packageAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -1000,9 +1001,7 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public List<int> GetListOfTeamID()
     {
-        List<int> listOfID = new List<int>();
-        foreach (Team team in listOfTeams)
-        { listOfID.Add(team.teamID); }
+        List<int> listOfID = listOfTeams.Select(id => id.teamID).ToList();
         return listOfID;
     }
 
@@ -1023,6 +1022,16 @@ public class Node : MonoBehaviour
         return teamEffect;
     }
 
+
+    /// <summary>
+    /// returns list of TeamID's only from listOfTeams
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfOngoingID()
+    {
+        List<int> listOfID = listOfOngoingEffects.Select(id => id.ongoingID).ToList();
+        return listOfID;
+    }
 
     /// <summary>
     /// Add temporary effect to the listOfAdjustments

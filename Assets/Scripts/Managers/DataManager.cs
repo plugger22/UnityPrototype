@@ -661,11 +661,6 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, int> GetDictOfLookUpNodeArcs()
     { return dictOfLookUpNodeArcs; }
 
-
-    /*public Dictionary<string, NodeDatapoint> GetDictOfNodeDatapoints()
-    { return dictOfNodeDatapoints; }*/
-
-
     /// <summary>
     /// returns nodeArcID for specified nodeArc name, eg. "Corporate". Returns '-1' if not found in lookup dictionary. Must be in CAPS
     /// </summary>
@@ -2107,6 +2102,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, PathData> GetDictOfDijkstraWeighted()
     { return dictOfDijkstraWeighted; }
 
+
     /// <summary>
     /// empties out Weighted Dijkstra collections prior to a recalculation
     /// </summary>
@@ -2145,6 +2141,66 @@ public class DataManager : MonoBehaviour
 
     public List<Node> GetListOfCrisisNodes()
     { return listOfCrisisNodes; }
+
+    /// <summary>
+    /// returns list of nodeID's only from listOfNodes
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfNodeID()
+    {
+        List<int> listOfID = listOfNodes.Select(id => id.nodeID).ToList();
+        return listOfID;
+    }
+
+    /// <summary>
+    /// returns list of nodeID's only from listOfMostConnectedNodes
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfMostConnectedNodeID()
+    {
+        List<int> listOfID = listOfMostConnectedNodes.Select(id => id.nodeID).ToList();
+        return listOfID;
+    }
+
+    /// <summary>
+    /// returns list of nodeID's only from listOfDecisionNodes
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfDecisionNodeID()
+    {
+        List<int> listOfID = listOfDecisionNodes.Select(id => id.nodeID).ToList();
+        return listOfID;
+    }
+
+    /// <summary>
+    /// returns list of nodeID's only from listOfLoiterNodes
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfLoiterNodeID()
+    {
+        List<int> listOfID = listOfLoiterNodes.Select(id => id.nodeID).ToList();
+        return listOfID;
+    }
+
+    /// <summary>
+    /// returns list of nodeID's only from listOfCureNodes
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfCureNodeID()
+    {
+        List<int> listOfID = listOfCureNodes.Select(id => id.nodeID).ToList();
+        return listOfID;
+    }
+
+    /// <summary>
+    /// returns list of nodeID's only from listOfCrisisNodes
+    /// </summary>
+    /// <returns></returns>
+    public List<int> GetListOfCrisisNodeID()
+    {
+        List<int> listOfID = listOfCrisisNodes.Select(id => id.nodeID).ToList();
+        return listOfID;
+    }
 
     /// <summary>
     /// Get int data from Master node array

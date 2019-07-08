@@ -332,43 +332,6 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
-    #region Utilities
-
-    #region CheckListForDuplicates
-    /// <summary>
-    /// generic method that takes any list of IComparables, eg. int, string, but NOT SO's, and checks for duplicates. Debug.LogFormat("[Val]"...) messages generated for dupes.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="listToCheck"></param>
-    private void CheckListForDuplicates<T>(List<T> listToCheck, string typeOfObject = "Unknown", string nameOfObject = "Unknown", string nameOfList = "Unknown") where T : IComparable
-    {
-        if (listToCheck != null)
-        {
-            if (listToCheck.Count > 0)
-            {
-                var query = listToCheck.GroupBy(x => x)
-                                .Where(g => g.Count() > 1)
-                                .Select(y => new { Element = y.Key, Counter = y.Count() })
-                                .ToList();
-                if (query.Count > 0)
-                {
-                    //generate message for each set of duplicates in list
-                    int numOfDuplicates = 0;
-                    foreach (var item in query)
-                    {
-                        numOfDuplicates = item.Counter - 1;
-                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: {0} \"{1}\" , list \"{2}\", record \"{3}\" has {4} duplicate{5}{6}", typeOfObject, nameOfObject, nameOfList,
-                            item.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
-                    }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid listToCheck (Null)"); }
-    }
-    #endregion
-
-    #endregion
-
 
 #if (UNITY_EDITOR)
 
@@ -561,34 +524,41 @@ public class ValidationManager : MonoBehaviour
 
 #endif
 
-
+    #region Data Integrity Checks
     //
     // - - - Integrity Check - - -
     //
 
+    #region ExecuteIntegrityCheck
     /// <summary>
     /// Master method to run all data Integrity checks
     /// </summary>
     public void ExecuteIntegrityCheck()
     {
         string prefix = "[Val] ValidationManager.cs -> ";
+        //range limits
+        int highestActorID = GameManager.instance.actorScript.actorIDCounter;
+        int highestNodeID = GameManager.instance.nodeScript.nodeCounter;
+        //run checks
         if (string.IsNullOrEmpty(prefix) == false)
         {
-            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - - - - {1}", prefix, "\n");
-            CheckNodeData(prefix);
+            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - {1}", prefix, "\n");
+            CheckNodeData(prefix, highestNodeID);
+            CheckActorData(prefix, highestActorID, highestNodeID);
         }
     }
+    #endregion
 
     #region CheckNodeData
     /// <summary>
     /// Integrity check on all node related data collections
     /// </summary>
     /// <param name="prefix"></param>
-    private void CheckNodeData(string prefix)
+    private void CheckNodeData(string prefix, int highestNodeID)
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckNodeData: ");
-        int highestNode = GameManager.instance.nodeScript.nodeCounter;
+        
         int maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
         Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //
@@ -599,8 +569,8 @@ public class ValidationManager : MonoBehaviour
         if (dictOfNodes != null)
         {
             //check count
-            if (dictOfNodes.Count != highestNode)
-            { Debug.LogFormat("{0}Incorrect count, dictOfNodes has {1} records, highestNode {2}{3}", tag, dictOfNodes.Count, highestNode, "\n"); }
+            if (dictOfNodes.Count != highestNodeID)
+            { Debug.LogFormat("{0}Incorrect count, dictOfNodes has {1} records, highestNode {2}{3}", tag, dictOfNodes.Count, highestNodeID, "\n"); }
             foreach (var node in dictOfNodes)
             {
                 //null check record
@@ -608,25 +578,26 @@ public class ValidationManager : MonoBehaviour
                 {
                     key = node.Key.ToString();
                     //range checks
-                    CheckDictRange(node.Key, 0, highestNode, tag, key);
+                    CheckDictRange(node.Key, 0, highestNodeID, tag, key);
                     CheckDictRange(node.Value.Stability, 0, maxStatValue, tag, key);
                     CheckDictRange(node.Value.Support, 0, maxStatValue, tag, key);
                     CheckDictRange(node.Value.Security, 0, maxStatValue, tag, key);
                     //null checks
-                    CheckDictString(node.Value.nodeName, tag, key);
-                    CheckDictObject(node.Value._Material, tag, key);
-                    CheckDictObject(node.Value.gameObject, tag, key);
-                    CheckDictObject(node.Value.Arc, tag, key);
-                    CheckDictObject(node.Value.launcher, tag, key);
-                    CheckDictObject(node.Value.nodePosition, tag, key);
-                    CheckDictObject(node.Value.loiter, tag, key);
+                    CheckDictString(node.Value.nodeName, "nodeName", tag, key);
+                    CheckDictObject(node.Value._Material, "_Material", tag, key);
+                    CheckDictObject(node.Value.gameObject, "gameObject", tag, key);
+                    CheckDictObject(node.Value.Arc, "node.Arc", tag, key);
+                    CheckDictObject(node.Value.launcher, "launcher", tag, key);
+                    CheckDictObject(node.Value.nodePosition, "nodePosition", tag, key);
+                    CheckDictObject(node.Value.loiter, "loiter", tag, key);
                     CheckDictList(node.Value.GetListOfTeams(), "dictOfNodes: listOfTeams", tag, key);
                     CheckDictList(node.Value.GetListOfOngoingEffects(), "dictOfNodes: listOfOngoingEffects", tag, key);
                     CheckDictList(node.Value.GetNeighbouringNodes(), "dictOfNodes: listOfNeighbouringNodes", tag, key);
                     CheckDictList(node.Value.GetNearNeighbours(), "dictOfNodes: listOfNearNeighbours", tag, key);
                     CheckDictList(node.Value.GetListOfConnections(), "dictOfNodes: listOfConnections", tag, key);
                     //duplicate checks
-                    CheckListForDuplicates(node.Value.GetListOfTeamID(), string.Format("dictOfNodes: dictKey {0}", key, "TeamID", "listOfTeams"));
+                    CheckListForDuplicates(node.Value.GetListOfTeamID(), string.Format("dictOfNodes: dictKey {0}", key), "TeamID", "listOfTeams");
+                    CheckListForDuplicates(node.Value.GetListOfOngoingID(), string.Format("dictOfNodes: dictKey {0}", key), "OngoingID", "listOfOngoingEffects");
                 }
                 else { Debug.LogFormat("{0}Invalid entry (Null) in dictOfNodes for nodeID {1}{2}", node.Key, "\n"); }
             }
@@ -641,8 +612,8 @@ public class ValidationManager : MonoBehaviour
             foreach (var node in dictOfNodeObjects)
             {
                 key = node.Key.ToString();
-                CheckDictRange(node.Key, 0, highestNode, tag, key);
-                CheckDictObject(node.Value, tag, key);
+                CheckDictRange(node.Key, 0, highestNodeID, tag, key);
+                CheckDictObject(node.Value, "node", tag, key);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeObjects (Null)"); }
@@ -656,7 +627,7 @@ public class ValidationManager : MonoBehaviour
             {
                 key = arc.Key.ToString();
                 CheckDictRange(arc.Value.nodeArcID, 0, 99, tag, key);
-                CheckDictObject(arc.Value.sprite, tag, key);
+                CheckDictObject(arc.Value.sprite, "sprite", tag, key);
                 CheckDictArray(arc.Value.contactTypes, tag, key);
             }
         }
@@ -670,10 +641,10 @@ public class ValidationManager : MonoBehaviour
             foreach (var nodeD in dictOfNodeUnweighted)
             {
                 key = nodeD.Key.ToString();
-                CheckDictRange(nodeD.Key, 0, highestNode, tag, key);
-                CheckDictObject(nodeD.Value, tag, key);
+                CheckDictRange(nodeD.Key, 0, highestNodeID, tag, key);
+                CheckDictObject(nodeD.Value, "nodeD", tag, key);
                 CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
-                CheckDictString(nodeD.Value.Name, tag, key);
+                CheckDictString(nodeD.Value.Name, "Name", tag, key);
                 CheckDictList(nodeD.Value.Weights, "NodeDUnWeighted: weights", tag, key);
                 CheckDictList(nodeD.Value.Adjacency, "NodeDUnWeighted: adjaceny", tag, key);
             }
@@ -688,10 +659,10 @@ public class ValidationManager : MonoBehaviour
             foreach (var nodeD in dictOfNodeWeighted)
             {
                 key = nodeD.Key.ToString();
-                CheckDictRange(nodeD.Key, 0, highestNode, tag, key);
-                CheckDictObject(nodeD.Value, tag, key);
+                CheckDictRange(nodeD.Key, 0, highestNodeID, tag, key);
+                CheckDictObject(nodeD.Value, "nodeD", tag, key);
                 CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
-                CheckDictString(nodeD.Value.Name, tag, key);
+                CheckDictString(nodeD.Value.Name, "Name", tag, key);
                 CheckDictList(nodeD.Value.Weights, "NodeDWeighted: weights", tag, key);
                 CheckDictList(nodeD.Value.Adjacency, "NodeDWeighted: adjaceny", tag, key);
             }
@@ -700,18 +671,115 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Node lists
         //
-        CheckList(GameManager.instance.dataScript.GetListOfAllNodes(), tag, highestNode);
+        CheckList(GameManager.instance.dataScript.GetListOfAllNodes(), tag, highestNodeID);
         CheckList(GameManager.instance.dataScript.GetListOfMostConnectedNodes(), tag);
         CheckList(GameManager.instance.dataScript.GetListOfDecisionNodes(), tag);
         CheckList(GameManager.instance.dataScript.GetListOfLoiterNodes(), tag);
         CheckList(GameManager.instance.dataScript.GetListOfCureNodes(), tag);
+        //duplicate checks
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfNodeID(), "Node", "nodeID", "listOfNodes");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfMostConnectedNodeID(), "Node", "nodeID", "listOfMostConnectedNodes");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfDecisionNodeID(), "Node", "nodeID", "listOfDecisionNodes");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfLoiterNodeID(), "Node", "nodeID", "listOfLoiterNodes");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfCureNodeID(), "Node", "nodeID", "listOfCureNodes");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfCrisisNodeID(), "Node", "nodeID", "listOfCrisisNodes");
     }
     #endregion
 
+    #region CheckActorData
+    /// <summary>
+    /// Integrity check on all actor related collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="highestActorID"></param>
+    private void CheckActorData(string prefix, int highestActorID, int highestNodeID)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
+        int maxStatValue = GameManager.instance.actorScript.maxStatValue;
+        int maxOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        int maxCompatibility = GameManager.instance.personScript.maxCompatibilityWithPlayer;
+        int minCompatibility = GameManager.instance.personScript.minCompatibilityWithPlayer;
 
+        int maxSlotID = maxOnMapActors - 1;
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //dictOfActors
+        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+        if (dictOfActors != null)
+        {
+            foreach(var actor in dictOfActors)
+            {
+                key = actor.Key.ToString();
+                CheckDictRange(actor.Key, 0, highestActorID, tag, key);
+                CheckDictRange(actor.Value.slotID, -1, maxSlotID, tag, key);
+                CheckDictRange(actor.Value.level, 1, 3, tag, key);
+                CheckDictString(actor.Value.actorName, "actorName", tag, key);
+                CheckDictString(actor.Value.firstName, "firstName", tag, key);
+                CheckDictString(actor.Value.spriteName, "spriteName", tag, key);
+                CheckDictObject(actor.Value.side, "side", tag, key);
+                CheckDictObject(actor.Value.arc, "arc", tag, key);
+                CheckDictObject(actor.Value.sprite, "sprite", tag, key);
+                CheckDictObject(actor.Value.GetTrait(), "trait", tag, key);
+                //personality
+                Personality personality = actor.Value.GetPersonality();
+                if (personality != null)
+                {
+                    CheckDictObject(personality.GetFactors(), "arrayOfFactors", tag, key);
+                    CheckDictRange(personality.GetCompatibilityWithPlayer(), minCompatibility, maxCompatibility, tag, key);
+                    CheckDictString(personality.GetProfile(), "profile", tag, key);
+                    CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
+                    CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
+                }
+                else { Debug.LogFormat("{0}Invalid personality (Null) for actorID {1}{2}", tag, actor.Key, "\n"); }
+                
+
+            }
+        }
+        else { Debug.LogError("Invalid dictOfActors (Null)"); }
+    }
+    #endregion
+
+    #endregion
+
+
+    #region Utilities
     //
-    // - - - SubMethods
+    // - - - Utilities - - - 
     //
+
+    #region CheckListForDuplicates
+    /// <summary>
+    /// generic method that takes any list of IComparables, eg. int, string, but NOT SO's, and checks for duplicates. Debug.LogFormat("[Val]"...) messages generated for dupes.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="listToCheck"></param>
+    private void CheckListForDuplicates<T>(List<T> listToCheck, string typeOfObject = "Unknown", string nameOfObject = "Unknown", string nameOfList = "Unknown") where T : IComparable
+    {
+        if (listToCheck != null)
+        {
+            if (listToCheck.Count > 0)
+            {
+                var query = listToCheck.GroupBy(x => x)
+                                .Where(g => g.Count() > 1)
+                                .Select(y => new { Element = y.Key, Counter = y.Count() })
+                                .ToList();
+                if (query.Count > 0)
+                {
+                    //generate message for each set of duplicates in list
+                    int numOfDuplicates = 0;
+                    foreach (var item in query)
+                    {
+                        numOfDuplicates = item.Counter - 1;
+                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: {0} \"{1}\" , list \"{2}\", record \"{3}\" has {4} duplicate{5}{6}", typeOfObject, nameOfObject, nameOfList,
+                            item.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listToCheck (Null)"); }
+    }
+    #endregion
+
 
     /// <summary>
     /// Checks that a dictionary int value is inside specified range (inclusive)
@@ -724,7 +792,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckDictRange(int value, int lower, int upper, string tag, string key)
     {
         if (value < lower || value > upper)
-        { Debug.LogFormat("{0}dictKey \"{1}\" outside of range ({2} to {3}){4}", tag, key, lower, upper, key, "\n"); }
+        { Debug.LogFormat("{0}dictKey \"{1}\" outside of range ({2} to {3}), value {4}", tag, key, lower, upper, value, "\n"); }
     }
 
     /// <summary>
@@ -733,10 +801,10 @@ public class ValidationManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="tag"></param>
     /// <param name="key"></param>
-    private void CheckDictString(string text, string tag, string key)
+    private void CheckDictString(string text, string stringName, string tag, string key)
     {
         if (string.IsNullOrEmpty(text) == true)
-        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, text, key, "\n"); }
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, stringName, key, "\n"); }
     }
 
     /// <summary>
@@ -746,10 +814,10 @@ public class ValidationManager : MonoBehaviour
     /// <param name="thing"></param>
     /// <param name="tag"></param>
     /// <param name="key"></param>
-    private void CheckDictObject<T>(T thing, string tag, string key)
+    private void CheckDictObject<T>(T thing, string objectName, string tag, string key)
     {
         if (thing == null)
-        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", objectName, tag, key, "\n"); }
     }
 
     /// <summary>
@@ -807,26 +875,9 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid {0} (Null)", nameof(list)); }
     }
 
-    /*/// <summary>
-    /// Check a list (value types only, eg. int) for duplicates and optional check for size of list (ignore otherwise)
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
-    /// <param name="tag"></param>
-    /// <param name="expectedCount"></param>
-    private void CheckListForDuplicates<T>(List<T> list, string tag, int expectedCount = 0)
-    {
-        int numOfDuplicates;
-        var query = list.GroupBy(x => x)
-            .Where(g => g.Count() > 1)
-            .Select(y => new { Element = y.Key, Counter = y.Count() })
-            .ToList();
-        foreach (var record in query)
-        {
-            numOfDuplicates = record.Counter - 1;
-            Debug.LogFormat("{0}, record {1} has {2} duplicate{3}{4}", tag,  record.Element, numOfDuplicates, numOfDuplicates != 1 ? "s" : "", "\n");
-        }
-    }*/
+    #endregion
+
+
 
 
 

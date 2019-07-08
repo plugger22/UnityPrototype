@@ -23,6 +23,16 @@ public class PersonalityManager : MonoBehaviour
     [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 3")]
     [Range(1, 100)] public int compatibilityChanceThree = 60;
 
+    [Header("Range Limits")]
+    [Tooltip("Max value allowed for a personality factor")]
+    [Range(2, 2)] public int maxPersonalityFactor = 2;
+    [Tooltip("Min value allowed for a personality factor")]
+    [Range(-2, -2)] public int minPersonalityFactor = -2;
+    [Tooltip("Max value allowed for a compatibilityWithPlayer")]
+    [Range(3, 3)] public int maxCompatibilityWithPlayer = 3;
+    [Tooltip("Min value allowed for a compatibilityWithPlayer")]
+    [Range(-3, -3)] public int minCompatibilityWithPlayer = -3;
+
     //Fast access
     private Factor[] arrayOfFactors;
     private string[] arrayOfFactorTags;
@@ -321,8 +331,6 @@ public class PersonalityManager : MonoBehaviour
                 //calculate alpha & beta of personality
                 int alpha = personality.GetAlpha();
                 int beta = personality.GetBeta();
-
-
                 //loop dictionary trying to find a profile match
                 foreach (var profile in dictOfProfiles)
                 {
