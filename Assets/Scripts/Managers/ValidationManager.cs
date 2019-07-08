@@ -836,7 +836,7 @@ public class ValidationManager : MonoBehaviour
             {
                 key = target.Key;
                 CheckDictRange(target.Value.intel, 0, maxTargetIntel, "intel", tag, key);
-                if (target.Value.targetStatus != Status.Dormant)
+                if (target.Value.targetStatus != Status.Dormant && target.Value.targetStatus != Status.Done)
                 { CheckDictRange(target.Value.nodeID, 0, highestNodeID, "nodeID", tag, key); }
                 if (target.Value.targetStatus == Status.Done)
                 { CheckDictRange(target.Value.turnDone, 0, highestTurn, "turnDone", tag, key); }
@@ -847,6 +847,13 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
+        //
+        // - - - Target lists
+        //
+        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Active), "targetPoolActive", tag);
+        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Live), "targetPoolLive", tag);
+        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding), "targetPoolOutstanding", tag);
+        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Done), "targetPoolDone", tag);        
     }
 
     #endregion
@@ -902,7 +909,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckDictRange(int value, int lower, int upper, string varName, string tag, string key)
     {
         if (value < lower || value > upper)
-        { Debug.LogFormat("{0}dictKey \"{1}\", value {2}, outside of range ({3} to {4}){5}", tag, key, value, lower, upper, "\n"); }
+        { Debug.LogFormat("{0}dictKey \"{1}\", variable {2}, value {3}, outside of range ({4} to {5}){6}", tag, key, varName, value, lower, upper, "\n"); }
     }
 
     /// <summary>
