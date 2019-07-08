@@ -907,7 +907,7 @@ public class FileManager : MonoBehaviour
         write.nodeData.nodeHighlight = GameManager.instance.nodeScript.nodeHighlight;
         write.nodeData.nodePlayer = GameManager.instance.nodeScript.nodePlayer;
         write.nodeData.nodeNemesis = GameManager.instance.nodeScript.nodeNemesis;
-        write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeCaptured;
+        write.nodeData.nodeCaptured = GameManager.instance.nodeScript.nodeCaptured;
         //
         // - - - Node.cs
         //

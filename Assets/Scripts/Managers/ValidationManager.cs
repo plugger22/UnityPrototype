@@ -12,11 +12,27 @@ using UnityEngine;
 /// </summary>
 public class ValidationManager : MonoBehaviour
 {
+
+    //fast access
+    GlobalSide globalAuthority;
+    GlobalSide globalResistance;
+
+    #region InitialiseFastAccess
+    private void InitialiseFastAccess()
+    {
+        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalResistance = GameManager.instance.globalScript.sideResistance;
+        Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+    }
+    #endregion
+
     /// <summary>
     /// Master control for all validations
     /// </summary>
     public void Initialise(GameState state)
     {
+        InitialiseFastAccess();
         ValidateTargets();
         ValidateGear();
         ValidateMissions();
@@ -333,6 +349,7 @@ public class ValidationManager : MonoBehaviour
     #endregion
 
 
+
 #if (UNITY_EDITOR)
 
     #region ValidateSO
@@ -539,12 +556,15 @@ public class ValidationManager : MonoBehaviour
         //range limits
         int highestActorID = GameManager.instance.actorScript.actorIDCounter;
         int highestNodeID = GameManager.instance.nodeScript.nodeCounter;
+        int highestContactID = GameManager.instance.contactScript.contactIDCounter;
+        int highestTurn = GameManager.instance.turnScript.Turn;
         //run checks
         if (string.IsNullOrEmpty(prefix) == false)
         {
             Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - {1}", prefix, "\n");
             CheckNodeData(prefix, highestNodeID);
             CheckActorData(prefix, highestActorID, highestNodeID);
+            CheckTargetData(prefix, highestNodeID, highestContactID, highestTurn);
         }
     }
     #endregion
@@ -578,10 +598,10 @@ public class ValidationManager : MonoBehaviour
                 {
                     key = node.Key.ToString();
                     //range checks
-                    CheckDictRange(node.Key, 0, highestNodeID, tag, key);
-                    CheckDictRange(node.Value.Stability, 0, maxStatValue, tag, key);
-                    CheckDictRange(node.Value.Support, 0, maxStatValue, tag, key);
-                    CheckDictRange(node.Value.Security, 0, maxStatValue, tag, key);
+                    CheckDictRange(node.Key, 0, highestNodeID, "nodeID", tag, key);
+                    CheckDictRange(node.Value.Stability, 0, maxStatValue, "Stability", tag, key);
+                    CheckDictRange(node.Value.Support, 0, maxStatValue, "Support", tag, key);
+                    CheckDictRange(node.Value.Security, 0, maxStatValue, "Security", tag, key);
                     //null checks
                     CheckDictString(node.Value.nodeName, "nodeName", tag, key);
                     CheckDictObject(node.Value._Material, "_Material", tag, key);
@@ -612,7 +632,7 @@ public class ValidationManager : MonoBehaviour
             foreach (var node in dictOfNodeObjects)
             {
                 key = node.Key.ToString();
-                CheckDictRange(node.Key, 0, highestNodeID, tag, key);
+                CheckDictRange(node.Key, 0, highestNodeID, "nodeID", tag, key);
                 CheckDictObject(node.Value, "node", tag, key);
             }
         }
@@ -626,9 +646,9 @@ public class ValidationManager : MonoBehaviour
             foreach (var arc in dictOfNodeArcs)
             {
                 key = arc.Key.ToString();
-                CheckDictRange(arc.Value.nodeArcID, 0, 99, tag, key);
+                CheckDictRange(arc.Value.nodeArcID, 0, 99, "nodeArcID", tag, key);
                 CheckDictObject(arc.Value.sprite, "sprite", tag, key);
-                CheckDictArray(arc.Value.contactTypes, tag, key);
+                CheckDictArray(arc.Value.contactTypes, "arrayOfContactTypes", tag, key, true);
             }
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
@@ -641,11 +661,11 @@ public class ValidationManager : MonoBehaviour
             foreach (var nodeD in dictOfNodeUnweighted)
             {
                 key = nodeD.Key.ToString();
-                CheckDictRange(nodeD.Key, 0, highestNodeID, tag, key);
+                CheckDictRange(nodeD.Key, 0, highestNodeID, "nodeD.ID", tag, key);
                 CheckDictObject(nodeD.Value, "nodeD", tag, key);
-                CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
+                CheckDictRange(nodeD.Value.Distance, 0, 99, "Distance", tag, key);
                 CheckDictString(nodeD.Value.Name, "Name", tag, key);
-                CheckDictList(nodeD.Value.Weights, "NodeDUnWeighted: weights", tag, key);
+                CheckDictList(nodeD.Value.Weights, "NodeDUnWeighted: weights", tag, key, false);
                 CheckDictList(nodeD.Value.Adjacency, "NodeDUnWeighted: adjaceny", tag, key);
             }
         }
@@ -659,11 +679,11 @@ public class ValidationManager : MonoBehaviour
             foreach (var nodeD in dictOfNodeWeighted)
             {
                 key = nodeD.Key.ToString();
-                CheckDictRange(nodeD.Key, 0, highestNodeID, tag, key);
+                CheckDictRange(nodeD.Key, 0, highestNodeID, "nodeD.ID", tag, key);
                 CheckDictObject(nodeD.Value, "nodeD", tag, key);
-                CheckDictRange(nodeD.Value.Distance, 0, 99, tag, key);
+                CheckDictRange(nodeD.Value.Distance, 0, 99, "Distance", tag, key);
                 CheckDictString(nodeD.Value.Name, "Name", tag, key);
-                CheckDictList(nodeD.Value.Weights, "NodeDWeighted: weights", tag, key);
+                CheckDictList(nodeD.Value.Weights, "NodeDWeighted: weights", tag, key, false);
                 CheckDictList(nodeD.Value.Adjacency, "NodeDWeighted: adjaceny", tag, key);
             }
         }
@@ -671,11 +691,11 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Node lists
         //
-        CheckList(GameManager.instance.dataScript.GetListOfAllNodes(), tag, highestNodeID);
-        CheckList(GameManager.instance.dataScript.GetListOfMostConnectedNodes(), tag);
-        CheckList(GameManager.instance.dataScript.GetListOfDecisionNodes(), tag);
-        CheckList(GameManager.instance.dataScript.GetListOfLoiterNodes(), tag);
-        CheckList(GameManager.instance.dataScript.GetListOfCureNodes(), tag);
+        CheckList(GameManager.instance.dataScript.GetListOfAllNodes(), tag, "listOfNodes", highestNodeID);
+        CheckList(GameManager.instance.dataScript.GetListOfMostConnectedNodes(), "listOfMostConnectedNodes", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfDecisionNodes(), "listOfDecisionNodes", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfLoiterNodes(), "listOfLoiterNodes", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfCureNodes(), "listOfCureNodes", tag);
         //duplicate checks
         CheckListForDuplicates(GameManager.instance.dataScript.GetListOfNodeID(), "Node", "nodeID", "listOfNodes");
         CheckListForDuplicates(GameManager.instance.dataScript.GetListOfMostConnectedNodeID(), "Node", "nodeID", "listOfMostConnectedNodes");
@@ -700,19 +720,24 @@ public class ValidationManager : MonoBehaviour
         int maxOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         int maxCompatibility = GameManager.instance.personScript.maxCompatibilityWithPlayer;
         int minCompatibility = GameManager.instance.personScript.minCompatibilityWithPlayer;
+        int maxFactor = GameManager.instance.personScript.maxPersonalityFactor;
+        int minFactor = GameManager.instance.personScript.minPersonalityFactor;
+        /*int numOfActorArcs = GameManager.instance.dataScript.GetNumOfActorArcs();*/
 
         int maxSlotID = maxOnMapActors - 1;
         Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
-        //dictOfActors
+        //
+        // - - - dictOfActors
+        //
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
             foreach(var actor in dictOfActors)
             {
                 key = actor.Key.ToString();
-                CheckDictRange(actor.Key, 0, highestActorID, tag, key);
-                CheckDictRange(actor.Value.slotID, -1, maxSlotID, tag, key);
-                CheckDictRange(actor.Value.level, 1, 3, tag, key);
+                CheckDictRange(actor.Key, 0, highestActorID, "actorID", tag, key);
+                CheckDictRange(actor.Value.slotID, -1, maxSlotID, "slotID", tag, key);
+                CheckDictRange(actor.Value.level, 1, 3, "level", tag, key);
                 CheckDictString(actor.Value.actorName, "actorName", tag, key);
                 CheckDictString(actor.Value.firstName, "firstName", tag, key);
                 CheckDictString(actor.Value.spriteName, "spriteName", tag, key);
@@ -720,24 +745,109 @@ public class ValidationManager : MonoBehaviour
                 CheckDictObject(actor.Value.arc, "arc", tag, key);
                 CheckDictObject(actor.Value.sprite, "sprite", tag, key);
                 CheckDictObject(actor.Value.GetTrait(), "trait", tag, key);
+                CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint0), 0, maxStatValue, "datapoint0", tag, key);
+                CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint1), 0, maxStatValue, "datapoint1", tag, key);
+                CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint2), 0, maxStatValue, "datapoint2", tag, key);
+                CheckDictRange(actor.Value.Renown, 0, 99, "Renown", tag, key);
+                CheckDictList(actor.Value.GetListOfTeams(), "listOfTeams", tag, key, false);
+                CheckDictList(actor.Value.GetListOfSecrets(), "listOfSecrets", tag, key);
+                CheckDictList(actor.Value.GetListOfConditions(), "listOfConditions", tag, key);
+                CheckDictList(actor.Value.GetListOfTraitEffects(), "listOfTraitEffects", tag, key);
+                CheckDictDict(actor.Value.GetDictOfContacts(), "dictOfContacts", tag, key);
                 //personality
                 Personality personality = actor.Value.GetPersonality();
                 if (personality != null)
                 {
-                    CheckDictObject(personality.GetFactors(), "arrayOfFactors", tag, key);
-                    CheckDictRange(personality.GetCompatibilityWithPlayer(), minCompatibility, maxCompatibility, tag, key);
-                    CheckDictString(personality.GetProfile(), "profile", tag, key);
-                    CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
-                    CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
+                    CheckDictArrayBounds(personality.GetFactors(), "arrayOfFactors", tag, key, minFactor, maxFactor);
+                    CheckDictRange(personality.GetCompatibilityWithPlayer(), minCompatibility, maxCompatibility, "compatibilityWithPlayer", tag, key);
+                    if (personality.GetProfile() != null)
+                    {
+                        CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
+                        CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
+                        CheckList(personality.GetListOfDescriptors(), ",personality.listOfDescriptors", tag);
+                        CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
+                    }
                 }
                 else { Debug.LogFormat("{0}Invalid personality (Null) for actorID {1}{2}", tag, actor.Key, "\n"); }
-                
-
             }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        //
+        // - - - Other Actor Collections
+        //
+        CheckList(GameManager.instance.dataScript.GetListOfActorTypes(), "listOfActorTypes", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfActorPortraits(), "listOfActorPortraits", tag);
+        //authority
+        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), "authorityActorPoolLevelOne", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), "authorityActorPoolLevelTwo", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority), "authorityActorPoolLevelThree", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve), "authorityActorReserve", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Dismissed), "authorityActorDismissed", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Promoted), "authorityActorPromoted", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Disposed), "authorityActorDisposedOff", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Resigned), "authorityActorResigned", tag, 0, false);
+        //resistance
+        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance), "resistanceActorPoolLevelOne", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance), "resistanceActorPoolLevelTwo", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance), "resistanceActorPoolLevelThree", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve), "resistanceActorReserve", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Dismissed), "resistanceActorDismissed", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "resistanceActorPromoted", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "resistanceActorDisposedOff", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "resistanceActorResigned", tag, 0, false);
+        //authority duplicates
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), "actorID", "actor", "authorityActorPoolLevelOne");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), "actorID", "actor", "authorityActorPoolLevelTwo");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority), "actorID", "actor", "authorityActorPoolLevelThree");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve), "actorID", "actor", "authorityActorReserve");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Dismissed), "actorID", "actor", "authorityActorDismissed");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Promoted), "actorID", "actor", "authorityActorPromoted");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Disposed), "actorID", "actor", "authorityActorDisposedOff");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Resigned), "actorID", "actor", "authorityActorResigned");
+        //resistence duplicates
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance), "actorID", "actor", "resistanceActorPoolLevelOne");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance), "actorID", "actor", "resistanceActorPoolLevelTwo");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance), "actorID", "actor", "resistanceActorPoolLevelThree");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve), "actorID", "actor", "resistanceActorReserve");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Dismissed), "actorID", "actor", "resistanceActorDismissed");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "actorID", "actor", "resistanceActorPromoted");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "actorID", "actor", "resistanceActorDisposedOff");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "actorID", "actor", "resistanceActorResigned");
     }
     #endregion
+
+    /// <summary>
+    /// Integrity check on all target related collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckTargetData(string prefix, int highestNodeID, int highestContactID, int highestTurn)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckTargetData: ");
+        int maxTargetIntel = GameManager.instance.targetScript.maxTargetInfo;
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfTargets
+        //
+        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        if (dictOfTargets != null)
+        {
+            foreach(var target in dictOfTargets)
+            {
+                key = target.Key;
+                CheckDictRange(target.Value.intel, 0, maxTargetIntel, "intel", tag, key);
+                if (target.Value.targetStatus != Status.Dormant)
+                { CheckDictRange(target.Value.nodeID, 0, highestNodeID, "nodeID", tag, key); }
+                if (target.Value.targetStatus == Status.Done)
+                { CheckDictRange(target.Value.turnDone, 0, highestTurn, "turnDone", tag, key); }
+                CheckDictRange(target.Value.distance, 0, 20, "distance", tag, key);
+                CheckDictRange(target.Value.numOfAttempts, 0, 20, "numOfAtttempts", tag, key);
+                CheckDictList(target.Value.listOfRumourContacts, "listOfRumourContacts", tag, key, false);
+                CheckDictListBounds(target.Value.listOfRumourContacts, "listOfRumourContacts", tag, key, 0, highestContactID);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTargets (Null)"); }
+    }
 
     #endregion
 
@@ -789,10 +899,10 @@ public class ValidationManager : MonoBehaviour
     /// <param name="upper"></param>
     /// <param name="tag"></param>
     /// <param name="key"></param>
-    private void CheckDictRange(int value, int lower, int upper, string tag, string key)
+    private void CheckDictRange(int value, int lower, int upper, string varName, string tag, string key)
     {
         if (value < lower || value > upper)
-        { Debug.LogFormat("{0}dictKey \"{1}\" outside of range ({2} to {3}), value {4}", tag, key, lower, upper, value, "\n"); }
+        { Debug.LogFormat("{0}dictKey \"{1}\", value {2}, outside of range ({3} to {4}){5}", tag, key, value, lower, upper, "\n"); }
     }
 
     /// <summary>
@@ -817,45 +927,144 @@ public class ValidationManager : MonoBehaviour
     private void CheckDictObject<T>(T thing, string objectName, string tag, string key)
     {
         if (thing == null)
-        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", objectName, tag, key, "\n"); }
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, objectName, key, "\n"); }
     }
 
     /// <summary>
-    /// Check dictionary list for Null and duplicates (optional, default false)
+    /// Check dictionary list for Null and check elements in list for Null (optional, default true)
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckDictList<T>(List<T> list, string listName, string tag, string key)
+    private void CheckDictList<T>(List<T> list, string listName, string tag, string key, bool isNullCheckContents = true)
     {
         if (list == null)
-        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, listName, key, "\n"); }
+        else
+        {
+            if (isNullCheckContents == true)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    { Debug.LogFormat("{0}\"{1}\"[{2] invalid (Null) for dictKey {3}{4}", tag, listName, i, key, "\n"); }
+                }
+            }
+        }
     }
 
-
+    /// <summary>
+    /// Bounds checks a dict list of Int's (each element checked if within lower and upper, inclusive) 
+    /// </summary>
+    /// <param name="list"></param>
+    /// <param name="listName"></param>
+    /// <param name="tag"></param>
+    /// <param name="key"></param>
+    /// <param name="lower"></param>
+    /// <param name="upper"></param>
+    private void CheckDictListBounds(List<int> list, string listName, string tag, string key, int lower = 0, int upper = 0)
+    {
+        if (list != null)
+        {
+            if (lower != 0 || upper != 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] < lower || list[i] > upper)
+                    { Debug.LogFormat("{0}\"{1}\"[{2}] failed bounds check, value {3) (should be between {4} and {5}){6}", tag, listName, i, list[i], lower, upper, "\n"); }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid CheckDictListBounds for {0} check as both lower and upper bounds are Zero{1}", listName, "\n"); }
+        }
+        else { Debug.LogFormat("{0}\"{1}\" Invalid (Null) for dictKey {2}{3}", tag, listName, key, "\n"); }
+    }
 
     /// <summary>
-    /// Check dictionary array for Null
+    /// Check an encapsulated Dictionary within a dict object for null and all elements in list for Null (optional ,default true)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="listName"></param>
+    /// <param name="tag"></param>
+    /// <param name="key"></param>
+    /// <param name="isNullCheckContents"></param>
+    private void CheckDictDict<K, T>(Dictionary<K, T> dict, string dictName, string tag, string key, bool isNullCheckContents = true)
+    {
+        if (dict == null)
+        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, dictName, key, "\n"); }
+        else
+        {
+            if (isNullCheckContents == true)
+            {
+                foreach(var record in dict)
+                {
+                    if (record.Value == null)
+                    { Debug.LogFormat("{0}\"{1}\"[{2}] invalid (Null) for dictKey {3}{4}", tag, dictName, record.Key, key, "\n"); }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Check a Dict array for null. Elements checked for null if 'isNullCheckContents' true
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="array"></param>
-    /// <param name="key"></param>
     /// <param name="tag"></param>
-    private void CheckDictArray<T>(T[] array, string tag, string key)
+    private void CheckDictArray<T>(T[] array, string arrayName, string tag, string key, bool isNullCheckContents = false)
     {
-        if (array == null)
-        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, nameof(T), key, "\n"); }
+        if (array != null)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                //null checks on elements
+                if (isNullCheckContents == true)
+                {
+                    T item = array[0];
+                    if (item == null)
+                    { Debug.LogFormat("{0}{1}[{2}] is invalid (Null) for dictKey {3}{4}", tag, arrayName, i, key, "\n"); }
+                }
+            }
+        }
+        else { Debug.LogFormat("{0}\"{1}\" Invalid (Null) for dictKey {2}{3}", tag, arrayName, key, "\n"); }
     }
 
     /// <summary>
-    /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null
+    /// Bounds checks a dict array of Int's (each element checked if within lower and upper, inclusive) 
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="arrayName"></param>
+    /// <param name="tag"></param>
+    /// <param name="key"></param>
+    /// <param name="lower"></param>
+    /// <param name="upper"></param>
+    private void CheckDictArrayBounds(int[] array, string arrayName, string tag, string key, int lower = 0, int upper = 0)
+    {
+        if (array != null)
+        {
+            if (lower != 0 || upper != 0)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (array[i] < lower || array[i] > upper)
+                    { Debug.LogFormat("{0}\"{1}\"[{2}] failed bounds check, value {3) (should be between {4} and {5}){6}", tag, arrayName, i, array[i], lower, upper, "\n"); }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid CheckDictArrayBounds for {0} check as both lower and upper bounds are Zero{1}", arrayName, "\n"); }
+        }
+        else { Debug.LogFormat("{0}\"{1}\" Invalid (Null) for dictKey {2}{3}", tag, arrayName, key, "\n"); }
+    }
+
+
+    /// <summary>
+    /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null (optional, default true)
     /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="tag"></param>
-    private void CheckList<T>(List<T> list, string tag, int expectedCount = 0)
+    private void CheckList<T>(List<T> list, string listName, string tag, int expectedCount = 0, bool isNullCheckContents = true)
     {
         if (list != null)
         {
@@ -863,17 +1072,22 @@ public class ValidationManager : MonoBehaviour
             if (expectedCount > 0)
             {
                 if (list.Count != expectedCount)
-                { Debug.LogFormat("{0}Mismatch for {1} on count (was {2}, expected {3}){4}", tag, nameof(list), list.Count, expectedCount, "\n"); }
+                { Debug.LogFormat("{0}Mismatch for {1} on count (was {2}, expected {3}){4}", tag, listName, list.Count, expectedCount, "\n"); }
             }
             //check for null records in list
-            foreach (T item in list)
+            if (isNullCheckContents == true)
             {
-                if (item == null)
-                { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), nameof(list), "\n"); }
+                foreach (T item in list)
+                {
+                    if (item == null)
+                    { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), listName, "\n"); }
+                }
             }
         }
-        else { Debug.LogErrorFormat("Invalid {0} (Null)", nameof(list)); }
+        else { Debug.LogFormat("{0}\"{1}\" Invalid (Null){2}", tag, listName, "\n"); }
     }
+
+
 
     #endregion
 

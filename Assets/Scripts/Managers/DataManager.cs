@@ -46,6 +46,11 @@ public class DataManager : MonoBehaviour
     //Connections
     private List<Connection> listOfConnections = new List<Connection>();                       //main list of connections used for iteration (rather than dictOfConnections)
 
+    //team pools
+    private List<int> teamPoolReserve = new List<int>();
+    private List<int> teamPoolOnMap = new List<int>();
+    private List<int> teamPoolInTransit = new List<int>();
+
     //Actors
     private List<TextMeshProUGUI> listOfActorTypes = new List<TextMeshProUGUI>();               //actors (not player)
     private List<Image> listOfActorPortraits = new List<Image>();                               //actors (not player)
@@ -53,11 +58,6 @@ public class DataManager : MonoBehaviour
     //actor quality input arrays (used to populate arrayOfQualities)
     private Quality[] authorityQualities;
     private Quality[] resistanceQualities;
-
-    //team pools
-    private List<int> teamPoolReserve = new List<int>();
-    private List<int> teamPoolOnMap = new List<int>();
-    private List<int> teamPoolInTransit = new List<int>();
 
     //actor pools
     private List<int> authorityActorPoolLevelOne = new List<int>();
@@ -782,6 +782,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, ActorArc> GetDictOfActorArcs()
     { return dictOfActorArcs; }
+
+    public int GetNumOfActorArcs()
+    { return dictOfActorArcs.Count; }
 
 
     public List<ActorArc> GetListOfAuthorityActorArcs()
@@ -3946,6 +3949,9 @@ public class DataManager : MonoBehaviour
                     case ActorList.Disposed:
                         listOfActors = authorityActorDisposedOf;
                         break;
+                    case ActorList.Resigned:
+                        listOfActors = authorityActorResigned;
+                        break;
                     default:
                         Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list));
                         break;
@@ -3965,6 +3971,9 @@ public class DataManager : MonoBehaviour
                         break;
                     case ActorList.Disposed:
                         listOfActors = resistanceActorDisposedOf;
+                        break;
+                    case ActorList.Resigned:
+                        listOfActors = resistanceActorResigned;
                         break;
                     default:
                         Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list));
