@@ -584,6 +584,7 @@ public class ValidationManager : MonoBehaviour
             CheckGearData(prefix);
             CheckConnectionData(prefix, highestNodeID, highestConnID);
             CheckMessageData(prefix, highestMessageID, highestTurn);
+            CheckSecretData(prefix, highestActorID, highestTurn);
         }
     }
     #endregion
@@ -597,7 +598,7 @@ public class ValidationManager : MonoBehaviour
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckNodeData: ");
-        
+
         int maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
         Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //
@@ -749,7 +750,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
-            foreach(var actor in dictOfActors)
+            foreach (var actor in dictOfActors)
             {
                 key = actor.Key.ToString();
                 CheckDictRange(actor.Key, 0, highestActorID, "actorID", tag, key);
@@ -850,7 +851,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
-            foreach(var target in dictOfTargets)
+            foreach (var target in dictOfTargets)
             {
                 key = target.Key;
                 CheckDictRange(target.Value.intel, 0, maxTargetIntel, "intel", tag, key);
@@ -894,7 +895,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
-            foreach(var team in dictOfTeams)
+            foreach (var team in dictOfTeams)
             {
                 key = team.Key.ToString();
                 CheckDictRange(team.Value.teamID, 0, highestTeamID, "teamID", tag, key);
@@ -944,7 +945,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
-            foreach(var gear in dictOfGear)
+            foreach (var gear in dictOfGear)
             {
                 key = gear.Key;
                 CheckDictObject(gear.Value, "Gear.Value", tag, key);
@@ -977,7 +978,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
-            foreach(var conn in dictOfConnections)
+            foreach (var conn in dictOfConnections)
             {
                 key = conn.Key.ToString();
                 CheckDictRange(conn.Value.connID, 0, highestConnID, "connID", tag, key);
@@ -1010,7 +1011,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
         if (dictOfArchiveMessages != null)
         {
-            foreach(var message in dictOfArchiveMessages)
+            foreach (var message in dictOfArchiveMessages)
             {
                 key = message.Key.ToString();
                 CheckDictRange(message.Value.msgID, 0, highestMessageID, "msgID", tag, key);
@@ -1074,6 +1075,60 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckSecretData
+    /// <summary>
+    /// Integrity check for all secret related collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="highestActorID"></param>
+    /// <param name="highestTurn"></param>
+    private void CheckSecretData(string prefix, int highestActorID, int highestTurn)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckSecretData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfSecrets
+        //
+        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        if (dictOfSecrets != null)
+        {
+            foreach (var secret in dictOfSecrets)
+            {
+                key = secret.Key;
+                switch (secret.Value.status)
+                {
+                    case gameAPI.SecretStatus.Inactive:
+
+                        break;
+                    case gameAPI.SecretStatus.Active:
+                        CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
+                        break;
+                    case gameAPI.SecretStatus.Revealed:
+                        CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.revealedWhen, 0, highestTurn, "revealedWhen (turn)", tag, key);
+                        CheckDictRange(secret.Value.revealedWho, 0, highestActorID, "revealedWho (actor)", tag, key);
+                        break;
+                    case gameAPI.SecretStatus.Deleted:
+                        CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.deletedWhen, 0, highestTurn, "deletedWhen", tag, key);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised secret.status \"{0}\" for {1}", secret.Value.status, key);
+                        break;
+                }
+                CheckDictListBounds(secret.Value.GetListOfActors(), "listOfActors", tag, key, 0, highestActorID);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfSecrets (Null)"); }
+        //
+        // - - - lists Of Secrets
+        //
+        CheckList(GameManager.instance.dataScript.GetListOfPlayerSecrets(), "listOfPlayerSecrets", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfRevealedSecrets(), "listOfRevealedSecrets", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfDeletedSecrets(), "listOfDeletedSecrets", tag);
+    }
+    #endregion
 
     #endregion
 
@@ -1223,7 +1278,7 @@ public class ValidationManager : MonoBehaviour
         {
             if (isNullCheckContents == true)
             {
-                foreach(var record in dict)
+                foreach (var record in dict)
                 {
                     if (record.Value == null)
                     { Debug.LogFormat("{0}\"{1}\"[{2}] invalid (Null) for dictKey {3}{4}", tag, dictName, record.Key, key, "\n"); }

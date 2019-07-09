@@ -264,7 +264,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f6e7cce33899234387606982c90b0f0, type: 2}
   listOfTeamPrioritiesLow:
   - {fileID: 11400000, guid: d59514a9341d2ee4f9fa3c75e39a50f0, type: 2}
-  teamCounter: 0
+  teamIDCounter: 0
 --- !u!114 &114183753687402266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,6 +596,10 @@ MonoBehaviour:
   compatibilityChanceOne: 20
   compatibilityChanceTwo: 40
   compatibilityChanceThree: 60
+  maxPersonalityFactor: 2
+  minPersonalityFactor: -2
+  maxCompatibilityWithPlayer: 3
+  minCompatibilityWithPlayer: -3
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -680,8 +684,8 @@ MonoBehaviour:
   crisisSupport: 3
   numOfSmokeParticles: 30
   crisisPolicyModifier: 0
-  nodeCounter: 0
-  connCounter: 0
+  nodeIDCounter: 0
+  connIDCounter: 0
   nodeHighlight: -1
   nodePlayer: 0
   nodeNemesis: -1

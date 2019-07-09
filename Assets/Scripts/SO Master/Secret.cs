@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using gameAPI;
 
 /// <summary>
 /// SO for Secrets. Name of SO is the name of the secret, eg. "Paid to Murder"
@@ -28,9 +26,17 @@ public class Secret : ScriptableObject
     [HideInInspector] public int revealedWho;               //actorID of person who revealed the secret
     [HideInInspector] public int revealedWhen;              //turn revealed
     [HideInInspector] public int deletedWhen;               //turn deleted (removed from game without being revealed)
-
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
     #endregion
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+        Debug.AssertFormat(listOfEffects != null, "Invalid listOfEffects (Null) for {0}", name);
+        Debug.AssertFormat(type != null, "Invalid type (Null) for {0}", name);
+    }
 
     /// <summary>
     /// called by SecretManager.cs -> need to reset data back to default settings otherwise will carry over between sessions
@@ -109,7 +115,7 @@ public class Secret : ScriptableObject
     public List<int> GetListOfActors()
     { return listOfActors; }
 
-    
+
     /// <summary>
     /// Copies a full list of Actors across. Used for loading save games.
     /// </summary>
