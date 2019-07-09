@@ -18,3 +18,66 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 52165 -> Monday, 8 July 2019 5:33 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 20486 -> Tuesday, 9 July 2019 9:00 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54638 -> Tuesday, 9 July 2019 9:25 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25118 -> Tuesday, 9 July 2019 9:30 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7705 -> Tuesday, 9 July 2019 9:31 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60163 -> Tuesday, 9 July 2019 9:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41333 -> Tuesday, 9 July 2019 9:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11668 -> Tuesday, 9 July 2019 9:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8732 -> Tuesday, 9 July 2019 9:56 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15575 -> Tuesday, 9 July 2019 9:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1690 -> Tuesday, 9 July 2019 10:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11123 -> Tuesday, 9 July 2019 10:09 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23363 -> Tuesday, 9 July 2019 10:11 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57471 -> Tuesday, 9 July 2019 10:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62423 -> Tuesday, 9 July 2019 10:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4568 -> Tuesday, 9 July 2019 10:24 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+WARNING Unrecognised GameState "FollowOnInitialisation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTeamPicker:Initialise(GameState) (at Assets/Scripts/GUI/ModalTeamPicker.cs:86)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:694)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:811)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:231)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:82)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:208)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 12079 -> Tuesday, 9 July 2019 10:28 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

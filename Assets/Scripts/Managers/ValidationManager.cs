@@ -556,15 +556,27 @@ public class ValidationManager : MonoBehaviour
         //range limits
         int highestActorID = GameManager.instance.actorScript.actorIDCounter;
         int highestNodeID = GameManager.instance.nodeScript.nodeCounter;
+        int highestSlotID = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
         int highestContactID = GameManager.instance.contactScript.contactIDCounter;
+        int highestTeamID = GameManager.instance.teamScript.teamIDCounter;
         int highestTurn = GameManager.instance.turnScript.Turn;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //debug checks
+        Debug.Assert(highestActorID > 0, "Invalid highestActor (Zero or less)");
+        Debug.Assert(highestNodeID > 0, "Invalid highestNode (Zero or less)");
+        Debug.Assert(highestSlotID > 0, "Invalid highestSlotID (Zero or less)");
+        Debug.Assert(highestContactID > 0, "Invalid highestContactID (Zero or less)");
+        Debug.Assert(highestTeamID > 0, "Invalid highestTeamID (Zero or less)");
+        Debug.Assert(playerSide != null, "Invalid playerSide (Null)");
+
         //run checks
         if (string.IsNullOrEmpty(prefix) == false)
         {
             Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - {1}", prefix, "\n");
             CheckNodeData(prefix, highestNodeID);
-            CheckActorData(prefix, highestActorID, highestNodeID);
+            CheckActorData(prefix, highestActorID, highestNodeID, highestSlotID);
             CheckTargetData(prefix, highestNodeID, highestContactID, highestTurn);
+            CheckTeamData(prefix, highestNodeID, highestTeamID, highestSlotID, highestTurn, playerSide);
         }
     }
     #endregion
@@ -712,19 +724,17 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     /// <param name="prefix"></param>
     /// <param name="highestActorID"></param>
-    private void CheckActorData(string prefix, int highestActorID, int highestNodeID)
+    private void CheckActorData(string prefix, int highestActorID, int highestNodeID, int highestSlotID)
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
         int maxStatValue = GameManager.instance.actorScript.maxStatValue;
-        int maxOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         int maxCompatibility = GameManager.instance.personScript.maxCompatibilityWithPlayer;
         int minCompatibility = GameManager.instance.personScript.minCompatibilityWithPlayer;
         int maxFactor = GameManager.instance.personScript.maxPersonalityFactor;
         int minFactor = GameManager.instance.personScript.minPersonalityFactor;
         /*int numOfActorArcs = GameManager.instance.dataScript.GetNumOfActorArcs();*/
 
-        int maxSlotID = maxOnMapActors - 1;
         Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //
         // - - - dictOfActors
@@ -736,7 +746,7 @@ public class ValidationManager : MonoBehaviour
             {
                 key = actor.Key.ToString();
                 CheckDictRange(actor.Key, 0, highestActorID, "actorID", tag, key);
-                CheckDictRange(actor.Value.slotID, -1, maxSlotID, "slotID", tag, key);
+                CheckDictRange(actor.Value.slotID, -1, highestSlotID, "slotID", tag, key);
                 CheckDictRange(actor.Value.level, 1, 3, "level", tag, key);
                 CheckDictString(actor.Value.actorName, "actorName", tag, key);
                 CheckDictString(actor.Value.firstName, "firstName", tag, key);
@@ -816,6 +826,7 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckTargetData
     /// <summary>
     /// Integrity check on all target related collections
     /// </summary>
@@ -853,8 +864,62 @@ public class ValidationManager : MonoBehaviour
         CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Active), "targetPoolActive", tag);
         CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Live), "targetPoolLive", tag);
         CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding), "targetPoolOutstanding", tag);
-        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Done), "targetPoolDone", tag);        
+        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Done), "targetPoolDone", tag);
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfNodesWithTargets(), "nodes", "nodeID", "listOfNodesWithTargets");
     }
+    #endregion
+
+    #region CheckTeamData
+    /// <summary>
+    /// Integrity check all team related collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="highestNodeID"></param>
+    /// <param name="highestTeamID"></param>
+    private void CheckTeamData(string prefix, int highestNodeID, int highestTeamID, int highestSlotID, int highestTurn, GlobalSide playerSide)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckTeamData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfTeams
+        //
+        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        if (dictOfTeams != null)
+        {
+            foreach(var team in dictOfTeams)
+            {
+                key = team.Key.ToString();
+                CheckDictRange(team.Value.teamID, 0, highestTeamID, "teamID", tag, key);
+                CheckDictString(team.Value.teamName, "teamName", tag, key);
+                CheckDictObject(team.Value.arc, "arc", tag, key);
+                if (team.Value.pool == TeamPool.OnMap)
+                {
+                    //OnMap team should have actor assigned only if Authority player side, default '-1' if playerSide
+                    if (playerSide.level == 1)
+                    { CheckDictRange(team.Value.actorSlotID, 0, highestSlotID, "actorSlotID", tag, key); }
+                    else { CheckDictRange(team.Value.actorSlotID, -1, -1, "actorSlotID", tag, key); }
+                    CheckDictRange(team.Value.nodeID, 0, highestNodeID, "nodeID", tag, key);
+                    CheckDictRange(team.Value.turnDeployed, 0, highestTurn, "turnDeployed", tag, key);
+                }
+                else
+                {
+                    //if Reserve or Intransit values should all be set to default
+                    CheckDictRange(team.Value.actorSlotID, -1, -1, "actorSlotID", tag, key);
+                    CheckDictRange(team.Value.nodeID, -1, -1, "nodeID", tag, key);
+                    CheckDictRange(team.Value.turnDeployed, -1, -1, "turnDeployed", tag, key);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTeams (Null)"); }
+        //
+        // - - - Team pools
+        //
+        CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.Reserve), "team", "teamID", "teamPoolReserve");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap), "team", "teamID", "teamPoolOnMap");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit), "team", "teamID", "teamPoolInTransit");
+    }
+    #endregion
 
     #endregion
 
@@ -893,7 +958,7 @@ public class ValidationManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogError("Invalid listToCheck (Null)"); }
+        else { Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: Invalid listToCheck {0} (Null){1}", nameOfList, "\n"); }
     }
     #endregion
 

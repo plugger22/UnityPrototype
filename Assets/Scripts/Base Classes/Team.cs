@@ -37,7 +37,7 @@ namespace gameAPI
                 TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    teamID = GameManager.instance.teamScript.teamCounter++;
+                    teamID = GameManager.instance.teamScript.teamIDCounter++;
                     arc = teamArc;
                     InitialiseTeamData(natoCount);
                     AddToCollections(this);
@@ -61,7 +61,7 @@ namespace gameAPI
                 TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    teamID = GameManager.instance.teamScript.teamCounter++;
+                    teamID = GameManager.instance.teamScript.teamIDCounter++;
                     this.arc = teamArc;
                     InitialiseTeamData(natoCount);
                     AddToCollections(this);

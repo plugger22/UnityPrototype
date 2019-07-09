@@ -71,16 +71,13 @@ public class ModalTeamPicker : MonoBehaviour
             switch (state)
             {
                 case GameState.NewInitialisation:
-                    SubInitialiseSessionStart();
-                    SubInitialiseEvents();
-                    break;
                 case GameState.LoadAtStart:
                     SubInitialiseSessionStart();
                     SubInitialiseEvents();
                     break;
                 case GameState.LoadGame:
-                    SubInitialiseSessionStart();
-                    SubInitialiseEvents();
+                case GameState.FollowOnInitialisation:
+                    //do nothing
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);

@@ -51,7 +51,7 @@ public class TeamManager : MonoBehaviour
     private string colourEnd;
 
     #region Save Data Compatible
-    public int teamCounter = 0;                     //provides unique ID to teams (reset at start of new level)
+    [HideInInspector] public int teamIDCounter = 0;                     //provides unique ID to teams (reset at start of new level)
     #endregion
 
     /// <summary>
@@ -202,7 +202,7 @@ public class TeamManager : MonoBehaviour
     /// reset team ID counter prior to new level
     /// </summary>
     public void ResetCounter()
-    { teamCounter = 0; }
+    { teamIDCounter = 0; }
 
     /// <summary>
     /// End turn activity -> Event driven, decrement all timers in OnMap pool
@@ -1588,6 +1588,7 @@ public class TeamManager : MonoBehaviour
         List<int> listOfTeams = new List<int>();
         listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap));
         listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
+         //assign actors to teams
         if (listOfTeams != null)
         {
             int numUpdated = 0;
@@ -1648,7 +1649,7 @@ public class TeamManager : MonoBehaviour
                                     {
                                         //Add team to actor's list of Teams
                                         actor.AddTeam(team.teamID);
-                                        Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, slotID, "\n");
+                                        Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} assigned to actorSlotID {2}{3}", team.arc.name, team.teamID, slotID, "\n");
                                     }
                                     else { Debug.LogErrorFormat("Invalid current Actor (Null) for slotID {0}", slotID); }
                                     //delete list entry to prevent dupes
@@ -1727,9 +1728,12 @@ public class TeamManager : MonoBehaviour
                             /*}*/
                             numUpdated++;
                         }
-                        else { Debug.LogFormat("[Tst] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} ALREADY HAS actorSlotID {2}{3}", team.arc.name, team.teamID, team.actorSlotID, "\n"); }
+                        else { Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActors: {0} team, id {1} ALREADY HAS actorSlotID {2}{3}", team.arc.name, team.teamID, team.actorSlotID, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid Team (null) for teamID {0}", listOfTeams[i]); }
+                    //debug check
+                    if (team.pool == TeamPool.OnMap)
+                    { Debug.AssertFormat(team.actorSlotID > -1, "Invalid actorSlotID (-1) for team {0}, {1}, ID {2}", team.arc, team.teamName, team.teamID); }
                 }
             }
             Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActors: {0} teams of {1} have had Actors assigned{2}", numUpdated, count, "\n");

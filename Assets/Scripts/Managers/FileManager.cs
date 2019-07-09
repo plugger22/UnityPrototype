@@ -573,7 +573,7 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfTeamPoolInTransit.AddRange(tempList); }
         else { Debug.LogError("Invalid teamPoolInTransit list (Null)"); }
         //counter
-        write.dataData.teamCounter = GameManager.instance.teamScript.teamCounter;
+        write.dataData.teamCounter = GameManager.instance.teamScript.teamIDCounter;
         #endregion
         #region statistics
         //level stats
@@ -1859,7 +1859,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         //team counter
-        GameManager.instance.teamScript.teamCounter = read.dataData.teamCounter;
+        GameManager.instance.teamScript.teamIDCounter = read.dataData.teamCounter;
         #endregion
         #region AI
         //array -> AI Resources

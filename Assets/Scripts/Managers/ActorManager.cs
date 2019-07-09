@@ -159,7 +159,7 @@ public class ActorManager : MonoBehaviour
     //colour palette for Generic tool tip
     private string colourResistance;
     private string colourAuthority;
-    private string colourGrey;
+    /*private string colourGrey;*/
     private string colourCancel;
     private string colourInvalid;
     private string colourAlert;
@@ -513,7 +513,7 @@ public class ActorManager : MonoBehaviour
     {
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
