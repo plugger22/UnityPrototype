@@ -902,8 +902,8 @@ public class FileManager : MonoBehaviour
     private void WriteNodeData()
     {
         write.nodeData.crisisPolicyModifier = GameManager.instance.nodeScript.crisisPolicyModifier;
-        write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeCounter;
-        write.nodeData.connCounter = GameManager.instance.nodeScript.connCounter;
+        write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeIDCounter;
+        write.nodeData.connCounter = GameManager.instance.nodeScript.connIDCounter;
         write.nodeData.nodeHighlight = GameManager.instance.nodeScript.nodeHighlight;
         write.nodeData.nodePlayer = GameManager.instance.nodeScript.nodePlayer;
         write.nodeData.nodeNemesis = GameManager.instance.nodeScript.nodeNemesis;
@@ -2464,8 +2464,8 @@ public class FileManager : MonoBehaviour
     {
         //NodeManager.cs dynamic data
         GameManager.instance.nodeScript.crisisPolicyModifier = read.nodeData.crisisPolicyModifier;
-        GameManager.instance.nodeScript.nodeCounter = read.nodeData.nodeCounter;
-        GameManager.instance.nodeScript.connCounter = read.nodeData.connCounter;
+        GameManager.instance.nodeScript.nodeIDCounter = read.nodeData.nodeCounter;
+        GameManager.instance.nodeScript.connIDCounter = read.nodeData.connCounter;
         GameManager.instance.nodeScript.nodeHighlight = read.nodeData.nodeHighlight;
         GameManager.instance.nodeScript.nodePlayer = read.nodeData.nodePlayer;
         GameManager.instance.nodeScript.nodeNemesis = read.nodeData.nodeNemesis;

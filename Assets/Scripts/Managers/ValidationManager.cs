@@ -555,16 +555,20 @@ public class ValidationManager : MonoBehaviour
         string prefix = "[Val] ValidationManager.cs -> ";
         //range limits
         int highestActorID = GameManager.instance.actorScript.actorIDCounter;
-        int highestNodeID = GameManager.instance.nodeScript.nodeCounter;
+        int highestNodeID = GameManager.instance.nodeScript.nodeIDCounter;
+        int highestConnID = GameManager.instance.nodeScript.connIDCounter;
         int highestSlotID = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
         int highestContactID = GameManager.instance.contactScript.contactIDCounter;
+        int highestMessageID = GameManager.instance.messageScript.messageIDCounter;
         int highestTeamID = GameManager.instance.teamScript.teamIDCounter;
         int highestTurn = GameManager.instance.turnScript.Turn;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //debug checks
         Debug.Assert(highestActorID > 0, "Invalid highestActor (Zero or less)");
-        Debug.Assert(highestNodeID > 0, "Invalid highestNode (Zero or less)");
+        Debug.Assert(highestNodeID > 0, "Invalid highestNodeID (Zero or less)");
+        Debug.Assert(highestConnID > 0, "Invalid highestConnID (Zero or less)");
         Debug.Assert(highestSlotID > 0, "Invalid highestSlotID (Zero or less)");
+        Debug.Assert(highestMessageID > 0, "Invalid highestMessageID (Zero or less)");
         Debug.Assert(highestContactID > 0, "Invalid highestContactID (Zero or less)");
         Debug.Assert(highestTeamID > 0, "Invalid highestTeamID (Zero or less)");
         Debug.Assert(playerSide != null, "Invalid playerSide (Null)");
@@ -577,6 +581,9 @@ public class ValidationManager : MonoBehaviour
             CheckActorData(prefix, highestActorID, highestNodeID, highestSlotID);
             CheckTargetData(prefix, highestNodeID, highestContactID, highestTurn);
             CheckTeamData(prefix, highestNodeID, highestTeamID, highestSlotID, highestTurn, playerSide);
+            CheckGearData(prefix);
+            CheckConnectionData(prefix, highestNodeID, highestConnID);
+            CheckMessageData(prefix, highestMessageID, highestTurn);
         }
     }
     #endregion
@@ -920,6 +927,153 @@ public class ValidationManager : MonoBehaviour
         CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit), "team", "teamID", "teamPoolInTransit");
     }
     #endregion
+
+    #region CheckGearData
+    /// <summary>
+    /// Integrity check for all gear related conditions
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckGearData(string prefix)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckGearData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfGear
+        //
+        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        if (dictOfGear != null)
+        {
+            foreach(var gear in dictOfGear)
+            {
+                key = gear.Key;
+                CheckDictObject(gear.Value, "Gear.Value", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfGear (Null)"); }
+        //
+        // - - - Gear lists
+        //
+        CheckList(GameManager.instance.dataScript.GetListOfGearRarity(), "listOfGearRarity", tag);
+        CheckList(GameManager.instance.dataScript.GetListOfGearType(), "listOfGearType", tag);
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfCurrentGear(), "Gear", "gearName", "listOfCurrentGear");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfLostGear(), "Gear", "gearName", "listOfLostGear");
+    }
+    #endregion
+
+    #region CheckConnectionData
+    /// <summary>
+    /// Integrity check for all connection related collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckConnectionData(string prefix, int highestNodeID, int highestConnID)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckConnectionData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfConnections
+        //
+        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        if (dictOfConnections != null)
+        {
+            foreach(var conn in dictOfConnections)
+            {
+                key = conn.Key.ToString();
+                CheckDictRange(conn.Value.connID, 0, highestConnID, "connID", tag, key);
+                CheckDictRange(conn.Value.node1.nodeID, 0, highestNodeID, "node1.nodeID", tag, key);
+                CheckDictRange(conn.Value.node2.nodeID, 0, highestNodeID, "node2.nodeID", tag, key);
+                CheckDictRange(conn.Value.VerticeOne, 0, highestNodeID, "VerticeOne", tag, key);
+                CheckDictRange(conn.Value.VerticeTwo, 0, highestNodeID, "VerticeTwo", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConnections (Null)"); }
+        //
+        // - - - listOfConnections
+        //
+        CheckList(GameManager.instance.dataScript.GetListOfConnections(), "listOfConnections", tag, highestConnID);
+    }
+    #endregion
+
+    #region CheckMessageData
+    /// <summary>
+    /// Integrity check for all message related collections
+    /// </summary>
+    private void CheckMessageData(string prefix, int highestMessageID, int highestTurn)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckMessageData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfArchiveMessages
+        //
+        Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
+        if (dictOfArchiveMessages != null)
+        {
+            foreach(var message in dictOfArchiveMessages)
+            {
+                key = message.Key.ToString();
+                CheckDictRange(message.Value.msgID, 0, highestMessageID, "msgID", tag, key);
+                CheckDictRange(message.Value.turnCreated, 0, highestTurn, "turnCreated", tag, key);
+                CheckDictString(message.Value.text, "text", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfArchiveMessages (Null)"); }
+        //
+        // - - - dictOfPendingMessages
+        //
+        Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
+        if (dictOfPendingMessages != null)
+        {
+            foreach (var message in dictOfPendingMessages)
+            {
+                key = message.Key.ToString();
+                CheckDictRange(message.Value.msgID, 0, highestMessageID, "msgID", tag, key);
+                CheckDictRange(message.Value.turnCreated, 0, highestTurn, "turnCreated", tag, key);
+                CheckDictString(message.Value.text, "text", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
+        //
+        // - - - dictOfCurrentMessages
+        //
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        if (dictOfCurrentMessages != null)
+        {
+            foreach (var message in dictOfCurrentMessages)
+            {
+                key = message.Key.ToString();
+                CheckDictRange(message.Value.msgID, 0, highestMessageID, "msgID", tag, key);
+                CheckDictRange(message.Value.turnCreated, 0, highestTurn, "turnCreated", tag, key);
+                CheckDictString(message.Value.text, "text", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
+        //
+        // - - - dictOfAIMessages
+        //
+        Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
+        if (dictOfAIMessages != null)
+        {
+            foreach (var message in dictOfAIMessages)
+            {
+                key = message.Key.ToString();
+                CheckDictRange(message.Value.msgID, 0, highestMessageID, "msgID", tag, key);
+                CheckDictRange(message.Value.turnCreated, 0, highestTurn, "turnCreated", tag, key);
+                CheckDictString(message.Value.text, "text", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
+        //
+        // - - - Duplicate check all dictionaries
+        //
+        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.Archive), "Message", "msgID", "dictOfArchiveMessages");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.Pending), "Message", "msgID", "dictOfPendingMessages");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.Current), "Message", "msgID", "dictOfCurrentMessages");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.AI), "Message", "msgID", "dictOfAIMessages");
+    }
+    #endregion
+
 
     #endregion
 

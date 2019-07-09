@@ -59,4 +59,13 @@ public class Gear : ScriptableObject
         statRenownSpent = 0;
     }
 
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
+        Debug.AssertFormat(rarity != null, "Invalid rarity (Null) for {0}", name);
+        Debug.AssertFormat(type != null, "Invalid type (Null) for {0}", name);
+
+    }
+
 }

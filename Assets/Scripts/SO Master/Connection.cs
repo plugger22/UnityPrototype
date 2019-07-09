@@ -22,7 +22,7 @@ public class Connection : MonoBehaviour
     private Coroutine myCoroutine;
 
 
-    private List<EffectDataOngoing> listOfOngoingEffects;   //list of temporary (ongoing) effects impacting on the node
+    private List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();   //list of temporary (ongoing) effects impacting on the node
 
     [HideInInspector] public int connID;                                      //unique connectionID 
     [HideInInspector] public bool isDone;                                     //flag used to prevent connection being changed more than once for an effect
@@ -98,13 +98,6 @@ public class Connection : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// initialise
-    /// </summary>
-    public void Awake()
-    {
-        listOfOngoingEffects = new List<EffectDataOngoing>();
-    }
 
     public void Start()
     {

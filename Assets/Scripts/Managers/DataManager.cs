@@ -5254,6 +5254,35 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a list of msgID from a specified Message dictionary, Null if a problem
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public List<int> GetMessageListOfID(MessageCategory category)
+    {
+        List<int> listOfID = null;
+        switch (category)
+        {
+            case MessageCategory.Archive:
+                listOfID = dictOfArchiveMessages.Select(id => id.Value.msgID).ToList();
+                break;
+            case MessageCategory.Pending:
+                listOfID = dictOfPendingMessages.Select(id => id.Value.msgID).ToList();
+                break;
+            case MessageCategory.Current:
+                listOfID = dictOfCurrentMessages.Select(id => id.Value.msgID).ToList();
+                break;
+            case MessageCategory.AI:
+                listOfID = dictOfAIMessages.Select(id => id.Value.msgID).ToList();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid MessageCategory \"{0}\"", category));
+                break;
+        }
+        return listOfID;
+    }
+
+    /// <summary>
     /// Moves a message from one category (dict) to another while removing it from the original category. Handles all admin. Returns true if successful
     /// </summary>
     /// <param name="msgID"></param>

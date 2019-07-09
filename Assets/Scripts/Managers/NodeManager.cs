@@ -62,8 +62,8 @@ public class NodeManager : MonoBehaviour
 
     #region Save Data Compatible
     [HideInInspector] public int crisisPolicyModifier = 0;          //modifier to  crisisBaseChance due to Authority Policies, eg. "Curfew" 
-    [HideInInspector] public int nodeCounter = 0;                   //sequentially numbers nodes (reset for each new level)
-    [HideInInspector] public int connCounter = 0;                   //sequentially numbers connections (reset for each new level)
+    [HideInInspector] public int nodeIDCounter = 0;                   //sequentially numbers nodes (reset for each new level)
+    [HideInInspector] public int connIDCounter = 0;                   //sequentially numbers connections (reset for each new level)
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of human Resistance/Authority player
     [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
@@ -439,8 +439,8 @@ public class NodeManager : MonoBehaviour
     public void ResetCounters()
     {
         //reset node & connection ID counters
-        nodeCounter = 0;
-        connCounter = 0;
+        nodeIDCounter = 0;
+        connIDCounter = 0;
     }
 
     /// <summary>

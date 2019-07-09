@@ -322,7 +322,7 @@ public class LevelManager : MonoBehaviour
                 instanceNode.transform.SetParent(nodeHolder);
                 //assign nodeID
                 nodeTemp = instanceNode.GetComponent<Node>();
-                nodeTemp.nodeID = GameManager.instance.nodeScript.nodeCounter++;
+                nodeTemp.nodeID = GameManager.instance.nodeScript.nodeIDCounter++;
                 //add to node list & add to coord list for lookups
                 listOfNodeObjects.Add(instanceNode);
                 listOfNodes.Add(nodeTemp);
@@ -534,7 +534,7 @@ public class LevelManager : MonoBehaviour
         instanceConnection.transform.localScale = new Vector3(instanceScale.x, distance, instanceScale.z);
         //set up Connection fields
         Connection connectionTemp = instanceConnection.GetComponent<Connection>();
-        connectionTemp.connID = GameManager.instance.nodeScript.connCounter++;
+        connectionTemp.connID = GameManager.instance.nodeScript.connIDCounter++;
         connectionTemp.InitialiseConnection(node1, node2);
         //add an edge to Graph
         graph.AddEdge(node1, node2);
