@@ -1,5 +1,6 @@
 ﻿using dijkstraAPI;
 using gameAPI;
+using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -585,6 +586,8 @@ public class ValidationManager : MonoBehaviour
             CheckConnectionData(prefix, highestNodeID, highestConnID);
             CheckMessageData(prefix, highestMessageID, highestTurn);
             CheckSecretData(prefix, highestActorID, highestTurn);
+            CheckMainInfoData(prefix, highestTurn);
+            CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn);
         }
     }
     #endregion
@@ -1129,6 +1132,84 @@ public class ValidationManager : MonoBehaviour
         CheckList(GameManager.instance.dataScript.GetListOfDeletedSecrets(), "listOfDeletedSecrets", tag);
     }
     #endregion
+
+    #region CheckMainInfoData
+    /// <summary>
+    /// Integrity check for all MainInfoData
+    /// </summary>
+    private void CheckMainInfoData(string prefix, int highestTurn)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckMainInfoData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfHistory
+        //
+        Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
+        if (dictOfHistory != null)
+        {
+            foreach (var info in dictOfHistory)
+            {
+                key = info.Key.ToString();
+                CheckDictRange(info.Key, 0, highestTurn, "turn", tag, key);
+                CheckDictObject(info.Value, "MainInfoData", tag, key);
+                CheckDictArray(info.Value.arrayOfItemData, "arrayOfItemData", tag, key, true);
+                CheckDictString(info.Value.tickerText, "tickerText", tag, key);
+            }
+        }
+    }
+    #endregion
+
+    #region CheckContactData
+    /// <summary>
+    /// Integrity check for all contact related collections
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="highestContactID"></param>
+    /// <param name="highestNodeID"></param>
+    /// <param name="highestActorID"></param>
+    /// <param name="highestTurn"></param>
+    private void CheckContactData(string prefix, int highestContactID, int highestNodeID, int highestActorID, int highestTurn)
+    {
+        string key;
+        string tag = string.Format("{0}{1}", prefix, "CheckContactData: ");
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        //
+        // - - - dictOfContacts
+        //
+        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        if (dictOfContacts != null)
+        {
+            foreach (var contact in dictOfContacts)
+            {
+                key = contact.Key.ToString();
+                CheckDictRange(contact.Value.contactID, 0, highestContactID, "contactID", tag, key);
+                CheckDictString(contact.Value.nameFirst, "nameFirst", tag, key);
+                CheckDictString(contact.Value.nameLast, "nameLast", tag, key);
+                CheckDictString(contact.Value.job, "job", tag, key);
+                CheckDictRange(contact.Value.statsRumours, 0, 99, "statsRumour",tag, key);
+                CheckDictRange(contact.Value.statsNemesis, 0, 99, "statsNemesis",tag, key);
+                CheckDictRange(contact.Value.statsTeams, 0, 99, "statsTeams",tag, key);
+                switch (contact.Value.status)
+                {
+                    case ContactStatus.Active:
+                        CheckDictRange(contact.Value.actorID, 0, highestActorID, "actorID", tag, key);
+                        CheckDictRange(contact.Value.nodeID, 0, highestNodeID, "nodeID", tag, key);
+                        CheckDictRange(contact.Value.turnStart, 0, highestTurn, "turnStart", tag, key);
+                        CheckDictString(contact.Value.typeName, "typeName", tag, key);
+                        break;
+                    case ContactStatus.Inactive:
+                        CheckDictRange(contact.Value.turnFinish, 0, highestTurn, "turnFinish", tag, key);
+                        CheckDictString(contact.Value.typeName, "typeName", tag, key);
+                        break;
+                }
+                CheckDictRange(contact.Value.effectiveness, 1, 3, "effectiveness", tag, key);
+            }
+        }
+        else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+    }
+    #endregion
+
 
     #endregion
 

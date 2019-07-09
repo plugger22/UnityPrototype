@@ -503,6 +503,8 @@ public class DataManager : MonoBehaviour
         List<ItemData> tempList = new List<ItemData>();
         //empty out data package prior to updating
         currentInfoData.Reset();
+        //news
+        string tickerText = GameManager.instance.newsScript.GetNews();
         //package up all three priorities for each tab into a single list and add to currentInfoData
         for (int outer = 0; outer < (int)ItemTab.Count; outer++)
         {
@@ -530,6 +532,7 @@ public class DataManager : MonoBehaviour
             //pass by value, not reference (otherwise duplicate data for each turn)
             MainInfoData historyData = new MainInfoData(currentInfoData);
             int turn = GameManager.instance.turnScript.Turn;
+            historyData.tickerText = tickerText;
             try
             { dictOfHistory.Add(turn, historyData); }
             catch (ArgumentNullException)
@@ -538,7 +541,7 @@ public class DataManager : MonoBehaviour
             { Debug.LogErrorFormat("Duplicate record exists for MainInfoData turn {0}", turn); }
         }
         //Get news
-        currentInfoData.tickerText = GameManager.instance.newsScript.GetNews();
+        currentInfoData.tickerText = tickerText;
         return currentInfoData;
     }
 

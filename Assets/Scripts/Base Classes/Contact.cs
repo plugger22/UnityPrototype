@@ -23,7 +23,7 @@ public class Contact
     public int usefulIntel;             //tracks number of useful intel items sourced by the contact
     public string typeName;             //ContactType.name
     public ContactStatus status;
-    public string statusName;
+    /*public string statusName;*/
     public bool isMale;                 //Male if true, female if false
     public bool isTurned;               //working for Authority as an informant
 
