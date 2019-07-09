@@ -374,35 +374,36 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public string DisplayHelp()
     {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat(" Keyboard Commands{0},{1}", "\n", "\n");
-        builder.AppendFormat(" End Turn -> Enter{0}", "\n");
-        builder.AppendFormat(" End Level -> X{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Reserves -> R{0}", "\n");
-        builder.AppendFormat(" Gear -> G{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Targets -> T{0}", "\n");
-        builder.AppendFormat(" Spiders -> S{0}", "\n");
-        builder.AppendFormat(" Tracers -> C{0}", "\n");
-        builder.AppendFormat(" Teams -> M{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Actions -> Left Click{0}", "\n");
-        builder.AppendFormat(" Move -> Right Click{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Corporate Nodes -> F1{0}", "\n");
-        builder.AppendFormat(" Gated Nodes -> F2{0}", "\n");
-        builder.AppendFormat(" Government Nodes -> F3{0}", "\n");
-        builder.AppendFormat(" Industrial Nodes -> F4{0}", "\n");
-        builder.AppendFormat(" Research Nodes -> F5{0}", "\n");
-        builder.AppendFormat(" Sprawl Nodes -> F6{0}", "\n");
-        builder.AppendFormat(" Utility Nodes -> F7{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Debug Show -> D{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Activity Time -> F9{0}", "\n");
-        builder.AppendFormat(" Activity Count -> F10{0}{1}", "\n", "\n");
-        builder.AppendFormat(" MainInfoApp display -> I{0}", "\n");
-        builder.AppendFormat(" MainInfoApp ShowMe -> Space{0}", "\n");
-        builder.AppendFormat(" MainInfoApp Home -> Home{0}", "\n");
-        builder.AppendFormat(" MainInfoApp End -> End{0}", "\n");
-        builder.AppendFormat(" MainInfoApp Back -> PageDn{0}", "\n");
-        builder.AppendFormat(" MainInfoApp Forward -> PageUp{0}", "\n");
-        return builder.ToString();
+        return new StringBuilder()
+            .AppendFormat(" Keyboard Commands{0},{1}", "\n", "\n")
+            .AppendFormat(" End Turn -> Enter{0}", "\n")
+            .AppendFormat(" End Level -> X{0}{1}", "\n", "\n")
+            .AppendFormat(" Reserves -> R{0}", "\n")
+            .AppendFormat(" Gear -> G{0}{1}", "\n", "\n")
+            .AppendFormat(" Targets -> T{0}", "\n")
+            .AppendFormat(" Spiders -> S{0}", "\n")
+            .AppendFormat(" Tracers -> C{0}", "\n")
+            .AppendFormat(" AutoRun -> A{0}", "\n")
+            .AppendFormat(" Teams -> M{0}{1}", "\n", "\n")
+            .AppendFormat(" Actions -> Left Click{0}", "\n")
+            .AppendFormat(" Move -> Right Click{0}{1}", "\n", "\n")
+            .AppendFormat(" Corporate Nodes -> F1{0}", "\n")
+            .AppendFormat(" Gated Nodes -> F2{0}", "\n")
+            .AppendFormat(" Government Nodes -> F3{0}", "\n")
+            .AppendFormat(" Industrial Nodes -> F4{0}", "\n")
+            .AppendFormat(" Research Nodes -> F5{0}", "\n")
+            .AppendFormat(" Sprawl Nodes -> F6{0}", "\n")
+            .AppendFormat(" Utility Nodes -> F7{0}{1}", "\n", "\n")
+            .AppendFormat(" Debug Show -> D{0}{1}", "\n", "\n")
+            .AppendFormat(" Activity Time -> F9{0}", "\n")
+            .AppendFormat(" Activity Count -> F10{0}{1}", "\n", "\n")
+            .AppendFormat(" MainInfoApp display -> I{0}", "\n")
+            .AppendFormat(" MainInfoApp ShowMe -> Space{0}", "\n")
+            .AppendFormat(" MainInfoApp Home -> Home{0}", "\n")
+            .AppendFormat(" MainInfoApp End -> End{0}", "\n")
+            .AppendFormat(" MainInfoApp Back -> PageDn{0}", "\n")
+            .AppendFormat(" MainInfoApp Forward -> PageUp{0}", "\n")
+            .ToString();
     }
 
 }

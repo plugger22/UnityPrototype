@@ -549,3 +549,19 @@ InputManager:
     type: 0
     axis: 2
     joyNum: 0
+  - serializedVersion: 3
+    m_Name: ShowAutoRun
+    descriptiveName: Display AutoRun Message
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: a
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0
+    sensitivity: 0.1
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 2
+    joyNum: 0

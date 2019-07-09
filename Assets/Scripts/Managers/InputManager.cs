@@ -248,6 +248,11 @@ public class InputManager : MonoBehaviour
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams, string.Format("InputManager.cs -> ProcessInput ShowTeams \"{0}\"", Input.inputString.ToUpper()));
                 }
+                else if (Input.GetButtonDown("ShowAutoRun") == true)
+                {
+                    //debug
+                    GameManager.instance.sideScript.ShowAutoRunMessage();
+                }
                 //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
                 else if (Input.GetButtonDown("NodeArc0") == true)
                 {

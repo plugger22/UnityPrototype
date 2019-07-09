@@ -149,3 +149,26 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 6801 -> Tuesday, 9 July 2019 5:28 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 12950 -> Tuesday, 9 July 2019 8:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1316 -> Tuesday, 9 July 2019 8:13 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentException: Input Button ShowAutoRun is not setup.
+ To change the input settings use: Edit -> Project Settings -> Input
+InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:251)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 3017 -> Tuesday, 9 July 2019 8:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1560 -> Tuesday, 9 July 2019 8:19 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13693 -> Tuesday, 9 July 2019 8:20 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom

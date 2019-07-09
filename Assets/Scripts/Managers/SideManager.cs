@@ -468,6 +468,14 @@ public class SideManager : MonoBehaviour
         //
         // - - - Events of note occur during the AutoRun
         //
+        ShowAutoRunMessage();
+    }
+
+    /// <summary>
+    /// display autoRun history message in outcome window
+    /// </summary>
+    public void ShowAutoRunMessage()
+    {
         //only if nobody has yet won
         if (GameManager.instance.turnScript.winStateLevel == WinState.None)
         {

@@ -587,7 +587,7 @@ public class ValidationManager : MonoBehaviour
             CheckMessageData(prefix, highestMessageID, highestTurn);
             CheckSecretData(prefix, highestActorID, highestTurn);
             CheckMainInfoData(prefix, highestTurn);
-            CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn);
+            CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
         }
     }
     #endregion
@@ -907,7 +907,7 @@ public class ValidationManager : MonoBehaviour
                 if (team.Value.pool == TeamPool.OnMap)
                 {
                     //OnMap team should have actor assigned only if Authority player side, default '-1' if playerSide
-                    if (playerSide.level == 1)
+                    if (playerSide.level == globalAuthority.level)
                     { CheckDictRange(team.Value.actorSlotID, 0, highestSlotID, "actorSlotID", tag, key); }
                     else { CheckDictRange(team.Value.actorSlotID, -1, -1, "actorSlotID", tag, key); }
                     CheckDictRange(team.Value.nodeID, 0, highestNodeID, "nodeID", tag, key);
@@ -1169,7 +1169,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="highestNodeID"></param>
     /// <param name="highestActorID"></param>
     /// <param name="highestTurn"></param>
-    private void CheckContactData(string prefix, int highestContactID, int highestNodeID, int highestActorID, int highestTurn)
+    private void CheckContactData(string prefix, int highestContactID, int highestNodeID, int highestActorID, int highestTurn, GlobalSide playerSide)
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckContactData: ");
@@ -1207,6 +1207,13 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+        //
+        // - - - Resistance only
+        //
+        if (playerSide.level == globalResistance.level)
+        {
+            CheckListForDuplicates(GameManager.instance.dataScript.GetContactPool(), "Contact", "contactID", "contactPool");
+        }
     }
     #endregion
 
