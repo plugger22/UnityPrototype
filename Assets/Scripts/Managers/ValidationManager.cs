@@ -1213,7 +1213,61 @@ public class ValidationManager : MonoBehaviour
         if (playerSide.level == globalResistance.level)
         {
             CheckListForDuplicates(GameManager.instance.dataScript.GetContactPool(), "Contact", "contactID", "contactPool");
+            //dictOfActorContacts
+            Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+            if (dictOfActorContacts != null)
+            {
+                foreach(var record in dictOfActorContacts)
+                {
+                    key = record.Key.ToString();
+                    CheckDictRange(record.Key, 0, highestActorID, "actorID", tag, key);
+                    CheckDictListBounds(record.Value, "dictOfActorContacts.List<int>", tag, key, 0, highestNodeID);
+                    CheckListForDuplicates(record.Value, "Node", "nodeID", string.Format("dictOfActorContacts for actorID {0}", record.Key));
+
+                }
+            }
+            else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
+            //dictOfNodeContactsResistance
+            Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.instance.dataScript.GetDictOfNodeContacts(globalResistance);
+            if (dictOfNodeContactsResistance != null)
+            {
+                foreach (var record in dictOfNodeContactsResistance)
+                {
+                    key = record.Key.ToString();
+                    CheckDictRange(record.Key, 0, highestNodeID, "nodeID", tag, key);
+                    CheckDictListBounds(record.Value, "dictOfNodeContactsResistance.List<int>", tag, key, 0, highestActorID);
+                    CheckListForDuplicates(record.Value, "Actor", "actorID", string.Format("dictOfNodeContactsResistance for nodeID {0}", record.Key));
+                }
+            }
+            else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
+            //dictOfContactsByNodeResistance
+            Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+            if (dictOfContactsByNodeResistance != null)
+            {
+                foreach(var record in dictOfContactsByNodeResistance)
+                {
+                    key = record.Key.ToString();
+                    CheckDictRange(record.Key, 0, highestNodeID, "nodeID", tag, key);
+                    CheckDictList(record.Value, "dictOfNodeContactsResistance.List<Contact>", tag, key);
+                }
+            }
+            else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
         }
+        //
+        // - - - Both sides
+        //
+        //dictOfNodeContactsAuthority
+        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.instance.dataScript.GetDictOfNodeContacts(globalAuthority);
+        if (dictOfNodeContactsAuthority != null)
+        {
+            foreach (var record in dictOfNodeContactsAuthority)
+            {
+                key = record.Key.ToString();
+                List<int> tempList = record.Value;
+                CheckListForDuplicates(tempList, "Actor", "actorID", string.Format("dictOfNodeContactsAuthority for nodeID {0}", record.Key));
+            }
+        }
+        else { Debug.LogError("Invalid dictOfNodeContactsAuthority (Null)"); }
     }
     #endregion
 
