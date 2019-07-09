@@ -1358,6 +1358,8 @@ public class DataManager : MonoBehaviour
                     for (int i = 0; i < numOfNodes; i++)
                     {
                         nodeID = listOfActorContactNodes[i];
+                        //remove contacts from actor
+                        actor.RemoveContact(nodeID);
                         //find node entry in dictOfNodeContacts
                         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                         {
