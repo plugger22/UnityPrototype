@@ -1,272 +1,59 @@
-
-Dev seed 15503 -> Monday, 8 July 2019 3:40 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 41444 -> Monday, 8 July 2019 3:43 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 46118 -> Monday, 8 July 2019 4:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 17569 -> Monday, 8 July 2019 5:16 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35450 -> Monday, 8 July 2019 5:19 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 52165 -> Monday, 8 July 2019 5:33 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20486 -> Tuesday, 9 July 2019 9:00 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 54638 -> Tuesday, 9 July 2019 9:25 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 25118 -> Tuesday, 9 July 2019 9:30 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 7705 -> Tuesday, 9 July 2019 9:31 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 60163 -> Tuesday, 9 July 2019 9:41 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 41333 -> Tuesday, 9 July 2019 9:52 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11668 -> Tuesday, 9 July 2019 9:54 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 8732 -> Tuesday, 9 July 2019 9:56 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 15575 -> Tuesday, 9 July 2019 9:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1690 -> Tuesday, 9 July 2019 10:07 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11123 -> Tuesday, 9 July 2019 10:09 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 23363 -> Tuesday, 9 July 2019 10:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57471 -> Tuesday, 9 July 2019 10:15 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62423 -> Tuesday, 9 July 2019 10:15 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4568 -> Tuesday, 9 July 2019 10:24 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-WARNING Unrecognised GameState "FollowOnInitialisation"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ModalTeamPicker:Initialise(GameState) (at Assets/Scripts/GUI/ModalTeamPicker.cs:86)
-	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:694)
-	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:811)
-	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:231)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:82)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:208)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 12079 -> Tuesday, 9 July 2019 10:28 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-
-Dev seed 9793 -> Tuesday, 9 July 2019 10:45 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53962 -> Tuesday, 9 July 2019 11:09 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4715 -> Tuesday, 9 July 2019 11:34 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 40188 -> Tuesday, 9 July 2019 2:23 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29612 -> Tuesday, 9 July 2019 2:23 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
+Dev seed 2316 -> Wednesday, 10 July 2019 2:32 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 40462 -> Tuesday, 9 July 2019 2:28 PM
+Dev seed 2316 -> Wednesday, 10 July 2019 2:44 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 31879 -> Tuesday, 9 July 2019 3:09 PM
+Dev seed 2316 -> Wednesday, 10 July 2019 2:50 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 54105 -> Tuesday, 9 July 2019 3:33 PM
+Dev seed 2316 -> Wednesday, 10 July 2019 3:08 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 38384 -> Tuesday, 9 July 2019 3:44 PM
+Dev seed 2316 -> Wednesday, 10 July 2019 3:21 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 60953 -> Tuesday, 9 July 2019 3:48 PM
+Dev seed 2316 -> Wednesday, 10 July 2019 3:23 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 27961 -> Tuesday, 9 July 2019 3:53 PM
+Dev seed 2316 -> Wednesday, 10 July 2019 3:23 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 36071 -> Tuesday, 9 July 2019 3:54 PM
+Dev seed 9337 -> Wednesday, 10 July 2019 3:24 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 2344 -> Tuesday, 9 July 2019 3:56 PM
+Dev seed 9337 -> Wednesday, 10 July 2019 3:25 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 29455 -> Tuesday, 9 July 2019 3:57 PM
+Dev seed 9337 -> Wednesday, 10 July 2019 3:25 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 41270 -> Tuesday, 9 July 2019 3:58 PM
+Dev seed 35102 -> Wednesday, 10 July 2019 3:26 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 13908 -> Tuesday, 9 July 2019 3:59 PM
+Dev seed 30095 -> Wednesday, 10 July 2019 3:26 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 36484 -> Tuesday, 9 July 2019 4:05 PM
+Dev seed 45935 -> Wednesday, 10 July 2019 3:28 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 47905 -> Tuesday, 9 July 2019 5:25 PM
+Dev seed 28537 -> Wednesday, 10 July 2019 3:28 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 42169 -> Tuesday, 9 July 2019 5:26 PM
+Dev seed 28656 -> Wednesday, 10 July 2019 3:28 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 6801 -> Tuesday, 9 July 2019 5:28 PM
+Dev seed 28656 -> Wednesday, 10 July 2019 3:30 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 12950 -> Tuesday, 9 July 2019 8:01 PM
+Dev seed 28656 -> Wednesday, 10 July 2019 4:04 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 1316 -> Tuesday, 9 July 2019 8:13 PM
+Dev seed 14619 -> Wednesday, 10 July 2019 4:05 PM
 City seed 5678 -> London, United Kingdom
-ASSERT ArgumentException: Input Button ShowAutoRun is not setup.
- To change the input settings use: Edit -> Project Settings -> Input
-InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:251)
-	GameManager.Update () (at Assets/Scripts/GameManager.cs:369)
-	
-Dev seed 3017 -> Tuesday, 9 July 2019 8:14 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1560 -> Tuesday, 9 July 2019 8:19 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 13693 -> Tuesday, 9 July 2019 8:20 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19343 -> Wednesday, 10 July 2019 9:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9959 -> Wednesday, 10 July 2019 9:25 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 23453 -> Wednesday, 10 July 2019 9:45 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:35 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 47393 -> Wednesday, 10 July 2019 10:38 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:38 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:45 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:56 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
-City seed 5678 -> London, United Kingdom
 
-Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 11:02 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 11:06 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20758 -> Wednesday, 10 July 2019 11:07 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19256 -> Wednesday, 10 July 2019 11:08 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43527 -> Wednesday, 10 July 2019 11:10 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11523 -> Wednesday, 10 July 2019 11:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 158 -> Wednesday, 10 July 2019 11:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 158 -> Wednesday, 10 July 2019 11:17 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 158 -> Wednesday, 10 July 2019 11:22 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 158 -> Wednesday, 10 July 2019 11:23 AM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:505)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:259)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-OptionManager.OnDisable () (at Assets/Scripts/Managers/OptionManager.cs:53)
-	
-Dev seed 158 -> Wednesday, 10 July 2019 11:30 AM
+Dev seed 26680 -> Wednesday, 10 July 2019 4:05 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 158 -> Wednesday, 10 July 2019 11:31 AM
+Dev seed 31587 -> Wednesday, 10 July 2019 4:05 PM
 City seed 5678 -> London, United Kingdom

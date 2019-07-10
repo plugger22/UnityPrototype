@@ -5523,7 +5523,7 @@ public class DataManager : MonoBehaviour
     /// Remove an effect from the dictionary and, if present, generate a message for the relevant side. dataID could be NodeID or ConnID for connections
     /// </summary>
     /// <param name="ongoing"></param>
-    public void RemoveOngoingEffect(EffectDataOngoing ongoing)
+    public void RemoveOngoingEffectFromDict(EffectDataOngoing ongoing)
     {
         if (ongoing != null)
         {
@@ -5540,11 +5540,30 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
 
+    public void DebugCheckConnectionSecurity()
+    {
+        int none = 0;
+        int low = 0;
+        int med = 0;
+        int high = 0;
+        for (int i = 0; i < listOfConnections.Count; i++)
+        {
+            switch (listOfConnections[i].SecurityLevel)
+            {
+                case ConnectionType.HIGH: high++; break;
+                case ConnectionType.MEDIUM: med++; break;
+                case ConnectionType.LOW: low++; break;
+                case ConnectionType.None: none++; break;
+                default: Debug.LogWarningFormat("Unrecognised Connection Security level \"{0}\"", listOfConnections[i].SecurityLevel); break;
+            }
+        }
+        Debug.LogFormat("[Tst] DataManager.cs -> DebugCheckConnectionSecurity: None {0}, Low {1}, Med {2}, High {3}{4}", none, low, med, high, "\n");
+    }
 
     /// <summary>
     /// Debug method to remove all connection security effects for all entries in the register
     /// </summary>
-    public void RemoveOngoingEffects()
+    public void DebugRemoveOngoingEffects()
     {
         if (dictOfOngoingID.Count > 0)
         {
@@ -6053,7 +6072,7 @@ public class DataManager : MonoBehaviour
                         {
                             EffectDataOngoing ongoing = GetOngoingEffect(actionAdjustment.ongoingID);
                             if (ongoing != null)
-                            { RemoveOngoingEffect(ongoing); }
+                            { RemoveOngoingEffectFromDict(ongoing); }
                             else { Debug.LogWarningFormat("Invalid EffectDataOngoing (Null) for ongoingID {0}", actionAdjustment.ongoingID); }
                         }
                         //delete adjustment

@@ -641,7 +641,7 @@ public class DebugGUI : MonoBehaviour
             {
                 //removes connection Security ongoing effects (first entry in register dict)
                 Debug.Log("[Dbg] Button -> Remove Ongoing");
-                GameManager.instance.dataScript.RemoveOngoingEffects();
+                GameManager.instance.dataScript.DebugRemoveOngoingEffects();
             }
 
 

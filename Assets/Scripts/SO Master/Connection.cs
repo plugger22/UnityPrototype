@@ -20,6 +20,7 @@ public class Connection : MonoBehaviour
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
     private Coroutine myCoroutine;
+    /*private Renderer renderer;*/
 
 
     private List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();   //list of temporary (ongoing) effects impacting on the node
@@ -77,7 +78,7 @@ public class Connection : MonoBehaviour
             }
             return (ConnectionType)tempValue;
         }
-        //NOTE: Internal use only -> use AdjustSecurityLevel() to change Security Level as these will swap material if needed
+        //NOTE: Internal use only -> use ChangeSecurityLevel() to change Security Level as these will swap material if needed
         private set
         {
             switch (value)
@@ -98,6 +99,11 @@ public class Connection : MonoBehaviour
         }
     }
 
+    /*public void Awake()
+    {
+        /renderer = GetComponent<Renderer>();
+        Debug.AssertFormat(renderer != null, "Invalid renderer (Null) for connID {0}", connID);
+    }*/
 
     public void Start()
     {
@@ -135,7 +141,7 @@ public class Connection : MonoBehaviour
         //ignore if connection has already been changed for the current effect
         if (isDone == false)
         {
-            /*Debug.LogFormat("[Tst] Connection.cs -> ChangeSecurityLevel: adjust {0} for connID {1}{2}", adjust, connID, "\n");*/
+            Debug.LogFormat("[Tst] Connection.cs -> ChangeSecurityLevel: adjust {0} for connID {1}{2}", adjust, connID, "\n");
 
             //set flag to prevent being changed twice
             isDone = true;
@@ -218,10 +224,19 @@ public class Connection : MonoBehaviour
     }
 
     /// <summary>
-    /// saves level to a field so it can be restored back to the same state later
+    /// saves level to a field so it can be restored back to the same state later. Uses private backing field in order to exclude any Ongoing effects.
     /// </summary>
     public void SaveSecurityLevel()
-    { securityLevelSave = SecurityLevel; }
+    {
+        switch (_securityLevel)
+        {
+            case 1: securityLevelSave = ConnectionType.HIGH; break;
+            case 2: securityLevelSave = ConnectionType.MEDIUM; break;
+            case 3: securityLevelSave = ConnectionType.LOW; break;
+            case 0: securityLevelSave = ConnectionType.None; break;
+            default: Debug.LogWarningFormat("Unrecognised _securityLevel \"{0}\"", _securityLevel); break;
+        }
+    }
 
     /// <summary>
     /// restores previously saved security level and updates connection material
@@ -238,8 +253,7 @@ public class Connection : MonoBehaviour
     /// <param name="secLvl"></param>
     public void SetMaterial(ConnectionType secLvl)
     {
-        Renderer renderer = GetComponent<Renderer>();
-        renderer.material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
+        GetComponent<Renderer>().material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
     }
 
     public int GetNode1()
@@ -340,30 +354,29 @@ public class Connection : MonoBehaviour
 
     /// <summary>
     /// checks listOfOngoingEffects for any matching ongoingID and deletes them
+    /// NOTE: there are no checks for not finding the uniqueID or having no entries in list as ConnectionManager.cs loops through all connections looking for the right ones.
     /// </summary>
     /// <param name="uniqueID"></param>
     public void RemoveOngoingEffect(int uniqueID)
     {
         if (listOfOngoingEffects.Count > 0)
         {
-            bool isRemoved = false;
             //reverse loop, deleting as you go
             for (int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
             {
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
+                    //amount to reverse security level
                     Debug.LogFormat("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID, ongoing.ongoingID, ongoing.description, "\n");
-                    //add to register & create message
-                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing);
+                    //remove from register & create message
+                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);
                     //remove from list
                     listOfOngoingEffects.RemoveAt(i);
-                    isRemoved = true;
+                    //reset material of connection. Note that you are simply redoing the same security level without the additional ongoing effect (which will be at a lower level)
+                    ChangeSecurityLevel(SecurityLevel);
                 }
             }
-            //reset colour to take into account the new security level
-            if (isRemoved == true)
-            { SetMaterial(SecurityLevel); }
         }
     }
 

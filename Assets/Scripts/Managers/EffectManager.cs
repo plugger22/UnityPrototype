@@ -2211,6 +2211,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private EffectDataResolve ResolveConnectionData(Effect effect, Node node, EffectDataInput effectInput)
     {
+        Debug.LogFormat("[Tst] EffectManager.cs -> ResolveConnectionData: \"{0}\", nodeID {1}, duration {2}{3}", effect.apply.name, node.nodeID, effect.duration.name, "\n");
         int value = 0;
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;

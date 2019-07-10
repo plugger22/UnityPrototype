@@ -1078,7 +1078,7 @@ public class Node : MonoBehaviour
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
-                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing);
+                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }
@@ -1130,7 +1130,7 @@ public class Node : MonoBehaviour
                     //message
                     Debug.LogFormat("[Nod] Node.cs -> ProcessOngoingEffect: REMOVE Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.description, nodeID, "\n");
                     //delete effect
-                    GameManager.instance.dataScript.RemoveOngoingEffect(ongoing);
+                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }
