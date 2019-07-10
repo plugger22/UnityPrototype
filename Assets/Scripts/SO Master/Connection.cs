@@ -14,7 +14,7 @@ public class Connection : MonoBehaviour
     private int v2;
 
     private int _securityLevel;                             //private backing field (int vs. enum)
-    private ConnectionType securityLevelSave;               //stores existing security level prior to temporary changes
+    private int securityLevelSave;               //stores existing security level prior to temporary changes
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
     private float mouseOverDelay;                       //tooltip
@@ -228,14 +228,7 @@ public class Connection : MonoBehaviour
     /// </summary>
     public void SaveSecurityLevel()
     {
-        switch (_securityLevel)
-        {
-            case 1: securityLevelSave = ConnectionType.HIGH; break;
-            case 2: securityLevelSave = ConnectionType.MEDIUM; break;
-            case 3: securityLevelSave = ConnectionType.LOW; break;
-            case 0: securityLevelSave = ConnectionType.None; break;
-            default: Debug.LogWarningFormat("Unrecognised _securityLevel \"{0}\"", _securityLevel); break;
-        }
+        securityLevelSave = _securityLevel;
     }
 
     /// <summary>
@@ -243,7 +236,15 @@ public class Connection : MonoBehaviour
     /// </summary>
     public void RestoreSecurityLevel()
     {
-        SecurityLevel = securityLevelSave;
+        /*SecurityLevel = securityLevelSave;*/
+        switch (securityLevelSave)
+        {
+            case 1: SecurityLevel = ConnectionType.HIGH; break;
+            case 2: SecurityLevel = ConnectionType.MEDIUM; break;
+            case 3: SecurityLevel = ConnectionType.LOW; break;
+            case 0: SecurityLevel = ConnectionType.None; break;
+            default: Debug.LogWarningFormat("Unrecognised _securityLevel \"{0}\"", securityLevelSave); break;
+        }
         SetMaterial(SecurityLevel);
     }
 
