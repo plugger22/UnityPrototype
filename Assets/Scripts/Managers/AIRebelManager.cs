@@ -1063,15 +1063,15 @@ public class AIRebelManager : MonoBehaviour
                         if (connection.SecurityLevel == ConnectionType.None)
                         {
                             connection.ChangeSecurityLevel(sightLevel);
-                            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
-                                sightLevel, "\n");*/
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
+                                sightLevel, "\n");
                         }
                         //only upgrade connection security level if the sighting data indicates a higher level than is already there. NOTE '>' than 'cause enums for ConnectionType is reversed
                         else if (connection.SecurityLevel > sightLevel)
                         {
                             connection.ChangeSecurityLevel(sightLevel);
-                            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
-                                sightLevel, "\n");*/
+                            Debug.LogFormat("[Tst] AIRebelManager.cs -> UpdateNodeConnectionSecurity: Connection from id {0} to id {1} UPGRADED to {2}{3}", connection.GetNode1(), connection.GetNode2(),
+                                sightLevel, "\n");
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid connection (Null) for listOFConnections[{0}]", i); }

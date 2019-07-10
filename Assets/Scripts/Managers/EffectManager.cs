@@ -2202,7 +2202,7 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sub method to process Node Stability/Security/Support
+    /// Sub method to process Connection Security
     /// Note: effect and node checked for Null by calling method
     /// </summary>
     /// <param name="effect"></param>

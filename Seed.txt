@@ -183,3 +183,90 @@ Dev seed 23453 -> Wednesday, 10 July 2019 9:45 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:35 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47393 -> Wednesday, 10 July 2019 10:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:45 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:56 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 10:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 11:02 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 11:06 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20758 -> Wednesday, 10 July 2019 11:07 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19256 -> Wednesday, 10 July 2019 11:08 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43527 -> Wednesday, 10 July 2019 11:10 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11523 -> Wednesday, 10 July 2019 11:11 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 158 -> Wednesday, 10 July 2019 11:11 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 158 -> Wednesday, 10 July 2019 11:17 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 158 -> Wednesday, 10 July 2019 11:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 158 -> Wednesday, 10 July 2019 11:23 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:505)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:259)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+OptionManager.OnDisable () (at Assets/Scripts/Managers/OptionManager.cs:53)
+	
+Dev seed 158 -> Wednesday, 10 July 2019 11:30 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 158 -> Wednesday, 10 July 2019 11:31 AM
+City seed 5678 -> London, United Kingdom

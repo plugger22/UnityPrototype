@@ -739,6 +739,7 @@ public class ValidationManager : MonoBehaviour
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
+        int maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
         int maxStatValue = GameManager.instance.actorScript.maxStatValue;
         int maxCompatibility = GameManager.instance.personScript.maxCompatibilityWithPlayer;
         int minCompatibility = GameManager.instance.personScript.minCompatibilityWithPlayer;
@@ -834,6 +835,38 @@ public class ValidationManager : MonoBehaviour
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "actorID", "actor", "resistanceActorPromoted");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "actorID", "actor", "resistanceActorDisposedOff");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "actorID", "actor", "resistanceActorResigned");
+        //
+        // - - - arrayOfActors
+        //
+        Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
+        if (arrayOfActors != null)
+        {
+            bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
+            if (arrayOfActorsPresent != null)
+            {
+                //check for actors being, or not being, present (eg. cross check both arrays to see if in synch)
+                for (int outer  = 1; outer < 3 ; outer++)
+                {
+                    for (int inner = 0; inner < maxNumOfOnMapActors; inner++)
+                    {
+                        if (arrayOfActorsPresent[outer, inner] == true)
+                        {
+                            //actor present
+                            if (arrayOfActors[outer, inner] == null)
+                            { Debug.LogFormat("{0}Invalid Actor (Null, shouldn't be as TRUE in arrayOfActorsPresent, in arrayOfActors[{1}, {2}]{3}", tag, outer, inner, "\n"); }
+                        }
+                        else
+                        {
+                            //no actor
+                            if (arrayOfActors[outer, inner] != null)
+                            { Debug.LogFormat("{0}Invalid Actor (should be Null as FALSE in arrayOfActorsPresent, in arrayOfActors[{1}, {2}]{3}", tag, outer, inner, "\n"); }
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
     #endregion
 
