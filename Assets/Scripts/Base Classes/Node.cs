@@ -1127,14 +1127,16 @@ public class Node : MonoBehaviour
                 ongoing.timer--;
                 if (ongoing.timer <= 0)
                 {
+                    //node and any connections
+                    GameManager.instance.connScript.RemoveOngoingEffect(ongoing.ongoingID);
+                    RemoveOngoingEffect(ongoing.ongoingID);
                     //message
                     Debug.LogFormat("[Nod] Node.cs -> ProcessOngoingEffect: REMOVE Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.description, nodeID, "\n");
-                    //delete effect
-                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);
-                    listOfOngoingEffects.RemoveAt(i);
+                    
+                    /*//delete effect -> EDIT: RemoveOngoingEffect handles this
+                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);*/
                 }
             }
-            
         }
     }
 
