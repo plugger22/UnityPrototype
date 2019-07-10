@@ -2780,7 +2780,7 @@ public class DataManager : MonoBehaviour
             if (listOfNodesWithTargets.Exists(x => x == node.nodeID) == false)
             { isSuccess = true; }
             if (counter == 20)
-            { Debug.LogFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after {0} iterations{1}", counter, "\n"); }
+            { Debug.LogWarningFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after {0} iterations{1}", counter, "\n"); }
         }
         while (isSuccess == false && counter < 20);
         //go to manual
@@ -2797,7 +2797,7 @@ public class DataManager : MonoBehaviour
                 }
             }
             if (isSuccess == false)
-            { Debug.LogFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after a FULL loop through list of nodes{0}", "\n"); }
+            { Debug.LogWarningFormat("[Tst] DataManager.cs -> GetRandomTargetNode: No target found after a FULL loop through list of nodes{0}", "\n"); }
         }
         return node;
     }
@@ -5557,7 +5557,7 @@ public class DataManager : MonoBehaviour
                 default: Debug.LogWarningFormat("Unrecognised Connection Security level \"{0}\"", listOfConnections[i].SecurityLevel); break;
             }
         }
-        Debug.LogFormat("[Tst] DataManager.cs -> DebugCheckConnectionSecurity: None {0}, Low {1}, Med {2}, High {3}{4}", none, low, med, high, "\n");
+        /*Debug.LogFormat("[Tst] DataManager.cs -> DebugCheckConnectionSecurity: None {0}, Low {1}, Med {2}, High {3}{4}", none, low, med, high, "\n");*/
     }
 
     /// <summary>

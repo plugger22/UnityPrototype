@@ -836,7 +836,7 @@ public class AIRebelManager : MonoBehaviour
                 { listOfSpiderNodes.Add(listOfNodes[i].nodeID); }
             }
 
-            Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSpiderData: {0} records in listOfSpiders{1}", listOfSpiderNodes.Count, "\n");
+            /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessSpiderData: {0} records in listOfSpiders{1}", listOfSpiderNodes.Count, "\n");*/
 
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
@@ -1314,7 +1314,9 @@ public class AIRebelManager : MonoBehaviour
             {
                 index = Random.Range(0, tempList.Count);
                 listOfArcs.Add(tempList[index]);
-                Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessActorData: {0} actorArc added to list{1}", tempList[index].name, "\n");
+
+                /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessActorData: {0} actorArc added to list{1}", tempList[index].name, "\n");*/
+                
                 //delete to prevent duplicates
                 tempList.RemoveAt(index);
             }
@@ -2739,7 +2741,7 @@ public class AIRebelManager : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 AITask tempTask = listOfTasksCritical[i];
-                if (string.IsNullOrEmpty(tempTask.name0) == false)
+                /*if (string.IsNullOrEmpty(tempTask.name0) == false)
                 {
                     Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", tempTask.type, tempTask.priority,
                         tempTask.data0, tempTask.data1, tempTask.data2, tempTask.name0, "\n");
@@ -2748,7 +2750,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}{5}", tempTask.type, tempTask.priority,
                         tempTask.data0, tempTask.data1, tempTask.data2, "\n");
-                }
+                }*/
             }
 
         }
@@ -2764,12 +2766,13 @@ public class AIRebelManager : MonoBehaviour
                 for (int i = 0; i < count; i++)
                 {
                     AITask tempTask = listOfTasksPotential[i];
-                    if (string.IsNullOrEmpty(tempTask.name0) == false)
+
+                    /*if (string.IsNullOrEmpty(tempTask.name0) == false)
                     { Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}, name0: {5}{6}", tempTask.type, tempTask.priority,
                           tempTask.data0, tempTask.data1, tempTask.data2, tempTask.name0, "\n"); }
                     else
                     { Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTaskFinal: type {0}, {1} priority, d0: {2}, d1: {3}, d2: {4}{5}", tempTask.type, tempTask.priority,
-                          tempTask.data0, tempTask.data1, tempTask.data2, "\n"); }
+                          tempTask.data0, tempTask.data1, tempTask.data2, "\n"); }*/
                 }
 
                 //select a task from listOfPotential Tasks
@@ -3978,7 +3981,9 @@ public class AIRebelManager : MonoBehaviour
     private void ExecuteIdleTask(AITask task)
     {
         Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessIdleTask: \"{0}\", id {1} is IDLING at node ID {2}{3}", playerName, task.data1, task.data0, "\n");
-        Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessIdleTask: IDLING{0}", "\n");
+
+        /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessIdleTask: IDLING{0}", "\n");*/
+
         //action
         UseAction("Idle (Player)");
     }
@@ -4402,8 +4407,8 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="tempList"></param>
     private void DebugShowList(List<int> tempList)
     {
-        for (int i = 0; i < tempList.Count; i++)
-        { Debug.LogFormat("[Tst] tempList[{0}] -> {1}{2}", i, tempList[i], "\n"); }
+        /*for (int i = 0; i < tempList.Count; i++)
+        { Debug.LogFormat("[Tst] tempList[{0}] -> {1}{2}", i, tempList[i], "\n"); }*/
     }
 
     /// <summary>

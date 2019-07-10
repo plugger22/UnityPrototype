@@ -124,7 +124,8 @@ public class Connection : MonoBehaviour
     /// <param name="secLvl"></param>
     public void ChangeSecurityLevel(ConnectionType secLvl)
     {
-        Debug.LogFormat("[Tst] Connection.cs -> ChangeSecurityLevel: to secLvel {0} for connID {1}{2}", secLvl, connID, "\n");
+        /*Debug.LogFormat("[Tst] Connection.cs -> ChangeSecurityLevel: to secLvel {0} for connID {1}{2}", secLvl, connID, "\n");*/
+
         if (secLvl != SecurityLevel)
         {
             SecurityLevel = secLvl;
@@ -141,7 +142,7 @@ public class Connection : MonoBehaviour
         //ignore if connection has already been changed for the current effect
         if (isDone == false)
         {
-            Debug.LogFormat("[Tst] Connection.cs -> ChangeSecurityLevel: adjust {0} for connID {1}{2}", adjust, connID, "\n");
+            /*Debug.LogFormat("[Tst] Connection.cs -> ChangeSecurityLevel: adjust {0} for connID {1}{2}", adjust, connID, "\n");*/
 
             //set flag to prevent being changed twice
             isDone = true;
