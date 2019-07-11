@@ -376,7 +376,7 @@ public class Connection : MonoBehaviour
                     //remove from list
                     listOfOngoingEffects.RemoveAt(i);
                     //reset material of connection. Note that you are simply redoing the same security level without the additional ongoing effect (which will be at a lower level)
-                    ChangeSecurityLevel(SecurityLevel);
+                    SetMaterial(SecurityLevel);
                 }
             }
         }

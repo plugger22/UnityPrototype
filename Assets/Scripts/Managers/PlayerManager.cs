@@ -16,6 +16,10 @@ public class PlayerManager : MonoBehaviour
     [Range(3, 3)] int moodMax = 3;
     [Tooltip("Starting value of Player Mood at beginning of a level")]
     [Range(1, 3)] int moodStart = 2;
+    [Tooltip("Mood resets to this value once Player loses their Stressed Condition")]
+    [Range(1, 3)] int moodStressReset = 2;
+    [Tooltip("Mood increases by this amount for every turn spent Lying Low (up to the moodMax cap)")]
+    [Range(1, 1)] int moodLieLow = 1;
 
     public Sprite sprite;
 
@@ -60,6 +64,7 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionTagged;
     private Condition conditionWounded;
     private Condition conditionImaged;
+    private Condition conditionStressed;
 
 
 
@@ -227,6 +232,7 @@ public class PlayerManager : MonoBehaviour
         conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
         conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
         conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
+        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
@@ -238,6 +244,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
         Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
         Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+        Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
     }
     #endregion
 
@@ -1420,41 +1427,46 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Main method to change mood. Give a reason (keep short, eg. "Dismissed FIXER") and the name of the Factor that applied). Auto adds a history record
     /// NOTE: You only want to call this method if there is definite change (eg. not Zero)
+    /// NOTE: No changes are possible while player is STRESSED
     /// </summary>
     /// <param name="change"></param>
     /// <param name="reason"></param>
     /// <param name="factor"></param>
     public void ChangeMood(int change, string reason, string factor)
     {
-        Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
-        if (string.IsNullOrEmpty(reason) == true)
+        //check player isn't currently stressed
+        if (CheckConditionPresent(conditionStressed, GameManager.instance.sideScript.PlayerSide) == false)
         {
-            reason = "Unknown";
-            Debug.LogWarning("Invalid reason (Null or Empty)");
+            Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
+            if (string.IsNullOrEmpty(reason) == true)
+            {
+                reason = "Unknown";
+                Debug.LogWarning("Invalid reason (Null or Empty)");
+            }
+            if (string.IsNullOrEmpty(factor) == true)
+            {
+                factor = "Unknown";
+                Debug.LogWarning("Invalid factor (Null or Empty)");
+            }
+            //update mood
+            mood += change;
+            mood = Mathf.Clamp(mood, 0, moodMax);
+            //add a record
+            HistoryMood record = new HistoryMood()
+            {
+                change = change,
+                turn = GameManager.instance.turnScript.Turn,
+                mood = mood,
+                factor = factor
+            };
+            //colour Code descriptor
+            string text = string.Format("{0} {1}{2}, ({3})", reason, change > 0 ? "+" : "", change, factor);
+            if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
+            else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); } }
+            else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }
+            //add to list
+            listOfMoodHistory.Add(record);
         }
-        if (string.IsNullOrEmpty(factor) == true)
-        {
-            factor = "Unknown";
-            Debug.LogWarning("Invalid factor (Null or Empty)");
-        }
-        //update mood
-        mood += change;
-        mood = Mathf.Clamp(mood, 0, moodMax);
-        //add a record
-        HistoryMood record = new HistoryMood()
-        {
-            change = change,
-            turn = GameManager.instance.turnScript.Turn,
-            mood = mood,
-            factor = factor
-        };
-        //colour Code descriptor
-        string text = string.Format("{0} {1}{2} ({3})", reason, change > 0 ? "+" : "", change, factor);
-        if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
-        else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); } }
-        else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }
-        //add to list
-        listOfMoodHistory.Add(record);
     }
 
     /// <summary>

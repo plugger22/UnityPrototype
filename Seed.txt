@@ -17,3 +17,18 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 63220 -> Thursday, 11 July 2019 6:01 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 63220 -> Thursday, 11 July 2019 8:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15276 -> Thursday, 11 July 2019 8:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23906 -> Thursday, 11 July 2019 8:11 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50388 -> Thursday, 11 July 2019 8:13 PM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
