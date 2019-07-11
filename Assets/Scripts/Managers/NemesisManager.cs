@@ -1310,7 +1310,7 @@ public class NemesisManager : MonoBehaviour
                                     nemesisNode.Arc.name, nemesisNode.nodeID); }
                         }
                         else
-                        {  Debug.LogFormat("[Con] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                        {  Debug.LogFormat("[Cont] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
                                 actor.arc.name, actor.actorID, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }

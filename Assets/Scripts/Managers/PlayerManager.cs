@@ -13,13 +13,13 @@ public class PlayerManager : MonoBehaviour
 {
     [Header("Mood")]
     [Tooltip("Maximum value possible for Mood")]
-    [Range(3, 3)] int moodMax = 3;
+    [Range(3, 3)] public  int moodMax = 3;
     [Tooltip("Starting value of Player Mood at beginning of a level")]
-    [Range(1, 3)] int moodStart = 2;
+    [Range(1, 3)] public int moodStart = 2;
     [Tooltip("Mood resets to this value once Player loses their Stressed Condition")]
-    [Range(1, 3)] int moodStressReset = 2;
+    [Range(1, 3)] public int moodStressReset = 2;
     [Tooltip("Mood increases by this amount for every turn spent Lying Low (up to the moodMax cap)")]
-    [Range(1, 1)] int moodLieLow = 1;
+    [Range(1, 1)] public int moodLieLow = 1;
 
     public Sprite sprite;
 
@@ -832,6 +832,9 @@ public class PlayerManager : MonoBehaviour
                         case "IMAGED":
                             GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
                             break;
+                        case "STRESSED":
+                            mood = 0;
+                            break;
                     }
                     Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == side.level)
@@ -1434,8 +1437,9 @@ public class PlayerManager : MonoBehaviour
     /// <param name="factor"></param>
     public void ChangeMood(int change, string reason, string factor)
     {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //check player isn't currently stressed
-        if (CheckConditionPresent(conditionStressed, GameManager.instance.sideScript.PlayerSide) == false)
+        if (CheckConditionPresent(conditionStressed, playerSide) == false)
         {
             Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
             if (string.IsNullOrEmpty(reason) == true)
@@ -1449,7 +1453,13 @@ public class PlayerManager : MonoBehaviour
                 Debug.LogWarning("Invalid factor (Null or Empty)");
             }
             //update mood
+            bool isStressed = false;
             mood += change;
+            if (mood < 0)
+            {
+                //player gains stressed condition
+                AddCondition(conditionStressed, playerSide, "Mood drops below Zero");
+            }
             mood = Mathf.Clamp(mood, 0, moodMax);
             //add a record
             HistoryMood record = new HistoryMood()
@@ -1457,7 +1467,8 @@ public class PlayerManager : MonoBehaviour
                 change = change,
                 turn = GameManager.instance.turnScript.Turn,
                 mood = mood,
-                factor = factor
+                factor = factor,
+                isStressed = isStressed
             };
             //colour Code descriptor
             string text = string.Format("{0} {1}{2}, ({3})", reason, change > 0 ? "+" : "", change, factor);

@@ -274,8 +274,10 @@ public class TurnManager : MonoBehaviour
                 //start the new turn
                 StartTurnEarly();
                 StartTurnLate();
-                //Debug
-                GameManager.instance.dataScript.DebugCheckConnectionSecurity();
+                
+                /*//Debug
+                GameManager.instance.dataScript.DebugCheckConnectionSecurity();*/
+
                 //only do for player
                 if (playerSide != null && currentSide.level == playerSide.level)
                 {
