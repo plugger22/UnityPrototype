@@ -44,6 +44,7 @@ public class DebugGUI : MonoBehaviour
     private int button_width;
     private int targetToggle = 0;
     private int personalityToggle = 0;
+    private int playerToggle = 0;
     private int contactToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
@@ -208,9 +209,12 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Player Data"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Player Data");
-                if (debugDisplay != 8)
-                { debugDisplay = 8; }
-                else { debugDisplay = 0; }
+                switch (playerToggle)
+                {
+                    case 0: debugDisplay = 8; playerToggle = 1; break;
+                    case 1: debugDisplay = 60; playerToggle = 2; break;
+                    case 2: debugDisplay = 0; playerToggle = 0; break;
+                }
             }
 
             //tenth button
@@ -971,8 +975,8 @@ public class DebugGUI : MonoBehaviour
                     //Player stats
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.playerScript.DisplayPlayerStats();
-                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 600), analysis, customBackground);
+                        analysis = GameManager.instance.playerScript.DebugDisplayPlayerStats();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Toggle Messages
                     case 9:
@@ -1417,6 +1421,13 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.personScript.DebugDisplayActorMotivationHistory();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
                         break;
+                    //player stats -> mood history
+                    case 60:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.playerScript.DebugDisplayMoodHistory();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+
                 }
             }
             else { status = GUIStatus.None; }

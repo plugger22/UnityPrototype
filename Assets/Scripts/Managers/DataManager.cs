@@ -6564,6 +6564,9 @@ public class DataManager : MonoBehaviour
     public string[] GetArrayOfFactorTags()
     { return arrayOfFactorTags; }
 
+    public string DebugGetRandomFactor()
+    { return arrayOfFactorTags[Random.Range(0, arrayOfFactorTags.Length)]; }
+
     public Dictionary<string, PersonProfile> GetDictOfProfiles()
     { return dictOfProfiles; }
 

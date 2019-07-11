@@ -358,6 +358,7 @@ public class PlayerManager : MonoBehaviour
     {
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
+        DebugCreateMoodHistory();
     }
 
 
@@ -480,11 +481,12 @@ public class PlayerManager : MonoBehaviour
     /// update listOfGear with loaded save game data. Existing data is cleared out prior to updating.
     /// </summary>
     /// <param name="listOfGear"></param>
-    public void SetListOfGear(List<Gear> listOfGear)
+    public void SetListOfGear(List<string> listOfGear)
     {
         if (listOfGear != null)
         {
-
+            listOfGear.Clear();
+            listOfGear.AddRange(listOfGear);
         }
         else { Debug.LogError("Invalid listOfGear (Null)"); }
     }
@@ -1180,7 +1182,7 @@ public class PlayerManager : MonoBehaviour
     /// Debug function to display all player related stats
     /// </summary>
     /// <returns></returns>
-    public string DisplayPlayerStats()
+    public string DebugDisplayPlayerStats()
     {
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //use correct list for the player side
@@ -1447,7 +1449,7 @@ public class PlayerManager : MonoBehaviour
             factor = factor
         };
         //colour Code descriptor
-        string text = string.Format("{0} {1}{2}", reason, change > 0 ? "+" : "", change);
+        string text = string.Format("{0} {1}{2} ({3})", reason, change > 0 ? "+" : "", change, factor);
         if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
         else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); } }
         else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }
@@ -1493,8 +1495,27 @@ public class PlayerManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Mood history{0}", "\n");
         foreach(HistoryMood history in listOfMoodHistory)
-        { builder.AppendFormat(" {0}{1}", history, "\n"); }
+        { builder.AppendFormat(" {0}{1}", history.descriptor, "\n"); }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to create sample mood history data set
+    /// </summary>
+    public void DebugCreateMoodHistory()
+    {
+        int change = 1;
+        string reason = "Promote ";
+        string factor = "Unknown";
+        //create one random mood history per turn
+        if (Random.Range(0, 100) < 50)
+        {
+            change = -1;
+            reason = "Dismiss ";
+        }
+        reason = reason + GameManager.instance.dataScript.GetRandomActorArcs(1, GameManager.instance.sideScript.PlayerSide)[0].name;
+        factor = GameManager.instance.dataScript.DebugGetRandomFactor();
+        ChangeMood(change, reason, factor);
     }
 
    
