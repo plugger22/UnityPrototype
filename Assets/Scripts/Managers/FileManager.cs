@@ -260,6 +260,7 @@ public class FileManager : MonoBehaviour
         write.playerData.renown = GameManager.instance.playerScript.Renown;
         write.playerData.status = GameManager.instance.playerScript.status;
         write.playerData.Invisibility = GameManager.instance.playerScript.Invisibility;
+        write.playerData.mood = GameManager.instance.playerScript.GetMood();
         write.playerData.tooltipStatus = GameManager.instance.playerScript.tooltipStatus;
         write.playerData.inactiveStatus = GameManager.instance.playerScript.inactiveStatus;
         write.playerData.listOfGear = GameManager.instance.playerScript.GetListOfGear();
@@ -284,6 +285,14 @@ public class FileManager : MonoBehaviour
             if (secret != null)
             { write.playerData.listOfSecrets.Add(secret.name); }
             else { Debug.LogWarning("Invalid secret (Null)"); }
+        }
+        //mood history
+        List<HistoryMood> listOfHistory = GameManager.instance.playerScript.GetListOfMoodHistory();
+        foreach(HistoryMood history in listOfHistory)
+        {
+            if (history != null)
+            { write.playerData.listOfMoodHistory.Add(history); }
+            else { Debug.LogWarning("Invalid historyMood (Null)"); }
         }
         //conditions
         List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
@@ -1418,6 +1427,7 @@ public class FileManager : MonoBehaviour
     {
         GameManager.instance.playerScript.Renown = read.playerData.renown;
         GameManager.instance.playerScript.Invisibility = read.playerData.Invisibility;
+        GameManager.instance.playerScript.SetMood(read.playerData.mood);
         GameManager.instance.playerScript.status = read.playerData.status;
         GameManager.instance.playerScript.tooltipStatus = read.playerData.tooltipStatus;
         GameManager.instance.playerScript.inactiveStatus = read.playerData.inactiveStatus;
@@ -1451,6 +1461,8 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.playerScript.SetSecrets(listOfSecrets);
+        //mood history
+        GameManager.instance.playerScript.SetMoodHistory(read.playerData.listOfMoodHistory);
         //conditions -> Resistance
         List<Condition> listOfConditions = new List<Condition>();
         for (int i = 0; i < read.playerData.listOfConditionsResistance.Count; i++)

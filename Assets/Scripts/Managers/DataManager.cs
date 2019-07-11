@@ -5557,7 +5557,7 @@ public class DataManager : MonoBehaviour
                 default: Debug.LogWarningFormat("Unrecognised Connection Security level \"{0}\"", listOfConnections[i].SecurityLevel); break;
             }
         }
-        /*Debug.LogFormat("[Tst] DataManager.cs -> DebugCheckConnectionSecurity: None {0}, Low {1}, Med {2}, High {3}{4}", none, low, med, high, "\n");*/
+        Debug.LogFormat("[Tst] DataManager.cs -> DebugCheckConnectionSecurity: None {0}, Low {1}, Med {2}, High {3}{4}", none, low, med, high, "\n");
     }
 
     /// <summary>

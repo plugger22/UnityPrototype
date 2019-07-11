@@ -402,6 +402,19 @@ namespace packageAPI
         public string descriptor;       //FORMATTED string, eg. 'Gear HoloPorn Given +1' displayed in green, red if negative, grey if negated
     }
 
+    /// <summary>
+    /// history of player's mood changes
+    /// </summary>
+    [System.Serializable]
+    public class HistoryMood
+    {
+        public int change;              //positive change is good, negative bad
+        public int turn;
+        public int mood;                //mood AFTER the change
+        public string descriptor;       //FORMATTED string, eg. "Disposed of FIXER -2"
+        public string factor;           //name of factor that determined the change
+    }
+
     //
     // - - - Save / Load packages
     //

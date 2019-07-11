@@ -142,7 +142,7 @@ public class SavePlayerData
 {
     public int renown;
     public int Invisibility;
-    
+    public int mood;
     public ActorStatus status;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
@@ -158,7 +158,8 @@ public class SavePlayerData
     public List<string> listOfGear = new List<string>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditionsResistance = new List<string>();
-    public List<string> listOfConditionsAuthority = new List<string>();   
+    public List<string> listOfConditionsAuthority = new List<string>();
+    public List<HistoryMood> listOfMoodHistory = new List<HistoryMood>();
 }
 #endregion
 

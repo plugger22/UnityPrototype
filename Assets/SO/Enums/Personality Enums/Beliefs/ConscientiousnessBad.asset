@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a97e235957ea3b4083a36659fab126a, type: 3}
+  m_Name: ConscientiousnessBad
+  m_EditorClassIdentifier: 
+  tag: Conscientiousness negative
+  descriptor: Mood+ if conscientiousness < 0
+  factor: {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}
+  type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}

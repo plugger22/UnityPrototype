@@ -600,6 +600,27 @@ MonoBehaviour:
   minPersonalityFactor: -2
   maxCompatibilityWithPlayer: 3
   minCompatibilityWithPlayer: -3
+  beliefReservePromise: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192,
+    type: 2}
+  beliefReserveNoPromise: {fileID: 11400000, guid: f8009ccb46ef0c04cb437332ebd57aec,
+    type: 2}
+  beliefReserveRest: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192, type: 2}
+  beliefDismissIncompetent: {fileID: 11400000, guid: 92f49a9cf39480844b11daa96444510f,
+    type: 2}
+  beliefDismissUnsuited: {fileID: 11400000, guid: da09bad2ff221dc43bb3ad4b3cb661c9,
+    type: 2}
+  beliefDismissPromote: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192,
+    type: 2}
+  beliefDisposeCorrupt: {fileID: 11400000, guid: 12a21c02ab688094d8cec702354d9069,
+    type: 2}
+  beliefDisposeLoyalty: {fileID: 11400000, guid: 12a21c02ab688094d8cec702354d9069,
+    type: 2}
+  beliefDisposeHabit: {fileID: 11400000, guid: da09bad2ff221dc43bb3ad4b3cb661c9, type: 2}
+  beliefReserveLetGo: {fileID: 11400000, guid: 92f49a9cf39480844b11daa96444510f, type: 2}
+  beliefReserveFire: {fileID: 11400000, guid: da09bad2ff221dc43bb3ad4b3cb661c9, type: 2}
+  beliefReserveReassure: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192,
+    type: 2}
+  beliefReserveBully: {fileID: 11400000, guid: f8009ccb46ef0c04cb437332ebd57aec, type: 2}
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1

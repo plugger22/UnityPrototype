@@ -33,6 +33,36 @@ public class PersonalityManager : MonoBehaviour
     [Tooltip("Min value allowed for a compatibilityWithPlayer")]
     [Range(-3, -3)] public int minCompatibilityWithPlayer = -3;
 
+    [Header("Manage Actor Beliefs")]
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReservePromise;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReserveNoPromise;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReserveRest;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefDismissIncompetent;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefDismissUnsuited;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefDismissPromote;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefDisposeCorrupt;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefDisposeLoyalty;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefDisposeHabit;
+
+    [Header("Reserve Actor Beliefs")]
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReserveLetGo;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReserveFire;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReserveReassure;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefReserveBully;
+
     //Fast access
     private Factor[] arrayOfFactors;
     private string[] arrayOfFactorTags;

@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,10 +11,13 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    public Sprite sprite;
+    [Header("Mood")]
+    [Tooltip("Maximum value possible for Mood")]
+    [Range(3, 3)] int moodMax = 3;
+    [Tooltip("Starting value of Player Mood at beginning of a level")]
+    [Range(1, 3)] int moodStart = 2;
 
-    //[HideInInspector] public int numOfRecruits;
-    //[HideInInspector] public int Invisibility;
+    public Sprite sprite;
 
     #region save data compatibile
     [HideInInspector] public int actorID;
@@ -24,11 +28,14 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
-
+    //collections
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
     private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
+    private List<HistoryMood> listOfMoodHistory = new List<HistoryMood>();          //tracks all changes to player mood
+    //personality
+    private int mood;
     private Personality personality = new Personality();
     #endregion
 
@@ -242,6 +249,7 @@ public class PlayerManager : MonoBehaviour
         isEndOfTurnGearCheck = false;
         //set stats      
         Invisibility = 3;
+        mood = moodStart;
     }
     #endregion
 
@@ -467,6 +475,19 @@ public class PlayerManager : MonoBehaviour
 
     public List<string> GetListOfGear()
     { return listOfGear; }
+
+    /// <summary>
+    /// update listOfGear with loaded save game data. Existing data is cleared out prior to updating.
+    /// </summary>
+    /// <param name="listOfGear"></param>
+    public void SetListOfGear(List<Gear> listOfGear)
+    {
+        if (listOfGear != null)
+        {
+
+        }
+        else { Debug.LogError("Invalid listOfGear (Null)"); }
+    }
 
     /// <summary>
     /// returns a list of all gear that matches the specified type, null if none
@@ -1165,20 +1186,21 @@ public class PlayerManager : MonoBehaviour
         //use correct list for the player side
         List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
         StringBuilder builder = new StringBuilder();
-        builder.Append(string.Format("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n"));
-        builder.Append(string.Format("- Stats{0}", "\n"));
+        builder.AppendFormat("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n");
+        builder.AppendFormat("- Stats{0}", "\n");
         if (playerSide.level == globalResistance.level)
-        { builder.Append(string.Format(" Invisibility {0}{1}", Invisibility, "\n")); }
-        builder.Append(string.Format(" Renown {0}{1}", Renown, "\n"));
+        { builder.AppendFormat(" Invisibility {0}{1}", Invisibility, "\n"); }
+        builder.AppendFormat(" Renown {0}{1}", Renown, "\n");
+        builder.AppendFormat(" Mood {0}{1}", mood, "\n");
         if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
         //Conditions
         if (listOfConditions != null)
         {
-            builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
+            builder.AppendFormat("{0}- Conditions{1}", "\n", "\n");
             if (listOfConditions.Count > 0)
             {
                 for (int i = 0; i < listOfConditions.Count; i++)
-                { builder.Append(string.Format(" {0}{1}", listOfConditions[i].name, "\n")); }
+                { builder.AppendFormat(" {0}{1}", listOfConditions[i].name, "\n"); }
             }
             else { builder.AppendFormat(" None{0}", "\n"); }
         }
@@ -1187,7 +1209,7 @@ public class PlayerManager : MonoBehaviour
         List<Node> listOfCures = GameManager.instance.dataScript.GetListOfCureNodes();
         if (listOfCures != null)
         {
-            builder.Append(string.Format("{0}- Cures{1}", "\n", "\n"));
+            builder.AppendFormat("{0}- Cures{1}", "\n", "\n");
             if (listOfCures.Count > 0)
             {
                 for (int i = 0; i < listOfCures.Count; i++)
@@ -1196,29 +1218,26 @@ public class PlayerManager : MonoBehaviour
             else { builder.AppendFormat(" None{0}", "\n"); }
         }
         else { Debug.LogError("Invalid listOfCures (Null)"); }
-        builder.Append(string.Format("{0}- States{1}", "\n", "\n"));
-        builder.Append(string.Format(" Status {0}{1}", status, "\n"));
-        builder.Append(string.Format(" InactiveStatus {0}{1}", inactiveStatus, "\n"));
-        builder.Append(string.Format(" TooltipStatus {0}{1}", tooltipStatus, "\n"));
-        builder.Append(string.Format(" isBreakdown {0}{1}", isBreakdown, "\n"));
-        builder.Append(string.Format("{0} -Global{1}", "\n", "\n"));
-        /*builder.Append(string.Format(" Resistance Cause  {0} of {1}{2}", GameManager.instance.rebelScript.resistanceCause,
-            GameManager.instance.rebelScript.resistanceCauseMax, "\n"));
-        builder.Append(string.Format(" resistanceState {0}{1}", GameManager.instance.turnScript.resistanceState, "\n"));*/
-        builder.Append(string.Format(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n"));
-        builder.Append(string.Format("{0} -Reserve Pool{1}", "\n", "\n"));
-        builder.Append(string.Format(" NumOfRecruits {0} + {1}{2}", GameManager.instance.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n"));
+        builder.AppendFormat("{0}- States{1}", "\n", "\n");
+        builder.AppendFormat(" Status {0}{1}", status, "\n");
+        builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
+        builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
+        builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
+        builder.AppendFormat("{0} -Global{1}", "\n", "\n");
+        builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
+        builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");
+        builder.AppendFormat(" NumOfRecruits {0} + {1}{2}", GameManager.instance.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n");
         if (playerSide.level == globalResistance.level)
         {
             //gear
-            builder.Append(string.Format("{0}- Gear{1}", "\n", "\n"));
+            builder.AppendFormat("{0}- Gear{1}", "\n", "\n");
             if (listOfGear.Count > 0)
             {
                 for (int i = 0; i < listOfGear.Count; i++)
                 {
                     Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
-                    { builder.Append(string.Format(" {0}, {1}{2}", gear.tag, gear.type.name, "\n")); }
+                    { builder.AppendFormat(" {0}, {1}{2}", gear.tag, gear.type.name, "\n"); }
                 }
             }
             else { builder.Append(" No gear in inventory"); }
@@ -1387,11 +1406,98 @@ public class PlayerManager : MonoBehaviour
 
 
     //
-    // - - - Personality
+    // - - - Personality & mood
     //
 
     public Personality GetPersonality()
     { return personality; }
+
+    public int GetMood()
+    { return mood; }
+
+    /// <summary>
+    /// Main method to change mood. Give a reason (keep short, eg. "Dismissed FIXER") and the name of the Factor that applied). Auto adds a history record
+    /// NOTE: You only want to call this method if there is definite change (eg. not Zero)
+    /// </summary>
+    /// <param name="change"></param>
+    /// <param name="reason"></param>
+    /// <param name="factor"></param>
+    public void ChangeMood(int change, string reason, string factor)
+    {
+        Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
+        if (string.IsNullOrEmpty(reason) == true)
+        {
+            reason = "Unknown";
+            Debug.LogWarning("Invalid reason (Null or Empty)");
+        }
+        if (string.IsNullOrEmpty(factor) == true)
+        {
+            factor = "Unknown";
+            Debug.LogWarning("Invalid factor (Null or Empty)");
+        }
+        //update mood
+        mood += change;
+        mood = Mathf.Clamp(mood, 0, moodMax);
+        //add a record
+        HistoryMood record = new HistoryMood()
+        {
+            change = change,
+            turn = GameManager.instance.turnScript.Turn,
+            mood = mood,
+            factor = factor
+        };
+        //colour Code descriptor
+        string text = string.Format("{0} {1}{2}", reason, change > 0 ? "+" : "", change);
+        if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
+        else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); } }
+        else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }
+        //add to list
+        listOfMoodHistory.Add(record);
+    }
+
+    /// <summary>
+    /// Set mood to a particular value based on loaded save game data
+    /// </summary>
+    /// <param name="mood"></param>
+    public void SetMood(int mood)
+    {
+        Debug.AssertFormat(mood >= 0 && mood <= moodMax, "Invalid mood \"{0}\", (should be between 0 & 3)");
+        this.mood = mood;
+        this.mood = Mathf.Clamp(this.mood, 0, moodMax);
+    }
+
+    public List<HistoryMood> GetListOfMoodHistory()
+    { return listOfMoodHistory; }
+
+    /// <summary>
+    /// Set listOfMoodHistory with loaded save game data. Clears out any existing data prior to updating.
+    /// </summary>
+    /// <param name="listOfHistory"></param>
+    public void SetMoodHistory(List<HistoryMood> listOfHistory)
+    {
+        if (listOfHistory != null)
+        {
+            listOfMoodHistory.Clear();
+            listOfMoodHistory.AddRange(listOfHistory);
+        }
+        else { Debug.LogError("Invalid listOfHistory (Null)"); }
+    }
+
+
+    /// <summary>
+    /// display mood history
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayMoodHistory()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Mood history{0}", "\n");
+        foreach(HistoryMood history in listOfMoodHistory)
+        { builder.AppendFormat(" {0}{1}", history, "\n"); }
+        return builder.ToString();
+    }
+
+   
 
     //place new methods above here
 }
