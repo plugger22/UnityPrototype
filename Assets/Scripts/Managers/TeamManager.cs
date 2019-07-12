@@ -378,7 +378,7 @@ public class TeamManager : MonoBehaviour
                                     if (contact.status == ContactStatus.Active)
                                     {
                                         //message
-                                        Debug.LogFormat("[Cont] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} spots {3} team at {4}, {5}, id {6}{7}", contact.nameFirst,
+                                        Debug.LogFormat("[Cnt] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} spots {3} team at {4}, {5}, id {6}{7}", contact.nameFirst,
                                             contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                         text = string.Format("{0} team, id {1}, has been spotted by Contact {2} {3}, {4}, at district {5}, id {6}", team.teamName, team.teamID,
                                             contact.nameFirst, contact.nameLast, contact.job, node.nodeName, node.nodeID);
@@ -388,7 +388,7 @@ public class TeamManager : MonoBehaviour
                                     }
                                     else
                                     {
-                                        Debug.LogFormat("[Cont] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} INACTIVE & doesn't spot {3} Team at {4}, {5}, id {6}{7}",
+                                        Debug.LogFormat("[Cnt] TeamManager.cs -> StartTurnLate: Contact {0} {1}, {2} INACTIVE & doesn't spot {3} Team at {4}, {5}, id {6}{7}",
                                             contact.nameFirst, contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                         isSpotted = false;
                                     }

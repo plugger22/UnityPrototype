@@ -140,7 +140,7 @@
     public enum StatType                                //NOTE -> No 'None' or 'Count' (code loops enum and can't handle either)
     {
         StressLeaveResistance, StressLeaveAuthority,  
-        PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed,
+        PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed, PlayerStressed,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
         NodeCrisis, NodeCrisisExplodes

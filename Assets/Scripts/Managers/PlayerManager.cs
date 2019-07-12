@@ -832,9 +832,11 @@ public class PlayerManager : MonoBehaviour
                             break;
                         case "STRESSED":
                             mood = 0;
+                            //stats
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerStressed);
                             break;
                     }
-                    Debug.LogFormat("[Con] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
+                    Debug.LogFormat("[Cnd] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                     {
                         //message
@@ -905,7 +907,7 @@ public class PlayerManager : MonoBehaviour
                         if (listOfConditions[i].name.Equals(condition.tag, System.StringComparison.Ordinal) == true)
                         {
                             listOfConditions.RemoveAt(i);
-                            Debug.LogFormat("[Con] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.tag, "\n");
+                            Debug.LogFormat("[Cnd] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.tag, "\n");
                             if (GameManager.instance.sideScript.PlayerSide.level == side.level)
                             {
                                 //message
@@ -1460,6 +1462,7 @@ public class PlayerManager : MonoBehaviour
             {
                 //player gains stressed condition
                 AddCondition(conditionStressed, playerSide, "Mood drops below Zero");
+                isStressed = true;
             }
             mood = Mathf.Clamp(mood, 0, moodMax);
             //add a record
@@ -1472,7 +1475,7 @@ public class PlayerManager : MonoBehaviour
                 isStressed = isStressed
             };
             //colour Code descriptor
-            string text = string.Format("{0} {1}{2}, ({3})", reason, change > 0 ? "+" : "", change, factor);
+            string text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : "");
             if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
             else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); } }
             else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }

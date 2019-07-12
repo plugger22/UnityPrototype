@@ -1469,7 +1469,7 @@ public class DataManager : MonoBehaviour
                                                 //remove contact record from actor
                                                 if (actor.RemoveContact(nodeID) == true)
                                                 {
-                                                    Debug.LogFormat("[Cont] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.nameFirst, contact.contactID,
+                                                    Debug.LogFormat("[Cnt] DataManager.cs -> RemoveContacts: REMOVED {0}, ID {1} from {2}, {3},  nodeID {4}", contact.nameFirst, contact.contactID,
                                                     actor.actorName, actor.arc.name, nodeID);
                                                     //message
                                                     Node node = GetNode(nodeID);
@@ -1587,7 +1587,7 @@ public class DataManager : MonoBehaviour
                 if (contact != null)
                 {
                     actor.AddContact(contact);
-                    Debug.LogFormat("[Cont] DatabaseManager.cs -> AddContactSingle: ADDED {0}, contactID {1} to {2}, {3}, actorID {4}, nodeID {5}, {6}", contact.nameFirst, contact.contactID,
+                    Debug.LogFormat("[Cnt] DatabaseManager.cs -> AddContactSingle: ADDED {0}, contactID {1} to {2}, {3}, actorID {4}, nodeID {5}, {6}", contact.nameFirst, contact.contactID,
                         actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n");
                     //message
                     Node node = GetNode(nodeID);
@@ -1601,7 +1601,7 @@ public class DataManager : MonoBehaviour
                 else { Debug.LogError("Invalid contact (Null)"); }
             }
             else
-            { Debug.LogFormat("[Cont] DataManager.cs -> AddContactSingle: ADDED {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
+            { Debug.LogFormat("[Cnt] DataManager.cs -> AddContactSingle: ADDED {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Added (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
@@ -1687,7 +1687,7 @@ public class DataManager : MonoBehaviour
                 {
                     if (actor.RemoveContact(nodeID) == true)
                     {
-                        Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED {0}, ID {1}, from {2}, {3}, actorID {4}, at nodeID {5}", contact.nameFirst, contact.contactID,
+                        Debug.LogFormat("[Cnt] DataManager.cs -> RemoveContactsSingle: REMOVED {0}, ID {1}, from {2}, {3}, actorID {4}, at nodeID {5}", contact.nameFirst, contact.contactID,
                           actor.actorName, actor.arc.name, actor.actorID, nodeID);
                         //message
                         Node node = GetNode(nodeID);
@@ -1707,7 +1707,7 @@ public class DataManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid contact (Null) for nodeID {0}, actor {1}, {2}, ID {3}", nodeID, actor.actorName, actor.arc.name, actor.actorID); }
             }
             else
-            { Debug.LogFormat("[Cont] DataManager.cs -> RemoveContactsSingle: REMOVED from {0}, {1}, actorID {2}, at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, nodeID); }
+            { Debug.LogFormat("[Cnt] DataManager.cs -> RemoveContactsSingle: REMOVED from {0}, {1}, actorID {2}, at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, nodeID); }
         }
         else { Debug.LogFormat("DataManager.cs -> Contact NOT Removed (FAIL): {0}, {1}, actorID {2} contact at nodeID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, nodeID, "\n"); }
         //update node contact flags
@@ -2039,7 +2039,7 @@ public class DataManager : MonoBehaviour
                 case ContactStatus.Active: contact.status = ContactStatus.Inactive; break;
                 case ContactStatus.Inactive: contact.status = ContactStatus.Active; break;
             }
-            Debug.LogFormat("[Cont] DataManager.cs -> ContactToggleActive: {0} {1}, {2}, id {3} STATUS now {4}{5}", contact.nameFirst, contact.nameLast, contact.job, contact.contactID, contact.status, "\n");
+            Debug.LogFormat("[Cnt] DataManager.cs -> ContactToggleActive: {0} {1}, {2}, id {3} STATUS now {4}{5}", contact.nameFirst, contact.nameLast, contact.job, contact.contactID, contact.status, "\n");
             return Convert.ToString(contact.status);
         }
         return "Unknown";

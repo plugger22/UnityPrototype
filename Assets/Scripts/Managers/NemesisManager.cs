@@ -1289,7 +1289,7 @@ public class NemesisManager : MonoBehaviour
                                         //contact spots Nemesis
                                         string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,
                                             contact.job, node.nodeName, node.nodeID);
-                                        Debug.LogFormat("[Cont] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
+                                        Debug.LogFormat("[Cnt] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
                                             contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
                                         GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis, moveNumber);
                                         //contact stats
@@ -1300,7 +1300,7 @@ public class NemesisManager : MonoBehaviour
                                     else
                                     {
                                         //contact Fails to spot Nemesis
-                                        Debug.LogFormat("[Cont] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                        Debug.LogFormat("[Cnt] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Nemesis {2}, adj StealthRating {3} at nodeID {4}{5}",
                                             contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, nemesisNode.nodeID, "\n");
                                     }
                                 }
@@ -1310,7 +1310,7 @@ public class NemesisManager : MonoBehaviour
                                     nemesisNode.Arc.name, nemesisNode.nodeID); }
                         }
                         else
-                        {  Debug.LogFormat("[Cont] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                        {  Debug.LogFormat("[Cnt] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
                                 actor.arc.name, actor.actorID, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }

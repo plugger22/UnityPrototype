@@ -223,8 +223,8 @@ public class ContactManager : MonoBehaviour
                     catch (ArgumentException)
                     { Debug.LogErrorFormat("Invalid entry in dictOfContacts for contact {0}, ID {1}", contact.nameFirst, contact.contactID); }
                 }
-                Debug.LogFormat("[Cont] ContactManager.cs -> CreateContacts: {0} out of {1} contacts created and added to pool", counter, numOfContacts);
-                Debug.LogFormat("[Cont] ContactManager.cs -> CreateContacts: contactPool has {0} records", contactPool.Count);
+                Debug.LogFormat("[Cnt] ContactManager.cs -> CreateContacts: {0} out of {1} contacts created and added to pool", counter, numOfContacts);
+                Debug.LogFormat("[Cnt] ContactManager.cs -> CreateContacts: contactPool has {0} records", contactPool.Count);
             }
             else { Debug.LogError("Invalid contactPool list (Null)"); }
         }
@@ -298,7 +298,7 @@ public class ContactManager : MonoBehaviour
             {
                 //top up pool
                 CreateContacts(numOfPoolTopUp);
-                Debug.LogFormat("[Cont] ContactManager.cs -> AssignContact: ContactPool topped up, now has {0} records", contactPool.Count);
+                Debug.LogFormat("[Cnt] ContactManager.cs -> AssignContact: ContactPool topped up, now has {0} records", contactPool.Count);
             }
         }
         else { Debug.LogError("Invalid contactPool list (Null)"); }
@@ -393,7 +393,7 @@ public class ContactManager : MonoBehaviour
                                     if (contact != null)
                                     {
                                         actor.AddContact(contact);
-                                        Debug.LogFormat("[Cont] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4} {5}, ID {6}, E {7}, {8}", actor.actorName, actor.arc.name, 
+                                        Debug.LogFormat("[Cnt] ContactManager.cs ->SetActorContact: ADDED {0}, {1}, actorID {2}, nodeID {3}, {4} {5}, ID {6}, E {7}, {8}", actor.actorName, actor.arc.name, 
                                             actor.actorID, listOfContactNodes[i], contact.typeName, contact.nameFirst, contact.contactID, contact.effectiveness, "\n");
                                     }
                                     else { Debug.LogError("Invalid contact (Null)"); }
@@ -578,7 +578,7 @@ public class ContactManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid target (Null) for listOfActiveTargets[{0}]", i); }
                 }
                 numOfTargets = listOfRumourTargets.Count;
-                Debug.LogFormat("[Cont] ContactManager.cs -> CheckTargetRumours: {0} rumours triggered for Active Targets this turn", numOfTargets);
+                Debug.LogFormat("[Cnt] ContactManager.cs -> CheckTargetRumours: {0} rumours triggered for Active Targets this turn", numOfTargets);
                 //have any rumours been triggered?
                 if (numOfTargets > 0)
                 {
@@ -627,11 +627,11 @@ public class ContactManager : MonoBehaviour
                                         }
                                         else { Debug.LogWarning("Invalid node (Null)"); }
                                     }
-                                    else { Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: No random contact (Null) for Actor {0}, {1}, id {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n"); }
+                                    else { Debug.LogFormat("[Cnt] ContactManager.cs -> CheckTargetRumrous: No random contact (Null) for Actor {0}, {1}, id {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n"); }
                                 }
                                 else
                                 {
-                                    Debug.LogFormat("[Con] ContactManager.cs -> CheckTargetRumrous: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                    Debug.LogFormat("[Cnt] ContactManager.cs -> CheckTargetRumrous: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
                                      actor.arc.name, actor.actorID, "\n");
                                 }
                             }

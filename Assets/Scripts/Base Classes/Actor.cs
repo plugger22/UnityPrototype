@@ -666,7 +666,7 @@ namespace gameAPI
                                 blackmailTimer = timer;
                                 break;
                         }
-                        Debug.LogFormat("[Con] Actor.cs -> AddCondition: {0}, {1} gained {2} condition{3}", actorName, arc.name, condition.tag, "\n");
+                        Debug.LogFormat("[Cnd] Actor.cs -> AddCondition: {0}, {1} gained {2} condition{3}", actorName, arc.name, condition.tag, "\n");
                         //message
                         if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                         {
@@ -733,7 +733,7 @@ namespace gameAPI
                                     break;
                             }
                             listOfConditions.RemoveAt(i);
-                            Debug.LogFormat("[Con] Actor.cs -> RemoveCondition: {0}, {1} lost {2} condition{3}", actorName, arc.name, condition.tag, "\n");
+                            Debug.LogFormat("[Cnd] Actor.cs -> RemoveCondition: {0}, {1} lost {2} condition{3}", actorName, arc.name, condition.tag, "\n");
                             if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                             {
                                 //message
