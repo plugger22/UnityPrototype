@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all personality related matters
@@ -96,6 +97,7 @@ public class PersonalityManager : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
+        //fast access
         arrayOfFactors = GameManager.instance.dataScript.GetArrayOfFactors();
         arrayOfFactorTags = GameManager.instance.dataScript.GetArrayOfFactorTags();
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -106,6 +108,20 @@ public class PersonalityManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(playerPersonality != null, "Invalid playerPersonality (Null)");
+        //beliefs
+        Debug.Assert(beliefReservePromise != null, "Invalid beliefReservePromise (Null)");
+        Debug.Assert(beliefReserveNoPromise != null, "Invalid beliefReserveNoPromise (Null)");
+        Debug.Assert(beliefReserveRest != null, "Invalid beliefReserveRest (Null)");
+        Debug.Assert(beliefDismissIncompetent != null, "Invalid beliefDismissIncompetent (Null)");
+        Debug.Assert(beliefDismissUnsuited != null, "Invalid beliefDismissUnsuited (Null)");
+        Debug.Assert(beliefDismissPromote != null, "Invalid beliefDismissPromote (Null)");
+        Debug.Assert(beliefDisposeCorrupt != null, "Invalid beliefDisposeCorrupt (Null)");
+        Debug.Assert(beliefDisposeLoyalty != null, "Invalid beliefDisposeLoyalty (Null)");
+        Debug.Assert(beliefDisposeHabit != null, "Invalid beliefDisposeHabit (Null)");
+        Debug.Assert(beliefReserveLetGo != null, "Invalid beliefReserveLetGo (Null)");
+        Debug.Assert(beliefReserveFire != null, "Invalid beliefReserveFire (Null)");
+        Debug.Assert(beliefReserveReassure != null, "Invalid beliefReserveReassure (Null)");
+        Debug.Assert(beliefReserveBully != null, "Invalid beliefReserveBully (Null)");
     }
     #endregion
 
@@ -500,11 +516,13 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public string GetMoodTooltip(MoodType type, bool isShortVersion = true)
+    public string GetMoodTooltip(MoodType type, string actorArcName, bool isShortVersion = true)
     {
         StringBuilder builder = new StringBuilder();
+        if (string.IsNullOrEmpty(actorArcName) == true)
+        { actorArcName = "Unknown"; }
         //get the effect
-        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type);
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, actorArcName);
         int change = results.Item1;
         string factorName = results.Item2;
         string factorType = results.Item3;
@@ -556,11 +574,12 @@ public class PersonalityManager : MonoBehaviour
 
     /// <summary>
     /// subMethod which returns amount of change, name of determining factor, whether factor needs to be good/bad to have a positive effect and a reason (self contained short summary of the game action)
-    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and whether the mood change did, or will, result in the player gaining the STRESSED condition
+    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and wether the mood change did, or will, result in the player gaining the STRESSED condition
+    /// NOTE: method doesn't change player's mood or apply any conditions
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type)
+    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type, string actorArcName)
     {
         int change = 0;
         string factorName = "Unknown";
@@ -568,7 +587,60 @@ public class PersonalityManager : MonoBehaviour
         string reason = "Unknown";
         string factorPlayer = "Unknown";
         bool isStressed = false;
-
+        Belief actionBelief = null;
+        switch(type)
+        {
+            case MoodType.ReservePromise:
+                actionBelief = beliefReservePromise;
+                reason = string.Format("Promise {0} in Reserves", actorArcName);
+                break;
+            case MoodType.ReserveNoPromise:
+                actionBelief = beliefReserveNoPromise;
+                reason = string.Format("Send {0} to Reserves", actorArcName);
+                break;
+            case MoodType.ReserveRest:
+                actionBelief = beliefReserveRest;
+                reason = string.Format("Rest {0} in Reserves", actorArcName);
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);
+                break;
+        }
+        if (actionBelief != null)
+        {
+            factorName = actionBelief.factor.tag;
+            factorType = actionBelief.factor.type.name;
+            //get index of factor array
+            int index = GameManager.instance.dataScript.GetFactorIndex(actionBelief.factor.name);
+            if (index > -1)
+            {
+                //get value of player's corresponding factor
+                int playerValue = playerPersonality.GetFactorValue(index);
+                factorPlayer = string.Format("{0} {1}{2}", factorName, playerValue > 0 ? "+" : "", playerValue);
+                //if value is Zero then no effect
+                if (playerValue != 0)
+                {
+                    switch (actionBelief.type.name)
+                        {
+                        case "Good":
+                            change = playerValue;
+                            break;
+                        case "Bad":
+                            change = playerValue * -1;
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Unrecognised actionBelief.type.name \"{0}\"", actionBelief.type.name);
+                            break;
+                    }
+                    //check if player will be stressed
+                    int mood = GameManager.instance.playerScript.GetMood();
+                    if ((mood + change) < 0)
+                    { isStressed = true; }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
+        }
+        else { Debug.LogError("Invalid actionBelief (Null)"); }
         return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
     }
 

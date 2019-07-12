@@ -767,6 +767,16 @@ public class ActionManager : MonoBehaviour
                                     tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n",
                                       colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
                                 }
+                                //Mood
+                                string textMood = "Unknown";
+                                switch(manageAction.name)
+                                {
+                                    case "ReservePromise": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReservePromise, actor.arc.name); break;
+                                    case "ReserveNoPromise": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveNoPromise, actor.arc.name); break;
+                                    case "ReserveRest": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveRest, actor.arc.name); break;
+                                    default: Debug.LogWarningFormat("Unrecognised manageAction \"{0}\"", manageAction.name); break;
+                                }
+                                tooltip.textDetails = string.Format("{0}{1}{2}", tooltip.textDetails, "\n", textMood);
                             }
                             else
                             {

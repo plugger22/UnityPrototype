@@ -6618,6 +6618,23 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfFactors (Null)"); }
     }
 
+    /// <summary>
+    /// returns value of factor (0 to 4) based on a factor name. Returns -1 if a problem or name not found
+    /// </summary>
+    /// <param name="factorTag"></param>
+    public int GetFactorIndex(string factorName)
+    {
+        int factorIndex = -1;
+        if (string.IsNullOrEmpty(factorName) == false)
+        {
+            for (int i = 0; i < arrayOfFactorTags.LongLength; i++)
+            {
+                if (arrayOfFactorTags[i].Equals(factorName, StringComparison.Ordinal) == true)
+                { factorIndex = i; break; }
+            }
+        }
+        return factorIndex;
+    }
 
     #endregion
 

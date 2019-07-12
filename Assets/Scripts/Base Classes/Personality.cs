@@ -35,6 +35,17 @@ public class Personality
     { return compatibilityWithPlayer; }
 
     /// <summary>
+    /// Get the value of an individual factor (-2 to +2) based on an arrayOfFactors[index]
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public int GetFactorValue(int index)
+    {
+        Debug.Assert(index > -1 && index < arrayOfFactors.Length);
+        return arrayOfFactors[index];
+    }
+
+    /// <summary>
     /// Set compatibility with player (checks if within acceptable range of -3 to +3 and auto clamps if not)
     /// </summary>
     /// <param name="compatibility"></param>
