@@ -135,6 +135,16 @@
     }
 
     //
+    // - - - Mood - - -  
+    //
+    public enum MoodType {
+        ReservePromise, ReserveNoPromise, ReserveRest,
+        DismissIncompetent, DismissUnsuited, DismissPromote,
+        DisposeCorrupt, DisposeLoyalty, DisposeHabit,
+        ReserveLetGo, ReserveFire, ReserveBully
+    }
+
+    //
     // - - - Statistics - - - 
     //
     public enum StatType                                //NOTE -> No 'None' or 'Count' (code loops enum and can't handle either)

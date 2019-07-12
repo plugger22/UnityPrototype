@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -486,6 +487,89 @@ public class PersonalityManager : MonoBehaviour
             else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
         }
         else { Debug.LogError("Invalid personality (Null)"); }
+    }
+
+    //
+    // - - - Client Interaction - - -
+    //
+
+    /// <summary>
+    /// Returns a colour formatted tooltip showing any changes to the Player's mood based on their personality and the belief attached to the game mechanic that they are about to do
+    /// NOTE: Player about to do something, this is what will happen
+    /// NOTE: isShortVersion returns a single line, eg. 'Mood +1, STRESSED' if true (default), 3 lines if not (change / action factor / player factor)
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public string GetMoodTooltip(MoodType type, bool isShortVersion = true)
+    {
+        StringBuilder builder = new StringBuilder();
+        //get the effect
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type);
+        int change = results.Item1;
+        string factorName = results.Item2;
+        string factorType = results.Item3;
+        string reason = results.Item4;
+        string factorPlayer = results.Item5;
+        bool isStressed = results.Item6;
+        //generate outcome msg
+        string text = "Unknown";
+        //first line of msg -> effect of change on mood
+        if (change == 0)
+        {
+            text = "No effect on Mood";
+            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText));
+        }
+        else if (change > 0)
+        {
+            text = string.Format("Mood +{0}", change);
+            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText));
+        }
+        else
+        {
+            text = string.Format("Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
+            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
+        }
+        if (isShortVersion == false)
+        {
+            //second line of msg -> determining factor
+            builder.AppendLine();
+            builder.AppendFormat("{0} {1} for Mood increase", factorName, factorType.Equals("Good", StringComparison.Ordinal) == true ? "+ve" : "-ve");
+            //third line of msg -> player's factor
+            builder.AppendLine();
+            builder.AppendFormat("Player has {0}", factorPlayer);
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Returns a colour formatted msg for outcome dialogue showing change to Player's mood based on them having done the indicated activity. Auto adjusts player's mood.
+    /// NOTE: Player has done something, this is what has happened
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public string UpdateMood(MoodType type)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// subMethod which returns amount of change, name of determining factor, whether factor needs to be good/bad to have a positive effect and a reason (self contained short summary of the game action)
+    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and whether the mood change did, or will, result in the player gaining the STRESSED condition
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type)
+    {
+        int change = 0;
+        string factorName = "Unknown";
+        string factorType = "Unknown";
+        string reason = "Unknown";
+        string factorPlayer = "Unknown";
+        bool isStressed = false;
+
+        return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
     }
 
     //
