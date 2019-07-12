@@ -35,3 +35,66 @@ City seed 890 -> Arles, France
 
 Dev seed 30966 -> Friday, 12 July 2019 8:56 AM
 City seed 890 -> Arles, France
+
+Dev seed 41634 -> Friday, 12 July 2019 10:25 AM
+City seed 890 -> Arles, France
+
+Dev seed 41714 -> Friday, 12 July 2019 10:33 AM
+City seed 890 -> Arles, France
+
+Dev seed 64105 -> Friday, 12 July 2019 10:41 AM
+City seed 890 -> Arles, France
+
+Dev seed 51250 -> Friday, 12 July 2019 11:09 AM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.GetActorRecruitPool (System.Int32 level, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4004)
+	ValidationManager.CheckActorData (System.String prefix, System.Int32 highestActorID, System.Int32 highestNodeID, System.Int32 highestSlotID) (at Assets/Scripts/Managers/ValidationManager.cs:804)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:582)
+	ControlManager.CloseLoadGame () (at Assets/Scripts/Managers/ControlManager.cs:327)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:195)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 63565 -> Friday, 12 July 2019 11:11 AM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.GetActorRecruitPool (System.Int32 level, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4004)
+	ValidationManager.CheckActorData (System.String prefix, System.Int32 highestActorID, System.Int32 highestNodeID, System.Int32 highestSlotID) (at Assets/Scripts/Managers/ValidationManager.cs:804)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:582)
+	ControlManager.CloseLoadGame () (at Assets/Scripts/Managers/ControlManager.cs:327)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:195)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 17187 -> Friday, 12 July 2019 11:31 AM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.GetActorRecruitPool (System.Int32 level, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4004)
+	ValidationManager.CheckActorData (System.String prefix, System.Int32 highestActorID, System.Int32 highestNodeID, System.Int32 highestSlotID) (at Assets/Scripts/Managers/ValidationManager.cs:834)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:612)
+	ControlManager.CloseLoadGame () (at Assets/Scripts/Managers/ControlManager.cs:327)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:195)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 54731 -> Friday, 12 July 2019 11:35 AM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.GetActorRecruitPool (System.Int32 level, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4004)
+	ValidationManager.CheckActorData (System.String prefix, System.Int32 highestActorID, System.Int32 highestNodeID, System.Int32 highestSlotID) (at Assets/Scripts/Managers/ValidationManager.cs:834)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:612)
+	ControlManager.CloseLoadGame () (at Assets/Scripts/Managers/ControlManager.cs:327)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:64)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:195)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 38794 -> Friday, 12 July 2019 11:38 AM
+City seed 890 -> Arles, France
+
+Dev seed 15665 -> Friday, 12 July 2019 11:40 AM
+City seed 890 -> Arles, France

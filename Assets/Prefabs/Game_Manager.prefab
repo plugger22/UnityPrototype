@@ -2056,6 +2056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4827e018fb8e6c741914a9a48c200510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moodMax: 3
+  moodStart: 2
+  moodStressReset: 2
   sprite: {fileID: 21300000, guid: e7cc3aa6b3bdc6a43951687e10335e03, type: 3}
   actorID: 999
   status: 0
@@ -2213,6 +2216,7 @@ MonoBehaviour:
   levelScript: {fileID: 114256465635010494}
   preloadScript: {fileID: 0}
   loadScript: {fileID: 0}
+  validateScript: {fileID: 0}
   metaScript: {fileID: 0}
   dataScript: {fileID: 0}
   statScript: {fileID: 0}
@@ -2257,7 +2261,6 @@ MonoBehaviour:
   missionScript: {fileID: 0}
   colourScript: {fileID: 0}
   testScript: {fileID: 0}
-  validateScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}
@@ -2283,7 +2286,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   seedDev: 0
   isAuthority: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

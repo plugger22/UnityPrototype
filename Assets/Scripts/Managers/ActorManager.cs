@@ -5691,7 +5691,6 @@ public class ActorManager : MonoBehaviour
                             //restore actor (one Stress Leave turn only)
                             GameManager.instance.playerScript.status = ActorStatus.Active;
                             GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
-                            GameManager.instance.playerScript.SetMood(GameManager.instance.playerScript.moodStressReset);
                             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.instance.playerScript.GetPlayerName(globalAuthority));

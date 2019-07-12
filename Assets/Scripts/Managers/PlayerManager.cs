@@ -18,8 +18,6 @@ public class PlayerManager : MonoBehaviour
     [Range(1, 3)] public int moodStart = 2;
     [Tooltip("Mood resets to this value once Player loses their Stressed Condition")]
     [Range(1, 3)] public int moodStressReset = 2;
-    [Tooltip("Mood increases by this amount for every turn spent Lying Low (up to the moodMax cap)")]
-    [Range(1, 1)] public int moodLieLow = 1;
 
     public Sprite sprite;
 
@@ -929,6 +927,9 @@ public class PlayerManager : MonoBehaviour
                                     break;
                                 case "IMAGED":
                                     GameManager.instance.nodeScript.RemoveCureNode(conditionImaged.cure);
+                                    break;
+                                case "STRESSED":
+                                    mood = moodStressReset;
                                     break;
                             }
                             return true;

@@ -18,8 +18,36 @@ public class ValidationManager : MonoBehaviour
     GlobalSide globalAuthority;
     GlobalSide globalResistance;
 
-    #region InitialiseFastAccess
-    private void InitialiseFastAccess()
+
+    /// <summary>
+    /// Not called for GameState.LoadGame
+    /// </summary>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                ValidateTargets();
+                ValidateGear();
+                ValidateMissions();
+                ValidateTextLists();
+                ValidateCities();
+                break;
+            case GameState.FollowOnInitialisation:
+                //do nothing
+                //break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
     {
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -28,18 +56,20 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
+    #endregion
+
+    /*/// <summary>
     /// Master control for all validations
     /// </summary>
     public void Initialise(GameState state)
     {
-        InitialiseFastAccess();
+        SubInitialiseFastAccess();
         ValidateTargets();
         ValidateGear();
         ValidateMissions();
         ValidateTextLists();
         ValidateCities();
-    }
+    }*/
 
     #region ValidateTargets
     /// <summary>
@@ -588,6 +618,7 @@ public class ValidationManager : MonoBehaviour
             CheckSecretData(prefix, highestActorID, highestTurn);
             CheckMainInfoData(prefix, highestTurn);
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
+            CheckPlayerData(prefix);
         }
     }
     #endregion
@@ -786,7 +817,7 @@ public class ValidationManager : MonoBehaviour
                     {
                         CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
                         CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
-                        CheckList(personality.GetListOfDescriptors(), ",personality.listOfDescriptors", tag);
+                        CheckList(personality.GetListOfDescriptors(), "personality.listOfDescriptors", tag);
                         CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
                     }
                 }
@@ -1304,6 +1335,44 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckPlayerData
+    /// <summary>
+    /// Integrity check of all dynamic Player data
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckPlayerData(string prefix)
+    {
+        string tag = string.Format("{0}{1}", prefix, "CheckPlayerData: ");
+        int maxFactor = GameManager.instance.personScript.maxPersonalityFactor;
+        int minFactor = GameManager.instance.personScript.minPersonalityFactor;
+        Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
+        CheckRange(GameManager.instance.playerScript.GetMood(), 0, GameManager.instance.playerScript.moodMax, "mood", tag);
+        CheckRange(GameManager.instance.playerScript.actorID, 999, 999, "actorID", tag);
+        //personality
+        Personality personality = GameManager.instance.playerScript.GetPersonality();
+        if (personality != null)
+        {
+            CheckArrayBounds(personality.GetFactors(), "arrayOfFactors", tag, minFactor, maxFactor);
+            if (personality.GetProfile() != null)
+            {
+                CheckString(personality.GetProfileDescriptor(), "profileDescriptor", tag);
+                CheckString(personality.GetProfileExplanation(), "profileExplanation", tag);
+                CheckList(personality.GetListOfDescriptors(), "personality.listOfDescriptors", tag);
+                CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
+            }
+        }
+        else { Debug.LogFormat("{0}Invalid personality (Null) for Player {1}", tag, "\n"); }
+        //collections
+        CheckList(GameManager.instance.playerScript.GetListOfGear(), "listOfGear", tag);
+        CheckListForDuplicates(GameManager.instance.playerScript.GetListOfGear(), "Gear", "gearName", "ListOfGear");
+        CheckList(GameManager.instance.playerScript.GetListOfConditions(globalAuthority), "listOfConditionsAuthority", tag);
+        CheckList(GameManager.instance.playerScript.GetListOfConditions(globalResistance), "listOfConditionsResistance", tag);
+        CheckList(GameManager.instance.playerScript.GetListOfSecrets(), "listOfSecrets", tag);
+        CheckList(GameManager.instance.playerScript.GetListOfMoodHistory(), "listOfModdHistory", tag);
+
+    }
+    #endregion
+
     #endregion
 
 
@@ -1369,7 +1438,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckDictString(string text, string stringName, string tag, string key)
     {
         if (string.IsNullOrEmpty(text) == true)
-        { Debug.LogFormat("{0}Invalid {1} (Null) for dictKey {2}{3}", tag, stringName, key, "\n"); }
+        { Debug.LogFormat("{0}Invalid {1} (Null or Empty) for dictKey {2}{3}", tag, stringName, key, "\n"); }
     }
 
     /// <summary>
@@ -1542,6 +1611,56 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogFormat("{0}\"{1}\" Invalid (Null){2}", tag, listName, "\n"); }
     }
 
+    /// <summary>
+    /// Check a string for Null or Empty
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="stringName"></param>
+    /// <param name="tagy"></param>
+    private void CheckString(string text, string stringName, string tagy)
+    {
+        if (string.IsNullOrEmpty(text) == true)
+        { Debug.LogFormat("{0}Invalid {1} (Null or Empty){2}", tag, stringName, "\n"); }
+    }
+
+    /// <summary>
+    /// Check an int is within a range (inclusive)
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="lower"></param>
+    /// <param name="upper"></param>
+    /// <param name="varName"></param>
+    /// <param name="tag"></param>
+    private void CheckRange(int value, int lower, int upper, string varName, string tag)
+    {
+        if (value < lower || value > upper)
+        { Debug.LogFormat("{0} variable \"{1}\", value {2}, outside of range ({3} to {4}){5}", tag, varName, value, lower, upper, "\n"); }
+    }
+
+    /// <summary>
+    /// Bounds checks a dict array of Int's (each element checked if within lower and upper, inclusive) 
+    /// </summary>
+    /// <param name="array"></param>
+    /// <param name="arrayName"></param>
+    /// <param name="tag"></param>
+    /// <param name="lower"></param>
+    /// <param name="upper"></param>
+    private void CheckArrayBounds(int[] array, string arrayName, string tag, int lower = 0, int upper = 0)
+    {
+        if (array != null)
+        {
+            if (lower != 0 || upper != 0)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (array[i] < lower || array[i] > upper)
+                    { Debug.LogFormat("{0}\"{1}\"[{2}] failed bounds check, value {3) (should be between {4} and {5}){6}", tag, arrayName, i, array[i], lower, upper, "\n"); }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid CheckDictArrayBounds for {0} check as both lower and upper bounds are Zero{1}", arrayName, "\n"); }
+        }
+        else { Debug.LogFormat("{0}\"{1}\" Invalid (Null){2}", tag, arrayName, "\n"); }
+    }
 
 
     #endregion

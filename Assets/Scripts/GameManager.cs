@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public LevelManager levelScript;                  //Level Manager
     [HideInInspector] public PreLoadManager preloadScript;              //PreLoad Manager
     [HideInInspector] public LoadManager loadScript;                    //Load Manager
+    [HideInInspector] public ValidationManager validateScript;          //Validation Manager
     [HideInInspector] public MetaManager metaScript;                    //Meta Manager
     [HideInInspector] public DataManager dataScript;                    //Data Manager
     [HideInInspector] public StatisticManager statScript;               //Statistics Manager
@@ -74,7 +75,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MissionManager missionScript;              //Mission Manager
     [HideInInspector] public ColourManager colourScript;                //Colour Manager
     [HideInInspector] public TestManager testScript;                    //Test Manager
-    [HideInInspector] public ValidationManager validateScript;          //Validation Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;           //actor tooltip static instance
@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
         levelScript = GetComponent<LevelManager>();
         preloadScript = GetComponent<PreLoadManager>();
         loadScript = GetComponent<LoadManager>();
+        validateScript = GetComponent<ValidationManager>();
         statScript = GetComponent<StatisticManager>();
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
@@ -201,7 +202,6 @@ public class GameManager : MonoBehaviour
         missionScript = GetComponent<MissionManager>();
         colourScript = GetComponent<ColourManager>();
         testScript = GetComponent<TestManager>();
-        validateScript = GetComponent<ValidationManager>();
         tooltipScript = GetComponent<TooltipManager>();
         newsScript = GetComponent<NewsManager>();
         sideScript = GetComponent<SideManager>();
@@ -378,6 +378,7 @@ public class GameManager : MonoBehaviour
     private void InitialiseStartSequence()
     {
         StartMethod startMethod = new StartMethod();
+
         #region GlobalMethods
         //
         // - - - Global Methods
@@ -456,6 +457,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "DataManager Early";
         listOfGlobalMethods.Add(startMethod);
         #endregion
+
         #region Game Methods
         //
         // - - - Game methods - - -
@@ -469,6 +471,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "CampaignManager Game";
         listOfGameMethods.Add(startMethod);
         #endregion
+
         #region Level Methods
         //
         // - - - Level methods - - -
@@ -627,6 +630,7 @@ public class GameManager : MonoBehaviour
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
         #endregion
+
         #region UI Methods
         //
         // - - - UI methods - - -
@@ -657,6 +661,7 @@ public class GameManager : MonoBehaviour
         listOfConditionalMethods.Add(startMethod);
 
         #endregion
+
         #region Debug Methods
         //
         // - - - Debug methods - - -
@@ -836,6 +841,7 @@ public class GameManager : MonoBehaviour
         else
         {
             InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfDebugMethods);
             InitialiseMethods(listOfConditionalMethods);
             //set session flag
             isSession = true;
