@@ -22,6 +22,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
     [HideInInspector] public bool showRenown = true;                              //if true renown UI elements shown for actors and player
     [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
+    [HideInInspector] public bool fullMoodInfo = false;
 
     //Backing fields (use underscore)
     private ColourScheme _colourOption;
@@ -45,14 +46,14 @@ public class OptionManager : MonoBehaviour
     }  
 
 
-    /// <summary>
+    /*/// <summary>
     /// Housekeep events
     /// </summary>
     public void OnDisable()
     {
         EventManager.instance.RemoveEvent(EventType.ChangeSide);
         EventManager.instance.RemoveEvent(EventType.ChangeColour);
-    }
+    }*/
 
     /// <summary>
     /// Debug method
@@ -60,17 +61,21 @@ public class OptionManager : MonoBehaviour
     /// <returns></returns>
     public string DisplayOptions()
     {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat(" Current Option Settings{0}{1}", "\n", "\n");
-        builder.AppendFormat(" Side -> {0}{1}{2}", GameManager.instance.sideScript.PlayerSide, "\n", "\n");
-        builder.AppendFormat(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n");
-        builder.AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n");
-        builder.AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n");
-        builder.AppendFormat(" Debug Data -> {0}{1}", debugData, "\n");
-        builder.AppendFormat(" NO AI -> {0}{1}", noAI, "\n");
-        builder.AppendFormat(" Show Contacts -> {0}{1}", showContacts, "\n");
-        builder.AppendFormat(" Show Renown -> {0}{1}", showRenown, "\n");
-        return builder.ToString();
+        return new StringBuilder()
+            .AppendFormat(" Current Option Settings{0}{1}", "\n", "\n")
+            .AppendFormat(" Side -> {0}{1}", GameManager.instance.sideScript.PlayerSide, "\n")
+            .AppendFormat("{0}- Game Options{1}", "\n", "\n")
+            .AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n")
+            .AppendFormat(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n")
+            .AppendFormat("{0}- Debug Options{1}","\n", "\n")
+            .AppendFormat(" Debug Data -> {0}{1}", debugData, "\n")
+            .AppendFormat(" NO AI -> {0}{1}", noAI, "\n")
+            .AppendFormat("{0}- UI Options{1}","\n", "\n")
+            .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")
+            .AppendFormat(" Full Mood Information -> {0}{1}", fullMoodInfo, "\n")
+            .AppendFormat(" Show Contacts -> {0}{1}", showContacts, "\n")
+            .AppendFormat(" Show Renown -> {0}{1}", showRenown, "\n")
+            .ToString();
     }
 
     /// <summary>
@@ -81,6 +86,7 @@ public class OptionManager : MonoBehaviour
         if (autoGearResolution == true) { autoGearResolution = false; }
         else { autoGearResolution = true; }
     }
+
 
     //place methods above here
 }

@@ -512,24 +512,26 @@ public class PersonalityManager : MonoBehaviour
     /// <summary>
     /// Returns a colour formatted tooltip showing any changes to the Player's mood based on their personality and the belief attached to the game mechanic that they are about to do
     /// NOTE: Player about to do something, this is what will happen
-    /// NOTE: isShortVersion returns a single line, eg. 'Mood +1, STRESSED' if true (default), 3 lines if not (change / action factor / player factor)
+    /// NOTE: displays single line info, eg. 'Player mood -1, STRESSED' unless optionManager.cs -> 'fullMoodInfo' is set to true (displays 3 lines of info)
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public string GetMoodTooltip(MoodType type, string actorArcName, bool isShortVersion = false)
+    public string GetMoodTooltip(MoodType type, string actorArcName)
     {
-        StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(actorArcName) == true)
         { actorArcName = "Unknown"; }
         int mood = GameManager.instance.playerScript.GetMood();
         //get the effect
         Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, actorArcName);
-        int change = results.Item1;
+        return GetMoodMessage(results);
+
+        /*int change = results.Item1;
         string factorName = results.Item2;
         string factorType = results.Item3;
         string reason = results.Item4;
         string factorPlayer = results.Item5;
         bool isStressed = results.Item6;
+
         //generate outcome msg
         string text = "Unknown";
         //first line of msg -> effect of change on mood
@@ -548,7 +550,7 @@ public class PersonalityManager : MonoBehaviour
             text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
             builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
         }
-        if (isShortVersion == false)
+        if (GameManager.instance.optionScript.fullMoodInfo == true)
         {
             //second line of msg -> determining factor
             builder.AppendLine();
@@ -578,20 +580,29 @@ public class PersonalityManager : MonoBehaviour
                 default: Debug.LogWarningFormat("Unrecognised change \"{0}\"", change); break;
             }
         }
-        return builder.ToString();
+        return builder.ToString();*/
     }
 
     /// <summary>
-    /// Returns a colour formatted msg for outcome dialogue showing change to Player's mood based on them having done the indicated activity. Auto adjusts player's mood.
+    /// Returns a colour formatted msg for outcome dialogue showing change to Player's mood based on them having done the indicated activity. Auto adjusts player's mood
     /// NOTE: Player has done something, this is what has happened
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public string UpdateMood(MoodType type)
+    public string UpdateMood(MoodType type, string actorArcName)
     {
-        StringBuilder builder = new StringBuilder();
-
-        return builder.ToString();
+        if (string.IsNullOrEmpty(actorArcName) == true)
+        { actorArcName = "Unknown"; }
+        int mood = GameManager.instance.playerScript.GetMood();
+        //get the effect
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, actorArcName);
+        int change = results.Item1;
+        string factorName = results.Item2;
+        string reason = results.Item4;
+        //change mood, add history item, stressed condition added if mood < 0
+        GameManager.instance.playerScript.ChangeMood(change, reason, factorName);
+        //outcome message string (formatted)
+        return GetMoodMessage(results);
     }
 
     /// <summary>
@@ -694,6 +705,71 @@ public class PersonalityManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid actionBelief (Null)"); }
         return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
+    }
+
+    /// <summary>
+    /// subMethod to return mood message
+    /// </summary>
+    /// <param name="results"></param>
+    /// <returns></returns>
+    private string GetMoodMessage(Tuple<int, string, string, string, string, bool> results)
+    {
+        int change = results.Item1;
+        string factorName = results.Item2;
+        string factorType = results.Item3;
+        string reason = results.Item4;
+        string factorPlayer = results.Item5;
+        bool isStressed = results.Item6;
+        StringBuilder builder = new StringBuilder();
+        //generate outcome msg
+        string text = "Unknown";
+        //first line of msg -> effect of change on mood
+        if (change == 0)
+        {
+            text = "No effect on Player Mood";
+            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText));
+        }
+        else if (change > 0)
+        {
+            text = string.Format("Player Mood +{0}", change);
+            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText));
+        }
+        else
+        {
+            text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
+            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
+        }
+        if (GameManager.instance.optionScript.fullMoodInfo == true)
+        {
+            //second line of msg -> determining factor
+            builder.AppendLine();
+            switch (factorType)
+            {
+                case "Good": builder.Append(GameManager.instance.colourScript.GetFormattedString(factorName + " +", ColourType.normalText)); break;
+                case "Bad": builder.Append(GameManager.instance.colourScript.GetFormattedString(factorName + " -", ColourType.normalText)); break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised factorType \"{0}\"", factorType);
+                    builder.Append("Unknown");
+                    break;
+            }
+            builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("{0}for Mood increase{1}", "\n", "\n"), ColourType.normalText));
+            //third line of msg -> player's factor (coloured green for good, red for bad)
+            switch (change)
+            {
+                case 2:
+                case 1:
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.goodText));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.goodText));
+                    break;
+                case -1:
+                case -2:
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badEffect));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.badEffect));
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised change \"{0}\"", change); break;
+            }
+        }
+        return builder.ToString();
     }
 
     //

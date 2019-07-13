@@ -2523,6 +2523,7 @@ public class ActionManager : MonoBehaviour
         string msgText = "Unknown";
         int numOfTeams = 0;
         string gearName;
+        string moodText = "Unknown";
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
@@ -2557,16 +2558,19 @@ public class ActionManager : MonoBehaviour
                                     builderTop.AppendFormat("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
                                         actor.actorName, colourEnd);
                                     msgText = "Resting";
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReserveRest, actor.arc.name);
                                     break;
                                 case "ReservePromise":
                                     builderTop.AppendFormat("{0}{1} {2} accepts your word that they will be recalled within a reasonable time period{3}",
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgText = "Promised";
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReservePromise, actor.arc.name);
                                     break;
                                 case "ReserveNoPromise":
                                     builderTop.AppendFormat("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgText = "No Promise";
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReserveNoPromise, actor.arc.name);
                                     break;
                                 default:
                                     Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
@@ -2666,6 +2670,8 @@ public class ActionManager : MonoBehaviour
             builderTop.Append("Something has gone wrong. You are unable to move anyone to the Reserve Pool at present");
             builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
         }
+        //mood info
+        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
         //
         // - - - Outcome - - - 
         //
@@ -2693,6 +2699,7 @@ public class ActionManager : MonoBehaviour
         string msgTextStatus = "Unknown";
         string msgTextMain = "Who Knows?";
         string msgReason = "Unknown";
+        string moodText = "Unknown";
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -2733,6 +2740,7 @@ public class ActionManager : MonoBehaviour
                                     msgReason = "Promoted";
                                     msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName,
                                         GameManager.instance.factionScript.GetCurrentFaction().name);
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissPromote, actor.arc.name);
                                     break;
                                 case "DismissIncompetent":
                                     builderTop.AppendFormat("{0}{1} {2} scowls and curses before stomping off{3}",
@@ -2740,6 +2748,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextStatus = "Incompetent";
                                     msgReason = "dismissed for Incompetence";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissIncompetent, actor.arc.name);
                                     break;
                                 case "DismissUnsuited":
                                     builderTop.AppendFormat("{0}{1} {2} lets you know that they won't forget this{3}",
@@ -2747,6 +2756,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextStatus = "Unsuited";
                                     msgReason = "dismissed as Unsuited for role";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissUnsuited, actor.arc.name);
                                     break;
                                 default:
                                     Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
@@ -2825,6 +2835,8 @@ public class ActionManager : MonoBehaviour
             builderTop.Append("Something has gone wrong. You are unable to dismiss or promote anyone at present");
             builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
         }
+        //mood info
+        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
         //
         // - - - Outcome - - - 
         //
@@ -2852,6 +2864,7 @@ public class ActionManager : MonoBehaviour
         string msgTextStatus = "Unknown";
         string msgTextMain = "Who Knows?";
         string msgReason = "Unknown";
+        string moodText = "Unknown";
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -2888,6 +2901,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextStatus = "Loyalty";
                                     msgReason = "Disloyal";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.DisposeLoyalty, actor.arc.name);
                                     break;
                                 case "DisposeCorrupt":
                                     builderTop.AppendFormat("{0}{1} {2} protests their innocence but don't they all?{3}",
@@ -2895,6 +2909,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextStatus = "Corrupt";
                                     msgReason = "Corrupt";
                                     msgTextMain = string.Format("{0} {1} has been killed({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.DisposeCorrupt, actor.arc.name);
                                     break;
                                 case "DisposeHabit":
                                     builderTop.AppendFormat("{0}{1} {2} smiles and says that they will be waiting for you in hell{3}",
@@ -2902,6 +2917,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextStatus = "Habit";
                                     msgReason = "Bad Habit";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
+                                    moodText = GameManager.instance.personScript.UpdateMood(MoodType.DisposeHabit, actor.arc.name);
                                     break;
                                 default:
                                     Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
@@ -2980,6 +2996,8 @@ public class ActionManager : MonoBehaviour
             builderTop.Append("Something has gone wrong. You are unable to dispose off anyone at present");
             builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
         }
+        //mood info
+        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
         //
         // - - - Outcome - - - 
         //

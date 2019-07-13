@@ -61,6 +61,7 @@ public class DebugGUI : MonoBehaviour
     public string optionRenownUI;
     private string optionPath;
     public string optionContacts;
+    private string optionMoodInfo;
 
     private void Awake()
     {
@@ -81,6 +82,7 @@ public class DebugGUI : MonoBehaviour
         optionRenownUI = "Renown UI OFF";
         optionPath = "Input Path";
         optionContacts = "Contacts ON";
+        optionMoodInfo = "Mood Info ON";
     }
 
     // Update is called once per frame
@@ -572,6 +574,23 @@ public class DebugGUI : MonoBehaviour
                     optionContacts = "Contacts OFF";
                 }
             }
+
+            //twelfth button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), optionMoodInfo))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Full Mood Info option");
+                if (GameManager.instance.optionScript.fullMoodInfo == true)
+                {
+                    GameManager.instance.optionScript.fullMoodInfo = false;
+                    optionMoodInfo = "Mood Info ON";
+                }
+                else
+                {
+                    GameManager.instance.optionScript.fullMoodInfo = true;
+                    optionMoodInfo = "MoodInfo OFF";
+                }
+            }
+
 
             //
             // - - - Actions (third box)

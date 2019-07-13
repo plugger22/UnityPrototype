@@ -292,6 +292,10 @@ public class PlayerManager : MonoBehaviour
         tooltipStatus = ActorTooltip.None;
         //remove any conditions, Player starts followOn level with a clean slate
         RemoveAllConditions(GameManager.instance.sideScript.PlayerSide);
+        //reset mood to default
+        SetMood(moodStart);
+        //clear out mood history
+        listOfMoodHistory.Clear();
         //empty out gear list
         listOfGear.Clear();
     }
@@ -931,7 +935,7 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.instance.nodeScript.RemoveCureNode(conditionImaged.cure);
                                     break;
                                 case "STRESSED":
-                                    mood = moodStressReset;
+                                    ChangeMood(moodStressReset, reason, "n.a");
                                     break;
                             }
                             return true;
