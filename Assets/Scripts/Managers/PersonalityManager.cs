@@ -65,6 +65,28 @@ public class PersonalityManager : MonoBehaviour
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
     public Belief beliefReserveBully;
 
+    [Header("Personality Beliefs")]
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefAgreeablenessBad;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefAgreeablenessGood;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefConscientiousnessBad;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefConscientiousnessGood;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefExtroversionBad;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefExtroversionGood;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefNeurotiscismBad;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefNeurotiscismGood;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefOpennessBad;
+    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
+    public Belief beliefOpennessGood;
+
     //Fast access
     private Factor[] arrayOfFactors;
     private string[] arrayOfFactorTags;
@@ -122,6 +144,16 @@ public class PersonalityManager : MonoBehaviour
         Debug.Assert(beliefReserveFire != null, "Invalid beliefReserveFire (Null)");
         Debug.Assert(beliefReserveReassure != null, "Invalid beliefReserveReassure (Null)");
         Debug.Assert(beliefReserveBully != null, "Invalid beliefReserveBully (Null)");
+        Debug.Assert(beliefAgreeablenessBad != null, "Invalid beliefAgreeablenessBad (Null)");
+        Debug.Assert(beliefAgreeablenessGood != null, "Invalid beliefAgreeablenessGood (Null)");
+        Debug.Assert(beliefConscientiousnessBad != null, "Invalid beliefConscientiousnessBad (Null)");
+        Debug.Assert(beliefConscientiousnessGood != null, "Invalid beliefConscientiousnessGood (Null)");
+        Debug.Assert(beliefExtroversionBad != null, "Invalid beliefExtroversionBad (Null)");
+        Debug.Assert(beliefExtroversionGood != null, "Invalid beliefExtroversionGood (Null)");
+        Debug.Assert(beliefNeurotiscismBad != null, "Invalid beliefNeurotiscismBad (Null)");
+        Debug.Assert(beliefNeurotiscismGood != null, "Invalid beliefNeurotiscismGood (Null)");
+        Debug.Assert(beliefOpennessBad != null, "Invalid beliefOpennessBad (Null)");
+        Debug.Assert(beliefOpennessGood != null, "Invalid beliefOpennessGood (Null)");
     }
     #endregion
 
@@ -528,17 +560,18 @@ public class PersonalityManager : MonoBehaviour
 
     /// <summary>
     /// Returns a colour formatted msg for outcome dialogue showing change to Player's mood based on them having done the indicated activity. Auto adjusts player's mood
+    /// 'multiText' is normally the actor.arc.name but in the case of effects it's what has caused the effect, eg. EffectDataInput.originText
     /// NOTE: Player has done something, this is what has happened
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public string UpdateMood(MoodType type, string actorArcName)
+    public string UpdateMood(MoodType type, string multiText)
     {
-        if (string.IsNullOrEmpty(actorArcName) == true)
-        { actorArcName = "Unknown"; }
+        if (string.IsNullOrEmpty(multiText) == true)
+        { multiText = "Unknown"; }
         int mood = GameManager.instance.playerScript.GetMood();
         //get the effect
-        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, actorArcName);
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, multiText);
         int change = results.Item1;
         string factorName = results.Item2;
         string reason = results.Item4;
@@ -555,7 +588,7 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type, int mood, string actorArcName)
+    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type, int mood, string multiText)
     {
         int change = 0;
         string factorName = "Unknown";
@@ -566,59 +599,100 @@ public class PersonalityManager : MonoBehaviour
         Belief actionBelief = null;
         switch(type)
         {
-            //Manage actions
+            //Manage actions (multiText is actorArcName)
             case MoodType.ReservePromise:
                 actionBelief = beliefReservePromise;
-                reason = string.Format("Promise {0} in Reserves", actorArcName);
+                reason = string.Format("Promise {0} in Reserves", multiText);
                 break;
             case MoodType.ReserveNoPromise:
                 actionBelief = beliefReserveNoPromise;
-                reason = string.Format("Send {0} to Reserves", actorArcName);
+                reason = string.Format("Send {0} to Reserves", multiText);
                 break;
             case MoodType.ReserveRest:
                 actionBelief = beliefReserveRest;
-                reason = string.Format("Rest {0} in Reserves", actorArcName);
+                reason = string.Format("Rest {0} in Reserves", multiText);
                 break;
             case MoodType.DismissIncompetent:
                 actionBelief = beliefDismissIncompetent;
-                reason = string.Format("Dismiss {0} (Incompetence)", actorArcName);
+                reason = string.Format("Dismiss {0} (Incompetence)", multiText);
                 break;
             case MoodType.DismissPromote:
                 actionBelief = beliefDismissPromote;
-                reason = string.Format("Promote {0} ", actorArcName);
+                reason = string.Format("Promote {0} ", multiText);
                 break;
             case MoodType.DismissUnsuited:
                 actionBelief = beliefDismissUnsuited;
-                reason = string.Format("Dismiss {0} (Unsuited)", actorArcName);
+                reason = string.Format("Dismiss {0} (Unsuited)", multiText);
                 break;
             case MoodType.DisposeCorrupt:
                 actionBelief = beliefDisposeCorrupt;
-                reason = string.Format("Dispose of {0} (Corrupt)", actorArcName);
+                reason = string.Format("Dispose of {0} (Corrupt)", multiText);
                 break;
             case MoodType.DisposeHabit:
                 actionBelief = beliefDisposeHabit;
-                reason = string.Format("Dispose of {0} (Habit)", actorArcName);
+                reason = string.Format("Dispose of {0} (Habit)", multiText);
                 break;
             case MoodType.DisposeLoyalty:
                 actionBelief = beliefDisposeLoyalty;
-                reason = string.Format("Dispose of {0} (Loyalty)", actorArcName);
+                reason = string.Format("Dispose of {0} (Loyalty)", multiText);
                 break;
-             //Reserve Pool actions
+            //Reserve Pool actions (multiText is actorArcName)
             case MoodType.ReserveLetGo:
                 actionBelief = beliefReserveLetGo;
-                reason = string.Format("Let go of {0} (Reserves)", actorArcName);
+                reason = string.Format("Let go of {0} (Reserves)", multiText);
                 break;
             case MoodType.ReserveFire:
                 actionBelief = beliefReserveFire;
-                reason = string.Format("Fire {0} (Reserves)", actorArcName);
+                reason = string.Format("Fire {0} (Reserves)", multiText);
                 break;
             case MoodType.ReserveReassure:
                 actionBelief = beliefReserveReassure;
-                reason = string.Format("Reassure {0} (Reserves)", actorArcName);
+                reason = string.Format("Reassure {0} (Reserves)", multiText);
                 break;
             case MoodType.ReserveBully:
                 actionBelief = beliefReserveBully;
-                reason = string.Format("Bully {0} (Reserves)", actorArcName);
+                reason = string.Format("Bully {0} (Reserves)", multiText);
+                break;
+            //Personality Effects (multiText is the origin of the effect)
+            case MoodType.AgreeablenessBad:
+                actionBelief = beliefAgreeablenessBad;
+                reason = multiText;
+                break;
+            case MoodType.AgreeablenessGood:
+                actionBelief = beliefAgreeablenessGood;
+                reason = multiText;
+                break;
+            case MoodType.ConscientiousnessBad:
+                actionBelief = beliefConscientiousnessBad;
+                reason = multiText;
+                break;
+            case MoodType.ConscientiousnessGood:
+                actionBelief = beliefConscientiousnessGood;
+                reason = multiText;
+                break;
+            case MoodType.ExtroversionBad:
+                actionBelief = beliefExtroversionBad;
+                reason = multiText;
+                break;
+            case MoodType.ExtroversionGood:
+                actionBelief = beliefExtroversionGood;
+                reason = multiText;
+                break;
+            case MoodType.NeurotiscismBad:
+                actionBelief = beliefNeurotiscismBad;
+                reason = multiText;
+                break;
+            case MoodType.NeurotiscismGood:
+                actionBelief = beliefNeurotiscismGood;
+                reason = multiText;
+                break;
+            case MoodType.OpennessBad:
+                actionBelief = beliefOpennessBad;
+                reason = multiText;
+                break;
+            case MoodType.OpennessGood:
+                actionBelief = beliefOpennessGood;
+                reason = multiText;
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);

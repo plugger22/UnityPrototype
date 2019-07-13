@@ -621,6 +621,24 @@ MonoBehaviour:
   beliefReserveReassure: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192,
     type: 2}
   beliefReserveBully: {fileID: 11400000, guid: f8009ccb46ef0c04cb437332ebd57aec, type: 2}
+  beliefAgreeablenessBad: {fileID: 11400000, guid: f8009ccb46ef0c04cb437332ebd57aec,
+    type: 2}
+  beliefAgreeablenessGood: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192,
+    type: 2}
+  beliefConscientiousnessBad: {fileID: 11400000, guid: a914150c846e1834bb2b272cafd4eb5b,
+    type: 2}
+  beliefConscientiousnessGood: {fileID: 11400000, guid: 08f2a208a33267f4f996bcac4630cf49,
+    type: 2}
+  beliefExtroversionBad: {fileID: 11400000, guid: 08d380fed3c61754fab600473478c4ec,
+    type: 2}
+  beliefExtroversionGood: {fileID: 11400000, guid: 12a21c02ab688094d8cec702354d9069,
+    type: 2}
+  beliefNeurotiscismBad: {fileID: 11400000, guid: 57cc6b09edf14f6488d15ef2cf09186d,
+    type: 2}
+  beliefNeurotiscismGood: {fileID: 11400000, guid: da09bad2ff221dc43bb3ad4b3cb661c9,
+    type: 2}
+  beliefOpennessBad: {fileID: 11400000, guid: 92f49a9cf39480844b11daa96444510f, type: 2}
+  beliefOpennessGood: {fileID: 11400000, guid: 3e4765fa5607a6e4aaa266c569e78f10, type: 2}
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -865,6 +883,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5976175e127ee964fb44cc4fe7b7825f, type: 2}
   - {fileID: 11400000, guid: d77e6494404005247b6d73690a11af22, type: 2}
   - {fileID: 11400000, guid: 496c7f6eff1db9b4bb9bd3c2b1224712, type: 2}
+  - {fileID: 11400000, guid: d7dc92679399d1740a40c4b68d69d853, type: 2}
+  - {fileID: 11400000, guid: 6916df6c425ba6f4d947f2f5a709fa79, type: 2}
+  - {fileID: 11400000, guid: 6f8415e7cd319434da3a3950a7d4285a, type: 2}
+  - {fileID: 11400000, guid: de3106b1b86cded4da0975c8ee4e88c3, type: 2}
+  - {fileID: 11400000, guid: eb115732a4d0afe43ae03ce723853872, type: 2}
+  - {fileID: 11400000, guid: 5c4b9c60276cd2f409393e1232876b26, type: 2}
+  - {fileID: 11400000, guid: 5a4afac39287e5a4b9ffac21ceef593e, type: 2}
+  - {fileID: 11400000, guid: 95449941a71723649b0f78a72e66d364, type: 2}
+  - {fileID: 11400000, guid: c018d3b1c51c118499a5ddeb400b7319, type: 2}
+  - {fileID: 11400000, guid: 55ccd500cda874145bd8b156cb3f1180, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1411,6 +1439,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 75c5222b0758a26439f6188569469520, type: 2}
   - {fileID: 11400000, guid: e60e937d1329a1542a255615518c11d5, type: 2}
   - {fileID: 11400000, guid: ada99b83817c2f642a59bb4270b0e36f, type: 2}
+  - {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  - {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  - {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  - {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  - {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  - {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  - {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  - {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  - {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  - {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   arrayOfActions:
   - {fileID: 11400000, guid: e2452f8fe0121e9439cf59d543b9dc0a, type: 2}
   - {fileID: 11400000, guid: baa27ad6b90477e4e94cb6ed5cc27066, type: 2}

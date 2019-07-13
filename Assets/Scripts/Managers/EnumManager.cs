@@ -141,7 +141,8 @@
         ReservePromise, ReserveNoPromise, ReserveRest,
         DismissIncompetent, DismissUnsuited, DismissPromote,
         DisposeCorrupt, DisposeLoyalty, DisposeHabit,
-        ReserveLetGo, ReserveFire, ReserveBully, ReserveReassure
+        ReserveLetGo, ReserveFire, ReserveBully, ReserveReassure,
+        AgreeablenessBad, AgreeablenessGood, ConscientiousnessBad, ConscientiousnessGood, ExtroversionBad, ExtroversionGood, NeurotiscismBad, NeurotiscismGood, OpennessBad, OpennessGood
     }
 
     //

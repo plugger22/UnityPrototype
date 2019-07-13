@@ -1020,6 +1020,29 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 //
+                // - - - Player Mood effects - - -
+                //
+                case "AgreeablenessBad":
+                case "AgreeablenessGood":
+                case "ConscientiousnessBad":
+                case "ConscientiousnessGood":
+                case "ExtroversionBad":
+                case "ExtroversionGood":
+                case "NeurotiscismBad":
+                case "NeurotiscismGood":
+                case "OpennessBad":
+                case "OpennessGood":
+                    EffectDataResolve resolveMood = ResolveMoodData(effect, dataInput);
+                    if (resolveMood.isError == true)
+                    { effectReturn.errorFlag = true; }
+                    else
+                    {
+                        effectReturn.topText = resolveMood.topText;
+                        effectReturn.bottomText = resolveMood.bottomText;
+                        effectReturn.isAction = true;
+                    }
+                    break;
+                //
                 // - - - Special Actor Effects - - -
                 //
                 case "ActorResigns":
@@ -3090,11 +3113,61 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod to handle Ongoing Effects for Gear (Personal Use -> Actions +/-)
+    /// subMethod to process player mood personality related effects
     /// </summary>
     /// <param name="effect"></param>
-    /// <param name="dataInput"></param>
-    private int AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
+    /// <returns></returns>
+    private EffectDataResolve ResolveMoodData(Effect effect, EffectDataInput dataInput)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //get condition
+        switch (effect.outcome.name)
+        {
+            case "AgreeablenessBad":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.AgreeablenessBad, dataInput.originText + " effect");
+                break;
+            case "AgreeablenessGood":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.AgreeablenessGood, dataInput.originText + " effect");
+                break;
+            case "ConscientiousnessBad":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ConscientiousnessBad, dataInput.originText + " effect");
+                break;
+            case "ConscientiousnessGood":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ConscientiousnessGood, dataInput.originText + " effect");
+                break;
+            case "ExtroversionBad":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ExtroversionBad, dataInput.originText + " effect");
+                break;
+            case "ExtroversionGood":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ExtroversionGood, dataInput.originText + " effect");
+                break;
+            case "NeurotiscismBad":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.NeurotiscismBad, dataInput.originText + " effect");
+                break;
+            case "NeurotiscismGood":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.NeurotiscismGood, dataInput.originText + " effect");
+                break;
+            case "OpennessBad":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.OpennessBad, dataInput.originText + " effect");
+                break;
+            case "OpennessGood":
+                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.OpennessGood, dataInput.originText + " effect");
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
+                break;
+        }
+        return effectResolve;
+    }
+
+
+        /// <summary>
+        /// subMethod to handle Ongoing Effects for Gear (Personal Use -> Actions +/-)
+        /// </summary>
+        /// <param name="effect"></param>
+        /// <param name="dataInput"></param>
+        private int AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.effectOutcome = effect.outcome.name;
