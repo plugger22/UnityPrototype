@@ -129,3 +129,57 @@ City seed 890 -> Arles, France
 
 Dev seed 51937 -> Friday, 12 July 2019 12:34 PM
 City seed 890 -> Arles, France
+
+Dev seed 58787 -> Saturday, 13 July 2019 10:18 AM
+City seed 890 -> Arles, France
+
+Dev seed 21681 -> Saturday, 13 July 2019 10:47 AM
+City seed 890 -> Arles, France
+
+Dev seed 4424 -> Saturday, 13 July 2019 10:56 AM
+City seed 890 -> Arles, France
+
+Dev seed 10231 -> Saturday, 13 July 2019 11:13 AM
+City seed 890 -> Arles, France
+WARNING Unrecognised factorType "FiveFactorModel"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:560)
+	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:805)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3028)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised factorType "FiveFactorModel"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:560)
+	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:803)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3028)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised factorType "FiveFactorModel"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:560)
+	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:804)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3028)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 59284 -> Saturday, 13 July 2019 11:17 AM
+City seed 890 -> Arles, France
+
+Dev seed 11850 -> Saturday, 13 July 2019 11:25 AM
+City seed 890 -> Arles, France

@@ -521,8 +521,9 @@ public class PersonalityManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(actorArcName) == true)
         { actorArcName = "Unknown"; }
+        int mood = GameManager.instance.playerScript.GetMood();
         //get the effect
-        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, actorArcName);
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, actorArcName);
         int change = results.Item1;
         string factorName = results.Item2;
         string factorType = results.Item3;
@@ -534,27 +535,48 @@ public class PersonalityManager : MonoBehaviour
         //first line of msg -> effect of change on mood
         if (change == 0)
         {
-            text = "No effect on Mood";
+            text = "No effect on Player Mood";
             builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText));
         }
         else if (change > 0)
         {
-            text = string.Format("Mood +{0}", change);
+            text = string.Format("Player Mood +{0}", change);
             builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText));
         }
         else
         {
-            text = string.Format("Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
+            text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
             builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
         }
         if (isShortVersion == false)
         {
             //second line of msg -> determining factor
             builder.AppendLine();
-            builder.AppendFormat("{0} {1} for Mood increase", factorName, factorType.Equals("Good", StringComparison.Ordinal) == true ? "+ve" : "-ve");
-            //third line of msg -> player's factor
-            builder.AppendLine();
-            builder.AppendFormat("Player has {0}", factorPlayer);
+            switch (factorType)
+            {
+                case "Good": builder.Append(GameManager.instance.colourScript.GetFormattedString(factorName + " +", ColourType.normalText)); break;
+                case "Bad": builder.Append(GameManager.instance.colourScript.GetFormattedString(factorName + " -", ColourType.normalText)); break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised factorType \"{0}\"", factorType);
+                    builder.Append("Unknown");
+                    break;
+            }
+            builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("{0}for Mood increase{1}", "\n", "\n"), ColourType.normalText));
+            //third line of msg -> player's factor (coloured green for good, red for bad)
+            switch (change)
+            {
+                case 2:
+                case 1:
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.goodText));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.goodText));
+                    break;
+                case -1:
+                case -2:
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badEffect));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.badEffect));
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised change \"{0}\"", change); break;
+            }
         }
         return builder.ToString();
     }
@@ -574,12 +596,12 @@ public class PersonalityManager : MonoBehaviour
 
     /// <summary>
     /// subMethod which returns amount of change, name of determining factor, whether factor needs to be good/bad to have a positive effect and a reason (self contained short summary of the game action)
-    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and wether the mood change did, or will, result in the player gaining the STRESSED condition
+    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and whether the mood change did, or will, result in the player gaining the STRESSED condition
     /// NOTE: method doesn't change player's mood or apply any conditions
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type, string actorArcName)
+    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(MoodType type, int mood, string actorArcName)
     {
         int change = 0;
         string factorName = "Unknown";
@@ -609,14 +631,21 @@ public class PersonalityManager : MonoBehaviour
         if (actionBelief != null)
         {
             factorName = actionBelief.factor.tag;
-            factorType = actionBelief.factor.type.name;
+            factorType = actionBelief.type.name;
             //get index of factor array
             int index = GameManager.instance.dataScript.GetFactorIndex(actionBelief.factor.name);
             if (index > -1)
             {
                 //get value of player's corresponding factor
                 int playerValue = playerPersonality.GetFactorValue(index);
-                factorPlayer = string.Format("{0} {1}{2}", factorName, playerValue > 0 ? "+" : "", playerValue);
+                switch (playerValue)
+                {
+                    case 2: factorPlayer = string.Format("{0} ++", factorName); break;
+                    case 1: factorPlayer = string.Format("{0} +", factorName); break;
+                    case -1: factorPlayer = string.Format("{0} -", factorName); break;
+                    case -2: factorPlayer = string.Format("{0} --", factorName); break;
+                    default: Debug.LogWarningFormat("Unrecognised playerValue \"{0}\"", playerValue); break;
+                }
                 //if value is Zero then no effect
                 if (playerValue != 0)
                 {
@@ -633,7 +662,6 @@ public class PersonalityManager : MonoBehaviour
                             break;
                     }
                     //check if player will be stressed
-                    int mood = GameManager.instance.playerScript.GetMood();
                     if ((mood + change) < 0)
                     { isStressed = true; }
                 }

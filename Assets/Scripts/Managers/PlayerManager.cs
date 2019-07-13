@@ -363,7 +363,7 @@ public class PlayerManager : MonoBehaviour
     {
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
-        DebugCreateMoodHistory();
+        /*DebugCreateMoodHistory();*/
     }
 
 

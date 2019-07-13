@@ -728,6 +728,8 @@ public class ActionManager : MonoBehaviour
                     { unhappyTimer *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag); }
                     else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
                     { unhappyTimer /= 2; unhappyTimer = Mathf.Max(1, unhappyTimer); traitText = string.Format(" ({0})", actor.GetTrait().tag); }
+                    //tooltip details
+                    StringBuilder builder = new StringBuilder();
                     //manageAction
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
@@ -756,27 +758,14 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
+                                //tooltip details
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                builder.AppendFormat("{0}{1}", tooltipText, "\n");
+                                builder.AppendFormat("{0}Unhappy in {1} turn{2}{3}{4}{5}", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd, "\n");
                                 if (manageAction.isRenownCost == true)
-                                {
-                                    tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd,
-                                      "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
-                                }
+                                { builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd); }
                                 else
-                                {
-                                    tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n",
-                                      colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
-                                }
-                                //Mood
-                                string textMood = "Unknown";
-                                switch(manageAction.name)
-                                {
-                                    case "ReservePromise": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReservePromise, actor.arc.name); break;
-                                    case "ReserveNoPromise": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveNoPromise, actor.arc.name); break;
-                                    case "ReserveRest": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveRest, actor.arc.name); break;
-                                    default: Debug.LogWarningFormat("Unrecognised manageAction \"{0}\"", manageAction.name); break;
-                                }
-                                tooltip.textDetails = string.Format("{0}{1}{2}", tooltip.textDetails, "\n", textMood);
+                                { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
                             }
                             else
                             {
@@ -786,12 +775,9 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
+                                { builder.AppendFormat("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
-                                {
-                                    tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
-                                      colourEnd);
-                                }
+                                { builder.AppendFormat("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood, colourEnd); }
                             }
                         }
                         else
@@ -801,18 +787,27 @@ public class ActionManager : MonoBehaviour
                             //tooltip
                             tooltip.textHeader = string.Format("{0}Send to the RESERVES{1}", colourSide, colourEnd);
                             tooltip.textMain = manageAction.tooltipMain;
+                            //tooltip details
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            builder.AppendFormat("{0}{1}", tooltipText, "\n");
+                            builder.AppendFormat("{0}Unhappy in {1} turn{2}{3}{4}{5}", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd, "\n");
                             if (manageAction.isRenownCost == true)
-                            {
-                                tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}{5}{6}Unhappy in {7} turn{8}{9}{10}", tooltipText, "\n", colourBad, renownCost, colourEnd,
-                                  "\n", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
-                            }
+                            { builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd); }
                             else
-                            {
-                                tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}{4}{5}Unhappy in {6} turn{7}{8}{9}", tooltipText, "\n", colourGood, colourEnd, "\n", colourAlert, unhappyTimer,
-                                  unhappyTimer != 1 ? "s" : "", traitText, colourEnd);
-                            }
+                            { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
                         }
+                        //Mood tooltip
+                        string textMood = "Unknown";
+                        switch (manageAction.name)
+                        {
+                            case "ReservePromise": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReservePromise, actor.arc.name); break;
+                            case "ReserveNoPromise": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveNoPromise, actor.arc.name); break;
+                            case "ReserveRest": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveRest, actor.arc.name); break;
+                            default: Debug.LogWarningFormat("Unrecognised manageAction \"{0}\"", manageAction.name); break;
+                        }
+                        builder.AppendFormat("{0}{1}", "\n", textMood);
+                        //tooltip details finalise
+                        tooltip.textDetails = builder.ToString();
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
