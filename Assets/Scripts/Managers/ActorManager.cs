@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using modalAPI;
 using packageAPI;
 using System;
-using Random = UnityEngine.Random;
+using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles Actor related data and methods
@@ -552,7 +551,7 @@ public class ActorManager : MonoBehaviour
                     Debug.LogFormat("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
                         GameManager.instance.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
                         GameManager.instance.dataScript.GetQuality(side, 1), actor.GetDatapoint(ActorDatapoint.Datapoint1),
-                        GameManager.instance.dataScript.GetQuality(side, 2), actor.GetDatapoint(ActorDatapoint.Datapoint2), 
+                        GameManager.instance.dataScript.GetQuality(side, 2), actor.GetDatapoint(ActorDatapoint.Datapoint2),
                         actor.level, "\n");
                 }
                 else { Debug.LogWarning("Actor not created"); }
@@ -717,7 +716,7 @@ public class ActorManager : MonoBehaviour
                     //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
                     switch (actor.level)
                     {
-                        case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3);  break;
+                        case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); break;
                         case 2:
                             if (Random.Range(0, 100) <= 25) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
                             else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
@@ -2532,7 +2531,7 @@ public class ActorManager : MonoBehaviour
         List<EventButtonDetails> eventList = new List<EventButtonDetails>();
         //Cancel button tooltip (handles all no go cases)
         StringBuilder infoBuilder = new StringBuilder();
-        string tooltipText, sideColour;
+        string sideColour;
         string cancelText = null;
         int playerRenown = GameManager.instance.playerScript.Renown;
         int renownCost = 0;
@@ -2622,22 +2621,26 @@ public class ActorManager : MonoBehaviour
                     //trait Cranky
                     if (actor.CheckTraitEffect(actorReserveActionNone) == false)
                     {
+                        StringBuilder builder = new StringBuilder();
                         if (actor.CheckTraitEffect(actorReserveActionDoubled) == false)
                         {
-                            tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
+                            builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}{4}{5}Can only be Reassured once{6}", colourGood, actor.actorName,
                               unhappyReassureBoost, colourEnd, "\n", colourNeutral, colourEnd);
                         }
                         else
                         {
-                            tooltipText = string.Format("{0}{1}'s Unhappy Timer +{2} ({3}){4}{5}{6}Can only be Reassured once{7}", colourGood, actor.actorName,
+                            builder.AppendFormat("{0}{1}'s Unhappy Timer +{2} ({3}){4}{5}{6}Can only be Reassured once{7}", colourGood, actor.actorName,
                               unhappyReassureBoost * 2, colourEnd, actor.GetTrait().tag, "\n", colourNeutral, colourEnd);
                         }
+                        //mood info
+                        string moodText = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveReassure, actor.arc.name);
+                        builder.AppendFormat("{0}{1}", "\n", moodText);
                         EventButtonDetails actorDetails = new EventButtonDetails()
                         {
                             buttonTitle = "Reassure",
                             buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                             buttonTooltipMain = string.Format(string.Format("Reassure {0} that they will be the next person called for active duty", actor.actorName)),
-                            buttonTooltipDetail = tooltipText,
+                            buttonTooltipDetail = builder.ToString(),
                             //use a Lambda to pass arguments to the action
                             action = () => { EventManager.instance.PostNotification(EventType.InventoryReassure, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
 
@@ -2676,14 +2679,18 @@ public class ActorManager : MonoBehaviour
             {
                 if (actor.isNewRecruit == true)
                 {
-                    tooltipText = string.Format("{0}{1}'s{2}Motivation -1{3}{4}{5}Can be recruited again{6}", colourBad, actor.actorName, "\n",
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendFormat("{0}{1}'s{2}Motivation -1{3}{4}{5}Can be recruited again{6}", colourBad, actor.actorName, "\n",
                         colourEnd, "\n", colourNeutral, colourEnd);
+                    //mood info
+                    string moodText = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveLetGo, actor.arc.name);
+                    builder.AppendFormat("{0}{1}", "\n", moodText);
                     EventButtonDetails actorDetails = new EventButtonDetails()
                     {
                         buttonTitle = "Let Go",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
                         buttonTooltipMain = string.Format(string.Format("You don't want to but unfortunately you're going to have to let {0} go", actor.actorName)),
-                        buttonTooltipDetail = tooltipText,
+                        buttonTooltipDetail = builder.ToString(),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.InventoryLetGo, this, actorActionDetails, "ActorManager.cs -> GetReservePoolActions"); },
 
@@ -2724,6 +2731,9 @@ public class ActorManager : MonoBehaviour
                         builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                         builder.AppendLine();
                         builder.AppendFormat("{0}Can be Bullied again{1}{2}{3}(Renown cost +1){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
+                        //mood info
+                        string moodText = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveBully, actor.arc.name);
+                        builder.AppendFormat("{0}{1}", "\n", moodText);
                         EventButtonDetails actorDetails = new EventButtonDetails()
                         {
                             buttonTitle = "Bully",
@@ -2764,21 +2774,21 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Fire (Dismiss) - - -
             //
-            //generic tooltip (depends if actor is threatening or not)
-            StringBuilder builderTooltip = new StringBuilder();
-            /*builderTooltip.AppendFormat("{0}{1}'s Motivation -{2}{3}", colourBad, actor.actorName, motivationLossFire, colourEnd);
-            builderTooltip.AppendLine();*/
-
-            //allow for secrets and threats
-            ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
-            renownCost = manageRenownCost.renownCost;
-            //tooltip
-            builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
-            if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
-            { builderTooltip.Append(manageRenownCost.tooltip); }
             //only show button if player has enough renown to cover the cost of firing
             if (playerRenown >= renownCost)
             {
+                //generic tooltip (depends if actor is threatening or not)
+                StringBuilder builderTooltip = new StringBuilder();
+                //allow for secrets and threats
+                ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
+                renownCost = manageRenownCost.renownCost;
+                //tooltip
+                builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
+                { builderTooltip.Append(manageRenownCost.tooltip); }
+                //mood info
+                string moodText = GameManager.instance.personScript.GetMoodTooltip(MoodType.ReserveFire, actor.arc.name);
+                builderTooltip.AppendFormat("{0}{1}", "\n", moodText);
                 //pass through renown cost
                 actorActionDetails.renownCost = renownCost;
                 //action button
@@ -3978,7 +3988,7 @@ public class ActorManager : MonoBehaviour
     //
     // - - - Debug - - -
     //
-   
+
 
     /// <summary>
     /// Debug method to display actor pools (both sides)

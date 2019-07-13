@@ -524,63 +524,6 @@ public class PersonalityManager : MonoBehaviour
         //get the effect
         Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, actorArcName);
         return GetMoodMessage(results);
-
-        /*int change = results.Item1;
-        string factorName = results.Item2;
-        string factorType = results.Item3;
-        string reason = results.Item4;
-        string factorPlayer = results.Item5;
-        bool isStressed = results.Item6;
-
-        //generate outcome msg
-        string text = "Unknown";
-        //first line of msg -> effect of change on mood
-        if (change == 0)
-        {
-            text = "No effect on Player Mood";
-            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText));
-        }
-        else if (change > 0)
-        {
-            text = string.Format("Player Mood +{0}", change);
-            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText));
-        }
-        else
-        {
-            text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
-            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
-        }
-        if (GameManager.instance.optionScript.fullMoodInfo == true)
-        {
-            //second line of msg -> determining factor
-            builder.AppendLine();
-            switch (factorType)
-            {
-                case "Good": builder.Append(GameManager.instance.colourScript.GetFormattedString(factorName + " +", ColourType.normalText)); break;
-                case "Bad": builder.Append(GameManager.instance.colourScript.GetFormattedString(factorName + " -", ColourType.normalText)); break;
-                default:
-                    Debug.LogWarningFormat("Unrecognised factorType \"{0}\"", factorType);
-                    builder.Append("Unknown");
-                    break;
-            }
-            builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("{0}for Mood increase{1}", "\n", "\n"), ColourType.normalText));
-            //third line of msg -> player's factor (coloured green for good, red for bad)
-            switch (change)
-            {
-                case 2:
-                case 1:
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.goodText));
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.goodText));
-                    break;
-                case -1:
-                case -2:
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badEffect));
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.badEffect));
-                    break;
-                default: Debug.LogWarningFormat("Unrecognised change \"{0}\"", change); break;
-            }
-        }
-        return builder.ToString();*/
     }
 
     /// <summary>
@@ -623,6 +566,7 @@ public class PersonalityManager : MonoBehaviour
         Belief actionBelief = null;
         switch(type)
         {
+            //Manage actions
             case MoodType.ReservePromise:
                 actionBelief = beliefReservePromise;
                 reason = string.Format("Promise {0} in Reserves", actorArcName);
@@ -658,6 +602,23 @@ public class PersonalityManager : MonoBehaviour
             case MoodType.DisposeLoyalty:
                 actionBelief = beliefDisposeLoyalty;
                 reason = string.Format("Dispose of {0} (Loyalty)", actorArcName);
+                break;
+             //Reserve Pool actions
+            case MoodType.ReserveLetGo:
+                actionBelief = beliefReserveLetGo;
+                reason = string.Format("Let go of {0} (Reserves)", actorArcName);
+                break;
+            case MoodType.ReserveFire:
+                actionBelief = beliefReserveFire;
+                reason = string.Format("Fire {0} (Reserves)", actorArcName);
+                break;
+            case MoodType.ReserveReassure:
+                actionBelief = beliefReserveReassure;
+                reason = string.Format("Reassure {0} (Reserves)", actorArcName);
+                break;
+            case MoodType.ReserveBully:
+                actionBelief = beliefReserveBully;
+                reason = string.Format("Bully {0} (Reserves)", actorArcName);
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);

@@ -300,3 +300,24 @@ City seed 890 -> Arles, France
 
 Dev seed 31622 -> Saturday, 13 July 2019 3:42 PM
 City seed 890 -> Arles, France
+
+Dev seed 13071 -> Saturday, 13 July 2019 4:17 PM
+City seed 890 -> Arles, France
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object arg0) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	PersonalityManager.CheckMoodEffect (gameAPI.MoodType type, System.Int32 mood, System.String actorArcName) (at Assets/Scripts/Managers/PersonalityManager.cs:617)
+	PersonalityManager.GetMoodTooltip (gameAPI.MoodType type, System.String actorArcName) (at Assets/Scripts/Managers/PersonalityManager.cs:525)
+	ActorManager.GetReservePoolActions (System.Int32 actorID) (at Assets/Scripts/Managers/ActorManager.cs:2637)
+	InventoryInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:94)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 12909 -> Saturday, 13 July 2019 4:18 PM
+City seed 890 -> Arles, France
+
+Dev seed 50909 -> Saturday, 13 July 2019 4:39 PM
+City seed 890 -> Arles, France

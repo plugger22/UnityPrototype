@@ -141,7 +141,7 @@
         ReservePromise, ReserveNoPromise, ReserveRest,
         DismissIncompetent, DismissUnsuited, DismissPromote,
         DisposeCorrupt, DisposeLoyalty, DisposeHabit,
-        ReserveLetGo, ReserveFire, ReserveBully
+        ReserveLetGo, ReserveFire, ReserveBully, ReserveReassure
     }
 
     //

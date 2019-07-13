@@ -1887,6 +1887,7 @@ public class ActionManager : MonoBehaviour
     {
         int benefit = GameManager.instance.actorScript.unhappyReassureBoost;
         bool errorFlag = false;
+        string moodText = "Unknown";
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
         if (details != null)
@@ -1901,11 +1902,16 @@ public class ActionManager : MonoBehaviour
                     benefit *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
                     GameManager.instance.actorScript.TraitLogMessage(actor, "for being Reassured", "to DOUBLE effect of being Reassured");
                 }
+                StringBuilder builder = new StringBuilder();
+                builder.AppendFormat("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7}{8} can't be Reassured again{9}", colourGood, actor.actorName,
+                    benefit, traitText, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
+                //mood text
+                moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReserveReassure, actor.arc.name);
+                builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
                 //outcome
                 outcomeDetails.textTop = string.Format("{0} {1} has been reassured that they will be the next person called for active duty",
                     actor.arc.name, actor.actorName);
-                outcomeDetails.textBottom = string.Format("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7}{8} can't be Reassured again{9}", colourGood, actor.actorName,
-                    benefit, traitText, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
+                outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.sprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
