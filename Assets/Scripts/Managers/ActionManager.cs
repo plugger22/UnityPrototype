@@ -1945,6 +1945,7 @@ public class ActionManager : MonoBehaviour
     {
         int benefit = GameManager.instance.actorScript.unhappyBullyBoost;
         bool errorFlag = false;
+        string moodText = "Unknown";
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
         if (details != null)
@@ -1971,6 +1972,10 @@ public class ActionManager : MonoBehaviour
                 builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}{1} can be Bullied again for {2} Renown{3}", colourNeutral, actor.actorName, actor.numOfTimesBullied + 1, colourEnd);
+                //mood text
+                moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReserveBully, actor.arc.name);
+                builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+                //outcome details
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.sprite;
                 //Give boost to Unhappy timer
@@ -2007,6 +2012,7 @@ public class ActionManager : MonoBehaviour
         int motivationLoss = GameManager.instance.actorScript.motivationLossLetGo;
         bool errorFlag = false;
         int numOfTeams = 0;
+        string moodText = "Unknown";
         StringBuilder builder = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
@@ -2039,16 +2045,6 @@ public class ActionManager : MonoBehaviour
                     builder.AppendFormat("{0}{1} can be recruited later{2}", colourNeutral, actor.actorName, colourEnd);
                 }
                 else { Debug.LogErrorFormat("Invalid recruitPoolList (Null) for actor.level {0} & GlobalSide {1}", actor.level, details.side); }
-
-                /*//remove actor from reserve list
-                List<int> reservePoolList = GameManager.instance.dataScript.GetActorList(details.side, ActorList.Reserve);
-                if (reservePoolList != null)
-                {
-                    if (reservePoolList.Remove(actor.actorID) == false)
-                    { Debug.LogWarningFormat("Actor \"{0}\", ID {1}, not found in reservePoolList", actor.actorName, actor.actorID); }
-                }
-                else { Debug.LogErrorFormat("Invalid reservePoolList (Null) for GlobalSide {0}", details.side); }*/
-
                 //remove actor from reserve list
                 GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
                 //teams
@@ -2059,6 +2055,10 @@ public class ActionManager : MonoBehaviour
                     builder.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
                     numOfTeams != 1 ? "s" : "", colourEnd);
                 }
+                //mood text
+                moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReserveLetGo, actor.arc.name);
+                builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+                //outcome details
                 outcomeDetails.textTop = string.Format("{0} {1} reluctantly returns to the recruitment pool and asks that you keep them in mind", actor.arc.name,
                     actor.actorName);
                 outcomeDetails.textBottom = builder.ToString();
@@ -2093,6 +2093,7 @@ public class ActionManager : MonoBehaviour
         /*int motivationLoss = GameManager.instance.actorScript.motivationLossFire;*/
         bool errorFlag = false;
         int numOfTeams = 0;
+        string moodText = "Unknown";
         Debug.Assert(details.renownCost > 0, "Invalid renownCost (zero)");
         StringBuilder builder = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
@@ -2154,6 +2155,10 @@ public class ActionManager : MonoBehaviour
                     builder.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
                     numOfTeams != 1 ? "s" : "", colourEnd);
                 }
+                //mood text
+                moodText = GameManager.instance.personScript.UpdateMood(MoodType.ReserveFire, actor.arc.name);
+                builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+                //outcome details
                 outcomeDetails.textTop = string.Format("{0} {1} curses and spits at your feet before walking out the door", actor.arc.name,
                     actor.actorName);
                 outcomeDetails.textBottom = builder.ToString();

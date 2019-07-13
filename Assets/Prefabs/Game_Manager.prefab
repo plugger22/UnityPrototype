@@ -1772,6 +1772,7 @@ MonoBehaviour:
   showContacts: 0
   showRenown: 1
   connectorTooltips: 0
+  fullMoodInfo: 0
 --- !u!114 &114556544146557144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1798,7 +1799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPersonality: {fileID: 11400000, guid: bd1f183784e0246419bc2f0f6f0b95c4, type: 2}
+  testPersonality: {fileID: 11400000, guid: 8cf962c044260af44a24b143cfd5a935, type: 2}
   campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
