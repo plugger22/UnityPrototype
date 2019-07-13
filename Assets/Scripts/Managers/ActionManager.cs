@@ -882,6 +882,9 @@ public class ActionManager : MonoBehaviour
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
                 for (int i = 0; i < numOfOptions; i++)
                 {
+                    //tooltip details
+                    StringBuilder builder = new StringBuilder();
+                    //manageAction
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
                     {
@@ -909,18 +912,19 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
+                                //tooltip details
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                builder.AppendFormat("{0}{1}", tooltipText, "\n");
                                 if (manageAction.isRenownCost == true)
                                 {
-                                    StringBuilder builder = new StringBuilder();
                                     ManageRenownCost manageRenownCost = GameManager.instance.actorScript.GetManageRenownCost(actor, renownCost);
-                                    builder.AppendFormat("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, manageRenownCost.renownCost, colourEnd);
+                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.renownCost, colourEnd);
                                     if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
                                     { builder.Append(manageRenownCost.tooltip); }
-                                    tooltip.textDetails = builder.ToString();
+
                                 }
                                 else
-                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
+                                { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd);  }
                             }
                             else
                             {
@@ -930,12 +934,9 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
+                                { builder.AppendFormat("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
-                                {
-                                    tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
-                                      colourEnd);
-                                }
+                                { builder.AppendFormat("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood, colourEnd); }
                             }
                         }
                         else
@@ -946,11 +947,24 @@ public class ActionManager : MonoBehaviour
                             tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
                             tooltip.textMain = manageAction.tooltipMain;
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            builder.AppendFormat("{0}{1}", tooltipText, "\n");
                             if (manageAction.isRenownCost == true)
-                            { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                            { builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd); }
                             else
-                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
+                            { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
                         }
+                        //mood details
+                        string textMood = "Unknown";
+                        switch (manageAction.name)
+                        {
+                            case "DismissIncompetent": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.DismissIncompetent, actor.arc.name); break;
+                            case "DismissPromote": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.DismissPromote, actor.arc.name); break;
+                            case "DismissUnsuited": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.DismissUnsuited, actor.arc.name); break;
+                            default: Debug.LogWarningFormat("Unrecognised manageAction \"{0}\"", manageAction.name); break;
+                        }
+                        builder.AppendFormat("{0}{1}", "\n", textMood);
+                        //tooltip details finalise
+                        tooltip.textDetails = builder.ToString();
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;
@@ -1024,6 +1038,8 @@ public class ActionManager : MonoBehaviour
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
                 for (int i = 0; i < numOfOptions; i++)
                 {
+                    //tooltip details
+                    StringBuilder builder = new StringBuilder();
                     ManageAction manageAction = listOfManageOptions[i];
                     if (manageAction != null)
                     {
@@ -1051,18 +1067,27 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
+                                //tooltip details
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                                builder.AppendFormat("{0}{1}", tooltipText, "\n");
                                 if (manageAction.isRenownCost == true)
                                 {
-                                    StringBuilder builder = new StringBuilder();
+                                    /*StringBuilder builder = new StringBuilder();
                                     ManageRenownCost manageRenownCost = GameManager.instance.actorScript.GetManageRenownCost(actor, renownCost);
                                     builder.AppendFormat("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, manageRenownCost.renownCost, colourEnd);
                                     if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
                                     { builder.Append(manageRenownCost.tooltip); }
-                                    tooltip.textDetails = builder.ToString();
+                                    tooltip.textDetails = builder.ToString();*/
+                                    ManageRenownCost manageRenownCost = GameManager.instance.actorScript.GetManageRenownCost(actor, renownCost);
+                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.renownCost, colourEnd);
+                                    if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
+                                    { builder.Append(manageRenownCost.tooltip); }
                                 }
                                 else
-                                { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
+                                {
+                                    /*tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd);*/
+                                    builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd);
+                                }
                             }
                             else
                             {
@@ -1072,10 +1097,10 @@ public class ActionManager : MonoBehaviour
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
                                 if (manageAction.isRenownCost == true)
-                                { tooltip.textDetails = string.Format("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
+                                { builder.AppendFormat("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
                                 {
-                                    tooltip.textDetails = string.Format("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
+                                    builder.AppendFormat("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
                                       colourEnd);
                                 }
                             }
@@ -1087,12 +1112,32 @@ public class ActionManager : MonoBehaviour
                             //tooltip
                             tooltip.textHeader = string.Format("{0}DISPOSE OF{1}", colourSide, colourEnd);
                             tooltip.textMain = manageAction.tooltipMain;
+                            //tooltip details
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
+                            builder.AppendFormat("{0}{1}", tooltipText, "\n");
                             if (manageAction.isRenownCost == true)
-                            { tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd); }
+                            {
+                                /*tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd);*/
+                                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                            }
                             else
-                            { tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd); }
+                            {
+                                /*tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd);*/
+                                builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd);
+                            }
                         }
+                        //mood details
+                        string textMood = "Unknown";
+                        switch (manageAction.name)
+                        {
+                            case "DisposeCorrupt": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.DisposeCorrupt, actor.arc.name); break;
+                            case "DisposeHabit": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.DisposeHabit, actor.arc.name); break;
+                            case "DisposeLoyalty": textMood = GameManager.instance.personScript.GetMoodTooltip(MoodType.DisposeLoyalty, actor.arc.name); break;
+                            default: Debug.LogWarningFormat("Unrecognised manageAction \"{0}\"", manageAction.name); break;
+                        }
+                        builder.AppendFormat("{0}{1}", "\n", textMood);
+                        //tooltip details finalise
+                        tooltip.textDetails = builder.ToString();
                         //add to arrays
                         arrayOfGenericOptions[i] = option;
                         arrayOfTooltips[i] = tooltip;

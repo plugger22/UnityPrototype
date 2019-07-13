@@ -516,7 +516,7 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public string GetMoodTooltip(MoodType type, string actorArcName, bool isShortVersion = true)
+    public string GetMoodTooltip(MoodType type, string actorArcName, bool isShortVersion = false)
     {
         StringBuilder builder = new StringBuilder();
         if (string.IsNullOrEmpty(actorArcName) == true)
@@ -623,6 +623,30 @@ public class PersonalityManager : MonoBehaviour
             case MoodType.ReserveRest:
                 actionBelief = beliefReserveRest;
                 reason = string.Format("Rest {0} in Reserves", actorArcName);
+                break;
+            case MoodType.DismissIncompetent:
+                actionBelief = beliefDismissIncompetent;
+                reason = string.Format("Dismiss {0} (Incompetence)", actorArcName);
+                break;
+            case MoodType.DismissPromote:
+                actionBelief = beliefDismissPromote;
+                reason = string.Format("Promote {0} ", actorArcName);
+                break;
+            case MoodType.DismissUnsuited:
+                actionBelief = beliefDismissUnsuited;
+                reason = string.Format("Dismiss {0} (Unsuited)", actorArcName);
+                break;
+            case MoodType.DisposeCorrupt:
+                actionBelief = beliefDisposeCorrupt;
+                reason = string.Format("Dispose of {0} (Corrupt)", actorArcName);
+                break;
+            case MoodType.DisposeHabit:
+                actionBelief = beliefDisposeHabit;
+                reason = string.Format("Dispose of {0} (Habit)", actorArcName);
+                break;
+            case MoodType.DisposeLoyalty:
+                actionBelief = beliefDisposeLoyalty;
+                reason = string.Format("Dispose of {0} (Loyalty)", actorArcName);
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);

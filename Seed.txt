@@ -183,3 +183,93 @@ City seed 890 -> Arles, France
 
 Dev seed 11850 -> Saturday, 13 July 2019 11:25 AM
 City seed 890 -> Arles, France
+
+Dev seed 48214 -> Saturday, 13 July 2019 12:28 PM
+City seed 890 -> Arles, France
+WARNING Unrecognised MoodType "DismissPromote"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:628)
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:526)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:983)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3064)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actionBelief (Null)
+UnityEngine.Debug:LogError(Object)
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:671)
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:526)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:983)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3064)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised MoodType "DismissIncompetent"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:628)
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:526)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:982)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3064)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actionBelief (Null)
+UnityEngine.Debug:LogError(Object)
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:671)
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:526)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:982)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3064)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised MoodType "DismissUnsuited"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:628)
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:526)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:984)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3064)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actionBelief (Null)
+UnityEngine.Debug:LogError(Object)
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:671)
+	PersonalityManager:GetMoodTooltip(MoodType, String, Boolean) (at Assets/Scripts/Managers/PersonalityManager.cs:526)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:984)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3064)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 3283 -> Saturday, 13 July 2019 12:34 PM
+City seed 890 -> Arles, France
+
+Dev seed 61703 -> Saturday, 13 July 2019 12:51 PM
+City seed 890 -> Arles, France
+
+Dev seed 50699 -> Saturday, 13 July 2019 12:53 PM
+City seed 890 -> Arles, France
