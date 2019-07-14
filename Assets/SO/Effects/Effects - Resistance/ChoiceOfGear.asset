@@ -17,10 +17,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf0265e4a0bf2ae49a7898515c615e18, type: 2}
   - {fileID: 11400000, guid: ef283a2dc3169c1499f840ccb475e0aa, type: 2}
   - {fileID: 11400000, guid: 2ea1983928c01b246905066f0a3c0fa1, type: 2}
-  apply: {fileID: 0}
+  apply: {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}
   outcome: {fileID: 11400000, guid: f50f53083769bfd4ead05992b3aacfbc, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 1
+  isMoodEffect: 0
+  belief: {fileID: 0}

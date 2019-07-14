@@ -14,10 +14,12 @@ MonoBehaviour:
   description: City Loyalty +2
   ongoingTooltip: 
   listOfCriteria: []
-  apply: {fileID: 0}
+  apply: {fileID: 11400000, guid: 90ecb005a366e9c4485117b705745145, type: 2}
   outcome: {fileID: 11400000, guid: abb29d3fcfb7da3469c890f9aaf3e530, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 2
   ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}

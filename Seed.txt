@@ -406,3 +406,33 @@ City seed 890 -> Arles, France
 
 Dev seed 53310 -> Sunday, 14 July 2019 11:16 AM
 City seed 890 -> Arles, France
+
+Dev seed 59667 -> Sunday, 14 July 2019 1:33 PM
+City seed 890 -> Arles, France
+
+Dev seed 7005 -> Sunday, 14 July 2019 1:46 PM
+WARNING [Val] ValidateSO: MISMATCH on EffectApply, array 15, assets 18 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectApply[]) (at Assets/Scripts/Managers/ValidationManager.cs:549)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:404)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:724)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:337)
+	City seed 890 -> Arles, France
+
+Dev seed 36986 -> Sunday, 14 July 2019 1:47 PM
+City seed 890 -> Arles, France
+
+Dev seed 30662 -> Sunday, 14 July 2019 1:49 PM
+City seed 890 -> Arles, France
+
+Dev seed 36975 -> Sunday, 14 July 2019 2:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 61418 -> Sunday, 14 July 2019 2:07 PM
+City seed 890 -> Arles, France
+WARNING Gear "Stims", not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4751)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1320)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1087)
+	

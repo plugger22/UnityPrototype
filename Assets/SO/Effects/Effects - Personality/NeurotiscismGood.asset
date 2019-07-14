@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: NeurotiscismGood
   m_EditorClassIdentifier: 
-  description: Mood change possible
+  description: 
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}

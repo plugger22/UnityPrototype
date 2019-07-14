@@ -909,6 +909,10 @@ public class PersonalityManager : MonoBehaviour
                     builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.goodText));
                     builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.goodText));
                     break;
+                case 0:
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.neutralEffect));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.neutralEffect));
+                    break;
                 case -1:
                 case -2:
                     builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badEffect));

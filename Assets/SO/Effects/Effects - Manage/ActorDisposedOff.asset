@@ -14,10 +14,12 @@ MonoBehaviour:
   description: actor disposed off
   ongoingTooltip: 
   listOfCriteria: []
-  apply: {fileID: 0}
+  apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
   outcome: {fileID: 11400000, guid: 3bc6f9fb221a157439f0dbe5f6f6a5fe, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}

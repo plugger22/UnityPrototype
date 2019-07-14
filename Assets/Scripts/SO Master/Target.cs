@@ -44,7 +44,9 @@ public class Target : ScriptableObject
     public List<Effect> listOfBadEffects;
     [Tooltip("All effects (SO's) that happen when a target is attempted and the attempt Fails")]
     public List<Effect> listOfFailEffects;
-    [Tooltip("ONGOING effect (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained. Currently MAX of ONE effect allowed")]
+
+    [Header("Ongoing Effects only")]
+    [Tooltip("ONGOING effect (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained. Currently MAX of ONE effect allowed. Must be 'Ongoing' effect")]
     public Effect OngoingEffect;
 
     [Header("Profile")]

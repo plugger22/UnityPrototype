@@ -22,3 +22,5 @@ MonoBehaviour:
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 3
   ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}

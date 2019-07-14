@@ -767,6 +767,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea4162d04bdf345419d8618ed297b5af, type: 2}
   - {fileID: 11400000, guid: 5169348ff4ef0404e93a776c5721b803, type: 2}
   - {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}
+  - {fileID: 11400000, guid: 90ecb005a366e9c4485117b705745145, type: 2}
+  - {fileID: 11400000, guid: 3ae9234d51104fe4bb083314aa1b4948, type: 2}
+  - {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}
   arrayOfEffectCriteria:
   - {fileID: 11400000, guid: 66ba9847ba68cce4cbfe0eb31887e3eb, type: 2}
   - {fileID: 11400000, guid: d418f2ebe5cc37a459b60b88a9199c9f, type: 2}

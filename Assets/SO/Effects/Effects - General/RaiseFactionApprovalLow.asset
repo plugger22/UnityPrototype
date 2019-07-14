@@ -14,10 +14,12 @@ MonoBehaviour:
   description: Faction Support +1
   ongoingTooltip: 
   listOfCriteria: []
-  apply: {fileID: 0}
+  apply: {fileID: 11400000, guid: 3ae9234d51104fe4bb083314aa1b4948, type: 2}
   outcome: {fileID: 11400000, guid: 3099de3381bd4364fa627a4732ad5346, type: 2}
   operand: {fileID: 11400000, guid: b4858fc13d863c64db627b8de742a542, type: 2}
   typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 1
   ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}
