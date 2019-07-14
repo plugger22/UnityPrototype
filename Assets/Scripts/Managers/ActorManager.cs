@@ -1983,13 +1983,23 @@ public class ActorManager : MonoBehaviour
                                                     effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                                                     if (effectCriteria == null)
                                                     {
+                                                        if (i == 0)
+                                                        {
+                                                            //chance of compromise
+                                                            int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
+                                                            builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                                                colourNeutral, compromiseChance, colourEnd);
+                                                        }
                                                         //Effect criteria O.K -> tool tip text
-                                                        if (builder.Length > 0) { builder.AppendLine(); }
+                                                        builder.AppendLine();
                                                         builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                                                        //chance of compromise
-                                                        int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
-                                                        builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
-                                                            colourNeutral, compromiseChance, colourEnd);
+                                                        //mood change
+                                                        if (effect.isMoodEffect == true)
+                                                        {
+                                                            /*if (builder.Length > 0) { builder.AppendLine(); }*/
+                                                            string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
+                                                            builder.Append(moodText);
+                                                        }
                                                     }
                                                     else
                                                     {
@@ -2017,7 +2027,6 @@ public class ActorManager : MonoBehaviour
                                                     buttonTitle = string.Format("Use {0}", gear.tag),
                                                     buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
                                                     buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
-                                                    /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
                                                     buttonTooltipDetail = builder.ToString(),
                                                     //use a Lambda to pass arguments to the action
                                                     action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetPlayerAction"); }

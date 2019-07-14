@@ -19,11 +19,11 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects:
   - {fileID: 11400000, guid: 45811049bf3f89e4baa743d89046fe6c, type: 2}
+  - {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   aiHackingEffect: {fileID: 0}
-  gearID: 26
   timesUsed: 0
   isCompromised: 0
-  reasonUsed: 
+  reasonUsed: Used to affect Marleborne district
   chanceOfCompromise: 0
   statTurnObtained: 0
   statTurnLost: 0

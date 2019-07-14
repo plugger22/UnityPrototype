@@ -19,8 +19,8 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects:
   - {fileID: 11400000, guid: dbe2f6ba1a37dcf4f880a17e721f9155, type: 2}
+  - {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   aiHackingEffect: {fileID: 0}
-  gearID: 21
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 
