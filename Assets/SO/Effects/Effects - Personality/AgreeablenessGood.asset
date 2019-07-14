@@ -17,7 +17,9 @@ MonoBehaviour:
   apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}
   outcome: {fileID: 11400000, guid: 6916df6c425ba6f4d947f2f5a709fa79, type: 2}
   operand: {fileID: 0}
-  typeOfEffect: {fileID: 0}
+  typeOfEffect: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 0
+  isMoodEffect: 1
+  belief: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192, type: 2}

@@ -3121,7 +3121,9 @@ public class EffectManager : MonoBehaviour
     {
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-        //get condition
+        /*effectResolve.topText = "Your beliefs are tested by this action";*/
+        effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText + " effect");
+        /*//get condition
         switch (effect.outcome.name)
         {
             case "AgreeablenessBad":
@@ -3157,7 +3159,7 @@ public class EffectManager : MonoBehaviour
             default:
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                 break;
-        }
+        }*/
         return effectResolve;
     }
 

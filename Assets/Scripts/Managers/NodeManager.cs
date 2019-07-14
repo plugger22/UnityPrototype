@@ -1589,6 +1589,12 @@ public class NodeManager : MonoBehaviour
                                                     else
                                                     { builder.Append(string.Format("{0}Player {1}{2}", colourBad, effect.description, colourEnd)); }
                                                 }
+                                                //Mood (special case)
+                                                if (effect.isMoodEffect == true)
+                                                {
+                                                    string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
+                                                    builder.Append(moodText);
+                                                }
                                             }
                                             else
                                             {

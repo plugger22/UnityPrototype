@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
   m_Name: gearPersuasion
   m_EditorClassIdentifier: 
+  tag: 
   tooltipText: Persuade key node VIP's that your cause is worth supporting
   intendedActor: {fileID: 0}
   listOfEffects:
   - {fileID: 11400000, guid: 4fb86b3fd91efa142bea3767664cbbfd, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   special: {fileID: 11400000, guid: 3fa7b17e37e061449b2979172b574ec3, type: 2}
   coolDown: 0

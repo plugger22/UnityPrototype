@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
   m_Name: gearKinetic
   m_EditorClassIdentifier: 
+  tag: 
   tooltipText: Blow up critical node infrastructure and spread instability
   intendedActor: {fileID: 0}
   listOfEffects:
   - {fileID: 11400000, guid: 23d772167638cca468623db27b96c8ea, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   special: {fileID: 11400000, guid: 3fa7b17e37e061449b2979172b574ec3, type: 2}
   coolDown: 0

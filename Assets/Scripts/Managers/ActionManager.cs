@@ -478,7 +478,7 @@ public class ActionManager : MonoBehaviour
                             {
                                 outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
                                 //update stringBuilder texts
-                                if (effectReturn.topText.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
+                                if (String.IsNullOrEmpty(effectReturn.topText) == false) { builderTop.AppendLine(); builderTop.AppendLine(); }
                                 builderTop.Append(effectReturn.topText);
                                 if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                 builderBottom.Append(effectReturn.bottomText);

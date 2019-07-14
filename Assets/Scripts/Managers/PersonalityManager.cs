@@ -65,7 +65,7 @@ public class PersonalityManager : MonoBehaviour
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
     public Belief beliefReserveBully;
 
-    [Header("Personality Beliefs")]
+    /*[Header("Personality Beliefs")]
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
     public Belief beliefAgreeablenessBad;
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
@@ -85,7 +85,7 @@ public class PersonalityManager : MonoBehaviour
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
     public Belief beliefOpennessBad;
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefOpennessGood;
+    public Belief beliefOpennessGood;*/
 
     //Fast access
     private Factor[] arrayOfFactors;
@@ -144,7 +144,7 @@ public class PersonalityManager : MonoBehaviour
         Debug.Assert(beliefReserveFire != null, "Invalid beliefReserveFire (Null)");
         Debug.Assert(beliefReserveReassure != null, "Invalid beliefReserveReassure (Null)");
         Debug.Assert(beliefReserveBully != null, "Invalid beliefReserveBully (Null)");
-        Debug.Assert(beliefAgreeablenessBad != null, "Invalid beliefAgreeablenessBad (Null)");
+        /*Debug.Assert(beliefAgreeablenessBad != null, "Invalid beliefAgreeablenessBad (Null)");
         Debug.Assert(beliefAgreeablenessGood != null, "Invalid beliefAgreeablenessGood (Null)");
         Debug.Assert(beliefConscientiousnessBad != null, "Invalid beliefConscientiousnessBad (Null)");
         Debug.Assert(beliefConscientiousnessGood != null, "Invalid beliefConscientiousnessGood (Null)");
@@ -153,7 +153,7 @@ public class PersonalityManager : MonoBehaviour
         Debug.Assert(beliefNeurotiscismBad != null, "Invalid beliefNeurotiscismBad (Null)");
         Debug.Assert(beliefNeurotiscismGood != null, "Invalid beliefNeurotiscismGood (Null)");
         Debug.Assert(beliefOpennessBad != null, "Invalid beliefOpennessBad (Null)");
-        Debug.Assert(beliefOpennessGood != null, "Invalid beliefOpennessGood (Null)");
+        Debug.Assert(beliefOpennessGood != null, "Invalid beliefOpennessGood (Null)");*/
     }
     #endregion
 
@@ -538,7 +538,7 @@ public class PersonalityManager : MonoBehaviour
     }
 
     //
-    // - - - Client Interaction - - -
+    // - - - Client Interaction (GameMechanics) - - -
     //
 
     /// <summary>
@@ -576,7 +576,8 @@ public class PersonalityManager : MonoBehaviour
         string factorName = results.Item2;
         string reason = results.Item4;
         //change mood, add history item, stressed condition added if mood < 0
-        GameManager.instance.playerScript.ChangeMood(change, reason, factorName);
+        if (change != 0)
+        { GameManager.instance.playerScript.ChangeMood(change, reason, factorName); }
         //outcome message string (formatted)
         return GetMoodMessage(results);
     }
@@ -653,7 +654,7 @@ public class PersonalityManager : MonoBehaviour
                 actionBelief = beliefReserveBully;
                 reason = string.Format("Bully {0} (Reserves)", multiText);
                 break;
-            //Personality Effects (multiText is the origin of the effect)
+            /*//Personality Effects (multiText is the origin of the effect)
             case MoodType.AgreeablenessBad:
                 actionBelief = beliefAgreeablenessBad;
                 reason = multiText;
@@ -693,7 +694,7 @@ public class PersonalityManager : MonoBehaviour
             case MoodType.OpennessGood:
                 actionBelief = beliefOpennessGood;
                 reason = multiText;
-                break;
+                break;*/
             default:
                 Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);
                 break;
@@ -741,6 +742,118 @@ public class PersonalityManager : MonoBehaviour
         else { Debug.LogError("Invalid actionBelief (Null)"); }
         return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
     }
+
+    //
+    // - - - Client Interaction (Effects) - - -
+    //
+
+    /// <summary>
+    /// Returns a colour formatted tooltip showing any changes to the Player's mood based on their personality and the belief attached to the game mechanic that they are about to do
+    /// NOTE: Player about to do something, this is what will happen
+    /// NOTE: displays single line info, eg. 'Player mood -1, STRESSED' unless optionManager.cs -> 'fullMoodInfo' is set to true (displays 3 lines of info)
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public string GetMoodTooltip(Belief belief, string actorArcName)
+    {
+        if (string.IsNullOrEmpty(actorArcName) == true)
+        { actorArcName = "Unknown"; }
+        int mood = GameManager.instance.playerScript.GetMood();
+        //get the effect
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(belief, mood, actorArcName);
+        return GetMoodMessage(results);
+    }
+
+    /// <summary>
+    /// Returns a colour formatted msg for outcome dialogue showing change to Player's mood based on them having done the indicated activity. Auto adjusts player's mood
+    /// 'multiText' is normally the actor.arc.name but in the case of effects it's what has caused the effect, eg. EffectDataInput.originText
+    /// NOTE: Player has done something, this is what has happened
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public string UpdateMood(Belief belief, string multiText)
+    {
+        if (string.IsNullOrEmpty(multiText) == true)
+        { multiText = "Unknown"; }
+        int mood = GameManager.instance.playerScript.GetMood();
+        //get the effect
+        Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(belief, mood, multiText);
+        int change = results.Item1;
+        string factorName = results.Item2;
+        string reason = results.Item4;
+        //change mood, add history item, stressed condition added if mood < 0
+        if (change != 0)
+        { GameManager.instance.playerScript.ChangeMood(change, reason, factorName); }
+        //outcome message string (formatted)
+        return GetMoodMessage(results);
+    }
+
+
+    /// <summary>
+    /// subMethod which returns amount of change, name of determining factor, whether factor needs to be good/bad to have a positive effect and a reason (self contained short summary of the game action)
+    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and whether the mood change did, or will, result in the player gaining the STRESSED condition
+    /// NOTE: method doesn't change player's mood or apply any conditions
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private Tuple<int, string, string, string, string, bool> CheckMoodEffect(Belief actionBelief, int mood, string multiText)
+    {
+        int change = 0;
+        string factorName = "Unknown";
+        string factorType = "Unknown";
+        string reason = multiText;
+        string factorPlayer = "Unknown";
+        bool isStressed = false;
+        if (actionBelief != null)
+        {
+            factorName = actionBelief.factor.tag;
+            factorType = actionBelief.type.name;
+            //get index of factor array
+            int index = GameManager.instance.dataScript.GetFactorIndex(actionBelief.factor.name);
+            if (index > -1)
+            {
+                //get value of player's corresponding factor
+                int playerValue = playerPersonality.GetFactorValue(index);
+                switch (playerValue)
+                {
+                    case 2: factorPlayer = string.Format("{0} ++", factorName); break;
+                    case 1: factorPlayer = string.Format("{0} +", factorName); break;
+                    case 0: factorPlayer = factorName; break;
+                    case -1: factorPlayer = string.Format("{0} -", factorName); break;
+                    case -2: factorPlayer = string.Format("{0} --", factorName); break;
+                    default: Debug.LogWarningFormat("Unrecognised playerValue \"{0}\"", playerValue); break;
+                }
+                //if value is Zero then no effect
+                if (playerValue != 0)
+                {
+                    switch (actionBelief.type.name)
+                    {
+                        case "Good":
+                            change = playerValue;
+                            break;
+                        case "Bad":
+                            change = playerValue * -1;
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Unrecognised actionBelief.type.name \"{0}\"", actionBelief.type.name);
+                            break;
+                    }
+                    //check if player will be stressed
+                    if ((mood + change) < 0)
+                    { isStressed = true; }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
+        }
+        else { Debug.LogError("Invalid actionBelief (Null)"); }
+        return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
+    }
+
+
+    //
+    // - - - Utiliities - - -
+    //
+
 
     /// <summary>
     /// subMethod to return mood message
