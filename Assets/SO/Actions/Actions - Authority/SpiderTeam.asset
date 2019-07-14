@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Spider Team
   tooltipText: Insert a Spider Team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: 0b0d8b2e73568c0488f2c20d0e6fed1d, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: ada99b83817c2f642a59bb4270b0e36f, type: 2}
   special: {fileID: 0}

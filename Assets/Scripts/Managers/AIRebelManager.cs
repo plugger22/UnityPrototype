@@ -3788,7 +3788,7 @@ public class AIRebelManager : MonoBehaviour
                 GameManager.instance.dataScript.StatisticIncrement(StatType.TargetSuccesses);
                 target.turnSuccess = GameManager.instance.turnScript.Turn;
                 //Ongoing effects then target moved to completed pool
-                if (target.OngoingEffect != null)
+                if (target.ongoingEffect != null)
                 {
                     GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
                     GameManager.instance.dataScript.AddTargetToPool(target, Status.Outstanding);
@@ -3844,8 +3844,8 @@ public class AIRebelManager : MonoBehaviour
                 //combine all effects into one list for processing
                 listOfEffects.AddRange(target.listOfGoodEffects);
                 listOfEffects.AddRange(target.listOfBadEffects);
-                if (target.OngoingEffect != null)
-                { listOfEffects.Add(target.OngoingEffect); }
+                if (target.ongoingEffect != null)
+                { listOfEffects.Add(target.ongoingEffect); }
             }
             else
             {
@@ -3860,7 +3860,7 @@ public class AIRebelManager : MonoBehaviour
             EffectDataInput dataInput = new EffectDataInput();
             dataInput.originText = "Target Attempt";
             //handle any Ongoing effects of target completed -> only if target Successful
-            if (isSuccessful == true && target.OngoingEffect != null)
+            if (isSuccessful == true && target.ongoingEffect != null)
             {
                 dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
                 dataInput.ongoingText = target.reasonText;

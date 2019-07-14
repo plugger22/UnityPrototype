@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Damage Team
   tooltipText: Insert a Damage Minimisation team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: 11fde757d75c2e64ba8c4ae42de5a1cf, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 30441e6c968c98c43b8de59b0dfe20d7, type: 2}
   special: {fileID: 0}

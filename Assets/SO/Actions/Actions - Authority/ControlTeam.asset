@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Control Team
   tooltipText: Insert a Control Team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: 8b130c590875c384c946c0da17cc07a5, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: faad4be0b04d36644a822d0b83dda400, type: 2}
   special: {fileID: 0}

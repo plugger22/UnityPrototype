@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Civil Team
   tooltipText: Insert a Civil team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: 522246d5cd359754d9eac09e1fa907a4, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 1e584f551182f5543a80bc5349564aaa, type: 2}
   special: {fileID: 0}

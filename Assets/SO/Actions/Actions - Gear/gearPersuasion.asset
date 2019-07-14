@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
   m_Name: gearPersuasion
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Persuade district VIP's
   tooltipText: Persuade key node VIP's that your cause is worth supporting
   intendedActor: {fileID: 0}
   listOfEffects:

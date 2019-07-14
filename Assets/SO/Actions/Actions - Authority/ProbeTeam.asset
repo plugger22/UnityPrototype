@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Probe Team
   tooltipText: Insert a Probe team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: 19633dda06ebf4c4584309ee34b8623b, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: e60e937d1329a1542a255615518c11d5, type: 2}
   special: {fileID: 0}

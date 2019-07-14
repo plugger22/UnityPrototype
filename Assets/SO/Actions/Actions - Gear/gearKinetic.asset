@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
   m_Name: gearKinetic
   m_EditorClassIdentifier: 
-  tag: 
-  tooltipText: Blow up critical node infrastructure and spread instability
+  tag: Blow up district
+  tooltipText: Blow up critical district infrastructure and spread instability
   intendedActor: {fileID: 0}
   listOfEffects:
   - {fileID: 11400000, guid: 23d772167638cca468623db27b96c8ea, type: 2}

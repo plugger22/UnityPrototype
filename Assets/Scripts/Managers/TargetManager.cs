@@ -946,10 +946,10 @@ public class TargetManager : MonoBehaviour
                 //put tooltip together
                 tempList.Add(string.Format("{0}Target \"{1}\" has been Completed{2}", colourTarget, target.targetName, colourEnd));
                 //ongoing effects
-                if (target.OngoingEffect != null)
+                if (target.ongoingEffect != null)
                 {
                     tempList.Add(string.Format("{0}Ongoing effects until contained{1}", colourDefault, colourEnd));
-                    tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd));
+                    tempList.Add(string.Format("{0}{1}{2}", colourGood, target.ongoingEffect.description, colourEnd));
                 }
                 break;
         }
@@ -961,7 +961,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     /// <param name="targetID"></param>
     /// <returns></returns>
-    public string GetTargetEffects(string targetName)
+    public string GetTargetEffects(string targetName, bool isPlayerAction = false)
     {
         List<string> tempList = new List<string>();
         //find target
@@ -998,8 +998,11 @@ public class TargetManager : MonoBehaviour
                 }
             }
             //Ongoing effects -> add header
-            if (target.OngoingEffect != null)
-            { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, target.OngoingEffect.description, colourEnd)); }
+            if (target.ongoingEffect != null)
+            { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, target.ongoingEffect.description, colourEnd)); }
+            //Mood effects (player action only)
+            if (target.moodEffect != null && isPlayerAction == true)
+            { tempList.Add(GameManager.instance.personScript.GetMoodTooltip(target.moodEffect.belief, "Player")); }
         }
         else
         {

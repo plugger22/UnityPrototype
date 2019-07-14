@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Erasure Team
   tooltipText: Insert an Erasure team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: 55bfb6ff9566492469ddac055d606e50, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 8b991a1e2754d0e49b2cc4137761cf13, type: 2}
   special: {fileID: 0}

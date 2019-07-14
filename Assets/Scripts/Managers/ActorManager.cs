@@ -763,6 +763,7 @@ public class ActorManager : MonoBehaviour
         string cancelText = null;
         string effectCriteria;
         bool proceedFlag;
+        bool isPlayerAction = false;
         AuthoritySecurityState securityState = GameManager.instance.turnScript.authoritySecurityState;
         Actor[] arrayOfActors;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
@@ -793,7 +794,10 @@ public class ActorManager : MonoBehaviour
             {
                 //'Cancel' button tooltip)
                 if (nodeID == playerID)
-                { cancelText = "You are present at the node"; }
+                {
+                    cancelText = "You are present at the node";
+                    isPlayerAction = true;
+                }
                 else { cancelText = "You are NOT present at the node"; }
                 //
                 // - - -  Target - - -
@@ -842,7 +846,7 @@ public class ActorManager : MonoBehaviour
                                     buttonTitle = "Attempt Target",
                                     buttonTooltipHeader = targetHeader,
                                     buttonTooltipMain = GameManager.instance.targetScript.GetTargetFactors(node.targetName),
-                                    buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetName),
+                                    buttonTooltipDetail = GameManager.instance.targetScript.GetTargetEffects(node.targetName, isPlayerAction),
                                     //use a Lambda to pass arguments to the action
                                     action = () => { EventManager.instance.PostNotification(EventType.TargetAction, this, nodeID, "ActorManager.cs -> GetNodeActions"); }
                                 };

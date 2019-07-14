@@ -45,9 +45,13 @@ public class Target : ScriptableObject
     [Tooltip("All effects (SO's) that happen when a target is attempted and the attempt Fails")]
     public List<Effect> listOfFailEffects;
 
-    [Header("Ongoing Effects only")]
+    [Header("Mood Effect only")]
+    [Tooltip("Effect that may change Player's mood IF Player successfully attempts the target")]
+    public Effect moodEffect;
+
+    [Header("Ongoing Effect only")]
     [Tooltip("ONGOING effect (SO's) that happen each turn once target resolved, status.Completed, until target is status.Contained. Currently MAX of ONE effect allowed. Must be 'Ongoing' effect")]
-    public Effect OngoingEffect;
+    public Effect ongoingEffect;
 
     [Header("Profile")]
     [Tooltip("Base Profile that each target starts a level with")]

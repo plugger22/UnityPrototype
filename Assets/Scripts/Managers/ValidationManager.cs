@@ -126,11 +126,11 @@ public class ValidationManager : MonoBehaviour
                     }
                 }
                 //Ongoing effects
-                if (target.Value.OngoingEffect != null)
+                if (target.Value.ongoingEffect != null)
                 {
                     //should be duration 'Ongoing'
-                    if (target.Value.OngoingEffect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == false)
-                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>ongoing effect \"{1}\" NOT Ongoing</b>", target.Value.targetName, target.Value.OngoingEffect.name); }
+                    if (target.Value.ongoingEffect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("[Val] ValidateTargets: Target \"{0}\" <b>ongoing effect \"{1}\" NOT Ongoing</b>", target.Value.targetName, target.Value.ongoingEffect.name); }
                 }
                 //Target gear present and shouldn't be infiltration
                 if (target.Value.gear != null)

@@ -436,3 +436,45 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1320)
 	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1087)
 	
+Dev seed 28239 -> Sunday, 14 July 2019 2:40 PM
+City seed 890 -> Arles, France
+
+Dev seed 57805 -> Sunday, 14 July 2019 2:52 PM
+City seed 890 -> Arles, France
+
+Dev seed 32028 -> Sunday, 14 July 2019 2:58 PM
+City seed 890 -> Arles, France
+
+Dev seed 38519 -> Sunday, 14 July 2019 3:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 726 -> Sunday, 14 July 2019 3:18 PM
+City seed 890 -> Arles, France
+
+Dev seed 31187 -> Sunday, 14 July 2019 3:32 PM
+City seed 890 -> Arles, France
+
+Dev seed 24608 -> Sunday, 14 July 2019 3:33 PM
+City seed 890 -> Arles, France
+
+Dev seed 52986 -> Sunday, 14 July 2019 3:40 PM
+City seed 890 -> Arles, France
+
+Dev seed 14689 -> Sunday, 14 July 2019 3:41 PM
+City seed 890 -> Arles, France
+WARNING Invalid effect (Null)
+UnityEngine.Debug:LogWarning(Object)
+	ActionManager:ProcessNodeTarget(Int32) (at Assets/Scripts/Managers/ActionManager.cs:2493)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:163)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetNodeActions>c__AnonStorey0:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:851)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 26978 -> Sunday, 14 July 2019 3:48 PM
+City seed 890 -> Arles, France
+
+Dev seed 63935 -> Sunday, 14 July 2019 3:53 PM
+City seed 890 -> Arles, France
+
+Dev seed 22141 -> Sunday, 14 July 2019 4:00 PM
+City seed 890 -> Arles, France

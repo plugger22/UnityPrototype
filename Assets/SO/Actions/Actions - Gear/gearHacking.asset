@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f2e9d30aa93db40b570ba24df74c24, type: 3}
   m_Name: gearHacking
   m_EditorClassIdentifier: 
-  tooltipText: Hack node security networks and create a hole
+  tag: Hack district
+  tooltipText: Hack district security networks and create a hole
   intendedActor: {fileID: 0}
   listOfEffects:
   - {fileID: 11400000, guid: 182dd7cb388c99245a0385ed160fcdd5, type: 2}
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
+  - {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   special: {fileID: 11400000, guid: 3fa7b17e37e061449b2979172b574ec3, type: 2}
   coolDown: 0

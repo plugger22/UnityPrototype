@@ -464,7 +464,8 @@ public class ActionManager : MonoBehaviour
                         StringBuilder builderBottom = new StringBuilder();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
-                        dataInput.originText = "District Gear";
+                        dataInput.originText = string.Format("{0} District Action", details.gearName);
+                        
                         //
                         // - - - Process effects
                         //
@@ -472,7 +473,7 @@ public class ActionManager : MonoBehaviour
                         {
                             //no ongoing effect allowed for nodeGear actions
                             dataInput.ongoingID = -1;
-                            dataInput.ongoingText = "District Gear";
+                            dataInput.ongoingText = string.Format("{0} District Action", details.gearName);
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
@@ -2292,6 +2293,7 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
+        bool isPlayerAction = false;
         int actorID = GameManager.instance.playerScript.actorID;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
@@ -2314,6 +2316,7 @@ public class ActionManager : MonoBehaviour
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
+                    isPlayerAction = true;
                     details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
                     if (GameManager.instance.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }
@@ -2377,7 +2380,7 @@ public class ActionManager : MonoBehaviour
                     //objective
                     GameManager.instance.objectiveScript.CheckObjectiveTarget(target);
                     //Ongoing effects then target moved to completed pool
-                    if (target.OngoingEffect != null)
+                    if (target.ongoingEffect != null)
                     {
                         GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
                         GameManager.instance.dataScript.AddTargetToPool(target, Status.Outstanding);
@@ -2429,10 +2432,12 @@ public class ActionManager : MonoBehaviour
                 if (isSuccessful == true)
                 {
                     builderTop.AppendFormat("{0}{1}{2}{3}Attempt <b>Successful</b>", colourNeutral, target.targetName, colourEnd, "\n");
-                    //combine all effects into one list for processing
+                    //combine all effects into one list for processing (mood effect only applies if it's the player attempting the target)
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
-                    listOfEffects.Add(target.OngoingEffect);
+                    listOfEffects.Add(target.ongoingEffect);
+                    if (isPlayerAction == true)
+                    { listOfEffects.Add(target.moodEffect); }
                 }
                 else
                 {
@@ -2450,9 +2455,9 @@ public class ActionManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = "Target Attempt";
+                dataInput.originText = string.Format("{0} target", target.targetName);
                 //handle any Ongoing effects of target completed -> only if target Successful
-                if (isSuccessful == true && target.OngoingEffect != null)
+                if (isSuccessful == true && target.ongoingEffect != null)
                 {
                     dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
                     dataInput.ongoingText = target.reasonText;
@@ -2485,7 +2490,7 @@ public class ActionManager : MonoBehaviour
                                 break;
                             }
                         }
-                        else { Debug.LogWarning("Invalid effect (Null)"); }
+                        /*else { Debug.LogWarning("Invalid effect (Null)"); }  EDIT -> No need for a warning as some effects, eg. Ongoing, mood, etc. can be null*/
                     }
                     //target has an objective?
                     string objectiveInfo = GameManager.instance.objectiveScript.CheckObjectiveInfo(target.name);

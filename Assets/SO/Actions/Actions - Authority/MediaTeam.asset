@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Media Team
   tooltipText: Insert a Media team
-  intendedActor: {fileID: 0}
+  intendedActor: {fileID: 11400000, guid: db747620427cca543b9d5e37f91ce0ef, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 75c5222b0758a26439f6188569469520, type: 2}
   special: {fileID: 0}
