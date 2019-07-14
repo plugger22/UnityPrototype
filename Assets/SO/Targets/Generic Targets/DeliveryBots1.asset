@@ -29,24 +29,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
-  OngoingEffect: {fileID: 11400000, guid: 4b11afb0d6445bb4eac42e9ce8a879f1, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  ongoingEffect: {fileID: 0}
   profileBase: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
   isSuccessNeeded: 0
   followOnTarget: {fileID: 11400000, guid: 9a6620c460cf35b40bd94460b9637eef, type: 2}
-  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
-  targetStatus: 3
+  profile: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21, type: 2}
+  targetStatus: 0
   intel: 0
-  ongoingID: 0
+  ongoingID: -1
   isKnownByAI: 0
-  nodeID: 10
+  nodeID: -1
   distance: 0
   newIntel: 0
   intelGain: 0
-  turnSuccess: 13
+  turnSuccess: -1
   turnDone: -1
-  numOfAttempts: 1
+  numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 5
-  timerWindow: 7
-  listOfRumourContacts: 250000001700000010000000070000002a0000001e0000002c00000022000000090000000b000000
+  timerHardLimit: 1
+  timerWindow: 6
+  listOfRumourContacts: 250000001700000010000000070000002a0000001e0000002c00000022000000090000000b0000002d0000002800000027000000
