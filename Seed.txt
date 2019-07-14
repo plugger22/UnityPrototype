@@ -496,3 +496,37 @@ City seed 890 -> Arles, France
 
 Dev seed 72 -> Sunday, 14 July 2019 6:15 PM
 City seed 890 -> Arles, France
+
+Dev seed 37330 -> Sunday, 14 July 2019 8:16 PM
+City seed 890 -> Arles, France
+
+Dev seed 45741 -> Sunday, 14 July 2019 8:19 PM
+City seed 890 -> Arles, France
+WARNING Gear "Safe House", not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4751)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1320)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1087)
+	
+Dev seed 6496 -> Sunday, 14 July 2019 8:21 PM
+City seed 890 -> Arles, France
+
+Dev seed 61642 -> Sunday, 14 July 2019 8:22 PM
+City seed 890 -> Arles, France
+
+Dev seed 7635 -> Sunday, 14 July 2019 8:25 PM
+City seed 890 -> Arles, France
+
+Dev seed 18433 -> Sunday, 14 July 2019 8:44 PM
+City seed 890 -> Arles, France
+
+Dev seed 60109 -> Sunday, 14 July 2019 8:45 PM
+City seed 890 -> Arles, France
+WARNING Gear "Shredder", not found in listOfCommonGear
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:4751)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1320)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1087)
+	
+Dev seed 20431 -> Sunday, 14 July 2019 8:52 PM
+City seed 890 -> Arles, France

@@ -1313,17 +1313,24 @@ public class PlayerManager : MonoBehaviour
                 Gear gear = GameManager.instance.dataScript.GetGear(gearName);
                 if (gear != null)
                 {
-                    //add gear to player's inventory
-                    if (AddGear(gearName) == true)
+                    //check you aren't adding gear that has already been lost
+                    List<string> listOfLostGear = GameManager.instance.dataScript.GetListOfLostGear();
+                    if (listOfLostGear.Exists(x => x == gear.name) == false)
                     {
-                        //remove from pool
-                        if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
-                        { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
-                        text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
-                        //message
-                        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                        GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
+                        //add gear to player's inventory
+                        if (AddGear(gearName) == true)
+                        {
+                            //remove from pool
+                            if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
+                            { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
+                            text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
+                            //message
+                            Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                            GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
+                        }
                     }
+                    else
+                    { text = string.Format("{0} NOT added as is LOST GEAR{1}Press ESC to exit", gearName, "\n"); }
                 }
             }
         }

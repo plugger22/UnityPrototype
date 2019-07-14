@@ -1954,9 +1954,9 @@ public class ActorManager : MonoBehaviour
                                             StringBuilder builder = new StringBuilder();
                                             if (listOfEffects.Count > 0)
                                             {
+                                                proceedFlag = true;
                                                 for (int i = 0; i < listOfEffects.Count; i++)
                                                 {
-                                                    proceedFlag = true;
                                                     colourEffect = colourDefault;
                                                     Effect effect = listOfEffects[i];
                                                     //colour code effects according to type
@@ -1981,7 +1981,7 @@ public class ActorManager : MonoBehaviour
                                                         listOfCriteria = effect.listOfCriteria
                                                     };
                                                     effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                                                    if (effectCriteria == null)
+                                                    if (effectCriteria == null && proceedFlag == true)
                                                     {
                                                         if (i == 0)
                                                         {
@@ -2003,11 +2003,15 @@ public class ActorManager : MonoBehaviour
                                                     }
                                                     else
                                                     {
-                                                        proceedFlag = false;
-                                                        //invalid effect criteria -> Action cancelled
-                                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                        infoBuilder.AppendFormat("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
-                                                            colourInvalid, gear.tag, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
+                                                        //nneded because of possible mood effect that would cause a repeat of the first effect
+                                                        if (effectCriteria != null)
+                                                        {
+                                                            proceedFlag = false;
+                                                            //invalid effect criteria -> Action cancelled
+                                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                            infoBuilder.AppendFormat("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
+                                                                colourInvalid, gear.tag, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2299,9 +2303,10 @@ public class ActorManager : MonoBehaviour
                     StringBuilder builder = new StringBuilder();
                     if (listOfEffects.Count > 0)
                     {
+                        proceedFlag = true;
                         for (int i = 0; i < listOfEffects.Count; i++)
                         {
-                            proceedFlag = true;
+                            
                             colourEffect = colourDefault;
                             Effect effect = listOfEffects[i];
                             //colour code effects according to type
@@ -2324,23 +2329,36 @@ public class ActorManager : MonoBehaviour
                             CriteriaDataInput criteriaInput = new CriteriaDataInput()
                             { listOfCriteria = effect.listOfCriteria };
                             effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                            if (effectCriteria == null)
+                            if (effectCriteria == null && proceedFlag == true)
                             {
+                                if (i == 0)
+                                {
+                                    //chance of compromise
+                                    int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
+                                    builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                        colourNeutral, compromiseChance, colourEnd);
+                                }
                                 //Effect criteria O.K -> tool tip text
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                                //chance of compromise
-                                int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
-                                builder.AppendFormat("{0}{1}Chance of Gear being Compromised {2}{3}{4}%{5}", "\n", colourAlert, colourEnd,
-                                    colourNeutral, compromiseChance, colourEnd);
+                                //mood info
+                                if (effect.isMoodEffect == true)
+                                {
+                                    string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
+                                    builder.Append(moodText);
+                                }
                             }
                             else
                             {
-                                proceedFlag = false;
-                                //invalid effect criteria -> Action cancelled
-                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
-                                    colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
+                                //needed because of possible mood effect that would cause a repeat of the first effect
+                                if (effectCriteria != null)
+                                {
+                                    proceedFlag = false;
+                                    //invalid effect criteria -> Action cancelled
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
+                                        colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
+                                }
                             }
                         }
                     }
