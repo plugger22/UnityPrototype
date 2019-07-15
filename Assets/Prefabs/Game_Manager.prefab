@@ -621,6 +621,38 @@ MonoBehaviour:
   beliefReserveReassure: {fileID: 11400000, guid: 51126f19fe206ae4fab39bea426a9192,
     type: 2}
   beliefReserveBully: {fileID: 11400000, guid: f8009ccb46ef0c04cb437332ebd57aec, type: 2}
+  beliefGiveGear: {fileID: 11400000, guid: a914150c846e1834bb2b272cafd4eb5b, type: 2}
+  beliefTakeGear: {fileID: 11400000, guid: 08d380fed3c61754fab600473478c4ec, type: 2}
+  listOfAgreeablenessGood:
+  - Promising subordinates when you send them to the Reserves
+  - Sending subordinates to the Reserves when they are Stressed
+  - Promoting subordinates
+  - Reasuring subordinates in the Reserves
+  listOfAgreeablenessBad:
+  - Not promising subordinates when you send them to the Reserves
+  - Bullying subordinates in the Reserves
+  - Presonally coerciing  (drugs, money, etc.) district VIPs
+  listOfConscientiousnessGood:
+  - Personally hacking district security systems
+  listOfConscientiousnessBad:
+  - Giving gear to subordinates
+  listOfExtroversionGood:
+  - Disposing (permanently) Corrupt subordinates
+  - Disposing (permanently)Disloyal (Questionable) subordinates
+  - Personally using stimulants (Jungle Juice, NZT, Nitro Pills, Stims)
+  listOfExtroversionBad:
+  - Taking back gear that you'd already given to a subordinate
+  listOfNeurotiscismGood:
+  - Firing subordinates for no particular reason
+  - Killing off subordinates because you don't like them
+  - Firing subordinates in the Reserves just because you can
+  listOfNeurotiscismBad: []
+  listOfOpennessGood:
+  - Personally using HoloPorn
+  listOfOpennessBad:
+  - Dismissing subordinates for Incompetence
+  - Having to Let Go subordinates in the Reserves
+  - Personally blowing up districts
 --- !u!114 &114333061750755962
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -65,27 +65,34 @@ public class PersonalityManager : MonoBehaviour
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
     public Belief beliefReserveBully;
 
-    /*[Header("Personality Beliefs")]
+    [Header("Gear Give/Take")]
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefAgreeablenessBad;
+    public Belief beliefGiveGear;
     [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefAgreeablenessGood;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefConscientiousnessBad;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefConscientiousnessGood;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefExtroversionBad;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefExtroversionGood;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefNeurotiscismBad;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefNeurotiscismGood;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefOpennessBad;
-    [Tooltip("Doing this game mechanics will give a positive Mood shift for the Player if they align and a negative if they are the opposite")]
-    public Belief beliefOpennessGood;*/
+    public Belief beliefTakeGear;
+
+    [Header("Personal Preferences")]
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfAgreeablenessGood = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfAgreeablenessBad = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfConscientiousnessGood = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfConscientiousnessBad = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfExtroversionGood = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfExtroversionBad = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfNeurotiscismGood = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfNeurotiscismBad = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfOpennessGood = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
+    public List<string> listOfOpennessBad = new List<string>();
+    [Tooltip("Any game mechanic or item that involves this belief should have an equivalent descriptor (self contained) for Player like/dislikes. No need if already a similar descriptor present")]
 
     //Fast access
     private Factor[] arrayOfFactors;
@@ -144,16 +151,8 @@ public class PersonalityManager : MonoBehaviour
         Debug.Assert(beliefReserveFire != null, "Invalid beliefReserveFire (Null)");
         Debug.Assert(beliefReserveReassure != null, "Invalid beliefReserveReassure (Null)");
         Debug.Assert(beliefReserveBully != null, "Invalid beliefReserveBully (Null)");
-        /*Debug.Assert(beliefAgreeablenessBad != null, "Invalid beliefAgreeablenessBad (Null)");
-        Debug.Assert(beliefAgreeablenessGood != null, "Invalid beliefAgreeablenessGood (Null)");
-        Debug.Assert(beliefConscientiousnessBad != null, "Invalid beliefConscientiousnessBad (Null)");
-        Debug.Assert(beliefConscientiousnessGood != null, "Invalid beliefConscientiousnessGood (Null)");
-        Debug.Assert(beliefExtroversionBad != null, "Invalid beliefExtroversionBad (Null)");
-        Debug.Assert(beliefExtroversionGood != null, "Invalid beliefExtroversionGood (Null)");
-        Debug.Assert(beliefNeurotiscismBad != null, "Invalid beliefNeurotiscismBad (Null)");
-        Debug.Assert(beliefNeurotiscismGood != null, "Invalid beliefNeurotiscismGood (Null)");
-        Debug.Assert(beliefOpennessBad != null, "Invalid beliefOpennessBad (Null)");
-        Debug.Assert(beliefOpennessGood != null, "Invalid beliefOpennessGood (Null)");*/
+        Debug.Assert(beliefGiveGear != null, "Invalid beliefGiveGear (Null)");
+        Debug.Assert(beliefTakeGear != null, "Invalid beliefTakeGear (Null)");
     }
     #endregion
 
@@ -654,47 +653,14 @@ public class PersonalityManager : MonoBehaviour
                 actionBelief = beliefReserveBully;
                 reason = string.Format("Bully {0} (Reserves)", multiText);
                 break;
-            /*//Personality Effects (multiText is the origin of the effect)
-            case MoodType.AgreeablenessBad:
-                actionBelief = beliefAgreeablenessBad;
-                reason = multiText;
+            case MoodType.GiveGear:
+                actionBelief = beliefGiveGear;
+                reason = string.Format("Give gear to {0}", multiText);
                 break;
-            case MoodType.AgreeablenessGood:
-                actionBelief = beliefAgreeablenessGood;
-                reason = multiText;
+            case MoodType.TakeGear:
+                actionBelief = beliefTakeGear;
+                reason = string.Format("Take gear from {0}", multiText);
                 break;
-            case MoodType.ConscientiousnessBad:
-                actionBelief = beliefConscientiousnessBad;
-                reason = multiText;
-                break;
-            case MoodType.ConscientiousnessGood:
-                actionBelief = beliefConscientiousnessGood;
-                reason = multiText;
-                break;
-            case MoodType.ExtroversionBad:
-                actionBelief = beliefExtroversionBad;
-                reason = multiText;
-                break;
-            case MoodType.ExtroversionGood:
-                actionBelief = beliefExtroversionGood;
-                reason = multiText;
-                break;
-            case MoodType.NeurotiscismBad:
-                actionBelief = beliefNeurotiscismBad;
-                reason = multiText;
-                break;
-            case MoodType.NeurotiscismGood:
-                actionBelief = beliefNeurotiscismGood;
-                reason = multiText;
-                break;
-            case MoodType.OpennessBad:
-                actionBelief = beliefOpennessBad;
-                reason = multiText;
-                break;
-            case MoodType.OpennessGood:
-                actionBelief = beliefOpennessGood;
-                reason = multiText;
-                break;*/
             default:
                 Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);
                 break;
