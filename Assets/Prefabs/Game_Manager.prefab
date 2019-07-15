@@ -627,23 +627,23 @@ MonoBehaviour:
   - Promising subordinates when you send them to the Reserves
   - Sending subordinates to the Reserves when they are Stressed
   - Promoting subordinates
-  - Reasuring subordinates in the Reserves
+  - Reassuring subordinates in the Reserves
   listOfAgreeablenessBad:
   - Not promising subordinates when you send them to the Reserves
   - Bullying subordinates in the Reserves
-  - Presonally coerciing  (drugs, money, etc.) district VIPs
+  - Personally coerciing  (drugs, money, etc.) district VIPs
   listOfConscientiousnessGood:
   - Personally hacking district security systems
   listOfConscientiousnessBad:
   - Giving gear to subordinates
   listOfExtroversionGood:
-  - Disposing (permanently) Corrupt subordinates
-  - Disposing (permanently)Disloyal (Questionable) subordinates
-  - Personally using stimulants (Jungle Juice, NZT, Nitro Pills, Stims)
+  - Disposing of (permanently) Corrupt subordinates
+  - Disposing of (permanently)Disloyal (Questionable) subordinates
+  - Personal use of stimulants (Jungle Juice, NZT, Nitro Pills, Stims)
   listOfExtroversionBad:
   - Taking back gear that you'd already given to a subordinate
   listOfNeurotiscismGood:
-  - Firing subordinates for no particular reason
+  - Firing active subordinates for no particular reason
   - Killing off subordinates because you don't like them
   - Firing subordinates in the Reserves just because you can
   listOfNeurotiscismBad: []
@@ -1854,7 +1854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77b7a0ca453c7438b9d74492ed829b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPersonality: {fileID: 11400000, guid: c49065ef357a4604892f0d9cbe718ba1, type: 2}
+  testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999

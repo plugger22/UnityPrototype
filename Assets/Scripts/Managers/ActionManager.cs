@@ -1592,15 +1592,18 @@ public class ActionManager : MonoBehaviour
                         motivation += motivationBoost;
                         motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
                         string colourMotivation = colourGood;
-                        if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Give {0} gear", gear.tag)) == false)
+                        if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Given {0} gear", gear.tag)) == false)
                         { colourMotivation = colourGrey; }
                         //motivation message
                         if (isPreferred == true)
                         {
-                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}(Preferred Gear){7}", "\n", "\n", colourMotivation, actor.arc.name, motivationBoost, colourEnd,
-                                colourNeutral, colourEnd);
+                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}{7}Preferred Gear{8}", "\n", "\n", colourMotivation, actor.arc.name, motivationBoost, colourEnd,
+                                "\n", colourNeutral, colourEnd);
                         }
                         else { builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourMotivation, actor.arc.name, gearSwapBaseAmount, colourEnd); }
+                        //mood change
+                        string moodText = GameManager.instance.personScript.UpdateMood(MoodType.GiveGear, actor.arc.name);
+                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
                         //grace period note
                         if (actor.CheckTraitEffect(actorKeepGear) == false)
                         {
@@ -1703,7 +1706,7 @@ public class ActionManager : MonoBehaviour
                             motivation -= motivationCost;
                             motivation = Mathf.Max(0, motivation);
                             string colourMotivation = colourBad;
-                            if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Take {0} gear", gear.tag)) == false)
+                            if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("{0} gear taken", gear.tag)) == false)
                             { colourMotivation = colourGrey; }
                             else if (motivation < motivationCost)
                             {
@@ -1715,7 +1718,7 @@ public class ActionManager : MonoBehaviour
                             //motivation message
                             if (isPreferred == true)
                             {
-                                builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}{6}{7}(Preferred Gear){8}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd, "\n",
+                                builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}{6}{7}Preferred Gear{8}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd, "\n",
                                 colourNeutral, colourEnd);
                             }
                             else { builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd); }
@@ -1725,6 +1728,9 @@ public class ActionManager : MonoBehaviour
                             //no motivation cost
                             builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
                         }
+                        //mood change
+                        string moodText = GameManager.instance.personScript.UpdateMood(MoodType.TakeGear, actor.arc.name);
+                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
                     }
                     else
                     { Debug.LogErrorFormat("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name); errorFlag = true; }
