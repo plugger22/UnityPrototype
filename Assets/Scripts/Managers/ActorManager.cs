@@ -2061,6 +2061,11 @@ public class ActorManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid gear (Null) for gearID {0}", listOfGear[index]); }
                             }
                         }
+                        else
+                        {
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.Append("No Gear to USE");
+                        }
                     }
                     else { Debug.LogWarning("Invalid listOfGearID (Null)"); }
                     //
@@ -2145,6 +2150,11 @@ public class ActorManager : MonoBehaviour
                                 infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance,
                                     colourEnd, colourAlert, colourEnd);
                             }
+                        }
+                        else
+                        {
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.Append("StressLeave only if STRESSED");
                         }
                     }
                     break;

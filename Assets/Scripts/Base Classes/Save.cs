@@ -150,6 +150,7 @@ public class SavePlayerData
     public bool isEndOfTurnGearCheck;
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
+    public bool isStressed;
     public string profile;
     public string profileDescriptor;
     public string profileExplanation;

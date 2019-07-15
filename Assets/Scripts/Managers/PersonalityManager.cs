@@ -679,6 +679,7 @@ public class PersonalityManager : MonoBehaviour
                 {
                     case 2: factorPlayer = string.Format("{0} ++", factorName); break;
                     case 1: factorPlayer = string.Format("{0} +", factorName); break;
+                    case 0: factorPlayer = factorName; break;
                     case -1: factorPlayer = string.Format("{0} -", factorName); break;
                     case -2: factorPlayer = string.Format("{0} --", factorName); break;
                     default: Debug.LogWarningFormat("Unrecognised playerValue \"{0}\"", playerValue); break;
@@ -851,7 +852,10 @@ public class PersonalityManager : MonoBehaviour
         else
         {
             text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
-            builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
+            //Player stressed, show mood change in grey to indicate that effect will have no impact
+            if (GameManager.instance.playerScript.isStressed == false)
+            { builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect)); }
+            else { builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText)); }
         }
         if (GameManager.instance.optionScript.fullMoodInfo == true)
         {

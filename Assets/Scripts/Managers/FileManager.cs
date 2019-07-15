@@ -268,6 +268,7 @@ public class FileManager : MonoBehaviour
         write.playerData.isEndOfTurnGearCheck = GameManager.instance.playerScript.isEndOfTurnGearCheck;
         write.playerData.isLieLowFirstturn = GameManager.instance.playerScript.isLieLowFirstturn;
         write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
+        write.playerData.isStressed = GameManager.instance.playerScript.isStressed;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)
         {
@@ -1435,6 +1436,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
         GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
         GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
+        GameManager.instance.playerScript.isStressed = read.playerData.isStressed;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if ( personality != null)
         {

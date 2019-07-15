@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Starting value of Player Mood at beginning of a level")]
     [Range(1, 3)] public int moodStart = 2;
     [Tooltip("Mood resets to this value once Player loses their Stressed Condition")]
-    [Range(1, 3)] public int moodStressReset = 2;
+    [Range(1, 3)] public int moodStressReset = 3;
 
     public Sprite sprite;
 
@@ -30,6 +30,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
+    [HideInInspector] public bool isStressed;                                       //true if player stressed
+
     //collections
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
@@ -836,6 +838,7 @@ public class PlayerManager : MonoBehaviour
                             break;
                         case "STRESSED":
                             mood = 0;
+                            isStressed = true;
                             //stats
                             GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerStressed);
                             break;
@@ -936,6 +939,7 @@ public class PlayerManager : MonoBehaviour
                                     break;
                                 case "STRESSED":
                                     ChangeMood(moodStressReset, reason, "n.a");
+                                    isStressed = false;
                                     break;
                             }
                             return true;
@@ -1242,6 +1246,10 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
         builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
         builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
+        builder.AppendFormat(" isEndOfTurnGearCheck {0}{1}", isEndOfTurnGearCheck, "\n");
+        builder.AppendFormat(" isLieLowFirstTurn {0}{1}", isLieLowFirstturn, "\n");
+        builder.AppendFormat(" isStressLeave {0}{1}", isStressLeave, "\n");
+        builder.AppendFormat(" isStressed {0}{1}", isStressed, "\n");
         builder.AppendFormat("{0} -Global{1}", "\n", "\n");
         builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
         builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");

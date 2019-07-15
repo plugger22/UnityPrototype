@@ -10,3 +10,157 @@ City seed 890 -> Arles, France
 
 Dev seed 35822 -> Monday, 15 July 2019 5:22 PM
 City seed 890 -> Arles, France
+
+Dev seed 36243 -> Monday, 15 July 2019 7:59 PM
+City seed 890 -> Arles, France
+WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
+	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:806)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:804)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:805)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:962)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
+	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:962)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
+	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
+	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised playerValue "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
+	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
+	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:962)
+	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
+	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 62595 -> Monday, 15 July 2019 8:14 PM
+City seed 890 -> Arles, France
+
+Dev seed 58093 -> Monday, 15 July 2019 8:19 PM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 23686 -> Monday, 15 July 2019 8:23 PM
+City seed 890 -> Arles, France
+
+Dev seed 61359 -> Monday, 15 July 2019 8:28 PM
+City seed 890 -> Arles, France
+
+Dev seed 11405 -> Monday, 15 July 2019 8:31 PM
+City seed 890 -> Arles, France
