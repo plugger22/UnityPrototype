@@ -1784,12 +1784,13 @@ public class ActionManager : MonoBehaviour
                         EffectDataReturn effectReturn = new EffectDataReturn();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
-                        dataInput.originText = gear.tag;
+                        dataInput.originText = "Use " + gear.tag;
                         //
                         // - - - Process effects
                         //
-                        foreach (Effect effect in listOfEffects)
+                        for (int i = 0; i < listOfEffects.Count; i++)
                         {
+                            Effect effect = listOfEffects[i];
                             //ongoing effect for gear ONLY player actions +/- (handled differently to other ongoing effects)
                             dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID(); ;
                             /*dataInput.data = gear.gearID;*/
@@ -1797,8 +1798,12 @@ public class ActionManager : MonoBehaviour
                             effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
-                                outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
-                                builderTop.AppendFormat("{0} has been used by the Player", gear.tag);
+                                //header, once only
+                                if (i == 0)
+                                {
+                                    outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
+                                    builderTop.AppendFormat("{0} has been used by the Player", gear.tag);
+                                }
                                 //update stringBuilder texts
                                 if (effectReturn.topText != null && effectReturn.topText.Length > 0)
                                 {

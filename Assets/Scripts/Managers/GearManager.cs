@@ -1384,7 +1384,7 @@ public class GearManager : MonoBehaviour
             if (gear.timesUsed > 0)
             {
                 builderHeader.AppendLine();
-                builderHeader.AppendFormat("</size>{0}USED this Turn{1}Can't be gifted{2}", colourBad, "\n", colourEnd);
+                builderHeader.AppendFormat("</size>{0}Already USED this Turn{1}", colourBad, colourEnd);
             }
             //details
             builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);

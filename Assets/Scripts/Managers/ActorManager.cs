@@ -1950,67 +1950,71 @@ public class ActorManager : MonoBehaviour
                                         List<Effect> listOfEffects = gear.listOfPersonalEffects;
                                         if (listOfEffects != null)
                                         {
-                                            //effects
                                             StringBuilder builder = new StringBuilder();
-                                            if (listOfEffects.Count > 0)
+                                            //can't use gear twice in the one turn
+                                            if (gear.timesUsed == 0)
                                             {
-                                                proceedFlag = true;
-                                                for (int i = 0; i < listOfEffects.Count; i++)
+                                                //effects
+                                                if (listOfEffects.Count > 0)
                                                 {
-                                                    colourEffect = colourDefault;
-                                                    Effect effect = listOfEffects[i];
-                                                    //colour code effects according to type
-                                                    if (effect.typeOfEffect != null)
+                                                    proceedFlag = true;
+                                                    for (int i = 0; i < listOfEffects.Count; i++)
                                                     {
-                                                        switch (effect.typeOfEffect.name)
+                                                        colourEffect = colourDefault;
+                                                        Effect effect = listOfEffects[i];
+                                                        //colour code effects according to type
+                                                        if (effect.typeOfEffect != null)
                                                         {
-                                                            case "Good":
-                                                                colourEffect = colourGood;
-                                                                break;
-                                                            case "Neutral":
-                                                                colourEffect = colourNeutral;
-                                                                break;
-                                                            case "Bad":
-                                                                colourEffect = colourBad;
-                                                                break;
+                                                            switch (effect.typeOfEffect.name)
+                                                            {
+                                                                case "Good":
+                                                                    colourEffect = colourGood;
+                                                                    break;
+                                                                case "Neutral":
+                                                                    colourEffect = colourNeutral;
+                                                                    break;
+                                                                case "Bad":
+                                                                    colourEffect = colourBad;
+                                                                    break;
+                                                            }
                                                         }
-                                                    }
-                                                    //check effect criteria is valid
-                                                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                                                    {
-                                                        listOfCriteria = effect.listOfCriteria
-                                                    };
-                                                    effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                                                    if (effectCriteria == null && proceedFlag == true)
-                                                    {
-                                                        if (i == 0)
+                                                        //check effect criteria is valid
+                                                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
                                                         {
-                                                            //chance of compromise
-                                                            int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
-                                                            builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
-                                                                colourNeutral, compromiseChance, colourEnd);
+                                                            listOfCriteria = effect.listOfCriteria
+                                                        };
+                                                        effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                                                        if (effectCriteria == null && proceedFlag == true)
+                                                        {
+                                                            if (i == 0)
+                                                            {
+                                                                //chance of compromise
+                                                                int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
+                                                                builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                                                    colourNeutral, compromiseChance, colourEnd);
+                                                            }
+                                                            //Effect criteria O.K -> tool tip text
+                                                            builder.AppendLine();
+                                                            builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                                            //mood change
+                                                            if (effect.isMoodEffect == true)
+                                                            {
+                                                                /*if (builder.Length > 0) { builder.AppendLine(); }*/
+                                                                string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
+                                                                builder.Append(moodText);
+                                                            }
                                                         }
-                                                        //Effect criteria O.K -> tool tip text
-                                                        builder.AppendLine();
-                                                        builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                                                        //mood change
-                                                        if (effect.isMoodEffect == true)
+                                                        else
                                                         {
-                                                            /*if (builder.Length > 0) { builder.AppendLine(); }*/
-                                                            string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
-                                                            builder.Append(moodText);
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        //nneded because of possible mood effect that would cause a repeat of the first effect
-                                                        if (effectCriteria != null)
-                                                        {
-                                                            proceedFlag = false;
-                                                            //invalid effect criteria -> Action cancelled
-                                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                                            infoBuilder.AppendFormat("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
-                                                                colourInvalid, gear.tag, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
+                                                            //nneded because of possible mood effect that would cause a repeat of the first effect
+                                                            if (effectCriteria != null)
+                                                            {
+                                                                proceedFlag = false;
+                                                                //invalid effect criteria -> Action cancelled
+                                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                                infoBuilder.AppendFormat("{0}USE {1} invalid{2}{3}{4}({5}){6}{7}",
+                                                                    colourInvalid, gear.tag, colourEnd, "\n", colourBad, effectCriteria, colourEnd, "\n");
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -2037,6 +2041,12 @@ public class ActorManager : MonoBehaviour
                                                 };
                                                 //add USE to list
                                                 tempList.Add(gearDetails);
+                                            }
+                                            else
+                                            {
+                                                //gear has already been used this turn
+                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                infoBuilder.AppendFormat("{0}{1}{2} can't be Used{3}{4}(Used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
                                             }
                                         }
                                         else
@@ -2299,97 +2309,106 @@ public class ActorManager : MonoBehaviour
                 List<Effect> listOfEffects = gear.listOfPersonalEffects;
                 if (listOfEffects != null)
                 {
-                    //effects
-                    StringBuilder builder = new StringBuilder();
-                    if (listOfEffects.Count > 0)
+                    if (gear.timesUsed == 0)
                     {
-                        proceedFlag = true;
-                        for (int i = 0; i < listOfEffects.Count; i++)
+                        //effects
+                        StringBuilder builder = new StringBuilder();
+                        if (listOfEffects.Count > 0)
                         {
-                            
-                            colourEffect = colourDefault;
-                            Effect effect = listOfEffects[i];
-                            //colour code effects according to type
-                            if (effect.typeOfEffect != null)
+                            proceedFlag = true;
+                            for (int i = 0; i < listOfEffects.Count; i++)
                             {
-                                switch (effect.typeOfEffect.name)
+
+                                colourEffect = colourDefault;
+                                Effect effect = listOfEffects[i];
+                                //colour code effects according to type
+                                if (effect.typeOfEffect != null)
                                 {
-                                    case "Good":
-                                        colourEffect = colourGood;
-                                        break;
-                                    case "Neutral":
-                                        colourEffect = colourNeutral;
-                                        break;
-                                    case "Bad":
-                                        colourEffect = colourBad;
-                                        break;
+                                    switch (effect.typeOfEffect.name)
+                                    {
+                                        case "Good":
+                                            colourEffect = colourGood;
+                                            break;
+                                        case "Neutral":
+                                            colourEffect = colourNeutral;
+                                            break;
+                                        case "Bad":
+                                            colourEffect = colourBad;
+                                            break;
+                                    }
+                                }
+                                //check effect criteria is valid
+                                CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                { listOfCriteria = effect.listOfCriteria };
+                                effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                                if (effectCriteria == null && proceedFlag == true)
+                                {
+                                    if (i == 0)
+                                    {
+                                        //chance of compromise
+                                        int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
+                                        builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                            colourNeutral, compromiseChance, colourEnd);
+                                    }
+                                    //Effect criteria O.K -> tool tip text
+                                    if (builder.Length > 0) { builder.AppendLine(); }
+                                    builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                    //mood info
+                                    if (effect.isMoodEffect == true)
+                                    {
+                                        string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
+                                        builder.Append(moodText);
+                                    }
+                                }
+                                else
+                                {
+                                    //needed because of possible mood effect that would cause a repeat of the first effect
+                                    if (effectCriteria != null)
+                                    {
+                                        proceedFlag = false;
+                                        //invalid effect criteria -> Action cancelled
+                                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                        infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
+                                            colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
+                                    }
                                 }
                             }
-                            //check effect criteria is valid
-                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                            { listOfCriteria = effect.listOfCriteria };
-                            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                            if (effectCriteria == null && proceedFlag == true)
+                        }
+                        else
+                        {
+                            proceedFlag = false;
+                            infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd);
+                        }
+
+
+                        //button 
+                        if (proceedFlag == true)
+                        {
+                            ModalActionDetails gearActionDetails = new ModalActionDetails() { };
+                            gearActionDetails.side = globalResistance;
+                            gearActionDetails.gearName = gear.name;
+                            gearActionDetails.modalLevel = 2;
+                            gearActionDetails.modalState = ModalSubState.Inventory;
+                            gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
+                            EventButtonDetails gearDetails = new EventButtonDetails()
                             {
-                                if (i == 0)
-                                {
-                                    //chance of compromise
-                                    int compromiseChance = GameManager.instance.gearScript.GetChanceOfCompromise(gear.name);
-                                    builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
-                                        colourNeutral, compromiseChance, colourEnd);
-                                }
-                                //Effect criteria O.K -> tool tip text
-                                if (builder.Length > 0) { builder.AppendLine(); }
-                                builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                                //mood info
-                                if (effect.isMoodEffect == true)
-                                {
-                                    string moodText = GameManager.instance.personScript.GetMoodTooltip(effect.belief, "Player");
-                                    builder.Append(moodText);
-                                }
-                            }
-                            else
-                            {
-                                //needed because of possible mood effect that would cause a repeat of the first effect
-                                if (effectCriteria != null)
-                                {
-                                    proceedFlag = false;
-                                    //invalid effect criteria -> Action cancelled
-                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("{0}USE action invalid{1}{2}{3}({4}){5}",
-                                        colourInvalid, colourEnd, "\n", colourBad, effectCriteria, colourEnd);
-                                }
-                            }
+                                buttonTitle = "Use",
+                                buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
+                                buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
+                                /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
+                                buttonTooltipDetail = builder.ToString(),
+                                //use a Lambda to pass arguments to the action
+                                action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
+                            };
+                            //add USE to list
+                            eventList.Add(gearDetails);
                         }
                     }
                     else
                     {
-                        proceedFlag = false;
-                        infoBuilder.AppendFormat("USE Action Invalid{0}{1}(None for this Gear){2}", "\n", colourBad, colourEnd);
-                    }
-
-
-                    //button 
-                    if (proceedFlag == true)
-                    {
-                        ModalActionDetails gearActionDetails = new ModalActionDetails() { };
-                        gearActionDetails.side = globalResistance;
-                        gearActionDetails.gearName = gear.name;
-                        gearActionDetails.modalLevel = 2;
-                        gearActionDetails.modalState = ModalSubState.Inventory;
-                        gearActionDetails.handler = GameManager.instance.inventoryScript.RefreshInventoryUI;
-                        EventButtonDetails gearDetails = new EventButtonDetails()
-                        {
-                            buttonTitle = "Use",
-                            buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, "INFO", colourEnd),
-                            buttonTooltipMain = string.Format("Use {0} (Player)", gear.tag),
-                            /*buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, builder.ToString(), colourEnd),*/
-                            buttonTooltipDetail = builder.ToString(),
-                            //use a Lambda to pass arguments to the action
-                            action = () => { EventManager.instance.PostNotification(EventType.UseGearAction, this, gearActionDetails, "ActorManager.cs -> GetGearInventory"); }
-                        };
-                        //add USE to list
-                        eventList.Add(gearDetails);
+                        //gear has already been used this turn
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                        infoBuilder.AppendFormat("{0}{1}{2} can't be Used{3}{4}(Used this turn){5}", colourNeutral, gear.tag, colourEnd, "\n", colourBad, colourEnd);
                     }
                 }
                 else
