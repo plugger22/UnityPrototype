@@ -2472,6 +2472,9 @@ public class ActorManager : MonoBehaviour
                                             builderTooltip.Append("Unknown Preferred Gear");
                                             Debug.LogError(string.Format("Invalid preferredGear (Null) for actor Arc {0}", actor.arc.name));
                                         }
+                                        //mood info
+                                        string moodText = GameManager.instance.personScript.GetMoodTooltip(MoodType.GiveGear, actor.arc.name);
+                                        builderTooltip.AppendFormat("{0}{1}", "\n", moodText);
                                         //existing gear
                                         if (string.IsNullOrEmpty(actor.GetGearName()) == false)
                                         {
