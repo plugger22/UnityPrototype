@@ -624,6 +624,10 @@ public class MessageManager : MonoBehaviour
         data.subType = message.subType;
         data.sideLevel = message.sideLevel;
         data.help = 1;
+        data.tag0 = "mood_0";
+        data.tag1 = "mood_1";
+        data.tag2 = "mood_2";
+        data.tag3 = "mood_3";
         //add
         GameManager.instance.dataScript.AddMessage(message);
         GameManager.instance.dataScript.AddItemData(data);

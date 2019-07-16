@@ -1377,7 +1377,7 @@ public class TeamManager : MonoBehaviour
                     if (isError == false)
                     {
                         text = string.Format("{0} {1} effect: {2} at \"{3}\", ID {4}", team.arc.name, team.teamName, teamEffect.description, node.nodeName, node.nodeID);
-                        itemText = string.Format("{0} Team completes TASK at {0}", team.arc.name, node.nodeName);
+                        itemText = string.Format("{0} Team completes TASK at {1}", team.arc.name, node.nodeName);
                         effectText = string.Format("{0}{1}{2}", colourGood, teamEffect.description, colourEnd);
                         //both sides get a message for these teams
                         GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team, true);

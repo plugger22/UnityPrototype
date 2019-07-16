@@ -602,39 +602,39 @@ public class PersonalityManager : MonoBehaviour
             //Manage actions (multiText is actorArcName)
             case MoodType.ReservePromise:
                 actionBelief = beliefReservePromise;
-                reason = string.Format("Promise {0} in Reserves", multiText);
+                reason = string.Format("Promised {0} in Reserves", multiText);
                 break;
             case MoodType.ReserveNoPromise:
                 actionBelief = beliefReserveNoPromise;
-                reason = string.Format("Send {0} to Reserves", multiText);
+                reason = string.Format("Sent {0} to Reserves", multiText);
                 break;
             case MoodType.ReserveRest:
                 actionBelief = beliefReserveRest;
-                reason = string.Format("Rest {0} in Reserves", multiText);
+                reason = string.Format("Rested {0} in Reserves", multiText);
                 break;
             case MoodType.DismissIncompetent:
                 actionBelief = beliefDismissIncompetent;
-                reason = string.Format("Dismiss {0} (Incompetence)", multiText);
+                reason = string.Format("Dismissed {0} (Incompetence)", multiText);
                 break;
             case MoodType.DismissPromote:
                 actionBelief = beliefDismissPromote;
-                reason = string.Format("Promote {0} ", multiText);
+                reason = string.Format("Promoted {0} ", multiText);
                 break;
             case MoodType.DismissUnsuited:
                 actionBelief = beliefDismissUnsuited;
-                reason = string.Format("Dismiss {0} (Unsuited)", multiText);
+                reason = string.Format("Dismissed {0} (Unsuited)", multiText);
                 break;
             case MoodType.DisposeCorrupt:
                 actionBelief = beliefDisposeCorrupt;
-                reason = string.Format("Dispose of {0} (Corrupt)", multiText);
+                reason = string.Format("Disposed of {0} (Corrupt)", multiText);
                 break;
             case MoodType.DisposeHabit:
                 actionBelief = beliefDisposeHabit;
-                reason = string.Format("Dispose of {0} (Habit)", multiText);
+                reason = string.Format("Disposed of {0} (Habit)", multiText);
                 break;
             case MoodType.DisposeLoyalty:
                 actionBelief = beliefDisposeLoyalty;
-                reason = string.Format("Dispose of {0} (Loyalty)", multiText);
+                reason = string.Format("Disposed of {0} (Loyalty)", multiText);
                 break;
             //Reserve Pool actions (multiText is actorArcName)
             case MoodType.ReserveLetGo:
@@ -643,23 +643,23 @@ public class PersonalityManager : MonoBehaviour
                 break;
             case MoodType.ReserveFire:
                 actionBelief = beliefReserveFire;
-                reason = string.Format("Fire {0} (Reserves)", multiText);
+                reason = string.Format("Fired {0} (Reserves)", multiText);
                 break;
             case MoodType.ReserveReassure:
                 actionBelief = beliefReserveReassure;
-                reason = string.Format("Reassure {0} (Reserves)", multiText);
+                reason = string.Format("Reassured {0} (Reserves)", multiText);
                 break;
             case MoodType.ReserveBully:
                 actionBelief = beliefReserveBully;
-                reason = string.Format("Bully {0} (Reserves)", multiText);
+                reason = string.Format("Bullied {0} (Reserves)", multiText);
                 break;
             case MoodType.GiveGear:
                 actionBelief = beliefGiveGear;
-                reason = string.Format("Give gear to {0}", multiText);
+                reason = string.Format("Gave gear to {0}", multiText);
                 break;
             case MoodType.TakeGear:
                 actionBelief = beliefTakeGear;
-                reason = string.Format("Take gear from {0}", multiText);
+                reason = string.Format("Took gear from {0}", multiText);
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised MoodType \"{0}\"", type);

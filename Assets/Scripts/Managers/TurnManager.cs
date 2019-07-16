@@ -288,7 +288,7 @@ public class TurnManager : MonoBehaviour
                         GameManager.instance.alertScript.CloseAlertUI(true);
 
                         //debug
-                        /*DebugCreatePipelineMessages();*/
+                        DebugCreatePipelineMessages();
 
                         //info App displayed AFTER any end of turn Player interactions
                         myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);

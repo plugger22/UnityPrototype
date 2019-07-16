@@ -321,7 +321,7 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Questionable Condition
         //
-        //Over
+        //Overview
         data = new HelpData();
         data.tag = "questionable_0";
         data.header = "Questionable Condition";
@@ -349,6 +349,41 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("You can ask Rebel HQ to quietly {0}Dispose Of{1} a QUESTIONABLE subordinate at {2}no cost{3} in Renown if you suspect that they might be a traitor",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //
+        // - - - Mood
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "mood_0";
+        data.header = "Mood";
+        data.text = string.Format("Only you, the Player, have a mood. Doing {0}actions in line with your beliefs{1} (defined by your personality) improves your mood, the opposite worsens it.", 
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Stressed
+        data = new HelpData();
+        data.tag = "mood_1";
+        data.header = "Mood and Stress";
+        data.text = string.Format("Your mood moves between 0 and {0}. If it drops {1}below Zero{2} you become {3}STRESSED{4}", GameManager.instance.playerScript.moodMax, colourAlert, colourEnd,
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Improving mood
+        data = new HelpData();
+        data.tag = "mood_2";
+        data.header = "Improving your Mood";
+        data.text = string.Format("{0}Lying Low, Stress Leave and Doing Nothing{1} (unused actions at the end of your turn) all improve your mood as does {2}any action that aligns with your beliefs{3}", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "mood_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("As in real life doing things that you feel strongly about can help or hinder your mood. Keep an eye on it and {0}avoid STRESSING{1} yourself out if you can",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //
+        // - - - Return
+        //
         //return help
         return listOfHelp;
 
@@ -360,10 +395,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "compatibility_0";
-        string tag1 = "compatibility_1";
-        string tag2 = "compatibility_2";
-        string tag3 = "compatibility_3";
+        string tag0 = "mood_0";
+        string tag1 = "mood_1";
+        string tag2 = "mood_2";
+        string tag3 = "mood_3";
         List<HelpData> listOfHelp = GameManager.instance.mainInfoScript.GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moodMax: 3
   moodStart: 2
-  moodStressReset: 3
+  moodReset: 3
   sprite: {fileID: 21300000, guid: e7cc3aa6b3bdc6a43951687e10335e03, type: 3}
   actorID: 999
   status: 0
@@ -2213,6 +2213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c2df79480c93c4898de1b52835a108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pipelineWait: 0.2
   alphaActive: 1
   alphaInactive: 0.45
   alphaBaseText: 100
@@ -2341,7 +2342,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 11405
+  seedDev: 0
   isAuthority: 0
   autoRunTurns: 10
   isPerformanceLog: 1

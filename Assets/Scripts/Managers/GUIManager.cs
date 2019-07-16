@@ -13,6 +13,10 @@ using System;
 /// </summary>
 public class GUIManager : MonoBehaviour
 {
+    [Header("Message Pipeline")]
+    [Tooltip("Time in seconds to pause between messages, eg. between outcomes -> decision -> main info App")]
+    [Range(0f, 1f)] public float pipelineWait = 0.2f;
+
     [Header("Alpha")]
     [Tooltip("Alpha of Actor portraits when ActorStatus is 'Active'")]
     [Range(0f,1f)] public float alphaActive = 1.0f;
@@ -467,8 +471,10 @@ public class GUIManager : MonoBehaviour
         {
             if ((MsgPipelineType)msgType != MsgPipelineType.None)
             { yield return StartCoroutine("InfoPipelineMessage", (MsgPipelineType)msgType); }
+            yield return new WaitForSecondsRealtime(pipelineWait);
         }
         yield return StartCoroutine("Decision");
+        yield return new WaitForSecondsRealtime(pipelineWait);
         yield return StartCoroutine("MainInfoApp", playerSide);
     }
 
@@ -500,7 +506,6 @@ public class GUIManager : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
             }
         }
-
     }
 
     /// <summary>
