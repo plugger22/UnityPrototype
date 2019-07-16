@@ -287,8 +287,8 @@ public class TurnManager : MonoBehaviour
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
 
-                        //debug
-                        DebugCreatePipelineMessages();
+                        /*//debug
+                        DebugCreatePipelineMessages();*/
 
                         //info App displayed AFTER any end of turn Player interactions
                         myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
@@ -478,6 +478,11 @@ public class TurnManager : MonoBehaviour
     {
         Debug.LogFormat("TurnManager: - - - EndTurnEarly - - - turn {0}{1}", _turn, "\n");
         currentSide = GameManager.instance.sideScript.PlayerSide;
+        //any unused actions are converted to mood improvements (human player only)
+        int unusedActions = _actionsTotal - _actionsCurrent;
+        if (unusedActions > 0 && GameManager.instance.sideScript.CheckInteraction() == true )
+        { GameManager.instance.playerScript.ProcessDoNothing(unusedActions); }
+        //broadcast event
         EventManager.instance.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
     }
 

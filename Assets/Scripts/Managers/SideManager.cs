@@ -196,7 +196,7 @@ public class SideManager : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// Returns true if interaction is possible for the current Player side given the overall & noAI settings.
+    /// Returns true if interaction is possible for the current Player side (human) given the overall & noAI settings.
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>

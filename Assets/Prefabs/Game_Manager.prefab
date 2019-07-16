@@ -2213,7 +2213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c2df79480c93c4898de1b52835a108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipelineWait: 0.2
+  pipelineWait: 0.1
   alphaActive: 1
   alphaInactive: 0.45
   alphaBaseText: 100

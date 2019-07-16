@@ -370,14 +370,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "mood_2";
         data.header = "Improving your Mood";
-        data.text = string.Format("{0}Lying Low, Stress Leave and Doing Nothing{1} (unused actions at the end of your turn) all improve your mood as does {2}any action that aligns with your beliefs{3}", 
+        data.text = string.Format("{0}Lying Low, Stress Leave and Doing Nothing{1} (Unused actions at the end of your turn) all improve your mood as does {2}any action that aligns with your beliefs{3}", 
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
         data = new HelpData();
         data.tag = "mood_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("As in real life doing things that you feel strongly about can help or hinder your mood. Keep an eye on it and {0}avoid STRESSING{1} yourself out if you can",
+        data.text = string.Format("As in real life doing things that you feel strongly about will change your mood. {0}Avoid STRESSING{1} yourself out if you can",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
 

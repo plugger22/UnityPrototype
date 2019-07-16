@@ -5698,6 +5698,9 @@ public class ActorManager : MonoBehaviour
                 GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
             }
         }
+        //Stats -> check for Stress Condition (do now as it encompasses both breakdown and stressed case statements below)
+        if (GameManager.instance.playerScript.isStressed == true)
+        { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysStressed); }
         //check for Status -> both sides
         switch (GameManager.instance.playerScript.status)
         {
@@ -5801,7 +5804,7 @@ public class ActorManager : MonoBehaviour
                     //
                     // - - - STRESSED condition
                     //
-                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
+                    if (GameManager.instance.playerScript.isStressed == true)
                     {
                         //enforces a minimum one turn gap between successive breakdowns
                         if (GameManager.instance.playerScript.isBreakdown == false)

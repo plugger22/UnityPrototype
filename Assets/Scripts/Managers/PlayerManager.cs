@@ -13,12 +13,12 @@ public class PlayerManager : MonoBehaviour
 {
     [Header("Mood")]
     [Tooltip("Maximum value possible for Mood")]
-    [Range(3, 3)] public  int moodMax = 3;
+    [Range(3, 3)] public int moodMax = 3;
     [Tooltip("Starting value of Player Mood at beginning of a level")]
     [Range(1, 3)] public int moodStart = 2;
     [Tooltip("Mood resets to this value once Player loses their Stressed Condition or completes Lying Low")]
     [Range(1, 3)] public int moodReset = 3;
-    
+
 
     public Sprite sprite;
 
@@ -841,7 +841,7 @@ public class PlayerManager : MonoBehaviour
                             mood = 0;
                             isStressed = true;
                             //stats
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerStressed);
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTimesStressed);
                             break;
                     }
                     Debug.LogFormat("[Cnd] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
@@ -1534,6 +1534,32 @@ public class PlayerManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfHistory (Null)"); }
     }
 
+    /// <summary>
+    /// Any unused actions at the end of the turn are used to improve the Players mood, +1 / action
+    /// </summary>
+    /// <param name="unusedActions"></param>
+    public void ProcessDoNothing(int unusedActions)
+    {
+        if (unusedActions > 0)
+        {
+            //stats
+            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
+            //only improve mood if there is room for improvement
+            if (mood < moodMax && isStressed == false)
+            {
+                string reason = GameManager.instance.colourScript.GetFormattedString("Watching SerialFlix", ColourType.goodText);
+                string explanation = string.Format("<b>{0}{1}{2}</b>You had Unused Actions at the end of your turn", reason, "\n", "\n");
+                ChangeMood(unusedActions, explanation, "n.a");
+            }
+        }
+        else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
+    }
+
+
+    //
+    // - - - Debug 
+    //
+
 
     /// <summary>
     /// display mood history
@@ -1543,7 +1569,7 @@ public class PlayerManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Mood history{0}", "\n");
-        foreach(HistoryMood history in listOfMoodHistory)
+        foreach (HistoryMood history in listOfMoodHistory)
         { builder.AppendFormat(" {0}{1}", history.descriptor, "\n"); }
         return builder.ToString();
     }
@@ -1567,7 +1593,7 @@ public class PlayerManager : MonoBehaviour
         ChangeMood(change, reason, factor);
     }
 
-   
+
 
     //place new methods above here
 }
