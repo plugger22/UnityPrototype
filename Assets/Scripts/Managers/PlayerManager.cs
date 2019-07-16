@@ -852,6 +852,15 @@ public class PlayerManager : MonoBehaviour
                         GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
                     }
                 }
+                else 
+                    //condition already exists
+                    switch (condition.tag)
+                    {
+                        case "STRESSED":
+                            //stats
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
+                            break;
+                    }
             }
             else { Debug.LogError("Invalid listOfConditions (Null)"); }
         }
@@ -1462,7 +1471,7 @@ public class PlayerManager : MonoBehaviour
     {
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //check player isn't currently stressed
-        if (CheckConditionPresent(conditionStressed, playerSide) == false)
+        if (isStressed == false)
         {
             Debug.Assert(change != 0, "Invalid change (no point of it's Zero)");
             if (string.IsNullOrEmpty(reason) == true)
@@ -1503,6 +1512,12 @@ public class PlayerManager : MonoBehaviour
             listOfMoodHistory.Add(record);
             //message
             GameManager.instance.messageScript.PlayerMoodChange(reason, change, mood, isStressed);
+        }
+        else
+        {
+            //player already stressed
+            if ((mood + change) < 0)
+            { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed); }
         }
     }
 
