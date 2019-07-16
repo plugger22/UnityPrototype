@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
     [HideInInspector] public bool isStressed;                                       //true if player stressed
+    [HideInInspector] public int numOfSuperStress;                                  //increments whenever the player gets stressed when already stressed
 
     //collections
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
@@ -859,6 +860,8 @@ public class PlayerManager : MonoBehaviour
                         case "STRESSED":
                             //stats
                             GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
+                            //used to force a breakdown at the next opportunity
+                            numOfSuperStress++;
                             break;
                     }
             }
@@ -950,6 +953,7 @@ public class PlayerManager : MonoBehaviour
                                 case "STRESSED":
                                     ChangeMood(moodReset, reason, "n.a");
                                     isStressed = false;
+                                    numOfSuperStress = 0;
                                     break;
                             }
                             return true;
@@ -1189,102 +1193,7 @@ public class PlayerManager : MonoBehaviour
         return secret;
     }
 
-    //
-    // - - - Debug
-    //
 
-    /// <summary>
-    /// return a list of all secretsto SecretManager.cs -> DisplaySecretData for Debug display
-    /// </summary>
-    /// <returns></returns>
-    public string DebugDisplaySecrets()
-    {
-        StringBuilder builder = new StringBuilder();
-        if (listOfSecrets.Count > 0)
-        {
-            foreach (Secret secret in listOfSecrets)
-            { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.name, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
-        }
-        else { builder.AppendFormat("{0} No records", "\n"); }
-        return builder.ToString();
-    }
-
-    /// <summary>
-    /// Debug function to display all player related stats
-    /// </summary>
-    /// <returns></returns>
-    public string DebugDisplayPlayerStats()
-    {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        //use correct list for the player side
-        List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n");
-        builder.AppendFormat("- Stats{0}", "\n");
-        if (playerSide.level == globalResistance.level)
-        { builder.AppendFormat(" Invisibility {0}{1}", Invisibility, "\n"); }
-        builder.AppendFormat(" Renown {0}{1}", Renown, "\n");
-        builder.AppendFormat(" Mood {0}{1}", mood, "\n");
-        if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
-        //Conditions
-        if (listOfConditions != null)
-        {
-            builder.AppendFormat("{0}- Conditions{1}", "\n", "\n");
-            if (listOfConditions.Count > 0)
-            {
-                for (int i = 0; i < listOfConditions.Count; i++)
-                { builder.AppendFormat(" {0}{1}", listOfConditions[i].name, "\n"); }
-            }
-            else { builder.AppendFormat(" None{0}", "\n"); }
-        }
-        else { Debug.LogError("Invalid listOfConditions (Null)"); }
-        //Cures
-        List<Node> listOfCures = GameManager.instance.dataScript.GetListOfCureNodes();
-        if (listOfCures != null)
-        {
-            builder.AppendFormat("{0}- Cures{1}", "\n", "\n");
-            if (listOfCures.Count > 0)
-            {
-                for (int i = 0; i < listOfCures.Count; i++)
-                { builder.AppendFormat(" {0} at {1}, {2}, ID {3}{4}", listOfCures[i].cure.cureName, listOfCures[i].nodeName, listOfCures[i].Arc.name, listOfCures[i].nodeID, "\n"); }
-            }
-            else { builder.AppendFormat(" None{0}", "\n"); }
-        }
-        else { Debug.LogError("Invalid listOfCures (Null)"); }
-        builder.AppendFormat("{0}- States{1}", "\n", "\n");
-        builder.AppendFormat(" Status {0}{1}", status, "\n");
-        builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
-        builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
-        builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
-        builder.AppendFormat(" isEndOfTurnGearCheck {0}{1}", isEndOfTurnGearCheck, "\n");
-        builder.AppendFormat(" isLieLowFirstTurn {0}{1}", isLieLowFirstturn, "\n");
-        builder.AppendFormat(" isStressLeave {0}{1}", isStressLeave, "\n");
-        builder.AppendFormat(" isStressed {0}{1}", isStressed, "\n");
-        builder.AppendFormat("{0} -Global{1}", "\n", "\n");
-        builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
-        builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");
-        builder.AppendFormat(" NumOfRecruits {0} + {1}{2}", GameManager.instance.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n");
-        if (playerSide.level == globalResistance.level)
-        {
-            //gear
-            builder.AppendFormat("{0}- Gear{1}", "\n", "\n");
-            if (listOfGear.Count > 0)
-            {
-                for (int i = 0; i < listOfGear.Count; i++)
-                {
-                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
-                    if (gear != null)
-                    { builder.AppendFormat(" {0}, {1}{2}", gear.tag, gear.type.name, "\n"); }
-                }
-            }
-            else { builder.Append(" No gear in inventory"); }
-        }
-        //stats
-        builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
-        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLow), "\n");
-        return builder.ToString();
-    }
 
 
     /// <summary>
@@ -1517,7 +1426,11 @@ public class PlayerManager : MonoBehaviour
         {
             //player already stressed
             if ((mood + change) < 0)
-            { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed); }
+            {
+                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
+                //used to force a breakdown at the next opportunity
+                numOfSuperStress++;
+            }
         }
     }
 
@@ -1574,6 +1487,100 @@ public class PlayerManager : MonoBehaviour
     //
     // - - - Debug 
     //
+
+    /// <summary>
+    /// return a list of all secretsto SecretManager.cs -> DisplaySecretData for Debug display
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplaySecrets()
+    {
+        StringBuilder builder = new StringBuilder();
+        if (listOfSecrets.Count > 0)
+        {
+            foreach (Secret secret in listOfSecrets)
+            { builder.AppendFormat("{0} ID {1}, {2} ({3}), {4}, Known: {5}", "\n", secret.name, secret.name, secret.tag, secret.status, secret.CheckNumOfActorsWhoKnow()); }
+        }
+        else { builder.AppendFormat("{0} No records", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug function to display all player related stats
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayPlayerStats()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //use correct list for the player side
+        List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n");
+        builder.AppendFormat("- Stats{0}", "\n");
+        if (playerSide.level == globalResistance.level)
+        { builder.AppendFormat(" Invisibility {0}{1}", Invisibility, "\n"); }
+        builder.AppendFormat(" Renown {0}{1}", Renown, "\n");
+        builder.AppendFormat(" Mood {0}{1}", mood, "\n");
+        if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
+        //Conditions
+        if (listOfConditions != null)
+        {
+            builder.AppendFormat("{0}- Conditions{1}", "\n", "\n");
+            if (listOfConditions.Count > 0)
+            {
+                for (int i = 0; i < listOfConditions.Count; i++)
+                { builder.AppendFormat(" {0}{1}", listOfConditions[i].name, "\n"); }
+            }
+            else { builder.AppendFormat(" None{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
+        //Cures
+        List<Node> listOfCures = GameManager.instance.dataScript.GetListOfCureNodes();
+        if (listOfCures != null)
+        {
+            builder.AppendFormat("{0}- Cures{1}", "\n", "\n");
+            if (listOfCures.Count > 0)
+            {
+                for (int i = 0; i < listOfCures.Count; i++)
+                { builder.AppendFormat(" {0} at {1}, {2}, ID {3}{4}", listOfCures[i].cure.cureName, listOfCures[i].nodeName, listOfCures[i].Arc.name, listOfCures[i].nodeID, "\n"); }
+            }
+            else { builder.AppendFormat(" None{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfCures (Null)"); }
+        builder.AppendFormat("{0}- States{1}", "\n", "\n");
+        builder.AppendFormat(" Status {0}{1}", status, "\n");
+        builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
+        builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
+        builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
+        builder.AppendFormat(" isEndOfTurnGearCheck {0}{1}", isEndOfTurnGearCheck, "\n");
+        builder.AppendFormat(" isLieLowFirstTurn {0}{1}", isLieLowFirstturn, "\n");
+        builder.AppendFormat(" isStressLeave {0}{1}", isStressLeave, "\n");
+        builder.AppendFormat(" isStressed {0}{1}", isStressed, "\n");
+        builder.AppendFormat(" numOfSuperStressed {0}{1}", numOfSuperStress, "\n");
+        builder.AppendFormat("{0} -Global{1}", "\n", "\n");
+        builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
+        builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");
+        builder.AppendFormat(" NumOfRecruits {0} + {1}{2}", GameManager.instance.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n");
+        if (playerSide.level == globalResistance.level)
+        {
+            //gear
+            builder.AppendFormat("{0}- Gear{1}", "\n", "\n");
+            if (listOfGear.Count > 0)
+            {
+                for (int i = 0; i < listOfGear.Count; i++)
+                {
+                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    if (gear != null)
+                    { builder.AppendFormat(" {0}, {1}{2}", gear.tag, gear.type.name, "\n"); }
+                }
+            }
+            else { builder.Append(" No gear in inventory"); }
+        }
+        //stats
+        builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
+        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
+        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLow), "\n");
+        return builder.ToString();
+    }
 
 
     /// <summary>

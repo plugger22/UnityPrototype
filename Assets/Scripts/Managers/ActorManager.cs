@@ -5839,9 +5839,39 @@ public class ActorManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
-                                    breakdownChance, rnd, "\n");
-                                GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
+                                if (GameManager.instance.playerScript.numOfSuperStress < 1)
+                                {
+                                    //failed roll, no breakdown
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
+                                        breakdownChance, rnd, "\n");
+                                    GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
+                                }
+                                else
+                                {
+                                    //player SuperStressed, FORCE a Breakdown
+                                    GameManager.instance.playerScript.status = ActorStatus.Inactive;
+                                    GameManager.instance.playerScript.inactiveStatus = ActorInactive.Breakdown;
+                                    GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
+                                    GameManager.instance.playerScript.isBreakdown = true;
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerBreakdown);
+                                    //reduce superstress counter
+                                    GameManager.instance.playerScript.numOfSuperStress--;
+                                    //change alpha of actor to indicate inactive status
+                                    GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                                    //message (public)
+                                    text = "Player has suffered a Breakdown (Super Stressed)";
+                                    itemText = "has suffered a BREAKDOWN";
+                                    reason =  "has suffered a Nervous Breakdown due to being <b>SUPER STRESSED</b>";
+                                    string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
+                                    GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
+                                    Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a SUPER Stress BREAKDOWN{1}", 
+                                        GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
+                                    if (playerSide.level == globalResistance.level)
+                                    {
+                                        //update AI side tab status
+                                        GameManager.instance.aiScript.UpdateSideTabData();
+                                    }
+                                }
                             }
                         }
                         else { GameManager.instance.playerScript.isBreakdown = false; }
