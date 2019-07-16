@@ -151,6 +151,7 @@ public class SavePlayerData
     public bool isLieLowFirstturn;   
     public bool isStressLeave;
     public bool isStressed;
+    public int numOfSuperStress;
     public string profile;
     public string profileDescriptor;
     public string profileExplanation;

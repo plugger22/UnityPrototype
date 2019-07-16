@@ -269,6 +269,7 @@ public class FileManager : MonoBehaviour
         write.playerData.isLieLowFirstturn = GameManager.instance.playerScript.isLieLowFirstturn;
         write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
         write.playerData.isStressed = GameManager.instance.playerScript.isStressed;
+        write.playerData.numOfSuperStress = GameManager.instance.playerScript.numOfSuperStress;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)
         {
@@ -1437,6 +1438,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
         GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
         GameManager.instance.playerScript.isStressed = read.playerData.isStressed;
+        GameManager.instance.playerScript.numOfSuperStress = read.playerData.numOfSuperStress;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if ( personality != null)
         {
