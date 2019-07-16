@@ -5752,12 +5752,17 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
                             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+                            //check if Player has stressed condition -> Player.RemoveCondition handles mood change
+                            if (GameManager.instance.playerScript.isStressed == true)
+                            { GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
+                            else
+                            {
+                                //not stressed -> improve mood
+                                GameManager.instance.playerScript.ChangeMood(GameManager.instance.playerScript.moodReset, "Finished Lying Low", "n.a");
+                            }
                             //message -> status change
                             text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
-                            //check if Player has stressed condition
-                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
-                            { GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else
@@ -5773,7 +5778,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.instance.playerScript.GetPlayerName(globalAuthority));
                             GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority);
-                            GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Stress Leave");
+                            GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Finished Stress Leave");
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, returns from Stress Leave{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else { GameManager.instance.playerScript.isStressLeave = false; }

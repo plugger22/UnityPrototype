@@ -265,6 +265,25 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+   /// <summary>
+   /// Player's mood changed
+   /// </summary>
+   /// <param name="details"></param>
+   /// <param name="change"></param>
+   /// <param name="isStressed"></param>
+   /// <returns></returns>
+   public string GetPlayerMoodChangeDetails(string details, int change, bool isStressed)
+    {
+        StringBuilder builder = new StringBuilder();
+        string colourMood = colourGood;
+        if (change < 0) { colourMood = colourBad; }
+        builder.AppendFormat("<b>{0}</b>{1}{2}", details, "\n", "\n");
+        builder.AppendFormat("{0}<b>Mood {1}{2}</b>{3}", colourMood, change > 0 ? "+" : "", change, colourEnd);
+        if (isStressed == true)
+        { builder.AppendFormat("{0}{1}{2}Gains gains STRESSED Condition{1}", "\n", "\n", colourBad, colourEnd); }
+        return builder.ToString();
+    }
+
 
     //
     // - - - Actor - - -
@@ -292,7 +311,7 @@ public class ItemDataManager : MonoBehaviour
             //message
             if (string.IsNullOrEmpty(reason) == false)
             { builder.AppendFormat("<b>{0}{1}, PLAYER</b>{2}{3}<b>{4}</b>{5}{6}", GameManager.instance.playerScript.PlayerName, colourAlert, colourEnd, "\n", reason, "\n", "\n"); }
-            builder.AppendFormat("{0}PLAYER{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, status, colourEnd);
+            builder.AppendFormat("{0}<b>PLAYER</b>{1} status now {2}<b>{3}</b>{4}", colourAlert, colourEnd, colourNeutral, status, colourEnd);
         }
         else
         {
@@ -302,7 +321,7 @@ public class ItemDataManager : MonoBehaviour
             builder.AppendFormat("{0}<b>{1}</b>{2} status now {3}<b>{4}</b>{5}", colourAlert, actor.arc.name, colourEnd, colourNeutral, actor.Status, colourEnd);
         }
         if (string.IsNullOrEmpty(details) == false)
-        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", details); }
+        { builder.AppendFormat("{0}{1}<b>{2}</b>", "\n", "\n", details); }
         return builder.ToString();
     }
 

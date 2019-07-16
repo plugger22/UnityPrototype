@@ -16,8 +16,9 @@ public class PlayerManager : MonoBehaviour
     [Range(3, 3)] public  int moodMax = 3;
     [Tooltip("Starting value of Player Mood at beginning of a level")]
     [Range(1, 3)] public int moodStart = 2;
-    [Tooltip("Mood resets to this value once Player loses their Stressed Condition")]
-    [Range(1, 3)] public int moodStressReset = 3;
+    [Tooltip("Mood resets to this value once Player loses their Stressed Condition or completes Lying Low")]
+    [Range(1, 3)] public int moodReset = 3;
+    
 
     public Sprite sprite;
 
@@ -938,7 +939,7 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.instance.nodeScript.RemoveCureNode(conditionImaged.cure);
                                     break;
                                 case "STRESSED":
-                                    ChangeMood(moodStressReset, reason, "n.a");
+                                    ChangeMood(moodReset, reason, "n.a");
                                     isStressed = false;
                                     break;
                             }
@@ -1500,6 +1501,8 @@ public class PlayerManager : MonoBehaviour
             else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }
             //add to list
             listOfMoodHistory.Add(record);
+            //message
+            GameManager.instance.messageScript.PlayerMoodChange(reason, change, mood, isStressed);
         }
     }
 

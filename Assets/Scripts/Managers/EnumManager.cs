@@ -183,6 +183,7 @@
         Plyr_Damage,
         Plyr_Recognised,
         Plyr_Betrayed,
+        Plyr_Mood,
         //Team
         Team_Add,
         Team_Deploy,

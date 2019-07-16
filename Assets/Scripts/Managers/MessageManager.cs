@@ -587,6 +587,49 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Player undergoes a mood change
+    /// </summary>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="change"></param>
+    /// <param name="mood"></param>
+    /// <returns></returns>
+    public Message PlayerMoodChange(string details, int change, int moodAfterChange, bool isStressed)
+    {
+        Debug.Assert(string.IsNullOrEmpty(details) == false, "Invalid detailsTop (Null or Empty)");
+        Debug.Assert(change != 0, "Invalid change (Zero)");
+        string text = "Unknown";
+        string topText = "Unknown";
+        if (change > 0) { text = "Player's MOOD has IMPROVED"; topText = "Mood Improves"; }
+        else { text = "Player's MOOD has WORSENED"; topText = "Mood Worsens"; }
+        Message message = new Message();
+        message.text = text;
+        message.type = MessageType.PLAYER;
+        message.subType = MessageSubType.Plyr_Mood;
+        message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+        message.isPublic = true;
+        message.data0 = change;
+        message.data1 = moodAfterChange;
+        //ItemData
+        ItemData data = new ItemData();
+        data.itemText = text;
+        data.topText = topText;
+        data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoodChangeDetails(details, change, isStressed);
+        data.priority = ItemPriority.Low;
+        data.sprite = playerSprite;
+        data.spriteName = data.sprite.name;
+        data.tab = ItemTab.ALERTS;
+        data.type = message.type;
+        data.subType = message.subType;
+        data.sideLevel = message.sideLevel;
+        data.help = 1;
+        //add
+        GameManager.instance.dataScript.AddMessage(message);
+        GameManager.instance.dataScript.AddItemData(data);
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //
@@ -652,7 +695,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Authority Actor/Player takes stress leave
+    /// Both sides Actor/Player takes stress leave
     /// </summary>
     /// <param name="text"></param>
     /// <param name="itemTextTag"></param>
@@ -3665,7 +3708,7 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-    
+
     //
     // - - - Objectives - - -
     //
