@@ -164,3 +164,39 @@ City seed 890 -> Arles, France
 
 Dev seed 11405 -> Monday, 15 July 2019 8:31 PM
 City seed 890 -> Arles, France
+Nemesis Damaged player while lying low, turn 11, damages t12
+Dev seed 11405 -> Tuesday, 16 July 2019 8:40 AM
+City seed 890 -> Arles, France
+ERROR Duplicate record exists for MainInfoData turn 13
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:541)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 11405 -> Tuesday, 16 July 2019 8:42 AM
+City seed 890 -> Arles, France
+
+Dev seed 11405 -> Tuesday, 16 July 2019 8:43 AM
+City seed 890 -> Arles, France
+
+Dev seed 11405 -> Tuesday, 16 July 2019 8:45 AM
+City seed 890 -> Arles, France
+
+Dev seed 11405 -> Tuesday, 16 July 2019 9:33 AM
+City seed 890 -> Arles, France
+
+Dev seed 2320 -> Tuesday, 16 July 2019 9:36 AM
+City seed 890 -> Arles, France
+
+Dev seed 22290 -> Tuesday, 16 July 2019 9:42 AM
+City seed 890 -> Arles, France
+
+Dev seed 22290 -> Tuesday, 16 July 2019 9:51 AM
+City seed 890 -> Arles, France
+
+Dev seed 22290 -> Tuesday, 16 July 2019 9:53 AM
+City seed 890 -> Arles, France
+
+Dev seed 22290 -> Tuesday, 16 July 2019 10:00 AM
+City seed 890 -> Arles, France

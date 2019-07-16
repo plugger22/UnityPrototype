@@ -353,6 +353,7 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.Human;
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
+                GameManager.instance.nemesisScript.SetResistancePlayer(SideState.Human);
                 //convert resources to renown
                 renown = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
                 Debug.LogFormat("[Rim] SideManager.cs -> RevertToHumanPlayer: Resistance has {0} Resources{1}", renown, "\n");

@@ -255,6 +255,10 @@ public class NemesisManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);*/
     }
 
+
+    public void SetResistancePlayer(SideState state)
+    { resistancePlayer = state; }
+
     /// <summary>
     /// called by AIManager.cs -> AISideAuthority, handles all nemesis turn processing methods. 
     /// NOTE: Nemesis checked for null by calling method
@@ -1070,7 +1074,7 @@ public class NemesisManager : MonoBehaviour
 
     /// <summary>
     /// nemesis and player at same node. For end of turn checks set 'isPlayerMove' to false as this tweaks modal setting of outcome window to handle MainInfoApp, leave as default true otherwise
-    /// returns true if player spotted by nemesis. Can't be spotted if lying low
+    /// returns true if player spotted by nemesis. 
     /// </summary>
     private bool ProcessPlayerInteraction(bool isPlayerMove = true)
     {
@@ -1081,15 +1085,18 @@ public class NemesisManager : MonoBehaviour
         int searchRating = GetSearchRatingAdjusted();
         if (searchRating >= GameManager.instance.playerScript.Invisibility)
         {
-            //can't be spotted if Lying Low
+            
             bool isValidPlayer = true;
-            switch (resistancePlayer)
+            //can't be spotted if Lying Low or on Stress Leave (but can for breakdown) 
+            switch (resistancePlayer)  
             {
                 case SideState.AI:
-                    if (GameManager.instance.aiRebelScript.inactiveStatus == ActorInactive.LieLow) { isValidPlayer = false; }
+                    if (GameManager.instance.aiRebelScript.status == ActorStatus.Inactive && GameManager.instance.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
+                    { isValidPlayer = false; }
                     break;
                 case SideState.Human:
-                    if (GameManager.instance.playerScript.inactiveStatus == ActorInactive.LieLow) { isValidPlayer = false; }
+                    if (GameManager.instance.playerScript.status == ActorStatus.Inactive && GameManager.instance.playerScript.inactiveStatus != ActorInactive.Breakdown)
+                    { isValidPlayer = false; }
                     break;
                 default:
                     Debug.LogErrorFormat("Unrecognised resistancePlayer \"{0}\"", resistancePlayer);
@@ -1101,6 +1108,11 @@ public class NemesisManager : MonoBehaviour
                 //player SPOTTED
                 isSpotted = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+                
+                /*Debug.LogFormat("[Tst] NemesisManager.cs -> ProcessPlayerInteraction: Human status {0} inactive {1}, AI status {2} inactive {3}{4}",
+                    GameManager.instance.playerScript.status, GameManager.instance.playerScript.inactiveStatus,
+                    GameManager.instance.aiRebelScript.status, GameManager.instance.aiRebelScript.inactiveStatus, "\n");*/
+
                 //cause damage / message
                 ProcessPlayerDamage(isPlayerMove);
                 hasActed = true;
@@ -1400,15 +1412,17 @@ public class NemesisManager : MonoBehaviour
             //ignored if nemesis inactive
             if (mode != NemesisMode.Inactive)
             {
-                //Resistance player must be active in order to be found
+                //Resistance player must be active (or suffering a stress induced breakdown) in order to be found
                 bool isValidPlayer = true;
-                switch(resistancePlayer)
+                switch (resistancePlayer)
                 {
                     case SideState.AI:
-                        if (GameManager.instance.aiRebelScript.status != ActorStatus.Active) { isValidPlayer = false; }
+                        if (GameManager.instance.aiRebelScript.status == ActorStatus.Inactive && GameManager.instance.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
+                        { isValidPlayer = false; }
                         break;
                     case SideState.Human:
-                        if (GameManager.instance.playerScript.status != ActorStatus.Active) { isValidPlayer = false; }
+                        if (GameManager.instance.playerScript.status == ActorStatus.Inactive && GameManager.instance.playerScript.inactiveStatus != ActorInactive.Breakdown)
+                        { isValidPlayer = false; }
                         break;
                     default:
                         Debug.LogErrorFormat("Unrecognised resistancePlayer \"{0}\"", resistancePlayer);
@@ -1946,6 +1960,7 @@ public class NemesisManager : MonoBehaviour
         writeData.controlTimer = controlTimer;
         writeData.controlCooldownTimer = controlCooldownTimer;
         writeData.controlGoal = controlGoal;
+        writeData.resistancePlayer = resistancePlayer;
         return writeData;
     }
 
@@ -1978,6 +1993,7 @@ public class NemesisManager : MonoBehaviour
             controlTimer = readData.controlTimer;
             controlCooldownTimer = readData.controlCooldownTimer;
             controlGoal = readData.controlGoal;
+            resistancePlayer = readData.resistancePlayer;
         }
         else { Debug.LogError("Invalid NemesisSaveClass (Null)"); }
     }
