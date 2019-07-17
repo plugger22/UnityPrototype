@@ -1,231 +1,5 @@
 
-Dev seed 29762 -> Monday, 15 July 2019 5:07 PM
-City seed 890 -> Arles, France
-
-Dev seed 14059 -> Monday, 15 July 2019 5:16 PM
-City seed 890 -> Arles, France
-
-Dev seed 47366 -> Monday, 15 July 2019 5:20 PM
-City seed 890 -> Arles, France
-
-Dev seed 35822 -> Monday, 15 July 2019 5:22 PM
-City seed 890 -> Arles, France
-
-Dev seed 36243 -> Monday, 15 July 2019 7:59 PM
-City seed 890 -> Arles, France
-WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
-	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
-	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
-	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetGearInventoryActions(String) (at Assets/Scripts/Managers/ActorManager.cs:2476)
-	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
-	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:806)
-	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
-	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
-	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:804)
-	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
-	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
-	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActionManager:InitialiseReserveActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:805)
-	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
-	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
-	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:962)
-	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
-	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
-	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
-	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:962)
-	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
-	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
-	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
-	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActorManager:GetActorActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1584)
-	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:66)
-	UnityEngine.EventSystems.EventSystem:Update()
-	WARNING Unrecognised playerValue "0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	PersonalityManager:CheckMoodEffect(MoodType, Int32, String) (at Assets/Scripts/Managers/PersonalityManager.cs:684)
-	PersonalityManager:GetMoodTooltip(MoodType, String) (at Assets/Scripts/Managers/PersonalityManager.cs:556)
-	ActionManager:InitialiseDismissActorAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:962)
-	ActionManager:ProcessHandleActor(GenericReturnData) (at Assets/Scripts/Managers/ActionManager.cs:3118)
-	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:231)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ModalGenericPicker:ProcessGenericChoice() (at Assets/Scripts/GUI/ModalGenericPicker.cs:700)
-	ModalGenericPicker:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalGenericPicker.cs:144)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 62595 -> Monday, 15 July 2019 8:14 PM
-City seed 890 -> Arles, France
-
-Dev seed 58093 -> Monday, 15 July 2019 8:19 PM
-City seed 890 -> Arles, France
-City seed 234 -> Sydney, Australia
-City seed 890 -> Arles, France
-
-Dev seed 23686 -> Monday, 15 July 2019 8:23 PM
-City seed 890 -> Arles, France
-
-Dev seed 61359 -> Monday, 15 July 2019 8:28 PM
-City seed 890 -> Arles, France
-
-Dev seed 11405 -> Monday, 15 July 2019 8:31 PM
-City seed 890 -> Arles, France
-Nemesis Damaged player while lying low, turn 11, damages t12
-Dev seed 11405 -> Tuesday, 16 July 2019 8:40 AM
-City seed 890 -> Arles, France
-ERROR Duplicate record exists for MainInfoData turn 13
-UnityEngine.Debug:LogErrorFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:541)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:542)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 11405 -> Tuesday, 16 July 2019 8:42 AM
-City seed 890 -> Arles, France
-
-Dev seed 11405 -> Tuesday, 16 July 2019 8:43 AM
-City seed 890 -> Arles, France
-
-Dev seed 11405 -> Tuesday, 16 July 2019 8:45 AM
-City seed 890 -> Arles, France
-
-Dev seed 11405 -> Tuesday, 16 July 2019 9:33 AM
-City seed 890 -> Arles, France
-
-Dev seed 2320 -> Tuesday, 16 July 2019 9:36 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 9:42 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 9:51 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 9:53 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 10:00 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 10:42 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 11:02 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 11:42 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 11:46 AM
-City seed 890 -> Arles, France
-
-Dev seed 22290 -> Tuesday, 16 July 2019 1:54 PM
-City seed 890 -> Arles, France
-ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
-System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.String.Format (System.String format, System.Object arg0, System.Object arg1) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	HelpManager.CreateItemDataHelp () (at Assets/Scripts/Managers/HelpManager.cs:372)
-	LoadManager.InitialiseLate (gameAPI.GameState state) (at Assets/Scripts/Managers/LoadManager.cs:1532)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:724)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:778)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:346)
-	
-Dev seed 22290 -> Tuesday, 16 July 2019 1:56 PM
+Dev seed 54351 -> Wednesday, 17 July 2019 10:02 AM
 City seed 890 -> Arles, France
 ASSERT NullReferenceException: Object reference not set to an instance of an object
 DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
@@ -248,111 +22,95 @@ DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
 	ASSERT NullReferenceException: Object reference not set to an instance of an object
 DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
 	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:504)
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:477)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:506)
 	ASSERT NullReferenceException: Object reference not set to an instance of an object
 ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:259)
 	ASSERT NullReferenceException: Object reference not set to an instance of an object
 NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
 	
-Dev seed 22290 -> Tuesday, 16 July 2019 1:59 PM
+Dev seed 53620 -> Wednesday, 17 July 2019 10:03 AM
 City seed 890 -> Arles, France
 ERROR Invalid editor window UnityEditor.ConsoleWindow
 UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
 	
-Dev seed 22290 -> Tuesday, 16 July 2019 1:59 PM
+Dev seed 63683 -> Wednesday, 17 July 2019 10:03 AM
 City seed 890 -> Arles, France
 ERROR Invalid editor window UnityEditor.ConsoleWindow
 UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
 	
-Dev seed 11405 -> Tuesday, 16 July 2019 2:10 PM
+Dev seed 35426 -> Wednesday, 17 July 2019 10:04 AM
 City seed 890 -> Arles, France
 
-Dev seed 9379 -> Tuesday, 16 July 2019 2:15 PM
+Dev seed 42929 -> Wednesday, 17 July 2019 10:07 AM
 City seed 890 -> Arles, France
 
-Dev seed 14306 -> Tuesday, 16 July 2019 2:37 PM
+Dev seed 45100 -> Wednesday, 17 July 2019 10:24 AM
 City seed 890 -> Arles, France
 
-Dev seed 35762 -> Tuesday, 16 July 2019 2:40 PM
+Dev seed 37091 -> Wednesday, 17 July 2019 11:32 AM
 City seed 890 -> Arles, France
 
-Dev seed 29120 -> Tuesday, 16 July 2019 2:46 PM
+Dev seed 65190 -> Wednesday, 17 July 2019 1:53 PM
 City seed 890 -> Arles, France
-ERROR Invalid details (Duplicate) for "Nemesis"
-UnityEngine.Debug:LogErrorFormat(String, Object[])
-	GUIManager:InfoPipelineAdd(ModalOutcomeDetails) (at Assets/Scripts/Managers/GUIManager.cs:438)
-	TurnManager:DebugCreatePipelineMessages() (at Assets/Scripts/Managers/TurnManager.cs:334)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:291)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
-	WARNING Nemesis infoPipeline message FAILED to be added to dictOfPipeline
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TurnManager:DebugCreatePipelineMessages() (at Assets/Scripts/Managers/TurnManager.cs:335)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:291)
+
+Dev seed 23860 -> Wednesday, 17 July 2019 2:00 PM
+City seed 890 -> Arles, France
+WARNING Invalid unused Actions (Zero)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:ProcessDoNothing(Int32) (at Assets/Scripts/Managers/PlayerManager.cs:1483)
+	TurnManager:EndTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:484)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:272)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
 	
-Dev seed 56825 -> Tuesday, 16 July 2019 2:46 PM
+Dev seed 6919 -> Wednesday, 17 July 2019 2:10 PM
 City seed 890 -> Arles, France
-
-Dev seed 52971 -> Tuesday, 16 July 2019 2:48 PM
-City seed 890 -> Arles, France
-
-Dev seed 64454 -> Tuesday, 16 July 2019 2:49 PM
-City seed 890 -> Arles, France
-
-Dev seed 16398 -> Tuesday, 16 July 2019 3:04 PM
-City seed 890 -> Arles, France
-
-Dev seed 3528 -> Tuesday, 16 July 2019 3:13 PM
-City seed 890 -> Arles, France
-
-Dev seed 45543 -> Tuesday, 16 July 2019 3:15 PM
-City seed 890 -> Arles, France
-
-Dev seed 16890 -> Tuesday, 16 July 2019 3:17 PM
-City seed 890 -> Arles, France
-
-Dev seed 37459 -> Tuesday, 16 July 2019 3:37 PM
-City seed 890 -> Arles, France
-
-Dev seed 2047 -> Tuesday, 16 July 2019 3:41 PM
-City seed 890 -> Arles, France
-
-Dev seed 21359 -> Tuesday, 16 July 2019 3:46 PM
-City seed 890 -> Arles, France
-
-Dev seed 51054 -> Tuesday, 16 July 2019 3:48 PM
-City seed 890 -> Arles, France
-City seed 234 -> Sydney, Australia
-City seed 890 -> Arles, France
-
-Dev seed 35216 -> Tuesday, 16 July 2019 4:23 PM
-City seed 890 -> Arles, France
-City seed 234 -> Sydney, Australia
-City seed 765 -> New York, America
-City seed 890 -> Arles, France
-
-Dev seed 30797 -> Tuesday, 16 July 2019 5:18 PM
-City seed 890 -> Arles, France
-
-Dev seed 39563 -> Tuesday, 16 July 2019 5:24 PM
-City seed 890 -> Arles, France
-
-Dev seed 21175 -> Tuesday, 16 July 2019 5:29 PM
-City seed 890 -> Arles, France
-
-Dev seed 14878 -> Tuesday, 16 July 2019 5:39 PM
-City seed 890 -> Arles, France
-
-Dev seed 32260 -> Tuesday, 16 July 2019 5:41 PM
-City seed 890 -> Arles, France
-
-Dev seed 30689 -> Tuesday, 16 July 2019 5:51 PM
-City seed 890 -> Arles, France
-City seed 234 -> Sydney, Australia
+WARNING Invalid unused Actions (Zero)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:ProcessDoNothing(Int32) (at Assets/Scripts/Managers/PlayerManager.cs:1483)
+	TurnManager:EndTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:484)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid unused Actions (Zero)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:ProcessDoNothing(Int32) (at Assets/Scripts/Managers/PlayerManager.cs:1483)
+	TurnManager:EndTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:484)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid unused Actions (Zero)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:ProcessDoNothing(Int32) (at Assets/Scripts/Managers/PlayerManager.cs:1483)
+	TurnManager:EndTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:484)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid unused Actions (Zero)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:ProcessDoNothing(Int32) (at Assets/Scripts/Managers/PlayerManager.cs:1483)
+	TurnManager:EndTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:484)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:272)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 19383 -> Wednesday, 17 July 2019 2:16 PM
 City seed 890 -> Arles, France

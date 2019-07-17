@@ -82,6 +82,8 @@ public class HelpManager : MonoBehaviour
         data.header = "Missing help";
         data.text = string.Format("No help has been provided here. You need to go into {0}HelpManager.cs{1} and create a series of topics for the this item", colourAlert, colourEnd);
         listOfHelp.Add(data);
+
+        #region Faction Support
         //
         // - - - Faction Support
         //
@@ -112,6 +114,9 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("Your main source of Renown is from the support of your Faction. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        #endregion
+
+        #region Main Info App
         //
         // - - - Main Info App 
         //
@@ -149,6 +154,9 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("To {0}open{1} the App at any time press 'I'", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        #endregion
+
+        #region Secrets
         //
         // - - - Secrets
         //
@@ -185,6 +193,9 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        #endregion
+
+        #region Random Rolls
         //
         // - - - Random Rolls - - -
         //
@@ -206,6 +217,9 @@ public class HelpManager : MonoBehaviour
         data.header = "Bad Rolls";
         data.text = string.Format("If a successful roll indicates a {0}BAD{1} outcome from the Player's point of view, the header is shown in {2}RED{3}.", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
+        #region Actor Compatibility
         //
         // - - - Actor Compatibility
         //
@@ -250,6 +264,9 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("The more {0}Red stars{1} (worse your relationship), the more likely this is to happen", colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
+        #endregion
+
+        #region Actor Conflic
         //
         // - - - Actor Conflict
         //
@@ -263,6 +280,9 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        #endregion
+
+        #region Player Betrayed
         //
         // - - - Player Betrayed
         //
@@ -294,6 +314,9 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("A {0}QUESTIONABLE subordinate{1} may NOT be a traitor. On the other hand if you're being betrayed {2}often{3}, don't take any chances",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
+        #region Traitor
         //
         // - - - Traitor
         //
@@ -318,6 +341,9 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("How can you tell if a subordinate is a {0}TRAITOR{1}? You can't. Any leaks could be coming from Rebel HQ but if they become more frequent, take a hard look at any {2}QUESTIONABLE{3} subordinates",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
+        #region Questionable Condition
         //
         // - - - Questionable Condition
         //
@@ -325,7 +351,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "questionable_0";
         data.header = "Questionable Condition";
-        data.text = string.Format("Whenever you, or one of your subordinates, are {0}Captured{1}, you become QUESTIONABLE. People wonder if you've secretly become an {2}informant for the Authority{3}. Your loyalty is in quesiton",
+        data.text = string.Format("Whenever you, or one of your subordinates, are {0}Captured{1}, you become QUESTIONABLE. People wonder if you've secretly become an {2}informant for the Authority{3}. Your loyalty is in question",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //player
@@ -349,6 +375,111 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("You can ask Rebel HQ to quietly {0}Dispose Of{1} a QUESTIONABLE subordinate at {2}no cost{3} in Renown if you suspect that they might be a traitor",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
+        #region Stressed Condition
+        //
+        // - - - Stressed Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "stress_0";
+        data.header = "Stressed Condition";
+        data.text = string.Format("Gained when your {0}Mood drops below 0{1} or from other causes. For every turn that you are Stressed there is a {2}chance of a Breakdown{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Breakdowns
+        data = new HelpData();
+        data.tag = "stress_1";
+        data.header = "Breakdowns";
+        data.text = string.Format("A stress induced Nervous Breakdown {0}prevents you from doing anything that turn{1}. You are {2}vulnerable{3} and can be captured or worse",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Chance of Breakdowns
+        data = new HelpData();
+        data.tag = "stress_2";
+        data.header = "Chance of Breakdowns";
+        data.text = string.Format("There is {0}{1} %{2} chance of a Breakdown each turn. Subordinates can have {3}traits{4} that modify this. If you become Stressed when you are already Stressed, the {5}odds increase{6}",
+            colourAlert, GameManager.instance.actorScript.breakdownChance, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recovering from Stress
+        data = new HelpData();
+        data.tag = "stress_3";
+        data.header = "Removing Stress";
+        data.text = string.Format("{0}Lying Low and Stress Leave{1} both remove the Stressed Condition. Certain {2}stimulants{3} (Persuasion Gear) can also do so (Personal Use)",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Stress Leave
+        //
+        // - - - Stress Leave
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "stressLeave_0";
+        data.header = "Stress Leave";
+        data.text = string.Format("Is only available when your, or your subordinate, (Resistance only) has {0}Invisibility{1} at Max ({2} stars), and are {3}STRESSED{4}. You also need permission from HQ ({5}{6}{7})",
+            colourAlert, colourEnd, GameManager.instance.actorScript.maxStatValue, colourAlert, colourEnd, colourAlert, 
+            GameManager.instance.actorScript.stressLeaveHQApproval == true ? "Given" : "Denied", colourEnd);
+        listOfHelp.Add(data);
+        //Breakdowns
+        data = new HelpData();
+        data.tag = "stressLeave_1";
+        data.header = "Taking Stress Leave";
+        data.text = string.Format("It's {0}quicker{1} (one turn) than Lying Low but costs {2}{3}{4} Renown. You are {5}Safe{6} while taking Stress Leave",
+            colourAlert, colourEnd, colourAlert,
+            GameManager.instance.sideScript.PlayerSide.level == 1 ? GameManager.instance.actorScript.stressLeaveRenownCostAuthority : GameManager.instance.actorScript.stressLeaveRenownCostResistance, 
+            colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Chance of Breakdowns
+        data = new HelpData();
+        data.tag = "stressLeave_2";
+        data.header = "Surveillance Crackdown";
+        data.text = string.Format("If this Security Measure is in place the Resistance {0}can't take Stress Leave{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recovering from Stress
+        data = new HelpData();
+        data.tag = "stressLeave_3";
+        data.header = "Stress Leave Effects";
+        data.text = "Removes Stress and improves your mood";
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Lying Low
+        //
+        // - - - Lying Low
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "lielow_0";
+        data.header = "Lying Low";
+        data.text = string.Format("Resistance only. You, or your subordinate, must have Invisibility {0}less than{1} the Max ({2}{3} stars{4}) and the Lie Low {5}Timer{6} must be {7}Zero{8}",
+            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Breakdowns
+        data = new HelpData();
+        data.tag = "lielow_1";
+        data.header = "Lie Low Timer";
+        data.text = string.Format("Lying Low involves Resistance HQ sourcing a suitable, safe, location. This takes time and effort. The {0}Effects Tab{1} in the {2}App{3} lets you know when Lying Low will be next available",
+            colourAlert, colourEnd, colourAlert,  colourEnd);
+        listOfHelp.Add(data);
+        //Chance of Breakdowns
+        data = new HelpData();
+        data.tag = "lielow_2";
+        data.header = "Surveillance Crackdown";
+        data.text = string.Format("If this Security Measure is in place, safe locations aren't available and Lying Low {0}isn't possible{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recovering from Stress
+        data = new HelpData();
+        data.tag = "lielow_3";
+        data.header = "Lying Low Effects";
+        data.text = string.Format("Removes Stress, increases your Invisibility (to {0}{1} stars{2}) and improves your Mood (to {3}{4} stars{5}, Player only)", colourAlert, 
+            GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, GameManager.instance.playerScript.moodReset, colourEnd); ;
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Mood
         //
         // - - - Mood
         //
@@ -380,6 +511,7 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("As in real life doing things that you feel strongly about will change your mood. {0}Avoid STRESSING{1} yourself out if you can",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
 
         //
         // - - - Return
@@ -395,10 +527,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "mood_0";
-        string tag1 = "mood_1";
-        string tag2 = "mood_2";
-        string tag3 = "mood_3";
+        string tag0 = "lielow_0";
+        string tag1 = "lielow_1";
+        string tag2 = "lielow_2";
+        string tag3 = "lielow_3";
         List<HelpData> listOfHelp = GameManager.instance.mainInfoScript.GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

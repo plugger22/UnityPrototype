@@ -641,12 +641,13 @@ public class MessageManager : MonoBehaviour
     /// <summary>
     /// Actor / Player status changes, eg. Active -> Lie Low, Lie Low -> Active as a result of an Actor action. itemText in format '[Actor] ...', eg. 'sent to Reserves', 'Recalled', 'Let Go'
     /// 'Reason' is a short text tag for ItemData, in format '[Actor] ... Lying Low'
+    /// HelpType enum determines which set of Help messages are shown for the help tooltip, default None.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="isPublic"></param>
     /// <returns></returns>
-    public Message ActorStatus(string text, string itemTextTag, string reason, int actorID, GlobalSide side, string details = null)
+    public Message ActorStatus(string text, string itemTextTag, string reason, int actorID, GlobalSide side, string details = null, HelpType help = HelpType.None)
     {
         Debug.Assert(actorID >= 0, string.Format("Invalid actorID ({0})", actorID));
         Debug.Assert(side != null, "Invalid side (Null)");
@@ -666,7 +667,6 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
-            data.help = 1;
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
@@ -690,6 +690,33 @@ public class MessageManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
+            data.help = 0;
+            if (help != HelpType.None)
+            {
+                data.help = 1;
+                switch (help)
+                {
+                    case HelpType.PlayerBreakdown:
+                        data.tag0 = "stress_0";
+                        data.tag1 = "stress_1";
+                        data.tag2 = "stress_2";
+                        data.tag3 = "stress_3";
+                        break;
+                    case HelpType.StressLeave:
+                        data.tag0 = "stressLeave_0";
+                        data.tag1 = "stressLeave_1";
+                        data.tag2 = "stressLeave_2";
+                        data.tag3 = "stressLeave_3";
+                        break;
+                    case HelpType.LieLow:
+                        data.tag0 = "lielow_0";
+                        data.tag1 = "lielow_1";
+                        data.tag2 = "lielow_2";
+                        data.tag3 = "lielow_3";
+                        break;
+                }
+            }
+            
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -906,17 +933,25 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
-            data.help = 1;
+            data.help = 0;
             if (condition != null)
             {
                 //tooltip
                 switch (condition.tag)
                 {
                     case "QUESTIONABLE":
+                        data.help = 1;
                         data.tag0 = "questionable_0";
                         data.tag1 = "questionable_1";
                         data.tag2 = "questionable_2";
                         data.tag3 = "questionable_3";
+                        break;
+                    case "STRESSED":
+                        data.help = 1;
+                        data.tag0 = "stress_0";
+                        data.tag1 = "stress_1";
+                        data.tag2 = "stress_2";
+                        data.tag3 = "stress_3";
                         break;
                 }
             }
@@ -1245,6 +1280,8 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 1;
+            data.tag0 = "lielow_0";
+            data.tag1 = "lielow_1";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

@@ -478,9 +478,9 @@ public class TurnManager : MonoBehaviour
     {
         Debug.LogFormat("TurnManager: - - - EndTurnEarly - - - turn {0}{1}", _turn, "\n");
         currentSide = GameManager.instance.sideScript.PlayerSide;
-        //any unused actions are converted to mood improvements (human player only)
+        //any unused actions are converted to mood improvements (human player, ACTIVE, only)
         int unusedActions = _actionsTotal - _actionsCurrent;
-        if (unusedActions > 0 && GameManager.instance.sideScript.CheckInteraction() == true )
+        if (unusedActions > 0 && GameManager.instance.sideScript.CheckInteraction() == true)
         { GameManager.instance.playerScript.ProcessDoNothing(unusedActions); }
         //broadcast event
         EventManager.instance.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");

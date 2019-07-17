@@ -70,6 +70,8 @@ public class ActorManager : MonoBehaviour
     [Header("Condition Related")]
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
     [Range(1, 99)] public int breakdownChance = 5;
+    [Tooltip("Chance of a breakdown when Player becomes Stressed when already Stressed. Note that this is a fake chance as the breakdown is forced but it's needed for the fake random roll msg")]
+    [Range(1, 99)] public int superStressChance = 80;
     [Tooltip("Chance per turn of the player, with the IMAGED condition, being picked up by a facial recognition scan and losing a level of invisibility")]
     [Range(0, 50)] public int playerRecognisedChance = 20;
     [Tooltip("Chance per turn of the player, with the QUESTIONABLE condition, losing one notch of Rebel HQ approval")]
@@ -5731,8 +5733,8 @@ public class ActorManager : MonoBehaviour
                         GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                         GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                         string textBreakdown = string.Format("{0} has recovered from their Breakdown", playerName);
-                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their breakdown",
-                            playerID, playerSide);
+                        GameManager.instance.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown",
+                            playerID, playerSide, null, HelpType.PlayerBreakdown);
                         Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, has recovered from their stress induced Breakdown{1}",
                             GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         if (playerSide.level == globalResistance.level)
@@ -5765,7 +5767,7 @@ public class ActorManager : MonoBehaviour
                             }
                             //message -> status change
                             text = string.Format("{0} has automatically reactivated", playerName);
-                            GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
+                            GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance, null, HelpType.LieLow);
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else
@@ -5780,7 +5782,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                             text = string.Format("{0}, Player, has returned from their Stress Leave", GameManager.instance.playerScript.GetPlayerName(globalAuthority));
-                            GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority);
+                            GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority, null, HelpType.StressLeave);
                             GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Finished Stress Leave");
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, returns from Stress Leave{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
@@ -5826,7 +5828,7 @@ public class ActorManager : MonoBehaviour
                                 itemText = "has suffered a BREAKDOWN";
                                 reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-                                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
+                                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details, HelpType.PlayerBreakdown);
                                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a Stress BREAKDOWN{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
@@ -5859,13 +5861,16 @@ public class ActorManager : MonoBehaviour
                                     //change alpha of actor to indicate inactive status
                                     GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
                                     //message (public)
-                                    text = "Player has suffered a Breakdown (Super Stressed)";
+                                    text = "Player has suffered a Breakdown";
                                     itemText = "has suffered a BREAKDOWN";
-                                    reason =  "has suffered a Nervous Breakdown due to being <b>SUPER STRESSED</b>";
+                                    reason =  "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                     string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-                                    GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details);
+                                    GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details, HelpType.PlayerBreakdown);
                                     Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a SUPER Stress BREAKDOWN{1}", 
                                         GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
+                                    //fake a successful roll (chance is superStressChance to make it appear as there are higher odds but in reality it is a forced breakdown)
+                                    rnd = Random.Range(0, superStressChance);
+                                    GameManager.instance.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", superStressChance, rnd, true);
                                     if (playerSide.level == globalResistance.level)
                                     {
                                         //update AI side tab status

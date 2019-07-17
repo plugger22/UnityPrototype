@@ -2059,6 +2059,7 @@ MonoBehaviour:
   dismissQuestionableChance: 15
   renownCostGear: 1
   breakdownChance: 20
+  superStressChance: 80
   playerRecognisedChance: 20
   playerQuestionableChance: 30
   actorTraitorChance: 30
@@ -2125,6 +2126,7 @@ MonoBehaviour:
   isLieLowFirstturn: 0
   isStressLeave: 0
   isStressed: 0
+  numOfSuperStress: 0
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1

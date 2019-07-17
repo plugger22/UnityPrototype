@@ -1257,7 +1257,7 @@ public class ActionManager : MonoBehaviour
             Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLieLowPlayerAction: {0}, {1} Player, commences LYING LOW", GameManager.instance.playerScript.GetPlayerName(modalDetails.side), modalDetails.side.name);
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.instance.playerScript.status);
             string reason = string.Format("is currently Lying Low and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
-            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, modalDetails.side);
+            GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.instance.playerScript.actorID, modalDetails.side, null, HelpType.LieLow);
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         if (errorFlag == false)
@@ -1461,7 +1461,7 @@ public class ActionManager : MonoBehaviour
             string itemText = "You have gone on Stress LEAVE";
             string reason = "has taken a break in order to recover from their <b>STRESS</b>";
             string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-            GameManager.instance.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details);
+            GameManager.instance.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details, HelpType.StressLeave);
             Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLeavePlayerAction: {0}, {1} Player, commences STRESS LEAVE", GameManager.instance.playerScript.GetPlayerName(modalDetails.side),
                 modalDetails.side.name);
             //statistics
@@ -1510,7 +1510,7 @@ public class ActionManager : MonoBehaviour
                 string itemText = "has gone on Stress LEAVE";
                 string reason = "has taken a break in order to recover from their <b>STRESS</b>";
                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details);
+                GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details, HelpType.StressLeave);
                 //statistics
                 StressLeaveStatistics(modalDetails.side);
                 //action (if valid) expended -> must be BEFORE outcome window event

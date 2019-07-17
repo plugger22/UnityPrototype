@@ -1463,21 +1463,24 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Any unused actions at the end of the turn are used to improve the Players mood, +1 / action
+    /// Any unused actions at the end of the turn are used to improve the Players mood, +1 / action. Player must be active for this to occur
     /// </summary>
     /// <param name="unusedActions"></param>
     public void ProcessDoNothing(int unusedActions)
     {
         if (unusedActions > 0)
         {
-            //stats
-            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
-            //only improve mood if there is room for improvement
-            if (mood < moodMax && isStressed == false)
+            if (status == ActorStatus.Active)
             {
-                string reason = GameManager.instance.colourScript.GetFormattedString("Watching SerialFlix", ColourType.goodText);
-                string explanation = string.Format("<b>{0}{1}{2}</b>You had Unused Actions at the end of your turn", reason, "\n", "\n");
-                ChangeMood(unusedActions, explanation, "n.a");
+                //stats
+                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
+                //only improve mood if there is room for improvement
+                if (mood < moodMax && isStressed == false)
+                {
+                    string reason = GameManager.instance.colourScript.GetFormattedString("Watching SerialFlix", ColourType.goodText);
+                    string explanation = string.Format("<b>{0}{1}{2}</b>You had Unused Actions at the end of your turn", reason, "\n", "\n");
+                    ChangeMood(unusedActions, explanation, "n.a");
+                }
             }
         }
         else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
