@@ -678,16 +678,16 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         if (GameManager.instance.sideScript.PlayerSide.level == 1)
         { colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority); }
         else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel); }
         /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);*/

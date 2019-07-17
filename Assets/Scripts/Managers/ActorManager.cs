@@ -517,14 +517,14 @@ public class ActorManager : MonoBehaviour
         /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourArc = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

@@ -10,17 +10,8 @@ public enum ColourType
 {
     sideRebel, sideAuthority,
     cancelHighlight, cancelNormal,
-    actionEffect,
     dataGood, dataNeutral, dataBad, dataTerrible,
-    normalText, defaultText, greyText, alertText, goodText,                         //normal is slight off yellow text, default is white, grey is greyed out, alert is Salmon
-    //outcome window effects
-    goodEffect, neutralEffect, badEffect,                              
-    nodeActive,
-    error,
-    black,
-    //other
-    actorArc,
-    actorAction,
+    normalText, goodText, badText, neutralText, alertText, greyText, whiteText, blackText,
     Count
 }
 
@@ -37,31 +28,21 @@ public class ColourManager : MonoBehaviour
     public Colour[] sideAuthority;                  //Red for authority text
     public Colour[] cancelHighlight;                //Cancel button generic tool tip
     public Colour[] cancelNormal;                   //Cancel button generic tool tip
-    public Colour[] actionEffect;                   //effects for action menu buttons
-    //stats
+    //Data
     public Colour[] dataGood;                       //number in good range (value 3)
     public Colour[] dataNeutral;                    //neutral (value 2)
     public Colour[] dataBad;                        //bad (value 1)
     public Colour[] dataTerrible;                   //terrible (value 0)
-    //default Text
+    //Text
     public Colour[] normalText;                     //normal non-coloured text, eg. white equivalent
-    public Colour[] defaultText;                    //default White text if no colour provided
-    public Colour[] greyText;                       //greyed out text
+    public Colour[] goodText;                       //mild green text
+    public Colour[] badText;                        //mild red text
+    public Colour[] neutralText;                    //neutral yellow text
     public Colour[] alertText;                      //text you want highlighted (Salmon)
-    public Colour[] goodText;                       //green text
-    //outcome Effects
-    public Colour[] goodEffect;
-    public Colour[] neutralEffect;
-    public Colour[] badEffect;
+    public Colour[] greyText;                       //greyed out text
+    public Colour[] whiteText;                    //default White text if no colour provided
+    public Colour[] blackText;
 
-    //tool tip Node
-    public Colour[] nodeActive;                     //active actors in Node
-    //error (global)
-    public Colour[] error;                          //error text
-
-    public Colour[] black;
-    public Colour[] actorArc;                       //violet colour for "WORKS"
-    public Colour[] actorAction;                    //salmon colour for "Blow Stuff Up"
 
     private Colour[,] arrayOfColours;               //repositry of colourTypes
     private List<Colour[]> listOfColourTypes;       //facilitates automatic population of array
@@ -78,24 +59,18 @@ public class ColourManager : MonoBehaviour
             sideAuthority,
             cancelHighlight,
             cancelNormal,
-            actionEffect,
             dataGood,
             dataNeutral,
             dataBad,
             dataTerrible,
             normalText,
-            defaultText,
-            greyText,
-            alertText,
             goodText,
-            goodEffect,
-            neutralEffect,
-            badEffect,
-            nodeActive,
-            error,
-            black,
-            actorArc,
-            actorAction,
+            badText,
+            neutralText,
+            alertText,
+            greyText,
+            whiteText,
+            blackText
         };
 
         //loop thorugh list and auto populate array

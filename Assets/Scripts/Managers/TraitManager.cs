@@ -122,7 +122,7 @@ public class TraitManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourEnd = GameManager.instance.colourScript.GetEndTag();

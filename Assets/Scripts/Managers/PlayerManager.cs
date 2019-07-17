@@ -1415,8 +1415,8 @@ public class PlayerManager : MonoBehaviour
             //colour Code descriptor
             string text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : "");
             if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
-            else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); } }
-            else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect); }
+            else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText); } }
+            else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralText); }
             //add to list
             listOfMoodHistory.Add(record);
             //message

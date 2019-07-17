@@ -322,14 +322,14 @@ public class GearManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGear = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }

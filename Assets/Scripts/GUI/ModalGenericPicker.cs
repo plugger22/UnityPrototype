@@ -157,11 +157,11 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

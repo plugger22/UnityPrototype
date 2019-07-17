@@ -188,13 +188,13 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.actionEffect);
+        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

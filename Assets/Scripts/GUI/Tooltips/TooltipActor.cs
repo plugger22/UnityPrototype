@@ -112,9 +112,9 @@ public class TooltipActor : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourQuality = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
-        colourAction = GameManager.instance.colourScript.GetColour(ColourType.actorAction);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourQuality = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        colourAction = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourArc = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();

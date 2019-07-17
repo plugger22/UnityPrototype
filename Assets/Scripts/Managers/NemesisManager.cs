@@ -246,13 +246,13 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);*/
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);*/
     }
 
 

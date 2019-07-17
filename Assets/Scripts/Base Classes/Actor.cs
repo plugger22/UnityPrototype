@@ -339,7 +339,7 @@ namespace gameAPI
                                 else
                                 {
                                     if (difference > 0) { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
-                                    else { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect); }
+                                    else { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText); }
                                 }
                                 //add to list
                                 personality.AddMotivation(history);
@@ -357,7 +357,7 @@ namespace gameAPI
                             history.motivation = datapoint1;
                             history.isNormal = true;
                             text = string.Format("Starting Motivation {0}", datapoint1);
-                            history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralEffect);
+                            history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralText);
                             personality.AddMotivation(history);
                         }
                     }

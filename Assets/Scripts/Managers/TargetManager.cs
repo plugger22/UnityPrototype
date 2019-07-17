@@ -244,15 +244,15 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourGear = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourTarget = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourTarget = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }

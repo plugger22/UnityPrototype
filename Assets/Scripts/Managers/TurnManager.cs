@@ -197,7 +197,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         /*colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/

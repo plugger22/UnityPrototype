@@ -612,8 +612,8 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);

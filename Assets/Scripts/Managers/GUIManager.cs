@@ -189,9 +189,9 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);

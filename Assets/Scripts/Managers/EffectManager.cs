@@ -177,24 +177,24 @@ public class EffectManager : MonoBehaviour
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Resistance":
-                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.badText);
                 break;
             case "Authority":
-                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.badText);
+                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.goodText);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.actorArc);
+        colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

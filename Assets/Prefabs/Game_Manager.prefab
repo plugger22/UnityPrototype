@@ -544,8 +544,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a001b68021fc9314fad7786c5b9fa288, type: 2}
   cancelNormal:
   - {fileID: 11400000, guid: bd60485e274a87a4cae916a3fbf002bd, type: 2}
-  actionEffect:
-  - {fileID: 11400000, guid: 9553bda66f274944b91a451c5b6cfebe, type: 2}
   dataGood:
   - {fileID: 11400000, guid: f085c50c6111fe447a3a889665b63ace, type: 2}
   dataNeutral:
@@ -556,30 +554,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e8940c8e47062740bc971fb86b9aa5c, type: 2}
   normalText:
   - {fileID: 11400000, guid: ef292ef9ea6cd594188c88c76ba62540, type: 2}
-  defaultText:
-  - {fileID: 11400000, guid: 1b5e060f35571df4985ead7b62cc758f, type: 2}
-  greyText:
-  - {fileID: 11400000, guid: 842f2e8e1346f304ebbc26c7e792849b, type: 2}
-  alertText:
-  - {fileID: 11400000, guid: a001b68021fc9314fad7786c5b9fa288, type: 2}
   goodText:
   - {fileID: 11400000, guid: 4694d196bd9f0ef4a87bac06e97f4006, type: 2}
-  goodEffect:
-  - {fileID: 11400000, guid: 4694d196bd9f0ef4a87bac06e97f4006, type: 2}
-  neutralEffect:
-  - {fileID: 11400000, guid: 79f1dc0903a143b49997772a08ab76da, type: 2}
-  badEffect:
-  - {fileID: 11400000, guid: 7e8940c8e47062740bc971fb86b9aa5c, type: 2}
-  nodeActive:
-  - {fileID: 11400000, guid: 79f1dc0903a143b49997772a08ab76da, type: 2}
-  error:
-  - {fileID: 11400000, guid: 7e8940c8e47062740bc971fb86b9aa5c, type: 2}
-  black:
-  - {fileID: 11400000, guid: f29b18d30abf0b341915422fb5e7180f, type: 2}
-  actorArc:
-  - {fileID: 11400000, guid: a001b68021fc9314fad7786c5b9fa288, type: 2}
-  actorAction:
+  badText:
+  - {fileID: 11400000, guid: b248fc9b2e9eeac489e667a90b656985, type: 2}
+  neutralText:
   - {fileID: 11400000, guid: ef292ef9ea6cd594188c88c76ba62540, type: 2}
+  alertText:
+  - {fileID: 11400000, guid: a001b68021fc9314fad7786c5b9fa288, type: 2}
+  greyText:
+  - {fileID: 11400000, guid: 842f2e8e1346f304ebbc26c7e792849b, type: 2}
+  whiteText:
+  - {fileID: 11400000, guid: 1b5e060f35571df4985ead7b62cc758f, type: 2}
+  blackText:
+  - {fileID: 11400000, guid: f29b18d30abf0b341915422fb5e7180f, type: 2}
 --- !u!114 &114309057188216108
 MonoBehaviour:
   m_ObjectHideFlags: 1

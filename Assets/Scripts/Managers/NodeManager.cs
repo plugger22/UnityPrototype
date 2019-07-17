@@ -411,14 +411,14 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.defaultText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.nodeActive);
+        colourHighlight = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badEffect);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralEffect);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodEffect);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);

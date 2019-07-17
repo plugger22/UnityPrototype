@@ -856,7 +856,7 @@ public class PersonalityManager : MonoBehaviour
             if (GameManager.instance.playerScript.isStressed == false)
             {
                 text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
-                builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badEffect));
+                builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText));
             }
             else
             {
@@ -888,13 +888,13 @@ public class PersonalityManager : MonoBehaviour
                     builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.goodText));
                     break;
                 case 0:
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.neutralEffect));
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.neutralEffect));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.neutralText));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.neutralText));
                     break;
                 case -1:
                 case -2:
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badEffect));
-                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.badEffect));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badText));
+                    builder.Append(GameManager.instance.colourScript.GetFormattedString(factorPlayer, ColourType.badText));
                     break;
                 default: Debug.LogWarningFormat("Unrecognised change \"{0}\"", change); break;
             }
