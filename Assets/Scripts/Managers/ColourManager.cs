@@ -158,13 +158,13 @@ public class ColourManager : MonoBehaviour
     {
         //create an outcome window to notify player
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.side = GameManager.instance.globalScript.sideBoth;
+        outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
         outcomeDetails.textTop = "Colour Palette";
         StringBuilder builder = new StringBuilder();
         Colour[] arrayOfColour = GameManager.instance.loadScript.arrayOfColours;
         if (arrayOfColour != null)
         {
-            foreach(Colour colour in arrayOfColours)
+            foreach(Colour colour in arrayOfColour)
             {
                 if (colour != null)
                 { builder.AppendFormat("<color={0}>{1}</color>{2}", colour.hexCode, colour.name, "\n"); }

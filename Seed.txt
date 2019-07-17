@@ -334,3 +334,81 @@ UnityEngine.Debug:LogError(Object)
 	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:176)
 	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
 	
+Dev seed 8166 -> Wednesday, 17 July 2019 9:34 PM
+City seed 890 -> Arles, France
+WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	WARNING Invalid colour (Null) in arrayOfColours
+UnityEngine.Debug:LogWarning(Object)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:171)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	ERROR Invalid side "Both (GlobalSide)"
+UnityEngine.Debug:LogError(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:158)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:176)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	
+Dev seed 29857 -> Wednesday, 17 July 2019 9:36 PM
+City seed 890 -> Arles, France
+ERROR Invalid side "Both (GlobalSide)"
+UnityEngine.Debug:LogError(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:158)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ColourManager:DebugDisplayColourPalette() (at Assets/Scripts/Managers/ColourManager.cs:176)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:616)
+	
+Dev seed 48536 -> Wednesday, 17 July 2019 9:42 PM
+City seed 890 -> Arles, France
