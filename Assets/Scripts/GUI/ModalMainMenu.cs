@@ -172,8 +172,8 @@ public class ModalMainMenu : MonoBehaviour
     public void SetColours()
     {
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

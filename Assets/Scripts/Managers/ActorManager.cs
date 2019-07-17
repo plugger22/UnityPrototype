@@ -512,19 +512,19 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.blueText);
+        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
         /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);
-        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourArc = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

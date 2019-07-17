@@ -28,6 +28,7 @@ public class LoadManager : MonoBehaviour
     public TargetTrigger[] arrayOfTargetTriggers;
     public TargetProfile[] arrayOfTargetProfiles;
     public Quality[] arrayOfQualities;
+    public Colour[] arrayOfColours;
     public CitySize[] arrayOfCitySize;
     public CitySpacing[] arrayOfCitySpacing;
     public CityConnections[] arrayOfCityConnections;
@@ -481,7 +482,20 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listAuthority (size different to numOfQualities)"); }
         }
         else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Qualities present"); }
-
+        //
+        // - - - Colours (not stored in a collection)
+        //
+        numArray = arrayOfColours.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfColours has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No colours present"); }        
+        //
+        // - - - Mission (not stored in a collection)
+        //
+        numArray = arrayOfMissions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfMissions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Missions present"); }
         //
         // - - - Conditions - - -
         //

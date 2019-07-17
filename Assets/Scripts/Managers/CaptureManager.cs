@@ -132,7 +132,7 @@ public class CaptureManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

@@ -1,17 +1,17 @@
 ﻿using gameAPI;
+using modalAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 //Colour Manager -?NOTE: DO NOT change the order of either colour enum!
 public enum ColourScheme { Normal, ColourBlind, Count }
 public enum ColourType
 {
-    sideRebel, sideAuthority,
-    cancelHighlight, cancelNormal,
     dataGood, dataNeutral, dataBad, dataTerrible,
-    normalText, goodText, badText, neutralText, alertText, greyText, whiteText, blackText,
+    normalText, goodText, neutralText, badText, blueText, salmonText, moccasinText, greyText, whiteText, blackText,
     Count
 }
 
@@ -23,11 +23,6 @@ public enum ColourType
 /// </summary>
 public class ColourManager : MonoBehaviour
 {
-    //tool tip Generic
-    public Colour[] sideRebel;                      //Blue for rebel text
-    public Colour[] sideAuthority;                  //Red for authority text
-    public Colour[] cancelHighlight;                //Cancel button generic tool tip
-    public Colour[] cancelNormal;                   //Cancel button generic tool tip
     //Data
     public Colour[] dataGood;                       //number in good range (value 3)
     public Colour[] dataNeutral;                    //neutral (value 2)
@@ -36,9 +31,11 @@ public class ColourManager : MonoBehaviour
     //Text
     public Colour[] normalText;                     //normal non-coloured text, eg. white equivalent
     public Colour[] goodText;                       //mild green text
-    public Colour[] badText;                        //mild red text
     public Colour[] neutralText;                    //neutral yellow text
-    public Colour[] alertText;                      //text you want highlighted (Salmon)
+    public Colour[] badText;                        //mild red text
+    public Colour[] salmonText;                     //text you want highlighted (Salmon), eg. Alert text
+    public Colour[] blueText;                       //resistance side
+    public Colour[] moccasinText;                   //cancel text
     public Colour[] greyText;                       //greyed out text
     public Colour[] whiteText;                    //default White text if no colour provided
     public Colour[] blackText;
@@ -55,19 +52,17 @@ public class ColourManager : MonoBehaviour
         //Note: KEEP IN SAME ORDER AS ColourType enum
         listOfColourTypes = new List<Colour[]>()
         {
-            sideRebel,
-            sideAuthority,
-            cancelHighlight,
-            cancelNormal,
             dataGood,
             dataNeutral,
             dataBad,
             dataTerrible,
             normalText,
             goodText,
-            badText,
             neutralText,
-            alertText,
+            badText,
+            blueText,
+            salmonText,
+            moccasinText,
             greyText,
             whiteText,
             blackText
@@ -153,6 +148,32 @@ public class ColourManager : MonoBehaviour
         { formattedText = string.Format("{0}{1}{2}", GetColour(colourType), text, GetEndTag()); }
         else { Debug.LogError("Invalid text (Null)"); }
         return formattedText;
+    }
+
+
+    /// <summary>
+    /// Debug display of an outcome message with all colours LoadManager.cs -> arrayOfColours (Colour.SO) named and appropriately coloure for purposes of colour comparison
+    /// </summary>
+    public void DebugDisplayColourPalette()
+    {
+        //create an outcome window to notify player
+        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.side = GameManager.instance.globalScript.sideBoth;
+        outcomeDetails.textTop = "Colour Palette";
+        StringBuilder builder = new StringBuilder();
+        Colour[] arrayOfColour = GameManager.instance.loadScript.arrayOfColours;
+        if (arrayOfColour != null)
+        {
+            foreach(Colour colour in arrayOfColours)
+            {
+                if (colour != null)
+                { builder.AppendFormat("<color={0}>{1}</color>{2}", colour.hexCode, colour.name, "\n"); }
+                else { Debug.LogWarning("Invalid colour (Null) in arrayOfColours"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfColour (Null)"); }
+        outcomeDetails.textBottom = builder.ToString();
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
     }
 
 }

@@ -58,7 +58,7 @@ public class HelpManager : MonoBehaviour
     public void SetColours()
     {
         colourTip = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

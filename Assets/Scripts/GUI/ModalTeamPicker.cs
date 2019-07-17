@@ -201,7 +201,7 @@ public class ModalTeamPicker : MonoBehaviour
     public void SetColours()
     {
         colourEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralText);

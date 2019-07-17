@@ -181,7 +181,7 @@ public class ModalDiceUI : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourDataNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourDataBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);

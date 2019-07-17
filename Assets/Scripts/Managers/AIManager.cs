@@ -617,7 +617,7 @@ public class AIManager : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

@@ -193,7 +193,7 @@ public class EffectManager : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }

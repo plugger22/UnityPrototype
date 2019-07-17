@@ -598,9 +598,9 @@ public class DebugGUI : MonoBehaviour
             //
 
             //first button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Swap Sides"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Colour Palette"))
             {
-                Debug.Log("[Dbg] Button -> Swap sides");
+                /*Debug.Log("[Dbg] Button -> Swap sides");
                 if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
                 {
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
@@ -608,7 +608,14 @@ public class DebugGUI : MonoBehaviour
                     else { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideResistance; }
                     //redraw nodes (player node shown/not shown depending on side)
                     GameManager.instance.nodeScript.RedrawNodes();
+                }*/
+                Debug.Log("[Dbg] Button -> Colour Palette");
+                if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
+                {
+                    //display outcome dialogue showing colour Palette
+                    GameManager.instance.colourScript.DebugDisplayColourPalette();
                 }
+                
             }
 
             //second button

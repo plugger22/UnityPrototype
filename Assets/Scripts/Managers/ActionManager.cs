@@ -38,7 +38,6 @@ public class ActionManager : MonoBehaviour
     private string colourNormal;
     private string colourError;
     private string colourGood;
-    private string colourgoodText;
     private string colourNeutral;
     private string colourBad;
     private string colourAlert;
@@ -264,15 +263,15 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.blueText);
+        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -2507,7 +2506,7 @@ public class ActionManager : MonoBehaviour
                     if (objectiveInfo != null)
                     {
                         if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                        builderBottom.AppendFormat("{0}Objective {1}{2}", colourgoodText, objectiveInfo, colourEnd);
+                        builderBottom.AppendFormat("{0}Objective {1}{2}", colourGood, objectiveInfo, colourEnd);
                     }
                 }
 

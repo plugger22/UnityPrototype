@@ -91,7 +91,7 @@ public class TooltipConnection : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourArc = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }

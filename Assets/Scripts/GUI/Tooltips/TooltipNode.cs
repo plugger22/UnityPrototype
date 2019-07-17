@@ -177,7 +177,7 @@ public class TooltipNode : MonoBehaviour
         }
         //colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.neutralText);

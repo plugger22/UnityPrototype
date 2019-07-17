@@ -681,16 +681,16 @@ public class MainInfoUI : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         if (GameManager.instance.sideScript.PlayerSide.level == 1)
-        { colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority); }
-        else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.sideRebel); }
+        { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
+        else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
         /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.cancelHighlight);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.cancelNormal);*/
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);*/
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 

@@ -238,8 +238,8 @@ public class SecretManager : MonoBehaviour
     {
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
-        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourResistance = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);

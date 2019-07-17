@@ -100,12 +100,12 @@ public class ObjectiveManager : MonoBehaviour
     public void SetColours()
     {
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.sideAuthority);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.sideRebel);
+        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.alertText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         //current Player side colour
