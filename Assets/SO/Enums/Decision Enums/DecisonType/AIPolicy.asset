@@ -9,6 +9,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17437e73dc682ad409b16f33d30ebb17, type: 3}
-  m_Name: Security
+  m_Name: AIPolicy
   m_EditorClassIdentifier: 
-  descriptor: Security Measures
+  descriptor: Policies

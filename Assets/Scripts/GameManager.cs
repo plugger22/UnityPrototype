@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public OptionManager optionScript;                //Option Manager
     [HideInInspector] public PlayerManager playerScript;                //Player Manager
     [HideInInspector] public TraitManager traitScript;                  //Trait Manager
+    [HideInInspector] public TopicManager topicScript;                  //Topic Manager
     [HideInInspector] public FactionManager factionScript;              //Faction Manager
     [HideInInspector] public SecretManager secretScript;                //Secret Manager
     [HideInInspector] public OrganisationManager orgScript;             //Organisation Manager
@@ -184,6 +185,7 @@ public class GameManager : MonoBehaviour
         actionScript = GetComponent<ActionManager>();
         playerScript = GetComponent<PlayerManager>();
         traitScript = GetComponent<TraitManager>();
+        topicScript = GetComponent<TopicManager>();
         factionScript = GetComponent<FactionManager>();
         secretScript = GetComponent<SecretManager>();
         orgScript = GetComponent<OrganisationManager>();
@@ -258,6 +260,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(actionScript != null, "Invalid actionScript (Null)");
         Debug.Assert(playerScript != null, "Invalid playerScript (Null)");
         Debug.Assert(traitScript != null, "Invalid traitScript (Null)");
+        Debug.Assert(topicScript != null, "Invalid topicScript (Null)");
         Debug.Assert(factionScript != null, "Invalid factionScript (Null)");
         Debug.Assert(secretScript != null, "Invalid secretScript (Null)");
         Debug.Assert(orgScript != null, "Invalid orgScript (Null)");
