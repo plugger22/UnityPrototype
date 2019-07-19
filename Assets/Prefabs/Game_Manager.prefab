@@ -1538,6 +1538,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a88df17476114704ab637e71e32b4140, type: 2}
   - {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   - {fileID: 11400000, guid: 378cee33565b65c42aff9c940e94919c, type: 2}
+  arrayOfTopicTypes:
+  - {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  - {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
+  - {fileID: 11400000, guid: b662571175bcd8b43aa7617fcc8ff8c8, type: 2}
+  arrayOfTopicSubTypes:
+  - {fileID: 11400000, guid: 3bda592150deaf040902ed378ff96e8b, type: 2}
+  - {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
+  - {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
+  - {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
+  - {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
+  - {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
+  - {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
+  - {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
+  - {fileID: 11400000, guid: 20d025ed7361e6b488f6400c7f1a8614, type: 2}
   arrayOfTargetsGeneric:
   - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
   - {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
@@ -2302,6 +2316,7 @@ MonoBehaviour:
   optionScript: {fileID: 0}
   playerScript: {fileID: 0}
   traitScript: {fileID: 0}
+  topicScript: {fileID: 0}
   factionScript: {fileID: 0}
   secretScript: {fileID: 0}
   orgScript: {fileID: 0}

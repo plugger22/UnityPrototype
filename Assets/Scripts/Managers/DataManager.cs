@@ -201,6 +201,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                              //Key -> cure.name, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
     private Dictionary<string, PersonProfile> dictOfProfiles = new Dictionary<string, PersonProfile>();         //Key -> personProfile.name, Value -> personProfile
+    private Dictionary<string, TopicData> dictOfTopicTypes = new Dictionary<string, TopicData>();               //Key -> topicType.name, Value -> TopicData package
+    private Dictionary<string, TopicData> dictOfTopicSubTypes = new Dictionary<string, TopicData>();            //Key -> topicSubType.name, Value -> TopicData package
+    
 
     #region SO enum Dictionaries
     //global SO's (enum equivalents)
@@ -6553,7 +6556,9 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    #endregion
 
+    #region Personality
     //
     // - - - Personality - - -
     //
@@ -6635,6 +6640,15 @@ public class DataManager : MonoBehaviour
         }
         return factorIndex;
     }
+    #endregion
+
+    #region Topics
+
+    public Dictionary<string, TopicData> GetDictOfTopicTypes()
+    { return dictOfTopicTypes; }
+
+    public Dictionary<string, TopicData> GetDictOfTopicSubTypes()
+    { return dictOfTopicSubTypes; }
 
     #endregion
 

@@ -670,5 +670,20 @@ namespace packageAPI
         public HackingStatus status;        //used to determine what happens when player clicks AI Side Tab UI
     }
 
+    /// <summary>
+    /// dynamic data packages for TopicType and TopicSubType
+    /// </summary>
+    [System.Serializable]
+    public class TopicData
+    {
+        public string type;                         //SO.name of TopicType or TopicSubType that the package referes to
+        public bool isAvailable;                    //True if the topic has decisions available, false if not
+        public int turnLastUsed;                    //turn # when last used
+        public int minInterval;                     //minimum turn interval that must elapse prior to the next occurrence
+        //stats
+        public int timesUsedLevel;                  //tally of times used (for this level)
+        public int timesUsedCampaign;               //cumulative total for campaign
+    }
+
     //new classes above here
 }

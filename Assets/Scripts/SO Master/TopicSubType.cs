@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// SubCategory for human decisions (Topics)
+/// SubCategory for human decisions (Topics) Static data only, dynamic data is kept in the dictOfTopicSubTypes using a TopicData package
 /// </summary>
 [CreateAssetMenu(menuName = "Topic / TopicSubType")]
 public class TopicSubType : ScriptableObject
@@ -14,6 +14,8 @@ public class TopicSubType : ScriptableObject
     public TopicType type;
     [Tooltip("Overall priority for this sub topic when being placed in the selection pool")]
     public GlobalChance priority;
+    [Tooltip("Number of turns that must elapse before it can be chosen again, default 0")]
+    [Range(0, 20)] public int minimumInterval = 0;
 
 
     public void OnEnable()
