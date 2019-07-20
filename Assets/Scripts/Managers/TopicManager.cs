@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using packageAPI;
@@ -36,7 +37,7 @@ public class TopicManager : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// display of dictOfTopicTypes/SubTypes
     /// </summary>
     /// <returns></returns>
@@ -70,7 +71,46 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicData (Null)"); }
         return builder.ToString();
+    }*/
+
+    /// <summary>
+    /// Display's topic type data in a more user friendly manner (subTypes grouped by Types)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayTopicTypes()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        if (dictOfTopicTypes != null)
+        {
+            Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+            if (dictOfTopicSubTypes != null)
+            {
+                builder.AppendFormat("- TopicData for TopicTypes{0}{1}", "\n", "\n");
+                //loop topic Types
+                foreach(var topicType in dictOfTopicTypes)
+                {
+                    builder.AppendFormat(" {0}", DisplayTypeRecord(topicType.Value));
+                    //look for any matching SubTypes
+                    foreach(var topicSubType in dictOfTopicSubTypes)
+                    {
+                        if (topicSubType.Value.parent.Equals(topicType.Key, StringComparison.Ordinal) == true)
+                        { builder.AppendFormat("  {0}", DisplayTypeRecord(topicSubType.Value)); }
+                    }
+                    builder.AppendLine();
+                }
+            }
+            else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
+        return builder.ToString();
     }
 
+    //Sub method for DebugDisplayTopicTypes to display a TopicData record
+    private string DisplayTypeRecord(TopicData data)
+    {
+        return string.Format(" {0} Av {1}, Last {2}, MinInt {3}, #Lvl {4}, #Cmp {5}{6}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
+                        data.timesUsedLevel, data.timesUsedCampaign, "\n");
+    }
     //new methods above here
 }

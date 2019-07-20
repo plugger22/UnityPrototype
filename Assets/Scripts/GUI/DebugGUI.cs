@@ -1468,7 +1468,7 @@ public class DebugGUI : MonoBehaviour
                     //Topic Data
                     case 62:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayTopicTypeData();
+                        analysis = GameManager.instance.topicScript.DebugDisplayTopicTypes();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
                         break;
                 }

@@ -1148,6 +1148,7 @@ public class LoadManager : MonoBehaviour
                 TopicData data = new TopicData()
                 {
                     type = topicSubType.name,
+                    parent = topicSubType.type.name,
                     isAvailable = true,
                     turnLastUsed = 0,
                     minInterval = topicSubType.minimumInterval,
