@@ -669,12 +669,18 @@ public class FileManager : MonoBehaviour
         //topic types
         Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
         if (dictOfTopicTypes != null)
-        { write.dataData.listOfTopicTypes.AddRange(dictOfTopicTypes.Values); }
+        {
+            write.dataData.listOfTopicTypeValues.AddRange(dictOfTopicTypes.Values);
+            write.dataData.listOfTopicTypeKeys.AddRange(dictOfTopicTypes.Keys);
+        }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //topic sub types
         Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
         if (dictOfTopicSubTypes != null)
-        { write.dataData.listOfTopicSubTypes.AddRange(dictOfTopicSubTypes.Values); }
+        {
+            write.dataData.listOfTopicSubTypeValues.AddRange(dictOfTopicSubTypes.Values);
+            write.dataData.listOfTopicSubTypeKeys.AddRange(dictOfTopicSubTypes.Keys);
+        }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
         #endregion
 
@@ -1578,6 +1584,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadDataData()
     {
+        int countKey, countValue;
+        string itemName;
+
         #region statistics
         //level stats
         Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
@@ -1946,8 +1955,8 @@ public class FileManager : MonoBehaviour
         {
             //clear dict and copy across data
             dictOfArchiveMessages.Clear();
-            int countKey = read.dataData.listOfArchiveMessagesKey.Count;
-            int countValue = read.dataData.listOfArchiveMessagesValue.Count;
+            countKey = read.dataData.listOfArchiveMessagesKey.Count;
+            countValue = read.dataData.listOfArchiveMessagesValue.Count;
             Debug.AssertFormat(countKey == countValue, "Mismatch on count for Archive Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
             for (int i = 0; i < countKey; i++)
             {
@@ -1969,8 +1978,8 @@ public class FileManager : MonoBehaviour
         {
             //clear dict and copy across data
             dictOfPendingMessages.Clear();
-            int countKey = read.dataData.listOfPendingMessagesKey.Count;
-            int countValue = read.dataData.listOfPendingMessagesValue.Count;
+            countKey = read.dataData.listOfPendingMessagesKey.Count;
+            countValue = read.dataData.listOfPendingMessagesValue.Count;
             Debug.AssertFormat(countKey == countValue, "Mismatch on count for Pending Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
             for (int i = 0; i < countKey; i++)
             {
@@ -1992,8 +2001,8 @@ public class FileManager : MonoBehaviour
         {
             //clear dict and copy across data
             dictOfCurrentMessages.Clear();
-            int countKey = read.dataData.listOfCurrentMessagesKey.Count;
-            int countValue = read.dataData.listOfCurrentMessagesValue.Count;
+            countKey = read.dataData.listOfCurrentMessagesKey.Count;
+            countValue = read.dataData.listOfCurrentMessagesValue.Count;
             Debug.AssertFormat(countKey == countValue, "Mismatch on count for Current Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
             for (int i = 0; i < countKey; i++)
             {
@@ -2015,8 +2024,8 @@ public class FileManager : MonoBehaviour
         {
             //clear dict and copy across data
             dictOfAIMessages.Clear();
-            int countKey = read.dataData.listOfAIMessagesKey.Count;
-            int countValue = read.dataData.listOfAIMessagesValue.Count;
+            countKey = read.dataData.listOfAIMessagesKey.Count;
+            countValue = read.dataData.listOfAIMessagesValue.Count;
             Debug.AssertFormat(countKey == countValue, "Mismatch on count for AI Message Lists ->  Keys {0} and Values {1}", countKey, countValue);
             for (int i = 0; i < countKey; i++)
             {
@@ -2037,7 +2046,60 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region topics
-
+        //Topic Types
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        if (dictOfTopicTypes != null)
+        {
+            dictOfTopicTypes.Clear();
+            countKey = read.dataData.listOfTopicTypeKeys.Count;
+            countValue = read.dataData.listOfTopicTypeValues.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for TopicType Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                TopicData topicData = read.dataData.listOfTopicTypeValues[i];
+                itemName = read.dataData.listOfTopicTypeKeys[i];
+                if (topicData != null)
+                {
+                    if (string.IsNullOrEmpty(itemName) == false)
+                    {
+                        //add to dictionary
+                        try { dictOfTopicTypes.Add(itemName, topicData); }
+                        catch (ArgumentException)
+                        { Debug.LogWarningFormat("Duplicate topicType key exists for topicType \"{0}\"", itemName); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Topic Type Key/name (Null or Empty) for listOfTopicTypeKeys[{0}]", i); }
+                }
+                else { Debug.LogWarningFormat("Invalid topicData (Null) for listOfTopicTypeValues[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
+        //Topic Sub Types
+        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        if (dictOfTopicSubTypes != null)
+        {
+            dictOfTopicSubTypes.Clear();
+            countKey = read.dataData.listOfTopicSubTypeKeys.Count;
+            countValue = read.dataData.listOfTopicSubTypeValues.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for TopicSubType Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                TopicData topicData = read.dataData.listOfTopicSubTypeValues[i];
+                itemName = read.dataData.listOfTopicSubTypeKeys[i];
+                if (topicData != null)
+                {
+                    if (string.IsNullOrEmpty(itemName) == false)
+                    {
+                        //add to dictionary
+                        try { dictOfTopicSubTypes.Add(itemName, topicData); }
+                        catch (ArgumentException)
+                        { Debug.LogWarningFormat("Duplicate topicSubType key exists for topicSubType \"{0}\"", itemName); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Topic Type Key/name (Null or Empty) for listOfTopicSubTypeKeys[{0}]", i); }
+                }
+                else { Debug.LogWarningFormat("Invalid topicData (Null) for listOfTopicSubTypeValues[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
         #endregion
 
         #region registers
