@@ -46,6 +46,7 @@ public class DebugGUI : MonoBehaviour
     private int personalityToggle = 0;
     private int playerToggle = 0;
     private int contactToggle = 0;
+    private int trackerToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";
@@ -374,21 +375,25 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentysecond button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Rebel Tracker"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 22 + button_height * 22, button_width, button_height), "Topic Data"))
             {
-                Debug.Log("[Dbg] Button -> Rebel Tracker");
-                if (debugDisplay != 44)
-                { debugDisplay = 44; }
+                Debug.Log("[Dbg] Button -> Topic Data");
+                if (debugDisplay != 62)
+                { debugDisplay = 62; }
                 else { debugDisplay = 0; }
             }
 
-            //twentythird button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Nemesis Tracker"))
+
+
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Tracker Data"))
             {
-                Debug.Log("[Dbg] Button -> Nemesis Tracker");
-                if (debugDisplay != 45)
-                { debugDisplay = 45; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Tracker Data");
+                switch (trackerToggle)
+                {
+                    case 0: debugDisplay = 44; trackerToggle = 1; break;
+                    case 1: debugDisplay = 45; trackerToggle = 2; break;
+                    case 2: debugDisplay = 0; trackerToggle = 0; break;
+                }
             }
 
             //
@@ -1458,6 +1463,12 @@ public class DebugGUI : MonoBehaviour
                     case 61:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayPlayerLikes();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        break;
+                    //Topic Data
+                    case 62:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.topicScript.DebugDisplayTopicTypeData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
                         break;
                 }

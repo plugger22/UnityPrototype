@@ -32,6 +32,7 @@ public class MetaManager : MonoBehaviour
     public void ProcessMetaGame()
     {
         GameManager.instance.statScript.ProcessMetaStatistics();
+        GameManager.instance.topicScript.ProcessMetaTopics();
     }
 
 

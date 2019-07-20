@@ -1,7 +1,7 @@
-﻿using gameAPI;
+﻿using dijkstraAPI;
+using gameAPI;
 using GraphAPI;
 using packageAPI;
-using dijkstraAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -203,7 +203,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, PersonProfile> dictOfProfiles = new Dictionary<string, PersonProfile>();         //Key -> personProfile.name, Value -> personProfile
     private Dictionary<string, TopicData> dictOfTopicTypes = new Dictionary<string, TopicData>();               //Key -> topicType.name, Value -> TopicData package
     private Dictionary<string, TopicData> dictOfTopicSubTypes = new Dictionary<string, TopicData>();            //Key -> topicSubType.name, Value -> TopicData package
-    
+
 
     #region SO enum Dictionaries
     //global SO's (enum equivalents)
@@ -336,7 +336,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void ResetNewLevel()
     {
-        graph = null;        
+        graph = null;
         //arrays
         Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
         Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
@@ -2547,7 +2547,7 @@ public class DataManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(nodeCrisisName) == false)
         {
-           if (dictOfNodeCrisis.ContainsKey(nodeCrisisName) == true)
+            if (dictOfNodeCrisis.ContainsKey(nodeCrisisName) == true)
             { return dictOfNodeCrisis[nodeCrisisName]; }
         }
         else { Debug.LogError("Invalid nodeCrisisName (Null)"); }
@@ -4270,7 +4270,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public int  CheckNumOfOnMapActors(GlobalSide side)
+    public int CheckNumOfOnMapActors(GlobalSide side)
     {
         int numOfActors = 0;
         for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
@@ -4281,7 +4281,7 @@ public class DataManager : MonoBehaviour
         return numOfActors;
     }
 
-    
+
     public Dictionary<int, Actor> GetDictOfActors()
     { return dictOfActors; }
 
@@ -4350,7 +4350,7 @@ public class DataManager : MonoBehaviour
                 if (actor != null)
                 {
                     builder.Append(string.Format(" {0}, ", actor.actorName));
-                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} U {6} {7}", actor.actorID, actor.arc.name, actor.level, 
+                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} U {6} {7}", actor.actorID, actor.arc.name, actor.level,
                         actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, "\n"));
                 }
                 else { builder.Append(string.Format("Error for actorID {0}", listOfActors[i])); }
@@ -4947,7 +4947,7 @@ public class DataManager : MonoBehaviour
                         {
                             gear.statTurnObtained = Random.Range(0, turn);
                             gear.statTimesUsed = Random.Range(0, 3);
-                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2}, Gear currently in use (used {3} times){4}", 
+                            Debug.LogFormat("[Gea] DataManager.cs -> UpdateGearCurrentOnRevert: {0}, {1}, {2}, Gear currently in use (used {3} times){4}",
                                 gear.tag, gear.type.name, gear.rarity.name, gear.statTimesUsed, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", gearName); }
@@ -5203,7 +5203,7 @@ public class DataManager : MonoBehaviour
     {
         Dictionary<int, Message> dictOfMessages = null;
         //get appropriate dictionary
-        switch(category)
+        switch (category)
         {
             case MessageCategory.Archive:
                 dictOfMessages = new Dictionary<int, Message>(dictOfArchiveMessages);
@@ -5503,7 +5503,7 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" OngoingID Register{0}", "\n"));
-        foreach(var ongoing in dictOfOngoingID)
+        foreach (var ongoing in dictOfOngoingID)
         {
             if (ongoing.Value.nodeID > -1)
             {
@@ -5570,7 +5570,7 @@ public class DataManager : MonoBehaviour
     {
         if (dictOfOngoingID.Count > 0)
         {
-            foreach(var register in dictOfOngoingID)
+            foreach (var register in dictOfOngoingID)
             {
                 GameManager.instance.connScript.RemoveOngoingEffect(register.Key);
                 GameManager.instance.nodeScript.RemoveOngoingEffect(register.Key);
@@ -5794,15 +5794,15 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public ManageAction GetManageAction(string actionName)
     {
-            ManageAction manageAction = null;
-            if (string.IsNullOrEmpty(actionName) == false)
-            {
-                if (dictOfManageActions.ContainsKey(actionName))
-                { return dictOfManageActions[actionName]; }
-                else { Debug.LogWarning(string.Format("ManageAction \"{0}\" not found in dictOfManageActions{1}", actionName, "\n")); }
-            }
-            else { Debug.LogError("Invalid actionName (Null or Empty)"); }
-            return manageAction;
+        ManageAction manageAction = null;
+        if (string.IsNullOrEmpty(actionName) == false)
+        {
+            if (dictOfManageActions.ContainsKey(actionName))
+            { return dictOfManageActions[actionName]; }
+            else { Debug.LogWarning(string.Format("ManageAction \"{0}\" not found in dictOfManageActions{1}", actionName, "\n")); }
+        }
+        else { Debug.LogError("Invalid actionName (Null or Empty)"); }
+        return manageAction;
     }
 
     public Dictionary<string, ManageAction> GetDictOfManageActions()
@@ -5852,7 +5852,7 @@ public class DataManager : MonoBehaviour
         List<City> tempList = dictOfCities.Values.ToList();
         List<City> useList = new List<City>();
         //narrow list down to those with 'isTestOff' = false (default condition) -> Debug testing only, not for release
-        foreach(City cityTemp in tempList)
+        foreach (City cityTemp in tempList)
         {
             if (cityTemp != null)
             { if (cityTemp.isTestOff == false) { useList.Add(cityTemp); } }
@@ -5947,7 +5947,7 @@ public class DataManager : MonoBehaviour
         int index;
         List<Objective> listOfRandom = new List<Objective>();
         List<Objective> listOfObjectives = new List<Objective>(dictOfObjectives.Values.ToList());
-        for(int i = 0; i < num; i++)
+        for (int i = 0; i < num; i++)
         {
             index = Random.Range(0, listOfObjectives.Count);
             Objective objective = listOfObjectives[index];
@@ -6107,7 +6107,7 @@ public class DataManager : MonoBehaviour
         int netAdjustment = 0;
         if (listOfActionAdjustments.Count > 0)
         {
-            foreach(ActionAdjustment actionAdjustment in listOfActionAdjustments)
+            foreach (ActionAdjustment actionAdjustment in listOfActionAdjustments)
             {
                 if (actionAdjustment.sideLevel == side.level)
                 { netAdjustment += actionAdjustment.value; }
@@ -6155,8 +6155,10 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Action Adjustments Register{0}", "\n"));
         foreach (ActionAdjustment actionAdjustment in listOfActionAdjustments)
-        { builder.Append(string.Format("{0}\"{1}\", Side: {2} Adjust: {3} Timer: {4}", "\n", actionAdjustment.descriptor, 
-            actionAdjustment.sideLevel, actionAdjustment.value, actionAdjustment.timer)); }
+        {
+            builder.Append(string.Format("{0}\"{1}\", Side: {2} Adjust: {3} Timer: {4}", "\n", actionAdjustment.descriptor,
+              actionAdjustment.sideLevel, actionAdjustment.value, actionAdjustment.timer));
+        }
         return builder.ToString();
     }
 
@@ -6285,8 +6287,10 @@ public class DataManager : MonoBehaviour
             {
                 HistoryRebelMove history = listOfHistoryRebelMove[index];
                 if (history != null)
-                { builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}{5}", history.turn, history.playerNodeID, history.invisibility, history.nemesisNodeID, 
-                    history.playerNodeID == history.nemesisNodeID ? " *" : "", "\n"); }
+                {
+                    builder.AppendFormat(" t{0}: nodeID {1},  invis {2},  nemesisID {3}{4}{5}", history.turn, history.playerNodeID, history.invisibility, history.nemesisNodeID,
+                      history.playerNodeID == history.nemesisNodeID ? " *" : "", "\n");
+                }
                 else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryRebelMoves[{0}]", index); }
             }
         }
@@ -6309,8 +6313,10 @@ public class DataManager : MonoBehaviour
             {
                 HistoryNemesisMove history = listOfHistoryNemesisMove[index];
                 if (history != null)
-                { builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}{8}", history.turn, history.nemesisNodeID, history.mode, history.goal, history.targetNodeID, 
-                    history.searchRating, history.playerNodeID, history.playerNodeID == history.nemesisNodeID ? " *" : "", "\n"); }
+                {
+                    builder.AppendFormat(" t{0}: nodeID {1}, {2} | {3}, trgtID {4}, serch {5}, aiPlyrID {6}{7}{8}", history.turn, history.nemesisNodeID, history.mode, history.goal, history.targetNodeID,
+                      history.searchRating, history.playerNodeID, history.playerNodeID == history.nemesisNodeID ? " *" : "", "\n");
+                }
                 else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNemesisMoves[{0}]", index); }
             }
         }
@@ -6358,8 +6364,8 @@ public class DataManager : MonoBehaviour
     public int StatisticGetLevel(StatType statType)
     {
         int statValue = -1;
-            if (dictOfStatisticsLevel.ContainsKey(statType) == true)
-            { statValue = dictOfStatisticsLevel[statType]; }
+        if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+        { statValue = dictOfStatisticsLevel[statType]; }
         return statValue;
     }
 
@@ -6384,9 +6390,9 @@ public class DataManager : MonoBehaviour
         //loop enums as you can't directly loop dictionary and change values
         foreach (StatType statType in Enum.GetValues(typeof(StatType)))
         {
-                if (dictOfStatisticsLevel.ContainsKey(statType) == true)
-                { dictOfStatisticsLevel[statType] = 0; }
-                else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
+            if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+            { dictOfStatisticsLevel[statType] = 0; }
+            else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
         }
     }
 
@@ -6649,6 +6655,9 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, TopicData> GetDictOfTopicSubTypes()
     { return dictOfTopicSubTypes; }
+
+
+
 
     #endregion
 
