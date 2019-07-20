@@ -117,6 +117,9 @@ public class SaveDataData
     public List<Message> listOfCurrentMessagesValue = new List<Message>();
     public List<int> listOfAIMessagesKey = new List<int>();
     public List<Message> listOfAIMessagesValue = new List<Message>();
+    //Topics
+    public List<TopicData> listOfTopicTypes = new List<TopicData>();
+    public List<TopicData> listOfTopicSubTypes = new List<TopicData>();
     //Registers
     public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();

@@ -432,6 +432,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
         #endregion
+
         #region contacts
         //
         // - - - Contacts
@@ -521,6 +522,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
         #endregion
+
         #region teams
         //
         // - - - Teams
@@ -586,6 +588,7 @@ public class FileManager : MonoBehaviour
         //counter
         write.dataData.teamCounter = GameManager.instance.teamScript.teamIDCounter;
         #endregion
+
         #region statistics
         //level stats
         Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
@@ -606,6 +609,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfStatisticsCampaign (Null)"); }
         #endregion
+
         #region AI
         //array -> AI Resources
         int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
@@ -623,6 +627,7 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfRecentConnections.AddRange(queueOfRecentConnections); }
         else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
         #endregion
+
         #region messages
         //archive
         Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
@@ -659,6 +664,20 @@ public class FileManager : MonoBehaviour
         //id counter
         write.dataData.messageIDCounter = GameManager.instance.messageScript.messageIDCounter;
         #endregion
+
+        #region topics
+        //topic types
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        if (dictOfTopicTypes != null)
+        { write.dataData.listOfTopicTypes.AddRange(dictOfTopicTypes.Values); }
+        else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
+        //topic sub types
+        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        if (dictOfTopicSubTypes != null)
+        { write.dataData.listOfTopicSubTypes.AddRange(dictOfTopicSubTypes.Values); }
+        else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
+        #endregion
+
         #region registers
         //Ongoing Effects
         Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
@@ -678,12 +697,14 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfActionAdjustments.AddRange(listOFAdjustments); }
         else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
         #endregion
+
         #region moveNodes
         List<int> listOfNodes = GameManager.instance.dataScript.GetListOfMoveNodes();
         if (listOfNodes != null)
         { write.dataData.listOfMoveNodes.AddRange(listOfNodes); }
         else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
         #endregion
+
         #region mainInfoApp
         //delayed itemData
         List<ItemData> listOfDelayed = GameManager.instance.dataScript.GetListOfDelayedItemData();
@@ -780,6 +801,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfItemDataByPriority (Null)"); }
         #endregion
+
         #region history
         //rebel moves
         List<HistoryRebelMove> listOfHistoryRebel = GameManager.instance.dataScript.GetListOfHistoryRebelMove();
@@ -1606,6 +1628,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfStatisticsCampaign (Null)"); }
         #endregion
+
         #region secrets
         //
         // - - - Secrets
@@ -1671,6 +1694,7 @@ public class FileManager : MonoBehaviour
         }
         GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
         #endregion
+
         #region contacts
         //
         // - - - Contacts
@@ -1789,6 +1813,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfContactsByNodeResistance (Null)"); }
         #endregion
+
         #region teams
         //
         // - - - Teams
@@ -1878,6 +1903,7 @@ public class FileManager : MonoBehaviour
         //team counter
         GameManager.instance.teamScript.teamIDCounter = read.dataData.teamCounter;
         #endregion
+
         #region AI
         //array -> AI Resources
         int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
@@ -1912,6 +1938,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
         #endregion
+
         #region messages
         //archive
         Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
@@ -2008,6 +2035,11 @@ public class FileManager : MonoBehaviour
         //message counter
         GameManager.instance.messageScript.messageIDCounter = read.dataData.messageIDCounter;
         #endregion
+
+        #region topics
+
+        #endregion
+
         #region registers
         //ongoing effects
         Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
@@ -2033,9 +2065,11 @@ public class FileManager : MonoBehaviour
         GameManager.instance.dataScript.SetListOfActionAdjustments(read.dataData.listOfActionAdjustments);
 
         #endregion
+
         #region moveNodes
         GameManager.instance.dataScript.SetListOfMoveNodes(read.dataData.listOfMoveNodes);
         #endregion
+
         #region mainInfoApp
         GameManager.instance.dataScript.SetListOfDelayedItemData(read.dataData.listOfDelayedItemData);
         //main info
@@ -2153,6 +2187,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfItemDataByPriority (Null)"); }
         #endregion
+
         #region history
         GameManager.instance.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
         GameManager.instance.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
