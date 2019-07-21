@@ -682,6 +682,11 @@ public class FileManager : MonoBehaviour
             write.dataData.listOfTopicSubTypeKeys.AddRange(dictOfTopicSubTypes.Keys);
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
+        //listOfTopicTypesLevel
+        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        if (listOfTopicTypesLevel != null)
+        { write.dataData.listOfTopicTypesLevel.AddRange(listOfTopicTypesLevel.Select(x => x.name).ToList()); }
+        else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         #endregion
 
         #region registers
@@ -2100,6 +2105,21 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
+        //listOfTopicTypesLevel
+        string topicTypeName;
+        List<TopicType> listOfTopicTypes = new List<TopicType>();
+        for (int i = 0; i < read.dataData.listOfTopicTypesLevel.Count; i++)
+        {
+            topicTypeName = read.dataData.listOfTopicTypesLevel[i];
+            if (string.IsNullOrEmpty(topicTypeName) == false)
+            {
+                TopicType topicType = GameManager.instance.dataScript.GetTopicType(topicTypeName);
+                if (topicType != null)
+                { listOfTopicTypes.Add(topicType); }
+            }
+            else { Debug.LogWarningFormat("Invalid topicTypeName (Null) for listOfTopicTypesLevel[{0}]", i); }
+        }
+        GameManager.instance.dataScript.SetListOfTopicTypesLevel(listOfTopicTypes);
         #endregion
 
         #region registers

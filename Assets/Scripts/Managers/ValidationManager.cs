@@ -649,7 +649,7 @@ public class ValidationManager : MonoBehaviour
         //run checks
         if (string.IsNullOrEmpty(prefix) == false)
         {
-            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks - - - {1}", prefix, "\n");
+            Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks...{1}", prefix, "\n");
             CheckNodeData(prefix, highestNodeID);
             CheckActorData(prefix, highestActorID, highestNodeID, highestSlotID);
             CheckTargetData(prefix, highestNodeID, highestContactID, highestTurn);

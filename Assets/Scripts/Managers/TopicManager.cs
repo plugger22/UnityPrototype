@@ -63,38 +63,44 @@ public class TopicManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Check all topic types to see if they are valid for the level
+    /// Check all topic types to see if they are valid for the level (if so copied to DataManager.cs listOfTopicTypesLevel)
     /// </summary>
     private void CheckForValidTopics()
     {
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypes != null)
         {
-            string criteriaCheck;
-            //loop list
-            foreach(TopicType topicType in listOfTopicTypes)
+            if (listOfTopicTypesLevel != null)
             {
-                TopicData topicData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
-                if (topicData != null)
+                string criteriaCheck;
+                //loop list
+                foreach (TopicType topicType in listOfTopicTypes)
                 {
-                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                    { listOfCriteria = topicType.listOfCriteria };
-                    criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                    if (criteriaCheck == null)
+                    TopicData topicData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                    if (topicData != null)
                     {
-                        //criteria check passed O.K
-                        topicData.isAvailable = true;
+                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                        { listOfCriteria = topicType.listOfCriteria };
+                        criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                        if (criteriaCheck == null)
+                        {
+                            //criteria check passed O.K
+                            topicData.isAvailable = true;
+                            listOfTopicTypesLevel.Add(topicType);
+                        }
+                        else
+                        {
+                            //criteria check FAILED
+                            topicData.isAvailable = false;
+                            //generate message explaining why criteria failed
+                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" FAILED Criteria check due to {1}{2}", topicType.tag, criteriaCheck, "\n");
+                        }
                     }
-                    else
-                    {
-                        //criteria check FAILED
-                        topicData.isAvailable = false;
-                        //generate message explaining why criteria failed
-                        Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" FAILED Criteria check due to {1}{2}", topicType.tag, criteriaCheck, "\n");
-                    }
+                    else { Debug.LogError("Invalid topicData (Null)"); }
                 }
-                else { Debug.LogError("Invalid topicData (Null)"); }
             }
+            else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
     }

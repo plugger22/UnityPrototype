@@ -152,8 +152,8 @@ public class DataManager : MonoBehaviour
     private List<string> listOfHistoryAutoRun = new List<string>();
 
     //Topics
-    private List<TopicType> listOfTopicTypes = new List<TopicType>();
-
+    private List<TopicType> listOfTopicTypes = new List<TopicType>();                                           //All topic Types
+    private List<TopicType> listOfTopicTypesLevel = new List<TopicType>();                                      //Topic types available for the current level
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -356,6 +356,8 @@ public class DataManager : MonoBehaviour
         listOfCureNodes.Clear();
         listOfCrisisNodes.Clear();
         listOfMoveNodes.Clear();
+        //topics
+        listOfTopicTypesLevel.Clear();
         //actor lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();
@@ -429,6 +431,7 @@ public class DataManager : MonoBehaviour
         dictOfCurrentMessages.Clear();
         dictOfAIMessages.Clear();
         dictOfHistory.Clear();
+
         //dictOfTargets -> leave
         //dictOfStatistics -> leave
         //dictOfSecrets -> leave
@@ -6662,6 +6665,9 @@ public class DataManager : MonoBehaviour
     public List<TopicType> GetListOfTopicTypes()
     { return listOfTopicTypes; }
 
+    public List<TopicType> GetListOfTopicTypesLevel()
+    { return listOfTopicTypesLevel; }
+
     /// <summary>
     /// Get topicType data for specified topicType. Returns Null if not found
     /// </summary>
@@ -6677,6 +6683,32 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topicTypeName (Null or Empty)"); }
         return data;
+    }
+
+    /// <summary>
+    /// Get topic Type for a specified name. Returns Null if not found
+    /// </summary>
+    /// <param name="topicTypeName"></param>
+    /// <returns></returns>
+    public TopicType GetTopicType(string topicTypeName)
+    {
+        TopicType topicType = null;
+        topicType = listOfTopicTypes.Find(x => x.name.Equals(topicTypeName, StringComparison.Ordinal));
+        return topicType;
+    }
+
+    /// <summary>
+    /// Clear out and then refill listOfTopicTypesLevel with loaded save game data
+    /// </summary>
+    /// <param name="listOfTopicTypes"></param>
+    public void SetListOfTopicTypesLevel(List<TopicType> listOfTopicTypes)
+    {
+        if (listOfTopicTypes != null)
+        {
+            listOfTopicTypesLevel.Clear();
+            listOfTopicTypesLevel.AddRange(listOfTopicTypes);
+        }
+        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
     }
 
     #endregion

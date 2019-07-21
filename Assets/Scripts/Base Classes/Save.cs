@@ -91,6 +91,8 @@ public class SaveDataData
     public List<int> listOfNodeContactsByAuthorityKey = new List<int>();
     public List<ContactListWrapper> listOfContactsByNodeResistanceValue = new List<ContactListWrapper>();
     public List<int> listOfContactsByNodeResistanceKey = new List<int>();
+    //topics
+    public List<string> listOfTopicTypesLevel = new List<string>();
     //teams
     public int teamCounter;
     public List<SaveTeam> listOfTeams = new List<SaveTeam>();
