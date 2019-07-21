@@ -146,6 +146,24 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns true if Authority topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicAuthority()
+    {
+        return true;
+    }
+
+    /// <summary>
+    /// returns true if Resistance topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicRebel()
+    {
+        return true;
+    }
+
+    /// <summary>
     /// returns true if HQ topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
     /// </summary>
     /// <returns></returns>

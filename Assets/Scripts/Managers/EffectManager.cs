@@ -796,6 +796,14 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.topicScript.CheckTopicHQ() == false)
                                                 { BuildString(result, "no topics being available"); }
                                                 break;
+                                            case "TopicRebel":
+                                                if (GameManager.instance.topicScript.CheckTopicRebel() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
+                                            case "TopicAuthority":
+                                                if (GameManager.instance.topicScript.CheckTopicAuthority() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Toic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
