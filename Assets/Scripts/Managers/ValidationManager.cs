@@ -438,6 +438,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalSide);
         //GlobalWho
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalWho);
+        //Criteria
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCriteria);
         //EffectApply
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectApply);
         //EffectCriteria

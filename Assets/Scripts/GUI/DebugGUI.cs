@@ -47,6 +47,7 @@ public class DebugGUI : MonoBehaviour
     private int playerToggle = 0;
     private int contactToggle = 0;
     private int trackerToggle = 0;
+    private int topicToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";
@@ -381,6 +382,12 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 62)
                 { debugDisplay = 62; }
                 else { debugDisplay = 0; }
+                switch (topicToggle)
+                {
+                    case 0: debugDisplay = 62; topicToggle = 1; break;
+                    case 1: debugDisplay = 63; topicToggle = 2; break;
+                    case 2: debugDisplay = 0; topicToggle = 0; break;
+                }
             }
 
 
@@ -1469,7 +1476,13 @@ public class DebugGUI : MonoBehaviour
                     case 62:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicTypes();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
+                        break;
+                    //Topic Type lists
+                    case 63:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.topicScript.DisplayTopicTypeLists();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
                         break;
                 }
             }

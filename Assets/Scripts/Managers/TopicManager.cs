@@ -221,11 +221,49 @@ public class TopicManager : MonoBehaviour
         return builder.ToString();
     }
 
-    //Sub method for DebugDisplayTopicTypes to display a TopicData record
+    /// <summary>
+    /// Sub method for DebugDisplayTopicTypes to display a TopicData record
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     private string DisplayTypeRecord(TopicData data)
     {
         return string.Format(" {0} Av {1}, Last {2}, MinInt {3}, #Lvl {4}, #Cmp {5}{6}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
                         data.timesUsedLevel, data.timesUsedCampaign, "\n");
     }
+
+    /// <summary>
+    /// display two lists of topic Types
+    /// </summary>
+    /// <returns></returns>
+    public string DisplayTopicTypeLists()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listOfTopicTypes{0}", "\n");
+        //listOfTopicTypes
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        if (listOfTopicTypes != null)
+        {
+            foreach(TopicType topicType in listOfTopicTypes)
+            {
+                builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minimumInterval, "\n");
+                foreach(Criteria criteria in topicType.listOfCriteria)
+                { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
+        //listOfTopicTypesLevel
+        builder.AppendFormat("{0}{1}- listOfTopicTypesLevel{2}", "\n", "\n", "\n");
+        List<TopicType> listOfTopicTypeLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        if (listOfTopicTypeLevel != null)
+        {
+            foreach(TopicType typeLevel in listOfTopicTypeLevel)
+            { builder.AppendFormat(" {0}{1}", typeLevel.tag, "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
+        return builder.ToString();
+    }
+
+
     //new methods above here
 }

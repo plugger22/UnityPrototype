@@ -18,6 +18,7 @@ public class LoadManager : MonoBehaviour
     public GlobalType[] arrayOfGlobalType;
     public GlobalSide[] arrayOfGlobalSide;
     public GlobalWho[] arrayOfGlobalWho;
+    public Criteria[] arrayOfCriteria;
     public EffectApply[] arrayOfEffectApply;
     public EffectCriteria[] arrayOfEffectCriteria;
     public EffectDuration[] arrayOfEffectDuration;
@@ -133,7 +134,7 @@ public class LoadManager : MonoBehaviour
             numArray = arrayOfPersonProfiles.Length;
             if (numArray > 0)
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfPersonProfiles has {0} entries{1}", numArray, "\n"); }
-            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No PersonProfile present"); }
+            else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No PersonProfile present"); }
             //add to dictionary
             counter = 0;
             for (int i = 0; i < numArray; i++)
@@ -161,14 +162,14 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfGlobalMeta.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalMeta has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GlobalMeta present"); }
         //
         // - - - GlobalChance (not stored in a collection)
         //
         numArray = arrayOfGlobalChance.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalChance has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GlobalChance present"); }
         //
         // - - - GlobalType
         //
@@ -178,7 +179,7 @@ public class LoadManager : MonoBehaviour
             numArray = arrayOfGlobalType.Length;
             if (numArray > 0)
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalType has {0} entries{1}", numArray, "\n"); }
-            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalType present"); }
+            else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GlobalType present"); }
             //add to dictionary
             for (int i = 0; i < numArray; i++)
             {
@@ -204,7 +205,7 @@ public class LoadManager : MonoBehaviour
             numArray = arrayOfGlobalSide.Length;
             if (numArray > 0)
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
-            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
+            else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
             //add to dictionary
             for (int i = 0; i < numArray; i++) 
             {
@@ -226,49 +227,56 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfGlobalWho.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalWho has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
+        else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No GlobalWho present"); }
         //
         // - - - Effect (not stored in a collection)
         //
         numArray = arrayOfEffects.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffects has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Effects present"); }
+        else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No Effects present"); }
+        //
+        // - - - Criteria (not stored in a collection)
+        //
+        numArray = arrayOfCriteria.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCriteria has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No Criteria present"); }
         //
         // - - - EffectApply (not stored in a collection)
         //
         numArray = arrayOfEffectApply.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectApply has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectApply present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No EffectApply present"); }
         //
         // - - - EffectCriteria (not stored in a collection)
         //
         numArray = arrayOfEffectCriteria.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectCriteria has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectCriteria present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No EffectCriteria present"); }
         //
         // - - - EffectDuration (not stored in a collection)
         //
         numArray = arrayOfEffectDuration.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectDuration has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectDuration present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No EffectDuration present"); }
         //
         // - - - EffectOperator (not stored in a collection)
         //
         numArray = arrayOfEffectOperator.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOperator has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOperator present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No EffectOperator present"); }
         //
         // - - - EffectOutcome (not stored in a collection)
         //
         numArray = arrayOfEffectOutcome.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffectOutcome has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No EffectOutcome present"); }
 
         //
         // - - - ObjectiveTargets (not stored in a collection)
@@ -276,70 +284,70 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfObjectiveTargets.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfObjectiveTargets has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ObjectiveArcs present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ObjectiveArcs present"); }
         //
         // - - - ContactType (not stored in a collection)
         //
         numArray = arrayOfContactTypes.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfContactTypes has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ContactTypes present"); }
         //
         // - - - TargetType (not stored in a collection)
         //
         numArray = arrayOfTargetTypes.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetTypes has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TargetTypes present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TargetTypes present"); }
         //
         // - - - TargetTriggers (not stored in a collection)
         //
         numArray = arrayOfTargetTriggers.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetTriggers has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TargetTriggers present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TargetTriggers present"); }
         //
         // - - - TargetProfile (not stored in a collection)
         //
         numArray = arrayOfTargetProfiles.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetProfiles has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TargetProfiles present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TargetProfiles present"); }
         //
         // - - - Text Lists Contacts (not stored in a collection)
         //
         numArray = arrayOfContactTextLists.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfContactTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ContactTextLists present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ContactTextLists present"); }
         //
         // - - - Text Lists Names (not stored in a collection)
         //
         numArray = arrayOfNameTextLists.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNameTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NameTextLists present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NameTextLists present"); }
         //
         // - - - Text Lists Districts (not stored in a collection)
         //
         numArray = arrayOfDistrictTextLists.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfDistrictTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No DistrictTextLists present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No DistrictTextLists present"); }
         //
         // - - - Text Lists Shorts (not stored in a collection)
         //
         numArray = arrayOfShortTextLists.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfShortTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
         //
         // - - - Text Lists Factors (not stored in a collection)
         //
         numArray = arrayOfFactorTextLists.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfFactorTextLists has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ShortTextLists present"); }
         //
         // - - - NameSets (not stored in a collection)
         //
@@ -349,7 +357,7 @@ public class LoadManager : MonoBehaviour
             numArray = arrayOfNameSets.Length;
             if (numArray > 0)
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNameSets has {0} entries{1}", numArray, "\n"); }
-            else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NameSets present"); }
+            else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NameSets present"); }
             for (int i = 0; i < numArray; i++)
             {
                 NameSet set = arrayOfNameSets[i];
@@ -370,77 +378,77 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfCityArcs.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityArcs has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityArcs present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CityArcs present"); }
         //
         // - - - CitySize (not stored in a collection)
         //
         numArray = arrayOfCitySize.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCitySize has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CitySize present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CitySize present"); }
         //
         // - - - CitySpacing (not stored in a collection)
         //
         numArray = arrayOfCitySpacing.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCitySpacing has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CitySpacing present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CitySpacing present"); }
         //
         // - - - CityConnections (not stored in a collection)
         //
         numArray = arrayOfCityConnections.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCityConnections has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CityConnections present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CityConnections present"); }
         //
         // - - - CitySecurity (not stored in a collection)
         //
         numArray = arrayOfCitySecurity.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCitySecurity has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No CitySecurity present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CitySecurity present"); }
         //
         // - - - Scenario (not stored in a collection)
         //
         numArray = arrayOfScenarios.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfScenarios has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Scenario present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Scenario present"); }
         //
         // - - - Damage (not stored in a collection)
         //
         numArray = arrayOfDamages.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfDamages has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Damages present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Damages present"); }
         //
         // - - - Challenge (not stored in a collection)
         //
         numArray = arrayOfChallenges.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfChallenges has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Challenges present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Challenges present"); }
         //
         // - - - Nemesis (not stored in a collection)
         //
         numArray = arrayOfNemesis.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNemesis has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Nemesis present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Nemesis present"); }
         //
         // - - - Rebel Leaders (not stored in a collection)
         //
         numArray = arrayOfRebelLeaders.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
         //
         // - - - Mission (not stored in a collection)
         //
         numArray = arrayOfMissions.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfMissions has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Missions present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Missions present"); }
         //
         // - - - Quality
         //
@@ -485,21 +493,21 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogWarning("Invalid listAuthority (size different to numOfQualities)"); }
         }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Qualities present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Qualities present"); }
         //
         // - - - Colours (not stored in a collection)
         //
         numArray = arrayOfColours.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfColours has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No colours present"); }        
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No colours present"); }        
         //
         // - - - Mission (not stored in a collection)
         //
         numArray = arrayOfMissions.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfMissions has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Missions present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Missions present"); }
         //
         // - - - Conditions - - -
         //
@@ -523,7 +531,7 @@ public class LoadManager : MonoBehaviour
             Debug.LogFormat("[Loa] InitialiseStart -> dictOfConditions has {0} entries{1}", numDict, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Condition Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Conditions present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Conditions present"); }
         //
         // - - - Cures - - -
         //
@@ -552,7 +560,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch on Cure Load -> array {0}, dict {1}", numArray, numDict));
             Debug.Assert(counter == numDict, string.Format("Mismatch on Cure Load -> counter {0}, dict {1}", counter, numDict));
         }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No Cures present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Cures present"); }
         //
         // - - - TraitCategories - - -
         //
@@ -576,7 +584,7 @@ public class LoadManager : MonoBehaviour
             Debug.LogFormat("[Loa] InitialiseStart -> dictOfTraitCategories has {0} entries{1}", numDict, "\n");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on TraitCategory Load -> array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No TraitCategories present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TraitCategories present"); }
         //
         // - - - TraitEffects - - -
         //
@@ -642,7 +650,7 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfNodeDatapoints.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNodeDatapoints has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
     }
     #endregion
 
@@ -1184,7 +1192,7 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfManageActors.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfManageActors has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning("[Loa] LoadManager.cs -> InitialiseStart: No ManageActors present"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ManageActors present"); }
         //
         // - - - Manage Actions - - -
         //
