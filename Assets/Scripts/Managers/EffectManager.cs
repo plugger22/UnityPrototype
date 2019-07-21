@@ -254,557 +254,533 @@ public class EffectManager : MonoBehaviour
                 {
                     if (criteria != null)
                     {
-                        if (criteria.apply != null)
+                        if (criteria.effectCriteria != null)
                         {
-                            switch (criteria.apply.name)
+                            if (criteria.apply != null)
                             {
+                                switch (criteria.apply.name)
+                                {
 
-                                //
-                                // - - - Current Node - - -
-                                //
-                                case "NodeCurrent":
-                                    if (node != null)
-                                    {
-                                        if (criteria.effectCriteria != null)
+                                    //
+                                    // - - - Current Node - - -
+                                    //
+                                    case "NodeCurrent":
+                                        if (node != null)
                                         {
-                                            switch (criteria.effectCriteria.name)
-                                            {
-                                                case "NodeSecurityMin":
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
-                                                    compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "Security " + compareTip); }
-                                                    break;
-                                                case "NodeStabilityMin":
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
-                                                    compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "Stability " + compareTip); }
-                                                    break;
-                                                case "NodeStabilityLow":
-                                                    val = GameManager.instance.nodeScript.medNodeValue;
-                                                    compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "Stability " + compareTip); }
-                                                    break;
-                                                case "NodeSupportMax":
-                                                    val = GameManager.instance.nodeScript.maxNodeValue;
-                                                    compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "Support " + compareTip); }
-                                                    break;
-                                                case "NumTeamsMin":
-                                                    val = GameManager.instance.teamScript.minTeamsAtNode;
-                                                    compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "no Teams present"); }
-                                                    break;
-                                                case "NumTeamsMax":
-                                                    val = GameManager.instance.teamScript.maxTeamsAtNode;
-                                                    compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "Max teams present"); }
-                                                    break;
-                                                case "NumTracers":
-                                                    if (node.isTracer == true)
-                                                    { BuildString(result, "Tracer already present"); }
-                                                    break;
-                                                case "TargetInfoMax":
-                                                    val = GameManager.instance.targetScript.maxTargetInfo;
-                                                    Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
-                                                    if (target != null)
-                                                    {
-                                                        compareTip = ComparisonCheck(val, target.intel, criteria.comparison);
+                                                switch (criteria.effectCriteria.name)
+                                                {
+                                                    case "NodeSecurityMin":
+                                                        val = GameManager.instance.nodeScript.minNodeValue;
+                                                        compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
                                                         if (compareTip != null)
-                                                        { BuildString(result, "Full Info already"); }
-                                                    }
-                                                    else { Debug.LogErrorFormat("Invalid target (Null) for {0}", node.targetName); }
-                                                    break;
-                                                case "TargetPresent":
-                                                    //check that a target is present at the node
-                                                    if (string.IsNullOrEmpty(node.targetName) == true)
-                                                    { BuildString(result, "No Target present"); }
-                                                    break;
-                                                case "TeamActorAbility":
-                                                    //actor can only have a number of teams OnMap equal to their ability at any time
-                                                    if (actor != null)
-                                                    {
-                                                        if (actor.CheckNumOfTeams() >= actor.GetDatapoint(ActorDatapoint.Ability2))
-                                                        { BuildString(result, "Actor Ability exceeded"); }
-                                                    }
-                                                    else
-                                                    { Debug.LogError(string.Format("Invalid Actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
-                                                    break;
-                                                case "TeamIdentical":
-                                                    //there can only be one team of a type at a node
-                                                    if (node.CheckTeamPresent(data.teamArcID) > -1)
-                                                    { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
-                                                    break;
-                                                case "TeamPreferred":
-                                                    //there must be a spare team in the reserve pool of the actors preferred type
-                                                    if (teamArc != null)
-                                                    {
-                                                        if (GameManager.instance.dataScript.CheckTeamInfo(data.teamArcID, TeamInfo.Reserve) < 1)
-                                                        { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
-                                                    }
-                                                    else
-                                                    { Debug.LogError(string.Format("Invalid teamArc (null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
-                                                    break;
-                                                case "TeamAny":
-                                                    //there must be a spare team of any type in the reserve pool
-                                                    if (teamArc != null)
-                                                    {
-                                                        if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
-                                                        { BuildString(result, string.Format("No Teams available", teamArc.name)); }
-                                                    }
-                                                    else
-                                                    { Debug.LogError(string.Format("Invalid teamArc (null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
-                                                    break;
-                                                case "TeamCivilNo":
-                                                    //A Civil team can't be present
-                                                    if (node != null)
-                                                    {
-                                                        if (node.CheckTeamPresent(teamArcCivil) > -1)
-                                                        { BuildString(result, string.Format("{0}CIVIL team present{1}", colourBadSide, colourEnd)); }
-                                                    }
-                                                    break;
-                                                case "TeamProbeNo":
-                                                    //A Probe team can't be present
-                                                    if (node != null)
-                                                    {
-                                                        if (node.CheckTeamPresent(teamArcProbe) > -1)
-                                                        { BuildString(result, string.Format("{0}PROBE team present{1}", colourBadSide, colourEnd)); }
-                                                    }
-                                                    break;
-                                                case "TeamControlNo":
-                                                    //A Control team can't be present
-                                                    if (node != null)
-                                                    {
-                                                        if (node.CheckTeamPresent(teamArcControl) > -1)
-                                                        { BuildString(result, string.Format("{0}CONTROL team present{1}", colourBadSide, colourEnd)); }
-                                                    }
-                                                    break;
-                                                case "TeamSpiderNo":
-                                                    //A Spider team can't be present
-                                                    if (node != null)
-                                                    {
-                                                        if (node.CheckTeamPresent(teamArcSpider) > -1)
-                                                        { BuildString(result, string.Format("{0}SPIDER team present{1}", colourBadSide, colourEnd)); }
-                                                    }
-                                                    break;
-                                                case "TeamMediaNo":
-                                                    //A Media team can't be present
-                                                    if (node != null)
-                                                    {
-                                                        if (node.CheckTeamPresent(teamArcMedia) > -1)
-                                                        { BuildString(result, string.Format("{0}MEDIA team present{1}", colourBadSide, colourEnd)); }
-                                                    }
-                                                    break;
-                                                default:
-                                                    BuildString(result, "Error!");
-                                                    Debug.LogWarning(string.Format("NodeCurrent: Invalid criteriaEffect \"{0}\"", criteria.effectCriteria.name));
-                                                    errorFlag = true;
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for criteria {0}", criteria.name));
-                                            errorFlag = true;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
-                                        errorFlag = true;
-                                    }
-                                    break;
-                                //
-                                // - - - Neighbouring nodes - - -
-                                //
-                                case "NodeNeighbours":
-                                    if (node != null)
-                                    {
-                                        if (criteria.effectCriteria != null)
-                                        {
-                                            switch (criteria.effectCriteria.name)
-                                            {
-                                                case "NodeStabilityMin":
-                                                    //at least one neighbouring node must have stability > 0
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
-                                                    List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
-                                                    if (listOfNeighbouringNodes != null)
-                                                    {
-                                                        bool atLeastOneOK = false;
-                                                        //loop neighbouring nodes (current node excluded)
-                                                        foreach (Node nearNode in listOfNeighbouringNodes)
+                                                        { BuildString(result, "Security " + compareTip); }
+                                                        break;
+                                                    case "NodeStabilityMin":
+                                                        val = GameManager.instance.nodeScript.minNodeValue;
+                                                        compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
+                                                        if (compareTip != null)
+                                                        { BuildString(result, "Stability " + compareTip); }
+                                                        break;
+                                                    case "NodeStabilityLow":
+                                                        val = GameManager.instance.nodeScript.medNodeValue;
+                                                        compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
+                                                        if (compareTip != null)
+                                                        { BuildString(result, "Stability " + compareTip); }
+                                                        break;
+                                                    case "NodeSupportMax":
+                                                        val = GameManager.instance.nodeScript.maxNodeValue;
+                                                        compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
+                                                        if (compareTip != null)
+                                                        { BuildString(result, "Support " + compareTip); }
+                                                        break;
+                                                    case "NumTeamsMin":
+                                                        val = GameManager.instance.teamScript.minTeamsAtNode;
+                                                        compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
+                                                        if (compareTip != null)
+                                                        { BuildString(result, "no Teams present"); }
+                                                        break;
+                                                    case "NumTeamsMax":
+                                                        val = GameManager.instance.teamScript.maxTeamsAtNode;
+                                                        compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
+                                                        if (compareTip != null)
+                                                        { BuildString(result, "Max teams present"); }
+                                                        break;
+                                                    case "NumTracers":
+                                                        if (node.isTracer == true)
+                                                        { BuildString(result, "Tracer already present"); }
+                                                        break;
+                                                    case "TargetInfoMax":
+                                                        val = GameManager.instance.targetScript.maxTargetInfo;
+                                                        Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
+                                                        if (target != null)
                                                         {
-                                                            compareTip = ComparisonCheck(val, nearNode.Stability, criteria.comparison);
-                                                            if (compareTip == null)
-                                                            { atLeastOneOK = true; break; }
+                                                            compareTip = ComparisonCheck(val, target.intel, criteria.comparison);
+                                                            if (compareTip != null)
+                                                            { BuildString(result, "Full Info already"); }
                                                         }
-                                                        if (atLeastOneOK == false)
-                                                        { BuildString(result, "Near Nodes Stability > 0"); }
-                                                    }
-                                                    else { Debug.LogError("Invalid listOfNeighbouringNodes (Null)"); errorFlag = true; }
-                                                    break;
-                                                default:
-                                                    BuildString(result, "Error!");
-                                                    Debug.LogWarning(string.Format("NodeNeighbours: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
-                                                    errorFlag = true;
-                                                    break;
-                                            }
+                                                        else { Debug.LogErrorFormat("Invalid target (Null) for {0}", node.targetName); }
+                                                        break;
+                                                    case "TargetPresent":
+                                                        //check that a target is present at the node
+                                                        if (string.IsNullOrEmpty(node.targetName) == true)
+                                                        { BuildString(result, "No Target present"); }
+                                                        break;
+                                                    case "TeamActorAbility":
+                                                        //actor can only have a number of teams OnMap equal to their ability at any time
+                                                        if (actor != null)
+                                                        {
+                                                            if (actor.CheckNumOfTeams() >= actor.GetDatapoint(ActorDatapoint.Ability2))
+                                                            { BuildString(result, "Actor Ability exceeded"); }
+                                                        }
+                                                        else
+                                                        { Debug.LogError(string.Format("Invalid Actor (Null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                        break;
+                                                    case "TeamIdentical":
+                                                        //there can only be one team of a type at a node
+                                                        if (node.CheckTeamPresent(data.teamArcID) > -1)
+                                                        { BuildString(result, string.Format(" {0} Team already present", teamArc.name)); }
+                                                        break;
+                                                    case "TeamPreferred":
+                                                        //there must be a spare team in the reserve pool of the actors preferred type
+                                                        if (teamArc != null)
+                                                        {
+                                                            if (GameManager.instance.dataScript.CheckTeamInfo(data.teamArcID, TeamInfo.Reserve) < 1)
+                                                            { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
+                                                        }
+                                                        else
+                                                        { Debug.LogError(string.Format("Invalid teamArc (null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                        break;
+                                                    case "TeamAny":
+                                                        //there must be a spare team of any type in the reserve pool
+                                                        if (teamArc != null)
+                                                        {
+                                                            if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
+                                                            { BuildString(result, string.Format("No Teams available", teamArc.name)); }
+                                                        }
+                                                        else
+                                                        { Debug.LogError(string.Format("Invalid teamArc (null) for criteria \"{0}\"", criteria.name)); errorFlag = true; }
+                                                        break;
+                                                    case "TeamCivilNo":
+                                                        //A Civil team can't be present
+                                                        if (node != null)
+                                                        {
+                                                            if (node.CheckTeamPresent(teamArcCivil) > -1)
+                                                            { BuildString(result, string.Format("{0}CIVIL team present{1}", colourBadSide, colourEnd)); }
+                                                        }
+                                                        break;
+                                                    case "TeamProbeNo":
+                                                        //A Probe team can't be present
+                                                        if (node != null)
+                                                        {
+                                                            if (node.CheckTeamPresent(teamArcProbe) > -1)
+                                                            { BuildString(result, string.Format("{0}PROBE team present{1}", colourBadSide, colourEnd)); }
+                                                        }
+                                                        break;
+                                                    case "TeamControlNo":
+                                                        //A Control team can't be present
+                                                        if (node != null)
+                                                        {
+                                                            if (node.CheckTeamPresent(teamArcControl) > -1)
+                                                            { BuildString(result, string.Format("{0}CONTROL team present{1}", colourBadSide, colourEnd)); }
+                                                        }
+                                                        break;
+                                                    case "TeamSpiderNo":
+                                                        //A Spider team can't be present
+                                                        if (node != null)
+                                                        {
+                                                            if (node.CheckTeamPresent(teamArcSpider) > -1)
+                                                            { BuildString(result, string.Format("{0}SPIDER team present{1}", colourBadSide, colourEnd)); }
+                                                        }
+                                                        break;
+                                                    case "TeamMediaNo":
+                                                        //A Media team can't be present
+                                                        if (node != null)
+                                                        {
+                                                            if (node.CheckTeamPresent(teamArcMedia) > -1)
+                                                            { BuildString(result, string.Format("{0}MEDIA team present{1}", colourBadSide, colourEnd)); }
+                                                        }
+                                                        break;
+                                                    default:
+                                                        BuildString(result, "Error!");
+                                                        Debug.LogWarning(string.Format("NodeCurrent: Invalid criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                        errorFlag = true;
+                                                        break;
+                                                }
                                         }
                                         else
                                         {
-                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for criteria {0}", criteria.name));
+                                            Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
                                             errorFlag = true;
                                         }
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
-                                        errorFlag = true;
-                                    }
-                                    break;
-                                //
-                                // - - - All Nodes - - -
-                                //
-                                case "NodeAll":
-                                    if (node != null)
-                                    {
-                                        if (criteria.effectCriteria != null)
+                                        break;
+                                    //
+                                    // - - - Neighbouring nodes - - -
+                                    //
+                                    case "NodeNeighbours":
+                                        if (node != null)
                                         {
+                                                switch (criteria.effectCriteria.name)
+                                                {
+                                                    case "NodeStabilityMin":
+                                                        //at least one neighbouring node must have stability > 0
+                                                        val = GameManager.instance.nodeScript.minNodeValue;
+                                                        List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
+                                                        if (listOfNeighbouringNodes != null)
+                                                        {
+                                                            bool atLeastOneOK = false;
+                                                            //loop neighbouring nodes (current node excluded)
+                                                            foreach (Node nearNode in listOfNeighbouringNodes)
+                                                            {
+                                                                compareTip = ComparisonCheck(val, nearNode.Stability, criteria.comparison);
+                                                                if (compareTip == null)
+                                                                { atLeastOneOK = true; break; }
+                                                            }
+                                                            if (atLeastOneOK == false)
+                                                            { BuildString(result, "Near Nodes Stability > 0"); }
+                                                        }
+                                                        else { Debug.LogError("Invalid listOfNeighbouringNodes (Null)"); errorFlag = true; }
+                                                        break;
+                                                    default:
+                                                        BuildString(result, "Error!");
+                                                        Debug.LogWarning(string.Format("NodeNeighbours: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                        errorFlag = true;
+                                                        break;
+                                                }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
+                                            errorFlag = true;
+                                        }
+                                        break;
+                                    //
+                                    // - - - All Nodes - - -
+                                    //
+                                    case "NodeAll":
+                                        if (node != null)
+                                        {
+                                                switch (criteria.effectCriteria.name)
+                                                {
+                                                    case "TargetPresent":
+                                                        //There must be at least one Live target
+                                                        List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+                                                        if (listOfLiveTargets != null)
+                                                        {
+                                                            if (listOfLiveTargets.Count == 0)
+                                                            { BuildString(result, "No Targets present"); }
+                                                            else
+                                                            {
+                                                                bool isSuccess = false;
+                                                                //loop targets looking for at least one who has targetInfo < max
+                                                                foreach (Target target in listOfLiveTargets)
+                                                                {
+                                                                    if (target.intel < maxTargetInfo)
+                                                                    { isSuccess = true; break; }
+                                                                }
+                                                                if (isSuccess == false)
+                                                                { BuildString(result, "All Targets have MAX Info already"); }
+                                                            }
+                                                        }
+                                                        else { Debug.LogError("Invalid listOfLiveTargets (Null)"); errorFlag = true; }
+                                                        break;
+                                                    default:
+                                                        BuildString(result, "Error!");
+                                                        Debug.LogWarning(string.Format("NodeNeighbours: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                        errorFlag = true;
+                                                        break;
+                                                }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
+                                            errorFlag = true;
+                                        }
+                                        break;
+                                    //
+                                    // - - - Current Actor / Player - - -
+                                    //
+                                    case "ActorCurrent":
+                                            int playerRenown;
                                             switch (criteria.effectCriteria.name)
                                             {
-                                                case "TargetPresent":
-                                                    //There must be at least one Live target
-                                                    List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
-                                                    if (listOfLiveTargets != null)
+                                                case "ConditionStressedYes":
+                                                    //actor has the 'Stressed' condition
+                                                    if (conditionStressed != null)
                                                     {
-                                                        if (listOfLiveTargets.Count == 0)
-                                                        { BuildString(result, "No Targets present"); }
+                                                        if (actor != null)
+                                                        {
+                                                            if (actor.CheckConditionPresent(conditionStressed) == false)
+                                                            { BuildString(result, string.Format(" {0} isn't {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
                                                         else
                                                         {
-                                                            bool isSuccess = false;
-                                                            //loop targets looking for at least one who has targetInfo < max
-                                                            foreach (Target target in listOfLiveTargets)
-                                                            {
-                                                                if (target.intel < maxTargetInfo)
-                                                                { isSuccess = true; break; }
-                                                            }
-                                                            if (isSuccess == false)
-                                                            { BuildString(result, "All Targets have MAX Info already"); }
+                                                            //player
+                                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == false)
+                                                            { BuildString(result, string.Format(" Player isn't {0}STRESSED{1}", colourNeutral, colourEnd)); }
                                                         }
                                                     }
-                                                    else { Debug.LogError("Invalid listOfLiveTargets (Null)"); errorFlag = true; }
+                                                    else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "ConditionStressedNo":
+                                                    //actor / player does NOT have the 'Stressed' condition
+                                                    if (conditionStressed != null)
+                                                    {
+                                                        if (actor != null)
+                                                        {
+                                                            //actor
+                                                            if (actor.CheckConditionPresent(conditionStressed) == true)
+                                                            { BuildString(result, string.Format(" {0} is {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
+                                                        else
+                                                        {
+                                                            //player
+                                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
+                                                            { BuildString(result, string.Format(" Player is {0}STRESSED{1}", colourNeutral, colourEnd)); }
+                                                        }
+                                                    }
+                                                    else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "ConditionCorruptYes":
+                                                    if (conditionCorrupt != null)
+                                                    {
+                                                        if (actor != null)
+                                                        {
+                                                            //actor
+                                                            if (actor.CheckConditionPresent(conditionCorrupt) == false)
+                                                            { BuildString(result, string.Format(" {0} isn't {1}CORRUPT{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
+                                                        else
+                                                        {
+                                                            //player
+                                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == false)
+                                                            { BuildString(result, string.Format(" Player isn't {0}CORRUPT{1}", colourNeutral, colourEnd)); }
+                                                        }
+                                                    }
+                                                    else { Debug.LogWarning("Invalid conditionCorrupt (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "ConditionIncompetentYes":
+                                                    if (conditionIncompetent != null)
+                                                    {
+                                                        if (actor != null)
+                                                        {
+                                                            //actor
+                                                            if (actor.CheckConditionPresent(conditionIncompetent) == false)
+                                                            { BuildString(result, string.Format(" {0} isn't {1}INCOMPETENT{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
+                                                        else
+                                                        {
+                                                            //player
+                                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == false)
+                                                            { BuildString(result, string.Format(" Player isn't {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
+                                                        }
+                                                    }
+                                                    else { Debug.LogWarning("Invalid conditionIncompetent (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "ConditionQuestionableYes":
+                                                    if (conditionQuestionable != null)
+                                                    {
+                                                        if (actor != null)
+                                                        {
+                                                            if (actor.CheckConditionPresent(conditionQuestionable) == false)
+                                                            { BuildString(result, string.Format(" {0} isn't {1}QUESTIONABLE{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
+                                                        else
+                                                        {
+                                                            //player
+                                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == false)
+                                                            { BuildString(result, string.Format(" Player isn't {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
+                                                        }
+                                                    }
+                                                    else { Debug.LogWarning("Invalid conditionQuestionable (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "ConditionStarYes":
+                                                    if (conditionStar != null)
+                                                    {
+                                                        if (actor != null)
+                                                        {
+                                                            if (actor.CheckConditionPresent(conditionStar) == false)
+                                                            { BuildString(result, string.Format(" {0} isn't a {1}STAR{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
+                                                        else
+                                                        {
+                                                            //player
+                                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar, playerSide) == false)
+                                                            { BuildString(result, string.Format(" Player isn't a {0}STAR{1}", colourNeutral, colourEnd)); }
+                                                        }
+                                                    }
+                                                    else { Debug.LogWarning("Invalid conditionStar (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "ConditionBlackmailerNo":
+                                                    //actor only  does NOT have the 'Blackmailer' condition
+                                                    if (conditionBlackmailer != null)
+                                                    {
+                                                        if (actor != null)
+                                                        {
+                                                            //actor
+                                                            if (actor.CheckConditionPresent(conditionBlackmailer) == true)
+                                                            { BuildString(result, string.Format(" {0} already {1}BLACKMAILING{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        }
+                                                        else
+                                                        { Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
+                                                    }
+                                                    else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                    break;
+                                                case "TraitBlackmailNoneNo":
+                                                    if (actor != null)
+                                                    {
+                                                        //actor -> doesn't have 'Honorable' trait
+                                                        if (actor.CheckTraitEffect(actorBlackmailNone) == true)
+                                                        { BuildString(result, string.Format(" {0} has {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
+                                                    }
+                                                    else
+                                                    { Debug.LogWarning("Invalid actor (Null) for TraitBlackmailNone"); }
+                                                    break;
+                                                case "TraitConflictPoisonYes":
+                                                    if (actor != null)
+                                                    {
+                                                        //actor -> HAS 'Snake' trait
+                                                        if (actor.CheckTraitEffect(actorConflictPoison) == false)
+                                                        { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName)); }
+                                                    }
+                                                    else
+                                                    { Debug.LogWarning("Invalid actor (Null) for TraitConflictPoisonYes"); }
+                                                    break;
+                                                case "TraitConflictKillYes":
+                                                    if (actor != null)
+                                                    {
+                                                        //actor -> HAS 'Psychopath' trait
+                                                        if (actor.CheckTraitEffect(actorConflictKill) == false)
+                                                        { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName)); }
+                                                    }
+                                                    else
+                                                    { Debug.LogWarning("Invalid actor (Null) for TraitConflictKillYes"); }
+                                                    break;
+                                                case "RenownReserveMin":
+                                                    //player
+                                                    int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
+                                                    playerRenown = GameManager.instance.playerScript.Renown;
+                                                    if (playerRenown < renownReserve)
+                                                    {
+                                                        BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve,
+                                                          colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                    }
+                                                    break;
+                                                case "RenownDismissMin":
+                                                    //player -> extra cost for actor knowing secrets and threatening player
+                                                    ManageRenownCost manageDismissCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
+                                                    int renownDismiss = manageDismissCost.renownCost;
+                                                    playerRenown = GameManager.instance.playerScript.Renown;
+                                                    if (playerRenown < renownDismiss)
+                                                    {
+                                                        BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
+                                                          colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                        if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
+                                                        { result.Append(manageDismissCost.tooltip); }
+                                                    }
+                                                    break;
+                                                case "RenownDisposeMin":
+                                                    //player -> extra cost for actor knowing secrets and threatening player
+                                                    ManageRenownCost manageDisposeCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDisposeRenown);
+                                                    int renownDispose = manageDisposeCost.renownCost;
+                                                    playerRenown = GameManager.instance.playerScript.Renown;
+                                                    if (playerRenown < renownDispose)
+                                                    {
+                                                        BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
+                                                          colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                        if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
+                                                        { result.Append(manageDisposeCost.tooltip); }
+                                                    }
+                                                    break;
+                                                case "RenownNOTZero":
+                                                    //Player / Actor
+                                                    playerRenown = GameManager.instance.playerScript.Renown;
+                                                    if (playerRenown == 0)
+                                                    { BuildString(result, "Renown Zero"); }
+                                                    break;
+                                                case "NumRecruitsCurrent":
+                                                    //check max. number of recruits in reserve pool not exceeded
+                                                    val = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
+                                                    compareTip = ComparisonCheck(GameManager.instance.actorScript.maxNumOfReserveActors, val, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "maxxed Recruit allowance"); }
+                                                    break;
+                                                case "InvisibilityNOTMax":
+                                                    //check invisibility is less than the max value -> Actor / Player
+                                                    if (actor != null)
+                                                    { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                                                    else { val = GameManager.instance.playerScript.Invisibility; }
+                                                    if (val == GameManager.instance.actorScript.maxStatValue)
+                                                    { BuildString(result, "Invisibility at Max"); }
+                                                    break;
+                                                case "InvisibilityNOTZero":
+                                                    //check invisibility greater than Zero -> Actor / Player
+                                                    if (actor != null)
+                                                    { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                                                    else { val = GameManager.instance.playerScript.Invisibility; }
+                                                    if (val == 0)
+                                                    { BuildString(result, "Invisibility Zero"); }
+                                                    break;
+                                                case "SecretsNOTZero":
+                                                    //check num of secrets greater than Zero -> Actor / Player
+                                                    if (actor != null)
+                                                    { val = actor.CheckNumOfSecrets(); }
+                                                    else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
+                                                    if (val == 0)
+                                                    { BuildString(result, "Secrets Zero"); }
+                                                    break;
+                                                case "NumGearMax":
+                                                    //Note: effect criteria value is ignored in this case
+                                                    val = GameManager.instance.gearScript.maxNumOfGear;
+                                                    compareTip = ComparisonCheck(val, GameManager.instance.playerScript.CheckNumOfGear(), criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "maxxed Gear Allowance"); }
+                                                    break;
+                                                case "GearAvailability":
+                                                    //checks to see if at least 1 piece of unused common gear is available
+                                                    List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
+                                                    if (tempCommonGear.Count > 0)
+                                                    {
+                                                        //remove from lists any gear that the player currently has
+                                                        List<string> tempPlayerGear = new List<string>(GameManager.instance.playerScript.GetListOfGear());
+                                                        string gearName;
+                                                        if (tempPlayerGear.Count > 0)
+                                                        {
+                                                            for (int i = 0; i < tempPlayerGear.Count; i++)
+                                                            {
+                                                                gearName = tempPlayerGear[i];
+                                                                if (tempCommonGear.Exists(x => x == gearName) == true)
+                                                                { tempCommonGear.Remove(gearName); }
+                                                            }
+                                                        }
+                                                        if (tempCommonGear.Count == 0)
+                                                        { BuildString(result, "No Gear available"); }
+                                                    }
+                                                    else { BuildString(result, "No Gear available"); }
                                                     break;
                                                 default:
                                                     BuildString(result, "Error!");
-                                                    Debug.LogWarning(string.Format("NodeNeighbours: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                    Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                     errorFlag = true;
                                                     break;
                                             }
-                                        }
-                                        else
-                                        {
-                                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for criteria {0}", criteria.name));
-                                            errorFlag = true;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError(string.Format("Invalid node (null) for criteria \"{0}\"", criteria.name));
+                                        break;
+                                    default:
+                                        BuildString(result, "Error!");
+                                        Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));
                                         errorFlag = true;
-                                    }
-                                    break;
-                                //
-                                // - - - Current Actor / Player - - -
-                                //
-                                case "ActorCurrent":
-                                    if (criteria.effectCriteria != null)
-                                    {
-                                        int playerRenown;
-                                        switch (criteria.effectCriteria.name)
-                                        {
-                                            case "ConditionStressedYes":
-                                                //actor has the 'Stressed' condition
-                                                if (conditionStressed != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        if (actor.CheckConditionPresent(conditionStressed) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    {
-                                                        //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == false)
-                                                        { BuildString(result, string.Format(" Player isn't {0}STRESSED{1}", colourNeutral, colourEnd)); }
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
-                                                break;
-                                            case "ConditionStressedNo":
-                                                //actor / player does NOT have the 'Stressed' condition
-                                                if (conditionStressed != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        //actor
-                                                        if (actor.CheckConditionPresent(conditionStressed) == true)
-                                                        { BuildString(result, string.Format(" {0} is {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    {
-                                                        //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
-                                                        { BuildString(result, string.Format(" Player is {0}STRESSED{1}", colourNeutral, colourEnd)); }
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
-                                                break;
-                                            case "ConditionCorruptYes":
-                                                if (conditionCorrupt != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        //actor
-                                                        if (actor.CheckConditionPresent(conditionCorrupt) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't {1}CORRUPT{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    {
-                                                        //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == false)
-                                                        { BuildString(result, string.Format(" Player isn't {0}CORRUPT{1}", colourNeutral, colourEnd)); }
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionCorrupt (Null)"); errorFlag = true; }
-                                                break;
-                                            case "ConditionIncompetentYes":
-                                                if (conditionIncompetent != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        //actor
-                                                        if (actor.CheckConditionPresent(conditionIncompetent) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't {1}INCOMPETENT{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    {
-                                                        //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == false)
-                                                        { BuildString(result, string.Format(" Player isn't {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionIncompetent (Null)"); errorFlag = true; }
-                                                break;
-                                            case "ConditionQuestionableYes":
-                                                if (conditionQuestionable != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        if (actor.CheckConditionPresent(conditionQuestionable) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't {1}QUESTIONABLE{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    {
-                                                        //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == false)
-                                                        { BuildString(result, string.Format(" Player isn't {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionQuestionable (Null)"); errorFlag = true; }
-                                                break;
-                                            case "ConditionStarYes":
-                                                if (conditionStar != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        if (actor.CheckConditionPresent(conditionStar) == false)
-                                                        { BuildString(result, string.Format(" {0} isn't a {1}STAR{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    {
-                                                        //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar, playerSide) == false)
-                                                        { BuildString(result, string.Format(" Player isn't a {0}STAR{1}", colourNeutral, colourEnd)); }
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionStar (Null)"); errorFlag = true; }
-                                                break;
-                                            case "ConditionBlackmailerNo":
-                                                //actor only  does NOT have the 'Blackmailer' condition
-                                                if (conditionBlackmailer != null)
-                                                {
-                                                    if (actor != null)
-                                                    {
-                                                        //actor
-                                                        if (actor.CheckConditionPresent(conditionBlackmailer) == true)
-                                                        { BuildString(result, string.Format(" {0} already {1}BLACKMAILING{2}", actor.actorName, colourNeutral, colourEnd)); }
-                                                    }
-                                                    else
-                                                    { Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
-                                                }
-                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
-                                                break;
-                                            case "TraitBlackmailNoneNo":
-                                                if (actor != null)
-                                                {
-                                                    //actor -> doesn't have 'Honorable' trait
-                                                    if (actor.CheckTraitEffect(actorBlackmailNone) == true)
-                                                    { BuildString(result, string.Format(" {0} has {1}{2}{3}", actor.actorName, colourNeutral, actor.GetTrait().tag, colourEnd)); }
-                                                }
-                                                else
-                                                { Debug.LogWarning("Invalid actor (Null) for TraitBlackmailNone"); }
-                                                break;
-                                            case "TraitConflictPoisonYes":
-                                                if (actor != null)
-                                                {
-                                                    //actor -> HAS 'Snake' trait
-                                                    if (actor.CheckTraitEffect(actorConflictPoison) == false)
-                                                    { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName)); }
-                                                }
-                                                else
-                                                { Debug.LogWarning("Invalid actor (Null) for TraitConflictPoisonYes"); }
-                                                break;
-                                            case "TraitConflictKillYes":
-                                                if (actor != null)
-                                                {
-                                                    //actor -> HAS 'Psychopath' trait
-                                                    if (actor.CheckTraitEffect(actorConflictKill) == false)
-                                                    { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName)); }
-                                                }
-                                                else
-                                                { Debug.LogWarning("Invalid actor (Null) for TraitConflictKillYes"); }
-                                                break;
-                                            case "RenownReserveMin":
-                                                //player
-                                                int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
-                                                playerRenown = GameManager.instance.playerScript.Renown;
-                                                if (playerRenown < renownReserve)
-                                                {
-                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve,
-                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
-                                                }
-                                                break;
-                                            case "RenownDismissMin":
-                                                //player -> extra cost for actor knowing secrets and threatening player
-                                                ManageRenownCost manageDismissCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
-                                                int renownDismiss = manageDismissCost.renownCost;
-                                                playerRenown = GameManager.instance.playerScript.Renown;
-                                                if (playerRenown < renownDismiss)
-                                                {
-                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
-                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
-                                                    if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
-                                                    { result.Append(manageDismissCost.tooltip); }
-                                                }
-                                                break;
-                                            case "RenownDisposeMin":
-                                                //player -> extra cost for actor knowing secrets and threatening player
-                                                ManageRenownCost manageDisposeCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDisposeRenown);
-                                                int renownDispose = manageDisposeCost.renownCost;
-                                                playerRenown = GameManager.instance.playerScript.Renown;
-                                                if (playerRenown < renownDispose)
-                                                {
-                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
-                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
-                                                    if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
-                                                    { result.Append(manageDisposeCost.tooltip); }
-                                                }
-                                                break;
-                                            case "RenownNOTZero":
-                                                //Player / Actor
-                                                playerRenown = GameManager.instance.playerScript.Renown;
-                                                if (playerRenown == 0)
-                                                { BuildString(result, "Renown Zero"); }
-                                                break;
-                                            case "NumRecruitsCurrent":
-                                                //check max. number of recruits in reserve pool not exceeded
-                                                val = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
-                                                compareTip = ComparisonCheck(GameManager.instance.actorScript.maxNumOfReserveActors, val, criteria.comparison);
-                                                if (compareTip != null)
-                                                { BuildString(result, "maxxed Recruit allowance"); }
-                                                break;
-                                            case "InvisibilityNOTMax":
-                                                //check invisibility is less than the max value -> Actor / Player
-                                                if (actor != null)
-                                                { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                                else { val = GameManager.instance.playerScript.Invisibility; }
-                                                if (val == GameManager.instance.actorScript.maxStatValue)
-                                                { BuildString(result, "Invisibility at Max"); }
-                                                break;
-                                            case "InvisibilityNOTZero":
-                                                //check invisibility greater than Zero -> Actor / Player
-                                                if (actor != null)
-                                                { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                                else { val = GameManager.instance.playerScript.Invisibility; }
-                                                if (val == 0)
-                                                { BuildString(result, "Invisibility Zero"); }
-                                                break;
-                                            case "SecretsNOTZero":
-                                                //check num of secrets greater than Zero -> Actor / Player
-                                                if (actor != null)
-                                                { val = actor.CheckNumOfSecrets(); }
-                                                else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
-                                                if (val == 0)
-                                                { BuildString(result, "Secrets Zero"); }
-                                                break;
-                                            case "NumGearMax":
-                                                //Note: effect criteria value is ignored in this case
-                                                val = GameManager.instance.gearScript.maxNumOfGear;
-                                                compareTip = ComparisonCheck(val, GameManager.instance.playerScript.CheckNumOfGear(), criteria.comparison);
-                                                if (compareTip != null)
-                                                { BuildString(result, "maxxed Gear Allowance"); }
-                                                break;
-                                            case "GearAvailability":
-                                                //checks to see if at least 1 piece of unused common gear is available
-                                                List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
-                                                if (tempCommonGear.Count > 0)
-                                                {
-                                                    //remove from lists any gear that the player currently has
-                                                    List<string> tempPlayerGear = new List<string>(GameManager.instance.playerScript.GetListOfGear());
-                                                    string gearName;
-                                                    if (tempPlayerGear.Count > 0)
-                                                    {
-                                                        for (int i = 0; i < tempPlayerGear.Count; i++)
-                                                        {
-                                                            gearName = tempPlayerGear[i];
-                                                            if (tempCommonGear.Exists(x => x == gearName) == true)
-                                                            { tempCommonGear.Remove(gearName); }
-                                                        }
-                                                    }
-                                                    if (tempCommonGear.Count == 0)
-                                                    { BuildString(result, "No Gear available"); }
-                                                }
-                                                else { BuildString(result, "No Gear available"); }
-                                                break;
-                                            default:
-                                                BuildString(result, "Error!");
-                                                Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
-                                                errorFlag = true;
-                                                break;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for criteria {0}", criteria.name));
-                                        errorFlag = true;
-                                    }
-                                    break;
-                                default:
-                                    BuildString(result, "Error!");
-                                    Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));
-                                    errorFlag = true;
-                                    break;
-                            }
+                                        break;
+                                }
 
+                            }
+                            else
+                            {
+                                Debug.LogError(string.Format("Invalid criteria.apply (null) for criteria {0}", criteria.name));
+                                errorFlag = true;
+                            }
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid criteria.apply (null) for criteria {0}", criteria.name));
+                            Debug.LogError(string.Format("Invalid criteria.effectCriteria (Null) for criteria {0}", criteria.name));
                             errorFlag = true;
                         }
                     }

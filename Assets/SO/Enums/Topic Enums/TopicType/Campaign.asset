@@ -9,12 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e51190899335214ab0e132de86b521e, type: 3}
-  m_Name: City
+  m_Name: Campaign
   m_EditorClassIdentifier: 
-  tag: City
+  tag: Campaign
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minimumInterval: 0
+  minimumInterval: 10
   listOfSubTypes:
-  - {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
+  - {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67, type: 2}
+  - {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 23fcf677b30f6964c8a1a2e913c7f1b0, type: 2}
+  - {fileID: 11400000, guid: 6f78dac5d7e54b942bdf43ad58ab63b7, type: 2}

@@ -54,3 +54,41 @@ Dev seed 3019 -> Saturday, 20 July 2019 2:14 PM
 City seed 890 -> Arles, France
 City seed 234 -> Sydney, Australia
 City seed 890 -> Arles, France
+
+Dev seed 18358 -> Sunday, 21 July 2019 11:25 AM
+WARNING [Val] ValidateSO: MISMATCH on EffectApply, array 18, assets 19 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectApply[]) (at Assets/Scripts/Managers/ValidationManager.cs:591)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:442)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	WARNING [Val] ValidateSO: MISMATCH on EffectCriteria, array 39, assets 43 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectCriteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:591)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:444)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager+<ValidateSOGeneric>c__AnonStorey2`1[T].<>m__0 (T element) (at Assets/Scripts/Managers/ValidationManager.cs:601)
+	System.Array.FindIndex[T] (T[] array, System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.FindIndex[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.Exists[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.ValidateSOGeneric[T] (T[] arraySO) (at Assets/Scripts/Managers/ValidationManager.cs:601)
+	ValidationManager.ValidateSO (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:444)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:731)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:340)
+	
+Dev seed 18694 -> Sunday, 21 July 2019 11:27 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicSubType, array 13, assets 14 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicSubType[]) (at Assets/Scripts/Managers/ValidationManager.cs:591)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:520)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 890 -> Arles, France
+
+Dev seed 12037 -> Sunday, 21 July 2019 11:31 AM
+City seed 890 -> Arles, France
+
+Dev seed 65433 -> Sunday, 21 July 2019 11:31 AM
+City seed 890 -> Arles, France

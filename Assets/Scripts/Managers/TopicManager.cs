@@ -67,15 +67,28 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void CheckForValidTopics()
     {
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
-        if (dictOfTopicTypes != null)
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        if (listOfTopicTypes != null)
         {
-            foreach(var topicType in dictOfTopicTypes)
+            string criteriaCheck;
+            //loop list
+            foreach(TopicType topicType in listOfTopicTypes)
             {
-
+                CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                { listOfCriteria = topicType.listOfCriteria };
+                criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                if (criteriaCheck == null)
+                {
+                    //criteria check passed O.K
+                }
+                else
+                {
+                    //generate message explaining why criteria failed
+                }
             }
+
         }
-        else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
+        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
     }
 
     //
@@ -89,8 +102,8 @@ public class TopicManager : MonoBehaviour
     public void ProcessMetaTopics()
     {
         //dictOfType/SubType
-        UpdateTopicTypes(GameManager.instance.dataScript.GetDictOfTopicTypes());
-        UpdateTopicTypes(GameManager.instance.dataScript.GetDictOfTopicSubTypes());
+        UpdateTopicTypes(GameManager.instance.dataScript.GetDictOfTopicTypeData());
+        UpdateTopicTypes(GameManager.instance.dataScript.GetDictOfTopicSubTypeData());
     }
 
     /// <summary>
@@ -119,10 +132,10 @@ public class TopicManager : MonoBehaviour
     public string DebugDisplayTopicTypes()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
-            Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+            Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
             if (dictOfTopicSubTypes != null)
             {
                 builder.AppendFormat("- TopicData for TopicTypes{0}{1}", "\n", "\n");

@@ -9,12 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e51190899335214ab0e132de86b521e, type: 3}
-  m_Name: City
+  m_Name: Family
   m_EditorClassIdentifier: 
-  tag: City
+  tag: HQ
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minimumInterval: 0
+  minimumInterval: 10
   listOfSubTypes:
-  - {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
+  - {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  - {fileID: 11400000, guid: 0ad4986848059a04e93cbb005b7bac10, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 23fcf677b30f6964c8a1a2e913c7f1b0, type: 2}
+  - {fileID: 11400000, guid: 285f8151292eb9d4c8b9fca3a44476a4, type: 2}

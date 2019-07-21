@@ -151,6 +151,9 @@ public class DataManager : MonoBehaviour
     private List<HistoryNemesisMove> listOfHistoryNemesisMove = new List<HistoryNemesisMove>();
     private List<string> listOfHistoryAutoRun = new List<string>();
 
+    //Topics
+    private List<TopicType> listOfTopicTypes = new List<TopicType>();
+
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -201,8 +204,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                              //Key -> cure.name, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
     private Dictionary<string, PersonProfile> dictOfProfiles = new Dictionary<string, PersonProfile>();         //Key -> personProfile.name, Value -> personProfile
-    private Dictionary<string, TopicData> dictOfTopicTypes = new Dictionary<string, TopicData>();               //Key -> topicType.name, Value -> TopicData package
-    private Dictionary<string, TopicData> dictOfTopicSubTypes = new Dictionary<string, TopicData>();            //Key -> topicSubType.name, Value -> TopicData package
+    private Dictionary<string, TopicData> dictOfTopicTypeData = new Dictionary<string, TopicData>();            //Key -> topicType.name, Value -> TopicData package
+    private Dictionary<string, TopicData> dictOfTopicSubTypeData = new Dictionary<string, TopicData>();         //Key -> topicSubType.name, Value -> TopicData package
 
 
     #region SO enum Dictionaries
@@ -6650,13 +6653,14 @@ public class DataManager : MonoBehaviour
 
     #region Topics
 
-    public Dictionary<string, TopicData> GetDictOfTopicTypes()
-    { return dictOfTopicTypes; }
+    public Dictionary<string, TopicData> GetDictOfTopicTypeData()
+    { return dictOfTopicTypeData; }
 
-    public Dictionary<string, TopicData> GetDictOfTopicSubTypes()
-    { return dictOfTopicSubTypes; }
+    public Dictionary<string, TopicData> GetDictOfTopicSubTypeData()
+    { return dictOfTopicSubTypeData; }
 
-
+    public List<TopicType> GetListOfTopicTypes()
+    { return listOfTopicTypes; }
 
 
     #endregion

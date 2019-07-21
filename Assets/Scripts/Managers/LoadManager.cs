@@ -1098,44 +1098,52 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topic Types - - -
         //
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (dictOfTopicTypes != null)
         {
-            counter = 0;
-            numArray = arrayOfTopicTypes.Length;
-            for (int i = 0; i < numArray; i++)
+            if (listOfTopicTypes != null)
             {
-                TopicType topicType = arrayOfTopicTypes[i];
-                counter++;
-                //create dataPackage
-                TopicData data = new TopicData()
+                counter = 0;
+                numArray = arrayOfTopicTypes.Length;
+                for (int i = 0; i < numArray; i++)
                 {
-                    type = topicType.name,
-                    isAvailable = true,
-                    turnLastUsed = 0,
-                    minInterval = topicType.minimumInterval,
-                    timesUsedLevel = 0,
-                    timesUsedCampaign = 0
-                };
-                //add to dictionary
-                try
-                { dictOfTopicTypes.Add(topicType.name, data); }
-                catch (ArgumentNullException)
-                { Debug.LogError("Invalid TopicType (Null)"); counter--; }
-                catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid TopicType.name (duplicate) \"{0}\" for \"{1}\"", counter, topicType.name)); counter--; }
+                    TopicType topicType = arrayOfTopicTypes[i];
+                    counter++;
+                    //create dataPackage
+                    TopicData data = new TopicData()
+                    {
+                        type = topicType.name,
+                        isAvailable = true,
+                        turnLastUsed = 0,
+                        minInterval = topicType.minimumInterval,
+                        timesUsedLevel = 0,
+                        timesUsedCampaign = 0
+                    };
+                    //add to dictionary & list
+                    try
+                    {
+                        dictOfTopicTypes.Add(topicType.name, data);
+                        listOfTopicTypes.Add(topicType);
+                    }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid TopicType (Null)"); counter--; }
+                    catch (ArgumentException)
+                    { Debug.LogError(string.Format("Invalid TopicType.name (duplicate) \"{0}\" for \"{1}\"", counter, topicType.name)); counter--; }
+                }
+                numDict = dictOfTopicTypes.Count;
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicTypes has {0} entries{1}", numDict, "\n");
+                Debug.Assert(numDict == counter, "Mismatch on Count");
+                Debug.Assert(numDict > 0, "No TopicType has been imported");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicType count, array {0}, dict {1}", numArray, numDict));
             }
-            numDict = dictOfTopicTypes.Count;
-            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicTypes has {0} entries{1}", numDict, "\n");
-            Debug.Assert(numDict == counter, "Mismatch on Count");
-            Debug.Assert(numDict > 0, "No TopicType has been imported");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicType count, array {0}, dict {1}", numArray, numDict));
+            else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTopicType (Null) -> Import failed"); }
         //
         // - - - Topic SubTypes - - -
         //
-        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             counter = 0;

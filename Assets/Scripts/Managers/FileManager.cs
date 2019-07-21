@@ -667,7 +667,7 @@ public class FileManager : MonoBehaviour
 
         #region topics
         //topic types
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
             write.dataData.listOfTopicTypeValues.AddRange(dictOfTopicTypes.Values);
@@ -675,7 +675,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //topic sub types
-        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             write.dataData.listOfTopicSubTypeValues.AddRange(dictOfTopicSubTypes.Values);
@@ -2047,7 +2047,7 @@ public class FileManager : MonoBehaviour
 
         #region topics
         //Topic Types
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypes();
+        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
             dictOfTopicTypes.Clear();
@@ -2074,7 +2074,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //Topic Sub Types
-        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             dictOfTopicSubTypes.Clear();

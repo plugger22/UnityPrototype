@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: TeamsPreferred
+  m_Name: TopicHQ
   m_EditorClassIdentifier: 
-  description: Preferred team
-  effectCriteria: {fileID: 11400000, guid: d92a04abc83c8e34994bb9e45bc4cdd2, type: 2}
+  description: HQ Topic Type
+  effectCriteria: {fileID: 11400000, guid: f4362882cfe90c7458d804eabc67fd63, type: 2}
   comparison: {fileID: 0}
-  apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}
+  apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
