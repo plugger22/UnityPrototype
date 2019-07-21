@@ -19,12 +19,17 @@ public class TopicType : ScriptableObject
     [Tooltip("All SubTopics for this Topic should be in this list. Should be at least one subTopic in list")]
     public List<TopicSubType> listOfSubTypes;
 
+    [Header("Criteria")]
+    [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
+    public List<Criteria> listOfCriteria;
+
 
     public void OnEnable()
     {
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(listOfSubTypes != null, "Invalid listOfSubTypes (Null, needs at least one subType) for {0}", name);
+        Debug.AssertFormat(listOfCriteria != null, "Invalid listOfCriteria (Null) for {0}", name);
     }
 
 }

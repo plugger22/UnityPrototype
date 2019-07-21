@@ -632,6 +632,10 @@ public class GameManager : MonoBehaviour
         startMethod.className = "ConnectionManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
+        //Topic Manager
+        startMethod.handler = topicScript.Initialise;
+        startMethod.className = "TopicManager";
+        listOfLevelMethods.Add(startMethod);
         #endregion
 
         #region UI Methods

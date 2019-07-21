@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using packageAPI;
-using System.Text;
 using System;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -14,7 +13,7 @@ using Random = UnityEngine.Random;
 public class EffectManager : MonoBehaviour
 {
     [Tooltip("How long do ongoing effects last for? Global setting")]
-    [Range(3,20)] public int ongoingEffectTimer = 10;
+    [Range(3, 20)] public int ongoingEffectTimer = 10;
 
     //fast access -> spiders
     private int delayNoSpider;
@@ -46,7 +45,7 @@ public class EffectManager : MonoBehaviour
     private Condition conditionBlackmailer;
     private Condition conditionStar;
     private Condition conditionTagged;
-    
+
 
     //colour palette for Modal Outcome
     private string colourGoodSide; //good effect Resisance / bad effect Authority
@@ -259,6 +258,7 @@ public class EffectManager : MonoBehaviour
                         {
                             switch (criteria.apply.name)
                             {
+
                                 //
                                 // - - - Current Node - - -
                                 //
@@ -488,10 +488,10 @@ public class EffectManager : MonoBehaviour
                                                         {
                                                             bool isSuccess = false;
                                                             //loop targets looking for at least one who has targetInfo < max
-                                                            foreach(Target target in listOfLiveTargets)
+                                                            foreach (Target target in listOfLiveTargets)
                                                             {
                                                                 if (target.intel < maxTargetInfo)
-                                                                { isSuccess = true;  break; }
+                                                                { isSuccess = true; break; }
                                                             }
                                                             if (isSuccess == false)
                                                             { BuildString(result, "All Targets have MAX Info already"); }
@@ -674,7 +674,7 @@ public class EffectManager : MonoBehaviour
                                                 {
                                                     //actor -> HAS 'Psychopath' trait
                                                     if (actor.CheckTraitEffect(actorConflictKill) == false)
-                                                    { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName));  }
+                                                    { BuildString(result, string.Format(" {0} doesn't have required trait", actor.actorName)); }
                                                 }
                                                 else
                                                 { Debug.LogWarning("Invalid actor (Null) for TraitConflictKillYes"); }
@@ -800,6 +800,7 @@ public class EffectManager : MonoBehaviour
                                     errorFlag = true;
                                     break;
                             }
+
                         }
                         else
                         {
@@ -1234,27 +1235,27 @@ public class EffectManager : MonoBehaviour
                     effectReturn.isAction = true;
                     break;
                 case "FactionApproval":
-                            switch (effect.operand.name)
-                            {
-                                case "Add":
-                                    GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
-                                    effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
-                                        GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}Faction Approval +{1}{2}", colourGood, effect.value, colourEnd);
-                                    break;
-                                case "Subtract":
-                                    GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
-                                    effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
-                                        GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}Faction Approval -{1}{2}", colourBad, effect.value, colourEnd);
-                                    break;
-                                default:
-                                    Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                                    effectReturn.errorFlag = true;
-                                    break;
-                            }
-                            effectReturn.isAction = true;
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
+                            effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
+                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Faction Approval +{1}{2}", colourGood, effect.value, colourEnd);
                             break;
+                        case "Subtract":
+                            GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
+                            effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
+                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Faction Approval -{1}{2}", colourBad, effect.value, colourEnd);
+                            break;
+                        default:
+                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                            effectReturn.errorFlag = true;
+                            break;
+                    }
+                    effectReturn.isAction = true;
+                    break;
                 //
                 // - - - Resistance effects
                 //
@@ -1692,9 +1693,9 @@ public class EffectManager : MonoBehaviour
             {
                 string operation = "inserted";
                 if (isInserted == false) { operation = "recalled"; }
-                return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}", 
-                    colourNeutral, team.arc.name, colourEnd, 
-                    colourNormal, team.teamName, operation, colourEnd,  
+                return string.Format("{0}{1}{2}{3} {4} have been {5} at {6}{7}{8}{9}{10} {11}{12}",
+                    colourNeutral, team.arc.name, colourEnd,
+                    colourNormal, team.teamName, operation, colourEnd,
                     colourBadSide, node.Arc.name, colourEnd, colourNormal, node.nodeName, colourEnd);
             }
             else
@@ -1757,7 +1758,7 @@ public class EffectManager : MonoBehaviour
                         //don't do actorExclude if provided
                         if (actorExclude != null)
                         {
-                           if (actorExclude.actorID == actor.actorID)
+                            if (actorExclude.actorID == actor.actorID)
                             { isProceed = false; }
                         }
                         //adjust actor
@@ -2450,7 +2451,7 @@ public class EffectManager : MonoBehaviour
                 //Process Connection effect
                 List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
                 if (listOfNodes != null)
-                {                
+                {
                     //clear all connection flags first to prevent double dipping
                     GameManager.instance.connScript.SetAllFlagsToFalse();
                     foreach (Node nodeTemp in listOfNodes)
@@ -2836,7 +2837,7 @@ public class EffectManager : MonoBehaviour
                         if (dictOfConditionsByType.Count > 0)
                         {
                             //loop listOfConditions and remove any identical entries in the temp dict
-                            foreach(Condition condition in listOfConditions)
+                            foreach (Condition condition in listOfConditions)
                             {
                                 if (dictOfConditionsByType.ContainsKey(condition.tag))
                                 { dictOfConditionsByType.Remove(condition.tag); }
@@ -2903,7 +2904,7 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorPromoted":
-                effectResolve.bottomText = string.Format("{0}{1} promoted and will join {2} HQ{3}", colourEffect, actor.actorName, 
+                effectResolve.bottomText = string.Format("{0}{1} promoted and will join {2} HQ{3}", colourEffect, actor.actorName,
                     GameManager.instance.factionScript.GetCurrentFaction(), colourEnd);
                 break;
             case "ActorDismissed":
@@ -3056,7 +3057,7 @@ public class EffectManager : MonoBehaviour
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} {7}{8}NEXT TURN{9}", colourEffect, colourEnd,
-                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);                                    
+                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
@@ -3079,10 +3080,10 @@ public class EffectManager : MonoBehaviour
                                     actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value);
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}", 
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
-                                    
+
                                     break;
                                 case "Subtract":
                                     actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
@@ -3091,7 +3092,7 @@ public class EffectManager : MonoBehaviour
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
-                                    
+
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name));
@@ -3104,11 +3105,11 @@ public class EffectManager : MonoBehaviour
                     }
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name)); 
+                    Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                     break;
             }
         }
-        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name));}
+        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
         return effectResolve;
     }
 
@@ -3166,12 +3167,12 @@ public class EffectManager : MonoBehaviour
     }
 
 
-        /// <summary>
-        /// subMethod to handle Ongoing Effects for Gear (Personal Use -> Actions +/-)
-        /// </summary>
-        /// <param name="effect"></param>
-        /// <param name="dataInput"></param>
-        private int AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
+    /// <summary>
+    /// subMethod to handle Ongoing Effects for Gear (Personal Use -> Actions +/-)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    private int AddOngoingEffectToDict(Effect effect, EffectDataInput effectInput, int value)
     {
         EffectDataOngoing effectOngoing = new EffectDataOngoing();
         effectOngoing.effectOutcome = effect.outcome.name;
