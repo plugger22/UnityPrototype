@@ -6662,6 +6662,22 @@ public class DataManager : MonoBehaviour
     public List<TopicType> GetListOfTopicTypes()
     { return listOfTopicTypes; }
 
+    /// <summary>
+    /// Get topicType data for specified topicType. Returns Null if not found
+    /// </summary>
+    /// <param name="topicTypeName"></param>
+    /// <returns></returns>
+    public TopicData GetTopicTypeData(string topicTypeName)
+    {
+        TopicData data = null;
+        if (string.IsNullOrEmpty(topicTypeName) == false)
+        {
+            if (dictOfTopicTypeData.ContainsKey(topicTypeName) == true)
+            { return dictOfTopicTypeData[topicTypeName]; }
+        }
+        else { Debug.LogError("Invalid topicTypeName (Null or Empty)"); }
+        return data;
+    }
 
     #endregion
 

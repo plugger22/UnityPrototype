@@ -11,11 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e51190899335214ab0e132de86b521e, type: 3}
   m_Name: Family
   m_EditorClassIdentifier: 
-  tag: HQ
+  tag: Family
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   minimumInterval: 10
   listOfSubTypes:
   - {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
   - {fileID: 11400000, guid: 0ad4986848059a04e93cbb005b7bac10, type: 2}
+  - {fileID: 11400000, guid: dc8c642199c72da41928a4fcf306adc4, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 285f8151292eb9d4c8b9fca3a44476a4, type: 2}

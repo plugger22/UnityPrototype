@@ -22,7 +22,7 @@ public class TopicManager : MonoBehaviour
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
-                SubInitialiseStartSession();
+                SubInitialiseLevelStart();
                 break;
             case GameState.LoadGame:
             default:
@@ -48,8 +48,8 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region SubInitialiseStartSession
-    private void SubInitialiseStartSession()
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
     {
         //establish which TopicTypes are valid for the level
         CheckForValidTopics();
@@ -74,21 +74,78 @@ public class TopicManager : MonoBehaviour
             //loop list
             foreach(TopicType topicType in listOfTopicTypes)
             {
-                CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                { listOfCriteria = topicType.listOfCriteria };
-                criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                if (criteriaCheck == null)
+                TopicData topicData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                if (topicData != null)
                 {
-                    //criteria check passed O.K
+                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                    { listOfCriteria = topicType.listOfCriteria };
+                    criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                    if (criteriaCheck == null)
+                    {
+                        //criteria check passed O.K
+                        topicData.isAvailable = true;
+                    }
+                    else
+                    {
+                        //criteria check FAILED
+                        topicData.isAvailable = false;
+                        //generate message explaining why criteria failed
+                        Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" FAILED Criteria check due to {1}{2}", topicType.tag, criteriaCheck, "\n");
+                    }
                 }
-                else
-                {
-                    //generate message explaining why criteria failed
-                }
+                else { Debug.LogError("Invalid topicData (Null)"); }
             }
-
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
+    }
+
+    //
+    // - - - Topic Availability - - -
+    //
+
+    /// <summary>
+    /// returns true if Actor topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicActor()
+    {
+        return true;
+    }
+
+    /// <summary>
+    /// returns true if Campaign topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicCampaign()
+    {
+        return true;
+    }
+
+    /// <summary>
+    /// returns true if City topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicCity()
+    {
+        return true;
+    }
+
+    /// <summary>
+    /// returns true if Family topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicFamily()
+    {
+        return false;
+    }
+
+    /// <summary>
+    /// returns true if HQ topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTopicHQ()
+    {
+        return true;
     }
 
     //

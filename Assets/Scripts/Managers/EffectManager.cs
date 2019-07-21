@@ -769,6 +769,41 @@ public class EffectManager : MonoBehaviour
                                         Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));
                                         errorFlag = true;
                                         break;
+                                    //
+                                    // - - - Topics - - - 
+                                    //
+                                    case "Topic":
+                                        //BuildString reason '[due to] ....'
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "TopicActor":
+                                                if (GameManager.instance.topicScript.CheckTopicActor() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
+                                            case "TopicCampaign":
+                                                if (GameManager.instance.topicScript.CheckTopicCampaign() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
+                                            case "TopicCity":
+                                                if (GameManager.instance.topicScript.CheckTopicCity() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
+                                            case "TopicFamily":
+                                                if (GameManager.instance.topicScript.CheckTopicFamily() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
+                                            case "TopicHQ":
+                                                if (GameManager.instance.topicScript.CheckTopicHQ() == false)
+                                                { BuildString(result, "no topics being available"); }
+                                                break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Toic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        break;
+
                                 }
 
                             }

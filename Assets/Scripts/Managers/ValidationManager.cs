@@ -406,7 +406,7 @@ public class ValidationManager : MonoBehaviour
                         {
                             //any remaining SubTypes in list must be duplicates
                             foreach(TopicSubType topicSubType in listOfSubTypes)
-                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" in list but not present in arrayOfTopicSubTypes (Duplicate?)", topicSubType.tag,  "\n"); }
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" in list but not present in arrayOfTopicSubTypes (Duplicate or Mismatch)", topicSubType.tag,  "\n"); }
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid TopicType (Null) in listOfTopicTypes[{0}]", i); }
