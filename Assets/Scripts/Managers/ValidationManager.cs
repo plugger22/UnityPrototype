@@ -375,6 +375,9 @@ public class ValidationManager : MonoBehaviour
     private void ValidateTopics()
     {
         int count, countSubType;
+        //
+        // - - - TopicTypes and TopicSubTypes
+        //
         TopicType[] arrayOfTopicTypes = GameManager.instance.loadScript.arrayOfTopicTypes;
         if (arrayOfTopicTypes != null)
         {
@@ -409,11 +412,13 @@ public class ValidationManager : MonoBehaviour
                         if (listOfSubTypes.Count > 0)
                         {
                             //any remaining SubTypes in list must be duplicates
-                            foreach(TopicSubType topicSubType in listOfSubTypes)
+                            foreach (TopicSubType topicSubType in listOfSubTypes)
                             {
                                 if (topicSubType != null)
-                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" in list but not present in arrayOfTopicSubTypes (Duplicate or Mismatch)", 
-                                    topicSubType.tag, "\n"); }
+                                {
+                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" in list but not present in arrayOfTopicSubTypes (Duplicate or Mismatch)",
+                                      topicSubType.tag, "\n");
+                                }
                                 else { Debug.LogWarningFormat("Invalid topicSubType (Null) for Topic \"{0}\"", type.name); }
                             }
                         }
@@ -424,6 +429,71 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfTopicSubTypes (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfTopicTypes (Null)"); }
+        //
+        // - - - Topics and TopicOptions
+        //
+        Topic[] arrayOfTopics = GameManager.instance.loadScript.arrayOfTopics;
+        TopicOption[] arrayOfTopicOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
+        if (arrayOfTopics != null)
+        {
+            if (arrayOfTopicOptions != null)
+            {
+                //create a list of option names that you can progressively delete from to check if any are left over at the end
+                List<string> listOfOptionNames = arrayOfTopicOptions.Select(x => x.name).ToList();
+                string topicName;
+                //loop topics
+                for (int i = 0; i < arrayOfTopics.Length; i++)
+                {
+                    Topic topic = arrayOfTopics[i];
+                    if (topic != null)
+                    {
+                        topicName = topic.name;
+
+                        //listOfOptions
+                        if (topic.listOfOptions != null)
+                        {
+                            if (topic.listOfOptions.Count > 0)
+                            {
+                                //loop options and check that they aren't null and have the correct topic name
+                                foreach (TopicOption option in topic.listOfOptions)
+                                {
+                                    if (option.topic.name.Equals(topicName, StringComparison.Ordinal) == false)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has a mismatching topic (\"{2}\"){3}",
+                                          option.name, topicName, option.topic.name, "\n");
+                                    }
+                                    //delete option from list
+                                    if (listOfOptionNames.Remove(option.name) == false)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" not found in arrayOfTopicOptions{2}", option.name, topicName, "\n"); }
+                                }
+                            }
+                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has an Empty listOfOptions{1}", topicName, "\n"); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
+
+                        //subType matches type
+                        TopicType topicType = GameManager.instance.dataScript.GetTopicType(topic.type.name);
+                        if (topicType != null)
+                        {
+                            //check topic subType is on the listOfSubTypes
+                            if (topicType.listOfSubTypes.Find(x => x.name.Equals(topic.subType.name, StringComparison.Ordinal)) == false)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has a mismatch with it's subType \"{1}\"{2}", topicName, topic.subType.name, "\n"); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid topicType (Null) for topic.type.name \"{0}\"", topic.type.name); }
+
+                    }
+                    else { Debug.LogWarningFormat("Invalid topic (Null) for arrayOfTopics[{0}]", i); }
+                }
+                //unused topicOptions
+                if (listOfOptionNames.Count > 0)
+                {
+                    foreach (string optionName in listOfOptionNames)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" NOT part of any Topic's listOfOptions{1}", optionName, "\n"); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfTopicOptions (Null)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfTopics (Null)"); }
     }
     #endregion
 

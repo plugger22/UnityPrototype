@@ -6741,7 +6741,8 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds a listOfTopics to specified topicSubType in dict. Adds data to any existing data already present
+    /// Adds a listOfTopics to specified topicSubType in dict. Adds data to any existing data already present, otherwise creates new record
+    /// NOTE: dictOfTopicPools is cleared between levels in ResetNewLevel
     /// </summary>
     /// <param name="subType"></param>
     public void AddListOfTopicsToPool(TopicSubType subType, List<Topic> listOfTopics)
@@ -6757,8 +6758,22 @@ public class DataManager : MonoBehaviour
                     List<Topic> listOfDictTopics = dictOfTopicPools[subName];
                     //add list to existing list
                     if (listOfDictTopics != null)
-                    { listOfDictTopics.AddRange(listOfTopics); }
+                    {
+                        listOfDictTopics.AddRange(listOfTopics);
+                        /*Debug.LogFormat("[Tst] DataManager.cs -> AddListOfTopicsToPool: {0} topics added to {1}{2}", listOfTopics.Count, subType.name, "\n");*/
+                    }
                     else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for \"{0}\"", subName); }
+                }
+                else
+                {
+                    //create new record
+                    try
+                    {
+                        dictOfTopicPools.Add(subName, listOfTopics);
+                        /*Debug.LogFormat("[Tst] DataManager.cs -> AddListOfTopicsToPool: {0} topics added to {1}{2}", listOfTopics.Count, subType.name, "\n");*/
+                    }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid subName \"{0}\" (Duplicate)", subName); }
                 }
             }
             else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for subType \"{0}\"", subType.name); }

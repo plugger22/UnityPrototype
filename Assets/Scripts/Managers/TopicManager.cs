@@ -131,12 +131,13 @@ public class TopicManager : MonoBehaviour
                             if (subTopicType != null)
                             {
                                 listOfTopics.Clear();
-                                /*listOfTopics = dictOfTopics.Select(t => t.Value.subType.name.Equals(subTopicType.name, StringComparison.Ordinal)).ToList();*/
                                 IEnumerable<Topic> topicData =
                                     from item in dictOfTopics
                                     where item.Value.subType == subTopicType
                                     select item.Value;
                                 listOfTopics = topicData.ToList();
+                                if (listOfTopics.Count > 0)
+                                { GameManager.instance.dataScript.AddListOfTopicsToPool(subTopicType, listOfTopics); }
                             }
                             else { Debug.LogErrorFormat("Invalid TopicSubType (Null) for Topic \"{0}\"", topicType.name); }
                         }
@@ -186,7 +187,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckTopicFamily()
     {
-        return false;
+        return true;
     }
 
     /// <summary>
