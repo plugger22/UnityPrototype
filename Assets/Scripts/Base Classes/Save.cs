@@ -124,6 +124,8 @@ public class SaveDataData
     public List<string> listOfTopicTypeKeys = new List<string>();
     public List<TopicData> listOfTopicSubTypeValues = new List<TopicData>();
     public List<string> listOfTopicSubTypeKeys = new List<string>();
+    public List<string> listOfTopicPoolsKeys = new List<string>();
+    public List<StringListWrapper> listOfTopicPoolsValue = new List<StringListWrapper>();
     //Registers
     public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();

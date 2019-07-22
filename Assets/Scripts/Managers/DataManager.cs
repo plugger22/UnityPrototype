@@ -6669,6 +6669,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, Topic> GetDictOfTopics()
     { return dictOfTopics; }
 
+    public Dictionary<string, List<Topic>> GetDictOfTopicPools()
+    { return dictOfTopicPools; }
+
     public Dictionary<string, TopicOption> GetDictOfTopicOptions()
     { return dictOfTopicOptions; }
 
@@ -6677,6 +6680,7 @@ public class DataManager : MonoBehaviour
 
     public List<TopicType> GetListOfTopicTypesLevel()
     { return listOfTopicTypesLevel; }
+
 
     /// <summary>
     /// Get topicType data for specified topicType. Returns Null if not found

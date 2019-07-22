@@ -2120,6 +2120,23 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid topicTypeName (Null) for listOfTopicTypesLevel[{0}]", i); }
         }
         GameManager.instance.dataScript.SetListOfTopicTypesLevel(listOfTopicTypes);
+        //dictOfTopicPools
+        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
+        if (dictOfTopicPools != null)
+        {
+            foreach(var topicList in dictOfTopicPools)
+            {
+                StringListWrapper listOfTopicNames = new StringListWrapper();
+                listOfTopicNames.myList.AddRange(topicList.Value.Select(x => x.name).ToList());
+                if (listOfTopicNames.myList != null)
+                {
+                    write.dataData.listOfTopicPoolsValue.Add(listOfTopicNames);
+                    write.dataData.listOfTopicPoolsKeys.Add(topicList.Key);
+                }
+                else { Debug.LogWarningFormat("Invalid listOfTopicNames (Null) for topicSubType \"{0}\"", topicList.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
         #endregion
 
         #region registers

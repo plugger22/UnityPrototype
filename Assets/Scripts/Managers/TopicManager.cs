@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using gameAPI;
+using packageAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using gameAPI;
-using packageAPI;
 using UnityEngine;
 
 /// <summary>
@@ -114,28 +113,26 @@ public class TopicManager : MonoBehaviour
     {
         //Debug loads in all topics in dictOfTopics. Need to replace.
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
-        List<Topic> listOfTopics = new List<Topic>();
         if (dictOfTopics != null)
         {
             //get all valid topic types for level
             List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
             if (listOfTopicTypes != null)
             {
-                foreach(TopicType topicType in listOfTopicTypes)
+                foreach (TopicType topicType in listOfTopicTypes)
                 {
                     if (topicType != null)
                     {
                         //Loop list Of topic subTypes
-                        foreach(TopicSubType subTopicType in topicType.listOfSubTypes)
+                        foreach (TopicSubType subTopicType in topicType.listOfSubTypes)
                         {
                             if (subTopicType != null)
                             {
-                                listOfTopics.Clear();
                                 IEnumerable<Topic> topicData =
                                     from item in dictOfTopics
                                     where item.Value.subType == subTopicType
                                     select item.Value;
-                                listOfTopics = topicData.ToList();
+                                List<Topic> listOfTopics = topicData.ToList();
                                 if (listOfTopics.Count > 0)
                                 { GameManager.instance.dataScript.AddListOfTopicsToPool(subTopicType, listOfTopics); }
                             }
@@ -266,14 +263,14 @@ public class TopicManager : MonoBehaviour
             {
                 builder.AppendFormat("- TopicData for TopicTypes{0}{1}", "\n", "\n");
                 //loop topic Types
-                foreach(var topicType in dictOfTopicTypes)
+                foreach (var topicType in dictOfTopicTypes)
                 {
-                    builder.AppendFormat(" {0}", DisplayTypeRecord(topicType.Value));
+                    builder.AppendFormat(" {0}", DebugDisplayTypeRecord(topicType.Value));
                     //look for any matching SubTypes
-                    foreach(var topicSubType in dictOfTopicSubTypes)
+                    foreach (var topicSubType in dictOfTopicSubTypes)
                     {
                         if (topicSubType.Value.parent.Equals(topicType.Key, StringComparison.Ordinal) == true)
-                        { builder.AppendFormat("  {0}", DisplayTypeRecord(topicSubType.Value)); }
+                        { builder.AppendFormat("  {0}", DebugDisplayTypeRecord(topicSubType.Value)); }
                     }
                     builder.AppendLine();
                 }
@@ -289,7 +286,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    private string DisplayTypeRecord(TopicData data)
+    private string DebugDisplayTypeRecord(TopicData data)
     {
         return string.Format(" {0} Av {1}, Last {2}, MinInt {3}, #Lvl {4}, #Cmp {5}{6}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
                         data.timesUsedLevel, data.timesUsedCampaign, "\n");
@@ -299,7 +296,7 @@ public class TopicManager : MonoBehaviour
     /// display two lists of topic Types
     /// </summary>
     /// <returns></returns>
-    public string DisplayTopicTypeLists()
+    public string DebugDisplayTopicTypeLists()
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- listOfTopicTypes{0}", "\n");
@@ -307,10 +304,10 @@ public class TopicManager : MonoBehaviour
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
         {
-            foreach(TopicType topicType in listOfTopicTypes)
+            foreach (TopicType topicType in listOfTopicTypes)
             {
                 builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minimumInterval, "\n");
-                foreach(Criteria criteria in topicType.listOfCriteria)
+                foreach (Criteria criteria in topicType.listOfCriteria)
                 { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
             }
         }
@@ -320,8 +317,61 @@ public class TopicManager : MonoBehaviour
         List<TopicType> listOfTopicTypeLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypeLevel != null)
         {
-            foreach(TopicType typeLevel in listOfTopicTypeLevel)
+            foreach (TopicType typeLevel in listOfTopicTypeLevel)
             { builder.AppendFormat(" {0}{1}", typeLevel.tag, "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of all topic pools (topics valid for the current level)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayTopicPools()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- dictOfTopicPools{0}", "\n");
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        if (listOfTopicTypes != null)
+        {
+            //loop topic types by level
+            foreach (TopicType topicType in listOfTopicTypes)
+            {
+                /*builder.AppendFormat("{0} {1}{2}", "\n", topicType.tag, "\n");*/
+                builder.AppendLine();
+                //loop topicSubTypes
+                if (topicType.listOfSubTypes != null)
+                {
+                    foreach (TopicSubType subType in topicType.listOfSubTypes)
+                    {
+                        builder.AppendFormat("   {0}{1}", subType.tag, "\n");
+                        //find entry in dictOfTopicPools and display all topics for that subType
+                        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                        {
+                            if (listOfTopics != null)
+                            {
+                                if (listOfTopics.Count > 0)
+                                {
+                                    foreach (Topic topic in listOfTopics)
+                                    { builder.AppendFormat("     {0}, {1}{2}", topic.name, topic.tag, "\n"); }
+                                }
+                                else { builder.AppendFormat("    None found{0}", "\n"); }
+                            }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid listOfTopics (Null) for topicSubType {0}", subType.name);
+                                builder.AppendFormat("    Invalid list (Error){0}", "\n");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"{1}", topicType, "\n");
+                    builder.AppendFormat("  None found (Error){0}", "\n");
+                }
+            }
         }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         return builder.ToString();
