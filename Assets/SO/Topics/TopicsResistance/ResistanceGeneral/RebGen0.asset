@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: RebGen0
+  m_EditorClassIdentifier: 
+  tag: Resistance General Test 0
+  type: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116, type: 2}
+  subType: {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: e87231b1a98a55f46b58fb3b4353c4ef, type: 2}
+  - {fileID: 11400000, guid: 821d5f5b332725b48bf789269c5cc5f7, type: 2}
+  - {fileID: 11400000, guid: fd3e633a074c7dd4aa6a7b55887f8147, type: 2}

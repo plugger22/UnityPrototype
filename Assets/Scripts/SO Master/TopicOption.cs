@@ -15,9 +15,9 @@ public class TopicOption : ScriptableObject
     public Topic topic;
 
 
-    public void OnEnable()
+    /*public void OnEnable()
     {
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null) for {0}", name);
         Debug.AssertFormat(topic != null, "Invalid topic (Null)");
-    }
+    }*/
 }
