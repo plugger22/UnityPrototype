@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: FamA0
+  m_EditorClassIdentifier: 
+  tag: Family story line Alpha test 0
+  type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
+  subType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: 8073890fe9521b341819ee58a510c6dd, type: 2}
+  - {fileID: 11400000, guid: 50d9bfc94d84cd544b1eaca1795551be, type: 2}
+  - {fileID: 11400000, guid: 2f4c075690eab5e4d8cec402501d7292, type: 2}
