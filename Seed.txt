@@ -135,3 +135,38 @@ City seed 890 -> Arles, France
 
 Dev seed 26291 -> Monday, 22 July 2019 8:47 AM
 City seed 890 -> Arles, France
+
+Dev seed 30591 -> Monday, 22 July 2019 2:52 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicSubType, array 20, assets 19 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicSubType[]) (at Assets/Scripts/Managers/ValidationManager.cs:593)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:522)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager+<ValidateSOGeneric>c__AnonStorey2`1[T].<>m__0 (T element) (at Assets/Scripts/Managers/ValidationManager.cs:603)
+	System.Array.FindIndex[T] (T[] array, System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.FindIndex[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.Exists[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.ValidateSOGeneric[T] (T[] arraySO) (at Assets/Scripts/Managers/ValidationManager.cs:603)
+	ValidationManager.ValidateSO (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:522)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:731)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:340)
+	
+Dev seed 23943 -> Monday, 22 July 2019 2:53 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.ValidateTopics () (at Assets/Scripts/Managers/ValidationManager.cs:409)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:37)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:731)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:787)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:349)
+	
+Dev seed 60217 -> Monday, 22 July 2019 2:58 PM
+City seed 890 -> Arles, France
+
+Dev seed 36924 -> Monday, 22 July 2019 3:06 PM
+City seed 890 -> Arles, France
+
+Dev seed 60280 -> Monday, 22 July 2019 3:08 PM
+City seed 890 -> Arles, France

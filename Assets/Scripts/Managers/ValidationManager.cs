@@ -396,17 +396,26 @@ public class ValidationManager : MonoBehaviour
                         for (int j = 0; j < countSubType; j++)
                         {
                             TopicSubType subType = arrayOfTopicSubTypes[j];
-                            if (subType.type.name.Equals(type.name, StringComparison.Ordinal) == true)
+                            if (subType != null)
                             {
-                                if (listOfSubTypes.Remove(subType) == false)
-                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" not in topicType \"{1}\" listOfSubTopics{2}", subType.tag, type.tag, "\n"); }
+                                if (subType.type.name.Equals(type.name, StringComparison.Ordinal) == true)
+                                {
+                                    if (listOfSubTypes.Remove(subType) == false)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" not in topicType \"{1}\" listOfSubTopics{2}", subType.tag, type.tag, "\n"); }
+                                }
                             }
+                            else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topic \"{0}\"", type.name); }
                         }
                         if (listOfSubTypes.Count > 0)
                         {
                             //any remaining SubTypes in list must be duplicates
                             foreach(TopicSubType topicSubType in listOfSubTypes)
-                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" in list but not present in arrayOfTopicSubTypes (Duplicate or Mismatch)", topicSubType.tag,  "\n"); }
+                            {
+                                if (topicSubType != null)
+                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" in list but not present in arrayOfTopicSubTypes (Duplicate or Mismatch)", 
+                                    topicSubType.tag, "\n"); }
+                                else { Debug.LogWarningFormat("Invalid topicSubType (Null) for Topic \"{0}\"", type.name); }
+                            }
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid TopicType (Null) in listOfTopicTypes[{0}]", i); }
@@ -520,6 +529,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicTypes);
         //TopicSubType
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicSubTypes);
+        //TopicOption
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicOptions);
+        //Topics
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopics);
         //ManageActor
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfManageActors);
         //ManageAction

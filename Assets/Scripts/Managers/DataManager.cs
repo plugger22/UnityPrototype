@@ -206,6 +206,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, PersonProfile> dictOfProfiles = new Dictionary<string, PersonProfile>();         //Key -> personProfile.name, Value -> personProfile
     private Dictionary<string, TopicData> dictOfTopicTypeData = new Dictionary<string, TopicData>();            //Key -> topicType.name, Value -> TopicData package
     private Dictionary<string, TopicData> dictOfTopicSubTypeData = new Dictionary<string, TopicData>();         //Key -> topicSubType.name, Value -> TopicData package
+    private Dictionary<string, Topic> dictOfTopics = new Dictionary<string, Topic>();                           //Key -> topic.name, Value -> Topic
+    private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption
+    private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
 
 
     #region SO enum Dictionaries
@@ -358,6 +361,7 @@ public class DataManager : MonoBehaviour
         listOfMoveNodes.Clear();
         //topics
         listOfTopicTypesLevel.Clear();
+        dictOfTopicPools.Clear();
         //actor lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();
@@ -6662,6 +6666,12 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, TopicData> GetDictOfTopicSubTypeData()
     { return dictOfTopicSubTypeData; }
 
+    public Dictionary<string, Topic> GetDictOfTopics()
+    { return dictOfTopics; }
+
+    public Dictionary<string, TopicOption> GetDictOfTopicOptions()
+    { return dictOfTopicOptions; }
+
     public List<TopicType> GetListOfTopicTypes()
     { return listOfTopicTypes; }
 
@@ -6709,6 +6719,51 @@ public class DataManager : MonoBehaviour
             listOfTopicTypesLevel.AddRange(listOfTopicTypes);
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
+    }
+
+    /// <summary>
+    /// returns a list of all topics valid for the level for the specified TopicSubType. Null if none found.
+    /// </summary>
+    /// <param name="subType"></param>
+    /// <returns></returns>
+    public List<Topic> GetListOfTopics(TopicSubType subType)
+    {
+        List<Topic> listOfTopics = null;
+        if (subType != null)
+        {
+            string subName = subType.name;
+            //find entry in dict
+            if (dictOfTopicPools.ContainsKey(subType.name) == true)
+            { return dictOfTopicPools[subType.name]; }
+        }
+        else { Debug.LogError("Invalid subType (Null)"); }
+        return listOfTopics;
+    }
+
+    /// <summary>
+    /// Adds a listOfTopics to specified topicSubType in dict. Adds data to any existing data already present
+    /// </summary>
+    /// <param name="subType"></param>
+    public void AddListOfTopicsToPool(TopicSubType subType, List<Topic> listOfTopics)
+    {
+        if (subType != null)
+        {
+            if (listOfTopics != null)
+            {
+                string subName = subType.name;
+                //find entry in dict
+                if (dictOfTopicPools.ContainsKey(subName) == true)
+                {
+                    List<Topic> listOfDictTopics = dictOfTopicPools[subName];
+                    //add list to existing list
+                    if (listOfDictTopics != null)
+                    { listOfDictTopics.AddRange(listOfTopics); }
+                    else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for \"{0}\"", subName); }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for subType \"{0}\"", subType.name); }
+        }
+        else { Debug.LogError("Invalid TopicSubType (Null)"); }
     }
 
     #endregion

@@ -78,6 +78,8 @@ public class LoadManager : MonoBehaviour
     [Header("Topics")]
     public TopicType[] arrayOfTopicTypes;
     public TopicSubType[] arrayOfTopicSubTypes;
+    public TopicOption[] arrayOfTopicOptions;
+    public Topic[] arrayOfTopics;
 
     [Header("Targets")]
     public Target[] arrayOfTargetsGeneric;
@@ -1186,6 +1188,60 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicSubType (Null) -> Import failed"); }
+        //
+        // - - - Topic Options - - -
+        //
+        Dictionary<string, TopicOption> dictOfTopicOptions = GameManager.instance.dataScript.GetDictOfTopicOptions();
+        if (dictOfTopicOptions != null)
+        {
+            counter = 0;
+            numArray = arrayOfTopicOptions.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                TopicOption topicOption = arrayOfTopicOptions[i];
+                counter++;
+                //add to dictionary
+                try
+                { dictOfTopicOptions.Add(topicOption.name, topicOption); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid TopicOption (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid TopicOption.name (duplicate) \"{0}\" for \"{1}\"", counter, topicOption.name)); counter--; }
+            }
+            numDict = dictOfTopicOptions.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicOptions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No TopicOption has been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicOption count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }
+        //
+        // - - - Topics - - -
+        //
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        if (dictOfTopics != null)
+        {
+            counter = 0;
+            numArray = arrayOfTopics.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                Topic topic = arrayOfTopics[i];
+                counter++;
+                //add to dictionary
+                try
+                { dictOfTopics.Add(topic.name, topic); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Topic (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid Topic.name (duplicate) \"{0}\" for \"{1}\"", counter, topic.name)); counter--; }
+            }
+            numDict = dictOfTopics.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopics has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No Topic has been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Topic count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
         //
         // - - - Manage Actors - - -
         //

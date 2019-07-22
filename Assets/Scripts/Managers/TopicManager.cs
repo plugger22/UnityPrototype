@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using gameAPI;
 using packageAPI;
@@ -53,6 +54,7 @@ public class TopicManager : MonoBehaviour
     {
         //establish which TopicTypes are valid for the level
         CheckForValidTopics();
+        UpdateTopicPools();
     }
     #endregion
 
@@ -103,6 +105,48 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
+    }
+
+    /// <summary>
+    /// Populates DataManager.cs -> dictOfTopicPools (at start of a level) with all valid topics for the current level
+    /// </summary>
+    public void UpdateTopicPools()
+    {
+        //Debug loads in all topics in dictOfTopics. Need to replace.
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        List<Topic> listOfTopics = new List<Topic>();
+        if (dictOfTopics != null)
+        {
+            //get all valid topic types for level
+            List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+            if (listOfTopicTypes != null)
+            {
+                foreach(TopicType topicType in listOfTopicTypes)
+                {
+                    if (topicType != null)
+                    {
+                        //Loop list Of topic subTypes
+                        foreach(TopicSubType subTopicType in topicType.listOfSubTypes)
+                        {
+                            if (subTopicType != null)
+                            {
+                                listOfTopics.Clear();
+                                /*listOfTopics = dictOfTopics.Select(t => t.Value.subType.name.Equals(subTopicType.name, StringComparison.Ordinal)).ToList();*/
+                                IEnumerable<Topic> topicData =
+                                    from item in dictOfTopics
+                                    where item.Value.subType == subTopicType
+                                    select item.Value;
+                                listOfTopics = topicData.ToList();
+                            }
+                            else { Debug.LogErrorFormat("Invalid TopicSubType (Null) for Topic \"{0}\"", topicType.name); }
+                        }
+                    }
+                    else { Debug.LogError("Invalid topicType (Null) in listOfTopicTypesLevel"); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
     }
 
     //
