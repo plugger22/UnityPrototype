@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActGea0
   m_EditorClassIdentifier: 
-  tag: 
-  type: {fileID: 0}
-  subType: {fileID: 0}
-  listOfOptions: []
+  tag: Actor Gear test 0
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: 85fdfdb0fd7fcee4b82365675db02c3e, type: 2}
+  - {fileID: 11400000, guid: c26631bfe9b21d64ea3d5bddc33c8610, type: 2}
+  - {fileID: 11400000, guid: 2e9aec2c78e4f2347bd41e4fd9fca828, type: 2}

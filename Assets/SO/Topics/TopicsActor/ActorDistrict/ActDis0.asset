@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDis0
   m_EditorClassIdentifier: 
-  tag: 
-  type: {fileID: 0}
-  subType: {fileID: 0}
-  listOfOptions: []
+  tag: Actor District test 0
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: a160db712e060274db52ee7c9218751c, type: 2}
+  - {fileID: 11400000, guid: 25f05175ce81b5d49b7cacec354d0bfd, type: 2}
+  - {fileID: 11400000, guid: 323a8ab627855aa47b4b40a7bfa32357, type: 2}

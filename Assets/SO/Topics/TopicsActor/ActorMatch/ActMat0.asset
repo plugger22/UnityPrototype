@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActMat0
   m_EditorClassIdentifier: 
-  tag: 
-  type: {fileID: 0}
-  subType: {fileID: 0}
-  listOfOptions: []
+  tag: Actor Match test 0
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: 7fa9f9dde48275d49a25ebaa12a1a92a, type: 2}
+  - {fileID: 11400000, guid: 0f8521367002886418f80733c386f391, type: 2}
+  - {fileID: 11400000, guid: 83e01c2dc24af2b42a12ecb2a7541bf2, type: 2}
