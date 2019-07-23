@@ -10,6 +10,8 @@ public class TopicPool : ScriptableObject
 {
     [Tooltip("Short descriptor")]
     public string tag;
+    [Tooltip("Designer explanation")]
+    [TextArea] public string descriptor;
 
     [Header("Categories")]
     [Tooltip("Topic Type that decisions are associated with")]

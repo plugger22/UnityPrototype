@@ -50,6 +50,12 @@ public class Scenario : ScriptableObject
     public Challenge challengeResistance;
     public Challenge challengeAuthority;
 
+    [Header("Topic Pool")]
+    [Tooltip("Topic pool of Scenario specific Authority decisions")]
+    public TopicPool authorityPool;
+    [Tooltip("Topic pool of Scenario specific Resistance decisions")]
+    public TopicPool resistancePool;
+
     [Header("Number of Turns")]
     [Range(20, 100)] public int timer = 100;
 
