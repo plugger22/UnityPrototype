@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using gameAPI;
 
 /// <summary>
 /// Topic Decision 
@@ -12,6 +13,7 @@ public class Topic : ScriptableObject
     [Tooltip("Short descriptor")]
     public string tag;
 
+    [Header("Categories")]
     [Tooltip("Topic Type that decision is associated with")]
     public TopicType type;
     [Tooltip("Topic SubType that the decision is associated with")]
@@ -20,6 +22,8 @@ public class Topic : ScriptableObject
     [Header("Options")]
     [Tooltip("Options for the decision. Max 4")]
     public List<TopicOption> listOfOptions;
+
+    [HideInInspector] public Status status = Status.Dormant;
 
 
     public void OnEnable()

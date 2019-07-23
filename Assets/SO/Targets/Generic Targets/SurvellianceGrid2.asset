@@ -31,7 +31,7 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
-  ongoingEffect: {fileID: 0}
+  ongoingEffect: {fileID: 11400000, guid: 9eef9920ae131f847ac02efc8b347252, type: 2}
   profileBase: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 0}

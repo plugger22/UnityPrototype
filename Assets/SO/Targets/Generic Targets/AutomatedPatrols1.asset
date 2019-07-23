@@ -30,24 +30,24 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
-  ongoingEffect: {fileID: 0}
+  ongoingEffect: {fileID: 11400000, guid: 9eef9920ae131f847ac02efc8b347252, type: 2}
   profileBase: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   isSuccessNeeded: 1
   followOnTarget: {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
-  profile: {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
+  profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   targetStatus: 2
   intel: 0
   ongoingID: -1
   isKnownByAI: 0
-  nodeID: 1
+  nodeID: 13
   distance: 0
   newIntel: 0
   intelGain: 0
   turnSuccess: -1
   turnDone: -1
   numOfAttempts: 0
-  turnsWindow: 10
+  turnsWindow: 5
   timerDelay: 0
-  timerHardLimit: 2
-  timerWindow: 7
-  listOfRumourContacts: 220000001e0000001c00000026000000190000001b0000000000000017000000300000000d0000001c000000270000002c0000000300000007000000250000002d00000028000000
+  timerHardLimit: 0
+  timerWindow: 5
+  listOfRumourContacts: 220000001e0000001c00000026000000190000001b0000000000000017000000300000000d0000001c000000270000002c0000000300000007000000250000002d000000280000002b000000

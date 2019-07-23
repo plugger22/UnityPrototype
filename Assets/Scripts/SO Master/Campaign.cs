@@ -15,9 +15,25 @@ public class Campaign : ScriptableObject
     [Tooltip("Description of campaign used in-game")]
     public string descriptor;
 
+    [Header("Scenarios")]
     [Tooltip("A list of all scenarios that make up the campaign. NOTE: Scenarios are played in order from top (index 0) to bottom")]
     public List<Scenario> listOfScenarios = new List<Scenario>();
 
+    [Header("Campaign Topic Pools")]
+    [Tooltip("Topic pool of decisions for campaign story line Alpha")]
+    public TopicPool campaignAlpha;
+    [Tooltip("Topic pool of decisions for campaign story line Bravo")]
+    public TopicPool campaignBravo;
+    [Tooltip("Topic pool of decisions for campaign story line Charlie")]
+    public TopicPool campaignCharlie;
+
+    [Header("Family Topic Pools")]
+    [Tooltip("Topic pool of decisions for family story line Alpha")]
+    public TopicPool familyAlpha;
+    [Tooltip("Topic pool of decisions for family story line Bravo")]
+    public TopicPool familyBravo;
+    [Tooltip("Topic pool of decisions for family story line Charlie")]
+    public TopicPool familyCharlie;
 
     public void OnEnable()
     {

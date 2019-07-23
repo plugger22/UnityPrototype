@@ -30,7 +30,7 @@ MonoBehaviour:
   listOfFailEffects:
   - {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
-  ongoingEffect: {fileID: 0}
+  ongoingEffect: {fileID: 11400000, guid: 502f00bd350a7094d82b0b36533bd4e7, type: 2}
   profileBase: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   isSuccessNeeded: 0
   followOnTarget: {fileID: 11400000, guid: 47c6550348fa8db4eb48d70113e62bda, type: 2}
@@ -48,6 +48,6 @@ MonoBehaviour:
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
-  timerHardLimit: 3
-  timerWindow: 8
-  listOfRumourContacts: 00000000110000001b000000010000000e000000
+  timerHardLimit: 5
+  timerWindow: 10
+  listOfRumourContacts: 00000000110000001b000000010000000e0000002500000006000000
