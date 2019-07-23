@@ -501,15 +501,24 @@ public class ValidationManager : MonoBehaviour
         if (arrayOfTopicPools != null)
         {
             count = arrayOfTopicPools.Length;
-
-            for (int i = 0; i < count; i++)
+            if (count > 0)
             {
-                TopicPool pool = arrayOfTopicPools[i];
-                if (count > 0)
+                for (int i = 0; i < count; i++)
                 {
+                    TopicPool pool = arrayOfTopicPools[i];
+
+                    if (pool.listOfTopics.Count > 0)
+                    {
+                        foreach (Topic topic in pool.listOfTopics)
+                        {
+                            //Check it has the correct TopicType/SubType to match the TopicPool
+                        }
+                    }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topicPool \"{0}\", has no listOfTopics{1}", pool.name, "\n"); }
+
                 }
-                else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topicPool \"{0}\" has No Topics (Empty){1}", pool.name, "\n"); }
             }
+            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: arrayOfTopicPools  has No Pools (Empty){1}", "\n"); }
         }
         else { Debug.LogError("Invalid arrayOfTopicPools (Null)"); }
     }
