@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: AutCam0
+  m_EditorClassIdentifier: 
+  tag: Authority Campaign test 0
+  type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
+  subType: {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: c7b1334e635dba943bab8a4034ecff9d, type: 2}
+  - {fileID: 11400000, guid: cf21afdc8f1b3a745acb54ae86a1cb8b, type: 2}
+  - {fileID: 11400000, guid: c7396f93cfc20b944952e374f5658db4, type: 2}
+  status: 0

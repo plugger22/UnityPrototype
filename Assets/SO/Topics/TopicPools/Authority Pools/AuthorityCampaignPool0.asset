@@ -8,13 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: AutPol0
+  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
+  m_Name: AuthorityCampaignPool0
   m_EditorClassIdentifier: 
-  tag: Authority Politics test 0
+  tag: Authority Campaign specific topics test pool 0
+  descriptor: 
   type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   subType: {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67, type: 2}
-  listOfOptions:
-  - {fileID: 11400000, guid: c7b1334e635dba943bab8a4034ecff9d, type: 2}
-  - {fileID: 11400000, guid: cf21afdc8f1b3a745acb54ae86a1cb8b, type: 2}
-  - {fileID: 11400000, guid: c7396f93cfc20b944952e374f5658db4, type: 2}
+  listOfTopics:
+  - {fileID: 11400000, guid: 005b0798ea05fac4ebf389be132d3d61, type: 2}

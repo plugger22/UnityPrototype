@@ -24,3 +24,8 @@ MonoBehaviour:
   familyAlphaPool: {fileID: 11400000, guid: 14b31fe7cd436b546955231cd33731cd, type: 2}
   familyBravoPool: {fileID: 0}
   familyCharliePool: {fileID: 0}
+  authorityCampaignPool: {fileID: 0}
+  resistanceCampaignPool: {fileID: 11400000, guid: 138cf08ce5265694591825f2eebad94e,
+    type: 2}
+  authorityGeneralPool: {fileID: 0}
+  resistanceGeneralPool: {fileID: 0}

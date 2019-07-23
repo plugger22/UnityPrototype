@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -34,6 +33,19 @@ public class Campaign : ScriptableObject
     public TopicPool familyBravoPool;
     [Tooltip("Topic pool of decisions for family story line Charlie")]
     public TopicPool familyCharliePool;
+
+    [Header("Authority/Resistance Campaign Topic Pools")]
+    [Tooltip("Topic pool of campaign specific Authority decisions")]
+    public TopicPool authorityCampaignPool;
+    [Tooltip("Topic pool of campaign specific Resistance decisions")]
+    public TopicPool resistanceCampaignPool;
+
+    [Header("Authority/Resistance General Topic Pools")]
+    [Tooltip("Topic pool of general Authority decisions")]
+    public TopicPool authorityGeneralPool;
+    [Tooltip("Topic pool of general Resistance decisions")]
+    public TopicPool resistanceGeneralPool;
+
 
     public void OnEnable()
     {
