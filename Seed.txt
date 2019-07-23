@@ -39,3 +39,9 @@ City seed 890 -> Arles, France
 
 Dev seed 43246 -> Tuesday, 23 July 2019 4:09 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 844 -> Tuesday, 23 July 2019 5:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8318 -> Tuesday, 23 July 2019 5:45 PM
+City seed 5678 -> London, United Kingdom

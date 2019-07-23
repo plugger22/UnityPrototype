@@ -79,6 +79,7 @@ public class LoadManager : MonoBehaviour
     public TopicType[] arrayOfTopicTypes;
     public TopicSubType[] arrayOfTopicSubTypes;
     public TopicOption[] arrayOfTopicOptions;
+    public TopicPool[] arrayOfTopicPools;
     public Topic[] arrayOfTopics;
 
     [Header("Targets")]
@@ -1188,7 +1189,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicSubType (Null) -> Import failed"); }
-        //
+        /*//
         // - - - Topic Options - - -
         //
         Dictionary<string, TopicOption> dictOfTopicOptions = GameManager.instance.dataScript.GetDictOfTopicOptions();
@@ -1214,7 +1215,21 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict > 0, "No TopicOption has been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicOption count, array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }
+        else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }*/
+        //
+        // - - - Topic Options (not stored in a collection)
+        //
+        numArray = arrayOfTopicOptions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicOptions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicOptions present"); }
+        //
+        // - - - Topic Pools (not stored in a collection)
+        //
+        numArray = arrayOfTopicPools.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicPools has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicPools present"); }
         //
         // - - - Topics - - -
         //

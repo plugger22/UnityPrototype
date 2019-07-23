@@ -494,6 +494,24 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfTopicOptions (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfTopics (Null)"); }
+        //
+        // - - - Topic Pools
+        //
+        TopicPool[] arrayOfTopicPools = GameManager.instance.loadScript.arrayOfTopicPools;
+        if (arrayOfTopicPools != null)
+        {
+            count = arrayOfTopicPools.Length;
+
+            for (int i = 0; i < count; i++)
+            {
+                TopicPool pool = arrayOfTopicPools[i];
+                if (count > 0)
+                {
+                }
+                else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topicPool \"{0}\" has No Topics (Empty){1}", pool.name, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTopicPools (Null)"); }
     }
     #endregion
 
@@ -601,6 +619,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicSubTypes);
         //TopicOption
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicOptions);
+        //TopicPool
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicPools);
         //Topics
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopics);
         //ManageActor
