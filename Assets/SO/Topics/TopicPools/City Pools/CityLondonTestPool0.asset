@@ -8,10 +8,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d48773d11cd406c49a773f4d29836b75, type: 3}
-  m_Name: CityEvent
+  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
+  m_Name: CityLondonTestPool0
   m_EditorClassIdentifier: 
-  tag: City Event
+  tag: London city test pool 0
   type: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
-  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  minimumInterval: 0
+  subType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
+  listOfTopics:
+  - {fileID: 11400000, guid: 14142335e39632b4a976b7dac4443e88, type: 2}

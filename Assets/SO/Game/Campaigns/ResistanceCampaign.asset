@@ -18,3 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
+  campaignAlpha: {fileID: 11400000, guid: 13918a6559490744084ea873a6feb090, type: 2}
+  campaignBravo: {fileID: 11400000, guid: 1c9cf7a43152bdf47a61df35418e37b0, type: 2}
+  campaignCharlie: {fileID: 11400000, guid: c869c7a4bb01d1d41ad9f7639ab64dfa, type: 2}
+  familyAlpha: {fileID: 11400000, guid: 14b31fe7cd436b546955231cd33731cd, type: 2}
+  familyBravo: {fileID: 11400000, guid: 46d468c573ac5034aa03128d778871b7, type: 2}
+  familyCharlie: {fileID: 11400000, guid: acaf5b34889cb78479ea001be58a216b, type: 2}

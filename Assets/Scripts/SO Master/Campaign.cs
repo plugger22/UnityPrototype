@@ -21,19 +21,19 @@ public class Campaign : ScriptableObject
 
     [Header("Campaign Topic Pools")]
     [Tooltip("Topic pool of decisions for campaign story line Alpha")]
-    public TopicPool campaignAlpha;
+    public TopicPool campaignAlphaPool;
     [Tooltip("Topic pool of decisions for campaign story line Bravo")]
-    public TopicPool campaignBravo;
+    public TopicPool campaignBravoPool;
     [Tooltip("Topic pool of decisions for campaign story line Charlie")]
-    public TopicPool campaignCharlie;
+    public TopicPool campaignCharliePool;
 
     [Header("Family Topic Pools")]
     [Tooltip("Topic pool of decisions for family story line Alpha")]
-    public TopicPool familyAlpha;
+    public TopicPool familyAlphaPool;
     [Tooltip("Topic pool of decisions for family story line Bravo")]
-    public TopicPool familyBravo;
+    public TopicPool familyBravoPool;
     [Tooltip("Topic pool of decisions for family story line Charlie")]
-    public TopicPool familyCharlie;
+    public TopicPool familyCharliePool;
 
     public void OnEnable()
     {

@@ -20,6 +20,7 @@ MonoBehaviour:
   harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: Big Ben
+  cityPool: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   isTestOff: 0
   mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
   faction: {fileID: 0}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Family storyline test pool 2
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
-  subType: {fileID: 0}
+  subType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
   listOfTopics:
   - {fileID: 11400000, guid: fda3c44130477a94d8983853281c2f24, type: 2}

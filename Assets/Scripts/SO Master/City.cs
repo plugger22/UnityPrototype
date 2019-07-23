@@ -35,7 +35,11 @@ public class City : ScriptableObject
     [Header("Features")]
     [Tooltip("Name of a distinctive cultural icon for the city, eg 'The Eiffel Tower' or 'The Statue of Liberty'. All cities have an icon.")]
     public string iconName;
-    
+
+    [Header("City Topic Pool")]
+    [Tooltip("Topic pool of decisions for City")]
+    public TopicPool cityPool;
+
     [Header("Debugging")]
     [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
     public bool isTestOff = false;
