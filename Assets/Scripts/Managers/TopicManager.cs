@@ -134,7 +134,7 @@ public class TopicManager : MonoBehaviour
                                     select item.Value;
                                 List<Topic> listOfTopics = topicData.ToList();
                                 if (listOfTopics.Count > 0)
-                                { GameManager.instance.dataScript.AddListOfTopicsToPool(subTopicType, listOfTopics); }
+                                { GameManager.instance.dataScript.AddListOfTopicsToPool(subTopicType.name, listOfTopics); }
                             }
                             else { Debug.LogErrorFormat("Invalid TopicSubType (Null) for Topic \"{0}\"", topicType.name); }
                         }
@@ -354,7 +354,7 @@ public class TopicManager : MonoBehaviour
                                 if (listOfTopics.Count > 0)
                                 {
                                     foreach (Topic topic in listOfTopics)
-                                    { builder.AppendFormat("     {0}, {1}{2}", topic.name, topic.tag, "\n"); }
+                                    { builder.AppendFormat("     {0}, {1}, {2} options{3}", topic.name, topic.tag, topic.listOfOptions?.Count, "\n"); }
                                 }
                                 else { builder.AppendFormat("    None found{0}", "\n"); }
                             }

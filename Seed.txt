@@ -1,0 +1,15 @@
+
+Dev seed 2553 -> Tuesday, 23 July 2019 11:31 AM
+City seed 890 -> Arles, France
+
+Dev seed 60006 -> Tuesday, 23 July 2019 11:33 AM
+City seed 890 -> Arles, France
+
+Dev seed 9512 -> Tuesday, 23 July 2019 12:16 PM
+City seed 890 -> Arles, France
+City seed 890 -> Arles, France
+
+Dev seed 55051 -> Tuesday, 23 July 2019 12:26 PM
+City seed 890 -> Arles, France
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia

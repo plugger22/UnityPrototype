@@ -687,6 +687,23 @@ public class FileManager : MonoBehaviour
         if (listOfTopicTypesLevel != null)
         { write.dataData.listOfTopicTypesLevel.AddRange(listOfTopicTypesLevel.Select(x => x.name).ToList()); }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
+        //dictOfTopicPools
+        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
+        if (dictOfTopicPools != null)
+        {
+            foreach (var topicList in dictOfTopicPools)
+            {
+                StringListWrapper listOfTopicNames = new StringListWrapper();
+                listOfTopicNames.myList.AddRange(topicList.Value.Select(x => x.name).ToList());
+                if (listOfTopicNames.myList != null)
+                {
+                    write.dataData.listOfTopicPoolsValue.Add(listOfTopicNames);
+                    write.dataData.listOfTopicPoolsKeys.Add(topicList.Key);
+                }
+                else { Debug.LogWarningFormat("Invalid listOfTopicNames (Null) for topicSubType \"{0}\"", topicList.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
         #endregion
 
         #region registers
@@ -2124,16 +2141,36 @@ public class FileManager : MonoBehaviour
         Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
         if (dictOfTopicPools != null)
         {
-            foreach(var topicList in dictOfTopicPools)
+            string subTypeName;
+            //clear dictionary
+            dictOfTopicPools.Clear();
+            List<Topic> listOfTopics = new List<Topic>();
+            //copy saved data across
+            for (int i = 0; i < read.dataData.listOfTopicPoolsKeys.Count; i++)
             {
-                StringListWrapper listOfTopicNames = new StringListWrapper();
-                listOfTopicNames.myList.AddRange(topicList.Value.Select(x => x.name).ToList());
-                if (listOfTopicNames.myList != null)
+                subTypeName = read.dataData.listOfTopicPoolsKeys[i];
+                //clear out tempList of topics for topicSubType
+                listOfTopics.Clear();
+                List<string> listOfTopicNames = read.dataData.listOfTopicPoolsValue[i].myList;
+                if (listOfTopicNames != null)
                 {
-                    write.dataData.listOfTopicPoolsValue.Add(listOfTopicNames);
-                    write.dataData.listOfTopicPoolsKeys.Add(topicList.Key);
+                    countKey = listOfTopicNames.Count;
+                    if (countKey > 0)
+                    {
+                        //refill with topics based on saved topic names
+                        for (int j = 0; j < countKey; j++)
+                        {
+                            //Generate topics from topicNames
+                            Topic topic = GameManager.instance.dataScript.GetTopic(listOfTopicNames[j]);
+                            if (topic != null)
+                            { listOfTopics.Add(topic); }
+                            else { Debug.LogWarningFormat("Invalid topic (Null) for topic \"{0}\" for topicSubType \"{1}\"", listOfTopicNames[j], subTypeName); }
+                        }
+                    }
                 }
-                else { Debug.LogWarningFormat("Invalid listOfTopicNames (Null) for topicSubType \"{0}\"", topicList.Key); }
+                else { Debug.LogWarningFormat("Invalid listOfTppicNames (Null) for topicSubType \"{0}\"", subTypeName); }
+                //add to dict
+                GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, listOfTopics);
             }
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }

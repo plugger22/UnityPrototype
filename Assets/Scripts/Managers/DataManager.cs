@@ -6745,44 +6745,60 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds a listOfTopics to specified topicSubType in dict. Adds data to any existing data already present, otherwise creates new record
+    /// Adds a listOfTopics to specified topicSubType.name in dict. Adds data to any existing data already present, otherwise creates new record
     /// NOTE: dictOfTopicPools is cleared between levels in ResetNewLevel
     /// </summary>
-    /// <param name="subType"></param>
-    public void AddListOfTopicsToPool(TopicSubType subType, List<Topic> listOfTopics)
+    /// <param name="subTypeName"></param>
+    public void AddListOfTopicsToPool(string subTypeName, List<Topic> listOfTopics)
     {
-        if (subType != null)
+        if (string.IsNullOrEmpty(subTypeName) == false)
         {
             if (listOfTopics != null)
             {
-                string subName = subType.name;
                 //find entry in dict
-                if (dictOfTopicPools.ContainsKey(subName) == true)
+                if (dictOfTopicPools.ContainsKey(subTypeName) == true)
                 {
-                    List<Topic> listOfDictTopics = dictOfTopicPools[subName];
+                    List<Topic> listOfDictTopics = dictOfTopicPools[subTypeName];
                     //add list to existing list
                     if (listOfDictTopics != null)
                     {
                         listOfDictTopics.AddRange(listOfTopics);
                         /*Debug.LogFormat("[Tst] DataManager.cs -> AddListOfTopicsToPool: {0} topics added to {1}{2}", listOfTopics.Count, subType.name, "\n");*/
                     }
-                    else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for \"{0}\"", subName); }
+                    else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for \"{0}\"", subTypeName); }
                 }
                 else
                 {
                     //create new record
                     try
                     {
-                        dictOfTopicPools.Add(subName, listOfTopics);
+                        dictOfTopicPools.Add(subTypeName, new List<Topic>(listOfTopics));
                         /*Debug.LogFormat("[Tst] DataManager.cs -> AddListOfTopicsToPool: {0} topics added to {1}{2}", listOfTopics.Count, subType.name, "\n");*/
                     }
                     catch (ArgumentException)
-                    { Debug.LogErrorFormat("Invalid subName \"{0}\" (Duplicate)", subName); }
+                    { Debug.LogErrorFormat("Invalid subName \"{0}\" (Duplicate)", subTypeName); }
                 }
             }
-            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for subType \"{0}\"", subType.name); }
+            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for subType \"{0}\"", subTypeName); }
         }
-        else { Debug.LogError("Invalid TopicSubType (Null)"); }
+        else { Debug.LogError("Invalid subTypeName (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// Get topic from dictOfTopics based on topic.name, returns Null if not found
+    /// </summary>
+    /// <param name="topicName"></param>
+    /// <returns></returns>
+    public Topic GetTopic(string topicName)
+    {
+        Topic topic = null;
+        if (string.IsNullOrEmpty(topicName) == false)
+        {
+            if (dictOfTopics.ContainsKey(topicName) == true)
+            { return dictOfTopics[topicName]; }
+        }
+        else { Debug.LogError("Invalid topicName (Null or Empty)"); }
+        return topic;
     }
 
     #endregion
