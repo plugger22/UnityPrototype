@@ -18,38 +18,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
-  campaignType: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
-  campaignSubType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
   campaignAlphaPool: {fileID: 11400000, guid: 13918a6559490744084ea873a6feb090, type: 2}
   campaignBravoPool: {fileID: 11400000, guid: 1c9cf7a43152bdf47a61df35418e37b0, type: 2}
   campaignCharliePool: {fileID: 11400000, guid: c869c7a4bb01d1d41ad9f7639ab64dfa,
     type: 2}
-  familyType: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
-  familySubType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
   familyAlphaPool: {fileID: 11400000, guid: 14b31fe7cd436b546955231cd33731cd, type: 2}
   familyBravoPool: {fileID: 11400000, guid: 46d468c573ac5034aa03128d778871b7, type: 2}
   familyCharliePool: {fileID: 11400000, guid: acaf5b34889cb78479ea001be58a216b, type: 2}
-  authorityCampaignType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09,
-    type: 2}
-  authorityCampaignSubType: {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67,
-    type: 2}
   authorityCampaignPool: {fileID: 11400000, guid: 97c7cf6be7b3c9644923da7eda622b65,
-    type: 2}
-  resistanceCampaignType: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116,
-    type: 2}
-  resistanceCampaignSubType: {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc,
     type: 2}
   resistanceCampaignPool: {fileID: 11400000, guid: 138cf08ce5265694591825f2eebad94e,
     type: 2}
-  authorityGeneralType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09,
-    type: 2}
-  authorityGeneralSubType: {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb,
-    type: 2}
   authorityGeneralPool: {fileID: 11400000, guid: 797a5c8b64ad0164bba95cdfa6aab7d9,
-    type: 2}
-  resistanceGeneralType: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116,
-    type: 2}
-  resistanceGeneralSubType: {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8,
     type: 2}
   resistanceGeneralPool: {fileID: 11400000, guid: f8d378a8686be4e40a80a1d0a9bd87b6,
     type: 2}

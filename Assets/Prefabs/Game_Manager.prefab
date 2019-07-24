@@ -2690,3 +2690,5 @@ MonoBehaviour:
     type: 2}
   resistanceGeneralSubType: {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8,
     type: 2}
+  cityType: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
+  citySubType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
