@@ -20,3 +20,134 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 8307 -> Wednesday, 24 July 2019 2:52 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 64483 -> Wednesday, 24 July 2019 3:57 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicSubType, array 14, assets 16 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicSubType[]) (at Assets/Scripts/Managers/ValidationManager.cs:1088)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1011)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<SubInitialiseTopicTypes>m__0 (TopicSubType x) (at Assets/Scripts/Managers/ValidationManager.cs:106)
+	System.Collections.Generic.List`1[T].FindIndex (System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].FindIndex (System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].Exists (System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.SubInitialiseTopicTypes () (at Assets/Scripts/Managers/ValidationManager.cs:106)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:67)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:731)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:787)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:349)
+	
+Dev seed 47056 -> Wednesday, 24 July 2019 3:58 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<SubInitialiseTopicTypes>m__0 (TopicSubType x) (at Assets/Scripts/Managers/ValidationManager.cs:106)
+	System.Collections.Generic.List`1[T].FindIndex (System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].FindIndex (System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].Exists (System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.SubInitialiseTopicTypes () (at Assets/Scripts/Managers/ValidationManager.cs:106)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:67)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:731)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:787)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:349)
+	
+Dev seed 11650 -> Wednesday, 24 July 2019 3:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32467 -> Wednesday, 24 July 2019 4:16 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid campaignAlphaSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:112)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid campaignBravoSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:116)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid campaignCharlieSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:120)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid familyAlphaSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:129)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid familyBravoSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:133)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid familyCharlieSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:137)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	
+Dev seed 37543 -> Wednesday, 24 July 2019 4:20 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid campaignAlphaSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:112)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid campaignBravoSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:116)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid campaignCharlieSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:120)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid familyAlphaSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:129)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid familyBravoSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:133)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ERROR Invalid familyCharlieSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:137)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:71)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:787)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	
+Dev seed 4240 -> Wednesday, 24 July 2019 4:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12061 -> Wednesday, 24 July 2019 4:29 PM
+City seed 5678 -> London, United Kingdom

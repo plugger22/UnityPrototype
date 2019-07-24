@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: CampaignTestPool0
+  m_Name: FamilyCharliePool2
   m_EditorClassIdentifier: 
-  tag: Campaign StoryLine test Pool 0
-  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
-  subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
+  tag: Family storyline Charlie test pool 2
+  descriptor: 
+  type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
+  subType: {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00, type: 2}
   listOfTopics:
-  - {fileID: 11400000, guid: 0c5844e33729c6d4cbd2090a98499db5, type: 2}
+  - {fileID: 11400000, guid: fda3c44130477a94d8983853281c2f24, type: 2}

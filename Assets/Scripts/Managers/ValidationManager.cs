@@ -25,7 +25,11 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TopicType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType familyType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType familySubType;
+    public TopicSubType familyAlphaSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType familyBravoSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType familyCharlieSubType;
     [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType authorityCampaignType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
@@ -103,30 +107,54 @@ public class ValidationManager : MonoBehaviour
         if (campaignType != null)
         {
             //alpha
-            if (campaignType.listOfSubTypes.Exists(x => x.name.Equals(campaignAlphaSubType.name, StringComparison.Ordinal)) == false)
-            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaignSubType \"{0}\" Does Not Match campaignType \"{1}\"{2}", campaignAlphaSubType.name, campaignType.name, "\n"); }
-            else { Debug.Assert(campaignAlphaSubType != null, "Invalid campaignAlphaSubType (Null)"); }
+            if (campaignAlphaSubType != null)
+            {
+                if (campaignType.listOfSubTypes.Exists(x => x.name.Equals(campaignAlphaSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaignSubType \"{0}\" Does Not Match campaignType \"{1}\"{2}", campaignAlphaSubType.name, campaignType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid campaignAlphaSubType (Null)"); }
             //bravo
-            if (campaignType.listOfSubTypes.Exists(x => x.name.Equals(campaignBravoSubType.name, StringComparison.Ordinal)) == false)
-            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaignSubType \"{0}\" Does Not Match campaignType \"{1}\"{2}", campaignBravoSubType.name, campaignType.name, "\n"); }
-            else { Debug.Assert(campaignBravoSubType != null, "Invalid campaignBravoSubType (Null)"); }
+            if (campaignBravoSubType != null)
+            {
+                if (campaignType.listOfSubTypes.Exists(x => x.name.Equals(campaignBravoSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaignSubType \"{0}\" Does Not Match campaignType \"{1}\"{2}", campaignBravoSubType.name, campaignType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid campaignBravoSubType (Null)"); }
             //charlie
-            if (campaignType.listOfSubTypes.Exists(x => x.name.Equals(campaignCharlieSubType.name, StringComparison.Ordinal)) == false)
-            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaignSubType \"{0}\" Does Not Match campaignType \"{1}\"{2}", campaignCharlieSubType.name, campaignType.name, "\n"); }
-            else { Debug.Assert(campaignCharlieSubType != null, "Invalid campaignCharlieSubType (Null)"); }
+            if (campaignCharlieSubType != null)
+            {
+                if (campaignType.listOfSubTypes.Exists(x => x.name.Equals(campaignCharlieSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaignSubType \"{0}\" Does Not Match campaignType \"{1}\"{2}", campaignCharlieSubType.name, campaignType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid campaignCharlieSubType (Null)"); }
         }
-        else { Debug.Assert(campaignType != null, "Invalid campaignType (Null)"); }
+        else { Debug.LogError("Invalid campaignType (Null)"); }
         //subType checks -> Family
-        if (familyType != null && familySubType != null)
+        if (familyType != null)
         {
-            if (familyType.listOfSubTypes.Exists(x => x.name.Equals(familySubType.name, StringComparison.Ordinal)) == false)
-            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: familySubType \"{0}\" Does Not Match familyType \"{1}\"{2}", familySubType.name, familyType.name, "\n"); }
+            //alpha
+            if (familyAlphaSubType != null)
+            {
+                if (familyType.listOfSubTypes.Exists(x => x.name.Equals(familyAlphaSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: familyAlphaSubType \"{0}\" Does Not Match familyType \"{1}\"{2}", familyAlphaSubType.name, familyType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid familyAlphaSubType (Null)"); }
+            //bravo
+            if (familyBravoSubType != null)
+            {
+                if (familyType.listOfSubTypes.Exists(x => x.name.Equals(familyBravoSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: familyBravoSubType \"{0}\" Does Not Match familyType \"{1}\"{2}", familyBravoSubType.name, familyType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid familyBravoSubType (Null)"); }
+            //charlie
+            if (familyCharlieSubType != null)
+            {
+                if (familyType.listOfSubTypes.Exists(x => x.name.Equals(familyCharlieSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: familyCharlieSubType \"{0}\" Does Not Match familyType \"{1}\"{2}", familyCharlieSubType.name, familyType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid familyCharlieSubType (Null)"); }
         }
-        else
-        {
-            Debug.Assert(familyType != null, "Invalid familyType (Null)");
-            Debug.Assert(familySubType != null, "Invalid familSubType (Null)");
-        }
+        else {Debug.LogError("Invalid familyType (Null)"); }
         //subType checks -> authorityCampaignType
         if (authorityCampaignType != null && authorityCampaignSubType != null)
         {
@@ -756,10 +784,10 @@ public class ValidationManager : MonoBehaviour
                                     campaign.familyAlphaPool.name, campaign.familyAlphaPool.type.name, familyType.name, "\n");
                             }
                             //check subType for a match
-                            if (campaign.familyAlphaPool.subType.name.Equals(familySubType.name, StringComparison.Ordinal) == false)
+                            if (campaign.familyAlphaPool.subType.name.Equals(familyAlphaSubType.name, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyAlphaPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyAlphaPool.name, campaign.familyAlphaPool.subType.name, familySubType.name, "\n");
+                                    campaign.familyAlphaPool.name, campaign.familyAlphaPool.subType.name, familyAlphaSubType.name, "\n");
                             }
                         }
                         //family Bravo Pool
@@ -772,10 +800,10 @@ public class ValidationManager : MonoBehaviour
                                     campaign.familyBravoPool.name, campaign.familyBravoPool.type.name, familyType.name, "\n");
                             }
                             //check subType for a match
-                            if (campaign.familyBravoPool.subType.name.Equals(familySubType.name, StringComparison.Ordinal) == false)
+                            if (campaign.familyBravoPool.subType.name.Equals(familyBravoSubType.name, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyBravoPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyBravoPool.name, campaign.familyBravoPool.subType.name, familySubType.name, "\n");
+                                    campaign.familyBravoPool.name, campaign.familyBravoPool.subType.name, familyBravoSubType.name, "\n");
                             }
                         }
                         //family Charlie Pool
@@ -788,10 +816,10 @@ public class ValidationManager : MonoBehaviour
                                     campaign.familyCharliePool.name, campaign.familyCharliePool.type.name, familyType.name, "\n");
                             }
                             //check subType for a match
-                            if (campaign.familyCharliePool.subType.name.Equals(familySubType.name, StringComparison.Ordinal) == false)
+                            if (campaign.familyCharliePool.subType.name.Equals(familyCharlieSubType.name, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyCharliePool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyCharliePool.name, campaign.familyCharliePool.subType.name, familySubType.name, "\n");
+                                    campaign.familyCharliePool.name, campaign.familyCharliePool.subType.name, familyCharlieSubType.name, "\n");
                             }
                         }
                         //Authority Campaign Pool

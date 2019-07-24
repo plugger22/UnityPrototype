@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: FamilyTestPool0
+  m_Name: FamilyBravoPool1
   m_EditorClassIdentifier: 
-  tag: Family storyline test pool 0
+  tag: Family storyline Bravo test pool 1
+  descriptor: 
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
-  subType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  subType: {fileID: 11400000, guid: 8646488ba661a50429c3f85efe9cdfae, type: 2}
   listOfTopics:
-  - {fileID: 11400000, guid: ddf2fa19354793347b7e7485d1c4ff4b, type: 2}
+  - {fileID: 11400000, guid: 96fffcf830e53d8458f682d44913e435, type: 2}

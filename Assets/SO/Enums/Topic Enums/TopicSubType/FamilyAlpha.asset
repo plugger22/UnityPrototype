@@ -8,11 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: FamilyTestPool2
+  m_Script: {fileID: 11500000, guid: d48773d11cd406c49a773f4d29836b75, type: 3}
+  m_Name: FamilyAlpha
   m_EditorClassIdentifier: 
-  tag: Family storyline test pool 2
+  tag: Family story line Allpha
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
-  subType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
-  listOfTopics:
-  - {fileID: 11400000, guid: fda3c44130477a94d8983853281c2f24, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  minimumInterval: 10

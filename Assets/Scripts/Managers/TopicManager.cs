@@ -149,77 +149,87 @@ public class TopicManager : MonoBehaviour
 
         //get current topicTypes for the level
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
-        //loop by subTypes
-        for (int i = 0; i < listOfTopicTypes.Count; i++)
+        if (listOfTopicTypes != null)
         {
-            TopicType topicType = listOfTopicTypes[i];
-            if (topicType != null)
+            //loop by subTypes
+            for (int i = 0; i < listOfTopicTypes.Count; i++)
             {
-                for (int j = 0; j < topicType.listOfSubTypes.Count; j++)
+                TopicType topicType = listOfTopicTypes[i];
+                if (topicType != null)
                 {
-                    TopicSubType topicSubType = topicType.listOfSubTypes[j];
-                    if (topicSubType != null)
+                    for (int j = 0; j < topicType.listOfSubTypes.Count; j++)
                     {
-                        switch (topicSubType.name)
+                        TopicSubType topicSubType = topicType.listOfSubTypes[j];
+                        if (topicSubType != null)
                         {
-                            case "ActorPolitic":
+                            switch (topicSubType.name)
+                            {
+                                case "ActorPolitic":
 
-                                break;
-                            case "ActorContact":
+                                    break;
+                                case "ActorContact":
 
-                                break;
-                            case "ActorDistrict":
+                                    break;
+                                case "ActorDistrict":
 
-                                break;
-                            case "ActorGear":
+                                    break;
+                                case "ActorGear":
 
-                                break;
-                            case "ActorMatch":
+                                    break;
+                                case "ActorMatch":
 
-                                break;
-                            case "AuthorityCampaign":
+                                    break;
+                                case "AuthorityCampaign":
 
-                                break;
-                            case "AuthorityGeneral":
+                                    break;
+                                case "AuthorityGeneral":
 
-                                break;
-                            case "AuthorityTeam":
+                                    break;
+                                case "AuthorityTeam":
 
-                                break;
-                            case "ResistanceCampaign":
+                                    break;
+                                case "ResistanceCampaign":
 
-                                break;
-                            case "ResistanceGeneral":
+                                    break;
+                                case "ResistanceGeneral":
 
-                                break;
-                            case "CampaignAlpha":
+                                    break;
+                                case "CampaignAlpha":
 
-                                break;
-                            case "CampaignBravo":
+                                    break;
+                                case "CampaignBravo":
 
-                                break;
-                            case "CampaignCharlie":
+                                    break;
+                                case "CampaignCharlie":
 
-                                break;
-                            case "CitySub":
+                                    break;
+                                case "CitySub":
 
-                                break;
-                            case "FamilySub":
+                                    break;
+                                case "FamilyAlpha":
 
-                                break;
-                            case "HQSub":
+                                    break;
+                                case "FamilyBravo":
 
-                                break;
-                            default:
-                                Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
-                                break;
+                                    break;
+                                case "FamilyCharlie":
+
+                                    break;
+                                case "HQSub":
+
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
+                                    break;
+                            }
                         }
+                        else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topicType \"{0}\" in listOFSubTypes[{1}]", topicType.name, j); }
                     }
-                    else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topicType \"{0}\" in listOFSubTypes[{1}]", topicType.name, j); }
                 }
+                else { Debug.LogWarningFormat("Invalid topicType (Null) for listOfTopicTypes[{0}]", i); }
             }
-            else { Debug.LogWarningFormat("Invalid topicType (Null) for listOfTopicTypes[{0}]", i); }
         }
+        else { Debug.LogError("Invalid listOfTopicTypes by Level (Null)"); }
     }
 
     //

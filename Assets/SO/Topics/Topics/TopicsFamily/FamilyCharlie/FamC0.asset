@@ -9,14 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: FamB0
+  m_Name: FamC0
   m_EditorClassIdentifier: 
-  tag: Family Bravo story line tsst 0
+  tag: Family Charlie story line test 0
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
-  subType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  subType: {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00, type: 2}
   listOfOptions:
-  - {fileID: 11400000, guid: 6c802a9cf4732584f8370127c85856f6, type: 2}
-  - {fileID: 11400000, guid: 22facf6291e7cff4ab0cdf3f92aa4b93, type: 2}
-  - {fileID: 11400000, guid: 0316aab9a7661a6428fed1299dc259c6, type: 2}
-  - {fileID: 11400000, guid: 6a945e55c03353a4f945198bb0252062, type: 2}
+  - {fileID: 11400000, guid: f961e1c75363bd44495001a7783771a2, type: 2}
+  - {fileID: 11400000, guid: f70c1ab2fe08da44fa70e0a24c1964d6, type: 2}
+  - {fileID: 11400000, guid: ed1ce740bf2c0db4a848b0445abdf413, type: 2}
   status: 0

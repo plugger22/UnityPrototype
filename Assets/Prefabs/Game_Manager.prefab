@@ -1602,19 +1602,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   - {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116, type: 2}
   arrayOfTopicSubTypes:
-  - {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc, type: 2}
   - {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
   - {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   - {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   - {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
   - {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
-  - {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb, type: 2}
   - {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67, type: 2}
+  - {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb, type: 2}
   - {fileID: 11400000, guid: f31933caa1d5f614aa34b3f124cdf649, type: 2}
   - {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
+  - {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  - {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
   - {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
   - {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  - {fileID: 11400000, guid: 8646488ba661a50429c3f85efe9cdfae, type: 2}
+  - {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00, type: 2}
   - {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
+  - {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc, type: 2}
   - {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8, type: 2}
   arrayOfTopicOptions:
   - {fileID: 11400000, guid: 233c9ecd03e8bd54eac07869ea1a193e, type: 2}
@@ -2671,9 +2675,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   campaignType: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
-  campaignSubType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
+  campaignAlphaSubType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61,
+    type: 2}
+  campaignBravoSubType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1,
+    type: 2}
+  campaignCharlieSubType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971,
+    type: 2}
   familyType: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
-  familySubType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  familyAlphaSubType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  familyBravoSubType: {fileID: 11400000, guid: 8646488ba661a50429c3f85efe9cdfae, type: 2}
+  familyCharlieSubType: {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00,
+    type: 2}
   authorityCampaignType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09,
     type: 2}
   authorityCampaignSubType: {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67,
