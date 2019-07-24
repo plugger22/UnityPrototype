@@ -111,7 +111,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void UpdateTopicPools()
     {
-        //Debug loads in all topics in dictOfTopics. Need to replace.
+        /*//Debug loads in all topics in dictOfTopics. Need to replace.
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
@@ -145,6 +145,81 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTopics (Null)"); }
+        */
+
+        //get current topicTypes for the level
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        //loop by subTypes
+        for (int i = 0; i < listOfTopicTypes.Count; i++)
+        {
+            TopicType topicType = listOfTopicTypes[i];
+            if (topicType != null)
+            {
+                for (int j = 0; j < topicType.listOfSubTypes.Count; j++)
+                {
+                    TopicSubType topicSubType = topicType.listOfSubTypes[j];
+                    if (topicSubType != null)
+                    {
+                        switch (topicSubType.name)
+                        {
+                            case "ActorPolitic":
+
+                                break;
+                            case "ActorContact":
+
+                                break;
+                            case "ActorDistrict":
+
+                                break;
+                            case "ActorGear":
+
+                                break;
+                            case "ActorMatch":
+
+                                break;
+                            case "AuthorityCampaign":
+
+                                break;
+                            case "AuthorityGeneral":
+
+                                break;
+                            case "AuthorityTeam":
+
+                                break;
+                            case "ResistanceCampaign":
+
+                                break;
+                            case "ResistanceGeneral":
+
+                                break;
+                            case "CampaignAlpha":
+
+                                break;
+                            case "CampaignBravo":
+
+                                break;
+                            case "CampaignCharlie":
+
+                                break;
+                            case "CitySub":
+
+                                break;
+                            case "FamilySub":
+
+                                break;
+                            case "HQSub":
+
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
+                                break;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topicType \"{0}\" in listOFSubTypes[{1}]", topicType.name, j); }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid topicType (Null) for listOfTopicTypes[{0}]", i); }
+        }
     }
 
     //

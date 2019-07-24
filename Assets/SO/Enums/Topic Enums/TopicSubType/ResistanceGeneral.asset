@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d48773d11cd406c49a773f4d29836b75, type: 3}
-  m_Name: RebelGeneral
+  m_Name: ResistanceGeneral
   m_EditorClassIdentifier: 
   tag: Resistance General
   type: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116, type: 2}

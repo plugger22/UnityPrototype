@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: CamC0
+  m_Name: CamB0
   m_EditorClassIdentifier: 
-  tag: Campaign Charlie story line test 0
+  tag: Campaign Bravo story line test 0
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
-  subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
   listOfOptions:
-  - {fileID: 11400000, guid: fcc209d7fba89704cb537c2fe8c46e57, type: 2}
-  - {fileID: 11400000, guid: c5a0581bb9eb84044a36a72bae0f7879, type: 2}
-  - {fileID: 11400000, guid: c22b2beac3c747c4daf9c931cc2d064e, type: 2}
+  - {fileID: 11400000, guid: 3ffb6b9acda3d444fb31b16c6a567a0a, type: 2}
+  - {fileID: 11400000, guid: 1c260309ef7d0ac418acc0cd5d079561, type: 2}
+  - {fileID: 11400000, guid: c7f52090892748b4c8e8dfc12f2a07ec, type: 2}
   status: 0
