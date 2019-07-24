@@ -46,6 +46,26 @@ public class Campaign : ScriptableObject
     [Tooltip("Topic pool of general Resistance decisions")]
     public TopicPool resistanceGeneralPool;
 
+    [Header("Actor Topic Pools")]
+    [Tooltip("Topic pool for Actor Contact decisions")]
+    public TopicPool actorContactPool;
+    [Tooltip("Topic pool for Actor District decisions")]
+    public TopicPool actorDistrictPool;
+    [Tooltip("Topic pool for Actor Gear decisions")]
+    public TopicPool actorGearPool;
+    [Tooltip("Topic pool for Actor Match (Player Compatibility) decisions")]
+    public TopicPool actorMatchPool;
+    [Tooltip("Topic pool for Actor Politic (Actors interacting with other Actors) decisions")]
+    public TopicPool actorPoliticPool;
+
+    [Header("HQ Topic Pools")]
+    [Tooltip("Topic pool for HQ decisions")]
+    public TopicPool hqPool;
+
+    [Header("Team Topic Pools")]
+    [Tooltip("Topic pool for Authority Team decisions")]
+    public TopicPool teamPool;
+
 
     public void OnEnable()
     {
