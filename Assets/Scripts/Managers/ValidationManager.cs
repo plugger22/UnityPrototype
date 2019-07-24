@@ -13,6 +13,37 @@ using UnityEngine;
 /// </summary>
 public class ValidationManager : MonoBehaviour
 {
+    [Header("Campaign.SO Pool Criteria")]
+    [Tooltip("TopicType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType campaignType;
+    [Tooltip("TopicSubType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType campaignSubType;
+    [Tooltip("TopicType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType familyType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType familySubType;
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType authorityCampaignType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType authorityCampaignSubType;
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType resistanceCampaignType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType resistanceCampaignSubType;
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType authorityGeneralType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType authorityGeneralSubType;
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType resistanceGeneralType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType resistanceGeneralSubType;
+
+    [Header("City.SO Pool Criteria")]
+    [Tooltip("TopicType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType cityType;
+    [Tooltip("TopicSubType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType citySubType;
 
     //fast access
     GlobalSide globalAuthority;
@@ -500,27 +531,55 @@ public class ValidationManager : MonoBehaviour
         TopicPool[] arrayOfTopicPools = GameManager.instance.loadScript.arrayOfTopicPools;
         if (arrayOfTopicPools != null)
         {
+            string topicName, topicSubName;
             count = arrayOfTopicPools.Length;
             if (count > 0)
             {
                 for (int i = 0; i < count; i++)
                 {
                     TopicPool pool = arrayOfTopicPools[i];
-
+                    topicName = pool.type.name;
+                    topicSubName = pool.subType.name;
                     if (pool.listOfTopics.Count > 0)
                     {
+                        //Check each topic has the correct TopicType/SubType to match the TopicPool
                         foreach (Topic topic in pool.listOfTopics)
                         {
-                            //Check it has the correct TopicType/SubType to match the TopicPool
+                            if (topic.type.name.Equals(topicName, StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Type (is {1} , should be {2}) for pool \"{3}\"{4}", 
+                                topic.name, topic.type.name, topicName, pool.name, "\n"); }
+                            if (topic.subType.name.Equals(topicSubName, StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect SubType (is {1} , should be {2}) for pool \"{3}\"{4}", 
+                                topic.name, topic.subType.name, topicSubName, pool.name, "\n"); }
                         }
+                        //check for duplicates
+                        List<string> tempList = pool.listOfTopics.Select(x => x.name).ToList();
+                        CheckListForDuplicates<string>(tempList, pool.name, "listOfTopics", "topic.name");
                     }
                     else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topicPool \"{0}\", has no listOfTopics{1}", pool.name, "\n"); }
-
                 }
             }
             else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: arrayOfTopicPools  has No Pools (Empty){1}", "\n"); }
         }
         else { Debug.LogError("Invalid arrayOfTopicPools (Null)"); }
+        //
+        // - - - Campaigns (Topic Pools)
+        //
+        Campaign[] arrayOfCampaigns = GameManager.instance.loadScript.arrayOfCampaigns;
+        if (arrayOfCampaigns != null)
+        {
+            for (int i = 0; i < arrayOfCampaigns.Length; i++)
+            {
+                Campaign campaign = arrayOfCampaigns[i];
+                if (campaign != null)
+                {
+                    if (campaign.campaignAlphaPool != null)
+                    {
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfCampaigns (Null)"); }
     }
     #endregion
 
