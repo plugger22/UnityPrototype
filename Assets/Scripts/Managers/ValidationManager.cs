@@ -23,6 +23,7 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TopicSubType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType campaignCharlieSubType;
     [Tooltip("TopicType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
+
     public TopicType familyType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType familyAlphaSubType;
@@ -30,22 +31,40 @@ public class ValidationManager : MonoBehaviour
     public TopicSubType familyBravoSubType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType familyCharlieSubType;
+
     [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicType authorityCampaignType;
+    public TopicType authorityType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType authorityCampaignSubType;
-    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicType resistanceCampaignType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType resistanceCampaignSubType;
-    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicType authorityGeneralType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType authorityGeneralSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType authorityTeamSubType;
+
     [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicType resistanceGeneralType;
+    public TopicType resistanceType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType resistanceCampaignSubType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType resistanceGeneralSubType;
+
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType hqType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType hqSubType;
+
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType actorType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType actorContactSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType actorDistrictSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType actorGearSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType actorMatchSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType actorPoliticSubType;
 
     [Header("City.SO Pool Criteria")]
     [Tooltip("TopicType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
@@ -154,72 +173,132 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid familyCharlieSubType (Null)"); }
         }
-        else {Debug.LogError("Invalid familyType (Null)"); }
-        //subType checks -> authorityCampaignType
-        if (authorityCampaignType != null && authorityCampaignSubType != null)
+        else { Debug.LogError("Invalid familyType (Null)"); }
+        //subType checks -> authority
+        if (authorityType != null)
         {
-            if (authorityCampaignType.listOfSubTypes.Exists(x => x.name.Equals(authorityCampaignSubType.name, StringComparison.Ordinal)) == false)
-            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: authorityCampaignSubType \"{0}\" Does Not Match authorityCampaignType \"{1}\"{2}", 
-                authorityCampaignSubType.name, authorityCampaignType.name, "\n"); }
-        }
-        else
-        {
-            Debug.Assert(authorityCampaignType != null, "Invalid authorityCampaignType (Null)");
-            Debug.Assert(authorityCampaignSubType != null, "Invalid authorityCampaignSubType (Null)");
-        }
-        //subType checks -> resistanceCampaignType
-        if (resistanceCampaignType != null && resistanceCampaignSubType != null)
-        {
-            if (resistanceCampaignType.listOfSubTypes.Exists(x => x.name.Equals(resistanceCampaignSubType.name, StringComparison.Ordinal)) == false)
+            //authorityCampaign
+            if (authorityCampaignSubType != null)
             {
-                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: resistanceCampaignSubType \"{0}\" Does Not Match resistanceCampaignType \"{1}\"{2}",
-                  resistanceCampaignSubType.name, resistanceCampaignType.name, "\n");
+                if (authorityType.listOfSubTypes.Exists(x => x.name.Equals(authorityCampaignSubType.name, StringComparison.Ordinal)) == false)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: authorityCampaignSubType \"{0}\" Does Not Match authorityType \"{1}\"{2}",
+                      authorityCampaignSubType.name, authorityType.name, "\n");
+                }
             }
-        }
-        else
-        {
-            Debug.Assert(resistanceCampaignType != null, "Invalid resistanceCampaignType (Null)");
-            Debug.Assert(resistanceCampaignSubType != null, "Invalid resistanceCampaignSubType (Null)");
-        }
-        //subType checks -> authorityGeneralType
-        if (authorityGeneralType != null && authorityGeneralSubType != null)
-        {
-            if (authorityGeneralType.listOfSubTypes.Exists(x => x.name.Equals(authorityGeneralSubType.name, StringComparison.Ordinal)) == false)
+            else { Debug.LogError("Invalid authorityCampaignSubType (Null)"); }
+            //authorityGeneral
+            if (authorityGeneralSubType != null)
             {
-                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: authorityGeneralSubType \"{0}\" Does Not Match authorityGeneralType \"{1}\"{2}",
-                  authorityGeneralSubType.name, authorityGeneralType.name, "\n");
+                if (authorityType.listOfSubTypes.Exists(x => x.name.Equals(authorityGeneralSubType.name, StringComparison.Ordinal)) == false)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: authorityGeneralSubType \"{0}\" Does Not Match authorityType \"{1}\"{2}",
+                      authorityGeneralSubType.name, authorityType.name, "\n");
+                }
             }
-        }
-        else
-        {
-            Debug.Assert(authorityGeneralType != null, "Invalid authorityGeneralType (Null)");
-            Debug.Assert(authorityGeneralSubType != null, "Invalid authorityGeneralSubType (Null)");
-        }
-        //subType checks -> resistanceGeneralType
-        if (resistanceGeneralType != null && resistanceGeneralSubType != null)
-        {
-            if (resistanceGeneralType.listOfSubTypes.Exists(x => x.name.Equals(resistanceGeneralSubType.name, StringComparison.Ordinal)) == false)
+            else { Debug.LogError("Invalid authorityGeneralSubType (Null)"); }
+            //authorityTeam
+            if (authorityTeamSubType != null)
             {
-                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: resistanceGeneralSubType \"{0}\" Does Not Match resistanceGeneralType \"{1}\"{2}",
-                  resistanceGeneralSubType.name, resistanceGeneralType.name, "\n");
+                if (authorityType.listOfSubTypes.Exists(x => x.name.Equals(authorityTeamSubType.name, StringComparison.Ordinal)) == false)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: authorityTeamSubType \"{0}\" Does Not Match authorityType \"{1}\"{2}",
+                      authorityTeamSubType.name, authorityType.name, "\n");
+                }
             }
+            else { Debug.LogError("Invalid authorityTeamSubType (Null)"); }
         }
-        else
+
+        else { Debug.LogError("Invalid authorityType (Null)");}
+        //subType checks -> Resistance
+        if (resistanceType != null)
         {
-            Debug.Assert(resistanceGeneralType != null, "Invalid resistanceGeneralType (Null)");
-            Debug.Assert(resistanceGeneralSubType != null, "Invalid resistanceGeneralSubType (Null)");
+            //resistanceCampaign
+            if (resistanceCampaignSubType != null)
+            {
+                if (resistanceType.listOfSubTypes.Exists(x => x.name.Equals(resistanceCampaignSubType.name, StringComparison.Ordinal)) == false)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: resistanceCampaignSubType \"{0}\" Does Not Match resistanceType \"{1}\"{2}",
+                      resistanceCampaignSubType.name, resistanceType.name, "\n");
+                }
+            }
+            else { Debug.LogError("Invalid resistanceCampaignType (Null)"); }
+            //resistanceGeneral
+            if (resistanceGeneralSubType != null)
+            {
+                if (resistanceType.listOfSubTypes.Exists(x => x.name.Equals(resistanceGeneralSubType.name, StringComparison.Ordinal)) == false)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: resistanceGeneralSubType \"{0}\" Does Not Match resistanceType \"{1}\"{2}",
+                      resistanceGeneralSubType.name, resistanceType.name, "\n");
+                }
+            }
+            else { Debug.LogError("Invalid resistanceCampaignType (Null)"); }
         }
+        else { Debug.LogError("Invalid resistanceType (Null)"); }
         //subType checks -> City
-        if (cityType != null && citySubType != null)
+        if (cityType != null)
         {
-            if (cityType.listOfSubTypes.Exists(x => x.name.Equals(citySubType.name, StringComparison.Ordinal)) == false)
-            { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: citySubType \"{0}\" Does Not Match cityType \"{1}\"{2}", citySubType.name, cityType.name, "\n"); }
+            if (citySubType != null)
+            {
+                if (cityType.listOfSubTypes.Exists(x => x.name.Equals(citySubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: citySubType \"{0}\" Does Not Match cityType \"{1}\"{2}", citySubType.name, cityType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid citySubType (Null)"); }
         }
         else
+        { Debug.LogError("Invalid cityType (Null)"); }
+        //subType checks -> HQ
+        if (hqType != null)
         {
-            Debug.Assert(cityType != null, "Invalid cityType (Null)");
-            Debug.Assert(citySubType != null, "Invalid citySubType (Null)");
+            if (hqSubType != null)
+            {
+                if (hqType.listOfSubTypes.Exists(x => x.name.Equals(hqSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: hqSubType \"{0}\" Does Not Match hqType \"{1}\"{2}", hqSubType.name, hqType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid hqSubType (Null)"); }
         }
+        else
+        { Debug.LogError("Invalid hqType (Null)"); }
+        //subType checks -> Actor
+        if (actorType != null)
+        {
+            //actorContact
+            if (actorContactSubType != null)
+            {
+                if (actorType.listOfSubTypes.Exists(x => x.name.Equals(actorContactSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: actorContactSubType \"{0}\" Does Not Match actorType \"{1}\"{2}", actorContactSubType.name, actorType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid actorContactSubType (Null)"); }
+            //actorDistrict
+            if (actorDistrictSubType != null)
+            {
+                if (actorType.listOfSubTypes.Exists(x => x.name.Equals(actorDistrictSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: actorDistrictSubType \"{0}\" Does Not Match actorType \"{1}\"{2}", actorDistrictSubType.name, actorType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid actorDistrictSubType (Null)"); }
+            //actorGear
+            if (actorGearSubType != null)
+            {
+                if (actorType.listOfSubTypes.Exists(x => x.name.Equals(actorGearSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: actorGearSubType \"{0}\" Does Not Match actorType \"{1}\"{2}", actorGearSubType.name, actorType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid actorGearSubType (Null)"); }
+            //actorMatch
+            if (actorMatchSubType != null)
+            {
+                if (actorType.listOfSubTypes.Exists(x => x.name.Equals(actorMatchSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: actorMatchSubType \"{0}\" Does Not Match actorType \"{1}\"{2}", actorMatchSubType.name, actorType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid actorMatchSubType (Null)"); }
+            //actorPolitic
+            if (actorPoliticSubType != null)
+            {
+                if (actorType.listOfSubTypes.Exists(x => x.name.Equals(actorPoliticSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: actorPoliticSubType \"{0}\" Does Not Match actorType \"{1}\"{2}", actorPoliticSubType.name, actorType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid actorPoliticSubType (Null)"); }
+        }
+        else { Debug.LogError("Invalid actorType (Null)"); }
     }
     #endregion
 
