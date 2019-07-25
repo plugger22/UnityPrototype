@@ -777,7 +777,8 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "ActiveActorsNOTZero":
                                                 //at least one active, onMap actor preesent
-
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) == 0)
+                                                { BuildString(result, "No Active Actors OnMap"); }
                                                 break;
                                         }
                                         break;
@@ -817,7 +818,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                         }
                                         if (isValid == false)
-                                        { BuildString(result, "FAILED"); }
+                                        { BuildString(result, "FAILED topic"); }
                                         break;
 
                                 }

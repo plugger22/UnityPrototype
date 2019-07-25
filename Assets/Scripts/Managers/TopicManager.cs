@@ -326,8 +326,8 @@ public class TopicManager : MonoBehaviour
                         {
                             //criteria check FAILED
 
-                            /*//generate message explaining why criteria failed -> debug only, spam otherwise
-                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");*/
+                            //generate message explaining why criteria failed -> debug only, spam otherwise
+                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
                         }
                     }
                     else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicData check{1}", topicType.tag, "\n"); }
@@ -341,46 +341,6 @@ public class TopicManager : MonoBehaviour
     //
     // - - - TopicData - - -
     //
-
-    /*/// <summary>
-    /// returns true if Topic Data check passes, false otherwise. Default NO check for isAvailable
-    /// </summary>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    private bool CheckTopicData(TopicData data, int turn, bool isAvailableCheck = false)
-    {
-        bool isValid = false;
-        bool isProceed = true;
-        if (data != null)
-        {
-            //check isAvaiable
-            if (isAvailableCheck == true)
-            {
-                if (data.isAvailable == true)
-                { isValid = true; }
-                else { isProceed = false; }
-            }
-            if (isProceed == true)
-            {
-                //check for global interval
-                if ((turn - data.turnLastUsed) >= minTopicTypeTurns)
-                { isValid = true; }
-                else
-                {
-                    isProceed = false;
-                    isValid = false;
-                }
-                if (isProceed == true)
-                {
-                    //check for minimum Interval
-                    if ((turn - data.turnLastUsed) >= data.minInterval)
-                    { isValid = true; }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid TopicData (Null)"); }
-        return isValid;
-    }*/
 
     /// <summary>
     /// returns true if Topic Data check passes, false otherwise. 
