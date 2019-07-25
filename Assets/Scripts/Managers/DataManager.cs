@@ -6700,6 +6700,23 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Get topicSubType data for specified topicSubType. Returns Null if not found
+    /// </summary>
+    /// <param name="topicSubTypeName"></param>
+    /// <returns></returns>
+    public TopicData GetTopicSubTypeData(string topicSubTypeName)
+    {
+        TopicData data = null;
+        if (string.IsNullOrEmpty(topicSubTypeName) == false)
+        {
+            if (dictOfTopicSubTypeData.ContainsKey(topicSubTypeName) == true)
+            { return dictOfTopicSubTypeData[topicSubTypeName]; }
+        }
+        else { Debug.LogError("Invalid topicSubTypeName (Null or Empty)"); }
+        return data;
+    }
+
+    /// <summary>
     /// Get topic Type for a specified name. Returns Null if not found
     /// </summary>
     /// <param name="topicTypeName"></param>
@@ -6783,6 +6800,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid subTypeName (Null or Empty)"); }
     }
+
 
     /// <summary>
     /// Get topic from dictOfTopics based on topic.name, returns Null if not found

@@ -773,39 +773,31 @@ public class EffectManager : MonoBehaviour
                                     // - - - Topics - - - 
                                     //
                                     case "Topic":
-                                        //BuildString reason '[due to] ....'
+                                        //uses topicType from ValidationManager.cs to run checks in TopicManager.cs
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "TopicActor":
-                                                if (GameManager.instance.topicScript.CheckTopicActor() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.actorType);
                                                 break;
                                             case "TopicCampaign":
-                                                if (GameManager.instance.topicScript.CheckTopicCampaign() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.campaignType);
                                                 break;
                                             case "TopicCity":
-                                                if (GameManager.instance.topicScript.CheckTopicCity() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.cityType);
                                                 break;
                                             case "TopicFamily":
-                                                if (GameManager.instance.topicScript.CheckTopicFamily() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.familyType);
                                                 break;
                                             case "TopicHQ":
-                                                if (GameManager.instance.topicScript.CheckTopicHQ() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.hqType);
                                                 break;
                                             case "TopicRebel":
-                                                if (GameManager.instance.topicScript.CheckTopicRebel() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.resistanceType);
                                                 break;
                                             case "TopicAuthority":
-                                                if (GameManager.instance.topicScript.CheckTopicAuthority() == false)
-                                                { BuildString(result, "no topics being available"); }
+                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.authorityType);
                                                 break;
                                             default:
-                                                BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Toic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                 errorFlag = true;
                                                 break;

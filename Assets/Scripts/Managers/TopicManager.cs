@@ -337,66 +337,60 @@ public class TopicManager : MonoBehaviour
     //
 
     /// <summary>
-    /// returns true if Actor topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
+    /// Checks any topicType for availability this Turn using a cascading series of checks that exits on the first positive outcome
     /// </summary>
+    /// <param name="topicType"></param>
     /// <returns></returns>
-    public bool CheckTopicActor()
+    public bool CheckTopicsAvailable(TopicType topicType)
     {
-        return true;
-    }
+        bool isValid = false;
+        if (topicType != null)
+        {
 
-    /// <summary>
-    /// returns true if Campaign topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckTopicCampaign()
-    {
-        return true;
-    }
+            //TO DO check topicType topicData
 
-    /// <summary>
-    /// returns true if City topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckTopicCity()
-    {
-        return true;
-    }
+            //loop subTypes
+            for (int i = 0; i < topicType.listOfSubTypes.Count; i++)
+            {
+                TopicSubType subType = topicType.listOfSubTypes[i];
+                if (subType != null)
+                {
+                    //check subType pool present
+                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                    if (listOfTopics != null)
+                    {
 
-    /// <summary>
-    /// returns true if Family topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckTopicFamily()
-    {
-        return true;
-    }
+                        //TO DO check subType topicData
 
-    /// <summary>
-    /// returns true if Authority topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckTopicAuthority()
-    {
-        return true;
-    }
+                        //TO DO check subType criteria (bypass the topic checks if fail) 
 
-    /// <summary>
-    /// returns true if Resistance topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckTopicRebel()
-    {
-        return true;
-    }
+                        //loop pool of topics looking for any that are active. Break on the first active topic (only needs to be one)
+                        for (int j = 0; j < listOfTopics.Count; j++)
+                        {
+                            Topic topic = listOfTopics[j];
+                            if (topic != null)
+                            {
+                                //check status
+                                if (topic.status == Status.Active)
+                                {
+                                    //TO DO check topic criteria
 
-    /// <summary>
-    /// returns true if HQ topics are available. Run at level Start. Called by EffectManager.cs -> CheckCriteria
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckTopicHQ()
-    {
-        return true;
+                                    //at least one valid topic present, exit
+                                    isValid = true;
+
+                                    //TO DO set subTopic availability
+                                    
+                                    break;
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid topic (Null) for subTopicType \"{0}\" listOfTopics[{1}]", subType.name, j); }
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid subType (Null) for topic \"{0}\" listOfSubTypes[{1}]", topicType.name, i); }
+            }
+        }
+        return isValid;
     }
 
     //
