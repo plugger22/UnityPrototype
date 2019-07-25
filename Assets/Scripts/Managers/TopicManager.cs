@@ -15,6 +15,12 @@ public class TopicManager : MonoBehaviour
     [Range(0, 10)] public int minTopicTypeTurns = 4;
 
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
+    private List<TopicType> listOfTypePool = new List<TopicType>();                                    //turn selection pool for topicTypes (priority based)
+
+    //Turn selection
+    private TopicType turnTopicType;
+    private TopicSubType turnTopicSubType;
+    private Topic turnTopic;
 
     /// <summary>
     /// Initialisation
@@ -278,16 +284,18 @@ public class TopicManager : MonoBehaviour
 
     //
     //  - - - Turn Topic - - -
-    //
-
-    
+    //   
 
     /// <summary>
     /// Generates a decision or information topic for the turn (there will always be one)
     /// </summary>
     public void ProcessTopic()
     {
+        ResetTopicData();
         CheckForValidTopicTypes();
+        GetTopicType();
+        GetTopicSubType();
+        GetTopic();
     }
 
     /// <summary>
@@ -338,6 +346,57 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
     }
 
+    /// <summary>
+    /// Resets all relevant turn topic data prior to processing for the current turn
+    /// </summary>
+    private void ResetTopicData()
+    {
+        turnTopicType = null;
+        turnTopicSubType = null;
+        turnTopic = null;
+        //empty collections
+        listOfTopicTypesPool.Clear();
+    }
+
+    /// <summary>
+    /// Get topicType for turn Decision
+    /// </summary>
+    private void GetTopicType()
+    {
+        int numOfEntries;
+        int count = listOfTopicTypesTurn.Count;
+        if (count > 0)
+        {
+            //build up a pool
+            foreach (TopicType topicType in listOfTopicTypesTurn)
+            {
+                //populate pool based on priority
+                numOfEntries = GetNumOfEntries(topicType.priority);
+                if (numOfEntries > 0)
+                {
+                    for (int i = 0; i < numOfEntries; i++)
+                    { listOfTypePool.Add(topicType); }
+                }
+            }
+            //random draw of pool
+            turnTopicType = listOfTypePool[Random.Range(0, listOfTypePool.Count)];
+        }
+    }
+
+    /// <summary>
+    /// Get topicSubType for turn Decision
+    /// </summary>
+    private void GetTopicSubType()
+    {
+
+    }
+
+    //Get individual topic for turn Decision
+    private void GetTopic()
+    {
+
+    }
+
     //
     // - - - TopicData - - -
     //
@@ -357,7 +416,7 @@ public class TopicManager : MonoBehaviour
         bool isProceed = true;
         if (data != null)
         {
-            switch(isTopicSubType)
+            switch (isTopicSubType)
             {
                 case false:
                     //TopicTypes -> check global interval & data.minInterval
@@ -495,6 +554,40 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid TopicType list (Null)"); }
     }
+
+    /// <summary>
+    /// Returns the number of entries of a TopicType/SubType to place into a selection pool based on the items priority. Returns 0 if a problem.
+    /// </summary>
+    /// <param name="priority"></param>
+    /// <returns></returns>
+    private int GetNumOfEntries(GlobalChance priority)
+    {
+        int numOfEntries = 0;
+        if (priority != null)
+        {
+            switch(priority.name)
+            {
+                case "chanceLow":
+                    numOfEntries = 1;
+                    break;
+                case "chanceMedium":
+                    numOfEntries = 2;
+                    break;
+                case "chanceHigh":
+                    numOfEntries = 3;
+                    break;
+                case "chanceExtreme":
+                    numOfEntries = 5;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised priority.name \"{0}\"", priority.name);
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid priority (Null)"); }
+        return numOfEntries;
+    }
+
     #endregion
 
     #region Meta Methods
@@ -542,7 +635,7 @@ public class TopicManager : MonoBehaviour
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
-            foreach(var topic in dictOfTopics)
+            foreach (var topic in dictOfTopics)
             {
                 if (Random.Range(0, 100) < 50)
                 { topic.Value.status = Status.Dormant; }
