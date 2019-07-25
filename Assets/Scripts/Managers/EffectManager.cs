@@ -774,34 +774,38 @@ public class EffectManager : MonoBehaviour
                                     //
                                     case "Topic":
                                         //uses topicType from ValidationManager.cs to run checks in TopicManager.cs
+                                        bool isValid = false;
+                                        int turn = GameManager.instance.turnScript.Turn;
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "TopicActor":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.actorType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.actorType, turn);                                                
                                                 break;
                                             case "TopicCampaign":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.campaignType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.campaignType, turn);
                                                 break;
                                             case "TopicCity":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.cityType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.cityType, turn);
                                                 break;
                                             case "TopicFamily":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.familyType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.familyType, turn);
                                                 break;
                                             case "TopicHQ":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.hqType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.hqType, turn);
                                                 break;
                                             case "TopicRebel":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.resistanceType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.resistanceType, turn);
                                                 break;
                                             case "TopicAuthority":
-                                                GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.authorityType);
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.authorityType, turn);
                                                 break;
                                             default:
                                                 Debug.LogWarning(string.Format("Toic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                 errorFlag = true;
                                                 break;
                                         }
+                                        if (isValid == false)
+                                        { BuildString(result, "FAILED"); }
                                         break;
 
                                 }

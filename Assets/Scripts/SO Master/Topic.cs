@@ -23,7 +23,7 @@ public class Topic : ScriptableObject
     [Tooltip("Options for the decision. Max 4")]
     public List<TopicOption> listOfOptions;
 
-    [HideInInspector] public Status status = Status.Dormant;
+    [HideInInspector] public Status status = Status.Active;
 
 
     public void OnEnable()
