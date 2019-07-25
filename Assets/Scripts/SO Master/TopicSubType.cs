@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Topic / TopicSubType")]
 public class TopicSubType : ScriptableObject
 {
+    [Header("General")]
     [Tooltip("In game descriptor")]
     public string tag;
     [Tooltip("Which TopicType does this subType belong to?")]
@@ -16,6 +17,10 @@ public class TopicSubType : ScriptableObject
     public GlobalChance priority;
     [Tooltip("Number of turns that must elapse before it can be chosen again, default 0")]
     [Range(0, 20)] public int minimumInterval = 0;
+
+    [Header("Criteria")]
+    [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
+    public List<Criteria> listOfCriteria;
 
 
     public void OnEnable()
