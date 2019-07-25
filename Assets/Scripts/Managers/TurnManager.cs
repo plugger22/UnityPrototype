@@ -274,7 +274,6 @@ public class TurnManager : MonoBehaviour
                 //start the new turn
                 StartTurnEarly();
                 StartTurnLate();
-                
                 /*//Debug
                 GameManager.instance.dataScript.DebugCheckConnectionSecurity();*/
 
@@ -286,6 +285,9 @@ public class TurnManager : MonoBehaviour
                     {
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
+
+                        //Generate topic
+                        GameManager.instance.topicScript.ProcessTopic();
 
                         /*//debug
                         DebugCreatePipelineMessages();*/

@@ -2,7 +2,6 @@
 using packageAPI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -11,6 +10,9 @@ using UnityEngine;
 /// </summary>
 public class TopicManager : MonoBehaviour
 {
+
+    private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
+
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -52,7 +54,6 @@ public class TopicManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //establish which TopicTypes are valid for the level
-        CheckForValidTopics();
         UpdateTopicPools();
     }
     #endregion
@@ -63,209 +64,276 @@ public class TopicManager : MonoBehaviour
     // - - - Session Start - - -
     //
 
-    /// <summary>
-    /// Check all topic types to see if they are valid for the level (if so copied to DataManager.cs listOfTopicTypesLevel)
-    /// </summary>
-    private void CheckForValidTopics()
-    {
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
-        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
-        if (listOfTopicTypes != null)
-        {
-            if (listOfTopicTypesLevel != null)
-            {
-                string criteriaCheck;
-                //loop list
-                foreach (TopicType topicType in listOfTopicTypes)
-                {
-                    TopicData topicData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
-                    if (topicData != null)
-                    {
-                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                        { listOfCriteria = topicType.listOfCriteria };
-                        criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                        if (criteriaCheck == null)
-                        {
-                            //criteria check passed O.K
-                            topicData.isAvailable = true;
-                            listOfTopicTypesLevel.Add(topicType);
-                        }
-                        else
-                        {
-                            //criteria check FAILED
-                            topicData.isAvailable = false;
-                            //generate message explaining why criteria failed
-                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" FAILED Criteria check due to {1}{2}", topicType.tag, criteriaCheck, "\n");
-                        }
-                    }
-                    else { Debug.LogError("Invalid topicData (Null)"); }
-                }
-            }
-            else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
-        }
-        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
-    }
 
+
+    #region UpdateTopicPools
     /// <summary>
-    /// Populates DataManager.cs -> dictOfTopicPools (at start of a level) with all valid topics for the current level
+    /// Populates DataManager.cs -> dictOfTopicPools (at start of a level) with all valid topics and sets up listOfTopicTypesLevel for all topics that are valid for the current level
     /// </summary>
     public void UpdateTopicPools()
     {
-        /*//Debug loads in all topics in dictOfTopics. Need to replace.
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
-        if (dictOfTopics != null)
+        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        if (listOfTopicTypesLevel != null)
         {
-            //get all valid topic types for level
-            List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+            //get current topicTypes
+            List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
             if (listOfTopicTypes != null)
             {
-                foreach (TopicType topicType in listOfTopicTypes)
+                //get current campaign
+                Campaign campaign = GameManager.instance.campaignScript.campaign;
+                if (campaign != null)
                 {
-                    if (topicType != null)
+                    //get current city
+                    City city = GameManager.instance.campaignScript.scenario.city;
+                    if (city != null)
                     {
-                        //Loop list Of topic subTypes
-                        foreach (TopicSubType subTopicType in topicType.listOfSubTypes)
+                        string subTypeName;
+                        //loop by subTypes
+                        for (int i = 0; i < listOfTopicTypes.Count; i++)
                         {
-                            if (subTopicType != null)
+                            TopicType topicType = listOfTopicTypes[i];
+                            if (topicType != null)
                             {
-                                IEnumerable<Topic> topicData =
-                                    from item in dictOfTopics
-                                    where item.Value.subType == subTopicType
-                                    select item.Value;
-                                List<Topic> listOfTopics = topicData.ToList();
-                                if (listOfTopics.Count > 0)
-                                { GameManager.instance.dataScript.AddListOfTopicsToPool(subTopicType.name, listOfTopics); }
+                                for (int j = 0; j < topicType.listOfSubTypes.Count; j++)
+                                {
+                                    TopicSubType topicSubType = topicType.listOfSubTypes[j];
+                                    if (topicSubType != null)
+                                    {
+                                        subTypeName = topicSubType.name;
+                                        switch (topicSubType.name)
+                                        {
+                                            case "ActorPolitic":
+                                                if (campaign.actorPoliticPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "ActorContact":
+                                                if (campaign.actorContactPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorContactPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "ActorDistrict":
+                                                if (campaign.actorDistrictPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "ActorGear":
+                                                if (campaign.actorGearPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorGearPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "ActorMatch":
+                                                if (campaign.actorMatchPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "AuthorityCampaign":
+                                                if (campaign.authorityCampaignPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityCampaignPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "AuthorityGeneral":
+                                                if (campaign.authorityGeneralPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityGeneralPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "AuthorityTeam":
+                                                if (campaign.teamPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.teamPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "ResistanceCampaign":
+                                                if (campaign.resistanceCampaignPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceCampaignPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "ResistanceGeneral":
+                                                if (campaign.resistanceGeneralPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceGeneralPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "CampaignAlpha":
+                                                if (campaign.campaignAlphaPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "CampaignBravo":
+                                                if (campaign.campaignBravoPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "CampaignCharlie":
+                                                if (campaign.campaignCharliePool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "CitySub":
+                                                if (city.cityPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "FamilyAlpha":
+                                                if (campaign.familyAlphaPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyAlphaPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "FamilyBravo":
+                                                if (campaign.familyBravoPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyBravoPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "FamilyCharlie":
+                                                if (campaign.familyCharliePool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyCharliePool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            case "HQSub":
+                                                if (campaign.hqPool != null)
+                                                {
+                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.hqPool.listOfTopics);
+                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                }
+                                                break;
+                                            default:
+                                                Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
+                                                break;
+                                        }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topicType \"{0}\" in listOFSubTypes[{1}]", topicType.name, j); }
+                                }
                             }
-                            else { Debug.LogErrorFormat("Invalid TopicSubType (Null) for Topic \"{0}\"", topicType.name); }
+                            else { Debug.LogWarningFormat("Invalid topicType (Null) for listOfTopicTypes[{0}]", i); }
                         }
                     }
-                    else { Debug.LogError("Invalid topicType (Null) in listOfTopicTypesLevel"); }
+                    else { Debug.LogError("Invalid City (Null)"); }
                 }
+                else { Debug.LogError("Invalid campaign (Null)"); }
             }
             else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
         }
-        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
-        */
+        else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
+    }
+    #endregion
 
-        //get current topicTypes for the level
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
-        if (listOfTopicTypes != null)
+    //
+    //  - - - Turn Topic - - -
+    //
+
+    /// <summary>
+    /// Generates a decision or information topic for the turn (there will always be one)
+    /// </summary>
+    public void ProcessTopic()
+    {
+        CheckForValidTopicTypes();
+    }
+
+    /// <summary>
+    /// Check all level topic types to see if they are valid for the Turn. Updates listOfTopicTypesTurn with valid topicTypes
+    /// </summary>
+    private void CheckForValidTopicTypes()
+    {
+        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        if (listOfTopicTypesLevel != null)
         {
-            //get current campaign
-            Campaign campaign = GameManager.instance.campaignScript.campaign;
-            if (campaign != null)
+            string criteriaCheck;
+            //clear out turn list prior to updating
+            listOfTopicTypesTurn.Clear();
+            //loop list
+            foreach (TopicType topicType in listOfTopicTypesLevel)
             {
-                //get current city
-                City city = GameManager.instance.campaignScript.scenario.city;
-                if (city != null)
+                TopicData topicData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                if (topicData != null)
                 {
-                    string subTypeName;
-                    //loop by subTypes
-                    for (int i = 0; i < listOfTopicTypes.Count; i++)
+                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                    { listOfCriteria = topicType.listOfCriteria };
+                    criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                    if (criteriaCheck == null)
                     {
-                        TopicType topicType = listOfTopicTypes[i];
-                        if (topicType != null)
-                        {
-                            for (int j = 0; j < topicType.listOfSubTypes.Count; j++)
-                            {
-                                TopicSubType topicSubType = topicType.listOfSubTypes[j];
-                                if (topicSubType != null)
-                                {
-                                    subTypeName = topicSubType.name;
-                                    switch (topicSubType.name)
-                                    {
-                                        case "ActorPolitic":
-                                            if (campaign.actorPoliticPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics); }
-                                            break;
-                                        case "ActorContact":
-                                            if (campaign.actorContactPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorContactPool.listOfTopics); }
-                                            break;
-                                        case "ActorDistrict":
-                                            if (campaign.actorDistrictPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics); }
-                                            break;
-                                        case "ActorGear":
-                                            if (campaign.actorGearPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorGearPool.listOfTopics); }
-                                            break;
-                                        case "ActorMatch":
-                                            if (campaign.actorMatchPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics); }
-                                            break;
-                                        case "AuthorityCampaign":
-                                            if (campaign.authorityCampaignPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityCampaignPool.listOfTopics); }
-                                            break;
-                                        case "AuthorityGeneral":
-                                            if (campaign.authorityGeneralPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityGeneralPool.listOfTopics); }
-                                            break;
-                                        case "AuthorityTeam":
-                                            if (campaign.teamPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.teamPool.listOfTopics); }
-                                            break;
-                                        case "ResistanceCampaign":
-                                            if (campaign.resistanceCampaignPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceCampaignPool.listOfTopics); }
-                                            break;
-                                        case "ResistanceGeneral":
-                                            if (campaign.resistanceGeneralPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceGeneralPool.listOfTopics); }
-                                            break;
-                                        case "CampaignAlpha":
-                                            if (campaign.campaignAlphaPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics); }
-                                            break;
-                                        case "CampaignBravo":
-                                            if (campaign.campaignBravoPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics); }
-                                            break;
-                                        case "CampaignCharlie":
-                                            if (campaign.campaignCharliePool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics); }
-                                            break;
-                                        case "CitySub":
-                                            if (city.cityPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPool.listOfTopics); }
-                                            break;
-                                        case "FamilyAlpha":
-                                            if (campaign.familyAlphaPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyAlphaPool.listOfTopics); }
-                                            break;
-                                        case "FamilyBravo":
-                                            if (campaign.familyBravoPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyBravoPool.listOfTopics); }
-                                            break;
-                                        case "FamilyCharlie":
-                                            if (campaign.familyCharliePool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyCharliePool.listOfTopics); }
-                                            break;
-                                        case "HQSub":
-                                            if (campaign.hqPool != null)
-                                            { GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.hqPool.listOfTopics); }
-                                            break;
-                                        default:
-                                            Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
-                                            break;
-                                    }
-                                }
-                                else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topicType \"{0}\" in listOFSubTypes[{1}]", topicType.name, j); }
-                            }
-                        }
-                        else { Debug.LogWarningFormat("Invalid topicType (Null) for listOfTopicTypes[{0}]", i); }
+                        //criteria check passed O.K
+                        topicData.isAvailable = true;
+                        listOfTopicTypesTurn.Add(topicType);
+                        AddTopicTypeToList(listOfTopicTypesTurn, topicType);
+                    }
+                    else
+                    {
+                        //criteria check FAILED
+                        topicData.isAvailable = false;
+                        //generate message explaining why criteria failed
+                        Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" FAILED Criteria check due to {1}{2}", topicType.tag, criteriaCheck, "\n");
                     }
                 }
-                else { Debug.LogError("Invalid City (Null)"); }
+                else { Debug.LogError("Invalid topicData (Null)"); }
             }
-            else { Debug.LogError("Invalid campaign (Null)"); }
         }
-        else { Debug.LogError("Invalid listOfTopicTypes by Level (Null)"); }
+        else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
     }
 
     //
-    // - - - Topic Availability - - -
+    // - - - Utilities - - -
+    //
+
+    /// <summary>
+    /// add a topicType item to a list, only if not present already (uses TopicType.name for dupe checks)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="item"></param>
+    private void AddTopicTypeToList(List<TopicType> list, TopicType item)
+    {
+        if (list != null)
+        {
+            if (item != null)
+            {
+                //autoAdd first item
+                if (list.Count > 0)
+                {
+                    //add only if not already in list
+                    if (list.Exists(x => x.name.Equals(item.name, StringComparison.Ordinal)) == false)
+                    { list.Add(item); }
+                }
+                else { list.Add(item); }
+            }
+            else { Debug.LogError("Invalid TopicType item (Null)"); }
+        }
+        else { Debug.LogError("Invalid TopicType list (Null)"); }
+    }
+
+    //
+    // - - - TopicType Criteria - - -
     //
 
     /// <summary>
@@ -438,6 +506,14 @@ public class TopicManager : MonoBehaviour
             { builder.AppendFormat(" {0}{1}", typeLevel.tag, "\n"); }
         }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
+        //listOfTopicTypesTurn
+        builder.AppendFormat("{0}- listOfTopicTypesTurn{1}", "\n", "\n");
+        if (listOfTopicTypesTurn != null)
+        {
+            foreach (TopicType typeTurn in listOfTopicTypesTurn)
+            { builder.AppendFormat(" {0}{1}", typeTurn.tag, "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfTopicTypesTurn (Null)"); }
         return builder.ToString();
     }
 
