@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 17712bbf5f6fa1343ab340aef7f0c653, type: 2}
+  - {fileID: 11400000, guid: b2c3310478d5c054581efe8181672a23, type: 2}

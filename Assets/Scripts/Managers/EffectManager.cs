@@ -770,6 +770,18 @@ public class EffectManager : MonoBehaviour
                                         errorFlag = true;
                                         break;
                                     //
+                                    // - - - All Actors
+                                    //
+                                    case "ActorAll":
+                                        switch(criteria.effectCriteria.name)
+                                        {
+                                            case "ActiveActorsNOTZero":
+                                                //at least one active, onMap actor preesent
+
+                                                break;
+                                        }
+                                        break;
+                                    //
                                     // - - - Topics - - - 
                                     //
                                     case "Topic":

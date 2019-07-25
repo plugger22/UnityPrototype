@@ -2670,6 +2670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674c81addefd34e4a935d47ba9ab8967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTopicTypeTurns: 4
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2693,21 +2694,28 @@ MonoBehaviour:
   familyBravoSubType: {fileID: 11400000, guid: 8646488ba661a50429c3f85efe9cdfae, type: 2}
   familyCharlieSubType: {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00,
     type: 2}
-  authorityCampaignType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09,
-    type: 2}
+  authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   authorityCampaignSubType: {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67,
-    type: 2}
-  resistanceCampaignType: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116,
-    type: 2}
-  resistanceCampaignSubType: {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc,
-    type: 2}
-  authorityGeneralType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09,
     type: 2}
   authorityGeneralSubType: {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb,
     type: 2}
-  resistanceGeneralType: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116,
+  authorityTeamSubType: {fileID: 11400000, guid: f31933caa1d5f614aa34b3f124cdf649,
+    type: 2}
+  resistanceType: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116, type: 2}
+  resistanceCampaignSubType: {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc,
     type: 2}
   resistanceGeneralSubType: {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8,
+    type: 2}
+  hqType: {fileID: 11400000, guid: b662571175bcd8b43aa7617fcc8ff8c8, type: 2}
+  hqSubType: {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
+  actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  actorContactSubType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1,
+    type: 2}
+  actorDistrictSubType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558,
+    type: 2}
+  actorGearSubType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
+  actorMatchSubType: {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
+  actorPoliticSubType: {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb,
     type: 2}
   cityType: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
   citySubType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
