@@ -18,6 +18,8 @@ public class Topic : ScriptableObject
     public TopicType type;
     [Tooltip("Topic SubType that the decision is associated with")]
     public TopicSubType subType;
+    [Tooltip("Overall priority for this topic when being placed in the selection pool")]
+    public GlobalChance priority;
 
     [Header("Options")]
     [Tooltip("Options for the decision. Max 4")]

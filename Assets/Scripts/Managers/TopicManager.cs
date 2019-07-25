@@ -15,7 +15,9 @@ public class TopicManager : MonoBehaviour
     [Range(0, 10)] public int minTopicTypeTurns = 4;
 
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
-    private List<TopicType> listOfTypePool = new List<TopicType>();                                    //turn selection pool for topicTypes (priority based)
+    private List<TopicType> listOfTypePool = new List<TopicType>();                                     //turn selection pool for topicTypes (priority based)
+    private List<TopicSubType> listOfSubTypePool = new List<TopicSubType>();                            //turn selection pool for topicSubTypes (priority based)
+    private List<Topic> listOfTopicPool = new List<Topic>();                                            //turn selection pool for topics (priority based)
 
     //Turn selection
     private TopicType turnTopicType;
@@ -308,8 +310,6 @@ public class TopicManager : MonoBehaviour
         {
             string criteriaCheck;
             int turn = GameManager.instance.turnScript.Turn;
-            //clear out turn list prior to updating
-            listOfTopicTypesTurn.Clear();
             //loop list of Topic Types
             foreach (TopicType topicType in listOfTopicTypesLevel)
             {
@@ -355,7 +355,10 @@ public class TopicManager : MonoBehaviour
         turnTopicSubType = null;
         turnTopic = null;
         //empty collections
-        listOfTopicTypesPool.Clear();
+        listOfTopicTypesTurn.Clear();
+        listOfTypePool.Clear();
+        listOfSubTypePool.Clear();
+        listOfTopicPool.Clear();
     }
 
     /// <summary>
@@ -378,8 +381,12 @@ public class TopicManager : MonoBehaviour
                     { listOfTypePool.Add(topicType); }
                 }
             }
-            //random draw of pool
-            turnTopicType = listOfTypePool[Random.Range(0, listOfTypePool.Count)];
+            if (listOfTypePool.Count > 0)
+            {
+                //random draw of pool
+                turnTopicType = listOfTypePool[Random.Range(0, listOfTypePool.Count)];
+            }
+            else { Debug.LogError("Invalid listOfTypePool (Empty) for selecting topicType"); }
         }
     }
 
@@ -388,10 +395,39 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void GetTopicSubType()
     {
-
+        int numOfEntries;
+        if (turnTopicType != null)
+        {
+            //loop all subTypes for topicType
+            for (int i = 0; i < turnTopicType.listOfSubTypes.Count; i++)
+            {
+                TopicSubType subType = turnTopicType.listOfSubTypes[i];
+                if (subType != null)
+                {
+                    //populate pool based on priorities
+                    numOfEntries = GetNumOfEntries(subType.priority);
+                    if (numOfEntries > 0)
+                    {
+                        for (int j = 0; j < numOfEntries; j++)
+                        { listOfSubTypePool.Add(subType); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid subType (Null) for topicType \"{0}\"", turnTopicType.name); }
+            }
+            if (listOfSubTypePool.Count > 0)
+            {
+                //random draw of pool
+                turnTopicSubType = listOfSubTypePool[Random.Range(0, listOfSubTypePool.Count)];
+            }
+            else { Debug.LogError("Invalid listOfSubTypePool (Empty) for topicSubType selection"); }
+        }
+        else { Debug.LogError("Invalid turnTopicType (Null)"); }
     }
 
-    //Get individual topic for turn Decision
+
+    /// <summary>
+    /// Get individual topic for turn Decision
+    /// </summary>
     private void GetTopic()
     {
 
@@ -567,16 +603,16 @@ public class TopicManager : MonoBehaviour
         {
             switch(priority.name)
             {
-                case "chanceLow":
+                case "Low":
                     numOfEntries = 1;
                     break;
-                case "chanceMedium":
+                case "Medium":
                     numOfEntries = 2;
                     break;
-                case "chanceHigh":
+                case "High":
                     numOfEntries = 3;
                     break;
-                case "chanceExtreme":
+                case "Extreme":
                     numOfEntries = 5;
                     break;
                 default:
@@ -781,6 +817,39 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// Debug display of selection pools and data
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayTopicSelectionData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Topic Selection{0}{1}", "\n", "\n");
+        if (turnTopicType.name != null)
+        { builder.AppendFormat(" topicType: {0}{1}", turnTopicType.name, "\n"); }
+        else { builder.AppendFormat(" topicType: NULL ERROR{0}", "\n"); }
+        if (turnTopicSubType != null)
+        { builder.AppendFormat(" topicSubType: {0}{1}", turnTopicSubType.name, "\n"); }
+        else { builder.AppendFormat(" topicSubType: NULL ERROR{0}", "\n"); }
+        if (turnTopic != null)
+        { builder.AppendFormat(" topic: {0}{1}", turnTopic.name, "\n"); }
+        else { builder.AppendFormat(" topic: NULL ERROR{0}", "\n"); }
+        //topic type pool
+        builder.AppendFormat("{0}- listOfTopicTypePool{1}", "\n", "\n");
+        foreach(TopicType topicType in listOfTypePool)
+        { builder.AppendFormat(" {0}, priority: {1}{2}", topicType.name, topicType.priority.name, "\n"); }
+        //topic sub type pool
+        builder.AppendFormat("{0}- listOfTopicSubTypePool{1}", "\n", "\n");
+        foreach(TopicSubType subType in listOfSubTypePool)
+        { builder.AppendFormat(" {0}, proirity: {1}{2}", subType.name, subType.priority.name, "\n"); }
+        //topic pool
+        builder.AppendFormat("{0}- listOfTopicPool{1}", "\n", "\n");
+        foreach (Topic topic in listOfTopicPool)
+        { builder.AppendFormat(" {0}, priority: {1}{2}", topic.name, topic.priority.name, "\n"); }
+        return builder.ToString();
+    }
+
     #endregion
 
     //new methods above here
