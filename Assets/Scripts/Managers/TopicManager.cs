@@ -883,7 +883,7 @@ public class TopicManager : MonoBehaviour
     public string DebugDisplayTopicTypeLists()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- listOfTopicTypes{0}", "\n");
+        builder.AppendFormat("- listOfTopicTypes -> Criteria{0}", "\n");
         //listOfTopicTypes
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
@@ -946,7 +946,7 @@ public class TopicManager : MonoBehaviour
                                 if (listOfTopics.Count > 0)
                                 {
                                     foreach (Topic topic in listOfTopics)
-                                    { builder.AppendFormat("     {0}, {1}, {2} x Op, St: {3}{4}", topic.name, topic.tag, topic.listOfOptions?.Count, topic.status, "\n"); }
+                                    { builder.AppendFormat("     {0}, {1} x Op, St: {2}, Pr: {3}{4}", topic.name, topic.listOfOptions?.Count, topic.status, topic.priority.name, "\n"); }
                                 }
                                 else { builder.AppendFormat("    None found{0}", "\n"); }
                             }
