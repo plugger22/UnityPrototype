@@ -207,7 +207,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TopicData> dictOfTopicTypeData = new Dictionary<string, TopicData>();            //Key -> topicType.name, Value -> TopicData package
     private Dictionary<string, TopicData> dictOfTopicSubTypeData = new Dictionary<string, TopicData>();         //Key -> topicSubType.name, Value -> TopicData package
     private Dictionary<string, Topic> dictOfTopics = new Dictionary<string, Topic>();                           //Key -> topic.name, Value -> Topic
-    /*private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption*/
+    private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption 
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
 
 
@@ -6672,8 +6672,8 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, List<Topic>> GetDictOfTopicPools()
     { return dictOfTopicPools; }
 
-    /*public Dictionary<string, TopicOption> GetDictOfTopicOptions()
-    { return dictOfTopicOptions; }*/
+    public Dictionary<string, TopicOption> GetDictOfTopicOptions()
+    { return dictOfTopicOptions; }
 
     public List<TopicType> GetListOfTopicTypes()
     { return listOfTopicTypes; }

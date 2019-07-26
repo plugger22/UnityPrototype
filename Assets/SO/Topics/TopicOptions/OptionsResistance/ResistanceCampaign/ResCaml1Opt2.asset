@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: AutPol1Opt0
+  m_Name: ResCaml1Opt2
   m_EditorClassIdentifier: 
-  tag: Authority Politics 1 Option 0
-  topic: {fileID: 11400000, guid: bf7d8e95f7b870142b1ca782c4bf9499, type: 2}
+  tag: Resistance Campaign 1 option 2
+  topic: {fileID: 11400000, guid: da906bcc401890449a6e6bb6351fbb0f, type: 2}

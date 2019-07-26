@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: FamA0Opt1
   m_EditorClassIdentifier: 
-  tag: Family Alpha story line option 1
+  tag: Family Alpha 0 story line option 1
   topic: {fileID: 11400000, guid: ddf2fa19354793347b7e7485d1c4ff4b, type: 2}

@@ -16,8 +16,8 @@ MonoBehaviour:
   subType: {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   listOfOptions:
-  - {fileID: 11400000, guid: f961e1c75363bd44495001a7783771a2, type: 2}
-  - {fileID: 11400000, guid: f70c1ab2fe08da44fa70e0a24c1964d6, type: 2}
-  - {fileID: 11400000, guid: ed1ce740bf2c0db4a848b0445abdf413, type: 2}
+  - {fileID: 11400000, guid: 7577e0ed6ecdff34e883ef1c265af355, type: 2}
+  - {fileID: 11400000, guid: 2ca3a7c02ffa6ad4b866f00459ae84b1, type: 2}
+  - {fileID: 11400000, guid: 11b2519951056af4c87967e0edee80cb, type: 2}
   listOfCriteria: []
-  status: 1
+  status: 0

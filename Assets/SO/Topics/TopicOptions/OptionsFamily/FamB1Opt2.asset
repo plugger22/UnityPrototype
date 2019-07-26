@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: AutPol0Opt0
+  m_Name: FamB1Opt2
   m_EditorClassIdentifier: 
-  tag: Authority Politics 0 Option 0
-  topic: {fileID: 11400000, guid: 5fb73e831da643447b3ab5b33f263017, type: 2}
+  tag: Family Bravo 1 story line option 2
+  topic: {fileID: 11400000, guid: b51fa4af93d80ba4f86930bd4b2236a7, type: 2}

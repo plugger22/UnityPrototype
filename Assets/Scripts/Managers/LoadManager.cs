@@ -1189,7 +1189,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicSubType (Null) -> Import failed"); }
-        /*//
+        //
         // - - - Topic Options - - -
         //
         Dictionary<string, TopicOption> dictOfTopicOptions = GameManager.instance.dataScript.GetDictOfTopicOptions();
@@ -1215,7 +1215,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict > 0, "No TopicOption has been imported");
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicOption count, array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }*/
+        else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }
         //
         // - - - Topic Options (not stored in a collection)
         //
