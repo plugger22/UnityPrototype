@@ -342,7 +342,7 @@ public class TopicManager : MonoBehaviour
                             Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");*/
                         }
                     }
-                    else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicData check{1}", topicType.tag, "\n"); }
+                    /*else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicData check{1}", topicType.tag, "\n"); }*/
                 }
                 else { Debug.LogError("Invalid topicData (Null)"); }
             }
@@ -960,15 +960,21 @@ public class TopicManager : MonoBehaviour
             if (dictOfTopicSubTypes != null)
             {
                 builder.AppendFormat("- TopicData for TopicTypes{0}{1}", "\n", "\n");
+                //used to print a '*' to indicate topic / subType is valid and ready to go
+                bool isValidType, isValidSubType;
                 //loop topic Types
                 foreach (var topicType in dictOfTopicTypes)
                 {
-                    builder.AppendFormat(" {0}", DebugDisplayTypeRecord(topicType.Value));
+                    isValidType = DebugCheckValidType(topicType.Value);
+                    builder.AppendFormat(" {0}{1}{2}", DebugDisplayTypeRecord(topicType.Value), isValidType == true ? " *" : "", "\n");
                     //look for any matching SubTypes
                     foreach (var topicSubType in dictOfTopicSubTypes)
                     {
+                        isValidSubType = false;
+                        if (isValidType == true)
+                        { isValidSubType = DebugCheckValidType(topicSubType.Value);  }
                         if (topicSubType.Value.parent.Equals(topicType.Key, StringComparison.Ordinal) == true)
-                        { builder.AppendFormat("  {0}", DebugDisplayTypeRecord(topicSubType.Value, false)); }
+                        { builder.AppendFormat("  {0}{1}{2}", DebugDisplayTypeRecord(topicSubType.Value), isValidSubType == true ? " *" : "", "\n"); }
                     }
                     builder.AppendLine();
                 }
@@ -984,20 +990,10 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    private string DebugDisplayTypeRecord(TopicData data, bool isTopicType = true)
+    private string DebugDisplayTypeRecord(TopicData data)
     {
-        if (isTopicType == true)
-        {
-            //topicType
-            return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5} {6}{7}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
-                            data.timesUsedLevel, data.timesUsedCampaign, DebugCheckValidType(data) == true ? "*" : "", "\n");
-        }
-        else
-        {
-            //subType
-            return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5} {6}{7}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
-                data.timesUsedLevel, data.timesUsedCampaign, DebugCheckValidBubType(data) == true ? "*" : "", "\n");
-        }
+           return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
+                            data.timesUsedLevel, data.timesUsedCampaign);
     }
 
     /// <summary>
