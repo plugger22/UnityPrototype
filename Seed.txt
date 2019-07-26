@@ -98,3 +98,155 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 49437 -> Friday, 26 July 2019 1:54 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 13901 -> Friday, 26 July 2019 2:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48384 -> Friday, 26 July 2019 2:44 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "ActorPolitic"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic() (at Assets/Scripts/Managers/TopicManager.cs:497)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:301)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid turnTopic (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:ExecuteTopic() (at Assets/Scripts/Managers/TopicManager.cs:571)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:302)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.UpdateTopicData () (at Assets/Scripts/Managers/TopicManager.cs:602)
+	TopicManager.ProcessTopic () (at Assets/Scripts/Managers/TopicManager.cs:304)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 48384 -> Friday, 26 July 2019 2:48 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "ActorPolitic"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic() (at Assets/Scripts/Managers/TopicManager.cs:497)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:301)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid turnTopic (Null) -> No decision generated this turn
+UnityEngine.Debug:LogError(Object)
+	TopicManager:ExecuteTopic() (at Assets/Scripts/Managers/TopicManager.cs:570)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:302)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 48384 -> Friday, 26 July 2019 2:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48384 -> Friday, 26 July 2019 4:05 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid subType (Null)
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetListOfTopics(TopicSubType) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:414)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid listOfTopics (Null) for topicSubType "CampaignAlpha"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:437)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid subType (Null)
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetListOfTopics(TopicSubType) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:414)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid listOfTopics (Null) for topicSubType "CampaignBravo"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:437)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid subType (Null)
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetListOfTopics(TopicSubType) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:414)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid listOfTopics (Null) for topicSubType "CampaignCharlie"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:437)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid listOfSubTypePool (Empty) for topicSubType selection
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetTopicSubType() (at Assets/Scripts/Managers/TopicManager.cs:446)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid turnTopicSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetTopic() (at Assets/Scripts/Managers/TopicManager.cs:536)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:301)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid turnTopic (Null) -> No decision generated this turn
+UnityEngine.Debug:LogError(Object)
+	TopicManager:ExecuteTopic() (at Assets/Scripts/Managers/TopicManager.cs:644)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:302)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 48384 -> Friday, 26 July 2019 4:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48384 -> Friday, 26 July 2019 4:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48384 -> Friday, 26 July 2019 4:38 PM
+City seed 5678 -> London, United Kingdom

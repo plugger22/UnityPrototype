@@ -209,6 +209,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Topic> dictOfTopics = new Dictionary<string, Topic>();                           //Key -> topic.name, Value -> Topic
     private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption 
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
+    private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
 
 
     #region SO enum Dictionaries
@@ -6675,6 +6676,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, TopicOption> GetDictOfTopicOptions()
     { return dictOfTopicOptions; }
 
+    public Dictionary<int, HistoryTopic> GetDictOfTopicHistory()
+    { return dictOfTopicHistory; }
+
     public List<TopicType> GetListOfTopicTypes()
     { return listOfTopicTypes; }
 
@@ -6817,6 +6821,21 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topicName (Null or Empty)"); }
         return topic;
+    }
+
+    /// <summary>
+    /// Add a topicHistory entry to dictOfTopicHistory (max entry one per turn)
+    /// </summary>
+    /// <param name="history"></param>
+    public void AddTopicHistory(HistoryTopic history)
+    {
+        if (history != null)
+        {
+            try { dictOfTopicHistory.Add(history.turn, history); }
+            catch(ArgumentException)
+            { Debug.LogErrorFormat("Duplicate topicHistory record for history.turn \"{0}\"", history.turn); }
+        }
+        else { Debug.LogError("Invalid historyTopic (Null)"); }
     }
 
     #endregion

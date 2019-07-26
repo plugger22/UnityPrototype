@@ -416,6 +416,19 @@ namespace packageAPI
         public bool isStressed;         //true if mood has dropped below zero and player gained the Stressed conditoin
     }
 
+    /// <summary>
+    /// history of the selected topics (one per turn max)
+    /// </summary>
+    [System.Serializable]
+    public class HistoryTopic
+    {
+        public int turn;
+        public string topicType;        //name of topicType
+        public string topicSubType;     //name of topicSubType
+        public string topic;            //name of topic
+        public string option;           //name of option selected
+    }
+
     //
     // - - - Save / Load packages
     //

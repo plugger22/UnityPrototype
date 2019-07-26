@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 public class TopicManager : MonoBehaviour
 {
     [Tooltip("Minimum number of turns before topicType can be chosen again")]
-    [Range(0, 10)] public int minTopicTypeTurns = 4;
+    [Range(0, 10)] public int minTopicTypeTurns = 2;
 
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
     private List<TopicType> listOfTypePool = new List<TopicType>();                                     //turn selection pool for topicTypes (priority based)
@@ -23,6 +23,7 @@ public class TopicManager : MonoBehaviour
     private TopicType turnTopicType;
     private TopicSubType turnTopicSubType;
     private Topic turnTopic;
+    private TopicOption turnOption;                                                                     //option selected
 
     /// <summary>
     /// Initialisation
@@ -299,6 +300,8 @@ public class TopicManager : MonoBehaviour
         GetTopicSubType();
         GetTopic();
         ExecuteTopic();
+        //debug -> show be called once topic implemented
+        UpdateTopicData();
     }
 
     /// <summary>
@@ -335,8 +338,8 @@ public class TopicManager : MonoBehaviour
                         {
                             //criteria check FAILED
 
-                            //generate message explaining why criteria failed -> debug only, spam otherwise
-                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
+                            /*//generate message explaining why criteria failed -> debug only, spam otherwise
+                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");*/
                         }
                     }
                     else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicData check{1}", topicType.tag, "\n"); }
@@ -397,6 +400,7 @@ public class TopicManager : MonoBehaviour
     private void GetTopicSubType()
     {
         int numOfEntries;
+        bool isProceed;
         if (turnTopicType != null)
         {
             //loop all subTypes for topicType
@@ -405,13 +409,32 @@ public class TopicManager : MonoBehaviour
                 TopicSubType subType = turnTopicType.listOfSubTypes[i];
                 if (subType != null)
                 {
-                    //populate pool based on priorities
-                    numOfEntries = GetNumOfEntries(subType.priority);
-                    if (numOfEntries > 0)
+                    isProceed = false;
+                    //check that there are active, criteria checked O.K , topics available for subType
+                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                    if (listOfTopics != null)
                     {
-                        for (int j = 0; j < numOfEntries; j++)
-                        { listOfSubTypePool.Add(subType); }
+                        //loop topics looking for the first valid topic (only need one) in order to validate subType
+                        for (int k = 0; k < listOfTopics.Count; k++)
+                        {
+                            if (CheckIndividualTopic(listOfTopics[k]) == true)
+                            {
+                                isProceed = true;
+                                break;
+                            }
+                        }
+                        if (isProceed == true)
+                        {
+                            //populate pool based on priorities
+                            numOfEntries = GetNumOfEntries(subType.priority);
+                            if (numOfEntries > 0)
+                            {
+                                for (int j = 0; j < numOfEntries; j++)
+                                { listOfSubTypePool.Add(subType); }
+                            }
+                        }
                     }
+                    else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid subType (Null) for topicType \"{0}\"", turnTopicType.name); }
             }
@@ -448,40 +471,16 @@ public class TopicManager : MonoBehaviour
                         Topic topic = listOfTopics[i];
                         if (topic != null)
                         {
-                            isProceed = false;
-                            //topic must be active
-                            if (topic.status == Status.Active)
+                            //check each topic is valid (Active / Criteria checks O.K)
+                            isProceed = CheckIndividualTopic(topic);
+                            if (isProceed == true)
                             {
-                                isProceed = true;
-                                //topic criteria must pass checks
-                                if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
+                                //populate pool based on priorities
+                                numOfEntries = GetNumOfEntries(topic.priority);
+                                if (numOfEntries > 0)
                                 {
-                                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                                    { listOfCriteria = topic.listOfCriteria };
-                                    string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                                    if (criteriaCheck == null)
-                                    {
-                                        //criteria check passed O.K
-                                        isProceed = true;
-                                    }
-                                    else
-                                    {
-                                        //criteria check FAILED
-                                        isProceed = false;
-                                        //generate message explaining why criteria failed -> debug only, spam otherwise
-                                        Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: topic \"{0}\" {1} Criteria check failed{2}", topic.name, criteriaCheck, "\n");
-                                    }
-                                }
-                                //no need for criteria check
-                                if (isProceed == true)
-                                {
-                                    //populate pool based on priorities
-                                    numOfEntries = GetNumOfEntries(topic.priority);
-                                    if (numOfEntries > 0)
-                                    {
-                                        for (int j = 0; j < numOfEntries; j++)
-                                        { listOfTopicPool.Add(topic); }
-                                    }
+                                    for (int j = 0; j < numOfEntries; j++)
+                                    { listOfTopicPool.Add(topic); }
                                 }
                             }
                         }
@@ -500,6 +499,47 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid turnTopicSubType (Null)"); }
     }
 
+
+    /// <summary>
+    /// Checks individual topic for Active status and any Criteria checks being O.K. Returns true if good on all counts, false otherwise
+    /// </summary>
+    /// <param name="topic"></param>
+    /// <returns></returns>
+    private bool CheckIndividualTopic(Topic topic)
+    {
+        bool isProceed = false;
+        if (topic != null)
+        {
+            isProceed = false;
+            //topic must be active
+            if (topic.status == Status.Active)
+            {
+                isProceed = true;
+                //topic criteria must pass checks
+                if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
+                {
+                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                    { listOfCriteria = topic.listOfCriteria };
+                    string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                    if (criteriaCheck == null)
+                    {
+                        //criteria check passed O.K
+                        isProceed = true;
+                    }
+                    else
+                    {
+                        //criteria check FAILED
+                        isProceed = false;
+                        //generate message explaining why criteria failed -> debug only, spam otherwise
+                        Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: topic \"{0}\" {1} Criteria check failed{2}", topic.name, criteriaCheck, "\n");
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid topic (Null)"); }
+        return isProceed;
+    }
+
     /// <summary>
     /// Takes selected topic and executes according to topic subType
     /// </summary>
@@ -507,7 +547,6 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
-
             //TO DO -> execution of topics (branches to a method that returns a topic data package ready to send to UI)
 
             //Processing of topic depends on whether it's a standard subType or a dynamic, template, subType
@@ -561,6 +600,20 @@ public class TopicManager : MonoBehaviour
 
             // TO DO -> before updating stats check that topic data package from above is O.K
 
+
+
+            // TO DO -> send topic data package to UI for display and user interaction
+        }
+        else { Debug.LogError("Invalid turnTopic (Null) -> No decision generated this turn"); }
+    }
+
+    /// <summary>
+    /// handles all admin once a topic has been displayed and the user has chosen an option (or not, then default option selected)
+    /// </summary>
+    private void UpdateTopicData()
+    {
+        if (turnTopic != null)
+        {
             int turn = GameManager.instance.turnScript.Turn;
             //update TopicType topicData
             TopicData typeData = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
@@ -578,10 +631,21 @@ public class TopicManager : MonoBehaviour
                 typeSubData.turnLastUsed = turn;
             }
             else { Debug.LogErrorFormat("Invalid topicData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
+            //topicHistory
+            HistoryTopic history = new HistoryTopic()
+            {
+                turn = turn,
+                topicType = turnTopicType.name,
+                topicSubType = turnTopicSubType.name,
+                topic = turnTopic.name,
+                option = "?"
 
-            // TO DO -> send topic data package to UI for display and user interaction
+                //TO DO -> option selected
+
+            };
+            GameManager.instance.dataScript.AddTopicHistory(history);
         }
-        else { Debug.LogError("Invalid turnTopic (Null)"); }
+        //no need to generate warning message as covered elsewhere
     }
 
     //
@@ -775,6 +839,22 @@ public class TopicManager : MonoBehaviour
         return numOfEntries;
     }
 
+    /// <summary>
+    /// returns true if a valid topicType (must pass minInterval and global minInterval checks)
+    /// </summary>
+    /// <param name="topicType"></param>
+    /// <returns></returns>
+    private bool DebugCheckValidType(TopicData data)
+    {
+        bool isValid = false;
+        if (data != null)
+        {
+
+        }
+        else { Debug.LogError("Invalid topicData (Null)"); }
+        return isValid;
+    }
+
     #endregion
 
     #region Meta Methods
@@ -891,8 +971,12 @@ public class TopicManager : MonoBehaviour
             foreach (TopicType topicType in listOfTopicTypes)
             {
                 builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minimumInterval, "\n");
-                foreach (Criteria criteria in topicType.listOfCriteria)
-                { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                if (topicType.listOfCriteria.Count > 0)
+                {
+                    foreach (Criteria criteria in topicType.listOfCriteria)
+                    { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                }
+                else { builder.AppendFormat("No criteria{0}", "\n"); }
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
@@ -901,18 +985,39 @@ public class TopicManager : MonoBehaviour
         List<TopicType> listOfTopicTypeLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypeLevel != null)
         {
-            foreach (TopicType typeLevel in listOfTopicTypeLevel)
-            { builder.AppendFormat(" {0}{1}", typeLevel.tag, "\n"); }
+            if (listOfTopicTypeLevel.Count > 0)
+            {
+                foreach (TopicType typeLevel in listOfTopicTypeLevel)
+                { builder.AppendFormat(" {0}{1}", typeLevel.tag, "\n"); }
+            }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
         }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         //listOfTopicTypesTurn
         builder.AppendFormat("{0}- listOfTopicTypesTurn{1}", "\n", "\n");
         if (listOfTopicTypesTurn != null)
         {
-            foreach (TopicType typeTurn in listOfTopicTypesTurn)
-            { builder.AppendFormat(" {0}{1}", typeTurn.tag, "\n"); }
+            if (listOfTopicTypesTurn.Count > 0)
+            {
+                foreach (TopicType typeTurn in listOfTopicTypesTurn)
+                { builder.AppendFormat(" {0}{1}", typeTurn.tag, "\n"); }
+            }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
         }
         else { Debug.LogError("Invalid listOfTopicTypesTurn (Null)"); }
+        //topicHistory
+        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
+        if (dictOfTopicHistory != null)
+        {
+            builder.AppendFormat("{0} - dictOfTopicHistory{1}", "\n", "\n");
+            if (dictOfTopicHistory.Count > 0)
+            {
+                foreach (var history in dictOfTopicHistory)
+                { builder.AppendFormat("  t: {0} -> {1} -> {2} -> {3} -> {4}{5}", history.Value.turn, history.Value.topicType, history.Value.topicSubType, history.Value.topic, history.Value.option, "\n"); }
+            }
+            else { builder.AppendFormat("  No records{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid dictOfTopicHistory (Null)"); }
         return builder.ToString();
     }
 
@@ -977,15 +1082,16 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Topic Selection{0}{1}", "\n", "\n");
+        builder.AppendFormat(" minTopicTypeTurns: {0}{1}{2}", minTopicTypeTurns, "\n", "\n");
         if (turnTopicType != null)
         { builder.AppendFormat(" topicType: {0}{1}", turnTopicType.name, "\n"); }
         else { builder.AppendFormat(" topicType: NULL{0}", "\n"); }
         if (turnTopicSubType != null)
         { builder.AppendFormat(" topicSubType: {0}{1}", turnTopicSubType.name, "\n"); }
-        else { builder.AppendFormat(" topicSubType: NULL ERROR{0}", "\n"); }
+        else { builder.AppendFormat(" topicSubType: NULL{0}", "\n"); }
         if (turnTopic != null)
         { builder.AppendFormat(" topic: {0}{1}", turnTopic.name, "\n"); }
-        else { builder.AppendFormat(" topic: NULL ERROR{0}", "\n"); }
+        else { builder.AppendFormat(" topic: NULL{0}", "\n"); }
         //topic type pool
         builder.AppendFormat("{0}- listOfTopicTypePool{1}", "\n", "\n");
         if (listOfTypePool.Count > 0)
