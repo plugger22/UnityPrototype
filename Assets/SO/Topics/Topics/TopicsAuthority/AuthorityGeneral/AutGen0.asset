@@ -14,8 +14,11 @@ MonoBehaviour:
   tag: Authority General test 0
   type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   subType: {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: e87231b1a98a55f46b58fb3b4353c4ef, type: 2}
   - {fileID: 11400000, guid: 821d5f5b332725b48bf789269c5cc5f7, type: 2}
   - {fileID: 11400000, guid: fd3e633a074c7dd4aa6a7b55887f8147, type: 2}
   - {fileID: 11400000, guid: 8a6eca8b35fe71d40a66836f5fbd118f, type: 2}
+  listOfCriteria: []
+  status: 0

@@ -14,7 +14,10 @@ MonoBehaviour:
   tag: Resistance General test 0
   type: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116, type: 2}
   subType: {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8, type: 2}
+  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: a8056b8e9adc2e24081cf8e1568082c3, type: 2}
   - {fileID: 11400000, guid: e52f4b257424ef140bfb71c4cd7f28d8, type: 2}
   - {fileID: 11400000, guid: 634dcd709ed769a4885b2c8f05a00c05, type: 2}
+  listOfCriteria: []
+  status: 1

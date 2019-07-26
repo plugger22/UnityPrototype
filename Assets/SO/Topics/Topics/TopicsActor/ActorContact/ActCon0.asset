@@ -14,8 +14,11 @@ MonoBehaviour:
   tag: Actor Contact test 0
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
   - {fileID: 11400000, guid: eff6a8d34b8ab5d49baa8d957270e1de, type: 2}
   - {fileID: 11400000, guid: 198a55f90e44d3749a2e77f961c26448, type: 2}
+  listOfCriteria: []
+  status: 1

@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: AutPol0Opt2
   m_EditorClassIdentifier: 
-  tag: Option 2
-  topic: {fileID: 11400000, guid: 005b0798ea05fac4ebf389be132d3d61, type: 2}
+  tag: Authority Politics 0 Option 2
+  topic: {fileID: 11400000, guid: 5fb73e831da643447b3ab5b33f263017, type: 2}

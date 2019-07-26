@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: AutGen0Opt2
   m_EditorClassIdentifier: 
-  tag: Option 2
+  tag: Authority General 0 option 2
   topic: {fileID: 11400000, guid: 7b024d61716fe8042a506dcf33e18957, type: 2}

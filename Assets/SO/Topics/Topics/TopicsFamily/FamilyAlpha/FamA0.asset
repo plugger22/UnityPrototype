@@ -14,8 +14,10 @@ MonoBehaviour:
   tag: Family Alpha story line test 0
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
   subType: {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
+  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 8073890fe9521b341819ee58a510c6dd, type: 2}
   - {fileID: 11400000, guid: 50d9bfc94d84cd544b1eaca1795551be, type: 2}
   - {fileID: 11400000, guid: 2f4c075690eab5e4d8cec402501d7292, type: 2}
+  listOfCriteria: []
   status: 0

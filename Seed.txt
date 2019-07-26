@@ -22,3 +22,67 @@ System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:
 	
 Dev seed 31471 -> Friday, 26 July 2019 9:32 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 51981 -> Friday, 26 July 2019 10:27 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "CampaignBravo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic() (at Assets/Scripts/Managers/TopicManager.cs:494)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid turnTopic (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:ExecuteTopic() (at Assets/Scripts/Managers/TopicManager.cs:584)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:301)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 42871 -> Friday, 26 July 2019 10:32 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid priority (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetNumOfEntries(GlobalChance) (at Assets/Scripts/Managers/TopicManager.cs:774)
+	TopicManager:GetTopic() (at Assets/Scripts/Managers/TopicManager.cs:479)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "CitySub"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic() (at Assets/Scripts/Managers/TopicManager.cs:494)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:300)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	ERROR Invalid turnTopic (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:ExecuteTopic() (at Assets/Scripts/Managers/TopicManager.cs:584)
+	TopicManager:ProcessTopic() (at Assets/Scripts/Managers/TopicManager.cs:301)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:290)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 10026 -> Friday, 26 July 2019 10:47 AM
+WARNING [Val] ValidateSO: MISMATCH on Topic, array 18, assets 36 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Topic[]) (at Assets/Scripts/Managers/ValidationManager.cs:1242)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 49908 -> Friday, 26 July 2019 10:51 AM
+City seed 5678 -> London, United Kingdom

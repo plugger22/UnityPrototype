@@ -37,6 +37,7 @@ public class Topic : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(type != null, "Invalid type (Null) for {0}", name);
         Debug.AssertFormat(subType != null, "Invalid subType (Null) for {0}", name);
+        Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(listOfOptions != null, "Invalid listOfOptions (Null) for {0}", name);
         Debug.AssertFormat(listOfOptions?.Count <= 4, "To many options (Max 4) for {0}", name);
     }

@@ -14,7 +14,10 @@ MonoBehaviour:
   tag: Actor Gear test 0
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
+  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 85fdfdb0fd7fcee4b82365675db02c3e, type: 2}
   - {fileID: 11400000, guid: c26631bfe9b21d64ea3d5bddc33c8610, type: 2}
   - {fileID: 11400000, guid: 2e9aec2c78e4f2347bd41e4fd9fca828, type: 2}
+  listOfCriteria: []
+  status: 0

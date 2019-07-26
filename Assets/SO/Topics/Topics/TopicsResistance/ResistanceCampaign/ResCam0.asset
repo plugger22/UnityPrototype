@@ -14,8 +14,10 @@ MonoBehaviour:
   tag: Resistance Campaign test 0
   type: {fileID: 11400000, guid: 51942b8b750238846ba5e450a06c4116, type: 2}
   subType: {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 233c9ecd03e8bd54eac07869ea1a193e, type: 2}
   - {fileID: 11400000, guid: 673f268f214c5cb4a8e762fed3cdc7c3, type: 2}
   - {fileID: 11400000, guid: 9bc94feee0c560d43acdd268807d6bdf, type: 2}
+  listOfCriteria: []
   status: 0

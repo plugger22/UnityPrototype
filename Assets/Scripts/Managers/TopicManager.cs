@@ -454,7 +454,7 @@ public class TopicManager : MonoBehaviour
                             {
                                 isProceed = true;
                                 //topic criteria must pass checks
-                                if (topic.listOfCriteria != null)
+                                if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
                                 {
                                     CriteriaDataInput criteriaInput = new CriteriaDataInput()
                                     { listOfCriteria = topic.listOfCriteria };
@@ -824,7 +824,7 @@ public class TopicManager : MonoBehaviour
         {
             foreach (var topic in dictOfTopics)
             {
-                if (Random.Range(0, 100) < 50)
+                if (Random.Range(0, 100) < 20)
                 { topic.Value.status = Status.Dormant; }
                 else { topic.Value.status = Status.Active; }
             }
