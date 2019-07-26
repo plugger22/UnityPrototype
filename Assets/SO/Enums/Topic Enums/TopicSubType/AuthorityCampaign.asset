@@ -14,4 +14,5 @@ MonoBehaviour:
   tag: Authority Campaign
   type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  minimumInterval: 10
+  minimumInterval: 4
+  listOfCriteria: []

@@ -2600,7 +2600,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 48384
   isAuthority: 0
   autoRunTurns: 10
   isPerformanceLog: 1
@@ -2744,7 +2744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674c81addefd34e4a935d47ba9ab8967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTopicTypeTurns: 4
+  minTopicTypeTurns: 2
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

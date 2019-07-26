@@ -846,13 +846,47 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private bool DebugCheckValidType(TopicData data)
     {
-        bool isValid = false;
+        int turn = GameManager.instance.turnScript.Turn;
         if (data != null)
         {
-
+            if (data.minInterval == 0)
+            {
+                //global minInterval applies
+                if (turn - data.turnLastUsed >= minTopicTypeTurns)
+                { return true; }
+            }
+            else
+            {
+                //local minInterval applies
+                if (turn - data.turnLastUsed >= data.minInterval)
+                { return true; }
+            }
         }
         else { Debug.LogError("Invalid topicData (Null)"); }
-        return isValid;
+        return false;
+    }
+
+
+    private bool CheckValidSubType(TopicData data)
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        if (data != null)
+        {
+            if (data.minInterval == 0)
+            {
+                //global minInterval applies
+                if (turn - data.turnLastUsed >= minTopicTypeTurns)
+                { return true; }
+            }
+            else
+            {
+                //local minInterval applies
+                if (turn - data.turnLastUsed >= data.minInterval)
+                { return true; }
+            }
+        }
+        else { Debug.LogError("Invalid topicData (Null)"); }
+        return false;
     }
 
     #endregion
@@ -934,7 +968,7 @@ public class TopicManager : MonoBehaviour
                     foreach (var topicSubType in dictOfTopicSubTypes)
                     {
                         if (topicSubType.Value.parent.Equals(topicType.Key, StringComparison.Ordinal) == true)
-                        { builder.AppendFormat("  {0}", DebugDisplayTypeRecord(topicSubType.Value)); }
+                        { builder.AppendFormat("  {0}", DebugDisplayTypeRecord(topicSubType.Value, false)); }
                     }
                     builder.AppendLine();
                 }
@@ -946,14 +980,24 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sub method for DebugDisplayTopicTypes to display a TopicData record
+    /// Sub method for DebugDisplayTopicTypes to display a TopicData record (topicType / SubType)
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    private string DebugDisplayTypeRecord(TopicData data)
+    private string DebugDisplayTypeRecord(TopicData data, bool isTopicType = true)
     {
-        return string.Format(" {0} Av {1}, Last {2}, MinInt {3}, #Lvl {4}, #Cmp {5}{6}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
-                        data.timesUsedLevel, data.timesUsedCampaign, "\n");
+        if (isTopicType == true)
+        {
+            //topicType
+            return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5} {6}{7}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
+                            data.timesUsedLevel, data.timesUsedCampaign, DebugCheckValidType(data) == true ? "*" : "", "\n");
+        }
+        else
+        {
+            //subType
+            return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5} {6}{7}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
+                data.timesUsedLevel, data.timesUsedCampaign, DebugCheckValidBubType(data) == true ? "*" : "", "\n");
+        }
     }
 
     /// <summary>

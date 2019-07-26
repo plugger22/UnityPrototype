@@ -14,3 +14,5 @@ MonoBehaviour:
   tag: Actor Contacts
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  minimumInterval: 4
+  listOfCriteria: []
