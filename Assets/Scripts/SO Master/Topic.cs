@@ -25,6 +25,10 @@ public class Topic : ScriptableObject
     [Tooltip("Options for the decision. Max 4")]
     public List<TopicOption> listOfOptions;
 
+    [Header("Criteria")]
+    [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
+    public List<Criteria> listOfCriteria;
+
     [HideInInspector] public Status status = Status.Active;
 
 
