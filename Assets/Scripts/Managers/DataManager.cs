@@ -363,6 +363,7 @@ public class DataManager : MonoBehaviour
         //topics
         listOfTopicTypesLevel.Clear();
         dictOfTopicPools.Clear();
+        dictOfTopicHistory.Clear();
         //actor lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();

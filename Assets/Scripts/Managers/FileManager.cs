@@ -682,6 +682,14 @@ public class FileManager : MonoBehaviour
             write.dataData.listOfTopicSubTypeKeys.AddRange(dictOfTopicSubTypes.Keys);
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
+        //topic history
+        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
+        if (dictOfTopicHistory != null)
+        {
+            write.dataData.listOfTopicHistoryValues.AddRange(dictOfTopicHistory.Values);
+            write.dataData.listOfTopicHistoryKeys.AddRange(dictOfTopicHistory.Keys);
+        }
+        else { Debug.LogError("Invalid dictOfTopicHistory (Null)"); }
         //listOfTopicTypesLevel
         List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypesLevel != null)
@@ -2122,6 +2130,28 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
+        //Topic History
+        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
+        if (dictOfTopicHistory != null)
+        {
+            dictOfTopicHistory.Clear();
+            countKey = read.dataData.listOfTopicHistoryKeys.Count;
+            countValue = read.dataData.listOfTopicHistoryValues.Count;
+            Debug.AssertFormat(countKey == countValue, "Mismatch on count for topicHistory Lists ->  Keys {0} and Values {1}", countKey, countValue);
+            for (int i = 0; i < countKey; i++)
+            {
+                HistoryTopic history = read.dataData.listOfTopicHistoryValues[i];
+                if (history != null)
+                {
+                    //add to dictionary
+                    try { dictOfTopicHistory.Add(read.dataData.listOfTopicHistoryKeys[i], history); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate topicHistory key exists for turn \"{0}\"", read.dataData.listOfTopicHistoryKeys[i]); }
+                }
+                else { Debug.LogWarningFormat("Invalid historyTopic (Null) for turn {0}", read.dataData.listOfTopicHistoryKeys[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopicHistory (Null)"); }
         //listOfTopicTypesLevel
         string topicTypeName;
         List<TopicType> listOfTopicTypes = new List<TopicType>();
@@ -2174,6 +2204,7 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
+
         #endregion
 
         #region registers

@@ -91,8 +91,6 @@ public class SaveDataData
     public List<int> listOfNodeContactsByAuthorityKey = new List<int>();
     public List<ContactListWrapper> listOfContactsByNodeResistanceValue = new List<ContactListWrapper>();
     public List<int> listOfContactsByNodeResistanceKey = new List<int>();
-    //topics
-    public List<string> listOfTopicTypesLevel = new List<string>();
     //teams
     public int teamCounter;
     public List<SaveTeam> listOfTeams = new List<SaveTeam>();
@@ -120,12 +118,15 @@ public class SaveDataData
     public List<int> listOfAIMessagesKey = new List<int>();
     public List<Message> listOfAIMessagesValue = new List<Message>();
     //Topics
+    public List<string> listOfTopicTypesLevel = new List<string>();
     public List<TopicData> listOfTopicTypeValues = new List<TopicData>();
     public List<string> listOfTopicTypeKeys = new List<string>();
     public List<TopicData> listOfTopicSubTypeValues = new List<TopicData>();
     public List<string> listOfTopicSubTypeKeys = new List<string>();
     public List<string> listOfTopicPoolsKeys = new List<string>();
     public List<StringListWrapper> listOfTopicPoolsValue = new List<StringListWrapper>();
+    public List<int> listOfTopicHistoryKeys = new List<int>();
+    public List<HistoryTopic> listOfTopicHistoryValues = new List<HistoryTopic>();
     //Registers
     public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
