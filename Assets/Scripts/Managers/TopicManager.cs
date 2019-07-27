@@ -35,10 +35,12 @@ public class TopicManager : MonoBehaviour
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
-            case GameState.LoadAtStart:
                 SubInitialiseLevelStart();
                 break;
+            case GameState.LoadAtStart:
             case GameState.LoadGame:
+                //do nothing
+                break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.instance.inputScript.GameState);
                 break;

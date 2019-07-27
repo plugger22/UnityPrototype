@@ -1,0 +1,24 @@
+
+Dev seed 46054 -> Saturday, 27 July 2019 4:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24710 -> Saturday, 27 July 2019 5:02 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1798 -> Saturday, 27 July 2019 5:05 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised GameState "LoadAtStart" (InitialiseLate)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:43)
+	GameManager:InitialiseMethods(List`1) (at Assets/Scripts/GameManager.cs:706)
+	GameManager:InitialiseLoadGame(Int32) (at Assets/Scripts/GameManager.cs:850)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:186)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:303)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:49)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:416)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 21852 -> Saturday, 27 July 2019 5:06 PM
+City seed 5678 -> London, United Kingdom
