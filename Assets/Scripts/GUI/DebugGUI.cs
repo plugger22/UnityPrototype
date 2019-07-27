@@ -388,7 +388,8 @@ public class DebugGUI : MonoBehaviour
                     case 1: debugDisplay = 63; topicToggle = 2; break;
                     case 2: debugDisplay = 64; topicToggle = 3; break;
                     case 3: debugDisplay = 65; topicToggle = 4; break;
-                    case 4: debugDisplay = 0; topicToggle = 0; break;
+                    case 4: debugDisplay = 66; topicToggle = 5; break;
+                    case 5: debugDisplay = 0; topicToggle = 0; break;
                 }
             }
 
@@ -1498,6 +1499,13 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicSelectionData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
                         break;
+                    //Topic Criteria data
+                    case 66:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.topicScript.DebugDisplayCriteria();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
+                        break;
+
                 }
             }
             else { status = GUIStatus.None; }

@@ -290,18 +290,26 @@ public class TopicManager : MonoBehaviour
     //   
 
     /// <summary>
-    /// Generates a decision or information topic for the turn (there will always be one)
+    /// Selects a topic for the turn (there will always be one)
     /// </summary>
-    public void ProcessTopic()
+    public void SelectTopic()
     {
         ResetTopicData();
         CheckForValidTopicTypes();
         GetTopicType();
         GetTopicSubType();
         GetTopic();
-        ExecuteTopic();
-        //debug -> show be called once topic implemented
+
+        //debug -> should be in ProcessTopic but here for autorun debugging purposes
         UpdateTopicData();
+    }
+
+    /// <summary>
+    /// Process selected topic (decision or Information)
+    /// </summary>
+    public void ProcessTopic()
+    {
+        ExecuteTopic();
     }
 
     /// <summary>
@@ -665,6 +673,8 @@ public class TopicManager : MonoBehaviour
     {
         bool isValid = false;
         bool isProceed = true;
+        //accomodate the first few turns that may be less than the minTopicTypeTurns value
+        int minGlobalInterval = Mathf.Min(turn, minTopicTypeTurns);
         if (data != null)
         {
             switch (isTopicSubType)
@@ -672,7 +682,7 @@ public class TopicManager : MonoBehaviour
                 case false:
                     //TopicTypes -> check global interval & data.minInterval
                     //check for global interval
-                    if ((turn - data.turnLastUsed) >= minTopicTypeTurns)
+                    if ((turn - data.turnLastUsed) >= minGlobalInterval)
                     { isValid = true; }
                     else
                     {
@@ -774,6 +784,17 @@ public class TopicManager : MonoBehaviour
         return isValid;
     }
 
+    //
+    // - - - Analytics - - -
+    //
+
+    /// <summary>
+    /// runs a turn based unit test on selected topictype/subtype/topic looking for anything out of place
+    /// </summary>
+    private void ProcessTopicUnitTest()
+    {
+
+    }
 
     #region Utilities
     //
@@ -1003,25 +1024,8 @@ public class TopicManager : MonoBehaviour
     public string DebugDisplayTopicTypeLists()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- listOfTopicTypes -> Criteria{0}", "\n");
-        //listOfTopicTypes
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
-        if (listOfTopicTypes != null)
-        {
-            foreach (TopicType topicType in listOfTopicTypes)
-            {
-                builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minimumInterval, "\n");
-                if (topicType.listOfCriteria.Count > 0)
-                {
-                    foreach (Criteria criteria in topicType.listOfCriteria)
-                    { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
-                }
-                else { builder.AppendFormat("No criteria{0}", "\n"); }
-            }
-        }
-        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
         //listOfTopicTypesLevel
-        builder.AppendFormat("{0}{1}- listOfTopicTypesLevel{2}", "\n", "\n", "\n");
+        builder.AppendFormat("- listOfTopicTypesLevel{0}", "\n");
         List<TopicType> listOfTopicTypeLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypeLevel != null)
         {
@@ -1058,6 +1062,33 @@ public class TopicManager : MonoBehaviour
             else { builder.AppendFormat("  No records{0}", "\n"); }
         }
         else { Debug.LogError("Invalid dictOfTopicHistory (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of topic Type criteria
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayCriteria()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listOfTopicTypes -> Criteria{0}", "\n");
+        //listOfTopicTypes
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        if (listOfTopicTypes != null)
+        {
+            foreach (TopicType topicType in listOfTopicTypes)
+            {
+                builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minimumInterval, "\n");
+                if (topicType.listOfCriteria.Count > 0)
+                {
+                    foreach (Criteria criteria in topicType.listOfCriteria)
+                    { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                }
+                else { builder.AppendFormat("No criteria{0}", "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
         return builder.ToString();
     }
 

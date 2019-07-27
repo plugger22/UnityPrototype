@@ -280,13 +280,15 @@ public class TurnManager : MonoBehaviour
                 //only do for player
                 if (playerSide != null && currentSide.level == playerSide.level)
                 {
+                    //select topic
+                    GameManager.instance.topicScript.SelectTopic();
+
                     //turn on info App (only if not autorunning)
                     if (isAutoRun == false)
                     {
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
-
-                        //Generate topic
+                        //generate topic
                         GameManager.instance.topicScript.ProcessTopic();
 
                         /*//debug
