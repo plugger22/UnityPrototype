@@ -299,7 +299,8 @@ public class TopicManager : MonoBehaviour
         GetTopicType();
         GetTopicSubType();
         GetTopic();
-
+        //debug purposes only -> BEFORE UpdateTopicData
+        ProcessTopicUnitTest();
         //debug -> should be in ProcessTopic but here for autorun debugging purposes
         UpdateTopicData();
     }
@@ -418,31 +419,40 @@ public class TopicManager : MonoBehaviour
                 if (subType != null)
                 {
                     isProceed = false;
-                    //check that there are active, criteria checked O.K , topics available for subType
-                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
-                    if (listOfTopics != null)
+                    //check TopicSubTypes isValid (topicType may have been approved with some subTypes O.K and others not)
+                    TopicData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                    if (dataSub != null)
                     {
-                        //loop topics looking for the first valid topic (only need one) in order to validate subType
-                        for (int k = 0; k < listOfTopics.Count; k++)
+                        if (CheckTopicData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
                         {
-                            if (CheckIndividualTopic(listOfTopics[k]) == true)
+                            //check that there are active, criteria checked O.K , topics available for subType
+                            List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                            if (listOfTopics != null)
                             {
-                                isProceed = true;
-                                break;
+                                //loop topics looking for the first valid topic (only need one) in order to validate subType
+                                for (int k = 0; k < listOfTopics.Count; k++)
+                                {
+                                    if (CheckIndividualTopic(listOfTopics[k]) == true)
+                                    {
+                                        isProceed = true;
+                                        break;
+                                    }
+                                }
+                                if (isProceed == true)
+                                {
+                                    //populate pool based on priorities
+                                    numOfEntries = GetNumOfEntries(subType.priority);
+                                    if (numOfEntries > 0)
+                                    {
+                                        for (int j = 0; j < numOfEntries; j++)
+                                        { listOfSubTypePool.Add(subType); }
+                                    }
+                                }
                             }
-                        }
-                        if (isProceed == true)
-                        {
-                            //populate pool based on priorities
-                            numOfEntries = GetNumOfEntries(subType.priority);
-                            if (numOfEntries > 0)
-                            {
-                                for (int j = 0; j < numOfEntries; j++)
-                                { listOfSubTypePool.Add(subType); }
-                            }
+                            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
                         }
                     }
-                    else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
+                    else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid subType (Null) for topicType \"{0}\"", turnTopicType.name); }
             }
@@ -497,7 +507,10 @@ public class TopicManager : MonoBehaviour
                     //Select topic
                     count = listOfTopicPool.Count;
                     if (count > 0)
-                    { turnTopic = listOfTopicPool[Random.Range(0, count)]; }
+                    {
+                        turnTopic = listOfTopicPool[Random.Range(0, count)];
+                        Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, {1} -> {2} -> {3}{4}", GameManager.instance.turnScript.Turn, turnTopicType.name, turnTopicSubType.name, turnTopic.name, "\n");
+                    }
                     else { Debug.LogWarningFormat("Invalid listOfTopicPool (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid listOfTopics (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
@@ -643,6 +656,7 @@ public class TopicManager : MonoBehaviour
             HistoryTopic history = new HistoryTopic()
             {
                 turn = turn,
+                numSelect = listOfTopicTypesTurn.Count,
                 topicType = turnTopicType.name,
                 topicSubType = turnTopicSubType.name,
                 topic = turnTopic.name,
@@ -671,6 +685,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private bool CheckTopicData(TopicData data, int turn, bool isTopicSubType = false)
     {
+        int interval;
         bool isValid = false;
         bool isProceed = true;
         //accomodate the first few turns that may be less than the minTopicTypeTurns value
@@ -680,8 +695,7 @@ public class TopicManager : MonoBehaviour
             switch (isTopicSubType)
             {
                 case false:
-                    //TopicTypes -> check global interval & data.minInterval
-                    //check for global interval
+                    //TopicTypes -> check global interval & data.minInterval -> check for global interval
                     if ((turn - data.turnLastUsed) >= minGlobalInterval)
                     { isValid = true; }
                     else
@@ -691,9 +705,14 @@ public class TopicManager : MonoBehaviour
                     }
                     if (isProceed == true)
                     {
+                        //edge case, level start, hasn't been used yet
+                        if (data.timesUsedLevel == 0)
+                        { interval = Mathf.Min(data.minInterval, turn); }
+                        else { interval = data.minInterval; }
                         //check for minimum Interval
-                        if ((turn - data.turnLastUsed) >= data.minInterval)
+                        if ((turn - data.turnLastUsed) >= interval)
                         { isValid = true; }
+                        else { isValid = false; }
                     }
                     break;
                 case true:
@@ -706,9 +725,14 @@ public class TopicManager : MonoBehaviour
                     else { isProceed = false; }
                     if (isProceed == true)
                     {
+                        //edge case, level start, hasn't been used yet
+                        if (data.timesUsedLevel == 0)
+                        { interval = Mathf.Min(data.minInterval, turn); }
+                        else { interval = data.minInterval; }
                         //check for minimum Interval
-                        if ((turn - data.turnLastUsed) >= data.minInterval)
+                        if ((turn - data.turnLastUsed) >= interval)
                         { isValid = true; }
+                        else { isValid = false; }
                     }
                     break;
             }
@@ -742,11 +766,17 @@ public class TopicManager : MonoBehaviour
                     if (listOfTopics != null)
                     {
                         //check subType topicData
-                        TopicData data = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
-                        if (data != null)
+                        TopicData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                        if (dataSub != null)
                         {
-                            if (CheckTopicData(data, turn, true) == true)
+                            if (CheckTopicData(dataSub, turn, true) == true)
                             {
+                                /*if (dataSub.minInterval > 0)
+                                {
+                                    Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicAvailable: \"{0}\", t {1}, l {2}, m {3}, isValid {4}{5}", subType.name,
+                                        turn, dataSub.turnLastUsed, dataSub.minInterval, "True", "\n");
+                                }*/
+
                                 //TO DO check subType criteria (bypass the topic checks if fail) 
 
                                 //loop pool of topics looking for any that are active. Break on the first active topic (only needs to be one)
@@ -774,6 +804,14 @@ public class TopicManager : MonoBehaviour
                                 if (isValid == true)
                                 { break; }
                             }
+                            else
+                            {
+                                /*if (dataSub.minInterval > 0)
+                                {
+                                    Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicAvailable: \"{0}\", t {1}, l {2}, m {3}, isValid {4}{5}", subType.name,
+                                        turn, dataSub.turnLastUsed, dataSub.minInterval, "False", "\n");
+                                }*/
+                            }
                         }
                         else { Debug.LogErrorFormat("Invalid topicData (Null) for \"{0} / {1}\"", topicType.name, subType.name); }
                     }
@@ -784,17 +822,105 @@ public class TopicManager : MonoBehaviour
         return isValid;
     }
 
+    #region Analytics
     //
     // - - - Analytics - - -
     //
 
     /// <summary>
     /// runs a turn based unit test on selected topictype/subtype/topic looking for anything out of place
+    /// NOTE: checks a lot of stuff that should have already been checked but acts as a final check and picks up stuff in the case of code changes that might have thrown something out of alignment
     /// </summary>
     private void ProcessTopicUnitTest()
     {
-
+        //check if at least one entry in listOfTopicTypesTurn
+        if (listOfTopicTypesTurn.Count > 0)
+        {
+            int turn = GameManager.instance.turnScript.Turn;
+            int interval;
+            //
+            // - - - topicType
+            //
+            if (turnTopic != null)
+            {
+                TopicData dataType = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
+                if (dataType != null)
+                {
+                    //check global interval
+                    int minGlobalInterval = Mathf.Min(turn, minTopicTypeTurns);
+                    if ((turn - dataType.turnLastUsed) < minGlobalInterval)
+                    { Debug.LogWarningFormat("Invalid topicType \"{0}\" Global Interval (turn {1}, last used t {2}, minGlobaIInterval {3})", turnTopic.name, turn, dataType.turnLastUsed, minGlobalInterval); }
+                    //check topicType minInterval
+                    if (dataType.minInterval > 0)
+                    {
+                        //edge case, level start, hasn't been used yet
+                        if (dataType.timesUsedLevel == 0)
+                        { interval = Mathf.Min(dataType.minInterval, turn); }
+                        else { interval = dataType.minInterval; }
+                        //check
+                        if ((turn - dataType.turnLastUsed) < interval)
+                        { Debug.LogWarningFormat("Invalid topicType \"{0}\" Min Interval (turn {1}, last used t {2}, minInterval {3})", turnTopic.name, turn, dataType.turnLastUsed, dataType.minInterval); }
+                    }
+                    //check topicType on list
+                    if (listOfTopicTypesTurn.Exists(x => x.name.Equals(turnTopicType.name, StringComparison.Ordinal)) == false)
+                    { Debug.LogWarningFormat("Invalid topicType \"{0}\" NOT found in listOfTopicTypeTurn", turnTopicType.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid topicData (Null) for topicType \"{0}\"", turnTopic.name); }
+            }
+            else { Debug.LogWarning("Invalid topicType (Null)"); }
+            //
+            // - - - topicSubType
+            //
+            if (turnTopicSubType != null)
+            {
+                TopicData dataSubType = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
+                if (dataSubType != null)
+                {
+                    //check isAvailable 
+                    if (dataSubType.isAvailable == false)
+                    { Debug.LogWarningFormat("Invalid topicSubType \"{0}\" dataTopic.isAvailable \"{1}\" (should be True)", turnTopicSubType.name, dataSubType.isAvailable); }
+                    //check topicSubType minInterval
+                    if (dataSubType.minInterval > 0)
+                    {
+                        //edge case, level start, hasn't been used yet
+                        if (dataSubType.timesUsedLevel == 0)
+                        { interval = Mathf.Min(dataSubType.minInterval, turn); }
+                        else { interval = dataSubType.minInterval; }
+                        //check
+                        if ((turn - dataSubType.turnLastUsed) < interval)
+                        {
+                            Debug.LogWarningFormat("Invalid topicSubType \"{0}\" minInterval (turn {1}, last used t {2}, minInterval {3})",
+                                turnTopicSubType.name, turn, dataSubType.turnLastUsed, dataSubType.minInterval);
+                        }
+                    }
+                    //check subType child of TopicType parent
+                    if (turnTopicSubType.type.name.Equals(turnTopicType.name, StringComparison.Ordinal) == false)
+                    { Debug.LogWarningFormat("Invalid topicSubType \"{0}\" has MISMATCH with topicType parent (is {1}, should be {2})", turnTopicSubType.name, turnTopicSubType.type.name, turnTopicType.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid topicData for topicSubType \"{0}\"", turnTopicSubType.name); }
+            }
+            else { Debug.LogWarning("Invalid topicSubType (Null)"); }
+            //
+            // - - - Topic
+            //
+            if (turnTopic != null)
+            {
+                //status active
+                if (turnTopic.status != Status.Active)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" status \"{1}\" (should be Active)", turnTopic.name, turnTopic.status); }
+                //check correct topicSubType
+                if (turnTopic.subType.name.Equals(turnTopicSubType.name, StringComparison.Ordinal) == false)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" has MISMATCH with topicSubType parent (is {1}, should be {2})", turnTopic.name, turnTopic.subType.name, turnTopicSubType.name); }
+                //check correct topicType
+                if (turnTopic.type.name.Equals(turnTopicType.name, StringComparison.Ordinal) == false)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" has MISMATCH with topicType parent (is {1}, should be {2})", turnTopic.name, turnTopic.type.name, turnTopicType.name); }
+            }
+            else { Debug.LogWarning("Invalid topic (Null)"); }
+        }
+        else
+        { Debug.LogWarning("Invalid listOfTopicTypesTurn (Empty)"); }
     }
+    #endregion
 
     #region Utilities
     //
@@ -1057,7 +1183,8 @@ public class TopicManager : MonoBehaviour
             if (dictOfTopicHistory.Count > 0)
             {
                 foreach (var history in dictOfTopicHistory)
-                { builder.AppendFormat("  t: {0} -> {1} -> {2} -> {3} -> {4}{5}", history.Value.turn, history.Value.topicType, history.Value.topicSubType, history.Value.topic, history.Value.option, "\n"); }
+                { builder.AppendFormat("  t {0} -> # {1} -> {2} -> {3} -> {4} -> {5}{6}", history.Value.turn, history.Value.numSelect, 
+                    history.Value.topicType, history.Value.topicSubType, history.Value.topic, history.Value.option, "\n"); }
             }
             else { builder.AppendFormat("  No records{0}", "\n"); }
         }

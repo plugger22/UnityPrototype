@@ -364,3 +364,229 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 20618 -> Saturday, 27 July 2019 12:48 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 5770 -> Saturday, 27 July 2019 2:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52447 -> Saturday, 27 July 2019 2:38 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid topicData (Null) for topicType "ResCam1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "FamC0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "ActGea0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorGear" minInterval (turn 3, last used t 0, minInterval 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:839)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "AutCam0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "FamA1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "Cit1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "ActMat0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "CamC0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "Cit1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "FamC0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "Cit1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "ActCon1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "ResGen0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "CamA1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "FamA1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "ActCon1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "AutCam0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "Cit1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "ResCam1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicData (Null) for topicType "AutGen0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:822)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 52447 -> Saturday, 27 July 2019 2:46 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid topicSubType "AuthorityTeam" minInterval (turn 7, last used t 5, minInterval 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:841)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 52447 -> Saturday, 27 July 2019 2:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52447 -> Saturday, 27 July 2019 2:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20191 -> Saturday, 27 July 2019 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33735 -> Saturday, 27 July 2019 3:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64901 -> Saturday, 27 July 2019 3:16 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid topicSubType "AuthorityGeneral" minInterval (turn 8, last used t 6, minInterval 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:879)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorMatch" minInterval (turn 28, last used t 25, minInterval 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:879)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorMatch" minInterval (turn 30, last used t 28, minInterval 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessTopicUnitTest() (at Assets/Scripts/Managers/TopicManager.cs:879)
+	TopicManager:SelectTopic() (at Assets/Scripts/Managers/TopicManager.cs:303)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 64901 -> Saturday, 27 July 2019 3:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45626 -> Saturday, 27 July 2019 3:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12912 -> Saturday, 27 July 2019 3:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36917 -> Saturday, 27 July 2019 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44176 -> Saturday, 27 July 2019 3:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43617 -> Saturday, 27 July 2019 3:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13712 -> Saturday, 27 July 2019 3:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51624 -> Saturday, 27 July 2019 3:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44021 -> Saturday, 27 July 2019 3:43 PM
+City seed 5678 -> London, United Kingdom

@@ -423,6 +423,7 @@ namespace packageAPI
     public class HistoryTopic
     {
         public int turn;
+        public int numSelect;           //number of topicTypes in topicManager.cs -> listOfTopicTypesTurn from which a selection will be made
         public string topicType;        //name of topicType
         public string topicSubType;     //name of topicSubType
         public string topic;            //name of topic
