@@ -25,6 +25,8 @@ public class TopicManager : MonoBehaviour
     private Topic turnTopic;
     private TopicOption turnOption;                                                                     //option selected
 
+    private int minIntervalGlobalActual;                                                                //number used in codes. Can be less than the minIntervalGlobal
+
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -342,12 +344,22 @@ public class TopicManager : MonoBehaviour
     public void SelectTopic()
     {
         ResetTopicAdmin();
-
-        CheckForValidTopicTypes();
-        GetTopicType();
-        GetTopicSubType();
-        GetTopic();
-
+        //select a topic, if none found then drop the global interval by 1 and try again
+        do
+        {
+            CheckForValidTopicTypes();
+            GetTopicType();
+            GetTopicSubType();
+            GetTopic();
+            //repeat process with a reduced minInterval
+            if (turnTopic == null)
+            {
+                minIntervalGlobalActual--;
+                Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+            }
+            else { break; }
+        }
+        while (turnTopic == null && minIntervalGlobalActual > 0);
         //debug purposes only -> BEFORE UpdateTopicData
         ProcessTopicUnitTest();
         //debug -> should be in ProcessTopic but here for autorun debugging purposes
@@ -413,6 +425,9 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void ResetTopicAdmin()
     {
+        //minInterval
+        minIntervalGlobalActual = minIntervalGlobal;
+        //selected topic data
         turnTopicType = null;
         turnTopicSubType = null;
         turnTopic = null;
@@ -746,14 +761,14 @@ public class TopicManager : MonoBehaviour
         bool isValid = false;
         bool isProceed = true;
         //accomodate the first few turns that may be less than the minTopicTypeTurns value
-        int minGlobalInterval = Mathf.Min(turn, minIntervalGlobal);
+        int minOverallInterval = Mathf.Min(turn, minIntervalGlobalActual);
         if (data != null)
         {
             switch (isTopicSubType)
             {
                 case false:
                     //TopicTypes -> check global interval & data.minInterval -> check for global interval
-                    if ((turn - data.turnLastUsed) >= minGlobalInterval)
+                    if ((turn - data.turnLastUsed) >= minOverallInterval)
                     { isValid = true; }
                     else
                     {
@@ -904,9 +919,9 @@ public class TopicManager : MonoBehaviour
                 if (dataType != null)
                 {
                     //check global interval
-                    int minGlobalInterval = Mathf.Min(turn, minIntervalGlobal);
-                    if ((turn - dataType.turnLastUsed) < minGlobalInterval)
-                    { Debug.LogWarningFormat("Invalid topicType \"{0}\" Global Interval (turn {1}, last used t {2}, minGlobaIInterval {3})", turnTopic.name, turn, dataType.turnLastUsed, minGlobalInterval); }
+                    int minOverallInterval = Mathf.Min(turn, minIntervalGlobalActual);
+                    if ((turn - dataType.turnLastUsed) < minOverallInterval)
+                    { Debug.LogWarningFormat("Invalid topicType \"{0}\" Global Interval (turn {1}, last used t {2}, minGlobaIInterval {3})", turnTopic.name, turn, dataType.turnLastUsed, minOverallInterval); }
                     //check topicType minInterval
                     if (dataType.minInterval > 0)
                     {
@@ -1044,7 +1059,7 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns true if a valid topicType (must pass minInterval and global minInterval checks)
+    /// returns true if a valid topicType (must pass minInterval and global minInterval checks) -> Used for DebugDisplayTopicTypes to show a '*' or not
     /// </summary>
     /// <param name="topicType"></param>
     /// <returns></returns>
@@ -1071,7 +1086,7 @@ public class TopicManager : MonoBehaviour
     }
 
 
-    private bool CheckValidSubType(TopicData data)
+    /*private bool CheckValidSubType(TopicData data)
     {
         int turn = GameManager.instance.turnScript.Turn;
         if (data != null)
@@ -1091,7 +1106,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topicData (Null)"); }
         return false;
-    }
+    }*/
 
     #endregion
 
@@ -1339,7 +1354,8 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Topic Selection{0}{1}", "\n", "\n");
-        builder.AppendFormat(" minTopicTypeTurns: {0}{1}{2}", minIntervalGlobal, "\n", "\n");
+        builder.AppendFormat(" minIntervalGlobal: {0}{1}", minIntervalGlobal, "\n");
+        builder.AppendFormat(" minIntervalGlobalActual: {0}{1}{2}", minIntervalGlobalActual, "\n", "\n");
         if (turnTopicType != null)
         { builder.AppendFormat(" topicType: {0}{1}", turnTopicType.name, "\n"); }
         else { builder.AppendFormat(" topicType: NULL{0}", "\n"); }

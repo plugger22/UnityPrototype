@@ -275,3 +275,23 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 39238 -> Sunday, 28 July 2019 11:35 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 25982 -> Sunday, 28 July 2019 2:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30029 -> Sunday, 28 July 2019 2:31 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:534)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:231)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 43104 -> Sunday, 28 July 2019 2:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59397 -> Sunday, 28 July 2019 2:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23931 -> Sunday, 28 July 2019 2:34 PM
+City seed 5678 -> London, United Kingdom
