@@ -19,6 +19,8 @@ public class TopicSubType : ScriptableObject
     [Range(0, 20)] public int minIntervalFactor = 0;
 
     [Header("Criteria")]
+    [Tooltip("Which side (or 'Both') does this apply to?")]
+    public GlobalSide side;
     [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
@@ -29,5 +31,6 @@ public class TopicSubType : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(type != null, "Invalid Type (Null) for {0}", name);
+        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
     }
 }

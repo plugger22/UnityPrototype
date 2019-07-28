@@ -14,5 +14,7 @@ MonoBehaviour:
   tag: Authority General
   type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  minimumInterval: 4
+  minIntervalFactor: 0
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   listOfCriteria: []
+  minInterval: 0

@@ -14,4 +14,7 @@ MonoBehaviour:
   tag: City Event
   type: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  minimumInterval: 0
+  minIntervalFactor: 0
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  listOfCriteria: []
+  minInterval: 0
