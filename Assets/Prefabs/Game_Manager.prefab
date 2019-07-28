@@ -2744,7 +2744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674c81addefd34e4a935d47ba9ab8967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minIntervalGlobal: 3
+  minIntervalGlobal: 2
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,9 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Resistance
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minimumInterval: 0
+  minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: 9f010af17c4ad82418096d591e59add8, type: 2}
   - {fileID: 11400000, guid: 86e20dda2e42ed348a4d7b525b7729cc, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: cd489508540b15f44b51045d9933098a, type: 2}
+  minInterval: 0

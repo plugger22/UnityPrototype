@@ -14,6 +14,6 @@ MonoBehaviour:
   tag: Family story line Alpha
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  minIntervalFactor: 4
+  minIntervalFactor: 5
   listOfCriteria: []
-  minInterval: 12
+  minInterval: 8

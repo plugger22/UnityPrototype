@@ -13,9 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: City
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minIntervalFactor: 4
+  minIntervalFactor: 5
   listOfSubTypes:
   - {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 23fcf677b30f6964c8a1a2e913c7f1b0, type: 2}
-  minInterval: 12
+  minInterval: 8

@@ -20,6 +20,8 @@ public class TopicType : ScriptableObject
     public List<TopicSubType> listOfSubTypes;
 
     [Header("Criteria")]
+    [Tooltip("Which side (or 'Both') does this apply to?")]
+    public GlobalSide side;
     [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
@@ -31,6 +33,7 @@ public class TopicType : ScriptableObject
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(listOfSubTypes != null, "Invalid listOfSubTypes (Null, needs at least one subType) for {0}", name);
         Debug.AssertFormat(listOfCriteria != null, "Invalid listOfCriteria (Null) for {0}", name);
+        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
     }
 
 }

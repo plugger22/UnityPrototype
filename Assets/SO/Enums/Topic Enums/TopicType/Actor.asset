@@ -13,13 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Actor
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  minimumInterval: 0
+  minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
   - {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
   - {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   - {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   - {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
+  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 17712bbf5f6fa1343ab340aef7f0c653, type: 2}
   - {fileID: 11400000, guid: b2c3310478d5c054581efe8181672a23, type: 2}
+  minInterval: 0
