@@ -1121,13 +1121,13 @@ public class LoadManager : MonoBehaviour
                 {
                     TopicType topicType = arrayOfTopicTypes[i];
                     counter++;
-                    //create dataPackage
+                    //create dataPackage (minInterval assigned during topicManager.cs -> subInitialiseStartUp
                     TopicData data = new TopicData()
                     {
                         type = topicType.name,
                         isAvailable = true,
                         turnLastUsed = 0,
-                        minInterval = topicType.minimumInterval,
+                        minInterval = 0,
                         timesUsedLevel = 0,
                         timesUsedCampaign = 0
                     };
@@ -1170,7 +1170,7 @@ public class LoadManager : MonoBehaviour
                     parent = topicSubType.type.name,
                     isAvailable = true,
                     turnLastUsed = 0,
-                    minInterval = topicSubType.minimumInterval,
+                    minInterval = topicSubType.minIntervalFactor,
                     timesUsedLevel = 0,
                     timesUsedCampaign = 0
                 };

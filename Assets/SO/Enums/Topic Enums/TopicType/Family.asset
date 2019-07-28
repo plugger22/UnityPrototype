@@ -13,10 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Family
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minimumInterval: 10
+  minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}
   - {fileID: 11400000, guid: 8646488ba661a50429c3f85efe9cdfae, type: 2}
   - {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 285f8151292eb9d4c8b9fca3a44476a4, type: 2}
+  minInterval: 0

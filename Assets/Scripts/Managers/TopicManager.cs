@@ -11,8 +11,8 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class TopicManager : MonoBehaviour
 {
-    [Tooltip("Minimum number of turns before topicType can be chosen again")]
-    [Range(0, 10)] public int minTopicTypeTurns = 2;
+    [Tooltip("Minimum number of turns before topicType/SubTypes can be chosen again")]
+    [Range(0, 10)] public int minIntervalGlobal = 2;
 
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
     private List<TopicType> listOfTypePool = new List<TopicType>();                                     //turn selection pool for topicTypes (priority based)
@@ -34,10 +34,15 @@ public class TopicManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
+                SubInitialiseStartUp();
+                SubInitialiseLevelStart();
+                break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
+                SubInitialiseStartUp();
+                break;
             case GameState.LoadGame:
                 //do nothing
                 break;
@@ -53,7 +58,47 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseStartUp
     private void SubInitialiseStartUp()
     {
-
+        //calculates topicType/SubType minimum Intervals based on global setting (minTopicTypeTurns)
+        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        if (listOfTopicTypes != null)
+        {
+            //loop topicTypes and update minIntervals
+            for (int i = 0; i < listOfTopicTypes.Count; i++)
+            {
+                TopicType topicType = listOfTopicTypes[i];
+                if (topicType != null)
+                {
+                    topicType.minInterval = topicType.minIntervalFactor * minIntervalGlobal;
+                    //update topicData minInteval
+                    TopicData dataType = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                    if (dataType != null)
+                    { dataType.minInterval = topicType.minInterval; }
+                    else { Debug.LogWarningFormat("Invaid topicData (Null) for topicType \"{0}\"", topicType.name); }
+                    //get listOfSubTypes
+                    if (topicType.listOfSubTypes != null)
+                    {
+                        //loop listOfSubTypes
+                        for (int j = 0; j < topicType.listOfSubTypes.Count; j++)
+                        {
+                            TopicSubType subType = topicType.listOfSubTypes[j];
+                            if (subType != null)
+                            {
+                                subType.minInterval = subType.minIntervalFactor * minIntervalGlobal;
+                                //update topicData minInteval
+                                TopicData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                                if (dataSub != null)
+                                { dataSub.minInterval = subType.minInterval; }
+                                else { Debug.LogWarningFormat("Invaid topicData (Null) for topicSubType \"{0}\"", subType.name); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid topicSubType (Null) in listOfTopicSubType[{0}] for topicType \"{1}\"", j, topicType.name); }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid topicType.listOfSubTypes (Null) for \"{0}\"", topicType.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid topicType (Null) in listOfTopicTypes[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
     }
     #endregion
 
@@ -296,11 +341,13 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void SelectTopic()
     {
-        ResetTopicData();
+        ResetTopicAdmin();
+
         CheckForValidTopicTypes();
         GetTopicType();
         GetTopicSubType();
         GetTopic();
+
         //debug purposes only -> BEFORE UpdateTopicData
         ProcessTopicUnitTest();
         //debug -> should be in ProcessTopic but here for autorun debugging purposes
@@ -364,7 +411,7 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// Resets all relevant turn topic data prior to processing for the current turn
     /// </summary>
-    private void ResetTopicData()
+    private void ResetTopicAdmin()
     {
         turnTopicType = null;
         turnTopicSubType = null;
@@ -465,7 +512,7 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid listOfSubTypePool (Empty) for topicSubType selection"); }
         }
-        else { Debug.LogError("Invalid turnTopicType (Null)"); }
+        //O.K for there to be no valid topic
     }
 
 
@@ -519,7 +566,11 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", turnTopicSubType.name); }
         }
-        else { Debug.LogError("Invalid turnTopicSubType (Null)"); }
+        else
+        {
+            //No topic selected
+            Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, No Topic Selected{1}", GameManager.instance.turnScript.Turn, "\n");
+        }
     }
 
 
@@ -563,6 +614,10 @@ public class TopicManager : MonoBehaviour
         return isProceed;
     }
 
+    //
+    // - - - Process Topic - - - 
+    //
+
     /// <summary>
     /// Takes selected topic and executes according to topic subType
     /// </summary>
@@ -573,7 +628,7 @@ public class TopicManager : MonoBehaviour
             //TO DO -> execution of topics (branches to a method that returns a topic data package ready to send to UI)
 
             //Processing of topic depends on whether it's a standard subType or a dynamic, template, subType
-            switch(turnTopicSubType.name)
+            switch (turnTopicSubType.name)
             {
                 //Standard topics
                 case "CampaignAlpha":
@@ -691,7 +746,7 @@ public class TopicManager : MonoBehaviour
         bool isValid = false;
         bool isProceed = true;
         //accomodate the first few turns that may be less than the minTopicTypeTurns value
-        int minGlobalInterval = Mathf.Min(turn, minTopicTypeTurns);
+        int minGlobalInterval = Mathf.Min(turn, minIntervalGlobal);
         if (data != null)
         {
             switch (isTopicSubType)
@@ -849,7 +904,7 @@ public class TopicManager : MonoBehaviour
                 if (dataType != null)
                 {
                     //check global interval
-                    int minGlobalInterval = Mathf.Min(turn, minTopicTypeTurns);
+                    int minGlobalInterval = Mathf.Min(turn, minIntervalGlobal);
                     if ((turn - dataType.turnLastUsed) < minGlobalInterval)
                     { Debug.LogWarningFormat("Invalid topicType \"{0}\" Global Interval (turn {1}, last used t {2}, minGlobaIInterval {3})", turnTopic.name, turn, dataType.turnLastUsed, minGlobalInterval); }
                     //check topicType minInterval
@@ -920,7 +975,7 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogWarning("Invalid topic (Null)"); }
         }
         else
-        { Debug.LogWarning("Invalid listOfTopicTypesTurn (Empty)"); }
+        { /*Debug.LogWarning("Invalid listOfTopicTypesTurn (Empty)");*/ }
     }
     #endregion
 
@@ -965,7 +1020,7 @@ public class TopicManager : MonoBehaviour
         int numOfEntries = 0;
         if (priority != null)
         {
-            switch(priority.name)
+            switch (priority.name)
             {
                 case "Low":
                     numOfEntries = 1;
@@ -1001,7 +1056,7 @@ public class TopicManager : MonoBehaviour
             if (data.minInterval == 0)
             {
                 //global minInterval applies
-                if (turn - data.turnLastUsed >= minTopicTypeTurns)
+                if (turn - data.turnLastUsed >= minIntervalGlobal)
                 { return true; }
             }
             else
@@ -1024,7 +1079,7 @@ public class TopicManager : MonoBehaviour
             if (data.minInterval == 0)
             {
                 //global minInterval applies
-                if (turn - data.turnLastUsed >= minTopicTypeTurns)
+                if (turn - data.turnLastUsed >= minIntervalGlobal)
                 { return true; }
             }
             else
@@ -1121,7 +1176,7 @@ public class TopicManager : MonoBehaviour
                     {
                         isValidSubType = false;
                         if (isValidType == true)
-                        { isValidSubType = DebugCheckValidType(topicSubType.Value);  }
+                        { isValidSubType = DebugCheckValidType(topicSubType.Value); }
                         if (topicSubType.Value.parent.Equals(topicType.Key, StringComparison.Ordinal) == true)
                         { builder.AppendFormat("  {0}{1}{2}", DebugDisplayTypeRecord(topicSubType.Value), isValidSubType == true ? " *" : "", "\n"); }
                     }
@@ -1141,8 +1196,8 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private string DebugDisplayTypeRecord(TopicData data)
     {
-           return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
-                            data.timesUsedLevel, data.timesUsedCampaign);
+        return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
+                         data.timesUsedLevel, data.timesUsedCampaign);
     }
 
     /// <summary>
@@ -1181,12 +1236,14 @@ public class TopicManager : MonoBehaviour
         Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
         if (dictOfTopicHistory != null)
         {
-            builder.AppendFormat("{0} - dictOfTopicHistory{1}", "\n", "\n");
+            builder.AppendFormat("{0} - dictOfTopicHistory ({1} records){2}", "\n", dictOfTopicHistory.Count, "\n");
             if (dictOfTopicHistory.Count > 0)
             {
                 foreach (var history in dictOfTopicHistory)
-                { builder.AppendFormat("  t {0} -> # {1} -> {2} -> {3} -> {4} -> {5}{6}", history.Value.turn, history.Value.numSelect, 
-                    history.Value.topicType, history.Value.topicSubType, history.Value.topic, history.Value.option, "\n"); }
+                {
+                    builder.AppendFormat("  t {0} -> # {1} -> {2} -> {3} -> {4} -> {5}{6}", history.Value.turn, history.Value.numSelect,
+                      history.Value.topicType, history.Value.topicSubType, history.Value.topic, history.Value.option, "\n");
+                }
             }
             else { builder.AppendFormat("  No records{0}", "\n"); }
         }
@@ -1208,7 +1265,7 @@ public class TopicManager : MonoBehaviour
         {
             foreach (TopicType topicType in listOfTopicTypes)
             {
-                builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minimumInterval, "\n");
+                builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minInterval, "\n");
                 if (topicType.listOfCriteria.Count > 0)
                 {
                     foreach (Criteria criteria in topicType.listOfCriteria)
@@ -1282,7 +1339,7 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Topic Selection{0}{1}", "\n", "\n");
-        builder.AppendFormat(" minTopicTypeTurns: {0}{1}{2}", minTopicTypeTurns, "\n", "\n");
+        builder.AppendFormat(" minTopicTypeTurns: {0}{1}{2}", minIntervalGlobal, "\n", "\n");
         if (turnTopicType != null)
         { builder.AppendFormat(" topicType: {0}{1}", turnTopicType.name, "\n"); }
         else { builder.AppendFormat(" topicType: NULL{0}", "\n"); }

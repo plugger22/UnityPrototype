@@ -13,10 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Campaign
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minimumInterval: 10
+  minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
   - {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
   - {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 6f78dac5d7e54b942bdf43ad58ab63b7, type: 2}
+  minInterval: 0

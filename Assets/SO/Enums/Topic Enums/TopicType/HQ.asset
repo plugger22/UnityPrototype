@@ -13,8 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: HQ
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  minimumInterval: 0
+  minIntervalFactor: 4
   listOfSubTypes:
   - {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 4084e8d4c84c037448770bf1f725f079, type: 2}
+  minInterval: 12

@@ -12,8 +12,8 @@ public class TopicType : ScriptableObject
     public string tag;
     [Tooltip("Overall priority for this sub topic when being placed in the selection pool")]
     public GlobalChance priority;
-    [Tooltip("Number of turns that must elapse before it can be chosen again, default 0")]
-    [Range(0, 20)] public int minimumInterval = 0;
+    [Tooltip("Multiplier to global Minimum interval, eg. 2x, 3x, etc. for number of turns that must elapse before it can be chosen again, default 0")]
+    [Range(0, 20)] public int minIntervalFactor = 0;
 
     [Header("SubTopics")]
     [Tooltip("All SubTopics for this Topic should be in this list. Should be at least one subTopic in list")]
@@ -23,6 +23,7 @@ public class TopicType : ScriptableObject
     [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
+    [HideInInspector] public int minInterval;                     //calculated value = minIntervalFactor x TopicManager.cs -> minIntervalGlobal (calculated at TopicManager.cs -> subInitialiseStartUp)
 
     public void OnEnable()
     {
