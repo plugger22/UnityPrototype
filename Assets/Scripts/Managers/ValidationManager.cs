@@ -423,7 +423,7 @@ public class ValidationManager : MonoBehaviour
 
     #region ValidateMissions
     /// <summary>
-    /// check for unique targets and objectives and check that all ObjectveTargets have matching targets/objectives present
+    /// check for unique targets and objectives and check that all ObjectveTargets have matching targets/objectives present Check objective sides match that of mission
     /// </summary>
     private void ValidateMissions()
     {
@@ -477,7 +477,18 @@ public class ValidationManager : MonoBehaviour
                         //check for duplicates
                         listOfNames.Clear();
                         for (int i = 0; i < mission.listOfObjectives.Count; i++)
-                        { listOfNames.Add(mission.listOfObjectives[i].name); }
+                        {
+                            Objective objective = mission.listOfObjectives[i];
+                            if (objective != null)
+                            {
+                                listOfNames.Add(objective.name);
+                                //check side matches that of mission
+                                if (objective.side.level != mission.side.level)
+                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: mission {0}, obj \"{1}\", Invalid Side (is {2}, should be {3}){4}", mission.name, objective.name,
+                                    objective.side.name, mission.side.name, "\n"); }
+                            }
+                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: mission {0}, Invalid Objective for listOfObjectives[{1}]{2}", mission.name, i, "\n"); }
+                        }
                         //check for duplicates
                         CheckListForDuplicates(listOfNames, "Mission", mission.name, "Objectives");
                     }
@@ -1060,6 +1071,15 @@ public class ValidationManager : MonoBehaviour
                             //Authority
                             if (scenario.missionAuthority == null)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid missionAuthority (Null){1}", scenario.name, "\n"); }
+                            else
+                            {
+                                //check mission side same as scenario
+                                if (scenario.missionAuthority.side.level != scenario.side.level)
+                                {
+                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\", Authority mission \"{1}\", Invalid Side (is {2}, should be {3}){4}",
+                                        scenario.name, scenario.missionAuthority.name, scenario.missionAuthority.side.name, scenario.side.name, "\n");
+                                }
+                            }
                             /*if (scenario.challengeAuthority == null)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid challengeAuthority (Null){1}", scenario.name, "\n"); }*/
                             if (string.IsNullOrEmpty(scenario.descriptorAuthority) == true)
@@ -1069,6 +1089,15 @@ public class ValidationManager : MonoBehaviour
                             //Resistance
                             if (scenario.missionResistance == null)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid missionResistance (Null){1}", scenario.name, "\n"); }
+                            else
+                            {
+                                //check mission side same as scenario
+                                if (scenario.missionResistance.side.level != scenario.side.level)
+                                {
+                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\", Resistance mission \"{1}\", Invalid Side (is {2}, should be {3}){4}",
+                                        scenario.name, scenario.missionResistance.name, scenario.missionResistance.side.name, scenario.side.name, "\n");
+                                }
+                            }
                             if (scenario.challengeResistance == null)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid challengeResistance (Null){1}", scenario.name, "\n"); }
                             if (string.IsNullOrEmpty(scenario.descriptorResistance) == true)
