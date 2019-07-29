@@ -910,8 +910,14 @@ public class ValidationManager : MonoBehaviour
                                         //get city
                                         if (scenario.city != null)
                                         {
+                                            TopicPool pool = null;
                                             //get city topic pool
-                                            TopicPool pool = scenario.city.cityPool;
+                                            switch (campaign.side.level)
+                                            {
+                                                case 1: pool = scenario.city.cityPoolAuthority; break;
+                                                case 2: pool = scenario.city.cityPoolResistance; break;
+                                                default: Debug.LogWarningFormat("Unrecognised campaign.side \"{0}\"", campaign.side.name); break;
+                                            }
                                             if (pool != null)
                                             {
                                                 if (pool.listOfTopics != null)
@@ -983,20 +989,36 @@ public class ValidationManager : MonoBehaviour
                     City city = arrayOfCities[i];
                     if (city != null)
                     {
-                        //City Pool
-                        if (city.cityPool != null)
+                        //City Pool Authority
+                        if (city.cityPoolAuthority != null)
                         {
                             //check type for a match
-                            if (city.cityPool.type.name.Equals(cityType.name, StringComparison.Ordinal) == false)
+                            if (city.cityPoolAuthority.type.name.Equals(cityType.name, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: City \"{0}\", cityPool \"{1}\", has incorrect type ({2} should be {3}){4}", city.name,
-                                    city.cityPool.name, city.cityPool.type.name, cityType.name, "\n");
+                                    city.cityPoolAuthority.name, city.cityPoolAuthority.type.name, cityType.name, "\n");
                             }
                             //check subType for a match
-                            if (city.cityPool.subType.name.Equals(citySubType.name, StringComparison.Ordinal) == false)
+                            if (city.cityPoolAuthority.subType.name.Equals(citySubType.name, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: city \"{0}\", cityPool \"{1}\", has incorrect subType ({2} should be {3}){4}", city.name,
-                                    city.cityPool.name, city.cityPool.subType.name, citySubType.name, "\n");
+                                    city.cityPoolAuthority.name, city.cityPoolAuthority.subType.name, citySubType.name, "\n");
+                            }
+                        }
+                        //City Pool Resistance
+                        if (city.cityPoolResistance != null)
+                        {
+                            //check type for a match
+                            if (city.cityPoolResistance.type.name.Equals(cityType.name, StringComparison.Ordinal) == false)
+                            {
+                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: City \"{0}\", cityPool \"{1}\", has incorrect type ({2} should be {3}){4}", city.name,
+                                    city.cityPoolResistance.name, city.cityPoolResistance.type.name, cityType.name, "\n");
+                            }
+                            //check subType for a match
+                            if (city.cityPoolResistance.subType.name.Equals(citySubType.name, StringComparison.Ordinal) == false)
+                            {
+                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: city \"{0}\", cityPool \"{1}\", has incorrect subType ({2} should be {3}){4}", city.name,
+                                    city.cityPoolResistance.name, city.cityPoolResistance.subType.name, citySubType.name, "\n");
                             }
                         }
                     }

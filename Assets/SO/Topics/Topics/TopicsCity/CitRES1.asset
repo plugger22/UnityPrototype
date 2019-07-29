@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: CitRES1
+  m_EditorClassIdentifier: 
+  tag: City resistance test 1
+  type: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
+  subType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
+  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: 1acfebcb3b9bcaf439d26f60ec597525, type: 2}
+  - {fileID: 11400000, guid: b757285ecfcf5134aa3180c021f133a0, type: 2}
+  - {fileID: 11400000, guid: a743137fa3fe26b498b2a9b60ef702cb, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfCriteria: []
+  status: 1

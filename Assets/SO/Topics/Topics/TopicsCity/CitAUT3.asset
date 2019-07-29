@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: Cit0
+  m_Name: CitAUT3
   m_EditorClassIdentifier: 
-  tag: City test 0
+  tag: City Authority test 0
   type: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
   subType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   listOfOptions:
-  - {fileID: 11400000, guid: 11a05ed30227df143b0a816bf9f4a609, type: 2}
-  - {fileID: 11400000, guid: 9b930c5b537339148ad2cb22f37316f9, type: 2}
-  - {fileID: 11400000, guid: 2c6d4cbe81c3cfb47b5bd7f3cbb8399c, type: 2}
-  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  - {fileID: 11400000, guid: 38ccec239c050914e96876d372b0710a, type: 2}
+  - {fileID: 11400000, guid: 77d73565e6e4a1a4895bb621ac2eca8c, type: 2}
+  - {fileID: 11400000, guid: d3c01ccf34687824f86782068af7477a, type: 2}
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   listOfCriteria: []
   status: 1
