@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
+  m_Name: ScenarioAUThree
+  m_EditorClassIdentifier: 
+  tag: Test Scenario 3 Authority
+  descriptor: Taxi, Taxi, Taxi!
+  descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
+    London. Spare no effort and take no heed of collateral damage.
+
+'
+  descriptorAuthority: 
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  city: {fileID: 11400000, guid: 028f2bbc2bbda2244a371c4f7237c3db, type: 2}
+  seedCity: 765
+  leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
+  leaderAuthority: {fileID: 11400000, guid: 9768b5680a5445847b2a3e54b3577cc1, type: 2}
+  approvalStartRebelHQ: 3
+  approvalStartAuthorityHQ: 3
+  cityStartLoyalty: 3
+  missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
+  missionAuthority: {fileID: 0}
+  challengeResistance: {fileID: 11400000, guid: f49eada5905cc6e4dbd50b2b5650dea1,
+    type: 2}
+  challengeAuthority: {fileID: 0}
+  timer: 70

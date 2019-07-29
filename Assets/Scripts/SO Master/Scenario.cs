@@ -64,10 +64,12 @@ public class Scenario : ScriptableObject
         Debug.AssertFormat(leaderResistance != null, "Invalid leaderResistance (Null) for Scenario for {0}", name);
         Debug.AssertFormat(leaderAuthority != null, "Invalid leaderAuthority (Null) for Scenario for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for Scenario for {0}", name);
-        //resistance
+
+        //Side dependant -> done through ValidationManager.cs -> ValidateScenarios
+        /*//resistance
         Debug.AssertFormat(missionResistance != null, "Invalid mission (Null) for Scenario for {0}", name);
         Debug.AssertFormat(challengeResistance != null, "Invalid challenge (Null) for Scenario for {0}", name);
-        //authority -> TO DO
+        //authority -> TO DO*/
 
     }
 

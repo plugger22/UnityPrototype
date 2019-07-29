@@ -823,9 +823,9 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfTopicPools (Null)"); }
         #endregion
 
-        #region Campaign Topic Pools
+        #region Campaign Topics and Others
         //
-        // - - - Campaigns (Topic Pools)
+        // - - - Campaigns (Topic Pools and Scenario sides)
         //
         Campaign[] arrayOfCampaigns = GameManager.instance.loadScript.arrayOfCampaigns;
         if (arrayOfCampaigns != null)
@@ -893,7 +893,7 @@ public class ValidationManager : MonoBehaviour
                         if (campaign.actorPoliticPool != null)
                         { CheckCampaignPool(campaign, campaign.actorPoliticPool, actorPoliticSubType); }
                         //
-                        // - - - City pools (topics in pool correct side check only)
+                        // - - - Scenario side and City pools (topics in pool correct side check only)
                         //
                         //need to do here as only way to get access, via scenario, as cities can be in multiple campaigns)
                         if (campaign.listOfScenarios != null)
@@ -907,6 +907,12 @@ public class ValidationManager : MonoBehaviour
                                     Scenario scenario = campaign.listOfScenarios[j];
                                     if (scenario != null)
                                     {
+                                        //check scenario the same side as campaign
+                                        if (scenario.side.level != campaign.side.level)
+                                        {
+                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\" has invalid SIDE (is {2}, should be {3}){4}", 
+                                                campaign.name,  scenario.name, scenario.side.name, campaign.side.name, "\n");
+                                        }
                                         //get city
                                         if (scenario.city != null)
                                         {

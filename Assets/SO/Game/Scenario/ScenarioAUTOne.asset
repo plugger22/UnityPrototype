@@ -9,26 +9,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
-  m_Name: TestScenarioOne
+  m_Name: ScenarioAUTOne
   m_EditorClassIdentifier: 
-  tag: Test Scenario One
-  descriptor: Cab Ride to Hell
+  tag: Test Scenario 1 Authority
+  descriptor: Culture Vulture
   descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
     London. Spare no effort and take no heed of collateral damage.
 
 '
   descriptorAuthority: 
-  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
-  seedCity: 5678
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  city: {fileID: 11400000, guid: c81358a542eff24498e1312768e435ab, type: 2}
+  seedCity: 890
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
-  leaderAuthority: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
-  approvalStartRebelHQ: 4
-  approvalStartAuthorityHQ: 4
-  cityStartLoyalty: 4
-  missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
+  leaderAuthority: {fileID: 11400000, guid: e48a18091be2462438cacdcd3c612b7d, type: 2}
+  approvalStartRebelHQ: 5
+  approvalStartAuthorityHQ: 5
+  cityStartLoyalty: 5
+  missionResistance: {fileID: 11400000, guid: c18dfa424a4646349ac6ee1fc6ddb8cf, type: 2}
   missionAuthority: {fileID: 0}
-  challengeResistance: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b,
+  challengeResistance: {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869,
     type: 2}
   challengeAuthority: {fileID: 0}
   timer: 70
