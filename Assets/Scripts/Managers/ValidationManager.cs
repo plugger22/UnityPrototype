@@ -841,237 +841,57 @@ public class ValidationManager : MonoBehaviour
                         //campaign Alpha Pool
                         if (campaign.campaignAlphaPool != null)
                         {
-                            //check type for a match
-                            if (campaign.campaignAlphaPool.type.name.Equals(campaignType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.campaignAlphaPool.name, campaign.campaignAlphaPool.type.name, campaignType.name, "\n");
-                            }
-                            //check topics in pool to check that they are the correct side
-                            if (campaign.campaignAlphaPool.listOfTopics.Count > 0)
-                            {
-                                CheckCampaignTopicPool(campaign, campaign.campaignAlphaPools);
-
-                                /*//loop all topics
-                                for (int j = 0; j < campaign.campaignAlphaPool.listOfTopics.Count; j++)
-                                {
-                                    Topic topic = campaign.campaignAlphaPool.listOfTopics[j];
-                                    if (topic != null)
-                                    {
-                                        if (topic.side.level != playerSide.level)
-                                        {
-                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
-                                              campaign.name, campaign.campaignAlphaPool.name, topic.name, topic.side.name, playerSide.name, "\n");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", topic \"{2}\" Invalid (Null){3}}",
-                                            campaign.name, campaign.campaignAlphaPool.name, topic.name, "\n");
-                                    }
-                                }*/
-
-                            }
-                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\" is EMPTY{2}", campaign.name, campaign.campaignAlphaPool.name, "\n"); }
-                            //check subType for a match
-                            if (campaign.campaignAlphaPool.subType.name.Equals(campaignAlphaSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.campaignAlphaPool.name, campaign.campaignAlphaPool.subType.name, campaignAlphaSubType.name, "\n");
-                            }
+                            //check pool (correct topicType / topicSubType / topics correct side)
+                            CheckCampaignPool(campaign, campaign.campaignAlphaPool, campaignAlphaSubType);
                         }
                         //campaign Bravo Pool
                         if (campaign.campaignBravoPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.campaignBravoPool.type.name.Equals(campaignType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignBravoPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.campaignBravoPool.name, campaign.campaignBravoPool.type.name, campaignType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.campaignBravoPool.subType.name.Equals(campaignBravoSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignBravoPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.campaignBravoPool.name, campaign.campaignBravoPool.subType.name, campaignBravoSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.campaignBravoPool, campaignBravoSubType); }
                         //campaign Charlie Pool
                         if (campaign.campaignCharliePool != null)
-                        {
-                            //check type for a match
-                            if (campaign.campaignCharliePool.type.name.Equals(campaignType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignCharliePool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.campaignCharliePool.name, campaign.campaignCharliePool.type.name, campaignType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.campaignCharliePool.subType.name.Equals(campaignCharlieSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignCharliePool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.campaignCharliePool.name, campaign.campaignCharliePool.subType.name, campaignCharlieSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.campaignCharliePool, campaignCharlieSubType); }
                         //family Alpha Pool
                         if (campaign.familyAlphaPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.familyAlphaPool.type.name.Equals(familyType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyAlphaPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyAlphaPool.name, campaign.familyAlphaPool.type.name, familyType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.familyAlphaPool.subType.name.Equals(familyAlphaSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyAlphaPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyAlphaPool.name, campaign.familyAlphaPool.subType.name, familyAlphaSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.familyAlphaPool, familyAlphaSubType); }
                         //family Bravo Pool
                         if (campaign.familyBravoPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.familyBravoPool.type.name.Equals(familyType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyBravoPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyBravoPool.name, campaign.familyBravoPool.type.name, familyType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.familyBravoPool.subType.name.Equals(familyBravoSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyBravoPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyBravoPool.name, campaign.familyBravoPool.subType.name, familyBravoSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.familyBravoPool, familyBravoSubType); }
                         //family Charlie Pool
                         if (campaign.familyCharliePool != null)
-                        {
-                            //check type for a match
-                            if (campaign.familyCharliePool.type.name.Equals(familyType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyCharliePool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyCharliePool.name, campaign.familyCharliePool.type.name, familyType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.familyCharliePool.subType.name.Equals(familyCharlieSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", familyCharliePool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.familyCharliePool.name, campaign.familyCharliePool.subType.name, familyCharlieSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.familyCharliePool, familyCharlieSubType); }
                         //Authority Campaign Pool
                         if (campaign.authorityCampaignPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.authorityCampaignPool.type.name.Equals(authorityType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", authorityCampaignPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.authorityCampaignPool.name, campaign.authorityCampaignPool.type.name, authorityType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.authorityCampaignPool.subType.name.Equals(authorityCampaignSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", authorityCampaignPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.authorityCampaignPool.name, campaign.authorityCampaignPool.subType.name, authorityCampaignSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.authorityCampaignPool, authorityCampaignSubType); }
                         //Resistance Campaign Pool
                         if (campaign.resistanceCampaignPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.resistanceCampaignPool.type.name.Equals(resistanceType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", resistanceCampaignPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.resistanceCampaignPool.name, campaign.resistanceCampaignPool.type.name, resistanceType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.resistanceCampaignPool.subType.name.Equals(resistanceCampaignSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", resistanceCampaignPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.resistanceCampaignPool.name, campaign.resistanceCampaignPool.subType.name, resistanceCampaignSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.resistanceCampaignPool, resistanceCampaignSubType); }
                         //Authority General Pool
                         if (campaign.authorityGeneralPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.authorityGeneralPool.type.name.Equals(authorityType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", authorityGeneralPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.authorityGeneralPool.name, campaign.authorityGeneralPool.type.name, authorityType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.authorityGeneralPool.subType.name.Equals(authorityGeneralSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", authorityGeneralPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.authorityGeneralPool.name, campaign.authorityGeneralPool.subType.name, authorityGeneralSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.authorityGeneralPool, authorityGeneralSubType); }
                         //Authority Team Pool
                         if (campaign.teamPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.teamPool.type.name.Equals(authorityType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", teamPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.teamPool.name, campaign.teamPool.type.name, authorityType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.teamPool.subType.name.Equals(authorityTeamSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", teamPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.teamPool.name, campaign.teamPool.subType.name, authorityTeamSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.teamPool, authorityTeamSubType); }
                         //Resistance General Pool
                         if (campaign.resistanceGeneralPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.resistanceGeneralPool.type.name.Equals(resistanceType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", resistanceGeneralPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.resistanceGeneralPool.name, campaign.resistanceGeneralPool.type.name, resistanceType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.resistanceGeneralPool.subType.name.Equals(resistanceGeneralSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", resistanceGeneralPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.resistanceGeneralPool.name, campaign.resistanceGeneralPool.subType.name, resistanceGeneralSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.resistanceGeneralPool, resistanceGeneralSubType); }
                         //HQ Pool
                         if (campaign.hqPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.hqPool.type.name.Equals(hqType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", hqPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.hqPool.name, campaign.hqPool.type.name, hqType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.hqPool.subType.name.Equals(hqSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", hqPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.hqPool.name, campaign.hqPool.subType.name, hqSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.hqPool, hqSubType); }
                         //Actor Contact Pool
                         if (campaign.actorContactPool != null)
-                        {
-                            //check type for a match
-                            if (campaign.actorContactPool.type.name.Equals(actorType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", actorPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                                    campaign.actorContactPool.name, campaign.actorContactPool.type.name, actorType.name, "\n");
-                            }
-                            //check subType for a match
-                            if (campaign.actorContactPool.subType.name.Equals(actorContactSubType.name, StringComparison.Ordinal) == false)
-                            {
-                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", actorPool \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
-                                    campaign.actorContactPool.name, campaign.actorContactPool.subType.name, actorContactSubType.name, "\n");
-                            }
-                        }
+                        { CheckCampaignPool(campaign, campaign.actorContactPool, actorContactSubType); }
+                        //Actor District Pool
+                        if (campaign.actorDistrictPool != null)
+                        { CheckCampaignPool(campaign, campaign.actorDistrictPool, actorDistrictSubType); }
+                        //Actor Gear Pool
+                        if (campaign.actorGearPool != null)
+                        { CheckCampaignPool(campaign, campaign.actorGearPool, actorGearSubType); }
+                        //Actor Match Pool
+                        if (campaign.actorMatchPool != null)
+                        { CheckCampaignPool(campaign, campaign.actorMatchPool, actorMatchSubType); }
+                        //Actor Politic Pool
+                        if (campaign.actorPoliticPool != null)
+                        { CheckCampaignPool(campaign, campaign.actorPoliticPool, actorPoliticSubType); }
                     }
                     else { Debug.LogErrorFormat("Invalid campaign in arrayOfCampaigns[{0}]", i); }
                 }
@@ -2416,31 +2236,48 @@ public class ValidationManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks campaign topic pools (ValidateTopics -> Campaign Topic Pool)
-    /// NOTE: campaign and pool have been Null checked by parent method
+    /// Checks campaign pools (various checks) (ValidateTopics -> Campaign Topic Pool)
+    /// NOTE: campaign, pool and subType have been Null checked by parent method
     /// </summary>
     /// <param name="campaign"></param>
     /// <param name="pool"></param>
-    private void CheckCampaignTopicPool(Campaign campaign, TopicPool pool)
+    private void CheckCampaignPool(Campaign campaign, TopicPool pool, TopicSubType subType)
     {
-        //loop all topics
-        for (int i = 0; i < pool.listOfTopics.Count; i++)
+        //check type for a match
+        if (pool.type.name.Equals(campaignType.name, StringComparison.Ordinal) == false)
         {
-            Topic topic = pool.listOfTopics[i];
-            if (topic != null)
+            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
+                pool.name, pool.type.name, campaignType.name, "\n");
+        }
+        //check subType for a match
+        if (pool.subType.name.Equals(subType.name, StringComparison.Ordinal) == false)
+        {
+            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
+                pool.name, pool.subType.name, subType.name, "\n");
+        }
+        //loop all topics to check they are the correct side (campaign side)
+        int count = pool.listOfTopics.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
             {
-                if (topic.side.level != campaign.side.level)
+                Topic topic = pool.listOfTopics[i];
+                if (topic != null)
                 {
-                    Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignTopicPool: campaign \"{0}\", topicPool \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
-                      campaign.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                    if (topic.side.level != campaign.side.level)
+                    {
+                        Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
+                          campaign.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                    }
+                }
+                else
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\" Invalid (Null){3}}",
+                        campaign.name, pool.name, topic.name, "\n");
                 }
             }
-            else
-            {
-                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", pool \"{1}\", topic \"{2}\" Invalid (Null){3}}",
-                    campaign.name, pool.name, topic.name, "\n");
-            }
         }
+        else { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\" is EMPTY{2}", campaign.name, pool.name, "\n"); }
     }
 
 
