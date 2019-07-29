@@ -28,7 +28,7 @@ public class Scenario : ScriptableObject
     [Tooltip("Seed from which city is generated from (Zero is considered a seed). Can be a whole number between - 2147483648 and 2147483647")]
     public int seedCity;
 
-    [Header("AI Opponents")]
+    [Header("AI Opponents (need both)")]
     [Tooltip("RebelLeader SO")]
     public RebelLeader leaderResistance;
     [Tooltip("Mayor SO")]
@@ -50,7 +50,7 @@ public class Scenario : ScriptableObject
     [Header("Challenge")]
     [Tooltip("Challenge (difficulty) of the scenario")]
     public Challenge challengeResistance;
-    public Challenge challengeAuthority;
+    //public Challenge challengeAuthority;
 
     [Header("Number of Turns")]
     [Range(20, 100)] public int timer = 100;
@@ -64,13 +64,10 @@ public class Scenario : ScriptableObject
         Debug.AssertFormat(leaderResistance != null, "Invalid leaderResistance (Null) for Scenario for {0}", name);
         Debug.AssertFormat(leaderAuthority != null, "Invalid leaderAuthority (Null) for Scenario for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for Scenario for {0}", name);
-
-        //Side dependant -> done through ValidationManager.cs -> ValidateScenarios
-        /*//resistance
-        Debug.AssertFormat(missionResistance != null, "Invalid mission (Null) for Scenario for {0}", name);
-        Debug.AssertFormat(challengeResistance != null, "Invalid challenge (Null) for Scenario for {0}", name);
-        //authority -> TO DO*/
-
+        Debug.AssertFormat(approvalStartRebelHQ > 0, "Invalid approvalStartRebelHQ (Zero) for {0}", name);
+        Debug.AssertFormat(approvalStartAuthorityHQ > 0, "Invalid approvalStartAuthorityHQ (Zero) for {0}", name);
+        Debug.AssertFormat(cityStartLoyalty > 0, "Invalid cityStartLoyalty (Zero) for {0}", name);
+        Debug.AssertFormat(timer > 0, "Invalid timer (Zero) for {0}", name);
     }
 
 

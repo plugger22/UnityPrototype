@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f34838f8a6e0c34389da63668a03d07, type: 3}
+  m_Name: Authority_Test
+  m_EditorClassIdentifier: 
+  descriptor: Keep the pease
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  briefing: 
+  devNotes: 
+  listOfObjectives:
+  - {fileID: 11400000, guid: c4000c53b74317042a0a8286ca76b1be, type: 2}
+  targetsGenericLive: 0
+  targetsGenericActive: 0
+  targetBaseCityHall: {fileID: 11400000, guid: 796d29ef79a7d7341afcfda9e1326752, type: 2}
+  targetBaseIcon: {fileID: 11400000, guid: bcc7b1c15d6e397438b827203e31b023, type: 2}
+  targetBaseAirport: {fileID: 11400000, guid: 73731ae382ad85642aaa1fdb3f5e47af, type: 2}
+  targetBaseHarbour: {fileID: 11400000, guid: 2c5029d3845dc354a85aef9a8d624494, type: 2}
+  targetBaseVIP: {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
+  targetBaseStory: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  targetBaseGoal: {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
+  profileGenericLive: {fileID: 0}
+  profileGenericActive: {fileID: 0}
+  profileGenericFollowOn: {fileID: 0}
+  listOfObjectiveTargets: []

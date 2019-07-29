@@ -13,11 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Test Scenario 1 Authority
   descriptor: Culture Vulture
-  descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
-    London. Spare no effort and take no heed of collateral damage.
+  descriptorResistance: '
 
 '
-  descriptorAuthority: 
+  descriptorAuthority: test
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   city: {fileID: 11400000, guid: c81358a542eff24498e1312768e435ab, type: 2}
   seedCity: 890
@@ -27,7 +26,7 @@ MonoBehaviour:
   approvalStartAuthorityHQ: 5
   cityStartLoyalty: 5
   missionResistance: {fileID: 11400000, guid: c18dfa424a4646349ac6ee1fc6ddb8cf, type: 2}
-  missionAuthority: {fileID: 0}
+  missionAuthority: {fileID: 11400000, guid: 8023ca43a32398449810e7e2ddd1c5f0, type: 2}
   challengeResistance: {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869,
     type: 2}
   challengeAuthority: {fileID: 0}

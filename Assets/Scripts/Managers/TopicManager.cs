@@ -390,7 +390,7 @@ public class TopicManager : MonoBehaviour
         }
         while (turnTopic == null && minIntervalGlobalActual > 0);
         //debug purposes only -> BEFORE UpdateTopicData
-        ProcessTopicUnitTest();
+        UnitTestTopic();
         //debug -> should be in ProcessTopic but here for autorun debugging purposes
         UpdateTopicData();
     }
@@ -938,7 +938,7 @@ public class TopicManager : MonoBehaviour
     /// runs a turn based unit test on selected topictype/subtype/topic looking for anything out of place
     /// NOTE: checks a lot of stuff that should have already been checked but acts as a final check and picks up stuff in the case of code changes that might have thrown something out of alignment
     /// </summary>
-    private void ProcessTopicUnitTest()
+    private void UnitTestTopic()
     {
         //check if at least one entry in listOfTopicTypesTurn
         if (listOfTopicTypesTurn.Count > 0)
@@ -1021,6 +1021,9 @@ public class TopicManager : MonoBehaviour
                 //check correct topicType
                 if (turnTopic.type.name.Equals(turnTopicType.name, StringComparison.Ordinal) == false)
                 { Debug.LogWarningFormat("Invalid topic \"{0}\" has MISMATCH with topicType parent (is {1}, should be {2})", turnTopic.name, turnTopic.type.name, turnTopicType.name); }
+                //check correct side
+                if (turnTopic.side.level != GameManager.instance.sideScript.PlayerSide.level)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" with INCORRECT SIDE (is {1}, should be {2})", turnTopic.name, turnTopic.side.name, GameManager.instance.sideScript.PlayerSide.name); }
             }
             else { Debug.LogWarning("Invalid topic (Null)"); }
         }

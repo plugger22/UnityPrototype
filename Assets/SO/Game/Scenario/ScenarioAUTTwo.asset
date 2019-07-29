@@ -13,11 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Test Scenario 2  Authority
   descriptor: Bondi Burnout
-  descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
-    London. Spare no effort and take no heed of collateral damage.
-
-'
-  descriptorAuthority: 
+  descriptorResistance: 
+  descriptorAuthority: test
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   city: {fileID: 11400000, guid: e68919b8292180346a520337da71d547, type: 2}
   seedCity: 234
@@ -27,7 +24,7 @@ MonoBehaviour:
   approvalStartAuthorityHQ: 7
   cityStartLoyalty: 7
   missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
-  missionAuthority: {fileID: 0}
+  missionAuthority: {fileID: 11400000, guid: 8023ca43a32398449810e7e2ddd1c5f0, type: 2}
   challengeResistance: {fileID: 11400000, guid: 338cc5cc4c7726448bb8cc125e0b0633,
     type: 2}
   challengeAuthority: {fileID: 0}

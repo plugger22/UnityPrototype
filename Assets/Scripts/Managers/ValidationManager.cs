@@ -1045,7 +1045,44 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateScenarios()
     {
-
+        Scenario[] arrayOfScenarios = GameManager.instance.loadScript.arrayOfScenarios;
+        if (arrayOfScenarios != null)
+        {
+            for (int i = 0; i < arrayOfScenarios.Length; i++)
+            {
+                Scenario scenario = arrayOfScenarios[i];
+                if (scenario != null)
+                {
+                    //side specific data
+                    switch (scenario.side.level)
+                    {
+                        case 1:
+                            //Authority
+                            if (scenario.missionAuthority == null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid missionAuthority (Null){1}", scenario.name, "\n"); }
+                            /*if (scenario.challengeAuthority == null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid challengeAuthority (Null){1}", scenario.name, "\n"); }*/
+                            if (string.IsNullOrEmpty(scenario.descriptorAuthority) == true)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid descriptorAuthority (Null or Empty){1}", scenario.name, "\n"); }
+                            break;
+                        case 2:
+                            //Resistance
+                            if (scenario.missionResistance == null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid missionResistance (Null){1}", scenario.name, "\n"); }
+                            if (scenario.challengeResistance == null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid challengeResistance (Null){1}", scenario.name, "\n"); }
+                            if (string.IsNullOrEmpty(scenario.descriptorResistance) == true)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: scenario \"{0}\" has Invalid descriptorResistance (Null or Empty){1}", scenario.name, "\n"); }
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Unrecognised playerSide \"{0}\" for scenario \"{1}\"", scenario.side.name, scenario.name);
+                            break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid scenario (Null) in arrayOfScenarios[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfScenarios (Null)"); }
     }
 
     #endregion

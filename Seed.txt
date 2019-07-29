@@ -430,3 +430,30 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 15798 -> Monday, 29 July 2019 5:12 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 20328 -> Monday, 29 July 2019 7:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44754 -> Monday, 29 July 2019 8:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19757 -> Monday, 29 July 2019 8:10 PM
+WARNING [Val] ValidateSO: MISMATCH on Mission, array 5, assets 6 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Mission[]) (at Assets/Scripts/Managers/ValidationManager.cs:1268)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1217)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 14245 -> Monday, 29 July 2019 8:21 PM
+WARNING [Val] ValidateSO: MISMATCH on Objective, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Objective[]) (at Assets/Scripts/Managers/ValidationManager.cs:1268)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1209)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 16243 -> Monday, 29 July 2019 8:26 PM
+City seed 5678 -> London, United Kingdom

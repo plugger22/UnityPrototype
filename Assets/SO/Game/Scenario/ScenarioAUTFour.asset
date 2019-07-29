@@ -13,11 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Test Scenario 4 Authority
   descriptor: Cab Ride to Hell
-  descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
-    London. Spare no effort and take no heed of collateral damage.
+  descriptorResistance: '
 
 '
-  descriptorAuthority: 
+  descriptorAuthority: test
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
   seedCity: 5678
@@ -27,7 +26,7 @@ MonoBehaviour:
   approvalStartAuthorityHQ: 4
   cityStartLoyalty: 4
   missionResistance: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
-  missionAuthority: {fileID: 0}
+  missionAuthority: {fileID: 11400000, guid: 8023ca43a32398449810e7e2ddd1c5f0, type: 2}
   challengeResistance: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b,
     type: 2}
   challengeAuthority: {fileID: 0}

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Node Protector
   descriptor: Protect one class of Node
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   progress: 0
