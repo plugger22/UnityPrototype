@@ -94,6 +94,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateTextLists();
                 ValidateCities();
                 ValidateTopics();
+                ValidateScenarios();
                 break;
             case GameState.FollowOnInitialisation:
             //do nothing
@@ -825,7 +826,7 @@ public class ValidationManager : MonoBehaviour
 
         #region Campaign Topics and Others
         //
-        // - - - Campaigns (Topic Pools and Scenario sides)
+        // - - - Campaigns (Topic Pools and Scenario sides
         //
         Campaign[] arrayOfCampaigns = GameManager.instance.loadScript.arrayOfCampaigns;
         if (arrayOfCampaigns != null)
@@ -1036,6 +1037,17 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfCities (Null)"); }
         #endregion
     }
+    #endregion
+
+    #region ValidateScenarios
+    /// <summary>
+    /// runs checks on scenarios, mainly side specific data that can't be done in Scenario.SO OnEnable
+    /// </summary>
+    private void ValidateScenarios()
+    {
+
+    }
+
     #endregion
 
 
