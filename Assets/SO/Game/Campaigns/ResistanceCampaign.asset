@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Resistance Campaign
   descriptor: The French Connection
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfScenarios:
   - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}

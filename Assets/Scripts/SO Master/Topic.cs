@@ -26,6 +26,8 @@ public class Topic : ScriptableObject
     public List<TopicOption> listOfOptions;
 
     [Header("Criteria")]
+    [Tooltip("Which side (or 'Both') does this apply to?")]
+    public GlobalSide side;
     [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
@@ -40,6 +42,7 @@ public class Topic : ScriptableObject
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(listOfOptions != null, "Invalid listOfOptions (Null) for {0}", name);
         Debug.AssertFormat(listOfOptions?.Count <= 4, "To many options (Max 4) for {0}", name);
+        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
     }
 
 

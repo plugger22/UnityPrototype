@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Authority Campaign
   descriptor: Round up the Radish
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   listOfScenarios:
   - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
@@ -29,3 +30,10 @@ MonoBehaviour:
     type: 2}
   authorityGeneralPool: {fileID: 0}
   resistanceGeneralPool: {fileID: 0}
+  actorContactPool: {fileID: 0}
+  actorDistrictPool: {fileID: 0}
+  actorGearPool: {fileID: 0}
+  actorMatchPool: {fileID: 0}
+  actorPoliticPool: {fileID: 0}
+  hqPool: {fileID: 0}
+  teamPool: {fileID: 0}

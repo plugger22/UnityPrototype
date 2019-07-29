@@ -208,7 +208,7 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid authorityTeamSubType (Null)"); }
         }
-        else { Debug.LogError("Invalid authorityType (Null)");}
+        else { Debug.LogError("Invalid authorityType (Null)"); }
         //subType checks -> Resistance
         if (resistanceType != null)
         {
@@ -619,6 +619,8 @@ public class ValidationManager : MonoBehaviour
     private void ValidateTopics()
     {
         int count, countSubType;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        if (playerSide == null) { Debug.LogError("Invalid playerSide (Null)"); }
 
         #region TopicTypes and TopicSubTypes
         //
@@ -763,9 +765,9 @@ public class ValidationManager : MonoBehaviour
                     topicSubName = pool.subType.name;
                     if (pool.listOfTopics.Count > 0)
                     {
-                        //Check each topic has the correct TopicType/SubType to match the TopicPool
                         foreach (Topic topic in pool.listOfTopics)
                         {
+                            //Check each topic has the correct TopicType/SubType to match the TopicPool
                             if (topic.type.name.Equals(topicName, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Type (is {1} , should be {2}) for pool \"{3}\"{4}",
@@ -774,7 +776,39 @@ public class ValidationManager : MonoBehaviour
                             if (topic.subType.name.Equals(topicSubName, StringComparison.Ordinal) == false)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect SubType (is {1} , should be {2}) for pool \"{3}\"{4}",
-                                  topic.name, topicSubName, topic.subType.name,  pool.name, "\n");
+                                  topic.name, topicSubName, topic.subType.name, pool.name, "\n");
+                            }
+                            //check each topic has the correct side for the pool
+                            switch (pool.subType.side.level)
+                            {
+                                case 1:
+                                    //Authority
+                                    if (topic.side.level != 1)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Side (is {1} , should be {2}) for pool \"{3}\"{4}",
+                                            topic.name, topic.side.name, pool.subType.side.name, pool.name, "\n");
+                                    }
+                                    break;
+                                case 2:
+                                    //Resistance
+                                    if (topic.side.level != 2)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Side (is {1} , should be {2}) for pool \"{3}\"{4}",
+                                            topic.name, topic.side.name, pool.subType.side.name, pool.name, "\n");
+                                    }
+                                    break;
+                                case 3:
+                                    //Both (Player side)
+                                    if (topic.side.level != playerSide.level)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Side (is {1} , should be {2}) for pool \"{3}\"{4}",
+                                            topic.name, topic.side.name, pool.subType.side.name, pool.name, "\n");
+                                    }
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Unrecognised subType.side \"{0}\" for topicPool {1}", pool.subType.side.name, pool.name);
+                                    break;
+
                             }
                         }
                         //check for duplicates
@@ -813,6 +847,32 @@ public class ValidationManager : MonoBehaviour
                                 Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
                                     campaign.campaignAlphaPool.name, campaign.campaignAlphaPool.type.name, campaignType.name, "\n");
                             }
+                            //check topics in pool to check that they are the correct side
+                            if (campaign.campaignAlphaPool.listOfTopics.Count > 0)
+                            {
+                                CheckCampaignTopicPool(campaign, campaign.campaignAlphaPools);
+
+                                /*//loop all topics
+                                for (int j = 0; j < campaign.campaignAlphaPool.listOfTopics.Count; j++)
+                                {
+                                    Topic topic = campaign.campaignAlphaPool.listOfTopics[j];
+                                    if (topic != null)
+                                    {
+                                        if (topic.side.level != playerSide.level)
+                                        {
+                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
+                                              campaign.name, campaign.campaignAlphaPool.name, topic.name, topic.side.name, playerSide.name, "\n");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\", topic \"{2}\" Invalid (Null){3}}",
+                                            campaign.name, campaign.campaignAlphaPool.name, topic.name, "\n");
+                                    }
+                                }*/
+
+                            }
+                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", campaignAlphaPool \"{1}\" is EMPTY{2}", campaign.name, campaign.campaignAlphaPool.name, "\n"); }
                             //check subType for a match
                             if (campaign.campaignAlphaPool.subType.name.Equals(campaignAlphaSubType.name, StringComparison.Ordinal) == false)
                             {
@@ -2353,6 +2413,34 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid CheckDictArrayBounds for {0} check as both lower and upper bounds are Zero{1}", arrayName, "\n"); }
         }
         else { Debug.LogFormat("{0}\"{1}\" Invalid (Null){2}", tag, arrayName, "\n"); }
+    }
+
+    /// <summary>
+    /// Checks campaign topic pools (ValidateTopics -> Campaign Topic Pool)
+    /// NOTE: campaign and pool have been Null checked by parent method
+    /// </summary>
+    /// <param name="campaign"></param>
+    /// <param name="pool"></param>
+    private void CheckCampaignTopicPool(Campaign campaign, TopicPool pool)
+    {
+        //loop all topics
+        for (int i = 0; i < pool.listOfTopics.Count; i++)
+        {
+            Topic topic = pool.listOfTopics[i];
+            if (topic != null)
+            {
+                if (topic.side.level != campaign.side.level)
+                {
+                    Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignTopicPool: campaign \"{0}\", topicPool \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
+                      campaign.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                }
+            }
+            else
+            {
+                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", pool \"{1}\", topic \"{2}\" Invalid (Null){3}}",
+                    campaign.name, pool.name, topic.name, "\n");
+            }
+        }
     }
 
 

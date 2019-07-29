@@ -19,5 +19,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a160db712e060274db52ee7c9218751c, type: 2}
   - {fileID: 11400000, guid: 25f05175ce81b5d49b7cacec354d0bfd, type: 2}
   - {fileID: 11400000, guid: 323a8ab627855aa47b4b40a7bfa32357, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfCriteria: []
   status: 0
