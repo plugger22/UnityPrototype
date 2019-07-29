@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using gameAPI;
-using System.Text;
+﻿using gameAPI;
 using modalAPI;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 
 /// <summary>
 /// Handles change of Sides, eg. Rebel / Authority, admin
@@ -136,60 +134,75 @@ public class SideManager : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        //AUTORUN (first scenario in a campaign only)
-        if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.CheckIsFirstScenario() == true)
+        Campaign campaign = GameManager.instance.campaignScript.campaign;
+        if (campaign != null)
         {
-            //isAuthority determines what side will be Player side (for GUI and Messages once auto run finished)
-            if (GameManager.instance.isAuthority == true)
+            //AUTORUN (first scenario in a campaign only)
+            if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.CheckIsFirstScenario() == true)
             {
-                PlayerSide = globalAuthority;
-                //reverts to Human authority player
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
-            }
-            else
-            {
-                PlayerSide = globalResistance;
-                //reverts to Human resistance player
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.name);
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-            }
-            Debug.Log("[Start] Player set to AI for both sides");
-            resistanceOverall = SideState.AI;
-            authorityOverall = SideState.AI;
-            resistanceCurrent = SideState.AI;
-            authorityCurrent = SideState.AI;
-        }
-        else
-        {
-            // HUMAN Player
-            if (GameManager.instance.isAuthority == false)
-            {
-                //Resistance player
-                PlayerSide = GameManager.instance.globalScript.sideResistance;
-                Debug.Log("[Start] Player set to RESISTANCE side");
-                resistanceOverall = SideState.Human;
-                authorityOverall = SideState.AI;
-                resistanceCurrent = SideState.Human;
-                authorityCurrent = SideState.AI;
-                //names
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.mayorName);
-            }
-            else
-            {
-                //Authority player
-                PlayerSide = globalAuthority;
-                Debug.Log("[Start] Player set to AUTHORITY side");
+                //Campaign determines what side will be Player side (for GUI and Messages once auto run finished)
+                switch (campaign.side.level)
+                {
+                    case 1:
+                        //Authority
+                        PlayerSide = globalAuthority;
+                        //reverts to Human authority player
+                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
+                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
+                        break;
+                    case 2:
+                        //Resistance
+                        PlayerSide = globalResistance;
+                        //reverts to Human resistance player
+                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.name);
+                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised campaign side \"{0}\"", campaign.side.name);
+                        break;
+                }
+                Debug.Log("[Start] Player set to AI for both sides");
                 resistanceOverall = SideState.AI;
-                authorityOverall = SideState.Human;
+                authorityOverall = SideState.AI;
                 resistanceCurrent = SideState.AI;
-                authorityCurrent = SideState.Human;
-                //names
-                GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
-                GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
+                authorityCurrent = SideState.AI;
+            }
+            else
+            {
+                //HUMAN Player
+                switch (campaign.side.level)
+                {
+                    case 1:
+                        //Authority player
+                        PlayerSide = globalAuthority;
+                        Debug.Log("[Start] Player set to AUTHORITY side");
+                        resistanceOverall = SideState.AI;
+                        authorityOverall = SideState.Human;
+                        resistanceCurrent = SideState.AI;
+                        authorityCurrent = SideState.Human;
+                        //names
+                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
+                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
+                        break;
+                    case 2:
+                        //Resistance player
+                        PlayerSide = GameManager.instance.globalScript.sideResistance;
+                        Debug.Log("[Start] Player set to RESISTANCE side");
+                        resistanceOverall = SideState.Human;
+                        authorityOverall = SideState.AI;
+                        resistanceCurrent = SideState.Human;
+                        authorityCurrent = SideState.AI;
+                        //names
+                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
+                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.mayorName);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised campaign side \"{0}\"", campaign.side.name);
+                        break;
+                }
             }
         }
+        else { Debug.LogError("Invalid campaign (Null)"); }
     }
     #endregion
 
@@ -205,7 +218,7 @@ public class SideManager : MonoBehaviour
         bool isPossible = true;
         if (GameManager.instance.optionScript.noAI == false)
         {
-            switch(_playerSide.level)
+            switch (_playerSide.level)
             {
                 case 0:
                     //AI both

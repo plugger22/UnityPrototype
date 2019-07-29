@@ -26,12 +26,10 @@ MonoBehaviour:
   familyAlphaPool: {fileID: 11400000, guid: 14b31fe7cd436b546955231cd33731cd, type: 2}
   familyBravoPool: {fileID: 11400000, guid: 46d468c573ac5034aa03128d778871b7, type: 2}
   familyCharliePool: {fileID: 11400000, guid: acaf5b34889cb78479ea001be58a216b, type: 2}
-  authorityCampaignPool: {fileID: 11400000, guid: 97c7cf6be7b3c9644923da7eda622b65,
-    type: 2}
+  authorityCampaignPool: {fileID: 0}
   resistanceCampaignPool: {fileID: 11400000, guid: 138cf08ce5265694591825f2eebad94e,
     type: 2}
-  authorityGeneralPool: {fileID: 11400000, guid: 797a5c8b64ad0164bba95cdfa6aab7d9,
-    type: 2}
+  authorityGeneralPool: {fileID: 0}
   resistanceGeneralPool: {fileID: 11400000, guid: f8d378a8686be4e40a80a1d0a9bd87b6,
     type: 2}
   actorContactPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
@@ -40,4 +38,4 @@ MonoBehaviour:
   actorMatchPool: {fileID: 11400000, guid: 0e0366074a1d4c9479eed6cd79ef75c2, type: 2}
   actorPoliticPool: {fileID: 11400000, guid: 2cacc8eee82bc0b4fad6705b3c6e6054, type: 2}
   hqPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
-  teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}
+  teamPool: {fileID: 0}

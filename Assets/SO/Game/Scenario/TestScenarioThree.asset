@@ -18,7 +18,7 @@ MonoBehaviour:
 
 '
   descriptorAuthority: 
-  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   city: {fileID: 11400000, guid: e68919b8292180346a520337da71d547, type: 2}
   seedCity: 234
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}

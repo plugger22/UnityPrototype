@@ -20,7 +20,7 @@ MonoBehaviour:
   harbourDistrict: Botany
   districtNames: {fileID: 11400000, guid: f2ec3998326528a4c820b31d04acec8e, type: 2}
   iconName: Opera House
+  cityPool: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   isTestOff: 0
-  cityID: 8
   mayor: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
   faction: {fileID: 0}

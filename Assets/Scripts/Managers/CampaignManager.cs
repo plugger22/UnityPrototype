@@ -234,6 +234,7 @@ public class CampaignManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- CampaignData{0}{1}", "\n", "\n");
+        builder.AppendFormat(" {0} campaign{1}", campaign.side.name, "\n");
         builder.AppendFormat(" campaign: \"{0}\", {1}{2}", campaign.tag, campaign.descriptor, "\n");
         builder.AppendFormat(" current scenario: index {0}, \"{1}\", {2}{3}", scenarioIndex, scenario.tag, scenario.descriptor, "\n");
         //campaign scenario list in order

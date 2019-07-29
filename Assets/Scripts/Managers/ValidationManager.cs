@@ -798,11 +798,11 @@ public class ValidationManager : MonoBehaviour
                                     }
                                     break;
                                 case 3:
-                                    //Both (Player side)
-                                    if (topic.side.level != playerSide.level)
+                                    //Both (can be either resistance or authority)
+                                    if (topic.side.level != 1 && topic.side.level != 2)
                                     {
-                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Side (is {1} , should be {2}) for pool \"{3}\"{4}",
-                                            topic.name, topic.side.name, pool.subType.side.name, pool.name, "\n");
+                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topic \"{0}\", has incorrect Side (is {1} , should be Resistance or Authority) for pool \"{2}\"{3}",
+                                            topic.name, topic.side.name, pool.name, "\n");
                                     }
                                     break;
                                 default:
@@ -892,6 +892,75 @@ public class ValidationManager : MonoBehaviour
                         //Actor Politic Pool
                         if (campaign.actorPoliticPool != null)
                         { CheckCampaignPool(campaign, campaign.actorPoliticPool, actorPoliticSubType); }
+                        //
+                        // - - - City pools (topics in pool correct side check only)
+                        //
+                        //need to do here as only way to get access, via scenario, as cities can be in multiple campaigns)
+                        if (campaign.listOfScenarios != null)
+                        {
+                            int countScenarios = campaign.listOfScenarios.Count;
+                            if (countScenarios > 0)
+                            {
+                                //loop scenarios
+                                for (int j = 0; j < countScenarios; j++)
+                                {
+                                    Scenario scenario = campaign.listOfScenarios[j];
+                                    if (scenario != null)
+                                    {
+                                        //get city
+                                        if (scenario.city != null)
+                                        {
+                                            //get city topic pool
+                                            TopicPool pool = scenario.city.cityPool;
+                                            if (pool != null)
+                                            {
+                                                if (pool.listOfTopics != null)
+                                                {
+                                                    if (pool.listOfTopics.Count > 0)
+                                                    {
+                                                        //loop topics in pool
+                                                        for (int k = 0; k < pool.listOfTopics.Count; k++)
+                                                        {
+                                                            Topic topic = pool.listOfTopics[k];
+                                                            if (topic != null)
+                                                            {
+                                                                //check topic side same as campaign side
+                                                                if (topic.side.level != campaign.side.level)
+                                                                {
+                                                                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", topic \"{4}\", Invalid side (is {5}, should be {6}){7}",
+                                                                        campaign.name, scenario.name, scenario.city.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", listOfTopics[{4}], Invalid (Null){5}",
+                                                             campaign.name, scenario.name, scenario.city.name, pool.name, k, "\n");
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city Pool (Empty){2}",
+                                                     campaign.name, scenario.name, "\n");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", pool \"{3}\", Invalid (Null){4}",
+                                                 campaign.name, scenario.name, scenario.city.name, pool.name, "\n");
+                                                }
+                                            }
+                                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", Invalid pool (Null){3}", 
+                                                campaign.name, scenario.name, scenario.city.name, "\n"); }
+                                        }
+                                        else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city (Null){2}", campaign.name, scenario.name, "\n"); }
+                                    }
+                                    else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios[{1}] Invalid (Null){2}", campaign.name, j,"\n"); }
+                                }
+                            }
+                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" Invalid listOfScenarios (Empty){1}", campaign.name, "\n"); }
+                        }
+                        else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios Invalid (Null){1}", campaign.name, "\n"); }
                     }
                     else { Debug.LogErrorFormat("Invalid campaign in arrayOfCampaigns[{0}]", i); }
                 }
@@ -2237,17 +2306,17 @@ public class ValidationManager : MonoBehaviour
 
     /// <summary>
     /// Checks campaign pools (various checks) (ValidateTopics -> Campaign Topic Pool)
-    /// NOTE: campaign, pool and subType have been Null checked by parent method
+    /// NOTE: campaign and pool have been Null checked by parent method (and initialisation method in case of subType)
     /// </summary>
     /// <param name="campaign"></param>
     /// <param name="pool"></param>
     private void CheckCampaignPool(Campaign campaign, TopicPool pool, TopicSubType subType)
     {
         //check type for a match
-        if (pool.type.name.Equals(campaignType.name, StringComparison.Ordinal) == false)
+        if (pool.type.name.Equals(subType.type.name, StringComparison.Ordinal) == false)
         {
-            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}", campaign.name,
-                pool.name, pool.type.name, campaignType.name, "\n");
+            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}", 
+                campaign.name, pool.name, pool.type.name, subType.type.name, "\n");
         }
         //check subType for a match
         if (pool.subType.name.Equals(subType.name, StringComparison.Ordinal) == false)

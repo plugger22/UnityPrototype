@@ -105,9 +105,9 @@ public class GameManager : MonoBehaviour
 
     #region Variables
     [Tooltip("Leave as default 0 for random. Can be a whole number between -2147483648 and 2147483647")]
-    public int seedDev = 0;                                            //random seed for development
-    [Tooltip("If true Player side set to Authority")]               //DEBUG
-    public bool isAuthority;
+    public int seedDev = 0;                                           //random seed for development
+    /*[Tooltip("If true Player side set to Authority")]               //DEBUG -> now set by Campaign.side
+    public bool isAuthority;*/
     [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
 

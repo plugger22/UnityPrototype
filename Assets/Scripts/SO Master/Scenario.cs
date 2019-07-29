@@ -18,9 +18,11 @@ public class Scenario : ScriptableObject
     [Tooltip("Side specific descriptor")]
     [TextArea] public string descriptorAuthority;
 
-    [Header("Basics")]
-    [Tooltip("Which side can it be played from? Curently indicative only (not used in-game). Authority / Resistance / Both")]
+    [Header("Side")]
+    [Tooltip("Which side can it be played from? Has to match that of the campaign (can't be 'Both')")]
     public GlobalSide side;
+
+    [Header("City")]
     [Tooltip("Which city?")]
     public City city;
     [Tooltip("Seed from which city is generated from (Zero is considered a seed). Can be a whole number between - 2147483648 and 2147483647")]

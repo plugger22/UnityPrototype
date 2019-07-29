@@ -18,7 +18,7 @@ MonoBehaviour:
 
 '
   descriptorAuthority: 
-  side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   city: {fileID: 11400000, guid: 0f2cebc6f128b184a87fd83d276e7953, type: 2}
   seedCity: 5678
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
@@ -31,6 +31,4 @@ MonoBehaviour:
   challengeResistance: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b,
     type: 2}
   challengeAuthority: {fileID: 0}
-  authorityPool: {fileID: 11400000, guid: 97c7cf6be7b3c9644923da7eda622b65, type: 2}
-  resistancePool: {fileID: 11400000, guid: 138cf08ce5265694591825f2eebad94e, type: 2}
   timer: 70

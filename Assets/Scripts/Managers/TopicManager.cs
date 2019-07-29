@@ -276,11 +276,29 @@ public class TopicManager : MonoBehaviour
                                                         }
                                                         break;
                                                     case "CitySub":
-                                                        if (city.cityPool != null)
+                                                        switch (campaign.side.level)
                                                         {
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPool.listOfTopics);
-                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            isValid = true;
+                                                            case 1:
+                                                                //Authority
+                                                                if (city.cityPoolAuthority != null)
+                                                                {
+                                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolAuthority.listOfTopics);
+                                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                                    isValid = true;
+                                                                }
+                                                                break;
+                                                            case 2:
+                                                                //Resistance
+                                                                if (city.cityPoolResistance != null)
+                                                                {
+                                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolResistance.listOfTopics);
+                                                                    AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                                    isValid = true;
+                                                                }
+                                                                break;
+                                                            default:
+                                                                Debug.LogWarningFormat("Unrecognised campaign side \"{0}\" for CitySub", campaign.side.name);
+                                                                break;
                                                         }
                                                         break;
                                                     case "FamilyAlpha":
