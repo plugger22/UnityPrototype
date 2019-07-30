@@ -43,7 +43,8 @@ public class Topic : ScriptableObject
     //stats
     [HideInInspector] public int turnsDormant;
     [HideInInspector] public int turnsActive;
-    [HideInInspector] public int turnsLive;    
+    [HideInInspector] public int turnsLive;
+    [HideInInspector] public int turnsDone;
     #endregion
 
 

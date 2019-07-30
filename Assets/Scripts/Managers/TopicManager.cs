@@ -179,7 +179,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.actorPoliticPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.actorPoliticPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -188,7 +188,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorContactPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.actorContactPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.actorContactPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -197,7 +197,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.actorDistrictPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.actorDistrictPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -206,7 +206,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorGearPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.actorGearPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.actorGearPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -215,7 +215,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.actorMatchPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.actorMatchPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -224,7 +224,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityCampaignPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.authorityCampaignPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.authorityCampaignPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -233,7 +233,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.authorityGeneralPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.authorityGeneralPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -242,7 +242,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.teamPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.teamPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.teamPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -251,7 +251,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceCampaignPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.resistanceCampaignPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.resistanceCampaignPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -260,7 +260,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.resistanceGeneralPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.resistanceGeneralPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -269,7 +269,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.campaignAlphaPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.campaignAlphaPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -278,7 +278,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.campaignBravoPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.campaignBravoPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -287,7 +287,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.campaignCharliePool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.campaignCharliePool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -300,7 +300,7 @@ public class TopicManager : MonoBehaviour
                                                                 {
                                                                     GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolAuthority.listOfTopics);
                                                                     AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                                    SetTopicProfileData(city.cityPoolAuthority.listOfTopics);
+                                                                    SetTopicDynamicData(city.cityPoolAuthority.listOfTopics);
                                                                     isValid = true;
                                                                 }
                                                                 break;
@@ -310,7 +310,7 @@ public class TopicManager : MonoBehaviour
                                                                 {
                                                                     GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolResistance.listOfTopics);
                                                                     AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                                    SetTopicProfileData(city.cityPoolResistance.listOfTopics);
+                                                                    SetTopicDynamicData(city.cityPoolResistance.listOfTopics);
                                                                     isValid = true;
                                                                 }
                                                                 break;
@@ -324,7 +324,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.familyAlphaPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.familyAlphaPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -333,7 +333,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.familyBravoPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.familyBravoPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -342,7 +342,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.familyCharliePool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.familyCharliePool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -351,7 +351,7 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.hqPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicProfileData(campaign.hqPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.hqPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -385,12 +385,12 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region SetTopicProfileData
+    #region SetTopicDynamicData
     /// <summary>
-    /// Initialises all dynamic profile data, sets 'isCurrent' to true,  and sets status at session start for all topics in topic pool list
+    /// Initialises all dynamic profile data, sets 'isCurrent' to true, zero's stats  and sets status at session start for all topics in topic pool list
     /// </summary>
     /// <param name="listOfTopics"></param>
-    private void SetTopicProfileData(List<Topic> listOfTopics)
+    private void SetTopicDynamicData(List<Topic> listOfTopics)
     {
         if (listOfTopics != null)
         {
@@ -414,6 +414,11 @@ public class TopicManager : MonoBehaviour
                         else { topic.status = Status.Dormant; }
                         //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
                         topic.isCurrent = true;
+                        //zero status
+                        topic.turnsDormant = 0;
+                        topic.turnsActive = 0;
+                        topic.turnsLive = 0;
+                        topic.turnsDone = 0;
                     }
                     else { Debug.LogWarningFormat("Invalid profile (Null) for topic \"{0}\"", topic.name); }
                 }
@@ -437,7 +442,7 @@ public class TopicManager : MonoBehaviour
         //select a topic, if none found then drop the global interval by 1 and try again
         do
         {
-            CheckTopicTimers();
+            CheckTopics();
             CheckForValidTopicTypes();
             GetTopicType();
             GetTopicSubType();
@@ -457,10 +462,12 @@ public class TopicManager : MonoBehaviour
         UpdateTopicTypeData();
     }
 
+
+    #region CheckTopics
     /// <summary>
-    /// checks all current topic timers and adjusts status if required
+    /// checks all current topic timers and criteria and adjusts status if required
     /// </summary>
-    private void CheckTopicTimers()
+    private void CheckTopics()
     {
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
@@ -472,7 +479,39 @@ public class TopicManager : MonoBehaviour
                 {
                     if (topic.Value.isCurrent == true)
                     {
-                        //Timer checks
+                        //
+                        // - - - Criteria checks (done BEFORE timer checks for sequence issues, otherwise a start timer delay of 5 turns works out to be only 4)
+                        //
+                        switch (topic.Value.status)
+                        {
+                            case Status.Dormant:
+                                //do nothing
+                                break;
+                            case Status.Active:
+                                //check criteria (even they're aren't any)
+                                if (CheckTopicCriteria(topic.Value) == true)
+                                {
+                                    //Criteria O.K, status Live
+                                    topic.Value.status = Status.Live;
+                                }
+                                break;
+                            case Status.Live:
+                                if (CheckTopicCriteria(topic.Value) == false)
+                                {
+                                    //Criteria FAILED, status Active
+                                    topic.Value.status = Status.Active;
+                                }
+                                break;
+                            case Status.Done:
+                                //do nothing
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised status \"{0}\" for topic \"{1}\"", topic.Value.status, topic.Value.name);
+                                break;
+                        }
+                        //
+                        // - - - Timer checks
+                        //
                         switch (topic.Value.status)
                         {
                             case Status.Dormant:
@@ -497,8 +536,16 @@ public class TopicManager : MonoBehaviour
                                         topic.Value.timerRepeat = topic.Value.profile.delayRepeat;
                                     }
                                 }
+                                else
+                                {
+                                    //no timers -> status Done
+                                    topic.Value.status = Status.Done;
+                                }
                                 break;
                             case Status.Active:
+                                //do nothing
+                                break;
+                            case Status.Live:
                                 //Window timer
                                 if (topic.Value.timerWindow > 0)
                                 {
@@ -513,7 +560,6 @@ public class TopicManager : MonoBehaviour
                                     }
                                 }
                                 break;
-                            case Status.Live:
                             case Status.Done:
                                 //do nothing
                                 break;
@@ -521,11 +567,27 @@ public class TopicManager : MonoBehaviour
                                 Debug.LogWarningFormat("Unrecognised status \"{0}\" for topic \"{1}\"", topic.Value.status, topic.Value.name);
                                 break;
                         }
-
-                        //Criteria checks
-
-                        //Stat's update
-
+                        //
+                        // - - - Stat's update
+                        //
+                        switch (topic.Value.status)
+                        {
+                            case Status.Dormant:
+                                topic.Value.turnsDormant++;
+                                break;
+                            case Status.Active:
+                                topic.Value.turnsActive++;
+                                break;
+                            case Status.Live:
+                                topic.Value.turnsLive++;
+                                break;
+                            case Status.Done:
+                                topic.Value.turnsDone++;
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised status \"{0}\" for topic \"{1}\"", topic.Value.status, topic.Value.name);
+                                break;
+                        }
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid topic \"{0}\" (Null) in dictOfTopics", topic.Key); }
@@ -533,7 +595,46 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopics (Null)"); }
     }
+    #endregion
 
+
+    #region CheckTopicCriteria
+    /// <summary>
+    /// Check a topic's criteria, returns true if all criteria O.K (or none if first instance), false if any failed
+    /// NOTE: topic checked for Null by calling method
+    /// </summary>
+    /// <param name="topic"></param>
+    /// <returns></returns>
+    private bool CheckTopicCriteria(Topic topic)
+    {
+        bool isCheck = false;
+        //topic criteria must pass checks
+        if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
+        {
+            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+            { listOfCriteria = topic.listOfCriteria };
+            string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+            if (criteriaCheck == null)
+            {
+                //criteria check passed O.K
+                isCheck = true;
+            }
+            else
+            {
+                //criteria check FAILED
+                isCheck = false;
+                //generate message explaining why criteria failed -> debug only, spam otherwise
+                Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: topic \"{0}\" {1} Criteria check failed{2}", topic.name, criteriaCheck, "\n");
+            }
+        }
+        else
+        {
+            //no criteria present
+            isCheck = true;
+        }
+        return isCheck;
+    }
+    #endregion
 
 
     /// <summary>
@@ -656,18 +757,23 @@ public class TopicManager : MonoBehaviour
                         {
                             if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
                             {
-                                //check that there are active, criteria checked O.K , topics available for subType
+                                //check that there are Live topics available for subType
                                 List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
                                 if (listOfTopics != null)
                                 {
                                     //loop topics looking for the first valid topic (only need one) in order to validate subType
                                     for (int k = 0; k < listOfTopics.Count; k++)
                                     {
-                                        if (CheckIndividualTopic(listOfTopics[k]) == true)
+                                        Topic topic = listOfTopics[k];
+                                        if (topic != null)
                                         {
-                                            isProceed = true;
-                                            break;
+                                            if (topic.status == Status.Live)
+                                            {
+                                                isProceed = true;
+                                                break;
+                                            }
                                         }
+                                        else { Debug.LogWarningFormat("Invalid topic (Null) for subType \"{0}\"", subType.name); }
                                     }
                                     if (isProceed == true)
                                     {
@@ -705,7 +811,6 @@ public class TopicManager : MonoBehaviour
     private void GetTopic()
     {
         int numOfEntries;
-        bool isProceed;
         if (turnTopicSubType != null)
         {
             List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
@@ -721,9 +826,8 @@ public class TopicManager : MonoBehaviour
                         Topic topic = listOfTopics[i];
                         if (topic != null)
                         {
-                            //check each topic is valid (Active / Criteria checks O.K)
-                            isProceed = CheckIndividualTopic(topic);
-                            if (isProceed == true)
+                            //check topic Live (timer and status checks O.K)
+                            if (topic.status == Status.Live)
                             {
                                 //populate pool based on priorities
                                 numOfEntries = GetNumOfEntries(topic.priority);
@@ -757,7 +861,7 @@ public class TopicManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// Checks individual topic for Active status and any Criteria checks being O.K. Returns true if good on all counts, false otherwise
     /// </summary>
     /// <param name="topic"></param>
@@ -768,8 +872,8 @@ public class TopicManager : MonoBehaviour
         if (topic != null)
         {
             isProceed = false;
-            //topic must be active
-            if (topic.status == Status.Active)
+            //topic must be live or active
+            if (topic.status == Status.Live)
             {
                 isProceed = true;
                 //topic criteria must pass checks
@@ -795,7 +899,9 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topic (Null)"); }
         return isProceed;
-    }
+    }*/
+
+
 
     //
     // - - - Process Topic - - - 
@@ -1027,21 +1133,19 @@ public class TopicManager : MonoBehaviour
 
                                 //TO DO check subType criteria (bypass the topic checks if fail) 
 
-                                //loop pool of topics looking for any that are active. Break on the first active topic (only needs to be one)
+                                //loop pool of topics looking for any that are Live. Break on the first active topic (only needs to be one)
                                 for (int j = 0; j < listOfTopics.Count; j++)
                                 {
                                     Topic topic = listOfTopics[j];
                                     if (topic != null)
                                     {
                                         //check status
-                                        if (topic.status == Status.Active)
+                                        if (topic.status == Status.Live)
                                         {
-                                            //TO DO check topic criteria
-
                                             //at least one valid topic present, exit
                                             isValid = true;
 
-                                            //TO DO set subTopic availability
+                                            //TO DO set subTopic availability (Edit: do I still need to do this? I doubt it but need to check)
 
                                             break;
                                         }
@@ -1154,9 +1258,9 @@ public class TopicManager : MonoBehaviour
             if (turnTopic != null)
             {
                 //status active
-                if (turnTopic.status != Status.Active)
-                { Debug.LogWarningFormat("Invalid topic \"{0}\" status \"{1}\" (should be Active)", turnTopic.name, turnTopic.status); }
-                //check correct topicSubType
+                if (turnTopic.status != Status.Live)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" status \"{1}\" (should be {2})", turnTopic.name, turnTopic.status, Status.Live); }
+                //check correct topicSubType,
                 if (turnTopic.subType.name.Equals(turnTopicSubType.name, StringComparison.Ordinal) == false)
                 { Debug.LogWarningFormat("Invalid topic \"{0}\" has MISMATCH with topicSubType parent (is {1}, should be {2})", turnTopic.name, turnTopic.subType.name, turnTopicSubType.name); }
                 //check correct topicType
@@ -1596,8 +1700,9 @@ public class TopicManager : MonoBehaviour
             {
                 if (topic.Value.profile != null)
                 {
-                    builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7} -> {8}{9}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart, topic.Value.timerRepeat,
-                      topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive, topic.Value.isCurrent, "\n");
+                    builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}, D {8} -> {9}{10}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart, 
+                        topic.Value.timerRepeat, topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive, 
+                        topic.Value.turnsDone, topic.Value.isCurrent ? "true" : "FALSE", "\n");
                 }
                 else { builder.AppendFormat(" {0} -> Invalid Profile (Null){1}", topic.Value.name, "\n"); }
             }

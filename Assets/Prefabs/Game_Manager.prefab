@@ -2616,7 +2616,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 30
+  autoRunTurns: 0
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
