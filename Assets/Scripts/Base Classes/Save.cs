@@ -22,6 +22,7 @@ public class Save
     public SaveConnectionData connData = new SaveConnectionData();
     public SaveNemesisData nemesisData = new SaveNemesisData();
     public SaveGearData gearData = new SaveGearData();
+    public SaveTopicData topicData = new SaveTopicData();
     public SaveAIData aiData = new SaveAIData();
     public SaveScenarioData scenarioData = new SaveScenarioData();
     public SaveContactData contactData = new SaveContactData();
@@ -321,6 +322,16 @@ public class SaveGearData
     public List<string> listOfCurrentGear = new List<string>();
 }
 #endregion
+
+#region SaveTopicData
+/// <summary>
+/// Topics
+/// </summary>
+[System.Serializable]
+public class SaveTopicData
+{
+    public List<SaveTopic> listOfTopics = new List<SaveTopic>();
+}
 
 
 #region SaveNemesisData

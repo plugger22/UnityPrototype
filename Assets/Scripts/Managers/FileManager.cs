@@ -1222,6 +1222,8 @@ public class FileManager : MonoBehaviour
                 saveTopic.turnsDormant = topic.Value.turnsDormant;
                 saveTopic.turnsActive = topic.Value.turnsActive;
                 saveTopic.turnsLive = topic.Value.turnsLive;
+                //add to list
+                write.topicData.listOfTopics.Add(saveTopic);
             }
         }
         else { Debug.LogError("Invalid dictOfTopics"); }
