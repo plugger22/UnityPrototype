@@ -1499,12 +1499,13 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicSelectionData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
                         break;
-                    //Topic Criteria data
+                    //Topic Profile data
                     case 66:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayCriteria();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
+                        analysis = GameManager.instance.topicScript.DebugDisplayTopicProfileData();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 900), analysis, customBackground);
                         break;
+
 
                 }
             }

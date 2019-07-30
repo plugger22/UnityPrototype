@@ -363,6 +363,15 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Initialises all dynamic profile data and sets status at session start for all topics in topic pool list
+    /// </summary>
+    /// <param name="listOfTopics"></param>
+    private void SetTopicProfileData(List<Topic> listOfTopics)
+    {
+
+    }
+
     //
     //  - - - Select Topic - - -
     //   
@@ -1437,6 +1446,31 @@ public class TopicManager : MonoBehaviour
             { builder.AppendFormat(" {0}, priority: {1}{2}", topic.name, topic.priority.name, "\n"); }
         }
         else { builder.AppendFormat("No records{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of dynamic profile data, eg. timers etc.
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayTopicProfileData()
+    {
+        StringBuilder builder = new StringBuilder();
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        if (dictOfTopics != null)
+        {
+            builder.AppendFormat("- Topic Profile Data{0}{1}", "\n", "\n");
+            foreach (var topic in dictOfTopics)
+            {
+                if (topic.Value.profile != null)
+                {
+                    builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}{8}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart, topic.Value.timerRepeat,
+                      topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive, "\n");
+                }
+                else { builder.AppendFormat(" {0} -> Invalid Profile (Null){1}", topic.Value.name, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
         return builder.ToString();
     }
 

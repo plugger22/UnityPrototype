@@ -20,5 +20,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 034e475939e912342940d1d38baf63d2, type: 2}
   - {fileID: 11400000, guid: 67b7072feafa7c04e8b644f0201cd05d, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
   status: 1
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0

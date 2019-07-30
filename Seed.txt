@@ -1,0 +1,16 @@
+
+Dev seed 65468 -> Tuesday, 30 July 2019 1:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61084 -> Tuesday, 30 July 2019 2:02 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16509 -> Tuesday, 30 July 2019 2:45 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayTopicProfileData () (at Assets/Scripts/Managers/TopicManager.cs:1456)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1505)
+	
+Dev seed 4727 -> Tuesday, 30 July 2019 2:54 PM
+City seed 5678 -> London, United Kingdom

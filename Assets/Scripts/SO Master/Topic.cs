@@ -28,6 +28,8 @@ public class Topic : ScriptableObject
     [Header("Criteria")]
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
+    [Tooltip("Profile with timer and repeat data")]
+    public TopicProfile profile;
     [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
@@ -53,6 +55,7 @@ public class Topic : ScriptableObject
         Debug.AssertFormat(listOfOptions != null, "Invalid listOfOptions (Null) for {0}", name);
         Debug.AssertFormat(listOfOptions?.Count <= 4, "To many options (Max 4) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+        Debug.AssertFormat(profile != null, "Invalid profile (Null) for {0}", name);
     }
 
 

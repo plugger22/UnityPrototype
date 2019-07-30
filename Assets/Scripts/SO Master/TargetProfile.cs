@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// TargetTrigger SO. Name of SO is the name of the TargetTrigger, eg. "Default"
+/// TargetProfile SO. Contains target delay/repeat, etc. data
 /// </summary>
 [CreateAssetMenu(menuName = "Target / TargetProfile")]
 public class TargetProfile : ScriptableObject

@@ -2984,7 +2984,36 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadTopicData()
     {
-
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        if (dictOfTopics != null)
+        {
+            if (read.topicData.listOfTopics != null)
+            {
+                for (int i = 0; i < read.topicData.listOfTopics.Count; i++)
+                {
+                    SaveTopic saveTopic = read.topicData.listOfTopics[i];
+                    if (saveTopic != null)
+                    {
+                        //update topic dynamic data
+                        Topic topic = GameManager.instance.dataScript.GetTopic(saveTopic.topicName);
+                        if (topic != null)
+                        {
+                            topic.status = saveTopic.status;
+                            topic.timerStart = saveTopic.timerStart;
+                            topic.timerRepeat = saveTopic.timerRepeat;
+                            topic.timerWindow = saveTopic.timerWindow;
+                            topic.turnsDormant = saveTopic.turnsDormant;
+                            topic.turnsActive = saveTopic.turnsActive;
+                            topic.turnsLive = saveTopic.turnsLive;
+                        }
+                        else { Debug.LogWarningFormat("Invalid topic (Null) for saveTopic.topicName \"{0}\"", saveTopic.topicName); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid saveTopic (Null) for listOfTopics[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid read.topicData.listOfTopics (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfTopics"); }
     }
     #endregion
 
