@@ -385,6 +385,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region SetTopicProfileData
     /// <summary>
     /// Initialises all dynamic profile data, sets 'isCurrent' to true,  and sets status at session start for all topics in topic pool list
     /// </summary>
@@ -421,6 +422,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTopics (Null)"); }
     }
+    #endregion
 
     //
     //  - - - Select Topic - - -
@@ -435,6 +437,7 @@ public class TopicManager : MonoBehaviour
         //select a topic, if none found then drop the global interval by 1 and try again
         do
         {
+            CheckTopicTimers();
             CheckForValidTopicTypes();
             GetTopicType();
             GetTopicSubType();
@@ -455,12 +458,83 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process selected topic (decision or Information)
+    /// checks all current topic timers and adjusts status if required
     /// </summary>
-    public void ProcessTopic()
+    private void CheckTopicTimers()
     {
-        ExecuteTopic();
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        if (dictOfTopics != null)
+        {        
+            foreach(var topic in dictOfTopics)
+            {
+                //current topics for level only
+                if (topic.Value != null)
+                {
+                    if (topic.Value.isCurrent == true)
+                    {
+                        //Timer checks
+                        switch (topic.Value.status)
+                        {
+                            case Status.Dormant:
+                                //Start timer (turns before activating at level start)
+                                if (topic.Value.timerStart > 0)
+                                {
+                                    //decrement timer
+                                    topic.Value.timerStart--;
+                                    //if Zero, status Active (no need to reset timer as it's a once only use)
+                                    if (topic.Value.timerStart == 0)
+                                    { topic.Value.status = Status.Active; }
+                                }
+                                else if (topic.Value.turnsLive > 0 && topic.Value.timerRepeat > 0)
+                                {
+                                    //Repeat topic (has already been Live at least once)
+                                    topic.Value.timerRepeat--;
+                                    //if Zero, status Active
+                                    if (topic.Value.timerRepeat == 0)
+                                    {
+                                        topic.Value.status = Status.Active;
+                                        //reset repeat timer ready for next time (profile assumed to be not Null due to SO OnEnable checks)
+                                        topic.Value.timerRepeat = topic.Value.profile.delayRepeat;
+                                    }
+                                }
+                                break;
+                            case Status.Active:
+                                //Window timer
+                                if (topic.Value.timerWindow > 0)
+                                {
+                                    //decrement timer
+                                    topic.Value.timerWindow--;
+                                    //if Zero, status Dormant
+                                    if (topic.Value.timerWindow == 0)
+                                    {
+                                        topic.Value.status = Status.Dormant;
+                                        //reset timer ready for next time
+                                        topic.Value.timerWindow = topic.Value.profile.timerWindow;
+                                    }
+                                }
+                                break;
+                            case Status.Live:
+                            case Status.Done:
+                                //do nothing
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised status \"{0}\" for topic \"{1}\"", topic.Value.status, topic.Value.name);
+                                break;
+                        }
+
+                        //Criteria checks
+
+                        //Stat's update
+
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid topic \"{0}\" (Null) in dictOfTopics", topic.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
     }
+
+
 
     /// <summary>
     /// Check all level topic types to see if they are valid for the Turn. Updates listOfTopicTypesTurn with valid topicTypes
@@ -726,6 +800,14 @@ public class TopicManager : MonoBehaviour
     //
     // - - - Process Topic - - - 
     //
+
+    /// <summary>
+    /// Process selected topic (decision or Information)
+    /// </summary>
+    public void ProcessTopic()
+    {
+        ExecuteTopic();
+    }
 
     /// <summary>
     /// Takes selected topic and executes according to topic subType

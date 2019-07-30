@@ -37,3 +37,9 @@ Dev seed 34874 -> Tuesday, 30 July 2019 4:39 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 5678 -> London, United Kingdom
+
+Dev seed 2524 -> Tuesday, 30 July 2019 8:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55705 -> Tuesday, 30 July 2019 8:30 PM
+City seed 5678 -> London, United Kingdom
