@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// SubCategory for human decisions (Topics) Static data only, dynamic data is kept in the dictOfTopicSubTypes using a TopicData package
+/// SubCategory for human decisions (Topics) Static data only, dynamic data is kept in the dictOfTopicSubTypes using a TopictypeData package
 /// </summary>
 [CreateAssetMenu(menuName = "Topic / TopicSubType")]
 public class TopicSubType : ScriptableObject

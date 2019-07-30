@@ -71,11 +71,11 @@ public class TopicManager : MonoBehaviour
                 if (topicType != null)
                 {
                     topicType.minInterval = topicType.minIntervalFactor * minIntervalGlobal;
-                    //update topicData minInteval
-                    TopicData dataType = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                    //update topicTypeData minInteval
+                    TopicTypeData dataType = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
                     if (dataType != null)
                     { dataType.minInterval = topicType.minInterval; }
-                    else { Debug.LogWarningFormat("Invaid topicData (Null) for topicType \"{0}\"", topicType.name); }
+                    else { Debug.LogWarningFormat("Invaid topicTypeData (Null) for topicType \"{0}\"", topicType.name); }
                     //get listOfSubTypes
                     if (topicType.listOfSubTypes != null)
                     {
@@ -86,11 +86,11 @@ public class TopicManager : MonoBehaviour
                             if (subType != null)
                             {
                                 subType.minInterval = subType.minIntervalFactor * minIntervalGlobal;
-                                //update topicData minInteval
-                                TopicData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                                //update topicTypeData minInteval
+                                TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
                                 if (dataSub != null)
                                 { dataSub.minInterval = subType.minInterval; }
-                                else { Debug.LogWarningFormat("Invaid topicData (Null) for topicSubType \"{0}\"", subType.name); }
+                                else { Debug.LogWarningFormat("Invaid topicTypeData (Null) for topicSubType \"{0}\"", subType.name); }
                             }
                             else { Debug.LogWarningFormat("Invalid topicSubType (Null) in listOfTopicSubType[{0}] for topicType \"{1}\"", j, topicType.name); }
                         }
@@ -337,12 +337,12 @@ public class TopicManager : MonoBehaviour
                                                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
                                                         break;
                                                 }
-                                                //set subType topicData 'isAvailable' to appropriate value
-                                                TopicData data = GameManager.instance.dataScript.GetTopicSubTypeData(topicSubType.name);
+                                                //set subType topicTypeData 'isAvailable' to appropriate value
+                                                TopicTypeData data = GameManager.instance.dataScript.GetTopicSubTypeData(topicSubType.name);
                                                 if (data != null)
                                                 { data.isAvailable = isValid; }
                                                 else
-                                                { Debug.LogErrorFormat("Invalid topicData (Null) for topicSubType \"{0}\"", topicSubType.name); }
+                                                { Debug.LogErrorFormat("Invalid topicTypeData (Null) for topicSubType \"{0}\"", topicSubType.name); }
                                             }
                                         }
 
@@ -389,10 +389,10 @@ public class TopicManager : MonoBehaviour
             else { break; }
         }
         while (turnTopic == null && minIntervalGlobalActual > 0);
-        //debug purposes only -> BEFORE UpdateTopicData
+        //debug purposes only -> BEFORE UpdateTopicTypeData
         UnitTestTopic();
         //debug -> should be in ProcessTopic but here for autorun debugging purposes
-        UpdateTopicData();
+        UpdateTopicTypeData();
     }
 
     /// <summary>
@@ -417,11 +417,11 @@ public class TopicManager : MonoBehaviour
             //loop list of Topic Types
             foreach (TopicType topicType in listOfTopicTypesLevel)
             {
-                TopicData topicData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
-                if (topicData != null)
+                TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                if (topicTypeData != null)
                 {
-                    //check topicData
-                    if (CheckTopicData(topicData, turn) == true)
+                    //check topicTypeData
+                    if (CheckTopicTypeData(topicTypeData, turn) == true)
                     {
                         //check individual topicType criteria
                         CriteriaDataInput criteriaInput = new CriteriaDataInput()
@@ -442,9 +442,9 @@ public class TopicManager : MonoBehaviour
                             Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");*/
                         }
                     }
-                    /*else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicData check{1}", topicType.tag, "\n"); }*/
+                    /*else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }*/
                 }
-                else { Debug.LogError("Invalid topicData (Null)"); }
+                else { Debug.LogError("Invalid topicTypeData (Null)"); }
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
@@ -518,10 +518,10 @@ public class TopicManager : MonoBehaviour
                     if (subType.side.level == playerSide.level || subType.side.level == 3)
                     {
                         //check TopicSubTypes isValid (topicType may have been approved with some subTypes O.K and others not)
-                        TopicData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                        TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
                         if (dataSub != null)
                         {
-                            if (CheckTopicData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
+                            if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
                             {
                                 //check that there are active, criteria checked O.K , topics available for subType
                                 List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
@@ -738,27 +738,27 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// handles all admin once a topic has been displayed and the user has chosen an option (or not, then default option selected)
     /// </summary>
-    private void UpdateTopicData()
+    private void UpdateTopicTypeData()
     {
         if (turnTopic != null)
         {
             int turn = GameManager.instance.turnScript.Turn;
-            //update TopicType topicData
-            TopicData typeData = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
+            //update TopicType topicTypeData
+            TopicTypeData typeData = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
             if (typeData != null)
             {
                 typeData.timesUsedLevel++;
                 typeData.turnLastUsed = turn;
             }
-            else { Debug.LogErrorFormat("Invalid topicData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
-            //update TopicSubType topicData
-            TopicData typeSubData = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
+            else { Debug.LogErrorFormat("Invalid topicTypeData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
+            //update TopicSubType topicTypeData
+            TopicTypeData typeSubData = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
             if (typeSubData != null)
             {
                 typeSubData.timesUsedLevel++;
                 typeSubData.turnLastUsed = turn;
             }
-            else { Debug.LogErrorFormat("Invalid topicData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
+            else { Debug.LogErrorFormat("Invalid topicTypeData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
             //topicHistory
             HistoryTopic history = new HistoryTopic()
             {
@@ -778,19 +778,19 @@ public class TopicManager : MonoBehaviour
     }
 
     //
-    // - - - TopicData - - -
+    // - - - TopicTypeData - - -
     //
 
     /// <summary>
-    /// returns true if Topic Data check passes, false otherwise. 
-    /// TopicTypes test for global and topicData.minIntervals
-    /// TopicSubTypes test for topicData.isAvailable and topicData.minIntervals
+    /// returns true if Topic Type Data check passes, false otherwise. 
+    /// TopicTypes test for global and topicTypeData.minIntervals
+    /// TopicSubTypes test for topicTypeData.isAvailable and topicTypeData.minIntervals
     /// </summary>
     /// <param name="data"></param>
     /// <param name="turn"></param>
     /// <param name="isTopicSubType"></param>
     /// <returns></returns>
-    private bool CheckTopicData(TopicData data, int turn, bool isTopicSubType = false)
+    private bool CheckTopicTypeData(TopicTypeData data, int turn, bool isTopicSubType = false)
     {
         int interval;
         bool isValid = false;
@@ -844,7 +844,7 @@ public class TopicManager : MonoBehaviour
                     break;
             }
         }
-        else { Debug.LogError("Invalid TopicData (Null)"); }
+        else { Debug.LogError("Invalid TopicTypeData (Null)"); }
         return isValid;
     }
 
@@ -872,11 +872,11 @@ public class TopicManager : MonoBehaviour
                     List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
                     if (listOfTopics != null)
                     {
-                        //check subType topicData
-                        TopicData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                        //check subType topicTypeData
+                        TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
                         if (dataSub != null)
                         {
-                            if (CheckTopicData(dataSub, turn, true) == true)
+                            if (CheckTopicTypeData(dataSub, turn, true) == true)
                             {
                                 /*if (dataSub.minInterval > 0)
                                 {
@@ -920,7 +920,7 @@ public class TopicManager : MonoBehaviour
                                 }*/
                             }
                         }
-                        else { Debug.LogErrorFormat("Invalid topicData (Null) for \"{0} / {1}\"", topicType.name, subType.name); }
+                        else { Debug.LogErrorFormat("Invalid topicTypeData (Null) for \"{0} / {1}\"", topicType.name, subType.name); }
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid subType (Null) for topic \"{0}\" listOfSubTypes[{1}]", topicType.name, i); }
@@ -950,7 +950,7 @@ public class TopicManager : MonoBehaviour
             //
             if (turnTopic != null)
             {
-                TopicData dataType = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
+                TopicTypeData dataType = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
                 if (dataType != null)
                 {
                     //check global interval
@@ -972,7 +972,7 @@ public class TopicManager : MonoBehaviour
                     if (listOfTopicTypesTurn.Exists(x => x.name.Equals(turnTopicType.name, StringComparison.Ordinal)) == false)
                     { Debug.LogWarningFormat("Invalid topicType \"{0}\" NOT found in listOfTopicTypeTurn", turnTopicType.name); }
                 }
-                else { Debug.LogWarningFormat("Invalid topicData (Null) for topicType \"{0}\"", turnTopic.name); }
+                else { Debug.LogWarningFormat("Invalid topicTypeData (Null) for topicType \"{0}\"", turnTopic.name); }
             }
             else { Debug.LogWarning("Invalid topicType (Null)"); }
             //
@@ -980,7 +980,7 @@ public class TopicManager : MonoBehaviour
             //
             if (turnTopicSubType != null)
             {
-                TopicData dataSubType = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
+                TopicTypeData dataSubType = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
                 if (dataSubType != null)
                 {
                     //check isAvailable 
@@ -1004,7 +1004,7 @@ public class TopicManager : MonoBehaviour
                     if (turnTopicSubType.type.name.Equals(turnTopicType.name, StringComparison.Ordinal) == false)
                     { Debug.LogWarningFormat("Invalid topicSubType \"{0}\" has MISMATCH with topicType parent (is {1}, should be {2})", turnTopicSubType.name, turnTopicSubType.type.name, turnTopicType.name); }
                 }
-                else { Debug.LogWarningFormat("Invalid topicData for topicSubType \"{0}\"", turnTopicSubType.name); }
+                else { Debug.LogWarningFormat("Invalid topicTypeData for topicSubType \"{0}\"", turnTopicSubType.name); }
             }
             else { Debug.LogWarning("Invalid topicSubType (Null)"); }
             //
@@ -1101,7 +1101,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     /// <param name="topicType"></param>
     /// <returns></returns>
-    private bool DebugCheckValidType(TopicData data)
+    private bool DebugCheckValidType(TopicTypeData data)
     {
         int turn = GameManager.instance.turnScript.Turn;
         if (data != null)
@@ -1119,7 +1119,7 @@ public class TopicManager : MonoBehaviour
                 { return true; }
             }
         }
-        else { Debug.LogError("Invalid topicData (Null)"); }
+        else { Debug.LogError("Invalid topictypeData (Null)"); }
         return false;
     }
 
@@ -1134,7 +1134,7 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// Runs at end of level, MetaManager.cs -> ProcessMetaGame, to clear out relevant topic data and update others (eg. timesUsedCampaign += timesUsedLevel)
     /// </summary>
-    /// <param name="dictOfTopicData"></param>
+    /// <param name="dictOfTopicTypeData"></param>
     public void ProcessMetaTopics()
     {
         //dictOfType/SubType
@@ -1145,10 +1145,10 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// subMethod for ProcessMetaTopics to handle dictOfTopicType/SubType
     /// </summary>
-    /// <param name="dictOfTopicData"></param>
-    private void UpdateTopicTypes(Dictionary<string, TopicData> dictOfTopicData)
+    /// <param name="dictOfTopicTypeData"></param>
+    private void UpdateTopicTypes(Dictionary<string, TopicTypeData> dictOfTopicTypeData)
     {
-        foreach (var record in dictOfTopicData)
+        foreach (var record in dictOfTopicTypeData)
         {
             record.Value.isAvailable = true;
             record.Value.turnLastUsed = 0;
@@ -1188,14 +1188,14 @@ public class TopicManager : MonoBehaviour
     public string DebugDisplayTopicTypes()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
-            Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+            Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
             if (dictOfTopicSubTypes != null)
             {
                 GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-                builder.AppendFormat("- TopicData for TopicTypes{0}{1}", "\n", "\n");
+                builder.AppendFormat("- TopicTypeData for TopicTypes{0}{1}", "\n", "\n");
                 //used to print a '*' to indicate topic / subType is valid and ready to go
                 bool isValidType, isValidSubType;
                 //loop topic Types
@@ -1225,7 +1225,7 @@ public class TopicManager : MonoBehaviour
                                 //needs to be the correct side
                                 if (subType.side.level == playerSide.level || subType.side.level == 3)
                                 {
-                                    TopicData subData = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                                    TopicTypeData subData = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
                                     if (subData != null)
                                     {
                                         isValidSubType = false;
@@ -1253,11 +1253,11 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sub method for DebugDisplayTopicTypes to display a TopicData record (topicType / SubType)
+    /// Sub method for DebugDisplayTopicTypes to display a TopicTypeData record (topicType / SubType)
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
-    private string DebugDisplayTypeRecord(TopicData data)
+    private string DebugDisplayTypeRecord(TopicTypeData data)
     {
         return string.Format(" {0} Av {1}, Lst {2}, Min {3}, #Lv {4}, #Ca {5}", data.type, data.isAvailable, data.turnLastUsed, data.minInterval,
                          data.timesUsedLevel, data.timesUsedCampaign);

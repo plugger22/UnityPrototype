@@ -78,6 +78,7 @@ public class FileManager : MonoBehaviour
         WriteGearData();
         WriteContactData();
         WriteAIData();
+        WriteTopicData();
         WriteTargetData();
     }
     #endregion
@@ -190,6 +191,7 @@ public class FileManager : MonoBehaviour
                 ReadNemesisData();
                 ReadGearData();
                 ReadAIData();
+                ReadTopicData();
                 ReadActorData();
                 ValidateActorData();
                 ReadPlayerData();
@@ -667,7 +669,7 @@ public class FileManager : MonoBehaviour
 
         #region topics
         //topic types
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
             write.dataData.listOfTopicTypeValues.AddRange(dictOfTopicTypes.Values);
@@ -675,7 +677,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //topic sub types
-        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             write.dataData.listOfTopicSubTypeValues.AddRange(dictOfTopicSubTypes.Values);
@@ -1196,6 +1198,33 @@ public class FileManager : MonoBehaviour
         //GearManager fields
         write.gearData.gearSaveCurrentCost = GameManager.instance.gearScript.GetGearSaveCurrentCost();
         write.gearData.listOfCompromisedGear.AddRange(GameManager.instance.gearScript.GetListOfCompromisedGear());
+    }
+    #endregion
+
+    #region Write Topic Data
+    /// <summary>
+    /// Topic.cs dynamic data to file
+    /// </summary>
+    private void WriteTopicData()
+    {
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        if (dictOfTopics != null)
+        {
+            foreach(var topic in dictOfTopics)
+            {
+                //create new SaveTopic object and copy across all dynamic data
+                SaveTopic saveTopic = new SaveTopic();
+                saveTopic.topicName = topic.Key;
+                saveTopic.status = topic.Value.status;
+                saveTopic.timerStart = topic.Value.timerStart;
+                saveTopic.timerRepeat = topic.Value.timerRepeat;
+                saveTopic.timerWindow = topic.Value.timerWindow;
+                saveTopic.turnsDormant = topic.Value.turnsDormant;
+                saveTopic.turnsActive = topic.Value.turnsActive;
+                saveTopic.turnsLive = topic.Value.turnsLive;
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopics"); }
     }
     #endregion
 
@@ -2077,7 +2106,7 @@ public class FileManager : MonoBehaviour
 
         #region topics
         //Topic Types
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
             dictOfTopicTypes.Clear();
@@ -2086,25 +2115,25 @@ public class FileManager : MonoBehaviour
             Debug.AssertFormat(countKey == countValue, "Mismatch on count for TopicType Lists ->  Keys {0} and Values {1}", countKey, countValue);
             for (int i = 0; i < countKey; i++)
             {
-                TopicData topicData = read.dataData.listOfTopicTypeValues[i];
+                TopicTypeData topicTypeData = read.dataData.listOfTopicTypeValues[i];
                 itemName = read.dataData.listOfTopicTypeKeys[i];
-                if (topicData != null)
+                if (topicTypeData != null)
                 {
                     if (string.IsNullOrEmpty(itemName) == false)
                     {
                         //add to dictionary
-                        try { dictOfTopicTypes.Add(itemName, topicData); }
+                        try { dictOfTopicTypes.Add(itemName, topicTypeData); }
                         catch (ArgumentException)
                         { Debug.LogWarningFormat("Duplicate topicType key exists for topicType \"{0}\"", itemName); }
                     }
                     else { Debug.LogWarningFormat("Invalid Topic Type Key/name (Null or Empty) for listOfTopicTypeKeys[{0}]", i); }
                 }
-                else { Debug.LogWarningFormat("Invalid topicData (Null) for listOfTopicTypeValues[{0}]", i); }
+                else { Debug.LogWarningFormat("Invalid topicTypeData (Null) for listOfTopicTypeValues[{0}]", i); }
             }
         }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //Topic Sub Types
-        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             dictOfTopicSubTypes.Clear();
@@ -2113,20 +2142,20 @@ public class FileManager : MonoBehaviour
             Debug.AssertFormat(countKey == countValue, "Mismatch on count for TopicSubType Lists ->  Keys {0} and Values {1}", countKey, countValue);
             for (int i = 0; i < countKey; i++)
             {
-                TopicData topicData = read.dataData.listOfTopicSubTypeValues[i];
+                TopicTypeData topicTypeData = read.dataData.listOfTopicSubTypeValues[i];
                 itemName = read.dataData.listOfTopicSubTypeKeys[i];
-                if (topicData != null)
+                if (topicTypeData != null)
                 {
                     if (string.IsNullOrEmpty(itemName) == false)
                     {
                         //add to dictionary
-                        try { dictOfTopicSubTypes.Add(itemName, topicData); }
+                        try { dictOfTopicSubTypes.Add(itemName, topicTypeData); }
                         catch (ArgumentException)
                         { Debug.LogWarningFormat("Duplicate topicSubType key exists for topicSubType \"{0}\"", itemName); }
                     }
                     else { Debug.LogWarningFormat("Invalid Topic Type Key/name (Null or Empty) for listOfTopicSubTypeKeys[{0}]", i); }
                 }
-                else { Debug.LogWarningFormat("Invalid topicData (Null) for listOfTopicSubTypeValues[{0}]", i); }
+                else { Debug.LogWarningFormat("Invalid topicTypeData (Null) for listOfTopicSubTypeValues[{0}]", i); }
             }
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
@@ -2944,6 +2973,16 @@ public class FileManager : MonoBehaviour
         //GearManager.cs fields
         GameManager.instance.gearScript.SetGearSaveCurrentCost(read.gearData.gearSaveCurrentCost);
         GameManager.instance.gearScript.SetListOfCompromisedGear(read.gearData.listOfCompromisedGear);
+    }
+    #endregion
+
+    #region ReadTopicData
+    /// <summary>
+    /// Topic.cs dynamic data
+    /// </summary>
+    private void ReadTopicData()
+    {
+
     }
     #endregion
 

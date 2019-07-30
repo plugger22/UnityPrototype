@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Topic category (Human decision system) Static data only, dynamic data is kept in the dictOfTopicTypes using a TopicData package
+/// Topic category (Human decision system) Static data only, dynamic data is kept in the dictOfTopicTypes using a TopicTypeData package
 /// </summary>
 [CreateAssetMenu(menuName = "Topic / TopicType")]
 public class TopicType : ScriptableObject

@@ -204,8 +204,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Cure> dictOfCures = new Dictionary<string, Cure>();                              //Key -> cure.name, Value -> Cure
     private Dictionary<string, Sprite> dictOfSprites = new Dictionary<string, Sprite>();                        //Key -> sprite name, Value -> Sprite
     private Dictionary<string, PersonProfile> dictOfProfiles = new Dictionary<string, PersonProfile>();         //Key -> personProfile.name, Value -> personProfile
-    private Dictionary<string, TopicData> dictOfTopicTypeData = new Dictionary<string, TopicData>();            //Key -> topicType.name, Value -> TopicData package
-    private Dictionary<string, TopicData> dictOfTopicSubTypeData = new Dictionary<string, TopicData>();         //Key -> topicSubType.name, Value -> TopicData package
+    private Dictionary<string, TopicTypeData> dictOfTopicTypeData = new Dictionary<string, TopicTypeData>();            //Key -> topicType.name, Value -> TopicTypeData package
+    private Dictionary<string, TopicTypeData> dictOfTopicSubTypeData = new Dictionary<string, TopicTypeData>();         //Key -> topicSubType.name, Value -> TopicTypeData package
     private Dictionary<string, Topic> dictOfTopics = new Dictionary<string, Topic>();                           //Key -> topic.name, Value -> Topic
     private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption 
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
@@ -6662,10 +6662,10 @@ public class DataManager : MonoBehaviour
 
     #region Topics
 
-    public Dictionary<string, TopicData> GetDictOfTopicTypeData()
+    public Dictionary<string, TopicTypeData> GetDictOfTopicTypeData()
     { return dictOfTopicTypeData; }
 
-    public Dictionary<string, TopicData> GetDictOfTopicSubTypeData()
+    public Dictionary<string, TopicTypeData> GetDictOfTopicSubTypeData()
     { return dictOfTopicSubTypeData; }
 
     public Dictionary<string, Topic> GetDictOfTopics()
@@ -6692,9 +6692,9 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="topicTypeName"></param>
     /// <returns></returns>
-    public TopicData GetTopicTypeData(string topicTypeName)
+    public TopicTypeData GetTopicTypeData(string topicTypeName)
     {
-        TopicData data = null;
+        TopicTypeData data = null;
         if (string.IsNullOrEmpty(topicTypeName) == false)
         {
             if (dictOfTopicTypeData.ContainsKey(topicTypeName) == true)
@@ -6709,9 +6709,9 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="topicSubTypeName"></param>
     /// <returns></returns>
-    public TopicData GetTopicSubTypeData(string topicSubTypeName)
+    public TopicTypeData GetTopicSubTypeData(string topicSubTypeName)
     {
-        TopicData data = null;
+        TopicTypeData data = null;
         if (string.IsNullOrEmpty(topicSubTypeName) == false)
         {
             if (dictOfTopicSubTypeData.ContainsKey(topicSubTypeName) == true)

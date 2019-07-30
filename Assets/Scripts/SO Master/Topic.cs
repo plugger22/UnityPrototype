@@ -31,7 +31,17 @@ public class Topic : ScriptableObject
     [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
-    [HideInInspector] public Status status = Status.Active;
+    #region Save Data Compatible
+    [HideInInspector] public Status status = Status.Dormant;
+    //timers
+    [HideInInspector] public int timerStart;
+    [HideInInspector] public int timerRepeat;
+    [HideInInspector] public int timerWindow;
+    //stats
+    [HideInInspector] public int turnsDormant;
+    [HideInInspector] public int turnsActive;
+    [HideInInspector] public int turnsLive;    
+    #endregion
 
 
     public void OnEnable()

@@ -119,9 +119,9 @@ public class SaveDataData
     public List<Message> listOfAIMessagesValue = new List<Message>();
     //Topics
     public List<string> listOfTopicTypesLevel = new List<string>();
-    public List<TopicData> listOfTopicTypeValues = new List<TopicData>();
+    public List<TopicTypeData> listOfTopicTypeValues = new List<TopicTypeData>();
     public List<string> listOfTopicTypeKeys = new List<string>();
-    public List<TopicData> listOfTopicSubTypeValues = new List<TopicData>();
+    public List<TopicTypeData> listOfTopicSubTypeValues = new List<TopicTypeData>();
     public List<string> listOfTopicSubTypeKeys = new List<string>();
     public List<string> listOfTopicPoolsKeys = new List<string>();
     public List<StringListWrapper> listOfTopicPoolsValue = new List<StringListWrapper>();
@@ -460,6 +460,24 @@ public class SaveGear
     public int statTimesCompromised;
     public int statTimesSaved;
     public int statRenownSpent;
+}
+#endregion
+
+#region SaveTopic
+/// <summary>
+/// Topic.SO dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveTopic
+{
+    public string topicName;
+    public gameAPI.Status status;
+    public int timerStart;
+    public int timerRepeat;
+    public int timerWindow;
+    public int turnsDormant;
+    public int turnsActive;
+    public int turnsLive;
 }
 #endregion
 

@@ -1109,7 +1109,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topic Types - - -
         //
-        Dictionary<string, TopicData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (dictOfTopicTypes != null)
         {
@@ -1122,7 +1122,7 @@ public class LoadManager : MonoBehaviour
                     TopicType topicType = arrayOfTopicTypes[i];
                     counter++;
                     //create dataPackage (minInterval assigned during topicManager.cs -> subInitialiseStartUp
-                    TopicData data = new TopicData()
+                    TopicTypeData data = new TopicTypeData()
                     {
                         type = topicType.name,
                         isAvailable = true,
@@ -1154,7 +1154,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topic SubTypes - - -
         //
-        Dictionary<string, TopicData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             counter = 0;
@@ -1164,7 +1164,7 @@ public class LoadManager : MonoBehaviour
                 TopicSubType topicSubType = arrayOfTopicSubTypes[i];
                 counter++;
                 //create dataPackage
-                TopicData data = new TopicData()
+                TopicTypeData data = new TopicTypeData()
                 {
                     type = topicSubType.name,
                     parent = topicSubType.type.name,

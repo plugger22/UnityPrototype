@@ -688,7 +688,7 @@ namespace packageAPI
     /// dynamic data packages for TopicType and TopicSubType
     /// </summary>
     [System.Serializable]
-    public class TopicData
+    public class TopicTypeData
     {
         public string type;                        //SO.name of TopicType/SubType that the package refers to 
         public string parent;                      //SO.name of TopicType that the package refers to (used for SubTypes to indicate which type they belong to)
