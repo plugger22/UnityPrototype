@@ -6823,6 +6823,15 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid topicName (Null or Empty)"); }
         return topic;
     }
+    
+    /// <summary>
+    /// sets all topics in dictOftopics to 'isCurrent' FALSE prior to any changes
+    /// </summary>
+    public void ResetTopics()
+    {
+        foreach(var topic in dictOfTopics)
+        { topic.Value.isCurrent = false; }
+    }
 
     /// <summary>
     /// Add a topicHistory entry to dictOfTopicHistory (max entry one per turn)

@@ -1212,18 +1212,22 @@ public class FileManager : MonoBehaviour
         {
             foreach(var topic in dictOfTopics)
             {
-                //create new SaveTopic object and copy across all dynamic data
-                SaveTopic saveTopic = new SaveTopic();
-                saveTopic.topicName = topic.Key;
-                saveTopic.status = topic.Value.status;
-                saveTopic.timerStart = topic.Value.timerStart;
-                saveTopic.timerRepeat = topic.Value.timerRepeat;
-                saveTopic.timerWindow = topic.Value.timerWindow;
-                saveTopic.turnsDormant = topic.Value.turnsDormant;
-                saveTopic.turnsActive = topic.Value.turnsActive;
-                saveTopic.turnsLive = topic.Value.turnsLive;
-                //add to list
-                write.topicData.listOfTopics.Add(saveTopic);
+                //only save data for current topics used in level, ignore the rest
+                if (topic.Value.isCurrent == true)
+                {
+                    //create new SaveTopic object and copy across all dynamic data
+                    SaveTopic saveTopic = new SaveTopic();
+                    saveTopic.topicName = topic.Key;
+                    saveTopic.status = topic.Value.status;
+                    saveTopic.timerStart = topic.Value.timerStart;
+                    saveTopic.timerRepeat = topic.Value.timerRepeat;
+                    saveTopic.timerWindow = topic.Value.timerWindow;
+                    saveTopic.turnsDormant = topic.Value.turnsDormant;
+                    saveTopic.turnsActive = topic.Value.turnsActive;
+                    saveTopic.turnsLive = topic.Value.turnsLive;
+                    //add to list
+                    write.topicData.listOfTopics.Add(saveTopic);
+                }
             }
         }
         else { Debug.LogError("Invalid dictOfTopics"); }
@@ -2984,6 +2988,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadTopicData()
     {
+        //reset topics (isCurrent to False) prior to loading changes
+        GameManager.instance.dataScript.ResetTopics();
+        //read in dynamic data
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
@@ -3005,6 +3012,8 @@ public class FileManager : MonoBehaviour
                             topic.turnsDormant = saveTopic.turnsDormant;
                             topic.turnsActive = saveTopic.turnsActive;
                             topic.turnsLive = saveTopic.turnsLive;
+                            //set topic to isCurrent true
+                            topic.isCurrent = true;
                         }
                         else { Debug.LogWarningFormat("Invalid topic (Null) for saveTopic.topicName \"{0}\"", saveTopic.topicName); }
                     }

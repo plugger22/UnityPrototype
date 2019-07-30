@@ -1449,7 +1449,7 @@ public class DebugGUI : MonoBehaviour
                     case 57:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayAllPersonalities();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Actor Compatibility Range
                     case 58:
@@ -1461,7 +1461,7 @@ public class DebugGUI : MonoBehaviour
                     case 59:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayActorMotivationHistory();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //player stats -> mood history
                     case 60:
@@ -1473,37 +1473,37 @@ public class DebugGUI : MonoBehaviour
                     case 61:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayPlayerLikes();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 455, 800), analysis, customBackground);
                         break;
                     //Topic Data
                     case 62:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicTypes();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
                         break;
                     //Topic Type lists
                     case 63:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicTypeLists();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 900), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Topic Pools
                     case 64:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicPools();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 900), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Topic Selection data
                     case 65:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicSelectionData();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
                         break;
                     //Topic Profile data
                     case 66:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicProfileData();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 500, 900), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
 
 

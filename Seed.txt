@@ -14,3 +14,26 @@ TopicManager.DebugDisplayTopicProfileData () (at Assets/Scripts/Managers/TopicMa
 	
 Dev seed 4727 -> Tuesday, 30 July 2019 2:54 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 33364 -> Tuesday, 30 July 2019 4:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28937 -> Tuesday, 30 July 2019 4:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35476 -> Tuesday, 30 July 2019 4:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46049 -> Tuesday, 30 July 2019 4:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 152 -> Tuesday, 30 July 2019 4:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45802 -> Tuesday, 30 July 2019 4:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34874 -> Tuesday, 30 July 2019 4:39 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom

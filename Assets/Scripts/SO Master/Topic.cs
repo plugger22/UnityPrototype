@@ -35,6 +35,7 @@ public class Topic : ScriptableObject
 
     #region Save Data Compatible
     [HideInInspector] public Status status = Status.Dormant;
+    [HideInInspector] public bool isCurrent;                                                //true if topic valid for current level (in a Campaign/city topicPool), false otherwise
     //timers
     [HideInInspector] public int timerStart;
     [HideInInspector] public int timerRepeat;
