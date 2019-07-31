@@ -304,7 +304,6 @@ public class ValidationManager : MonoBehaviour
 
     #endregion
 
-
     #region ValidateTargets
     /// <summary>
     /// Checks targets
@@ -484,8 +483,10 @@ public class ValidationManager : MonoBehaviour
                                 listOfNames.Add(objective.name);
                                 //check side matches that of mission
                                 if (objective.side.level != mission.side.level)
-                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: mission {0}, obj \"{1}\", Invalid Side (is {2}, should be {3}){4}", mission.name, objective.name,
-                                    objective.side.name, mission.side.name, "\n"); }
+                                {
+                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: mission {0}, obj \"{1}\", Invalid Side (is {2}, should be {3}){4}", mission.name, objective.name,
+                                      objective.side.name, mission.side.name, "\n");
+                                }
                             }
                             else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: mission {0}, Invalid Objective for listOfObjectives[{1}]{2}", mission.name, i, "\n"); }
                         }
@@ -759,6 +760,56 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfTopics (Null)"); }
         #endregion
 
+        #region Topic Profiles
+        TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles;
+        if (arrayOfProfiles != null)
+        {
+            //get TopicManager.cs global minimum Interval
+            int minIntervalGlobal = GameManager.instance.topicScript.minIntervalGlobal;
+            Debug.Assert(minIntervalGlobal > 0, "Invalid minIntervalGlobal (Zero, should be at least One)");
+            //loop profiles
+            for (int i = 0; i < arrayOfProfiles.Length; i++)
+            {
+                TopicProfile profile = arrayOfProfiles[i];
+                if (profile != null)
+                {
+                    //delay Repeat (if non Zero)
+                    if (profile.delayRepeat > 0)
+                    {
+                        //repeat delay should be > global
+                        if (profile.delayRepeat <= minIntervalGlobal)
+                        {
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid profile \"{0}\" delayRepeat (is {1}, should be > {2}, the minIntervalGlobal){3}",
+                              profile.name, profile.delayRepeat, minIntervalGlobal, "\n");
+                        }
+                    }
+                    //delay Start (if non Zero)
+                    if (profile.delayStart > 0)
+                    {
+                        //start delay should be > global
+                        if (profile.delayStart <= minIntervalGlobal)
+                        {
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid profile \"{0}\" delayStart (is {1}, should be > {2}, the minIntervalGlobal){3}",
+                              profile.name, profile.delayStart, minIntervalGlobal, "\n");
+                        }
+                    }
+                    //Timer Window (if non Zero)
+                    if (profile.timerWindow > 0)
+                    {
+                        //timer Window should be > global
+                        if (profile.timerWindow <= minIntervalGlobal)
+                        {
+                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid profile \"{0}\" timerWindow (is {1}, should be > {2}, the minIntervalGlobal){3}",
+                              profile.name, profile.timerWindow, minIntervalGlobal, "\n");
+                        }
+                    }
+                }
+                else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid topicProfile (Null) for arrayOfTopicProfiles[{0}]{1}", i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTopicProfiles (Null)"); }
+        #endregion
+
         #region Topic Pools
         //
         // - - - Topic Pools
@@ -922,8 +973,8 @@ public class ValidationManager : MonoBehaviour
                                         //check scenario the same side as campaign
                                         if (scenario.side.level != campaign.side.level)
                                         {
-                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\" has invalid SIDE (is {2}, should be {3}){4}", 
-                                                campaign.name,  scenario.name, scenario.side.name, campaign.side.name, "\n");
+                                            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\" has invalid SIDE (is {2}, should be {3}){4}",
+                                                campaign.name, scenario.name, scenario.side.name, campaign.side.name, "\n");
                                         }
                                         //get city
                                         if (scenario.city != null)
@@ -974,12 +1025,15 @@ public class ValidationManager : MonoBehaviour
                                                  campaign.name, scenario.name, scenario.city.name, pool.name, "\n");
                                                 }
                                             }
-                                            else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", Invalid pool (Null){3}", 
-                                                campaign.name, scenario.name, scenario.city.name, "\n"); }
+                                            else
+                                            {
+                                                Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", city \"{2}\", Invalid pool (Null){3}",
+                                             campaign.name, scenario.name, scenario.city.name, "\n");
+                                            }
                                         }
                                         else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", scenario \"{1}\", Invalid city (Null){2}", campaign.name, scenario.name, "\n"); }
                                     }
-                                    else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios[{1}] Invalid (Null){2}", campaign.name, j,"\n"); }
+                                    else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" listOfScenarios[{1}] Invalid (Null){2}", campaign.name, j, "\n"); }
                                 }
                             }
                             else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\" Invalid listOfScenarios (Empty){1}", campaign.name, "\n"); }
@@ -1367,6 +1421,7 @@ public class ValidationManager : MonoBehaviour
             CheckMainInfoData(prefix, highestTurn);
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
+            CheckTopicData(prefix);
         }
     }
     #endregion
@@ -2121,8 +2176,33 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckTopicData
+    /// <summary>
+    /// Integrity check of all relevant dynamic Topic data
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckTopicData(string prefix)
+    {
+        string tag = string.Format("{0}{1}", prefix, "CheckTopicData: ");
+        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
+        if (dictOfTopicPools != null)
+        {
+            foreach (var pool in dictOfTopicPools)
+            {
+                CheckDictList(pool.Value, "listOfTopics", tag, pool.Key);
+                foreach (Topic topic in pool.Value)
+                {
+                    //each topic within pool should be 'isCurrent' true (dict contains all valid topics for the level)
+                    if (topic.isCurrent != true)
+                    { Debug.LogFormat("{0}, topic \"{1}\", Invalid isCurrent (is {2}, should be {3}){4}", tag, topic.name, topic.isCurrent, "True"); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
+    }
     #endregion
 
+    #endregion
 
     #region Utilities
     //
@@ -2421,7 +2501,7 @@ public class ValidationManager : MonoBehaviour
         //check type for a match
         if (pool.type.name.Equals(subType.type.name, StringComparison.Ordinal) == false)
         {
-            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}", 
+            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}",
                 campaign.name, pool.name, pool.type.name, subType.type.name, "\n");
         }
         //check subType for a match

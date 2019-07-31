@@ -79,6 +79,7 @@ public class LoadManager : MonoBehaviour
     public TopicType[] arrayOfTopicTypes;
     public TopicSubType[] arrayOfTopicSubTypes;
     public TopicOption[] arrayOfTopicOptions;
+    public TopicProfile[] arrayOfTopicProfiles;
     public TopicPool[] arrayOfTopicPools;
     public Topic[] arrayOfTopics;
 
@@ -116,7 +117,6 @@ public class LoadManager : MonoBehaviour
     #endregion
 
     #region InitialiseStart
-
     public void InitialiseStart(GameState state)
     {
         int numArray, numDict, counter;
@@ -658,7 +658,6 @@ public class LoadManager : MonoBehaviour
     #endregion
 
     #region InitialiseEarly
-
     /// <summary>
     /// default main constructor
     /// </summary>
@@ -1217,12 +1216,12 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }
         //
-        // - - - Topic Options (not stored in a collection)
+        // - - - Topic Profiles (not stored in a collection)
         //
-        numArray = arrayOfTopicOptions.Length;
+        numArray = arrayOfTopicProfiles.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicOptions has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicOptions present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicProfiles has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicProfiles present"); }
         //
         // - - - Topic Pools (not stored in a collection)
         //
@@ -1655,7 +1654,6 @@ public class LoadManager : MonoBehaviour
     #endregion
 
     #region InitialiseLate
-
     /// <summary>
     /// Stuff that is done after LevelManager.SetUp
     /// Note: DataManager.cs InitialiseLate runs immediately prior to this and sets up node arrays and lists

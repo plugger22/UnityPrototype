@@ -114,8 +114,6 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
-        /*DebugRandomiseTopicStatus();*/
-
         //reset all topics to isCurrent False prior to changes
         GameManager.instance.dataScript.ResetTopics();
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
@@ -125,6 +123,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
+    #region Session Start
     //
     // - - - Session Start - - -
     //
@@ -403,9 +402,7 @@ public class TopicManager : MonoBehaviour
                     if (profile != null)
                     {
                         //set timers
-                        if (profile.isRepeat == true)
-                        { topic.timerRepeat = profile.delayRepeat; }
-                        else { topic.timerRepeat = 0; }
+                        topic.timerRepeat = profile.delayRepeat;
                         topic.timerStart = profile.delayStart;
                         topic.timerWindow = profile.timerWindow;
                         //set status
@@ -429,9 +426,13 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
+    #region Select Topic
     //
     //  - - - Select Topic - - -
     //   
+
 
     /// <summary>
     /// Selects a topic for the turn (there will always be one)
@@ -471,8 +472,8 @@ public class TopicManager : MonoBehaviour
     {
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
-        {        
-            foreach(var topic in dictOfTopics)
+        {
+            foreach (var topic in dictOfTopics)
             {
                 //current topics for level only
                 if (topic.Value != null)
@@ -860,49 +861,9 @@ public class TopicManager : MonoBehaviour
         }
     }
 
+    #endregion
 
-    /*/// <summary>
-    /// Checks individual topic for Active status and any Criteria checks being O.K. Returns true if good on all counts, false otherwise
-    /// </summary>
-    /// <param name="topic"></param>
-    /// <returns></returns>
-    private bool CheckIndividualTopic(Topic topic)
-    {
-        bool isProceed = false;
-        if (topic != null)
-        {
-            isProceed = false;
-            //topic must be live or active
-            if (topic.status == Status.Live)
-            {
-                isProceed = true;
-                //topic criteria must pass checks
-                if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
-                {
-                    CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                    { listOfCriteria = topic.listOfCriteria };
-                    string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                    if (criteriaCheck == null)
-                    {
-                        //criteria check passed O.K
-                        isProceed = true;
-                    }
-                    else
-                    {
-                        //criteria check FAILED
-                        isProceed = false;
-                        //generate message explaining why criteria failed -> debug only, spam otherwise
-                        Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: topic \"{0}\" {1} Criteria check failed{2}", topic.name, criteriaCheck, "\n");
-                    }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid topic (Null)"); }
-        return isProceed;
-    }*/
-
-
-
+    #region ProcessTopic
     //
     // - - - Process Topic - - - 
     //
@@ -913,6 +874,7 @@ public class TopicManager : MonoBehaviour
     public void ProcessTopic()
     {
         ExecuteTopic();
+        UpdateTopicStatus();
     }
 
     /// <summary>
@@ -1024,6 +986,24 @@ public class TopicManager : MonoBehaviour
         //no need to generate warning message as covered elsewhere
     }
 
+    /// <summary>
+    /// Update status for selected topic once interaction complete
+    /// </summary>
+    private void UpdateTopicStatus()
+    {
+        if (turnTopic != null)
+        {
+            //Back to Dormant if repeat, Done otherwise
+            if (turnTopic.timerRepeat > 0)
+            { turnTopic.status = Status.Dormant; }
+            else { turnTopic.status = Status.Done; }
+        }
+        else { Debug.LogError("Invalid turnTopic (Null)"); }
+    }
+
+    #endregion
+
+    #region TopicTypeData
     //
     // - - - TopicTypeData - - -
     //
@@ -1094,7 +1074,9 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid TopicTypeData (Null)"); }
         return isValid;
     }
+    #endregion
 
+    #region Topic Type Criteria
     //
     // - - - TopicType Criteria - - -
     //
@@ -1173,10 +1155,11 @@ public class TopicManager : MonoBehaviour
         }
         return isValid;
     }
+    #endregion
 
-    #region Analytics
+    #region Unit Tests
     //
-    // - - - Analytics - - -
+    // - - - Unit Tests - - -
     //
 
     /// <summary>
@@ -1453,7 +1436,7 @@ public class TopicManager : MonoBehaviour
                         {
                             isValidType = DebugCheckValidType(topicTypeData.Value);
                             builder.AppendFormat(" {0}{1}{2}", DebugDisplayTypeRecord(topicTypeData.Value), isValidType == true ? " *" : "", "\n");
-                            
+
                             /*//look for any matching SubTypes
                             foreach (var topicSubType in dictOfTopicSubTypes)
                             {
@@ -1465,7 +1448,7 @@ public class TopicManager : MonoBehaviour
                             }*/
 
                             //loop subTypes
-                            foreach(TopicSubType subType in topicType.listOfSubTypes)
+                            foreach (TopicSubType subType in topicType.listOfSubTypes)
                             {
                                 //needs to be the correct side
                                 if (subType.side.level == playerSide.level || subType.side.level == 3)
@@ -1700,8 +1683,8 @@ public class TopicManager : MonoBehaviour
             {
                 if (topic.Value.profile != null)
                 {
-                    builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}, D {8} -> {9}{10}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart, 
-                        topic.Value.timerRepeat, topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive, 
+                    builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}, D {8} -> {9}{10}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart,
+                        topic.Value.timerRepeat, topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive,
                         topic.Value.turnsDone, topic.Value.isCurrent ? "true" : "FALSE", "\n");
                 }
                 else { builder.AppendFormat(" {0} -> Invalid Profile (Null){1}", topic.Value.name, "\n"); }
