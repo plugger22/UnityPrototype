@@ -273,3 +273,8 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 28781 -> Wednesday, 31 July 2019 9:54 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 44855 -> Wednesday, 31 July 2019 10:00 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom

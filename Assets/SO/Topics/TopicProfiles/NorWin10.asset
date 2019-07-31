@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
-  m_Name: StanWin10
+  m_Name: NorWin10
   m_EditorClassIdentifier: 
-  descriptor: Stardard, 10 turn Live window, no repeat
+  descriptor: Normal, 10 turn Live window, no repeat
   isRepeat: 0
   delayRepeat: 0
   delayStart: 0

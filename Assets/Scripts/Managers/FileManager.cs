@@ -1225,6 +1225,7 @@ public class FileManager : MonoBehaviour
                     saveTopic.turnsDormant = topic.Value.turnsDormant;
                     saveTopic.turnsActive = topic.Value.turnsActive;
                     saveTopic.turnsLive = topic.Value.turnsLive;
+                    saveTopic.turnsDone = topic.Value.turnsDone;
                     //add to list
                     write.topicData.listOfTopics.Add(saveTopic);
                 }
@@ -3012,6 +3013,7 @@ public class FileManager : MonoBehaviour
                             topic.turnsDormant = saveTopic.turnsDormant;
                             topic.turnsActive = saveTopic.turnsActive;
                             topic.turnsLive = saveTopic.turnsLive;
+                            topic.turnsDone = saveTopic.turnsDone;
                             //set topic to isCurrent true
                             topic.isCurrent = true;
                         }

@@ -490,6 +490,7 @@ public class SaveTopic
     public int turnsDormant;
     public int turnsActive;
     public int turnsLive;
+    public int turnsDone;
 }
 #endregion
 
