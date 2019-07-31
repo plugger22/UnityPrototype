@@ -439,28 +439,32 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void SelectTopic()
     {
-        ResetTopicAdmin();
-        //select a topic, if none found then drop the global interval by 1 and try again
-        do
+        //Player must be Active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
-            CheckTopics();
-            CheckForValidTopicTypes();
-            GetTopicType();
-            GetTopicSubType();
-            GetTopic();
-            //repeat process with a reduced minInterval
-            if (turnTopic == null)
+            ResetTopicAdmin();
+            //select a topic, if none found then drop the global interval by 1 and try again
+            do
             {
-                minIntervalGlobalActual--;
-                Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                CheckTopics();
+                CheckForValidTopicTypes();
+                GetTopicType();
+                GetTopicSubType();
+                GetTopic();
+                //repeat process with a reduced minInterval
+                if (turnTopic == null)
+                {
+                    minIntervalGlobalActual--;
+                    Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                }
+                else { break; }
             }
-            else { break; }
+            while (turnTopic == null && minIntervalGlobalActual > 0);
+            //debug purposes only -> BEFORE UpdateTopicTypeData
+            UnitTestTopic();
+            //debug -> should be in ProcessTopic but here for autorun debugging purposes
+            UpdateTopicTypeData();
         }
-        while (turnTopic == null && minIntervalGlobalActual > 0);
-        //debug purposes only -> BEFORE UpdateTopicTypeData
-        UnitTestTopic();
-        //debug -> should be in ProcessTopic but here for autorun debugging purposes
-        UpdateTopicTypeData();
     }
 
 
@@ -873,8 +877,12 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void ProcessTopic()
     {
-        ExecuteTopic();
-        UpdateTopicStatus();
+        //only if Player Active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        {
+            ExecuteTopic();
+            UpdateTopicStatus();
+        }
     }
 
     /// <summary>
