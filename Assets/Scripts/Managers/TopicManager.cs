@@ -437,35 +437,41 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// Selects a topic for the turn (there will always be one)
     /// </summary>
-    public void SelectTopic()
+    public void SelectTopic(GlobalSide playerSide)
     {
-        //Player must be Active
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        if (playerSide != null)
         {
-            ResetTopicAdmin();
-            //select a topic, if none found then drop the global interval by 1 and try again
-            do
+            //Player must be Active
+            if (CheckPlayerStatus(playerSide) == true)
             {
-                CheckTopics();
-                CheckForValidTopicTypes();
-                GetTopicType();
-                GetTopicSubType();
-                GetTopic();
-                //repeat process with a reduced minInterval
-                if (turnTopic == null)
+                ResetTopicAdmin();
+                //select a topic, if none found then drop the global interval by 1 and try again
+                do
                 {
-                    minIntervalGlobalActual--;
-                    Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                    CheckTopics();
+                    CheckForValidTopicTypes();
+                    GetTopicType();
+                    GetTopicSubType(playerSide);
+                    GetTopic();
+                    //repeat process with a reduced minInterval
+                    if (turnTopic == null)
+                    {
+                        minIntervalGlobalActual--;
+                        Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                    }
+                    else { break; }
                 }
-                else { break; }
+                while (turnTopic == null && minIntervalGlobalActual > 0);
+                //debug purposes only -> BEFORE UpdateTopicTypeData
+                UnitTestTopic(playerSide);
+                //debug -> should be in ProcessTopic but here for autorun debugging purposes
+                UpdateTopicTypeData();
             }
-            while (turnTopic == null && minIntervalGlobalActual > 0);
-            //debug purposes only -> BEFORE UpdateTopicTypeData
-            UnitTestTopic();
-            //debug -> should be in ProcessTopic but here for autorun debugging purposes
-            UpdateTopicTypeData();
         }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
     }
+
+
 
 
     #region CheckTopics
@@ -738,14 +744,14 @@ public class TopicManager : MonoBehaviour
 
     /// <summary>
     /// Get topicSubType for turn Decision
+    /// Note: playerSide checked for null by parent method
     /// </summary>
-    private void GetTopicSubType()
+    private void GetTopicSubType(GlobalSide playerSide)
     {
         int numOfEntries;
         bool isProceed;
         if (turnTopicType != null)
         {
-            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
             //loop all subTypes for topicType
             for (int i = 0; i < turnTopicType.listOfSubTypes.Count; i++)
             {
@@ -875,14 +881,18 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// Process selected topic (decision or Information)
     /// </summary>
-    public void ProcessTopic()
+    public void ProcessTopic(GlobalSide playerSide)
     {
-        //only if Player Active
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        if (playerSide != null)
         {
-            ExecuteTopic();
-            UpdateTopicStatus();
+            //only if Player Active
+            if (CheckPlayerStatus(playerSide) == true)
+            {
+                ExecuteTopic();
+                UpdateTopicStatus();
+            }
         }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
     }
 
     /// <summary>
@@ -1173,8 +1183,9 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// runs a turn based unit test on selected topictype/subtype/topic looking for anything out of place
     /// NOTE: checks a lot of stuff that should have already been checked but acts as a final check and picks up stuff in the case of code changes that might have thrown something out of alignment
+    /// NOTE: playerSide checked for Null by parent method
     /// </summary>
-    private void UnitTestTopic()
+    private void UnitTestTopic(GlobalSide playerSide)
     {
         //check if at least one entry in listOfTopicTypesTurn
         if (listOfTopicTypesTurn.Count > 0)
@@ -1258,8 +1269,8 @@ public class TopicManager : MonoBehaviour
                 if (turnTopic.type.name.Equals(turnTopicType.name, StringComparison.Ordinal) == false)
                 { Debug.LogWarningFormat("Invalid topic \"{0}\" has MISMATCH with topicType parent (is {1}, should be {2})", turnTopic.name, turnTopic.type.name, turnTopicType.name); }
                 //check correct side
-                if (turnTopic.side.level != GameManager.instance.sideScript.PlayerSide.level)
-                { Debug.LogWarningFormat("Invalid topic \"{0}\" with INCORRECT SIDE (is {1}, should be {2})", turnTopic.name, turnTopic.side.name, GameManager.instance.sideScript.PlayerSide.name); }
+                if (turnTopic.side.level != playerSide.level)
+                { Debug.LogWarningFormat("Invalid topic \"{0}\" with INCORRECT SIDE (is {1}, should be {2})", turnTopic.name, turnTopic.side.name, playerSide.name); }
             }
             else { Debug.LogWarning("Invalid topic (Null)"); }
         }
@@ -1331,6 +1342,59 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid priority (Null)"); }
         return numOfEntries;
     }
+
+    #region CheckPlayerStatus
+    /// <summary>
+    /// Checks Player (AI/Human) status
+    /// NOTE: playerSide checked for Null by parent method
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckPlayerStatus(GlobalSide playerSide)
+    {
+        bool isValid = false;
+        switch (playerSide.level)
+        {
+            case 1:
+                //Authority
+                switch (GameManager.instance.sideScript.authorityOverall)
+                {
+                    case SideState.Human:
+                        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+                        { isValid = true; }
+                        break;
+                    case SideState.AI:
+                        if (GameManager.instance.aiScript.status == ActorStatus.Active)
+                        { isValid = true; }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised authorityOverall \"{0}\"", GameManager.instance.sideScript.authorityOverall);
+                        break;
+                }
+                break;
+            case 2:
+                //Resistance
+                switch (GameManager.instance.sideScript.resistanceOverall)
+                {
+                    case SideState.Human:
+                        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+                        { isValid = true; }
+                        break;
+                    case SideState.AI:
+                        if (GameManager.instance.aiRebelScript.status == ActorStatus.Active)
+                        { isValid = true; }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised resistanceOverall \"{0}\"", GameManager.instance.sideScript.authorityOverall);
+                        break;
+                }
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", playerSide.name);
+                break;
+        }
+        return isValid;
+    }
+    #endregion
 
     /// <summary>
     /// returns true if a valid topicType (must pass minInterval and global minInterval checks) -> Used for DebugDisplayTopicTypes to show a '*' or not
