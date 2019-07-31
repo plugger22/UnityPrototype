@@ -19,6 +19,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 176f8b336f555004ea1b1417b51c8aa6, type: 2}
   - {fileID: 11400000, guid: fb2a2be37399b8e4384c8990d1a0d6c6, type: 2}
   - {fileID: 11400000, guid: 0f8ea9929e0fd3242b93416cdaccbb89, type: 2}
+  group: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   profile: {fileID: 11400000, guid: e6381bc8398f885499498120ca2f2fa9, type: 2}
   listOfCriteria: []
@@ -30,4 +31,4 @@ MonoBehaviour:
   turnsDormant: 1
   turnsActive: 0
   turnsLive: 9
-  turnsDone: 22
+  turnsDone: 23

@@ -25,6 +25,10 @@ public class Topic : ScriptableObject
     [Tooltip("Options for the decision. Max 4")]
     public List<TopicOption> listOfOptions;
 
+    [Header("Group")]
+    [Tooltip("Is it in the Good, Nuetral or Bad group of topics for that SubType? If not relevant use Neutral")]
+    public GlobalType group;
+
     [Header("Criteria")]
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
@@ -58,6 +62,7 @@ public class Topic : ScriptableObject
         Debug.AssertFormat(listOfOptions?.Count <= 4, "To many options (Max 4) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
         Debug.AssertFormat(profile != null, "Invalid profile (Null) for {0}", name);
+        Debug.AssertFormat(group != null, "Invalid group (Null) for {0}", name);
     }
 
 

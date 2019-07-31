@@ -4050,6 +4050,34 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a list of all current, active, OnMap actors for a specified side. Empty list if a none. (List won't ever be Null)
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<Actor> GetActiveActors(GlobalSide side)
+    {
+        List<Actor> listOfActors = new List<Actor>();
+        if (side != null)
+        {
+            for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+            {
+                if (CheckActorSlotStatus(i, side) == true)
+                {
+                    Actor actor = arrayOfActors[side.level, i];
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Active)
+                        { listOfActors.Add(actor); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfActors[{0}, {1}]", side.level, i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid side (Null)"); }
+        return listOfActors;
+    }
+
+    /// <summary>
     /// Find actor in dictOfActors, returns null if a problem
     /// </summary>
     /// <param name="actorID"></param>

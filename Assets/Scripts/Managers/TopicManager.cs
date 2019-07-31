@@ -452,7 +452,7 @@ public class TopicManager : MonoBehaviour
                     CheckForValidTopicTypes();
                     GetTopicType();
                     GetTopicSubType(playerSide);
-                    GetTopic();
+                    GetTopic(playerSide);
                     //repeat process with a reduced minInterval
                     if (turnTopic == null)
                     {
@@ -470,9 +470,6 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
-
-
-
 
     #region CheckTopics
     /// <summary>
@@ -608,7 +605,6 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-
     #region CheckTopicCriteria
     /// <summary>
     /// Check a topic's criteria, returns true if all criteria O.K (or none if first instance), false if any failed
@@ -647,7 +643,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-
+    #region CheckForValidTopicType
     /// <summary>
     /// Check all level topic types to see if they are valid for the Turn. Updates listOfTopicTypesTurn with valid topicTypes
     /// TopicType.side already taken into account with listOfTopicTypesLevel
@@ -694,7 +690,9 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
     }
+    #endregion
 
+    #region ResetTopicAdmin
     /// <summary>
     /// Resets all relevant turn topic data prior to processing for the current turn
     /// </summary>
@@ -712,7 +710,9 @@ public class TopicManager : MonoBehaviour
         listOfSubTypePool.Clear();
         listOfTopicPool.Clear();
     }
+    #endregion
 
+    #region GetTopicType
     /// <summary>
     /// Get topicType for turn Decision
     /// </summary>
@@ -741,7 +741,9 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfTypePool (Empty) for selecting topicType"); }
         }
     }
+    #endregion
 
+    #region GetTopicSubType
     /// <summary>
     /// Get topicSubType for turn Decision
     /// Note: playerSide checked for null by parent method
@@ -814,61 +816,136 @@ public class TopicManager : MonoBehaviour
         }
         //O.K for there to be no valid topic
     }
+    #endregion
 
 
     /// <summary>
     /// Get individual topic for turn Decision
     /// </summary>
-    private void GetTopic()
+    private void GetTopic(GlobalSide playerSide)
     {
         int numOfEntries;
         if (turnTopicSubType != null)
         {
-            List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
-            if (listOfTopics != null)
+            List<Topic> listOfPotentialTopics = new List<Topic>();
+            List<Topic> listOfSubTypeTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
+            if (listOfSubTypeTopics != null)
             {
-                int count = listOfTopics.Count;
-                //shouldn't be empty
-                if (count > 0)
+                switch (turnTopicSubType.name)
                 {
-                    //loop topics
-                    for (int i = 0; i < count; i++)
-                    {
-                        Topic topic = listOfTopics[i];
-                        if (topic != null)
-                        {
-                            //check topic Live (timer and status checks O.K)
-                            if (topic.status == Status.Live)
-                            {
-                                //populate pool based on priorities
-                                numOfEntries = GetNumOfEntries(topic.priority);
-                                if (numOfEntries > 0)
-                                {
-                                    for (int j = 0; j < numOfEntries; j++)
-                                    { listOfTopicPool.Add(topic); }
-                                }
-                            }
-                        }
-                        else { Debug.LogWarningFormat("Invalid topic (Null) for {0}.listOfTopics[{1}]", turnTopicSubType.name, i); }
-                    }
-                    //Select topic
-                    count = listOfTopicPool.Count;
+                    //Standard topics
+                    case "CampaignAlpha":
+                    case "CampaignBravo":
+                    case "CampaignCharlie":
+                    case "ResistanceCampaign":
+                    case "ResistanceGeneral":
+                    case "AuthorityCampaign":
+                    case "AuthorityGeneral":
+                    case "FamilyAlpha":
+                    case "FamilyBravo":
+                    case "FamilyCharlie":
+                        listOfPotentialTopics = listOfSubTypeTopics;
+                        break;
+                    //Dynamic topic
+                    case "ActorPolitic":
+                    case "ActorDistrict":
+                    case "ActorGear":
+                    case "ActorMatch":
+                    case "AuthorityTeam":
+                    case "CitySub":
+                    case "HQSub":
+                        listOfPotentialTopics = listOfSubTypeTopics;
+                        break;
+                    case "ActorContact":
+                        listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
+                        break;
+                }
+                //SubType should have provided a list of topics ready for a random draw
+                if (listOfPotentialTopics != null)
+                {
+                    int count = listOfPotentialTopics.Count;
+                    //shouldn't be empty
                     if (count > 0)
                     {
-                        turnTopic = listOfTopicPool[Random.Range(0, count)];
-                        Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, {1} -> {2} -> {3}{4}", GameManager.instance.turnScript.Turn, turnTopicType.name, turnTopicSubType.name, turnTopic.name, "\n");
+                        //loop topics
+                        for (int i = 0; i < count; i++)
+                        {
+                            Topic topic = listOfPotentialTopics[i];
+                            if (topic != null)
+                            {
+                                //check topic Live (timer and status checks O.K)
+                                if (topic.status == Status.Live)
+                                {
+                                    //populate pool based on priorities
+                                    numOfEntries = GetNumOfEntries(topic.priority);
+                                    if (numOfEntries > 0)
+                                    {
+                                        for (int j = 0; j < numOfEntries; j++)
+                                        { listOfTopicPool.Add(topic); }
+                                    }
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid topic (Null) for {0}.listOfTopics[{1}]", turnTopicSubType.name, i); }
+                        }
+                        //Select topic
+                        count = listOfTopicPool.Count;
+                        if (count > 0)
+                        {
+                            turnTopic = listOfTopicPool[Random.Range(0, count)];
+                            Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, {1} -> {2} -> {3}{4}", GameManager.instance.turnScript.Turn, turnTopicType.name, turnTopicSubType.name, turnTopic.name, "\n");
+                        }
+                        else { Debug.LogWarningFormat("Invalid listOfTopicPool (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
                     }
-                    else { Debug.LogWarningFormat("Invalid listOfTopicPool (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
+                    else { Debug.LogWarningFormat("Invalid listOfTopics (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
                 }
-                else { Debug.LogWarningFormat("Invalid listOfTopics (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
+                else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", turnTopicSubType.name); }
             }
-            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", turnTopicSubType.name); }
+            else { Debug.LogErrorFormat("Invalid listOfSubTypeTopics (Null) for topicSubType \"{0}\"", turnTopicSubType.name); }
         }
         else
         {
             //No topic selected
             Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, No Topic Selected{1}", GameManager.instance.turnScript.Turn, "\n");
         }
+    }
+
+    #endregion
+
+    #region Dynamic Topics
+    //
+    // - - - Select Dynamic Topics
+    //
+
+    /// <summary>
+    /// subType ActorContact template topics selected by actor / motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <returns></returns>
+    private List<Topic> GetActorContactTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide)
+    {
+        List<Topic> listOfTopics = new List<Topic>();
+        //get all active, onMap actors
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        if (listOfActors != null)
+        {
+            if (listOfActors.Count > 0)
+            {
+                //select an actor
+                Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                if (actor != null)
+                {
+                    //get actor motivation
+                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+
+                }
+                else { Debug.LogWarning("Invalid actor (Null) randomly selected from listOfActors for actorContact subType"); }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
+        return listOfTopics;
     }
 
     #endregion

@@ -19,13 +19,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0d68cf3174b30de489760a3d4e7ef89c, type: 2}
   - {fileID: 11400000, guid: aa1a65fa8bdf05f48b8605d716631e36, type: 2}
   - {fileID: 11400000, guid: 826d0423cc5ec5e489a09ef468ce82ab, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
   listOfCriteria: []
   status: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
   turnsLive: 0
+  turnsDone: 0
