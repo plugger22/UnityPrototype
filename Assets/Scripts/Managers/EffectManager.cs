@@ -780,6 +780,11 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) == 0)
                                                 { BuildString(result, "No Active Actors OnMap"); }
                                                 break;
+                                            case "ActiveActorsMinTwo":
+                                                //at least two active, onMap actor preesent
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) > 1)
+                                                { BuildString(result, "Less than two active actors OnMap"); }
+                                                break;
                                             case "ActorCompatibilityNOTZero":
                                                 //at least one actor with Compatibility NOT Zero (+/- 1 or 2)
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.CompatibilityNOTZero, playerSide) == 0)

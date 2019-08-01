@@ -861,14 +861,15 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = listOfSubTypeTopics;
                         break;
                     //Dynamic topic
-                    case "ActorPolitic":
                     case "ActorDistrict":
                     case "ActorGear":
-
                     case "AuthorityTeam":
                     case "CitySub":
                     case "HQSub":
                         listOfPotentialTopics = listOfSubTypeTopics;
+                        break;
+                    case "ActorPolitic":
+                        listOfPotentialTopics = GetActorPoliticTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorContact":
                         listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
@@ -983,17 +984,17 @@ public class TopicManager : MonoBehaviour
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
-    private List<Topic> GetActorMatchTopics(List<Topic> listOfSubTypeTopics,  GlobalSide playerSide, string subTypeName = "Unknown")
+    private List<Topic> GetActorMatchTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //get all active, onMap actors
         List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
-        {          
+        {
             List<Actor> selectionList = new List<Actor>();
             int compatibility;
-            foreach(Actor actor in listOfActors)
+            foreach (Actor actor in listOfActors)
             {
                 if (actor != null)
                 {
@@ -1023,14 +1024,77 @@ public class TopicManager : MonoBehaviour
                     default: Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}", compatibility, actor.actorName, actor.arc.name); break;
                 }
                 //if no entries use entire list by default
-                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName );
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                 //Info tags
                 tagActorID = actor.actorID;
             }
         }
-        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
+        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorMatch subType"); }
         return listOfTopics;
     }
+
+    /// <summary>
+    /// subType ActorPolitic template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <returns></returns>
+    private List<Topic> GetActorPoliticTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //get all active, onMap actors
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        if (listOfActors != null)
+        {
+            List<Actor> selectionList = new List<Actor>();
+            int motivation;
+            int numOfEntries = 0;
+            int numOfActors = 0;
+            foreach (Actor actor in listOfActors)
+            {
+                if (actor != null)
+                {
+                    numOfActors++;
+                    //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
+                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    switch (motivation)
+                    {
+                        case 3: numOfEntries = 2; break;
+                        case 2: numOfEntries = 1; break;
+                        case 1: numOfEntries = 2; break;
+                        case 0: numOfEntries = 3; break;
+                    }
+                    //populate selection pool
+                    for (int i = 0; i < numOfEntries; i++)
+                    { selectionList.Add(actor); }
+
+                }
+                else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
+            }
+            //check at least two actors present (need one actor interacting with another)
+            if (selectionList.Count > 0 && numOfActors > 1)
+            {
+                //randomly select an actor from unweighted list
+                Actor actor = selectionList[Random.Range(0, selectionList.Count)];
+                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                switch (motivation)
+                {
+                    case 3: group = GroupType.Good; break;
+                    case 2: group = GroupType.Neutral; break;
+                    case 1: group = GroupType.Bad; break;
+                    case 0: group = GroupType.VeryBad; break;
+                    default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
+                }
+                //if no entries use entire list by default
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                //Info tags
+                tagActorID = actor.actorID;
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorPolitic subType"); }
+        return listOfTopics;
+    }
+
 
     #endregion
 
@@ -1690,17 +1754,6 @@ public class TopicManager : MonoBehaviour
                         {
                             isValidType = DebugCheckValidType(topicTypeData.Value);
                             builder.AppendFormat(" {0}{1}{2}", DebugDisplayTypeRecord(topicTypeData.Value), isValidType == true ? " *" : "", "\n");
-
-                            /*//look for any matching SubTypes
-                            foreach (var topicSubType in dictOfTopicSubTypes)
-                            {
-                                isValidSubType = false;
-                                if (isValidType == true)
-                                { isValidSubType = DebugCheckValidType(topicSubType.Value); }
-                                if (topicSubType.Value.parent.Equals(topicTypeData.Key, StringComparison.Ordinal) == true)
-                                { builder.AppendFormat("  {0}{1}{2}", DebugDisplayTypeRecord(topicSubType.Value), isValidSubType == true ? " *" : "", "\n"); }
-                            }*/
-
                             //loop subTypes
                             foreach (TopicSubType subType in topicType.listOfSubTypes)
                             {
@@ -1719,9 +1772,7 @@ public class TopicManager : MonoBehaviour
                                 }
                                 else { builder.AppendFormat("  {0} -> Not Valid for this Side{1}", subType.name, "\n"); }
                             }
-
                             builder.AppendLine();
-
                         }
                         else { builder.AppendFormat("  {0} -> Not valid for this side{1}{2}", topicType.name, "\n", "\n"); }
                     }
@@ -1802,6 +1853,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayCriteria()
     {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- listOfTopicTypes -> Criteria{0}", "\n");
         //listOfTopicTypes
@@ -1810,13 +1862,28 @@ public class TopicManager : MonoBehaviour
         {
             foreach (TopicType topicType in listOfTopicTypes)
             {
-                builder.AppendFormat("{0} {1}, priority: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minInterval, "\n");
+                builder.AppendFormat("{0} {1}, pr: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minInterval, "\n");
                 if (topicType.listOfCriteria.Count > 0)
                 {
                     foreach (Criteria criteria in topicType.listOfCriteria)
-                    { builder.AppendFormat("  criteria: \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                    { builder.AppendFormat("    \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
                 }
                 else { builder.AppendFormat("No criteria{0}", "\n"); }
+                //loop subTypes
+                foreach (TopicSubType subType in topicType.listOfSubTypes)
+                {
+                    //needs to be the correct side
+                    if (subType.side.level == playerSide.level || subType.side.level == 3)
+                    {
+                        builder.AppendFormat("  -{0}, pr: {1}, minInt {2}{3}", subType.name, subType.priority.name, subType.minInterval, "\n");
+                        if (subType.listOfCriteria.Count > 0)
+                        {
+                            foreach (Criteria criteria in subType.listOfCriteria)
+                            { builder.AppendFormat("    \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                        }
+                    }
+                    else { builder.AppendFormat("  -{0} -> Not Valid for this Side{1}", subType.name, "\n"); }
+                }
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }

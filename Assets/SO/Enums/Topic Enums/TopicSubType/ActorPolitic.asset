@@ -13,8 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Actor Politics
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
-  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   minIntervalFactor: 2
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: a49d093489cbada45979e7d878437939, type: 2}
   minInterval: 4

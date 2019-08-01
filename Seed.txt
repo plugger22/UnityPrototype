@@ -441,3 +441,115 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 12668 -> Thursday, 1 August 2019 12:17 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 12668 -> Thursday, 1 August 2019 2:24 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorGear"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:921)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorGear"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:921)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorGear"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:921)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicType (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1450)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topic (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1501)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorGear"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:921)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:921)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicType (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1450)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorDistrict" has MISMATCH with topicType parent (is Actor, should be Family)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1478)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topic (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1501)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:921)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorPolitic" has MISMATCH with topicType parent (is Actor, should be Resistance)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1478)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topic "ActPol1" has MISMATCH with topicType parent (is Actor, should be Resistance)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1496)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 12668 -> Thursday, 1 August 2019 2:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12668 -> Thursday, 1 August 2019 2:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2886 -> Thursday, 1 August 2019 2:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6502 -> Thursday, 1 August 2019 2:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40797 -> Thursday, 1 August 2019 2:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22247 -> Thursday, 1 August 2019 2:48 PM
+City seed 5678 -> London, United Kingdom
