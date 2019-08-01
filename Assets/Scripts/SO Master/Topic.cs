@@ -18,6 +18,8 @@ public class Topic : ScriptableObject
     public TopicType type;
     [Tooltip("Topic SubType that the decision is associated with")]
     public TopicSubType subType;
+
+    [Header("Priority")]
     [Tooltip("Overall priority for this topic when being placed in the selection pool")]
     public GlobalChance priority;
 
@@ -32,8 +34,12 @@ public class Topic : ScriptableObject
     [Header("Criteria")]
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
+
+    [Header("Profile")]
     [Tooltip("Profile with timer and repeat data")]
     public TopicProfile profile;
+
+    [Header("Criteria")]
     [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 

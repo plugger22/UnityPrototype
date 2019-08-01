@@ -2,6 +2,7 @@
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,6 +15,10 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Minimum number of turns before topicType/SubTypes can be chosen again")]
     [Range(0, 10)] public int minIntervalGlobal = 2;
 
+    //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
+    private int tagActorID;
+
+    //collections (local)
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
     private List<TopicType> listOfTypePool = new List<TopicType>();                                     //turn selection pool for topicTypes (priority based)
     private List<TopicSubType> listOfSubTypePool = new List<TopicSubType>();                            //turn selection pool for topicSubTypes (priority based)
@@ -38,12 +43,14 @@ public class TopicManager : MonoBehaviour
             case GameState.NewInitialisation:
                 SubInitialiseStartUp();
                 SubInitialiseLevelStart();
+                /*SubInitialiseFastAccess();*/
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseStartUp();
+                /*SubInitialiseFastAccess();*/
                 break;
             case GameState.LoadGame:
                 //do nothing
@@ -118,6 +125,12 @@ public class TopicManager : MonoBehaviour
         GameManager.instance.dataScript.ResetTopics();
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
         UpdateTopicPools();
+    }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
     }
     #endregion
 
@@ -433,7 +446,6 @@ public class TopicManager : MonoBehaviour
     //  - - - Select Topic - - -
     //   
 
-
     /// <summary>
     /// Selects a topic for the turn (there will always be one)
     /// </summary>
@@ -704,6 +716,8 @@ public class TopicManager : MonoBehaviour
         turnTopicType = null;
         turnTopicSubType = null;
         turnTopic = null;
+        //info tags
+        tagActorID = -1;
         //empty collections
         listOfTopicTypesTurn.Clear();
         listOfTypePool.Clear();
@@ -818,7 +832,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-
+    #region GetTopic
     /// <summary>
     /// Get individual topic for turn Decision
     /// </summary>
@@ -850,7 +864,7 @@ public class TopicManager : MonoBehaviour
                     case "ActorPolitic":
                     case "ActorDistrict":
                     case "ActorGear":
-                    case "ActorMatch":
+
                     case "AuthorityTeam":
                     case "CitySub":
                     case "HQSub":
@@ -858,6 +872,9 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "ActorContact":
                         listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide);
+                        break;
+                    case "ActorMatch":
+                        listOfPotentialTopics = GetActorMatchTopics(listOfSubTypeTopics, playerSide);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
@@ -911,6 +928,7 @@ public class TopicManager : MonoBehaviour
             Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, No Topic Selected{1}", GameManager.instance.turnScript.Turn, "\n");
         }
     }
+    #endregion
 
     #endregion
 
@@ -926,6 +944,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private List<Topic> GetActorContactTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide)
     {
+        GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //get all active, onMap actors
         List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
@@ -939,12 +958,38 @@ public class TopicManager : MonoBehaviour
                 {
                     //get actor motivation
                     int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-
+                    switch (motivation)
+                    {
+                        case 3: group = GroupType.Good; break;
+                        case 2: group = GroupType.Neutral; break;
+                        case 1: group = GroupType.Bad; break;
+                        case 0: group = GroupType.VeryBad; break;
+                        default:
+                            Debug.LogWarningFormat("Unrecognised motivation \"[0}\" for actor {1}, {2}", motivation, actor.actorName, actor.arc.name);
+                            break;
+                    }
+                    //if no entries use entire list by default
+                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group);
+                    //Info tags
+                    tagActorID = actor.actorID;
                 }
                 else { Debug.LogWarning("Invalid actor (Null) randomly selected from listOfActors for actorContact subType"); }
             }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
+        return listOfTopics;
+    }
+
+    /// <summary>
+    /// subType ActorMatch template topics selected by actor compatibility (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <returns></returns>
+    private List<Topic> GetActorMatchTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide)
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
         return listOfTopics;
     }
 
@@ -1361,6 +1406,7 @@ public class TopicManager : MonoBehaviour
     // - - - Utilities - - -
     //
 
+    #region AddTopicTypeToList
     /// <summary>
     /// add a topicType item to a list, only if not present already (uses TopicType.name for dupe checks)
     /// </summary>
@@ -1386,7 +1432,9 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid TopicType list (Null)"); }
     }
+    #endregion
 
+    #region GetNumOfEntries
     /// <summary>
     /// Returns the number of entries of a TopicType/SubType to place into a selection pool based on the items priority. Returns 0 if a problem.
     /// </summary>
@@ -1419,6 +1467,52 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid priority (Null)"); }
         return numOfEntries;
     }
+    #endregion
+
+    #region GetTopicGroup
+    /// <summary>
+    /// Returns a list Of topics filetered out of the inputList by group type, eg. Good / Bad, etc. If Neutral then all of inputList is used, if no topic found of the correct group then all used again.
+    /// Returns EMPTY list if a problem
+    /// </summary>
+    /// <param name="inputList"></param>
+    /// <param name="group"></param>
+    /// <returns></returns>
+    private List<Topic> GetTopicGroup(List<Topic> inputList, GroupType group)
+    {
+        List<Topic> listOfTopics = new List<Topic>();
+        if (inputList != null)
+        {
+            switch (group)
+            {
+                case GroupType.Good:
+                    //high motivation, good group
+                    listOfTopics.AddRange(inputList.Where(t => t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
+                    break;
+                case GroupType.Neutral:
+                    //neutral motivation, use all
+                    listOfTopics.AddRange(inputList);
+                    break;
+                case GroupType.Bad:
+                case GroupType.VeryBad:
+                    //low motivation, bad group
+                    listOfTopics.AddRange(inputList.Where(t => t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
+                    break;
+            }
+            //if no entries use entire list by default
+            if (listOfTopics.Count == 0)
+            {
+                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for GroupType \"{0}\", All topics used{1}", group, "\n");
+                listOfTopics.AddRange(inputList);
+            }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: {0} topics found for group {1}{2}", listOfTopics.Count, group, "\n"); }
+        }
+        else { Debug.LogError("Invalid inputList (Null)"); }
+        return listOfTopics;
+    }
+    #endregion
 
     #region CheckPlayerStatus
     /// <summary>
@@ -1472,34 +1566,6 @@ public class TopicManager : MonoBehaviour
         return isValid;
     }
     #endregion
-
-    /// <summary>
-    /// returns true if a valid topicType (must pass minInterval and global minInterval checks) -> Used for DebugDisplayTopicTypes to show a '*' or not
-    /// </summary>
-    /// <param name="topicType"></param>
-    /// <returns></returns>
-    private bool DebugCheckValidType(TopicTypeData data)
-    {
-        int turn = GameManager.instance.turnScript.Turn;
-        if (data != null)
-        {
-            if (data.minInterval == 0)
-            {
-                //global minInterval applies
-                if (turn - data.turnLastUsed >= minIntervalGlobal)
-                { return true; }
-            }
-            else
-            {
-                //local minInterval applies
-                if (turn - data.turnLastUsed >= data.minInterval)
-                { return true; }
-            }
-        }
-        else { Debug.LogError("Invalid topictypeData (Null)"); }
-        return false;
-    }
-
 
     #endregion
 
@@ -1841,6 +1907,33 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopics (Null)"); }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns true if a valid topicType (must pass minInterval and global minInterval checks) -> Used for DebugDisplayTopicTypes to show a '*' or not
+    /// </summary>
+    /// <param name="topicType"></param>
+    /// <returns></returns>
+    private bool DebugCheckValidType(TopicTypeData data)
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        if (data != null)
+        {
+            if (data.minInterval == 0)
+            {
+                //global minInterval applies
+                if (turn - data.turnLastUsed >= minIntervalGlobal)
+                { return true; }
+            }
+            else
+            {
+                //local minInterval applies
+                if (turn - data.turnLastUsed >= data.minInterval)
+                { return true; }
+            }
+        }
+        else { Debug.LogError("Invalid topictypeData (Null)"); }
+        return false;
     }
 
     #endregion

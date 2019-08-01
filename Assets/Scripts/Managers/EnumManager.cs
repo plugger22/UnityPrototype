@@ -39,7 +39,6 @@
         DebugAI, DebugPlayer,
         HackingRebootInProgress, HackingInsufficientRenown, HackingInitialising, HackingIndisposed, HackingOffline
     }
-
    
     //
     // - - - Connections - - - 
@@ -69,10 +68,12 @@
     public enum ActivityUI { None, Time, Count}
 
     //
-    // - - - Decisions and Targets - - -
+    // - - - Topics and Targets - - -
     //
-    public enum Status { Dormant, Active, Live, Outstanding, Done }
-    public enum Activation { Low, Medium, High }                                     //chance of becoming 'Live' once 'Active'
+    public enum Status { Dormant, Active, Live, Outstanding, Done }     //target or topic status (Outstanding applies only targets)
+    public enum Activation { Low, Medium, High }                        //chance of Target becoming 'Live' once 'Active'
+    public enum GroupType { VeryBad, Bad, Neutral, Good}                   //Topic group type (NOTE: DO NOT CHANGE -> order specific) 'VeryBad' is another version of 'Bad'. Maps to actor Motivation (0 -> 3)
+
 
     //
     // - - - Actors - - -
