@@ -1752,6 +1752,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38ccec239c050914e96876d372b0710a, type: 2}
   - {fileID: 11400000, guid: 77d73565e6e4a1a4895bb621ac2eca8c, type: 2}
   - {fileID: 11400000, guid: d3c01ccf34687824f86782068af7477a, type: 2}
+  - {fileID: 11400000, guid: 9d1b0ca855dce50458ba5e23196dbcc8, type: 2}
+  - {fileID: 11400000, guid: b71e24748bb16c64ebe85b343d61b798, type: 2}
+  - {fileID: 11400000, guid: ceb06324bd1f9744ba5fc10119dd3dee, type: 2}
+  - {fileID: 11400000, guid: 026cfff3b098d084d8a2bb75a0db2f9c, type: 2}
+  - {fileID: 11400000, guid: 62f685f892359434f95747aaef8cc54f, type: 2}
+  - {fileID: 11400000, guid: 983cddb287215ac46b1f7b81f600dd15, type: 2}
   arrayOfTopicProfiles:
   - {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   - {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
@@ -2636,7 +2642,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

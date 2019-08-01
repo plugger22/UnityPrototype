@@ -627,3 +627,15 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 
 Dev seed 24640 -> Thursday, 1 August 2019 4:55 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 27360 -> Thursday, 1 August 2019 5:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27121 -> Thursday, 1 August 2019 5:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 659 -> Thursday, 1 August 2019 5:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7565 -> Thursday, 1 August 2019 5:54 PM
+City seed 5678 -> London, United Kingdom

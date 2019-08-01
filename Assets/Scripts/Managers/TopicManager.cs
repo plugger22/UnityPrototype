@@ -863,11 +863,14 @@ public class TopicManager : MonoBehaviour
                         break;
                     //Dynamic topic
                     case "ActorDistrict":
-                    case "ActorGear":
+
                     case "AuthorityTeam":
                     case "CitySub":
                     case "HQSub":
                         listOfPotentialTopics = listOfSubTypeTopics;
+                        break;
+                    case "ActorGear":
+                        listOfPotentialTopics = GetActorGearTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorPolitic":
                         listOfPotentialTopics = GetActorPoliticTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
@@ -1026,6 +1029,14 @@ public class TopicManager : MonoBehaviour
                 }
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                //Debug
+                if (listOfTopics.Count == 0)
+                {
+                    Debug.LogWarning("ActorMatch count 0");
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorMatchTopic: listOfSubTopics.Count {0}, group {1}{2}", listOfSubTypeTopics.Count, group, "\n");
+                    foreach(Topic topic in listOfSubTypeTopics)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorMatchTopic: topic \"{0}\", status {1}{2}", topic.name, topic.status, "\n"); }
+                }
                 //Info tags
                 tagActorID = actor.actorID;
             }
@@ -1093,6 +1104,67 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorPolitic subType"); }
+        return listOfTopics;
+    }
+
+    /// <summary>
+    /// subType ActorGear template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <returns></returns>
+    private List<Topic> GetActorGearTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //get all active, onMap actors
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        if (listOfActors != null)
+        {
+            List<Actor> selectionList = new List<Actor>();
+            int motivation;
+            int numOfEntries = 0;
+            int numOfActors = 0;
+            foreach (Actor actor in listOfActors)
+            {
+                if (actor != null)
+                {
+                    numOfActors++;
+                    //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
+                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    switch (motivation)
+                    {
+                        case 3: numOfEntries = 2; break;
+                        case 2: numOfEntries = 1; break;
+                        case 1: numOfEntries = 2; break;
+                        case 0: numOfEntries = 3; break;
+                    }
+                    //populate selection pool
+                    for (int i = 0; i < numOfEntries; i++)
+                    { selectionList.Add(actor); }
+                }
+                else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
+            }
+            //check at least two actors present (need one actor interacting with another)
+            if (selectionList.Count > 0 && numOfActors > 1)
+            {
+                //randomly select an actor from unweighted list
+                Actor actor = selectionList[Random.Range(0, selectionList.Count)];
+                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                switch (motivation)
+                {
+                    case 3: group = GroupType.Good; break;
+                    case 2: group = GroupType.Neutral; break;
+                    case 1: group = GroupType.Bad; break;
+                    case 0: group = GroupType.VeryBad; break;
+                    default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
+                }
+                //if no entries use entire list by default
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                //Info tags
+                tagActorID = actor.actorID;
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorGear subType"); }
         return listOfTopics;
     }
 
@@ -1921,7 +1993,8 @@ public class TopicManager : MonoBehaviour
                                 if (listOfTopics.Count > 0)
                                 {
                                     foreach (Topic topic in listOfTopics)
-                                    { builder.AppendFormat("     {0}, {1} x Op, St: {2}, Pr: {3}{4}", topic.name, topic.listOfOptions?.Count, topic.status, topic.priority.name, "\n"); }
+                                    { builder.AppendFormat("     {0}, {1} x Op, St: {2}, Pr: {3}, Gr: {4}{5}", topic.name, topic.listOfOptions?.Count, topic.status, 
+                                        topic.priority.name, topic.group.name, "\n"); }
                                 }
                                 else { builder.AppendFormat("    None found{0}", "\n"); }
                             }
