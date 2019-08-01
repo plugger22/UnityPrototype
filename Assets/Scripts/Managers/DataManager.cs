@@ -4306,6 +4306,40 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns number of active, onMap actors, for the specified side, who meet the special enum criteria, Zero if a problem
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
+    public int CheckNumOfActiveActorsSpecial(ActorCheck check, GlobalSide side)
+    {
+        int numOfActors = 0;
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            if (arrayOfActorsPresent[side.level, i] == true)
+            {
+                Actor actor = arrayOfActors[side.level, i];
+                if (actor != null)
+                {
+                    if (actor.Status == ActorStatus.Active)
+                    {
+                        switch (check)
+                        {
+                            case ActorCheck.CompatibilityNOTZero:
+                                //actor with compatibility anything other than Zero
+                                if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
+                                { numOfActors++;}
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for {0}, slotID {1}", side.name, i); }
+            }
+        }
+        return numOfActors;
+    }
+
+    /// <summary>
     /// returns the number of OnMap actors (status irrelevant) for a side. Returns Zero if none.
     /// </summary>
     /// <param name="side"></param>

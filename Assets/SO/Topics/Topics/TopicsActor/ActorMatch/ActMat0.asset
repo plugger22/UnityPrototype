@@ -30,5 +30,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 4
   turnsActive: 1
-  turnsLive: 28
+  turnsLive: 21
   turnsDone: 0

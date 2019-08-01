@@ -817,6 +817,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 17f4bef26b5a17e468f09e7a9029972e, type: 2}
   - {fileID: 11400000, guid: cd489508540b15f44b51045d9933098a, type: 2}
   - {fileID: 11400000, guid: b2c3310478d5c054581efe8181672a23, type: 2}
+  - {fileID: 11400000, guid: b5e0c4e5d9b1a0f4c9bddd3341d34e05, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -884,6 +885,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1295a7c0190520b4f9931e84c2efa4ee, type: 2}
   - {fileID: 11400000, guid: b26c01ff3d44ac64dbdb1f07db2290ef, type: 2}
   - {fileID: 11400000, guid: 4fed36488f3755e4088f7ac75ee8d140, type: 2}
+  - {fileID: 11400000, guid: 26765bd489d5b11419b1f3f3adab9577, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -2622,7 +2624,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 12668
   autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1

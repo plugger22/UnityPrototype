@@ -386,3 +386,58 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 33849 -> Thursday, 1 August 2019 10:21 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 65355 -> Thursday, 1 August 2019 11:44 AM
+WARNING [Val] ValidateSO: MISMATCH on Criteria, array 48, assets 49 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Criteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1351)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1194)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	WARNING [Val] ValidateSO: MISMATCH on EffectCriteria, array 46, assets 47 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectCriteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1351)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1198)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "ActorMatch"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:917)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 8473 -> Thursday, 1 August 2019 11:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12668 -> Thursday, 1 August 2019 12:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "ActorMatch"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:917)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorContact" has MISMATCH with topicType parent (is Actor, should be Family)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1413)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topic "ActCon1" has MISMATCH with topicType parent (is Actor, should be Family)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1431)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:478)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 12668 -> Thursday, 1 August 2019 12:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12668 -> Thursday, 1 August 2019 12:17 PM
+City seed 5678 -> London, United Kingdom

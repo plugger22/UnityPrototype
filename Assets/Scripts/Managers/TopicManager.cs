@@ -643,7 +643,7 @@ public class TopicManager : MonoBehaviour
                 //criteria check FAILED
                 isCheck = false;
                 //generate message explaining why criteria failed -> debug only, spam otherwise
-                Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: topic \"{0}\" {1} Criteria check failed{2}", topic.name, criteriaCheck, "\n");
+                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n");
             }
         }
         else
@@ -871,10 +871,10 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = listOfSubTypeTopics;
                         break;
                     case "ActorContact":
-                        listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide);
+                        listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorMatch":
-                        listOfPotentialTopics = GetActorMatchTopics(listOfSubTypeTopics, playerSide);
+                        listOfPotentialTopics = GetActorMatchTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
@@ -942,7 +942,7 @@ public class TopicManager : MonoBehaviour
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
-    private List<Topic> GetActorContactTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide)
+    private List<Topic> GetActorContactTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
@@ -964,12 +964,10 @@ public class TopicManager : MonoBehaviour
                         case 2: group = GroupType.Neutral; break;
                         case 1: group = GroupType.Bad; break;
                         case 0: group = GroupType.VeryBad; break;
-                        default:
-                            Debug.LogWarningFormat("Unrecognised motivation \"[0}\" for actor {1}, {2}", motivation, actor.actorName, actor.arc.name);
-                            break;
+                        default: Debug.LogWarningFormat("Unrecognised motivation \"[0}\" for actor {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
                     }
                     //if no entries use entire list by default
-                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group);
+                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     //Info tags
                     tagActorID = actor.actorID;
                 }
@@ -985,11 +983,52 @@ public class TopicManager : MonoBehaviour
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
-    private List<Topic> GetActorMatchTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide)
+    private List<Topic> GetActorMatchTopics(List<Topic> listOfSubTypeTopics,  GlobalSide playerSide, string subTypeName = "Unknown")
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-
+        //get all active, onMap actors
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        if (listOfActors != null)
+        {          
+            List<Actor> selectionList = new List<Actor>();
+            int compatibility;
+            foreach(Actor actor in listOfActors)
+            {
+                if (actor != null)
+                {
+                    //filter actors for compatibility != 0
+                    compatibility = actor.GetPersonality().GetCompatibilityWithPlayer();
+                    if (compatibility != 0)
+                    {
+                        //seed actor selection pool based on ABS(compatility), eg. 2 entries for compatibility +/-2 and 1 for compability +/-1
+                        for (int i = 0; i < Mathf.Abs(compatibility); i++)
+                        { selectionList.Add(actor); }
+                    }
+                }
+                else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
+            }
+            //check at least one entry in selectionList
+            if (selectionList.Count > 0)
+            {
+                //randomly select an actor from compatibility weighted list
+                Actor actor = selectionList[Random.Range(0, selectionList.Count)];
+                compatibility = actor.GetPersonality().GetCompatibilityWithPlayer();
+                switch (compatibility)
+                {
+                    case 2: group = GroupType.Good; break;
+                    case 1: group = GroupType.Good; break;
+                    case -1: group = GroupType.Bad; break;
+                    case -2: group = GroupType.VeryBad; break;
+                    default: Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}", compatibility, actor.actorName, actor.arc.name); break;
+                }
+                //if no entries use entire list by default
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName );
+                //Info tags
+                tagActorID = actor.actorID;
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
         return listOfTopics;
     }
 
@@ -1471,13 +1510,13 @@ public class TopicManager : MonoBehaviour
 
     #region GetTopicGroup
     /// <summary>
-    /// Returns a list Of topics filetered out of the inputList by group type, eg. Good / Bad, etc. If Neutral then all of inputList is used, if no topic found of the correct group then all used again.
+    /// Returns a list Of Live topics filtered out of the inputList by group type, eg. Good / Bad, etc. If Neutral then all of inputList is used, if no topic found of the correct group then all used again.
     /// Returns EMPTY list if a problem
     /// </summary>
     /// <param name="inputList"></param>
     /// <param name="group"></param>
     /// <returns></returns>
-    private List<Topic> GetTopicGroup(List<Topic> inputList, GroupType group)
+    private List<Topic> GetTopicGroup(List<Topic> inputList, GroupType group, string subTypeName = "Unknown")
     {
         List<Topic> listOfTopics = new List<Topic>();
         if (inputList != null)
@@ -1486,16 +1525,16 @@ public class TopicManager : MonoBehaviour
             {
                 case GroupType.Good:
                     //high motivation, good group
-                    listOfTopics.AddRange(inputList.Where(t => t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
+                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
                     break;
                 case GroupType.Neutral:
-                    //neutral motivation, use all
-                    listOfTopics.AddRange(inputList);
+                    //neutral motivation, use all Active topics
+                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
                     break;
                 case GroupType.Bad:
                 case GroupType.VeryBad:
                     //low motivation, bad group
-                    listOfTopics.AddRange(inputList.Where(t => t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
+                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
@@ -1504,10 +1543,10 @@ public class TopicManager : MonoBehaviour
             //if no entries use entire list by default
             if (listOfTopics.Count == 0)
             {
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for GroupType \"{0}\", All topics used{1}", group, "\n");
+                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n");
                 listOfTopics.AddRange(inputList);
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: {0} topics found for group {1}{2}", listOfTopics.Count, group, "\n"); }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\" group {2}{3}", listOfTopics.Count, subTypeName, group, "\n"); }
         }
         else { Debug.LogError("Invalid inputList (Null)"); }
         return listOfTopics;
