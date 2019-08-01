@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: GearCommonAvailable
+  m_Name: GearAvailableUnique
   m_EditorClassIdentifier: 
-  description: At leastt one item of common gear available
-  effectCriteria: {fileID: 11400000, guid: d8a6a1189c5eb9b429f5ef20e93faaf6, type: 2}
+  description: At leastt one item of unique gear available
+  effectCriteria: {fileID: 11400000, guid: c2c85b1e868de1646b8e69268e7e6ceb, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 00cda76d6950a004982fd85fb714112a, type: 2}

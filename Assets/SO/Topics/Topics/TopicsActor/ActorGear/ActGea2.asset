@@ -9,23 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActGea0
+  m_Name: ActGea2
   m_EditorClassIdentifier: 
-  tag: Actor Gear Common 0
+  tag: Actor Gear Rare 2
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
-  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: aa9025954ff4a9141832fec24a93b748, type: 2}
-  - {fileID: 11400000, guid: ef283a2dc3169c1499f840ccb475e0aa, type: 2}
-  notes: Actor sources some Common gear that will go into Player's inventory
+  - {fileID: 11400000, guid: 7b5f6123b272eb84c8a103de7309195c, type: 2}
+  notes: Actor sources some Rare gear that will go into Player's inventory
   listOfOptions:
-  - {fileID: 11400000, guid: 85fdfdb0fd7fcee4b82365675db02c3e, type: 2}
-  - {fileID: 11400000, guid: c26631bfe9b21d64ea3d5bddc33c8610, type: 2}
-  - {fileID: 11400000, guid: 2e9aec2c78e4f2347bd41e4fd9fca828, type: 2}
+  - {fileID: 11400000, guid: 9d1b0ca855dce50458ba5e23196dbcc8, type: 2}
+  - {fileID: 11400000, guid: b71e24748bb16c64ebe85b343d61b798, type: 2}
+  - {fileID: 11400000, guid: ceb06324bd1f9744ba5fc10119dd3dee, type: 2}
   status: 0
   isCurrent: 1
   timerStart: 5

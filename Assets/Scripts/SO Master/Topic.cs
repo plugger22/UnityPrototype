@@ -23,10 +23,6 @@ public class Topic : ScriptableObject
     [Tooltip("Overall priority for this topic when being placed in the selection pool")]
     public GlobalChance priority;
 
-    [Header("Options")]
-    [Tooltip("Options for the decision. Max 4")]
-    public List<TopicOption> listOfOptions;
-
     [Header("Group")]
     [Tooltip("Is it in the Good, Nuetral or Bad group of topics for that SubType? If not relevant use Neutral")]
     public GlobalType group;
@@ -42,6 +38,14 @@ public class Topic : ScriptableObject
     [Header("Criteria")]
     [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
+
+    [Header("Content")]
+    [Tooltip("Designer notes, not used inGame")]
+    [TextArea] public string notes;
+
+    [Header("Options")]
+    [Tooltip("Options for the decision. Max 4")]
+    public List<TopicOption> listOfOptions;
 
     #region Save Data Compatible
     [HideInInspector] public Status status = Status.Dormant;
