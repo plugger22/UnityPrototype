@@ -64,6 +64,8 @@ namespace gameAPI
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         #endregion
 
+        private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
+
         //cached trait effects (public for serialization reasons)
         [HideInInspector] public string actorStressNone;
         [HideInInspector] public string actorCorruptNone;
@@ -1116,6 +1118,41 @@ namespace gameAPI
 
         public Personality GetPersonality()
         { return personality; }
+
+        //
+        // - - - Node Actions
+        //
+
+        /// <summary>
+        /// add a nodeActionData package to list
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddNodeAction(NodeActionData data)
+        {
+            if (data != null)
+            { listOfNodeActions.Add(data); }
+            else { Debug.LogError("Invalid nodeDataAction (Null)"); }
+        }
+
+        /// <summary>
+        /// get number of nodeActionData records in list
+        /// </summary>
+        /// <returns></returns>
+        public int CheckNumOFNodeActions()
+        { return listOfNodeActions.Count; }
+
+        /// <summary>
+        /// Get most recent nodeActionData package (record at end of list)
+        /// </summary>
+        /// <returns></returns>
+        public NodeActionData GetMostRecentNodeAction()
+        { return listOfNodeActions[listOfNodeActions.Count - 1]; }
+
+        /// <summary>
+        /// Delete most recent nodeActionData package (record at end of list)
+        /// </summary>
+        public void RemoveMostRecentNodeAction()
+        { listOfNodeActions.RemoveAt(listOfNodeActions.Count - 1); }
 
 
 

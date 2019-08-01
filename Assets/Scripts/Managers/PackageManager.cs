@@ -700,5 +700,16 @@ namespace packageAPI
         public int timesUsedCampaign;               //cumulative total for campaign
     }
 
+    /// <summary>
+    /// every Node action by player or actor generates a node action data package
+    /// </summary>
+    [System.Serializable]
+    public class NodeActionData
+    {
+        public int turn;
+        public int actorID;
+        public int nodeID;
+    }
+
     //new classes above here
 }

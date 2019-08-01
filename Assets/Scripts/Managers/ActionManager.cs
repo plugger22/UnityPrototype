@@ -383,6 +383,16 @@ public class ActionManager : MonoBehaviour
                                 }
                                 else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                             }
+                            //NodeActionData package
+                            NodeActionData nodeActionData = new NodeActionData()
+                            {
+                                turn = GameManager.instance.turnScript.Turn,
+                                actorID = actor.actorID,
+                                nodeID = node.nodeID
+                            };
+                            //add to actor's personal list
+                            actor.AddNodeAction(nodeActionData);
+                            Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
                             //texts
                             outcomeDetails.textTop = builderTop.ToString();
                             outcomeDetails.textBottom = builderBottom.ToString();
