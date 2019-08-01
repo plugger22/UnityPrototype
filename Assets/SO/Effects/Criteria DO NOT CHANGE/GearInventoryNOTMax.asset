@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: GearAvailable
+  m_Name: GearInventoryNOTMax
   m_EditorClassIdentifier: 
-  description: 
-  effectCriteria: {fileID: 11400000, guid: d8a6a1189c5eb9b429f5ef20e93faaf6, type: 2}
+  description: Space remaining in Gear Inventory
+  effectCriteria: {fileID: 11400000, guid: e2c5c169cb3507540905ac2ac14667c8, type: 2}
   comparison: {fileID: 0}
-  apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
+  apply: {fileID: 11400000, guid: 00cda76d6950a004982fd85fb714112a, type: 2}

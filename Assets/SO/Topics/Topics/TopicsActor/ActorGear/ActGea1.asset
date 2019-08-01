@@ -22,7 +22,8 @@ MonoBehaviour:
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5f71194adb918384c8c90213d3627864, type: 2}
   status: 2
   isCurrent: 1
   timerStart: 0
@@ -30,5 +31,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 33
+  turnsLive: 24
   turnsDone: 0

@@ -728,35 +728,6 @@ public class EffectManager : MonoBehaviour
                                                     if (val == 0)
                                                     { BuildString(result, "Secrets Zero"); }
                                                     break;
-                                                case "NumGearMax":
-                                                    //Note: effect criteria value is ignored in this case
-                                                    val = GameManager.instance.gearScript.maxNumOfGear;
-                                                    compareTip = ComparisonCheck(val, GameManager.instance.playerScript.CheckNumOfGear(), criteria.comparison);
-                                                    if (compareTip != null)
-                                                    { BuildString(result, "maxxed Gear Allowance"); }
-                                                    break;
-                                                case "GearAvailability":
-                                                    //checks to see if at least 1 piece of unused common gear is available
-                                                    List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
-                                                    if (tempCommonGear.Count > 0)
-                                                    {
-                                                        //remove from lists any gear that the player currently has
-                                                        List<string> tempPlayerGear = new List<string>(GameManager.instance.playerScript.GetListOfGear());
-                                                        string gearName;
-                                                        if (tempPlayerGear.Count > 0)
-                                                        {
-                                                            for (int i = 0; i < tempPlayerGear.Count; i++)
-                                                            {
-                                                                gearName = tempPlayerGear[i];
-                                                                if (tempCommonGear.Exists(x => x == gearName) == true)
-                                                                { tempCommonGear.Remove(gearName); }
-                                                            }
-                                                        }
-                                                        if (tempCommonGear.Count == 0)
-                                                        { BuildString(result, "No Gear available"); }
-                                                    }
-                                                    else { BuildString(result, "No Gear available"); }
-                                                    break;
                                                 default:
                                                     BuildString(result, "Error!");
                                                     Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
@@ -789,6 +760,48 @@ public class EffectManager : MonoBehaviour
                                                 //at least one actor with Compatibility NOT Zero (+/- 1 or 2)
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.CompatibilityNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No Compatibility NOT Zero Actors OnMap"); }
+                                                break;
+                                        }
+                                        break;
+                                    //
+                                    // - - - Gear Inventory - - -
+                                    //
+                                    case "GearInventory":
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "GearInventoryMin":
+                                                //at least one item in player's gear inventory
+                                                if (GameManager.instance.playerScript.CheckNumOfGear() == 0)
+                                                { BuildString(result, "no gear in Inventory"); }
+                                                break;
+                                            case "GearInventoryNOTMax":
+                                                //space remaining in Player's gear inventory
+                                                if (GameManager.instance.playerScript.CheckNumOfGear() < GameManager.instance.gearScript.maxNumOfGear)
+                                                { BuildString(result, "maxxed Gear Allowance"); }
+                                                break;
+                                            case "GearCommonAvailability":
+                                                //checks to see if at least 1 piece of unused common gear is available
+                                                List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
+                                                if (tempCommonGear.Count > 0)
+                                                {
+                                                    /* EDIT -> Redundant code as gear in inventory has already been removed from list (99% sure of this, tested it)
+                                                     * 
+                                                     * //remove from lists any gear that the player currently has
+                                                    List<string> tempPlayerGear = new List<string>(GameManager.instance.playerScript.GetListOfGear());
+                                                    string gearName;
+                                                    if (tempPlayerGear.Count > 0)
+                                                    {
+                                                        for (int i = 0; i < tempPlayerGear.Count; i++)
+                                                        {
+                                                            gearName = tempPlayerGear[i];
+                                                            if (tempCommonGear.Exists(x => x == gearName) == true)
+                                                            { tempCommonGear.Remove(gearName); }
+                                                        }
+                                                    }
+                                                    if (tempCommonGear.Count == 0)
+                                                    { BuildString(result, "No Gear available"); }*/
+                                                }
+                                                else { BuildString(result, "no Common Gear available"); }
                                                 break;
                                         }
                                         break;

@@ -14,7 +14,7 @@ MonoBehaviour:
   description: Allows choice of item
   ongoingTooltip: 
   listOfCriteria:
-  - {fileID: 11400000, guid: bf0265e4a0bf2ae49a7898515c615e18, type: 2}
+  - {fileID: 11400000, guid: aa9025954ff4a9141832fec24a93b748, type: 2}
   - {fileID: 11400000, guid: ef283a2dc3169c1499f840ccb475e0aa, type: 2}
   - {fileID: 11400000, guid: 2ea1983928c01b246905066f0a3c0fa1, type: 2}
   apply: {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}
