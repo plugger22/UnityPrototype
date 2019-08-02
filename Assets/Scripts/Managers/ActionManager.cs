@@ -384,44 +384,48 @@ public class ActionManager : MonoBehaviour
                                 }
                                 else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                             }
-                            //NodeActionData package -> get type
-                            NodeAction nodeAction = NodeAction.None;
-                            switch(actor.arc.name)
+                            //only applies to resistance (authority node actions, eg. insert team, go through here and thence to TeamManager.cs -> MoveTeam via EffectManager.cs -> ProcessEffect)
+                            if (details.side.level == GameManager.instance.globalScript.sideResistance.level)
                             {
-                                case "ANARCHIST": nodeAction = NodeAction.BlowStuffUp; break;
-                                case "BLOGGER": nodeAction = NodeAction.SpreadFakeNews; break;
-                                case "HACKER":  nodeAction = NodeAction.HackSecurity; break;
-                                case "HEAVY": nodeAction = NodeAction.CreateRiots; break;
-                                case "OBSERVER": nodeAction = NodeAction.InsertTracer; break;
-                                default: Debug.LogWarningFormat("Unrecognised actor.arc \"{0}\"", actor.arc.name); break;
-                            }
-                            if (isPlayer == false)
-                            {
-                                //actor action
-                                NodeActionData nodeActionData = new NodeActionData()
+                                //NodeActionData package -> get type
+                                NodeAction nodeAction = NodeAction.None;
+                                switch (actor.arc.name)
                                 {
-                                    turn = GameManager.instance.turnScript.Turn,
-                                    actorID = actor.actorID,
-                                    nodeID = node.nodeID,
-                                    nodeAction = nodeAction
-                                };
-                                //add to actor's personal list
-                                actor.AddNodeAction(nodeActionData);
-                                Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
-                            }
-                            else
-                            {
-                                //player action
-                                NodeActionData nodeActionData = new NodeActionData()
+                                    case "ANARCHIST": nodeAction = NodeAction.BlowStuffUp; break;
+                                    case "BLOGGER": nodeAction = NodeAction.SpreadFakeNews; break;
+                                    case "HACKER": nodeAction = NodeAction.HackSecurity; break;
+                                    case "HEAVY": nodeAction = NodeAction.CreateRiots; break;
+                                    case "OBSERVER": nodeAction = NodeAction.InsertTracer; break;
+                                    default: Debug.LogWarningFormat("Unrecognised actor.arc \"{0}\"", actor.arc.name); break;
+                                }
+                                if (isPlayer == false)
                                 {
-                                    turn = GameManager.instance.turnScript.Turn,
-                                    actorID = 999,
-                                    nodeID = node.nodeID,
-                                    nodeAction = nodeAction
-                                };
-                                //add to player's personal list
-                                GameManager.instance.playerScript.AddNodeAction(nodeActionData);
-                                Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
+                                    //actor action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = actor.actorID,
+                                        nodeID = node.nodeID,
+                                        nodeAction = nodeAction
+                                    };
+                                    //add to actor's personal list
+                                    actor.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                }
+                                else
+                                {
+                                    //player action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = 999,
+                                        nodeID = node.nodeID,
+                                        nodeAction = nodeAction
+                                    };
+                                    //add to player's personal list
+                                    GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
+                                }
                             }
                             //texts
                             outcomeDetails.textTop = builderTop.ToString();

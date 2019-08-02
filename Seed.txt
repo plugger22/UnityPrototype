@@ -698,3 +698,38 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<GetNodeActions>c__AnonStorey2:<>m__1() (at Assets/Scripts/Managers/ActorManager.cs:1284)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 24516 -> Friday, 2 August 2019 1:32 PM
+City seed 890 -> Arles, France
+
+Dev seed 46400 -> Friday, 2 August 2019 1:34 PM
+City seed 890 -> Arles, France
+
+Dev seed 990 -> Friday, 2 August 2019 1:35 PM
+City seed 890 -> Arles, France
+
+Dev seed 27041 -> Friday, 2 August 2019 1:37 PM
+City seed 890 -> Arles, France
+
+Dev seed 4756 -> Friday, 2 August 2019 1:49 PM
+City seed 890 -> Arles, France
+
+Dev seed 40237 -> Friday, 2 August 2019 1:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53437 -> Friday, 2 August 2019 1:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50122 -> Friday, 2 August 2019 1:54 PM
+City seed 890 -> Arles, France
+
+Dev seed 49103 -> Friday, 2 August 2019 2:02 PM
+City seed 890 -> Arles, France
+
+Dev seed 43846 -> Friday, 2 August 2019 2:14 PM
+City seed 890 -> Arles, France
+
+Dev seed 40048 -> Friday, 2 August 2019 3:02 PM
+City seed 890 -> Arles, France
+
+Dev seed 33504 -> Friday, 2 August 2019 3:03 PM
+City seed 5678 -> London, United Kingdom

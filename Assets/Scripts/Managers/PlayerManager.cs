@@ -1668,5 +1668,11 @@ public class PlayerManager : MonoBehaviour
     public void RemoveMostRecentNodeAction()
     { listOfNodeActions.RemoveAt(listOfNodeActions.Count - 1); }
 
+    /// <summary>
+    /// Empty out listOfNodeActions
+    /// </summary>
+    public void ClearAllNodeActions()
+    { listOfNodeActions.Clear(); }
+
     //place new methods above here
 }

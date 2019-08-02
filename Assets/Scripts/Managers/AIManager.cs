@@ -3291,6 +3291,7 @@ public class AIManager : MonoBehaviour
             if (node != null)
             { isSuccess = GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, teamID, node); }
             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
+
         }
         else { Debug.LogWarning(string.Format("Invalid teamID (-1) for teamArcID {0}", task.data1)); }
         //debug log

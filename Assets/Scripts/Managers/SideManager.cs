@@ -324,6 +324,8 @@ public class SideManager : MonoBehaviour
                         }
                         break;
                 }
+                //clear out debug NodeActionData records for Player
+                GameManager.instance.playerScript.ClearAllNodeActions();
                 //loop actors and check for status
                 Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors != null)
@@ -378,6 +380,7 @@ public class SideManager : MonoBehaviour
                 GameManager.instance.playerScript.status = status;
                 GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
                 GameManager.instance.playerScript.isBreakdown = GameManager.instance.aiScript.isBreakdown;
+                //player
                 switch (status)
                 {
                     case ActorStatus.Captured:
@@ -404,6 +407,8 @@ public class SideManager : MonoBehaviour
                         }
                         break;
                 }
+                //clear out debug NodeActionData records for Player
+                GameManager.instance.playerScript.ClearAllNodeActions();
                 //loop actors and check for status
                 arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
                 if (arrayOfActors != null)
@@ -416,6 +421,8 @@ public class SideManager : MonoBehaviour
                             Actor actor = arrayOfActors[i];
                             if (actor != null)
                             {
+                                //clear out debug NodeActionData records
+                                actor.ClearAllNodeActions();
                                 //update
                                 switch (actor.Status)
                                 {
