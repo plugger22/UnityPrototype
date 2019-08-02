@@ -4329,6 +4329,11 @@ public class DataManager : MonoBehaviour
                                 if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
                                 { numOfActors++;}
                                 break;
+                            case ActorCheck.NodeActionsNOTZero:
+                                //actor with listOfNodeActions.Count > 0
+                                if (actor.CheckNumOFNodeActions() != 0)
+                                { numOfActors++; }
+                                break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
                     }

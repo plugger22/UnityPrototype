@@ -85,7 +85,7 @@
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
     public enum ActorDebugData { None, Pools, Lists, Dict }                             //used for toggling debugGUI.cs  AI data
     public enum ActorDatapoint { Datapoint0, Influence0, Connections0, Datapoint1, Motivation1, Ability2, Invisibility2, Datapoint2}    //interchangeable. Use whichever one is appropriate
-    public enum ActorCheck { None, CompatibilityNOTZero}                                //DataManager.cs -> CheckNumOfActiveActorsSpecial
+    public enum ActorCheck { None, CompatibilityNOTZero, NodeActionsNOTZero}                                //DataManager.cs -> CheckNumOfActiveActorsSpecial
 
     //
     // - - - Gear - - -

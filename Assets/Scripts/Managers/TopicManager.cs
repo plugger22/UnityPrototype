@@ -14,6 +14,8 @@ public class TopicManager : MonoBehaviour
 {
     [Tooltip("Minimum number of turns before topicType/SubTypes can be chosen again")]
     [Range(0, 10)] public int minIntervalGlobal = 2;
+    [Tooltip("Maximum number of options in a topic")]
+    [Range(2, 5)] public int maxOptions = 4;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
@@ -108,13 +110,6 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
-    }
-    #endregion
-
-    #region SubInitialiseAll
-    private void SubInitialiseAll()
-    {
-
     }
     #endregion
 

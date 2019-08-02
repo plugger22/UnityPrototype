@@ -44,7 +44,7 @@ public class Topic : ScriptableObject
     [TextArea] public string notes;
 
     [Header("Options")]
-    [Tooltip("Options for the decision. Max 4")]
+    [Tooltip("Options for the decision. Max as per TopicManager.cs -> maxOptions")]
     public List<TopicOption> listOfOptions;
 
     #region Save Data Compatible
@@ -69,7 +69,6 @@ public class Topic : ScriptableObject
         Debug.AssertFormat(subType != null, "Invalid subType (Null) for {0}", name);
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(listOfOptions != null, "Invalid listOfOptions (Null) for {0}", name);
-        Debug.AssertFormat(listOfOptions?.Count <= 4, "To many options (Max 4) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
         Debug.AssertFormat(profile != null, "Invalid profile (Null) for {0}", name);
         Debug.AssertFormat(group != null, "Invalid group (Null) for {0}", name);

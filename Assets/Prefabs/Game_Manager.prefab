@@ -822,6 +822,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba1a9b8178a58d64ab3ea2e5103a7a87, type: 2}
   - {fileID: 11400000, guid: 7b5f6123b272eb84c8a103de7309195c, type: 2}
   - {fileID: 11400000, guid: 341aaf642527b174aba5c7dab946e572, type: 2}
+  - {fileID: 11400000, guid: 225c70ada1842a446a31d0bf58d5adbf, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -895,6 +896,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d039f08013305f49ac6a3fdc9eaf285, type: 2}
   - {fileID: 11400000, guid: 2ffb641a4ce46ff478a937aa9752c753, type: 2}
   - {fileID: 11400000, guid: c2c85b1e868de1646b8e69268e7e6ceb, type: 2}
+  - {fileID: 11400000, guid: 4ae30b3edd3fda541b3e6aa53c7ad697, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -2151,7 +2153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
-  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
+  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -2642,7 +2644,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -2785,6 +2787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minIntervalGlobal: 2
+  maxOptions: 4
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

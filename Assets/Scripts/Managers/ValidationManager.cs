@@ -698,6 +698,7 @@ public class ValidationManager : MonoBehaviour
         //
         Topic[] arrayOfTopics = GameManager.instance.loadScript.arrayOfTopics;
         TopicOption[] arrayOfTopicOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
+        int maxOptions = GameManager.instance.topicScript.maxOptions;
         if (arrayOfTopics != null)
         {
             if (arrayOfTopicOptions != null)
@@ -716,8 +717,11 @@ public class ValidationManager : MonoBehaviour
                         //listOfOptions
                         if (topic.listOfOptions != null)
                         {
-                            if (topic.listOfOptions.Count > 0)
+                            count = topic.listOfOptions.Count();
+                            if (count > 0)
                             {
+                                if (count > maxOptions)
+                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has more options that allowed (has {1}, max is {2}){3}", topicName, count, maxOptions, "\n"); }
                                 //loop options and check that they aren't null and have the correct topic name
                                 foreach (TopicOption option in topic.listOfOptions)
                                 {
