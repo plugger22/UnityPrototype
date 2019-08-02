@@ -26,6 +26,10 @@ public class TopicSubType : ScriptableObject
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
 
+    [Header("SubSubTypes")]
+    [Tooltip("List of SubSubTypes that are linked to this SubType. Ignore if none")]
+    public List<TopicSubSubType> listOfSubSubType;
+
     [Header("Criteria")]
     [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;

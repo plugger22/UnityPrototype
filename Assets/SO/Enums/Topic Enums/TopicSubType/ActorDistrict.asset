@@ -16,6 +16,18 @@ MonoBehaviour:
   minIntervalFactor: 2
   priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  listOfSubSubType:
+  - {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
+  - {fileID: 11400000, guid: 07f004ee8b4a38346995487f87d3c3f4, type: 2}
+  - {fileID: 11400000, guid: 5abf4e1267a28594a822d32f9668aa90, type: 2}
+  - {fileID: 11400000, guid: 6c8995f486569b340ad24ff901003b26, type: 2}
+  - {fileID: 11400000, guid: 04af3fab917a51b418e9c3a778334286, type: 2}
+  - {fileID: 11400000, guid: 39204a073affb884a88039c73fd2ffca, type: 2}
+  - {fileID: 11400000, guid: 41ff737c5f7084f40946fbe21f1923e9, type: 2}
+  - {fileID: 11400000, guid: 7624c4b94b7aec64b92169d954e6f38e, type: 2}
+  - {fileID: 11400000, guid: 7e6e385977e5c6347a00f7c7048eaac7, type: 2}
+  - {fileID: 11400000, guid: 7d1e2c0d7fa6fb2408a5b30ad171a10c, type: 2}
+  - {fileID: 11400000, guid: bbf874a18dc168f4a90e7bed8c81c63d, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 225c70ada1842a446a31d0bf58d5adbf, type: 2}
   minInterval: 4
