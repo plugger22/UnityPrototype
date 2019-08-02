@@ -641,6 +641,18 @@ public class TeamManager : MonoBehaviour
                                                     Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0}{1}", text, "\n");
                                                     //message
                                                     GameManager.instance.messageScript.TeamDeploy(text, node, team, actor);
+                                                    //NodeActionData
+                                                    NodeActionData nodeActionData = new NodeActionData()
+                                                    {
+                                                        turn = GameManager.instance.turnScript.Turn,
+                                                        actorID = actor.actorID,
+                                                        nodeID = node.nodeID,
+                                                        dataName = team.arc.name + team.teamName,
+                                                        nodeAction = NodeAction.DeployTeam
+                                                    };
+                                                    //add to actor's personal list
+                                                    actor.AddNodeAction(nodeActionData);
+                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
                                                 }
                                                 else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from Reserve pool", team.arc.name, team.teamID); }
                                             }
@@ -1215,6 +1227,18 @@ public class TeamManager : MonoBehaviour
                         { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", team.actorSlotID)); }
                         if (MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node) == true)
                         {
+                            //NodeActionData
+                            NodeActionData nodeActionData = new NodeActionData()
+                            {
+                                turn = GameManager.instance.turnScript.Turn,
+                                actorID = actor.actorID,
+                                nodeID = node.nodeID,
+                                dataName = team.arc.name + team.teamName,
+                                nodeAction = NodeAction.RecallTeam
+                            };
+                            //add to actor's personal list
+                            actor.AddNodeAction(nodeActionData);
+                            Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
                             //message
                             string text = string.Format("{0} {1}, ID {2}, RECALLED from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                 node.nodeName, node.nodeID);
@@ -1258,6 +1282,7 @@ public class TeamManager : MonoBehaviour
     /// <param name="teamID"></param>
     public void ProcessNeutraliseTeam(GenericReturnData data)
     {
+        bool isPlayer = false;
         bool successFlag = true;
         if (data.optionID > -1)
         {
@@ -1271,6 +1296,7 @@ public class TeamManager : MonoBehaviour
                     Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
+                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { isPlayer = true; }
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, globalResistance);
                         if (actor != null)
                         {
@@ -1317,6 +1343,37 @@ public class TeamManager : MonoBehaviour
                                             else { Debug.LogError("Invalid effectReturn (Null)"); }
                                         }
                                     }
+                                }
+                                //NodeActionData package
+                                if (isPlayer == false)
+                                {
+                                    //actor
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = actor.actorID,
+                                        nodeID = node.nodeID,
+                                        dataName = team.arc.name + team.teamName,
+                                        nodeAction = NodeAction.NeutraliseTeam
+                                    };
+                                    //add to actor's personal list
+                                    actor.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                }
+                                else
+                                {
+                                    //player action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = 999,
+                                        nodeID = node.nodeID,
+                                        dataName = team.arc.name + team.teamName,
+                                        nodeAction = NodeAction.NeutraliseTeam
+                                    };
+                                    //add to player's personal list
+                                    GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
                                 }
                             }
                             else

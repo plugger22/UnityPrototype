@@ -709,6 +709,8 @@ namespace packageAPI
         public int turn;
         public int actorID;
         public int nodeID;
+        public string dataName;                     //general purpose data, eg. if recruited actor then name of actor recruited, name of gear gained, etc. Can be ignored
+        public NodeAction nodeAction;               //type of nodeAction (compulsory)
     }
 
     //new classes above here

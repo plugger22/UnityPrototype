@@ -3512,6 +3512,7 @@ public class ActorManager : MonoBehaviour
     private void ProcessRecruitChoiceResistance(GenericReturnData data)
     {
         bool successFlag = true;
+        bool isPlayer = false;
         int unhappyTimer = recruitedReserveTimer;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -3571,7 +3572,10 @@ public class ActorManager : MonoBehaviour
                             {
                                 //reset recruit actor cache flags
                                 if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
-                                { isNewActionResistancePlayer = true; }
+                                {
+                                    isPlayer = true;
+                                    isNewActionResistancePlayer = true;
+                                }
                                 else { isNewActionResistanceActor = true; }
                                 //loop effects
                                 List<Effect> listOfEffects = action.GetEffects();
@@ -3598,6 +3602,37 @@ public class ActorManager : MonoBehaviour
                                         }
                                     }
 
+                                }
+                                //NodeActionData package
+                                if (isPlayer == false)
+                                {
+                                    //actor action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = actorCurrent.actorID,
+                                        nodeID = node.nodeID,
+                                        dataName = actorRecruited.actorName,
+                                        nodeAction = NodeAction.RecruitActor
+                                    };
+                                    //add to actor's personal list
+                                    actorCurrent.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceResistance: nodeActionData added to {0}, {1}{2}", actorCurrent.actorName, actorCurrent.arc.name, "\n");
+                                }
+                                else
+                                {
+                                    //player action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = 999,
+                                        nodeID = GameManager.instance.nodeScript.nodePlayer,
+                                        dataName = actorRecruited.actorName,
+                                        nodeAction = NodeAction.RecruitActor
+                                    };
+                                    //add to player's personal list
+                                    GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceResistance: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
                                 }
                             }
                             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
@@ -3703,6 +3738,18 @@ public class ActorManager : MonoBehaviour
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
                             traitText, colourEnd);
+                        //NodeActionData package
+                        NodeActionData nodeActionData = new NodeActionData()
+                        {
+                            turn = GameManager.instance.turnScript.Turn,
+                            actorID = 999,
+                            nodeID = GameManager.instance.nodeScript.nodePlayer,
+                            dataName = actorRecruited.actorName,
+                            nodeAction = NodeAction.RecruitActor
+                        };
+                        //add to player's personal list
+                        GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                        Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceAuthority: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
                         //stats
                         GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                         //reset cached recruit actor flag
@@ -5863,10 +5910,10 @@ public class ActorManager : MonoBehaviour
                                     //message (public)
                                     text = "Player has suffered a Breakdown";
                                     itemText = "has suffered a BREAKDOWN";
-                                    reason =  "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
+                                    reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
                                     string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                                     GameManager.instance.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details, HelpType.PlayerBreakdown);
-                                    Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a SUPER Stress BREAKDOWN{1}", 
+                                    Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a SUPER Stress BREAKDOWN{1}",
                                         GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                                     //fake a successful roll (chance is superStressChance to make it appear as there are higher odds but in reality it is a forced breakdown)
                                     rnd = Random.Range(0, superStressChance);

@@ -45,6 +45,8 @@ public class PlayerManager : MonoBehaviour
     private Personality personality = new Personality();
     #endregion
 
+    private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
+
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
     private int _renownAuthority;
@@ -1618,7 +1620,53 @@ public class PlayerManager : MonoBehaviour
         ChangeMood(change, reason, factor);
     }
 
+    //
+    // - - - Node Actions
+    //
 
+    /// <summary>
+    /// add a nodeActionData package to list
+    /// </summary>
+    /// <param name="data"></param>
+    public void AddNodeAction(NodeActionData data)
+    {
+        if (data != null)
+        {
+            //validate data
+            if (data.turn < 0 || data.turn > GameManager.instance.turnScript.Turn)
+            { Debug.LogWarningFormat("Invalid NodeActionData turn \"{0}\" for {1}, {2}", data.turn, PlayerName, "Player"); }
+            if (data.actorID != 999)
+            { Debug.LogWarningFormat("Invalid NodeActionData actorID \"{0}\" (should be 999) for {1}, {2}", data.actorID, PlayerName, "Player"); }
+            if (data.nodeID < 0 || data.nodeID > GameManager.instance.nodeScript.nodeIDCounter)
+            { Debug.LogWarningFormat("Invalid NodeActionData nodeID \"{0}\" for {1}, {2}", data.nodeID, PlayerName, "Player"); }
+            if (data.nodeAction == NodeAction.None)
+            { Debug.LogWarningFormat("Invalid NodeActionData nodeAction \"{0}\" for {1}, {2}", data.nodeAction, PlayerName, "Player"); }
+            //add to list
+            listOfNodeActions.Add(data);
+            Debug.LogFormat("[Tst] PlayerManager.cs -> AddNodeAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.nodeAction, data.dataName, "\n");
+        }
+        else { Debug.LogError("Invalid nodeDataAction (Null)"); }
+    }
+
+    /// <summary>
+    /// get number of nodeActionData records in list
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOFNodeActions()
+    { return listOfNodeActions.Count; }
+
+    /// <summary>
+    /// Get most recent nodeActionData package (record at end of list)
+    /// </summary>
+    /// <returns></returns>
+    public NodeActionData GetMostRecentNodeAction()
+    { return listOfNodeActions[listOfNodeActions.Count - 1]; }
+
+    /// <summary>
+    /// Delete most recent nodeActionData package (record at end of list)
+    /// </summary>
+    public void RemoveMostRecentNodeAction()
+    { listOfNodeActions.RemoveAt(listOfNodeActions.Count - 1); }
 
     //place new methods above here
 }

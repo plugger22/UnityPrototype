@@ -1141,6 +1141,7 @@ public class GearManager : MonoBehaviour
         bool successFlag = true;
         bool isInvisibility = false;
         bool isPlayer = false;
+        int turn = GameManager.instance.turnScript.Turn;
         if (string.IsNullOrEmpty(data.optionName) == false)
         {
             //get currently selected node
@@ -1170,7 +1171,7 @@ public class GearManager : MonoBehaviour
                                 if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
                                 { Debug.LogWarningFormat("Invalid removal for \"{0}\"", gear.tag); }
                                 //stat
-                                gear.statTurnObtained = GameManager.instance.turnScript.Turn;
+                                gear.statTurnObtained = turn;
                                 //gear successfully acquired
                                 builderTop.Append(string.Format("{0}We have the goods!{1}", colourNormal, colourEnd));
                                 builderBottom.Append(string.Format("{0}{1}{2}{3} is in our possession{4}", colourGear, gear.tag.ToUpper(), colourEnd,
@@ -1222,6 +1223,37 @@ public class GearManager : MonoBehaviour
                                             }
                                         }
                                     }
+                                }
+                                //NodeActionData package
+                                if (isPlayer == false)
+                                {
+                                    //actor action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = turn,
+                                        actorID = actor.actorID,
+                                        nodeID = node.nodeID,
+                                        dataName = gear.tag,
+                                        nodeAction = NodeAction.ObtainGear
+                                    };
+                                    //add to actor's personal list
+                                    actor.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] GearManager.cs -> ProcessGearChoice: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                }
+                                else
+                                {
+                                    //player action
+                                    NodeActionData nodeActionData = new NodeActionData()
+                                    {
+                                        turn = turn,
+                                        actorID = 999,
+                                        nodeID = node.nodeID,
+                                        dataName = gear.tag,
+                                        nodeAction = NodeAction.ObtainGear
+                                    };
+                                    //add to player's personal list
+                                    GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] GearManager.cs -> ProcessGearChoice: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
                                 }
                             }
                             else

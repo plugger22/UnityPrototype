@@ -648,3 +648,53 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 59192 -> Thursday, 1 August 2019 8:58 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 14488 -> Friday, 2 August 2019 9:12 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10470 -> Friday, 2 August 2019 9:56 AM
+
+Dev seed 45633 -> Friday, 2 August 2019 10:09 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24371 -> Friday, 2 August 2019 10:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24371 -> Friday, 2 August 2019 10:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36881 -> Friday, 2 August 2019 10:51 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid NodeActionData turn "0" (should be 1+) for Macey Foster, ANARCHIST
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddNodeAction(NodeActionData) (at Assets/Scripts/Base Classes/Actor.cs:1136)
+	ActionManager:ProcessNodeAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:398)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetNodeActions>c__AnonStorey1:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:1013)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 31145 -> Friday, 2 August 2019 11:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1947 -> Friday, 2 August 2019 11:03 AM
+City seed 890 -> Arles, France
+
+Dev seed 29164 -> Friday, 2 August 2019 11:46 AM
+City seed 890 -> Arles, France
+WARNING Unrecognised actor.arc "FAVOURS"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActionManager:ProcessNodeAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:396)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetNodeActions>c__AnonStorey2:<>m__1() (at Assets/Scripts/Managers/ActorManager.cs:1284)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid NodeActionData nodeAction "None" for Samuel Coquelin, FAVOURS
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddNodeAction(NodeActionData) (at Assets/Scripts/Base Classes/Actor.cs:1142)
+	ActionManager:ProcessNodeAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:409)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	<GetNodeActions>c__AnonStorey2:<>m__1() (at Assets/Scripts/Managers/ActorManager.cs:1284)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

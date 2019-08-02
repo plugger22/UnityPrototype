@@ -1855,6 +1855,7 @@ public class TargetManager : MonoBehaviour
     /// <param name="details"></param>
     private void ProcessTargetInfo(GenericReturnData detailsGeneric)
     {
+        bool isPlayer = false;
         Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionName);
         if (target != null)
         {
@@ -1866,8 +1867,11 @@ public class TargetManager : MonoBehaviour
                 Node node = GameManager.instance.dataScript.GetNode(detailsGeneric.nodeID);
                 if (node != null)
                 {
+
                     StringBuilder builderTop = new StringBuilder();
                     StringBuilder builderBottom = new StringBuilder();
+                    //check if player action
+                    if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { isPlayer = true; }
                     //update target info level
                     target.intel = target.newIntel;
                     if (target.intel > maxTargetInfo)
@@ -1902,6 +1906,37 @@ public class TargetManager : MonoBehaviour
                                 else { Debug.LogError("Invalid effectReturn (Null)"); }
                             }
                         }
+                    }
+                    //NodeActionData package
+                    if (isPlayer == false)
+                    {
+                        //actor action
+                        NodeActionData nodeActionData = new NodeActionData()
+                        {
+                            turn = GameManager.instance.turnScript.Turn,
+                            actorID = actor.actorID,
+                            nodeID = node.nodeID,
+                            dataName = target.targetName,
+                            nodeAction = NodeAction.GainTargetInfo
+                        };
+                        //add to actor's personal list
+                        actor.AddNodeAction(nodeActionData);
+                        Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                    }
+                    else
+                    {
+                        //player action
+                        NodeActionData nodeActionData = new NodeActionData()
+                        {
+                            turn = GameManager.instance.turnScript.Turn,
+                            actorID = 999,
+                            nodeID = node.nodeID,
+                            dataName = target.targetName,
+                            nodeAction = NodeAction.GainTargetInfo
+                        };
+                        //add to player's personal list
+                        GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                        Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
                     }
                     //OUTCOME Window
                     ModalOutcomeDetails detailsModal = new ModalOutcomeDetails();

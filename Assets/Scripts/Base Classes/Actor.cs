@@ -1130,7 +1130,20 @@ namespace gameAPI
         public void AddNodeAction(NodeActionData data)
         {
             if (data != null)
-            { listOfNodeActions.Add(data); }
+            {
+                //validate data
+                if (data.turn < 0 || data.turn > GameManager.instance.turnScript.Turn)
+                { Debug.LogWarningFormat("Invalid NodeActionData turn \"{0}\" for {1}, {2}", data.turn, actorName, arc.name); }
+                if (data.actorID < 0 || data.actorID > GameManager.instance.actorScript.actorIDCounter)
+                { Debug.LogWarningFormat("Invalid NodeActionData actorID \"{0}\" for {1}, {2}", data.actorID, actorName, arc.name); }
+                if (data.nodeID < 0 || data.nodeID > GameManager.instance.nodeScript.nodeIDCounter)
+                { Debug.LogWarningFormat("Invalid NodeActionData nodeID \"{0}\" for {1}, {2}", data.nodeID, actorName, arc.name); }
+                if (data.nodeAction == NodeAction.None)
+                { Debug.LogWarningFormat("Invalid NodeActionData nodeAction \"{0}\" for {1}, {2}", data.nodeAction, actorName, arc.name); }
+                //add to list
+                listOfNodeActions.Add(data);
+                Debug.LogFormat("[Tst] Actor.cs -> AddNodeAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.nodeAction, data.dataName, "\n");
+            }
             else { Debug.LogError("Invalid nodeDataAction (Null)"); }
         }
 
