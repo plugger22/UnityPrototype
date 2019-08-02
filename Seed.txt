@@ -757,3 +757,21 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 8779 -> Friday, 2 August 2019 4:23 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 49397 -> Friday, 2 August 2019 5:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63531 -> Friday, 2 August 2019 5:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13732 -> Friday, 2 August 2019 5:45 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised compatibility "-3" for Princeton Jackson, FIXER
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetActorMatchTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:1023)
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:877)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:462)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	

@@ -18,7 +18,8 @@ public class TopicPool : ScriptableObject
     public TopicType type;
     [Tooltip("Topic SubType that the decisions are associated with")]
     public TopicSubType subType;
-
+    [Tooltip("Topic SubSubType that the decisions are associated with (ignore if not applicable)")]
+    public TopicSubSubType subSubType;
 
     [Header("Topics")]
     [Tooltip("All topics must be of the same type/subType. Any linked topics must all be in the list")]

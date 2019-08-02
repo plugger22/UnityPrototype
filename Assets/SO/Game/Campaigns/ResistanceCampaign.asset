@@ -37,5 +37,15 @@ MonoBehaviour:
   actorGearPool: {fileID: 11400000, guid: 3184e6a6b4316f3439fe0e8b10fda612, type: 2}
   actorMatchPool: {fileID: 11400000, guid: 0e0366074a1d4c9479eed6cd79ef75c2, type: 2}
   actorPoliticPool: {fileID: 11400000, guid: 2cacc8eee82bc0b4fad6705b3c6e6054, type: 2}
+  listOfActorDistrictPools:
+  - {fileID: 11400000, guid: a2e5ac369172d3a4eaa504a8a833defe, type: 2}
+  - {fileID: 11400000, guid: 080d69e1b7b6b4c45a46b661a9cf0500, type: 2}
+  - {fileID: 11400000, guid: 54216c2491c9375448c8055cd47edcd7, type: 2}
+  - {fileID: 11400000, guid: 21ba20892a579bd4faa758a2e7df164c, type: 2}
+  - {fileID: 11400000, guid: c95cc6c9b9eb848499700012334194ce, type: 2}
+  - {fileID: 11400000, guid: 03cf50e89d6f24940b85abeafd530e17, type: 2}
+  - {fileID: 11400000, guid: 350ad0c29db14ea49a9deed8260e5f73, type: 2}
+  - {fileID: 11400000, guid: bcad2eff25c6c4148a0aee424a8423ad, type: 2}
+  - {fileID: 11400000, guid: b8bd63b544acf6543a4ffccd4a72b52d, type: 2}
   hqPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
   teamPool: {fileID: 0}

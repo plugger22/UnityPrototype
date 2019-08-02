@@ -61,6 +61,8 @@ public class Campaign : ScriptableObject
     public TopicPool actorMatchPool;
     [Tooltip("Topic pool for Actor Politic (Actors interacting with other Actors) decisions")]
     public TopicPool actorPoliticPool;
+    [Tooltip("Place all relevant ActorDistrict SubSubType pools here")]
+    public List<TopicPool> listOfActorDistrictPools;
 
     [Header("HQ Topic Pools")]
     [Tooltip("Topic pool for HQ decisions")]

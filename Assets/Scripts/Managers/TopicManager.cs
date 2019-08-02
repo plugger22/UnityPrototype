@@ -1016,10 +1016,12 @@ public class TopicManager : MonoBehaviour
                 compatibility = actor.GetPersonality().GetCompatibilityWithPlayer();
                 switch (compatibility)
                 {
+                    case 3: group = GroupType.Good; break;
                     case 2: group = GroupType.Good; break;
                     case 1: group = GroupType.Good; break;
                     case -1: group = GroupType.Bad; break;
                     case -2: group = GroupType.VeryBad; break;
+                    case -3: group = GroupType.VeryBad; break;
                     default: Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}", compatibility, actor.actorName, actor.arc.name); break;
                 }
                 //if no entries use entire list by default

@@ -78,6 +78,7 @@ public class LoadManager : MonoBehaviour
     [Header("Topics")]
     public TopicType[] arrayOfTopicTypes;
     public TopicSubType[] arrayOfTopicSubTypes;
+    public TopicSubSubType[] arrayOfTopicSubSubTypes;
     public TopicOption[] arrayOfTopicOptions;
     public TopicProfile[] arrayOfTopicProfiles;
     public TopicPool[] arrayOfTopicPools;
@@ -1215,6 +1216,13 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicOption count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicOptions (Null)"); }
+        //
+        // - - - TopicSubSubTypes (not stored in a collection)
+        //
+        numArray = arrayOfTopicSubSubTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicSubSubTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicSubSubTypes present"); }
         //
         // - - - Topic Profiles (not stored in a collection)
         //

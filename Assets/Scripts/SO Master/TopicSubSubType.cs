@@ -20,4 +20,12 @@ public class TopicSubSubType : ScriptableObject
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
 
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null) for {0}", name);
+        Debug.AssertFormat(subType != null, "Invalid subType (Null) for {0}", name);
+        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+    }
+
 }
