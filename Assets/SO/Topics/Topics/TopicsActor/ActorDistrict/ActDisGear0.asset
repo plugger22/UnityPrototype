@@ -9,19 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActDis0
+  m_Name: ActDisGear0
   m_EditorClassIdentifier: 
-  tag: Actor District test 0
+  tag: Actor District Obtain Gear 0
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
-  subSubType: {fileID: 0}
+  subSubType: {fileID: 11400000, guid: 7624c4b94b7aec64b92169d954e6f38e, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
   listOfCriteria: []
-  notes: PLACEHOLDER TOPICS TO POPULATE ActorDistrict Topic Pool prior to it being
-    filled up (Validation Check issues if empty otherwise)
+  notes: 
   listOfOptions:
   - {fileID: 11400000, guid: a160db712e060274db52ee7c9218751c, type: 2}
   - {fileID: 11400000, guid: 25f05175ce81b5d49b7cacec354d0bfd, type: 2}
@@ -33,5 +32,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 4
   turnsActive: 1
-  turnsLive: 19
+  turnsLive: 28
   turnsDone: 0

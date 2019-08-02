@@ -14,15 +14,18 @@ MonoBehaviour:
   tag: Actor District test 1
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
+  subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  listOfOptions:
-  - {fileID: 11400000, guid: 137b0460c55d9674b8ad21a10e450892, type: 2}
-  - {fileID: 11400000, guid: 8081f1e4edaaa324fb64e9b474ec8dae, type: 2}
-  - {fileID: 11400000, guid: b4fcf1203149f7948962505774f1e569, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
   listOfCriteria: []
+  notes: PLACEHOLDER TOPICS TO POPULATE ActorDistrict Topic Pool prior to it being
+    filled up (Validation Check issues if empty otherwise)
+  listOfOptions:
+  - {fileID: 11400000, guid: 137b0460c55d9674b8ad21a10e450892, type: 2}
+  - {fileID: 11400000, guid: 8081f1e4edaaa324fb64e9b474ec8dae, type: 2}
+  - {fileID: 11400000, guid: b4fcf1203149f7948962505774f1e569, type: 2}
   status: 2
   isCurrent: 1
   timerStart: 0
@@ -30,5 +33,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 33
+  turnsLive: 24
   turnsDone: 0

@@ -18,6 +18,8 @@ public class Topic : ScriptableObject
     public TopicType type;
     [Tooltip("Topic SubType that the decision is associated with")]
     public TopicSubType subType;
+    [Tooltip("Topic SubSubType that the decision is associated with. Ignore if not applicable")]
+    public TopicSubSubType subSubType;
 
     [Header("Priority")]
     [Tooltip("Overall priority for this topic when being placed in the selection pool")]
