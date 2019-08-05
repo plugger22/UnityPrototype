@@ -2536,9 +2536,36 @@ public class ValidationManager : MonoBehaviour
                     { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", {2}, has an Invalid listOfTopics (EMPTY){3}", campaign.name, pool.name, subSubPool.name, "\n"); }
                     else
                     {
-                        //check for duplicates
+                        //check listOfTopics for duplicates
                         List<string> tempList = subSubPool.listOfTopics.Select(x => x.name).ToList();
                         CheckListForDuplicates(tempList, "Topic", subSubPool.name, "listOfTopics");
+                        //only check subSubPools of the same side as the campaign
+                        if (subSubPool.subSubType.side.level == campaign.side.level)
+                        {
+                            foreach (Topic topic in subSubPool.listOfTopics)
+                            {
+                                if (topic != null)
+                                {
+                                    //check each topic for the correct side
+                                    if (topic.side.level != campaign.side.level)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
+                                          campaign.name, subSubPool.name, topic.name, topic.side.name, campaign.side.name, "\n");
+                                    }
+                                    //check each topic the correct subSubType
+                                    if (topic.subSubType.name.Equals(subSubPool.subSubType.name, StringComparison.Ordinal) == false)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\", has INCORRECT subSubType (is {3}, should be {4}){5}",
+                                            campaign.name, subSubPool.name, topic.name, topic.subSubType.name, subSubPool.subSubType.name, "\n");
+                                    }
+                                }
+                                else
+                                {
+                                    Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\" Invalid (Null){3}}",
+                                        campaign.name, subSubPool.name, topic.name, "\n");
+                                }
+                            }
+                        }
                     }
                     //must have identical subType as parent
                     if (subSubPool.subType.name.Equals(subType.name, StringComparison.Ordinal) == false)
