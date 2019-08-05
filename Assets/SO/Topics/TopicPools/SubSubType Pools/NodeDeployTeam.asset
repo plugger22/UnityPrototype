@@ -19,3 +19,4 @@ MonoBehaviour:
   listOfTopics:
   - {fileID: 11400000, guid: fb4cd8ddda278544bb98ee87a35506f3, type: 2}
   - {fileID: 11400000, guid: 14910a3293be0ea4c92f79729d10d0b0, type: 2}
+  listOfSubSubTypePools: []

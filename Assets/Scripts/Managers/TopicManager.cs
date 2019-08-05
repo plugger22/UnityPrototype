@@ -204,26 +204,6 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorDistrict":
                                                         if (campaign.actorDistrictPool != null)
                                                         {
-                                                            /*//check for subSubType pools that need consolidating
-                                                            if (campaign.listOfActorDistrictPools != null && campaign.listOfActorDistrictPools.Count > 0)
-                                                            {
-                                                                //empty out any placeholder topics from main pool
-                                                                campaign.actorDistrictPool.listOfTopics.Clear();
-                                                                count = 0;
-                                                                //populate main pool with sub sub Type pools
-                                                                foreach(TopicPool subPool in campaign.listOfActorDistrictPools)
-                                                                {
-                                                                    if (subPool != null)
-                                                                    {
-                                                                        count += subPool.listOfTopics.Count;
-                                                                        campaign.actorDistrictPool.listOfTopics.AddRange(subPool.listOfTopics);
-                                                                    }
-                                                                    else { Debug.LogWarning("Invalid subSubPool (Null) in campaign.listOfActorDistrictPools"); }
-                                                                }
-                                                                Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicPools: {0} topics added to {1} from subSubTopicPools{2}", 
-                                                                    count, campaign.actorDistrictPool.name, "\n");
-                                                            }*/
-
                                                             //any subSubTypes present?
                                                             if (campaign.actorDistrictPool.listOfSubSubTypePools.Count > 0)
                                                             {
@@ -234,9 +214,9 @@ public class TopicManager : MonoBehaviour
                                                                 foreach(TopicPool subSubPool in campaign.actorDistrictPool.listOfSubSubTypePools)
                                                                 {
                                                                     //correct side?
-                                                                    if (subSubPool.subSubType.side.level == topicSubType.side.level)
+                                                                    if (subSubPool.subSubType.side.level == campaign.side.level)
                                                                     {
-                                                                        count = subSubPool.listOfTopics.Count;
+                                                                        count += subSubPool.listOfTopics.Count;
                                                                         campaign.actorDistrictPool.listOfTopics.AddRange(subSubPool.listOfTopics);
                                                                     }
                                                                 }

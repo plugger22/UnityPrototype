@@ -42,7 +42,7 @@ public class TopicPool : ScriptableObject
         else
         {
             //empty out topics from pool as it will be repopulated by UpdateTopicPools at level start
-            Debug.LogFormat("[Tst] TopicPool.cs -> OnEnable: {0}.listOFTopics emptied out ({1} records){2}", name, listOfTopics.Count, "\n");
+            Debug.LogFormat("[Tst] TopicPool.cs -> OnEnable: {0}.listOfTopics emptied out ({1} records){2}", name, listOfTopics.Count, "\n");
             listOfTopics.Clear();
         }
     }
