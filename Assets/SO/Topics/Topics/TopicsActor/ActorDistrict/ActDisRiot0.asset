@@ -22,9 +22,9 @@ MonoBehaviour:
   listOfCriteria: []
   notes: 
   listOfOptions:
-  - {fileID: 11400000, guid: a160db712e060274db52ee7c9218751c, type: 2}
-  - {fileID: 11400000, guid: 25f05175ce81b5d49b7cacec354d0bfd, type: 2}
-  - {fileID: 11400000, guid: 323a8ab627855aa47b4b40a7bfa32357, type: 2}
+  - {fileID: 11400000, guid: 943d16d8fa1bb674ab44531133ea78b7, type: 2}
+  - {fileID: 11400000, guid: bfc3f351bc3d2b449b4c40dcdb46826b, type: 2}
+  - {fileID: 11400000, guid: 74960dcfcdd885b4892b268925cad80f, type: 2}
   status: 2
   isCurrent: 1
   timerStart: 0
