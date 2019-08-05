@@ -2510,14 +2510,46 @@ public class ValidationManager : MonoBehaviour
         //check type for a match
         if (pool.type.name.Equals(subType.type.name, StringComparison.Ordinal) == false)
         {
-            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}",
+            Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", has incorrect type ({2} should be {3}){4}",
                 campaign.name, pool.name, pool.type.name, subType.type.name, "\n");
         }
         //check subType for a match
         if (pool.subType.name.Equals(subType.name, StringComparison.Ordinal) == false)
         {
-            Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: campaign \"{0}\", \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
+            Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", has incorrect subType ({2} should be {3}){4}", campaign.name,
                 pool.name, pool.subType.name, subType.name, "\n");
+
+        }
+        //SubSubTypes present?
+        if (pool.listOfSubSubTypePools.Count > 0)
+        {
+            for (int i = 0; i < pool.listOfSubSubTypePools.Count; i++)
+            {
+                TopicPool subSubPool = pool.listOfSubSubTypePools[i];
+                if (subSubPool != null)
+                {
+                    //must have a subSubType name
+                    if (subSubPool.subSubType == null)
+                    { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", {2}, has no subSubType (Null){3}", campaign.name, pool.name, subSubPool.name, "\n"); }
+                    //must have at least one topic
+                    if (subSubPool.listOfTopics.Count == 0)
+                    { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", {2}, has an Invalid listOfTopics (EMPTY){3}", campaign.name, pool.name, subSubPool.name, "\n"); }
+                    else
+                    {
+                        //check for duplicates
+                        List<string> tempList = subSubPool.listOfTopics.Select(x => x.name).ToList();
+                        CheckListForDuplicates(tempList, "Topic", subSubPool.name, "listOfTopics");
+                    }
+                    //must have identical subType as parent
+                    if (subSubPool.subType.name.Equals(subType.name, StringComparison.Ordinal) == false)
+                    {
+                        Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", {2} has Mismatching subTypes (is {3}, should be {4}){5}", campaign.name, pool.name,
+                          subSubPool.name, subSubPool.subType.name, subType.name, "\n");
+                    }
+                    
+                }
+                else { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", has invalid SubSubTypePool (Null){2}", campaign.name, pool.name, "\n"); }
+            }
         }
         //loop all topics to check they are the correct side (campaign side)
         int count = pool.listOfTopics.Count;
@@ -2540,6 +2572,9 @@ public class ValidationManager : MonoBehaviour
                         campaign.name, pool.name, topic.name, "\n");
                 }
             }
+            //check for duplicates
+            List<string> tempList = pool.listOfTopics.Select(i => i.name).ToList();
+            CheckListForDuplicates(tempList, "Topic", pool.name, "listOfTopics");
         }
         else
         {

@@ -142,7 +142,6 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void UpdateTopicPools()
     {
-        int count;
         List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypesLevel != null)
         {
@@ -185,7 +184,10 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorPolitic":
                                                         if (campaign.actorPoliticPool != null)
                                                         {
-                                                            
+                                                            //any subSubTypes present?
+                                                            if (campaign.actorPoliticPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.actorPoliticPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorPoliticPool.listOfTopics);
@@ -195,6 +197,10 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorContact":
                                                         if (campaign.actorContactPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.actorContactPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.actorContactPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorContactPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorContactPool.listOfTopics);
@@ -206,24 +212,8 @@ public class TopicManager : MonoBehaviour
                                                         {
                                                             //any subSubTypes present?
                                                             if (campaign.actorDistrictPool.listOfSubSubTypePools.Count > 0)
-                                                            {
-                                                                Debug.AssertFormat(campaign.actorDistrictPool.listOfTopics.Count == 0, "SubTypePool \"{0}\" is NOT EMPTY {1}", 
-                                                                        campaign.actorDistrictPool.name, "\n");
-                                                                count = 0;
-                                                                //populate subType listOfTopics from all subSubType pool's listOfTopics
-                                                                foreach(TopicPool subSubPool in campaign.actorDistrictPool.listOfSubSubTypePools)
-                                                                {
-                                                                    //correct side?
-                                                                    if (subSubPool.subSubType.side.level == campaign.side.level)
-                                                                    {
-                                                                        count += subSubPool.listOfTopics.Count;
-                                                                        campaign.actorDistrictPool.listOfTopics.AddRange(subSubPool.listOfTopics);
-                                                                    }
-                                                                }
-                                                                Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicPools: {0} topics added to {1} from subSubTopicPools{2}",
-                                                                    count, campaign.actorDistrictPool.name, "\n");
-                                                            }
-
+                                                            { LoadSubSubTypePools(campaign.actorDistrictPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorDistrictPool.listOfTopics);
@@ -233,6 +223,10 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorGear":
                                                         if (campaign.actorGearPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.actorGearPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.actorGearPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorGearPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorGearPool.listOfTopics);
@@ -242,6 +236,10 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorMatch":
                                                         if (campaign.actorMatchPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.actorMatchPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.actorMatchPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorMatchPool.listOfTopics);
@@ -251,6 +249,10 @@ public class TopicManager : MonoBehaviour
                                                     case "AuthorityCampaign":
                                                         if (campaign.authorityCampaignPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.authorityCampaignPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.authorityCampaignPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityCampaignPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.authorityCampaignPool.listOfTopics);
@@ -260,6 +262,10 @@ public class TopicManager : MonoBehaviour
                                                     case "AuthorityGeneral":
                                                         if (campaign.authorityGeneralPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.authorityGeneralPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.authorityGeneralPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.authorityGeneralPool.listOfTopics);
@@ -269,6 +275,10 @@ public class TopicManager : MonoBehaviour
                                                     case "AuthorityTeam":
                                                         if (campaign.teamPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.teamPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.teamPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.teamPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.teamPool.listOfTopics);
@@ -278,6 +288,10 @@ public class TopicManager : MonoBehaviour
                                                     case "ResistanceCampaign":
                                                         if (campaign.resistanceCampaignPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.resistanceCampaignPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.resistanceCampaignPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceCampaignPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.resistanceCampaignPool.listOfTopics);
@@ -287,6 +301,10 @@ public class TopicManager : MonoBehaviour
                                                     case "ResistanceGeneral":
                                                         if (campaign.resistanceGeneralPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.resistanceGeneralPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.resistanceGeneralPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.resistanceGeneralPool.listOfTopics);
@@ -296,6 +314,10 @@ public class TopicManager : MonoBehaviour
                                                     case "CampaignAlpha":
                                                         if (campaign.campaignAlphaPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.campaignAlphaPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.campaignAlphaPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.campaignAlphaPool.listOfTopics);
@@ -305,6 +327,10 @@ public class TopicManager : MonoBehaviour
                                                     case "CampaignBravo":
                                                         if (campaign.campaignBravoPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.campaignBravoPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.campaignBravoPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.campaignBravoPool.listOfTopics);
@@ -314,6 +340,10 @@ public class TopicManager : MonoBehaviour
                                                     case "CampaignCharlie":
                                                         if (campaign.campaignCharliePool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.campaignCharliePool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.campaignCharliePool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.campaignCharliePool.listOfTopics);
@@ -327,6 +357,10 @@ public class TopicManager : MonoBehaviour
                                                                 //Authority
                                                                 if (city.cityPoolAuthority != null)
                                                                 {
+                                                                    //any subSubTypes present?
+                                                                    if (city.cityPoolAuthority.listOfSubSubTypePools.Count > 0)
+                                                                    { LoadSubSubTypePools(city.cityPoolAuthority, campaign.side); }
+                                                                    //populate dictionary
                                                                     GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolAuthority.listOfTopics);
                                                                     AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                                     SetTopicDynamicData(city.cityPoolAuthority.listOfTopics);
@@ -337,6 +371,10 @@ public class TopicManager : MonoBehaviour
                                                                 //Resistance
                                                                 if (city.cityPoolResistance != null)
                                                                 {
+                                                                    //any subSubTypes present?
+                                                                    if (city.cityPoolResistance.listOfSubSubTypePools.Count > 0)
+                                                                    { LoadSubSubTypePools(city.cityPoolResistance, campaign.side); }
+                                                                    //populate dictionary   
                                                                     GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolResistance.listOfTopics);
                                                                     AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                                     SetTopicDynamicData(city.cityPoolResistance.listOfTopics);
@@ -351,6 +389,10 @@ public class TopicManager : MonoBehaviour
                                                     case "FamilyAlpha":
                                                         if (campaign.familyAlphaPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.familyAlphaPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.familyAlphaPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.familyAlphaPool.listOfTopics);
@@ -360,6 +402,10 @@ public class TopicManager : MonoBehaviour
                                                     case "FamilyBravo":
                                                         if (campaign.familyBravoPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.familyBravoPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.familyBravoPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.familyBravoPool.listOfTopics);
@@ -369,6 +415,10 @@ public class TopicManager : MonoBehaviour
                                                     case "FamilyCharlie":
                                                         if (campaign.familyCharliePool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.familyCharliePool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.familyCharliePool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.familyCharliePool.listOfTopics);
@@ -378,6 +428,10 @@ public class TopicManager : MonoBehaviour
                                                     case "HQSub":
                                                         if (campaign.hqPool != null)
                                                         {
+                                                            //any subSubTypes present?
+                                                            if (campaign.hqPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.hqPool, campaign.side); }
+                                                            //populate dictionary
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.hqPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.hqPool.listOfTopics);
@@ -1053,7 +1107,7 @@ public class TopicManager : MonoBehaviour
                 {
                     Debug.LogWarning("ActorMatch count 0");
                     Debug.LogFormat("[Tst] TopicManager.cs -> GetActorMatchTopic: listOfSubTopics.Count {0}, group {1}{2}", listOfSubTypeTopics.Count, group, "\n");
-                    foreach(Topic topic in listOfSubTypeTopics)
+                    foreach (Topic topic in listOfSubTypeTopics)
                     { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorMatchTopic: topic \"{0}\", status {1}{2}", topic.name, topic.status, "\n"); }
                 }
                 //Info tags
@@ -1762,6 +1816,35 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region LoadSubSubTypePools
+    /// <summary>
+    /// Load up a subType topic pool with any associated subSubType pools
+    /// NOTE: Assumes that the parent method has checked that the subType has listOfSubSubTypes.Count > 0
+    /// </summary>
+    private void LoadSubSubTypePools(TopicPool subPool, GlobalSide side)
+    {
+        if (subPool != null)
+        {
+            //empty out any residual topics prior to repopulating
+            subPool.listOfTopics.Clear();
+            int count = 0;
+            //populate subType listOfTopics from all subSubType pool's listOfTopics
+            foreach (TopicPool subSubPool in subPool.listOfSubSubTypePools)
+            {
+                //correct side or 'Both'
+                if (subSubPool.subSubType.side.level == side.level || subSubPool.subSubType.side.level == 3)
+                {
+                    count += subSubPool.listOfTopics.Count;
+                    subPool.listOfTopics.AddRange(subSubPool.listOfTopics);
+                }
+            }
+            Debug.LogFormat("[Top] TopicManager.cs -> LoadSubSubTypePools: {0} topics added to {1} from subSubTopicPools{2}",
+                count, subPool.name, "\n");
+        }
+        else { Debug.LogError("Invalid subPool (Null)"); }
+    }
+    #endregion
+
     #endregion
 
     #region Meta Methods
@@ -2012,8 +2095,10 @@ public class TopicManager : MonoBehaviour
                                 if (listOfTopics.Count > 0)
                                 {
                                     foreach (Topic topic in listOfTopics)
-                                    { builder.AppendFormat("     {0}, {1} x Op, St: {2}, Pr: {3}, Gr: {4}{5}", topic.name, topic.listOfOptions?.Count, topic.status, 
-                                        topic.priority.name, topic.group.name, "\n"); }
+                                    {
+                                        builder.AppendFormat("     {0}, {1} x Op, St: {2}, Pr: {3}, Gr: {4}{5}", topic.name, topic.listOfOptions?.Count, topic.status,
+                                          topic.priority.name, topic.group.name, "\n");
+                                    }
                                 }
                                 else { builder.AppendFormat("    None found{0}", "\n"); }
                             }

@@ -37,13 +37,10 @@ public class TopicPool : ScriptableObject
         Debug.AssertFormat(subType != null, "Invalid subType (Null) for {0}", name);
         Debug.AssertFormat(listOfTopics != null, "Invalid listOfTopics (Null) for {0}", name);
         //if there subSubTypes then they will be consolidated into this subType pool at level start with TopicManager.cs -> UpdateTopicPools but at present they will be empty topic Pools so ignore count check
-        if (listOfSubSubTypePools.Count == 0 && listOfSubSubTypePools.Count == 0)
+        if (subSubType == null && listOfSubSubTypePools.Count == 0)
         { Debug.AssertFormat(listOfTopics.Count > 0, "Invalid listOfTopics (Empty) for {0}", name); }
-        else
-        {
-            //empty out topics from pool as it will be repopulated by UpdateTopicPools at level start
-            Debug.LogFormat("[Tst] TopicPool.cs -> OnEnable: {0}.listOfTopics emptied out ({1} records){2}", name, listOfTopics.Count, "\n");
-            listOfTopics.Clear();
-        }
+        //if a subSubType pool then can't have anything in listOfSubSubTypePools
+        if (subSubType != null)
+        { Debug.AssertFormat(listOfSubSubTypePools.Count == 0, "If a subSubType present ({0}), can't have any listOfSubSubTypePools, for {1}", subSubType.name, name); }
     }
 }

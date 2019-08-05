@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: NodeNeutraliseTeam
+  m_Name: DistNeutraliseTeam
   m_EditorClassIdentifier: 
   tag: Actor Node Neutralise Team
   descriptor: 
