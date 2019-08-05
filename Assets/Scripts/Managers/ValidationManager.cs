@@ -882,7 +882,12 @@ public class ValidationManager : MonoBehaviour
                         List<string> tempList = pool.listOfTopics.Select(x => x.name).ToList();
                         CheckListForDuplicates<string>(tempList, pool.name, "listOfTopics", "topic.name");
                     }
-                    else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topicPool \"{0}\", has no listOfTopics{1}", pool.name, "\n"); }
+                    else
+                    {
+                        //O.K to have empty listOfTopics if a subType placeholder topic that will be filled with SubSubType pool topics during UpdateTopicManager.cs
+                        if (pool.subType.listOfSubSubType.Count == 0)
+                        { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: topicPool \"{0}\", has no listOfTopics{1}", pool.name, "\n"); }
+                    }
                 }
             }
             else { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: arrayOfTopicPools  has No Pools (Empty){1}", "\n"); }
@@ -2536,7 +2541,12 @@ public class ValidationManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\" is EMPTY{2}", campaign.name, pool.name, "\n"); }
+        else
+        {
+            //O.K to have no topics if there are subSubType pools that will be used to fill the pool via UpdateTopicPools
+            if (pool.subType.listOfSubSubType.Count == 0)
+            { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\" is EMPTY{2}", campaign.name, pool.name, "\n"); }
+        }
     }
 
 

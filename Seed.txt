@@ -777,3 +777,43 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 55572 -> Monday, 5 August 2019 9:59 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 27333 -> Monday, 5 August 2019 10:49 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57148 -> Monday, 5 August 2019 10:52 AM
+City seed 890 -> Arles, France
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57990 -> Monday, 5 August 2019 11:04 AM
+City seed 890 -> Arles, France
+
+Dev seed 38021 -> Monday, 5 August 2019 11:07 AM
+City seed 890 -> Arles, France
+
+Dev seed 63022 -> Monday, 5 August 2019 11:10 AM
+City seed 890 -> Arles, France
+
+Dev seed 34725 -> Monday, 5 August 2019 11:15 AM
+City seed 890 -> Arles, France
+
+Dev seed 54841 -> Monday, 5 August 2019 11:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11502 -> Monday, 5 August 2019 11:37 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17996 -> Monday, 5 August 2019 11:40 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16771 -> Monday, 5 August 2019 11:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60088 -> Monday, 5 August 2019 11:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34826 -> Monday, 5 August 2019 11:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14704 -> Monday, 5 August 2019 11:59 AM
+City seed 5678 -> London, United Kingdom

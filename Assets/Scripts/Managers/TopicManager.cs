@@ -142,6 +142,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void UpdateTopicPools()
     {
+        int count;
         List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypesLevel != null)
         {
@@ -184,6 +185,7 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorPolitic":
                                                         if (campaign.actorPoliticPool != null)
                                                         {
+                                                            
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorPoliticPool.listOfTopics);
@@ -202,6 +204,46 @@ public class TopicManager : MonoBehaviour
                                                     case "ActorDistrict":
                                                         if (campaign.actorDistrictPool != null)
                                                         {
+                                                            /*//check for subSubType pools that need consolidating
+                                                            if (campaign.listOfActorDistrictPools != null && campaign.listOfActorDistrictPools.Count > 0)
+                                                            {
+                                                                //empty out any placeholder topics from main pool
+                                                                campaign.actorDistrictPool.listOfTopics.Clear();
+                                                                count = 0;
+                                                                //populate main pool with sub sub Type pools
+                                                                foreach(TopicPool subPool in campaign.listOfActorDistrictPools)
+                                                                {
+                                                                    if (subPool != null)
+                                                                    {
+                                                                        count += subPool.listOfTopics.Count;
+                                                                        campaign.actorDistrictPool.listOfTopics.AddRange(subPool.listOfTopics);
+                                                                    }
+                                                                    else { Debug.LogWarning("Invalid subSubPool (Null) in campaign.listOfActorDistrictPools"); }
+                                                                }
+                                                                Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicPools: {0} topics added to {1} from subSubTopicPools{2}", 
+                                                                    count, campaign.actorDistrictPool.name, "\n");
+                                                            }*/
+
+                                                            //any subSubTypes present?
+                                                            if (campaign.actorDistrictPool.listOfSubSubTypePools.Count > 0)
+                                                            {
+                                                                Debug.AssertFormat(campaign.actorDistrictPool.listOfTopics.Count == 0, "SubTypePool \"{0}\" is NOT EMPTY {1}", 
+                                                                        campaign.actorDistrictPool.name, "\n");
+                                                                count = 0;
+                                                                //populate subType listOfTopics from all subSubType pool's listOfTopics
+                                                                foreach(TopicPool subSubPool in campaign.actorDistrictPool.listOfSubSubTypePools)
+                                                                {
+                                                                    //correct side?
+                                                                    if (subSubPool.subSubType.side.level == topicSubType.side.level)
+                                                                    {
+                                                                        count = subSubPool.listOfTopics.Count;
+                                                                        campaign.actorDistrictPool.listOfTopics.AddRange(subSubPool.listOfTopics);
+                                                                    }
+                                                                }
+                                                                Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicPools: {0} topics added to {1} from subSubTopicPools{2}",
+                                                                    count, campaign.actorDistrictPool.name, "\n");
+                                                            }
+
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorDistrictPool.listOfTopics);
