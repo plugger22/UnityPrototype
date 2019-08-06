@@ -53,6 +53,7 @@ public class TopicManager : MonoBehaviour
     //Turn selection
     private TopicType turnTopicType;
     private TopicSubType turnTopicSubType;
+    private TopicSubSubType turnTopicSubSubType;
     private Topic turnTopic;
     private TopicOption turnOption;                                                                     //option selected
 
@@ -822,6 +823,7 @@ public class TopicManager : MonoBehaviour
         //selected topic data
         turnTopicType = null;
         turnTopicSubType = null;
+        turnTopicSubSubType = null;
         turnTopic = null;
         //info tags
         tagActorID = -1;
@@ -1297,7 +1299,6 @@ public class TopicManager : MonoBehaviour
     private List<Topic> GetActorDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         int count, motivation;
-        string subSubTypeName = "Unknown";
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //Get all actors with at least one district action available
@@ -1305,10 +1306,41 @@ public class TopicManager : MonoBehaviour
         count = listOfActors.Count;
         if (count > 0)
         {
-            //select a random actor
-            Actor actor = listOfActors[Random.Range(0, count)];
-            if (actor != null)
+            //loop list and put any actor with a viable subSubType topic pool (consider recent NodeAction only) up for random selection
+            List<Actor> listOfSelection = new List<Actor>();
+            for (int i = 0; i < count; i++)
             {
+                Actor actorTemp = listOfActors[i];
+                if (actorTemp != null)
+                {
+                    NodeActionData dataTemp = actorTemp.GetMostRecentNodeAction();
+                    turnTopicSubSubType = GetTopicSubSubType(dataTemp.nodeAction);
+                    if (turnTopicSubSubType != null)
+                    {
+
+                        //check topics of this subSubType present
+                        if (CheckSubSubTypeTopicsPresent(listOfSubTypeTopics, turnTopicSubSubType.name) == true)
+                        {
+                            //add to selection pool
+                            listOfSelection.Add(actorTemp);
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                                actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has an INVALID ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                                actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for nodeAction \"{0}\"", dataTemp.nodeAction); }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}]", i); }
+            }
+            //select a random actor (all in pool have at least one matching topics present)
+            count = listOfSelection.Count;
+            if (count > 0)
+            {
+                Actor actor = listOfSelection[Random.Range(0, count)];
                 //get the most recent actor node action
                 NodeActionData data = actor.GetMostRecentNodeAction();
                 if (data != null)
@@ -1323,29 +1355,17 @@ public class TopicManager : MonoBehaviour
                         case 0: group = GroupType.VeryBad; break;
                         default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
                     }
-                    //get specific subSubType topic pool
-                    switch (data.nodeAction)
-                    {
-                        case NodeAction.BlowStuffUp: subSubTypeName = BlowStuffUp.name; break;
-                        case NodeAction.CreateRiots: subSubTypeName = CreateRiots.name; break;
-                        case NodeAction.DeployTeam: subSubTypeName = DeployTeam.name; break;
-                        case NodeAction.GainTargetInfo: subSubTypeName = GainTargetInfo.name; break;
-                        case NodeAction.HackSecurity: subSubTypeName = HackSecurity.name; break;
-                        case NodeAction.InsertTracer: subSubTypeName = InsertTracer.name; break;
-                        case NodeAction.NeutraliseTeam: subSubTypeName = NeutraliseTeam.name; break;
-                        case NodeAction.ObtainGear: subSubTypeName = ObtainGear.name; break;
-                        case NodeAction.RecallTeam: subSubTypeName = RecallTeam.name; break;
-                        case NodeAction.RecruitActor: subSubTypeName = RecruitActor.name; break;
-                        case NodeAction.SpreadFakeNews: subSubTypeName = SpreadFakeNews.name; break;
-                        default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\" for {0}, {1}, actorID {2}", data.nodeAction, actor.actorName, actor.arc.name, actor.actorID); break;
-                    }
                     //if no entries use entire list by default
-                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, subSubTypeName);
+                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+                    //debug
+                    foreach (Topic topic in listOfTopics)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
                 }
                 else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
             }
-            else { Debug.LogError("Invalid actor (Null)"); }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
+        else { Debug.LogWarning("No active, onMap actors present with at least one NodeAction"); }
         return listOfTopics;
     }
 
@@ -1865,6 +1885,13 @@ public class TopicManager : MonoBehaviour
                         Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
                         break;
                 }
+                //if no entries use entire list by default
+                if (listOfTopics.Count == 0)
+                {
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n");
+                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
+                }
+                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\" group {2}{3}", listOfTopics.Count, subTypeName, group, "\n"); }
             }
             else
             {
@@ -1893,17 +1920,75 @@ public class TopicManager : MonoBehaviour
                         Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
                         break;
                 }
+                //if no entries use full sub sub type list by default
+                if (listOfTopics.Count == 0)
+                {
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", \"{1}\", group \"{2}\", All relevant topics used{2}", subTypeName, subSubTypeName, group, "\n");
+                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                    t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
+                }
+                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\", \"{2}\", group {3}{4}", listOfTopics.Count, subTypeName, subSubTypeName, group, "\n"); }
             }
-            //if no entries use entire list by default
-            if (listOfTopics.Count == 0)
-            {
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n");
-                listOfTopics.AddRange(inputList);
-            }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\" group {2}{3}", listOfTopics.Count, subTypeName, group, "\n"); }
+
         }
         else { Debug.LogError("Invalid inputList (Null)"); }
         return listOfTopics;
+    }
+    #endregion
+
+    #region GetTopicSubSubType
+    /// <summary>
+    /// Get's NodeAction TopicSubSubType.SO.name given a nodeAction enum. Returns Null if a problem
+    /// </summary>
+    /// <param name="nodeAction"></param>
+    /// <returns></returns>
+    public TopicSubSubType GetTopicSubSubType(NodeAction nodeAction)
+    {
+        TopicSubSubType subSubType = null;
+        //get specific subSubType topic pool
+        switch (nodeAction)
+        {
+            case NodeAction.BlowStuffUp: subSubType = BlowStuffUp; break;
+            case NodeAction.CreateRiots: subSubType = CreateRiots; break;
+            case NodeAction.DeployTeam: subSubType = DeployTeam; break;
+            case NodeAction.GainTargetInfo: subSubType = GainTargetInfo; break;
+            case NodeAction.HackSecurity: subSubType = HackSecurity; break;
+            case NodeAction.InsertTracer: subSubType = InsertTracer; break;
+            case NodeAction.NeutraliseTeam: subSubType = NeutraliseTeam; break;
+            case NodeAction.ObtainGear: subSubType = ObtainGear; break;
+            case NodeAction.RecallTeam: subSubType = RecallTeam; break;
+            case NodeAction.RecruitActor: subSubType = RecruitActor; break;
+            case NodeAction.SpreadFakeNews: subSubType = SpreadFakeNews; break;
+            default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\"", nodeAction); break;
+        }
+        return subSubType;
+    }
+    #endregion
+
+    #region CheckSubSubTypeTopicsPresent
+    /// <summary>
+    /// Returns true if any topic in given list has the matching TopicSubSubType.name, false if not or if a problem
+    /// </summary>
+    /// <param name="listOfTopics"></param>
+    /// <param name="subSubTypeName"></param>
+    /// <returns></returns>
+    public bool CheckSubSubTypeTopicsPresent(List<Topic> listOfTopics, string subSubTypeName)
+    {
+        if (listOfTopics != null)
+        {
+            if (string.IsNullOrEmpty(subSubTypeName) == false)
+            {
+                //loop list and break out and return true on first match
+                for (int i = 0; i < listOfTopics.Count; i++)
+                {
+                    if (listOfTopics[i].subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) == true)
+                    { return true; }
+                }
+            }
+            else { Debug.LogError("Invalid subSubTypeName (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfTopics (Null)"); }
+        return false;
     }
     #endregion
 
@@ -2280,6 +2365,8 @@ public class TopicManager : MonoBehaviour
         else { builder.AppendFormat(" topicType: NULL{0}", "\n"); }
         if (turnTopicSubType != null)
         { builder.AppendFormat(" topicSubType: {0}{1}", turnTopicSubType.name, "\n"); }
+        if (turnTopicSubSubType != null)
+        { builder.AppendFormat(" topicSubSubType: {0}{1}", turnTopicSubSubType.name, "\n"); }
         else { builder.AppendFormat(" topicSubType: NULL{0}", "\n"); }
         if (turnTopic != null)
         { builder.AppendFormat(" topic: {0}{1}", turnTopic.name, "\n"); }

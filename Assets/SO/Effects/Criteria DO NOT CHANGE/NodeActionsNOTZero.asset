@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
   m_Name: NodeActionsNOTZero
   m_EditorClassIdentifier: 
-  description: At least one active actor with NodeActions
+  description: 1+ actor with Node Action and valid topics
   effectCriteria: {fileID: 11400000, guid: 4ae30b3edd3fda541b3e6aa53c7ad697, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}

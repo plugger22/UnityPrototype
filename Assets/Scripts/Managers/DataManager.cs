@@ -4327,12 +4327,28 @@ public class DataManager : MonoBehaviour
                             case ActorCheck.CompatibilityNOTZero:
                                 //actor with compatibility anything other than Zero
                                 if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
-                                { numOfActors++;}
+                                { numOfActors++; }
                                 break;
                             case ActorCheck.NodeActionsNOTZero:
-                                //actor with listOfNodeActions.Count > 0
+                                //actor with listOfNodeActions.Count > 0 && the actors most recent NodeActivity has valid topics present
                                 if (actor.CheckNumOFNodeActions() != 0)
-                                { numOfActors++; }
+                                {
+                                    NodeActionData data = actor.GetMostRecentNodeAction();
+                                    if (data != null)
+                                    {
+                                        //get relevant subType topic list
+                                        TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.nodeAction);
+                                        if (subSubType != null)
+                                        {
+                                            List<Topic> listOfTopics = GetListOfTopics(subSubType.subType);
+                                            //check that actors most recent node Action has topics on the list
+                                            if (GameManager.instance.topicScript.CheckSubSubTypeTopicsPresent(listOfTopics, subSubType.name) == true)
+                                            { numOfActors++; }
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }
+                                    }
+                                    else { Debug.LogError("Invalid NodeActionData (Null)"); }
+                                }
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
@@ -6930,13 +6946,13 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid topicName (Null or Empty)"); }
         return topic;
     }
-    
+
     /// <summary>
     /// sets all topics in dictOftopics to 'isCurrent' FALSE prior to any changes
     /// </summary>
     public void ResetTopics()
     {
-        foreach(var topic in dictOfTopics)
+        foreach (var topic in dictOfTopics)
         { topic.Value.isCurrent = false; }
     }
 
@@ -6949,7 +6965,7 @@ public class DataManager : MonoBehaviour
         if (history != null)
         {
             try { dictOfTopicHistory.Add(history.turn, history); }
-            catch(ArgumentException)
+            catch (ArgumentException)
             { Debug.LogErrorFormat("Duplicate topicHistory record for history.turn \"{0}\"", history.turn); }
         }
         else { Debug.LogError("Invalid historyTopic (Null)"); }

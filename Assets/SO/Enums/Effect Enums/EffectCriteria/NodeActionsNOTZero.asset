@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388824e1cb224e54eba0cf0741eca1fa, type: 3}
   m_Name: NodeActionsNOTZero
   m_EditorClassIdentifier: 
-  descriptor: 'At least one Node Action present '
+  descriptor: 1+ actor with Node Action and valid topics
