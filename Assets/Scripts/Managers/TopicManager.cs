@@ -17,6 +17,30 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Maximum number of options in a topic")]
     [Range(2, 5)] public int maxOptions = 4;
 
+    [Header("TopicSubSubTypes")]
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType BlowStuffUp;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType CreateRiots;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType DeployTeam;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType GainTargetInfo;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType HackSecurity;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType InsertTracer;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType NeutraliseTeam;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType ObtainGear;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType RecallTeam;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType RecruitActor;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType SpreadFakeNews;
+
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
 
@@ -45,14 +69,14 @@ public class TopicManager : MonoBehaviour
             case GameState.NewInitialisation:
                 SubInitialiseStartUp();
                 SubInitialiseLevelStart();
-                /*SubInitialiseFastAccess();*/
+                SubInitialiseFastAccess();
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseStartUp();
-                /*SubInitialiseFastAccess();*/
+                SubInitialiseFastAccess();
                 break;
             case GameState.LoadGame:
                 //do nothing
@@ -126,6 +150,17 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
+        Debug.Assert(BlowStuffUp != null, "Invalid BlowStuffUp (Null)");
+        Debug.Assert(CreateRiots != null, "Invalid CreateRiots (Null)");
+        Debug.Assert(DeployTeam != null, "Invalid DeployTeam (Null)");
+        Debug.Assert(GainTargetInfo != null, "Invalid GainTargetInfo (Null)");
+        Debug.Assert(HackSecurity != null, "Invalid HackSecurity (Null)");
+        Debug.Assert(InsertTracer != null, "Invalid InsertTracer (Null)");
+        Debug.Assert(NeutraliseTeam != null, "Invalid NeutraliseTeam (Null)");
+        Debug.Assert(ObtainGear != null, "Invalid ObtainGear (Null)");
+        Debug.Assert(RecallTeam != null, "Invalid RecallTeam (Null)");
+        Debug.Assert(RecruitActor != null, "Invalid RecruitActor (Null)");
+        Debug.Assert(SpreadFakeNews != null, "Invalid SpreadFakeNews (Null)");
     }
     #endregion
 
@@ -933,8 +968,6 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = listOfSubTypeTopics;
                         break;
                     //Dynamic topic
-                    case "ActorDistrict":
-
                     case "AuthorityTeam":
                     case "CitySub":
                     case "HQSub":
@@ -951,6 +984,9 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "ActorMatch":
                         listOfPotentialTopics = GetActorMatchTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "ActorDistrict":
+                        listOfPotentialTopics = GetActorDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
@@ -1013,6 +1049,7 @@ public class TopicManager : MonoBehaviour
     // - - - Select Dynamic Topics
     //
 
+    #region GetActorContactTopics
     /// <summary>
     /// subType ActorContact template topics selected by actor / motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
@@ -1053,7 +1090,9 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
         return listOfTopics;
     }
+    #endregion
 
+    #region GetActorMatchTopics
     /// <summary>
     /// subType ActorMatch template topics selected by actor compatibility (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
@@ -1117,7 +1156,9 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorMatch subType"); }
         return listOfTopics;
     }
+    #endregion
 
+    #region GetActorPoliticTopics
     /// <summary>
     /// subType ActorPolitic template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
@@ -1179,7 +1220,9 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorPolitic subType"); }
         return listOfTopics;
     }
+    #endregion
 
+    #region GetActorGearTopics
     /// <summary>
     /// subType ActorGear template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
@@ -1240,6 +1283,73 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorGear subType"); }
         return listOfTopics;
     }
+    #endregion
+
+    #region GetActorDistrictTopics
+    /// <summary>
+    /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetActorDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        int count, motivation;
+        string subSubTypeName = "Unknown";
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //Get all actors with at least one district action available
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide);
+        count = listOfActors.Count;
+        if (count > 0)
+        {
+            //select a random actor
+            Actor actor = listOfActors[Random.Range(0, count)];
+            if (actor != null)
+            {
+                //get the most recent actor node action
+                NodeActionData data = actor.GetMostRecentNodeAction();
+                if (data != null)
+                {
+                    //group depends on actor motivation
+                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    switch (motivation)
+                    {
+                        case 3: group = GroupType.Good; break;
+                        case 2: group = GroupType.Neutral; break;
+                        case 1: group = GroupType.Bad; break;
+                        case 0: group = GroupType.VeryBad; break;
+                        default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
+                    }
+                    //get specific subSubType topic pool
+                    switch (data.nodeAction)
+                    {
+                        case NodeAction.BlowStuffUp: subSubTypeName = BlowStuffUp.name; break;
+                        case NodeAction.CreateRiots: subSubTypeName = CreateRiots.name; break;
+                        case NodeAction.DeployTeam: subSubTypeName = DeployTeam.name; break;
+                        case NodeAction.GainTargetInfo: subSubTypeName = GainTargetInfo.name; break;
+                        case NodeAction.HackSecurity: subSubTypeName = HackSecurity.name; break;
+                        case NodeAction.InsertTracer: subSubTypeName = InsertTracer.name; break;
+                        case NodeAction.NeutraliseTeam: subSubTypeName = NeutraliseTeam.name; break;
+                        case NodeAction.ObtainGear: subSubTypeName = ObtainGear.name; break;
+                        case NodeAction.RecallTeam: subSubTypeName = RecallTeam.name; break;
+                        case NodeAction.RecruitActor: subSubTypeName = RecruitActor.name; break;
+                        case NodeAction.SpreadFakeNews: subSubTypeName = SpreadFakeNews.name; break;
+                        default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\" for {0}, {1}, actorID {2}", data.nodeAction, actor.actorName, actor.arc.name, actor.actorID); break;
+                    }
+                    //if no entries use entire list by default
+                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, subSubTypeName);
+                }
+                else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+            }
+            else { Debug.LogError("Invalid actor (Null)"); }
+        }
+        return listOfTopics;
+    }
+
+    #endregion
 
 
     #endregion
@@ -1726,29 +1836,63 @@ public class TopicManager : MonoBehaviour
     /// <param name="inputList"></param>
     /// <param name="group"></param>
     /// <returns></returns>
-    private List<Topic> GetTopicGroup(List<Topic> inputList, GroupType group, string subTypeName = "Unknown")
+    private List<Topic> GetTopicGroup(List<Topic> inputList, GroupType group, string subTypeName = "Unknown", string subSubTypeName = "")
     {
         List<Topic> listOfTopics = new List<Topic>();
         if (inputList != null)
         {
-            switch (group)
+            //normal
+            if (string.IsNullOrEmpty(subSubTypeName) == true)
             {
-                case GroupType.Good:
-                    //high motivation, good group
-                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
-                    break;
-                case GroupType.Neutral:
-                    //neutral motivation, use all Active topics
-                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
-                    break;
-                case GroupType.Bad:
-                case GroupType.VeryBad:
-                    //low motivation, bad group
-                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
-                    break;
-                default:
-                    Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
-                    break;
+                switch (group)
+                {
+                    case GroupType.Good:
+                        //high motivation, good group
+                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
+                        break;
+                    case GroupType.Neutral:
+                        //neutral motivation, use all Active topics
+                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
+                        break;
+                    case GroupType.Bad:
+                    case GroupType.VeryBad:
+                        //low motivation, bad group
+                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
+                        break;
+                }
+            }
+            else
+            {
+                //filter topics by subSubTypeName
+                switch (group)
+                {
+                    case GroupType.Good:
+                        //high motivation, good group
+                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) &&
+                        t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
+                        break;
+                    case GroupType.Neutral:
+                        //neutral motivation, use all Active topics
+                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
+                        break;
+                    case GroupType.Bad:
+                    case GroupType.VeryBad:
+                        //low motivation, bad group
+                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
+                        t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) &&
+                        t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised GroupType \"[0}\"", group);
+                        break;
+                }
             }
             //if no entries use entire list by default
             if (listOfTopics.Count == 0)

@@ -4345,6 +4345,46 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a list of Active, OnMap actors, who meet the special (ActorCheck enum) criteria). Returns EMPTY list if none.
+    /// </summary>
+    /// <param name="check"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public List<Actor> GetActiveActorsSpecial(ActorCheck check, GlobalSide side)
+    {
+        List<Actor> listOfActors = new List<Actor>();
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            if (arrayOfActorsPresent[side.level, i] == true)
+            {
+                Actor actor = arrayOfActors[side.level, i];
+                if (actor != null)
+                {
+                    if (actor.Status == ActorStatus.Active)
+                    {
+                        switch (check)
+                        {
+                            case ActorCheck.CompatibilityNOTZero:
+                                //actor with compatibility anything other than Zero
+                                if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
+                                { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.NodeActionsNOTZero:
+                                //actor with listOfNodeActions.Count > 0
+                                if (actor.CheckNumOFNodeActions() != 0)
+                                { listOfActors.Add(actor); }
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for {0}, slotID {1}", side.name, i); }
+            }
+        }
+        return listOfActors;
+    }
+
+    /// <summary>
     /// returns the number of OnMap actors (status irrelevant) for a side. Returns Zero if none.
     /// </summary>
     /// <param name="side"></param>

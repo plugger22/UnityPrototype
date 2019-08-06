@@ -2899,6 +2899,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minIntervalGlobal: 2
   maxOptions: 4
+  BlowStuffUp: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
+  CreateRiots: {fileID: 11400000, guid: 07f004ee8b4a38346995487f87d3c3f4, type: 2}
+  DeployTeam: {fileID: 11400000, guid: 5abf4e1267a28594a822d32f9668aa90, type: 2}
+  GainTargetInfo: {fileID: 11400000, guid: 6c8995f486569b340ad24ff901003b26, type: 2}
+  HackSecurity: {fileID: 11400000, guid: 04af3fab917a51b418e9c3a778334286, type: 2}
+  InsertTracer: {fileID: 11400000, guid: 39204a073affb884a88039c73fd2ffca, type: 2}
+  NeutraliseTeam: {fileID: 11400000, guid: 41ff737c5f7084f40946fbe21f1923e9, type: 2}
+  ObtainGear: {fileID: 11400000, guid: 7624c4b94b7aec64b92169d954e6f38e, type: 2}
+  RecallTeam: {fileID: 11400000, guid: 7e6e385977e5c6347a00f7c7048eaac7, type: 2}
+  RecruitActor: {fileID: 11400000, guid: 7d1e2c0d7fa6fb2408a5b30ad171a10c, type: 2}
+  SpreadFakeNews: {fileID: 11400000, guid: bbf874a18dc168f4a90e7bed8c81c63d, type: 2}
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Actor District Actions
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   minIntervalFactor: 2
-  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  priority: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   listOfSubSubType:
   - {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
