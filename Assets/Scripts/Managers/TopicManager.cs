@@ -1362,6 +1362,8 @@ public class TopicManager : MonoBehaviour
                     { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
                 }
                 else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                //Info tags
+                tagActorID = actor.actorID;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -1487,6 +1489,19 @@ public class TopicManager : MonoBehaviour
                 typeSubData.turnLastUsed = turn;
             }
             else { Debug.LogErrorFormat("Invalid topicTypeData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
+            //NodeAction
+            if (turnTopicSubSubType != null)
+            {
+                //actor subSubTopic?
+                if (turnTopicSubType.name.Equals("Actor", StringComparison.Ordinal) == true)
+                {
+                    //get actor and delete most recent NodeAction record
+                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                    if (actor != null)
+                    { actor.RemoveMostRecentNodeAction(); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                }
+            }
             //topicHistory
             HistoryTopic history = new HistoryTopic()
             {

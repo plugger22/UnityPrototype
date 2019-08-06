@@ -72,6 +72,10 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TopicSubType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType citySubType;
 
+    [Header("Topic Profile")]
+    [Tooltip("The 'Normal' topic profile with no delays. Needed to prevent hardcoding name, will auto adjust if TopicProfile.SO renamed")]
+    public TopicProfile normalProfile;
+
     //fast access
     GlobalSide globalAuthority;
     GlobalSide globalResistance;
@@ -114,6 +118,7 @@ public class ValidationManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
+        Debug.Assert(normalProfile != null, "Invalid normalProfile (Null)");
     }
     #endregion
 
@@ -2523,6 +2528,7 @@ public class ValidationManager : MonoBehaviour
         //SubSubTypes present?
         if (pool.listOfSubSubTypePools.Count > 0)
         {
+            bool isGoodTopicPresent, isBadTopicPresent;
             for (int i = 0; i < pool.listOfSubSubTypePools.Count; i++)
             {
                 TopicPool subSubPool = pool.listOfSubSubTypePools[i];
@@ -2542,6 +2548,8 @@ public class ValidationManager : MonoBehaviour
                         //only check subSubPools of the same side as the campaign
                         if (subSubPool.subSubType.side.level == campaign.side.level)
                         {
+                            isGoodTopicPresent = false;
+                            isBadTopicPresent = false;
                             foreach (Topic topic in subSubPool.listOfTopics)
                             {
                                 if (topic != null)
@@ -2558,12 +2566,29 @@ public class ValidationManager : MonoBehaviour
                                         Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\", has INCORRECT subSubType (is {3}, should be {4}){5}",
                                             campaign.name, subSubPool.name, topic.name, topic.subSubType.name, subSubPool.subSubType.name, "\n");
                                     }
+                                    //check at least one good and one bad topic with 'Normal' profile present in pool (see DecisionTopic/DesignNotes in Keep) -> needs to be one of each present at all times
+                                    if (topic.group.name.Equals("Good", StringComparison.Ordinal) == true)
+                                    {
+                                        if (topic.profile.name.Equals(normalProfile.name, StringComparison.Ordinal) == true)
+                                        { isGoodTopicPresent = true; }
+                                    }
+                                    if (topic.group.name.Equals("Bad", StringComparison.Ordinal) == true)
+                                    {
+                                        if (topic.profile.name.Equals(normalProfile.name, StringComparison.Ordinal) == true)
+                                        { isBadTopicPresent = true; }
+                                    }
                                 }
                                 else
                                 {
                                     Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\" Invalid (Null){3}}",
                                         campaign.name, subSubPool.name, topic.name, "\n");
                                 }
+                            }
+                            //Has one good and one bad topic present with 'Normal' profiles?
+                            if (isGoodTopicPresent == false || isBadTopicPresent == false)
+                            {
+                                Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", must have at least 1 Good & 1 Bad topics with \"{2}\" profiles present (is Good {3}, Bad {4}){5}",
+                                    campaign.name, subSubPool.name, normalProfile.name, isGoodTopicPresent, isBadTopicPresent, "\n");
                             }
                         }
                     }

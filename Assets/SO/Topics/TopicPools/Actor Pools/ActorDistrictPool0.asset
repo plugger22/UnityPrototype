@@ -14,7 +14,9 @@ MonoBehaviour:
   tag: Actor District topic test pool 0
   descriptor: Placeholder pool needed to allow consolidation of subSubType pools into
     one at session start for validation and operational purposes. The topics within
-    this pool will be removed and serve no purpose other than placeholders
+    this pool will be removed and serve no purpose other than placeholders (or more
+    likely show topics that were populated into list during the previous session which
+    is handy for debugging)
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 0}
@@ -23,6 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 65be758714597ac48b738b0edd34dd3c, type: 2}
   - {fileID: 11400000, guid: 36a73e13bb073d2449f92501d46690f4, type: 2}
   - {fileID: 11400000, guid: 2dfa08c4fa26dec4f91d6e3b10a2094e, type: 2}
+  - {fileID: 11400000, guid: d4f3fd36bfb13d545bbea15353f9a33c, type: 2}
+  - {fileID: 11400000, guid: 25f4cd81f2fb68948b42215e349178e8, type: 2}
   - {fileID: 11400000, guid: c40d7c8a605416340bff3dd7c4e3bdb2, type: 2}
   - {fileID: 11400000, guid: 373df1657db79634a939126c09eb5bc6, type: 2}
   - {fileID: 11400000, guid: e8fd41b718a2279489a516cd63a65cad, type: 2}

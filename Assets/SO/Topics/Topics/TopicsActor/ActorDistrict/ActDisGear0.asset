@@ -18,7 +18,7 @@ MonoBehaviour:
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
   notes: 
   listOfOptions:
@@ -30,7 +30,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 5
   timerWindow: 0
-  turnsDormant: 4
-  turnsActive: 1
-  turnsLive: 28
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 25
   turnsDone: 0

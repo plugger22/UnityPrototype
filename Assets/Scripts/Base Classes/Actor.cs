@@ -1165,7 +1165,11 @@ namespace gameAPI
         /// Delete most recent nodeActionData package (record at end of list)
         /// </summary>
         public void RemoveMostRecentNodeAction()
-        { listOfNodeActions.RemoveAt(listOfNodeActions.Count - 1); }
+        {
+            int index = listOfNodeActions.Count - 1;
+            Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentNodeAction: {0}, {1}, nodeAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfNodeActions[index].nodeAction, "\n");
+            listOfNodeActions.RemoveAt(index);
+        }
 
         /// <summary>
         /// Empty out listOfNodeActions
