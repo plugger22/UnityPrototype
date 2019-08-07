@@ -16,5 +16,6 @@ MonoBehaviour:
   minIntervalFactor: 2
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfSubSubType: []
   listOfCriteria: []
   minInterval: 4

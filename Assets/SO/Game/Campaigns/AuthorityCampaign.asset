@@ -37,4 +37,4 @@ MonoBehaviour:
   actorMatchPool: {fileID: 0}
   actorPoliticPool: {fileID: 0}
   hqPool: {fileID: 0}
-  teamPool: {fileID: 0}
+  teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}

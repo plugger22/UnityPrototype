@@ -14,21 +14,23 @@ MonoBehaviour:
   tag: Family Charlie story line test 0
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
   subType: {fileID: 11400000, guid: e22c3eb1bcc828940bda7b96b3ed4c00, type: 2}
+  subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  listOfCriteria: []
+  notes: 
   listOfOptions:
   - {fileID: 11400000, guid: f961e1c75363bd44495001a7783771a2, type: 2}
   - {fileID: 11400000, guid: f70c1ab2fe08da44fa70e0a24c1964d6, type: 2}
   - {fileID: 11400000, guid: ed1ce740bf2c0db4a848b0445abdf413, type: 2}
-  group: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
-  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
-  listOfCriteria: []
-  status: 4
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 33
+  turnsLive: 27
   turnsDone: 0

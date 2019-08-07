@@ -1250,8 +1250,8 @@ public class TopicManager : MonoBehaviour
                 }
                 else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
             }
-            //check at least two actors present (need one actor interacting with another)
-            if (selectionList.Count > 0 && numOfActors > 1)
+            //check at least one actors present
+            if (selectionList.Count > 0 && numOfActors > 0)
             {
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
@@ -1363,7 +1363,6 @@ public class TopicManager : MonoBehaviour
     }
 
     #endregion
-
 
     #endregion
 
@@ -2076,7 +2075,7 @@ public class TopicManager : MonoBehaviour
 
     #region CheckPlayerStatus
     /// <summary>
-    /// Checks Player (AI/Human) status
+    /// Checks Player (AI/Human) status. Returns True if ACTIVE, false otherwise
     /// NOTE: playerSide checked for Null by parent method
     /// </summary>
     /// <returns></returns>

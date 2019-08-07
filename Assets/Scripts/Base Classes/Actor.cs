@@ -1084,6 +1084,16 @@ namespace gameAPI
             gear.chanceOfCompromise = 0;
         }
 
+        /// <summary>
+        /// returns true if actor has gear, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckIfGear()
+        {
+            if (string.IsNullOrEmpty(gearName) == true)
+            { return false; }
+            return true;
+        }
 
         //
         // - - - Tooltip - - -

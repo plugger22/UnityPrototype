@@ -756,6 +756,16 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) < 2)
                                                 { BuildString(result, "Less than two active actors OnMap"); }
                                                 break;
+                                            case "ActiveActorGear":
+                                                //at least one active actor has personal gear
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PersonalGearYes, playerSide) == 0)
+                                                { BuildString(result, "No Active Actors with Gear"); }
+                                                break;
+                                            case "ActiveActorGearNo":
+                                                //at least one active actor does NOT have personal gear
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PersonalGearNo, playerSide) == 0)
+                                                { BuildString(result, "No Active Actors WITHOUT Gear"); }
+                                                break;
                                             case "ActorCompatibilityNOTZero":
                                                 //at least one actor with Compatibility NOT Zero (+/- 1 or 2)
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.CompatibilityNOTZero, playerSide) == 0)

@@ -9,30 +9,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActGea3
+  m_Name: ActGea5
   m_EditorClassIdentifier: 
-  tag: Actor Gear Want 3
+  tag: Actor Gear Personal 5
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 5f71194adb918384c8c90213d3627864, type: 2}
-  - {fileID: 11400000, guid: c0575a198d9f485449cb05f9d2fde86a, type: 2}
-  notes: Actor wants a piece of player's gear straight out. Gear will be lost.
+  - {fileID: 11400000, guid: 6aa1258e7e3e8d24793d7b73ff41cc64, type: 2}
+  notes: Actor with personal gear wants to give it to HQ for personal renown
   listOfOptions:
-  - {fileID: 11400000, guid: 026cfff3b098d084d8a2bb75a0db2f9c, type: 2}
-  - {fileID: 11400000, guid: 62f685f892359434f95747aaef8cc54f, type: 2}
-  - {fileID: 11400000, guid: 983cddb287215ac46b1f7b81f600dd15, type: 2}
-  status: 1
+  - {fileID: 11400000, guid: 13037b0b635f65a40933f0a538f0c430, type: 2}
+  - {fileID: 11400000, guid: 87afdba58570cc345abb439a0438b9fc, type: 2}
+  - {fileID: 11400000, guid: daac074def273184399cd5b9afdbc8bd, type: 2}
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 5
   timerWindow: 0
   turnsDormant: 4
-  turnsActive: 19
-  turnsLive: 0
+  turnsActive: 1
+  turnsLive: 18
   turnsDone: 0

@@ -50,6 +50,10 @@ public class Campaign : ScriptableObject
     [Tooltip("Topic pool of general Resistance decisions")]
     public TopicPool resistanceGeneralPool;
 
+    [Header("Authority Team Topic Pools")]
+    [Tooltip("Topic pool for Authority Team decisions")]
+    public TopicPool teamPool;
+
     [Header("Actor Topic Pools")]
     [Tooltip("Topic pool for Actor Contact decisions")]
     public TopicPool actorContactPool;
@@ -67,10 +71,6 @@ public class Campaign : ScriptableObject
     [Header("HQ Topic Pools")]
     [Tooltip("Topic pool for HQ decisions")]
     public TopicPool hqPool;
-
-    [Header("Team Topic Pools")]
-    [Tooltip("Topic pool for Authority Team decisions")]
-    public TopicPool teamPool;
 
 
     public void OnEnable()

@@ -1258,3 +1258,42 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 21872 -> Wednesday, 7 August 2019 12:14 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 47124 -> Wednesday, 7 August 2019 2:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46783 -> Wednesday, 7 August 2019 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59561 -> Wednesday, 7 August 2019 2:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11962 -> Wednesday, 7 August 2019 2:21 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorGear"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1026)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:584)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topicSubType "ActorMatch" has MISMATCH with topicType parent (is Actor, should be City)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1833)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:602)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid topic "ActMat1" has MISMATCH with topicType parent (is Actor, should be City)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UnitTestTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1851)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:602)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 11962 -> Wednesday, 7 August 2019 2:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11962 -> Wednesday, 7 August 2019 2:54 PM
+City seed 5678 -> London, United Kingdom

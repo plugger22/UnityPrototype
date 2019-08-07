@@ -4350,6 +4350,14 @@ public class DataManager : MonoBehaviour
                                     else { Debug.LogError("Invalid NodeActionData (Null)"); }
                                 }
                                 break;
+                            case ActorCheck.PersonalGearYes:
+                                //At least one active actor HAS personal gear
+                                if (actor.CheckIfGear() == true) { numOfActors++; }
+                                break;
+                            case ActorCheck.PersonalGearNo:
+                                //At least one active actor has NO personal gear
+                                if (actor.CheckIfGear() == false) { numOfActors++; }
+                                break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
                     }
