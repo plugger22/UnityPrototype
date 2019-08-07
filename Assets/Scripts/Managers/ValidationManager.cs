@@ -2512,6 +2512,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="pool"></param>
     private void CheckCampaignPool(Campaign campaign, TopicPool pool, TopicSubType subType)
     {
+        bool isGoodTopicPresent, isBadTopicPresent;
         //check type for a match
         if (pool.type.name.Equals(subType.type.name, StringComparison.Ordinal) == false)
         {
@@ -2528,7 +2529,6 @@ public class ValidationManager : MonoBehaviour
         //SubSubTypes present?
         if (pool.listOfSubSubTypePools.Count > 0)
         {
-            bool isGoodTopicPresent, isBadTopicPresent;
             for (int i = 0; i < pool.listOfSubSubTypePools.Count; i++)
             {
                 TopicPool subSubPool = pool.listOfSubSubTypePools[i];
@@ -2607,6 +2607,8 @@ public class ValidationManager : MonoBehaviour
         int count = pool.listOfTopics.Count;
         if (count > 0)
         {
+            isGoodTopicPresent = false;
+            isBadTopicPresent = false;
             for (int i = 0; i < count; i++)
             {
                 Topic topic = pool.listOfTopics[i];
@@ -2617,12 +2619,23 @@ public class ValidationManager : MonoBehaviour
                         Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\", has INCORRECT SIDE (is {3}, should be {4}){5}",
                           campaign.name, pool.name, topic.name, topic.side.name, campaign.side.name, "\n");
                     }
+                    //check at least one good and one bad topic  present in pool
+                    if (topic.group.name.Equals("Good", StringComparison.Ordinal) == true)
+                        { isGoodTopicPresent = true; }
+                    if (topic.group.name.Equals("Bad", StringComparison.Ordinal) == true)
+                        { isBadTopicPresent = true; }
                 }
                 else
                 {
                     Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\" Invalid (Null){3}}",
                         campaign.name, pool.name, topic.name, "\n");
                 }
+            }
+            //Has one good and one bad topic present?
+            if (isGoodTopicPresent == false || isBadTopicPresent == false)
+            {
+                Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", must have at least 1 Good & 1 Bad topics present (is Good {2}, Bad {3}){4}",
+                    campaign.name, pool.name, isGoodTopicPresent, isBadTopicPresent, "\n");
             }
             //check for duplicates
             List<string> tempList = pool.listOfTopics.Select(i => i.name).ToList();

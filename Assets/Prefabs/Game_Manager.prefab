@@ -2264,7 +2264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
-  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
+  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -2755,7 +2755,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -2899,6 +2899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minIntervalGlobal: 2
   maxOptions: 4
+  actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   BlowStuffUp: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
   CreateRiots: {fileID: 11400000, guid: 07f004ee8b4a38346995487f87d3c3f4, type: 2}
   DeployTeam: {fileID: 11400000, guid: 5abf4e1267a28594a822d32f9668aa90, type: 2}
