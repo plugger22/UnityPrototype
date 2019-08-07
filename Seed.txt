@@ -1297,3 +1297,49 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 11962 -> Wednesday, 7 August 2019 2:54 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 11962 -> Wednesday, 7 August 2019 3:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3436 -> Wednesday, 7 August 2019 3:46 PM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found chaosCritter, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:4756)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1242)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1111)
+	
+Dev seed 33586 -> Wednesday, 7 August 2019 3:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64033 -> Wednesday, 7 August 2019 4:21 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.ExecuteTopic () (at Assets/Scripts/Managers/TopicManager.cs:1463)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1388)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:292)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 14636 -> Wednesday, 7 August 2019 4:23 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.ExecuteTopic () (at Assets/Scripts/Managers/TopicManager.cs:1463)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1388)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:292)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 42787 -> Wednesday, 7 August 2019 4:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52800 -> Wednesday, 7 August 2019 4:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21960 -> Wednesday, 7 August 2019 4:39 PM
+City seed 5678 -> London, United Kingdom

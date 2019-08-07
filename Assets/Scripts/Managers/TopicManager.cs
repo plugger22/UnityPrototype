@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
@@ -1415,46 +1416,59 @@ public class TopicManager : MonoBehaviour
                 case "FamilyAlpha":
                 case "FamilyBravo":
                 case "FamilyCharlie":
-
                     break;
                 //Dynamic topic
                 case "ActorPolitic":
-
                     break;
                 case "ActorContact":
-
                     break;
                 case "ActorDistrict":
-
                     break;
                 case "ActorGear":
-
                     break;
                 case "ActorMatch":
-
                     break;
-
                 case "AuthorityTeam":
-
                     break;
-
                 case "CitySub":
-
                     break;
-
                 case "HQSub":
-
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                     break;
             }
 
-            // TO DO -> before updating stats check that topic data package from above is O.K
-
-
 
             // TO DO -> send topic data package to UI for display and user interaction
+
+            //Debug outcome dialogue in infoMsgPipeline
+            string actorDetails, nodeDetails;
+            if (tagActorID > -1)
+            {
+                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                actorDetails = string.Format("{0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID);
+            }
+            else { actorDetails = "actorID -1"; }
+            if (tagNodeID > -1)
+            {
+                Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
+                nodeDetails = string.Format("{0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
+            }
+            else { nodeDetails = "nodeID -1"; }
+            
+            ModalOutcomeDetails details = new ModalOutcomeDetails
+            {
+                textTop = string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetFormattedString(turnTopic.name, ColourType.neutralText), "\n", turnTopic.tag),
+                textBottom = String.Format("{0}{1}{2}{3}stringDataName {4}", actorDetails, "\n", nodeDetails, "\n", tagStringData),
+                sprite = GameManager.instance.guiScript.infoSprite,
+                isAction = false,
+                side = GameManager.instance.sideScript.PlayerSide,
+                type = MsgPipelineType.DebugTopic
+            };
+            if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+            { Debug.LogWarning("Debug Topic infoPipeLine message FAILED to be added to pipeline"); }
+
         }
         else { Debug.LogError("Invalid turnTopic (Null) -> No decision generated this turn"); }
     }
