@@ -4341,8 +4341,8 @@ public class DataManager : MonoBehaviour
                                         if (subSubType != null)
                                         {
                                             List<Topic> listOfTopics = GetListOfTopics(subSubType.subType);
-                                            //check that actors most recent node Action has topics on the list
-                                            if (GameManager.instance.topicScript.CheckSubSubTypeTopicsPresent(listOfTopics, subSubType.name) == true)
+                                            //check that actors most recent node Action has at least one Live topic of correct subSubType on the list
+                                            if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
                                             { numOfActors++; }
                                         }
                                         else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }

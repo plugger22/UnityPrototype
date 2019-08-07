@@ -43,6 +43,9 @@ public class TopicManager : MonoBehaviour
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
+    private int tagNodeID;
+    private int tagTurn;
+    private string tagStringData;        //General purpose
 
     //collections (local)
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
@@ -570,8 +573,8 @@ public class TopicManager : MonoBehaviour
                     CheckTopics();
                     CheckForValidTopicTypes();
                     GetTopicType();
-                    GetTopicSubType(playerSide);
-                    GetTopic(playerSide);
+                    if (GetTopicSubType(playerSide) == true)
+                    { GetTopic(playerSide); }
                     //repeat process with a reduced minInterval
                     if (turnTopic == null)
                     {
@@ -581,10 +584,14 @@ public class TopicManager : MonoBehaviour
                     else { break; }
                 }
                 while (turnTopic == null && minIntervalGlobalActual > 0);
-                //debug purposes only -> BEFORE UpdateTopicTypeData
-                UnitTestTopic(playerSide);
-                //debug -> should be in ProcessTopic but here for autorun debugging purposes
-                UpdateTopicTypeData();
+                //only if a valid topic selected
+                if (turnTopic != null)
+                {
+                    //debug purposes only -> BEFORE UpdateTopicTypeData
+                    UnitTestTopic(playerSide);
+                    //debug -> should be in ProcessTopic but here for autorun debugging purposes
+                    UpdateTopicTypeData();
+                }
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
@@ -827,6 +834,9 @@ public class TopicManager : MonoBehaviour
         turnTopic = null;
         //info tags
         tagActorID = -1;
+        tagNodeID = -1;
+        tagTurn = -1;
+        tagStringData = "";
         //empty collections
         listOfTopicTypesTurn.Clear();
         listOfTypePool.Clear();
@@ -868,12 +878,13 @@ public class TopicManager : MonoBehaviour
 
     #region GetTopicSubType
     /// <summary>
-    /// Get topicSubType for turn Decision
+    /// Get topicSubType for turn Decision. Returns true if valid subType found, false otherwise
     /// Note: playerSide checked for null by parent method
     /// </summary>
-    private void GetTopicSubType(GlobalSide playerSide)
+    private bool GetTopicSubType(GlobalSide playerSide)
     {
         int numOfEntries;
+        string criteriaCheck;
         bool isProceed;
         if (turnTopicType != null)
         {
@@ -891,38 +902,51 @@ public class TopicManager : MonoBehaviour
                         TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
                         if (dataSub != null)
                         {
-                            if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
+                            //check subTopic criteria
+                            if (subType.listOfCriteria != null && subType.listOfCriteria.Count > 0)
                             {
-                                //check that there are Live topics available for subType
-                                List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
-                                if (listOfTopics != null)
+                                //check individual topicSubType criteria
+                                criteriaCheck = null;
+                                CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                                { listOfCriteria = subType.listOfCriteria };
+                                criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                                if (criteriaCheck == null)
                                 {
-                                    //loop topics looking for the first valid topic (only need one) in order to validate subType
-                                    for (int k = 0; k < listOfTopics.Count; k++)
+                                    if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
                                     {
-                                        Topic topic = listOfTopics[k];
-                                        if (topic != null)
+                                        //check that there are Live topics available for subType
+                                        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                                        if (listOfTopics != null)
                                         {
-                                            if (topic.status == Status.Live)
+                                            //loop topics looking for the first valid topic (only need one) in order to validate subType
+                                            for (int k = 0; k < listOfTopics.Count; k++)
                                             {
-                                                isProceed = true;
-                                                break;
+                                                Topic topic = listOfTopics[k];
+                                                if (topic != null)
+                                                {
+                                                    if (topic.status == Status.Live)
+                                                    {
+                                                        isProceed = true;
+                                                        break;
+                                                    }
+                                                }
+                                                else { Debug.LogWarningFormat("Invalid topic (Null) for subType \"{0}\"", subType.name); }
+                                            }
+                                            if (isProceed == true)
+                                            {
+                                                //populate pool based on priorities
+                                                numOfEntries = GetNumOfEntries(subType.priority);
+                                                if (numOfEntries > 0)
+                                                {
+                                                    for (int j = 0; j < numOfEntries; j++)
+                                                    { listOfSubTypePool.Add(subType); }
+                                                }
                                             }
                                         }
-                                        else { Debug.LogWarningFormat("Invalid topic (Null) for subType \"{0}\"", subType.name); }
-                                    }
-                                    if (isProceed == true)
-                                    {
-                                        //populate pool based on priorities
-                                        numOfEntries = GetNumOfEntries(subType.priority);
-                                        if (numOfEntries > 0)
-                                        {
-                                            for (int j = 0; j < numOfEntries; j++)
-                                            { listOfSubTypePool.Add(subType); }
-                                        }
+                                        else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
                                     }
                                 }
-                                else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
+                                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n"); }
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }
@@ -934,10 +958,12 @@ public class TopicManager : MonoBehaviour
             {
                 //random draw of pool
                 turnTopicSubType = listOfSubTypePool[Random.Range(0, listOfSubTypePool.Count)];
+                return true;
             }
-            else { Debug.LogError("Invalid listOfSubTypePool (Empty) for topicSubType selection"); }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" Empty Pool for topicSubType selection{1}", turnTopicType.name, "\n"); }
         }
         //O.K for there to be no valid topic
+        return false;
     }
     #endregion
 
@@ -1364,6 +1390,9 @@ public class TopicManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                 //Info tags
                 tagActorID = actor.actorID;
+                tagNodeID = data.nodeID;
+                tagTurn = data.turn;
+                tagStringData = data.dataName;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -1391,8 +1420,12 @@ public class TopicManager : MonoBehaviour
             //only if Player Active
             if (CheckPlayerStatus(playerSide) == true)
             {
-                ExecuteTopic();
-                UpdateTopicStatus();
+                //valid topic selected, ignore otherwise
+                if (turnTopic != null)
+                {
+                    ExecuteTopic();
+                    UpdateTopicStatus();
+                }
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
@@ -1993,12 +2026,19 @@ public class TopicManager : MonoBehaviour
         {
             if (string.IsNullOrEmpty(subSubTypeName) == false)
             {
-                //loop list and break out and return true on first match
+                /*//loop list and break out and return true on first match
                 for (int i = 0; i < listOfTopics.Count; i++)
                 {
                     if (listOfTopics[i].subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) == true)
-                    { return true; }
-                }
+                    {
+                        //must be Live
+                        if (listOfTopics[i].status == Status.Live)
+                        { return true; }
+                    }
+                }*/
+
+                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) && x.status == Status.Live))
+                { return true; }
             }
             else { Debug.LogError("Invalid subSubTypeName (Null)"); }
         }
@@ -2386,6 +2426,11 @@ public class TopicManager : MonoBehaviour
         if (turnTopic != null)
         { builder.AppendFormat(" topic: {0}{1}", turnTopic.name, "\n"); }
         else { builder.AppendFormat(" topic: NULL{0}", "\n"); }
+        builder.AppendLine();
+        builder.AppendFormat(" actorID: {0}{1}", tagActorID, "\n");
+        builder.AppendFormat(" nodeID: {0}{1}", tagNodeID, "\n");
+        builder.AppendFormat(" turn: {0}{1}", tagTurn, "\n");
+        builder.AppendFormat(" stringData: {0}{1}", tagStringData, "\n");
         //topic type pool
         builder.AppendFormat("{0}- listOfTopicTypePool{1}", "\n", "\n");
         if (listOfTypePool.Count > 0)

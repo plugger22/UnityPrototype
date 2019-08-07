@@ -753,7 +753,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "ActiveActorsMinTwo":
                                                 //at least two active, onMap actor preesent
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) > 1)
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) < 2)
                                                 { BuildString(result, "Less than two active actors OnMap"); }
                                                 break;
                                             case "ActorCompatibilityNOTZero":
