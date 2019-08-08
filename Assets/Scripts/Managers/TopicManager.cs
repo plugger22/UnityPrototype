@@ -22,29 +22,53 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType actorType;
 
-    [Header("TopicSubSubTypes")]
+    [Header("Actor TopicSubSubTypes")]
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType BlowStuffUp;
+    public TopicSubSubType actorBlowStuffUp;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType CreateRiots;
+    public TopicSubSubType actorCreateRiots;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType DeployTeam;
+    public TopicSubSubType actorDeployTeam;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType GainTargetInfo;
+    public TopicSubSubType actorGainTargetInfo;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType HackSecurity;
+    public TopicSubSubType actorHackSecurity;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType InsertTracer;
+    public TopicSubSubType actorInsertTracer;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType NeutraliseTeam;
+    public TopicSubSubType actorNeutraliseTeam;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType ObtainGear;
+    public TopicSubSubType actorObtainGear;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType RecallTeam;
+    public TopicSubSubType actorRecallTeam;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType RecruitActor;
+    public TopicSubSubType actorRecruitActor;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
-    public TopicSubSubType SpreadFakeNews;
+    public TopicSubSubType actorSpreadFakeNews;
+
+    [Header("Player TopicSubSubTypes")]
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerBlowStuffUp;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerCreateRiots;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerDeployTeam;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerGainTargetInfo;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerHackSecurity;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerInsertTracer;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerNeutraliseTeam;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerObtainGear;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerRecallTeam;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerRecruitActor;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType playerSpreadFakeNews;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
@@ -161,18 +185,30 @@ public class TopicManager : MonoBehaviour
     {
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
-        //subSubTypes
-        Debug.Assert(BlowStuffUp != null, "Invalid BlowStuffUp (Null)");
-        Debug.Assert(CreateRiots != null, "Invalid CreateRiots (Null)");
-        Debug.Assert(DeployTeam != null, "Invalid DeployTeam (Null)");
-        Debug.Assert(GainTargetInfo != null, "Invalid GainTargetInfo (Null)");
-        Debug.Assert(HackSecurity != null, "Invalid HackSecurity (Null)");
-        Debug.Assert(InsertTracer != null, "Invalid InsertTracer (Null)");
-        Debug.Assert(NeutraliseTeam != null, "Invalid NeutraliseTeam (Null)");
-        Debug.Assert(ObtainGear != null, "Invalid ObtainGear (Null)");
-        Debug.Assert(RecallTeam != null, "Invalid RecallTeam (Null)");
-        Debug.Assert(RecruitActor != null, "Invalid RecruitActor (Null)");
-        Debug.Assert(SpreadFakeNews != null, "Invalid SpreadFakeNews (Null)");
+        //actor subSubTypes
+        Debug.Assert(actorBlowStuffUp != null, "Invalid actorBlowStuffUp (Null)");
+        Debug.Assert(actorCreateRiots != null, "Invalid actorCreateRiots (Null)");
+        Debug.Assert(actorDeployTeam != null, "Invalid actorDeployTeam (Null)");
+        Debug.Assert(actorGainTargetInfo != null, "Invalid actorGainTargetInfo (Null)");
+        Debug.Assert(actorHackSecurity != null, "Invalid actorHackSecurity (Null)");
+        Debug.Assert(actorInsertTracer != null, "Invalid actorInsertTracer (Null)");
+        Debug.Assert(actorNeutraliseTeam != null, "Invalid actorNeutraliseTeam (Null)");
+        Debug.Assert(actorObtainGear != null, "Invalid actorObtainGear (Null)");
+        Debug.Assert(actorRecallTeam != null, "Invalid actorRecallTeam (Null)");
+        Debug.Assert(actorRecruitActor != null, "Invalid actorRecruitActor (Null)");
+        Debug.Assert(actorSpreadFakeNews != null, "Invalid actorSpreadFakeNews (Null)");
+        //player subSubTypes
+        Debug.Assert(playerBlowStuffUp != null, "Invalid playerBlowStuffUp (Null)");
+        Debug.Assert(playerCreateRiots != null, "Invalid playerCreateRiots (Null)");
+        Debug.Assert(playerDeployTeam != null, "Invalid playerDeployTeam (Null)");
+        Debug.Assert(playerGainTargetInfo != null, "Invalid playerGainTargetInfo (Null)");
+        Debug.Assert(playerHackSecurity != null, "Invalid playerHackSecurity (Null)");
+        Debug.Assert(playerInsertTracer != null, "Invalid playerInsertTracer (Null)");
+        Debug.Assert(playerNeutraliseTeam != null, "Invalid playerNeutraliseTeam (Null)");
+        Debug.Assert(playerObtainGear != null, "Invalid playerObtainGear (Null)");
+        Debug.Assert(playerRecallTeam != null, "Invalid playerRecallTeam (Null)");
+        Debug.Assert(playerRecruitActor != null, "Invalid playerRecruitActor (Null)");
+        Debug.Assert(playerSpreadFakeNews != null, "Invalid playerSpreadFakeNews (Null)");
     }
     #endregion
 
@@ -290,6 +326,19 @@ public class TopicManager : MonoBehaviour
                                                             GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorMatchPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
+                                                    case "PlayerDistrict":
+                                                        if (campaign.playerDistrictPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.playerDistrictPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.playerDistrictPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerDistrictPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.playerDistrictPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -956,6 +1005,7 @@ public class TopicManager : MonoBehaviour
                     case "FamilyAlpha":
                     case "FamilyBravo":
                     case "FamilyCharlie":
+                    case "PlayerDistrict":
                         listOfPotentialTopics = listOfSubTypeTopics;
                         break;
                     //Dynamic topic
@@ -2036,17 +2086,30 @@ public class TopicManager : MonoBehaviour
         //get specific subSubType topic pool
         switch (nodeAction)
         {
-            case NodeAction.BlowStuffUp: subSubType = BlowStuffUp; break;
-            case NodeAction.CreateRiots: subSubType = CreateRiots; break;
-            case NodeAction.DeployTeam: subSubType = DeployTeam; break;
-            case NodeAction.GainTargetInfo: subSubType = GainTargetInfo; break;
-            case NodeAction.HackSecurity: subSubType = HackSecurity; break;
-            case NodeAction.InsertTracer: subSubType = InsertTracer; break;
-            case NodeAction.NeutraliseTeam: subSubType = NeutraliseTeam; break;
-            case NodeAction.ObtainGear: subSubType = ObtainGear; break;
-            case NodeAction.RecallTeam: subSubType = RecallTeam; break;
-            case NodeAction.RecruitActor: subSubType = RecruitActor; break;
-            case NodeAction.SpreadFakeNews: subSubType = SpreadFakeNews; break;
+            //actor SubSubTypes
+            case NodeAction.ActorBlowStuffUp: subSubType = actorBlowStuffUp; break;
+            case NodeAction.ActorCreateRiots: subSubType = actorCreateRiots; break;
+            case NodeAction.ActorDeployTeam: subSubType = actorDeployTeam; break;
+            case NodeAction.ActorGainTargetInfo: subSubType = actorGainTargetInfo; break;
+            case NodeAction.ActorHackSecurity: subSubType = actorHackSecurity; break;
+            case NodeAction.ActorInsertTracer: subSubType = actorInsertTracer; break;
+            case NodeAction.ActorNeutraliseTeam: subSubType = actorNeutraliseTeam; break;
+            case NodeAction.ActorObtainGear: subSubType = actorObtainGear; break;
+            case NodeAction.ActorRecallTeam: subSubType = actorRecallTeam; break;
+            case NodeAction.ActorRecruitActor: subSubType = actorRecruitActor; break;
+            case NodeAction.ActorSpreadFakeNews: subSubType = actorSpreadFakeNews; break;
+            //player SubSubTypes
+            case NodeAction.PlayerBlowStuffUp: subSubType = playerBlowStuffUp; break;
+            case NodeAction.PlayerCreateRiots: subSubType = playerCreateRiots; break;
+            case NodeAction.PlayerDeployTeam: subSubType = playerDeployTeam; break;
+            case NodeAction.PlayerGainTargetInfo: subSubType = playerGainTargetInfo; break;
+            case NodeAction.PlayerHackSecurity: subSubType = playerHackSecurity; break;
+            case NodeAction.PlayerInsertTracer: subSubType = playerInsertTracer; break;
+            case NodeAction.PlayerNeutraliseTeam: subSubType = playerNeutraliseTeam; break;
+            case NodeAction.PlayerObtainGear: subSubType = playerObtainGear; break;
+            case NodeAction.PlayerRecallTeam: subSubType = playerRecallTeam; break;
+            case NodeAction.PlayerRecruitActor: subSubType = playerRecruitActor; break;
+            case NodeAction.PlayerSpreadFakeNews: subSubType = playerSpreadFakeNews; break;
             default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\"", nodeAction); break;
         }
         return subSubType;

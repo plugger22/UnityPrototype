@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
+  m_Name: ActDistDeployTeam
+  m_EditorClassIdentifier: 
+  tag: Actor Node Deploy Team
+  descriptor: 
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
+  subSubType: {fileID: 11400000, guid: 5abf4e1267a28594a822d32f9668aa90, type: 2}
+  listOfTopics:
+  - {fileID: 11400000, guid: fb4cd8ddda278544bb98ee87a35506f3, type: 2}
+  - {fileID: 11400000, guid: 14910a3293be0ea4c92f79729d10d0b0, type: 2}
+  listOfSubSubTypePools: []

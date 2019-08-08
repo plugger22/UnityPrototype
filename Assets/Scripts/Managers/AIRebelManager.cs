@@ -3095,7 +3095,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayer = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ObtainGear, "AI_Gear");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorObtainGear, "AI_Gear");
             }
             else
             {
@@ -3105,7 +3105,7 @@ public class AIRebelManager : MonoBehaviour
                     actorName = actor.actorName;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ObtainGear, "AI_Gear");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorObtainGear, "AI_Gear");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3152,7 +3152,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayer = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.GainTargetInfo, "AI_Target");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorGainTargetInfo, "AI_Target");
             }
             else
             {
@@ -3162,7 +3162,7 @@ public class AIRebelManager : MonoBehaviour
                     actorName = actor.actorName;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.GainTargetInfo, "AI_Target");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorGainTargetInfo, "AI_Target");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3206,7 +3206,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayerAction = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.RecruitActor, "AI_Actor");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorRecruitActor, "AI_Actor");
             }
             else
             {
@@ -3216,7 +3216,7 @@ public class AIRebelManager : MonoBehaviour
                     actorName = actor.actorName;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.RecruitActor, "AI_Actor");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorRecruitActor, "AI_Actor");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3268,7 +3268,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayerAction = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.SpreadFakeNews, "Unknown");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorSpreadFakeNews, "Unknown");
             }
             else
             {
@@ -3279,7 +3279,7 @@ public class AIRebelManager : MonoBehaviour
                     actorArcName = actor.arc.name;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.SpreadFakeNews, "Unknown");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorSpreadFakeNews, "Unknown");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3330,7 +3330,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayerAction = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.BlowStuffUp, "Unknown");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorBlowStuffUp, "Unknown");
             }
             else
             {
@@ -3341,7 +3341,7 @@ public class AIRebelManager : MonoBehaviour
                     actorArcName = actor.arc.name;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.BlowStuffUp, "Unknown");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorBlowStuffUp, "Unknown");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3393,7 +3393,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayerAction = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.InsertTracer, "Unknown");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorInsertTracer, "Unknown");
             }
             else
             {
@@ -3404,7 +3404,7 @@ public class AIRebelManager : MonoBehaviour
                     actorArcName = actor.arc.name;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.InsertTracer, "Unknown");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorInsertTracer, "Unknown");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3456,7 +3456,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayerAction = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.NeutraliseTeam, "Unknown");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorNeutraliseTeam, "Unknown");
             }
             else
             {
@@ -3467,7 +3467,7 @@ public class AIRebelManager : MonoBehaviour
                     actorArcName = actor.arc.name;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.NeutraliseTeam, "Unknown");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorNeutraliseTeam, "Unknown");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3518,7 +3518,7 @@ public class AIRebelManager : MonoBehaviour
                 isPlayerAction = true;
                 UpdateRenown();
                 //debug
-                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.HackSecurity, "Unknown");
+                DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorHackSecurity, "Unknown");
             }
             else
             {
@@ -3529,7 +3529,7 @@ public class AIRebelManager : MonoBehaviour
                     actorArcName = actor.arc.name;
                     UpdateRenown(actor);
                     //debug
-                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.HackSecurity, "Unknown");
+                    DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorHackSecurity, "Unknown");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3600,7 +3600,7 @@ public class AIRebelManager : MonoBehaviour
                     isPlayerAction = true;
                     UpdateRenown();
                     //debug
-                    DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.CreateRiots, "Unknown");
+                    DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.ActorCreateRiots, "Unknown");
                 }
                 else
                 {
@@ -3611,7 +3611,7 @@ public class AIRebelManager : MonoBehaviour
                         actorArcName = actor.arc.name;
                         UpdateRenown(actor);
                         //debug
-                        DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.CreateRiots, "Unknown");
+                        DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorCreateRiots, "Unknown");
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
                 }

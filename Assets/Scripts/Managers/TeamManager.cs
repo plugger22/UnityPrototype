@@ -648,7 +648,7 @@ public class TeamManager : MonoBehaviour
                                                         actorID = actor.actorID,
                                                         nodeID = node.nodeID,
                                                         dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
-                                                        nodeAction = NodeAction.DeployTeam
+                                                        nodeAction = NodeAction.ActorDeployTeam
                                                     };
                                                     //add to actor's personal list
                                                     actor.AddNodeAction(nodeActionData);
@@ -857,7 +857,7 @@ public class TeamManager : MonoBehaviour
                                                     turn = GameManager.instance.turnScript.Turn,
                                                     actorID = actor.actorID,
                                                     nodeID = node.nodeID,
-                                                    nodeAction = NodeAction.DeployTeam,
+                                                    nodeAction = NodeAction.ActorDeployTeam,
                                                     dataName = string.Format("{0} {1}", team.arc.name, team.teamName)
                                                 };
                                                 //add to actor's personal list
@@ -1263,7 +1263,7 @@ public class TeamManager : MonoBehaviour
                                 actorID = actor.actorID,
                                 nodeID = node.nodeID,
                                 dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
-                                nodeAction = NodeAction.RecallTeam
+                                nodeAction = NodeAction.ActorRecallTeam
                             };
                             //add to actor's personal list
                             actor.AddNodeAction(nodeActionData);
@@ -1383,7 +1383,7 @@ public class TeamManager : MonoBehaviour
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
                                         dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
-                                        nodeAction = NodeAction.NeutraliseTeam
+                                        nodeAction = NodeAction.ActorNeutraliseTeam
                                     };
                                     //add to actor's personal list
                                     actor.AddNodeAction(nodeActionData);
@@ -1398,7 +1398,7 @@ public class TeamManager : MonoBehaviour
                                         actorID = 999,
                                         nodeID = node.nodeID,
                                         dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
-                                        nodeAction = NodeAction.NeutraliseTeam
+                                        nodeAction = NodeAction.ActorNeutraliseTeam
                                     };
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);
@@ -1744,7 +1744,7 @@ public class TeamManager : MonoBehaviour
                                                 actorID = actor.actorID,
                                                 nodeID = team.nodeID,
                                                 dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
-                                                nodeAction = NodeAction.DeployTeam
+                                                nodeAction = NodeAction.ActorDeployTeam
                                             };
                                             //add to actor's personal list
                                             actor.AddNodeAction(nodeActionData);

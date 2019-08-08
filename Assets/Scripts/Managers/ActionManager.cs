@@ -391,11 +391,11 @@ public class ActionManager : MonoBehaviour
                                 NodeAction nodeAction = NodeAction.None;
                                 switch (actor.arc.name)
                                 {
-                                    case "ANARCHIST": nodeAction = NodeAction.BlowStuffUp; break;
-                                    case "BLOGGER": nodeAction = NodeAction.SpreadFakeNews; break;
-                                    case "HACKER": nodeAction = NodeAction.HackSecurity; break;
-                                    case "HEAVY": nodeAction = NodeAction.CreateRiots; break;
-                                    case "OBSERVER": nodeAction = NodeAction.InsertTracer; break;
+                                    case "ANARCHIST": nodeAction = NodeAction.ActorBlowStuffUp; break;
+                                    case "BLOGGER": nodeAction = NodeAction.ActorSpreadFakeNews; break;
+                                    case "HACKER": nodeAction = NodeAction.ActorHackSecurity; break;
+                                    case "HEAVY": nodeAction = NodeAction.ActorCreateRiots; break;
+                                    case "OBSERVER": nodeAction = NodeAction.ActorInsertTracer; break;
                                     default: Debug.LogWarningFormat("Unrecognised actor.arc \"{0}\"", actor.arc.name); break;
                                 }
                                 if (isPlayer == false)

@@ -52,7 +52,14 @@
     public enum NodeArcTally { Current, Minimum, Count };                                   //used for indexing of arrayOfNodeArcTotals
     public enum NodeType { Normal, Highlight, Active, Player, Nemesis, Count }
     public enum NodeData { Stability, Support, Security, Target, Probe, Spider, Erasure};    //NOTE: keep first 3 in order as they are used in tooltipNode.cs -> GetStatColour (matches node tooltip stat display seq)
-    public enum NodeAction { None, BlowStuffUp, GainTargetInfo, HackSecurity, InsertTracer, NeutraliseTeam, ObtainGear, RecruitActor, SpreadFakeNews, CreateRiots, DeployTeam, RecallTeam} //NodeActionData package
+    public enum NodeAction
+    {                                                           //NodeActionData package
+        None,
+        ActorBlowStuffUp, ActorGainTargetInfo, ActorHackSecurity, ActorInsertTracer, ActorNeutraliseTeam, ActorObtainGear,
+        ActorRecruitActor, ActorSpreadFakeNews, ActorCreateRiots, ActorDeployTeam, ActorRecallTeam,
+        PlayerBlowStuffUp, PlayerGainTargetInfo, PlayerHackSecurity, PlayerInsertTracer, PlayerNeutraliseTeam, PlayerObtainGear,
+        PlayerRecruitActor, PlayerSpreadFakeNews, PlayerCreateRiots, PlayerDeployTeam, PlayerRecallTeam
+    } 
     public enum NodeUI
     {                                                            //parameter for NodeDisplay event
         None,

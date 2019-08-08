@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
+  m_Name: PlyDistRecruitActor
+  m_EditorClassIdentifier: 
+  tag: Player Node Recruit
+  descriptor: 
+  type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
+  subSubType: {fileID: 11400000, guid: c16cf3d6b0ddff141b0ef5f16a1b7b73, type: 2}
+  listOfTopics:
+  - {fileID: 11400000, guid: e541d66fc6a3eae4f9d0d4cd53f677b7, type: 2}
+  - {fileID: 11400000, guid: 96491a64fc358564eb8e5402bf422bb6, type: 2}
+  listOfSubSubTypePools: []
