@@ -3628,7 +3628,7 @@ public class ActorManager : MonoBehaviour
                                         actorID = 999,
                                         nodeID = GameManager.instance.nodeScript.nodePlayer,
                                         dataName = actorRecruited.actorName,
-                                        nodeAction = NodeAction.ActorRecruitActor
+                                        nodeAction = NodeAction.PlayerRecruitActor
                                     };
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);
@@ -3745,7 +3745,7 @@ public class ActorManager : MonoBehaviour
                             actorID = 999,
                             nodeID = GameManager.instance.nodeScript.nodePlayer,
                             dataName = actorRecruited.actorName,
-                            nodeAction = NodeAction.ActorRecruitActor
+                            nodeAction = NodeAction.PlayerRecruitActor
                         };
                         //add to player's personal list
                         GameManager.instance.playerScript.AddNodeAction(nodeActionData);

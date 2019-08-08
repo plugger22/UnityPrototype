@@ -1932,7 +1932,7 @@ public class TargetManager : MonoBehaviour
                             actorID = 999,
                             nodeID = node.nodeID,
                             dataName = target.targetName,
-                            nodeAction = NodeAction.ActorGainTargetInfo
+                            nodeAction = NodeAction.PlayerGainTargetInfo
                         };
                         //add to player's personal list
                         GameManager.instance.playerScript.AddNodeAction(nodeActionData);

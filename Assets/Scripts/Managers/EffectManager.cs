@@ -748,7 +748,7 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "NodeActionsNOTZero":
                                                 //player has listOfNodeActions.Count > 0
-                                                if (GameManager.instance.playerScript.CheckNumOFNodeActions() == 0)
+                                                if (GameManager.instance.playerScript.CheckPlayerSpecial(PlayerCheck.NodeActionsNOTZero) == false)
                                                 { BuildString(result, "Player has NO NodeActions"); }
                                                 break;
                                             default:

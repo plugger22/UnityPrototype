@@ -855,7 +855,7 @@ public class PlayerManager : MonoBehaviour
                         GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
                     }
                 }
-                else 
+                else
                     //condition already exists
                     switch (condition.tag)
                     {
@@ -1673,6 +1673,46 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void ClearAllNodeActions()
     { listOfNodeActions.Clear(); }
+
+
+    /// <summary>
+    /// returns true for the player if active and if meets the special enum criteria, false otherwise
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
+    public bool CheckPlayerSpecial(PlayerCheck check)
+    {
+        bool isResult = false;
+        if (status == ActorStatus.Active)
+        {
+                switch (check)
+                {
+                    case PlayerCheck.NodeActionsNOTZero:
+                        //Player with listOfNodeActions.Count > 0 && the player's most recent NodeActivity has valid topics present
+                        if (CheckNumOFNodeActions() != 0)
+                        {
+                            NodeActionData data = GetMostRecentNodeAction();
+                            if (data != null)
+                            {
+                                //get relevant subType topic list
+                                TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.nodeAction);
+                                if (subSubType != null)
+                                {
+                                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subSubType.subType);
+                                    //check that Players most recent node Action has at least one Live topic of correct subSubType on the list
+                                    if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
+                                    { isResult = true; }
+                                }
+                                else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }
+                            }
+                            else { Debug.LogError("Invalid NodeActionData (Null)"); }
+                        }
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised PlayerCheck \"{0}\"", check); break;
+                }
+        }
+        return isResult;
+    }
 
     //place new methods above here
 }

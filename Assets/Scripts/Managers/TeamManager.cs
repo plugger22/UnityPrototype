@@ -1398,7 +1398,7 @@ public class TeamManager : MonoBehaviour
                                         actorID = 999,
                                         nodeID = node.nodeID,
                                         dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
-                                        nodeAction = NodeAction.ActorNeutraliseTeam
+                                        nodeAction = NodeAction.PlayerNeutraliseTeam
                                     };
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);

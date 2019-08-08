@@ -1379,7 +1379,7 @@ public class TopicManager : MonoBehaviour
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
                         }
                     }
-                    else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for nodeAction \"{0}\"", dataTemp.nodeAction); }
+                    else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for Actor nodeAction \"{0}\"", dataTemp.nodeAction); }
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}]", i); }
             }
@@ -1434,6 +1434,7 @@ public class TopicManager : MonoBehaviour
     private List<Topic> GetPlayerDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         int mood;
+        bool isProceed = false;
         string playerName = GameManager.instance.playerScript.PlayerName;
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
@@ -1444,31 +1445,39 @@ public class TopicManager : MonoBehaviour
         {
             //check that it is a viable subSubType group
             turnTopicSubSubType = GetTopicSubSubType(data.nodeAction);
-
-
-            //group depends on player mood
-            mood = GameManager.instance.playerScript.GetMood();
-            switch (mood)
+            if (turnTopicSubSubType != null)
             {
-                case 3: group = GroupType.Good; break;
-                case 2: group = GroupType.Neutral; break;
-                case 1: group = GroupType.Bad; break;
-                case 0: group = GroupType.VeryBad; break;
-                default: Debug.LogWarningFormat("Unrecognised mood \"{0}\" for {1}, {2}", mood, playerName, "Player"); break;
+                //check topics of this subSubType present
+                if (CheckSubSubTypeTopicsPresent(listOfSubTypeTopics, turnTopicSubSubType.name) == true)
+                { isProceed = true; }
+                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: Player has an INVALID ActionTopic \"{0}\"{1}", turnTopicSubSubType.name, "\n"); }
             }
-            //if no entries use entire list by default
-            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
-            //debug
-            foreach (Topic topic in listOfTopics)
-            { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+            else { Debug.LogErrorFormat("invalid TopicSubSubType (Null) for Player nodeAction \"{0}\"", data.nodeAction); }
+            if (isProceed == true)
+            {
+                //group depends on player mood
+                mood = GameManager.instance.playerScript.GetMood();
+                switch (mood)
+                {
+                    case 3: group = GroupType.Good; break;
+                    case 2: group = GroupType.Neutral; break;
+                    case 1: group = GroupType.Bad; break;
+                    case 0: group = GroupType.VeryBad; break;
+                    default: Debug.LogWarningFormat("Unrecognised mood \"{0}\" for {1}, {2}", mood, playerName, "Player"); break;
+                }
+                //if no entries use entire list by default
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+                //debug
+                foreach (Topic topic in listOfTopics)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+                //Info tags
+                tagActorID = data.actorID;
+                tagNodeID = data.nodeID;
+                tagTurn = data.turn;
+                tagStringData = data.dataName;
+            }
         }
         else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}", playerName, "Player"); }
-        //Info tags
-        tagActorID = data.actorID;
-        tagNodeID = data.nodeID;
-        tagTurn = data.turn;
-        tagStringData = data.dataName;
-
         return listOfTopics;
     }
     #endregion

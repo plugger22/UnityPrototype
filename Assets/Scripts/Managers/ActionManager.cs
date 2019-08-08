@@ -388,14 +388,15 @@ public class ActionManager : MonoBehaviour
                             if (details.side.level == GameManager.instance.globalScript.sideResistance.level)
                             {
                                 //NodeActionData package -> get type
-                                NodeAction nodeAction = NodeAction.None;
+                                NodeAction nodeActionActor = NodeAction.None;
+                                NodeAction nodeActionPlayer = NodeAction.None;
                                 switch (actor.arc.name)
                                 {
-                                    case "ANARCHIST": nodeAction = NodeAction.ActorBlowStuffUp; break;
-                                    case "BLOGGER": nodeAction = NodeAction.ActorSpreadFakeNews; break;
-                                    case "HACKER": nodeAction = NodeAction.ActorHackSecurity; break;
-                                    case "HEAVY": nodeAction = NodeAction.ActorCreateRiots; break;
-                                    case "OBSERVER": nodeAction = NodeAction.ActorInsertTracer; break;
+                                    case "ANARCHIST": nodeActionActor = NodeAction.ActorBlowStuffUp; nodeActionPlayer = NodeAction.PlayerBlowStuffUp; break;
+                                    case "BLOGGER": nodeActionActor = NodeAction.ActorSpreadFakeNews; nodeActionPlayer = NodeAction.PlayerSpreadFakeNews; break;
+                                    case "HACKER": nodeActionActor = NodeAction.ActorHackSecurity; nodeActionPlayer = NodeAction.PlayerHackSecurity; break;
+                                    case "HEAVY": nodeActionActor = NodeAction.ActorCreateRiots; nodeActionPlayer = NodeAction.PlayerCreateRiots; break;
+                                    case "OBSERVER": nodeActionActor = NodeAction.ActorInsertTracer; nodeActionPlayer = NodeAction.PlayerInsertTracer; break;
                                     default: Debug.LogWarningFormat("Unrecognised actor.arc \"{0}\"", actor.arc.name); break;
                                 }
                                 if (isPlayer == false)
@@ -406,7 +407,7 @@ public class ActionManager : MonoBehaviour
                                         turn = GameManager.instance.turnScript.Turn,
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
-                                        nodeAction = nodeAction
+                                        nodeAction = nodeActionActor
                                     };
                                     //add to actor's personal list
                                     actor.AddNodeAction(nodeActionData);
@@ -420,7 +421,7 @@ public class ActionManager : MonoBehaviour
                                         turn = GameManager.instance.turnScript.Turn,
                                         actorID = 999,
                                         nodeID = node.nodeID,
-                                        nodeAction = nodeAction
+                                        nodeAction = nodeActionPlayer
                                     };
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);

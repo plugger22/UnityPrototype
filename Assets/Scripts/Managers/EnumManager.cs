@@ -144,7 +144,7 @@
     }
 
     //
-    // - - - Mood - - -  
+    // - - - Player - - -  
     //
     public enum MoodType {
         ReservePromise, ReserveNoPromise, ReserveRest,
@@ -153,6 +153,7 @@
         ReserveLetGo, ReserveFire, ReserveBully, ReserveReassure,
         GiveGear, TakeGear
     }
+    public enum PlayerCheck { None, NodeActionsNOTZero }
 
     //
     // - - - Statistics - - - 

@@ -1249,7 +1249,7 @@ public class GearManager : MonoBehaviour
                                         actorID = 999,
                                         nodeID = node.nodeID,
                                         dataName = gear.tag,
-                                        nodeAction = NodeAction.ActorObtainGear
+                                        nodeAction = NodeAction.PlayerObtainGear
                                     };
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);
