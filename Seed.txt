@@ -137,3 +137,29 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
 	
+Dev seed 40089 -> Thursday, 8 August 2019 6:15 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1079)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:639)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1079)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:639)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1079)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:639)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 58234 -> Thursday, 8 August 2019 6:26 PM
+City seed 5678 -> London, United Kingdom
