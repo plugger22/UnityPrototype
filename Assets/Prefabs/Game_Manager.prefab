@@ -825,6 +825,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 225c70ada1842a446a31d0bf58d5adbf, type: 2}
   - {fileID: 11400000, guid: 6aa1258e7e3e8d24793d7b73ff41cc64, type: 2}
   - {fileID: 11400000, guid: c0575a198d9f485449cb05f9d2fde86a, type: 2}
+  - {fileID: 11400000, guid: 8f1e0c7f861171349a77315e9653e719, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -2888,7 +2889,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -3033,6 +3034,7 @@ MonoBehaviour:
   minIntervalGlobal: 2
   maxOptions: 4
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   actorBlowStuffUp: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
   actorCreateRiots: {fileID: 11400000, guid: 07f004ee8b4a38346995487f87d3c3f4, type: 2}
   actorDeployTeam: {fileID: 11400000, guid: 5abf4e1267a28594a822d32f9668aa90, type: 2}

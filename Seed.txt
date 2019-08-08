@@ -1,0 +1,67 @@
+
+Dev seed 2827 -> Thursday, 8 August 2019 12:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30342 -> Thursday, 8 August 2019 1:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54667 -> Thursday, 8 August 2019 1:55 PM
+WARNING [Val] ValidateSO: MISMATCH on Criteria, array 56, assets 57 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Criteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1365)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1208)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 60153 -> Thursday, 8 August 2019 1:56 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid criteria.effectcriteria.name "GearAvailableRare"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:828)
+	TopicManager:CheckTopicCriteria(Topic) (at Assets/Scripts/Managers/TopicManager.cs:1691)
+	TopicManager:CheckTopics() (at Assets/Scripts/Managers/TopicManager.cs:683)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:630)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 50491 -> Thursday, 8 August 2019 2:22 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:506)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	
+Dev seed 26824 -> Thursday, 8 August 2019 2:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33255 -> Thursday, 8 August 2019 2:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21855 -> Thursday, 8 August 2019 2:32 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised topicSubType "PlayerDistrict" for topic "PlyDisRiot2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ExecuteTopic() (at Assets/Scripts/Managers/TopicManager.cs:1488)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1438)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:292)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:372)
+	
+Dev seed 922 -> Thursday, 8 August 2019 3:12 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.GetPlayerDistrictTopics (System.Collections.Generic.List`1[T] listOfSubTypeTopics, GlobalSide playerSide, System.String subTypeName) (at Assets/Scripts/Managers/TopicManager.cs:1453)
+	TopicManager.GetTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1034)
+	TopicManager.SelectTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:636)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:284)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:351)
+	

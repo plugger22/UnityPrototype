@@ -21,6 +21,8 @@ public class TopicManager : MonoBehaviour
     [Header("TopicTypes")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType actorType;
+    [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
+    public TopicType playerType;
 
     [Header("Actor TopicSubSubTypes")]
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
@@ -90,6 +92,8 @@ public class TopicManager : MonoBehaviour
     private TopicOption turnOption;                                                                     //option selected
 
     private int minIntervalGlobalActual;                                                                //number used in codes. Can be less than the minIntervalGlobal
+
+
 
     /// <summary>
     /// Initialisation
@@ -185,6 +189,7 @@ public class TopicManager : MonoBehaviour
     {
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
+        Debug.Assert(playerType != null, "Invalid playerType (Null)");
         //actor subSubTypes
         Debug.Assert(actorBlowStuffUp != null, "Invalid actorBlowStuffUp (Null)");
         Debug.Assert(actorCreateRiots != null, "Invalid actorCreateRiots (Null)");
@@ -1005,7 +1010,6 @@ public class TopicManager : MonoBehaviour
                     case "FamilyAlpha":
                     case "FamilyBravo":
                     case "FamilyCharlie":
-                    case "PlayerDistrict":
                         listOfPotentialTopics = listOfSubTypeTopics;
                         break;
                     //Dynamic topic
@@ -1028,6 +1032,9 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "ActorDistrict":
                         listOfPotentialTopics = GetActorDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "PlayerDistrict":
+                        listOfPotentialTopics = GetPlayerDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
@@ -1345,6 +1352,7 @@ public class TopicManager : MonoBehaviour
         count = listOfActors.Count;
         if (count > 0)
         {
+
             //loop list and put any actor with a viable subSubType topic pool (consider recent NodeAction only) up for random selection
             List<Actor> listOfSelection = new List<Actor>();
             for (int i = 0; i < count; i++)
@@ -1412,7 +1420,57 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogWarning("No active, onMap actors present with at least one NodeAction"); }
         return listOfTopics;
     }
+    #endregion
 
+    #region GetPlayerDistrictTopics
+    /// <summary>
+    /// subType PlayerDistrict template topics selected by player based on mood (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetPlayerDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        int mood;
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        //get the most recent Player node action
+        NodeActionData data = GameManager.instance.playerScript.GetMostRecentNodeAction();
+        if (data != null)
+        {
+            //check that it is a viable subSubType group
+            turnTopicSubSubType = GetTopicSubSubType(data.nodeAction);
+
+
+            //group depends on player mood
+            mood = GameManager.instance.playerScript.GetMood();
+            switch (mood)
+            {
+                case 3: group = GroupType.Good; break;
+                case 2: group = GroupType.Neutral; break;
+                case 1: group = GroupType.Bad; break;
+                case 0: group = GroupType.VeryBad; break;
+                default: Debug.LogWarningFormat("Unrecognised mood \"{0}\" for {1}, {2}", mood, playerName, "Player"); break;
+            }
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+            //debug
+            foreach (Topic topic in listOfTopics)
+            { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+        }
+        else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}", playerName, "Player"); }
+        //Info tags
+        tagActorID = data.actorID;
+        tagNodeID = data.nodeID;
+        tagTurn = data.turn;
+        tagStringData = data.dataName;
+
+        return listOfTopics;
+    }
     #endregion
 
     #endregion
@@ -1484,6 +1542,8 @@ public class TopicManager : MonoBehaviour
                     break;
                 case "HQSub":
                     break;
+                case "PlayerDistrict":
+                    break;
                 default:
                     Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                     break;
@@ -1496,20 +1556,32 @@ public class TopicManager : MonoBehaviour
             string actorDetails, nodeDetails;
             if (tagActorID > -1)
             {
-                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                actorDetails = string.Format("{0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID);
+                if (tagActorID != 999)
+                {
+                    //actor
+                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                    actorDetails = string.Format("{0}, {1}{2}Actor ID {3}", actor.actorName, actor.arc.name, "\n", actor.actorID);
+                    actorDetails = GameManager.instance.colourScript.GetFormattedString(actorDetails, ColourType.neutralText);
+                }
+                else
+                {
+                    //Player
+                    actorDetails = string.Format("{0}, {1}{2}Actor ID {3}", GameManager.instance.playerScript.PlayerName, "Player", "\n", tagActorID);
+                    actorDetails = GameManager.instance.colourScript.GetFormattedString(actorDetails, ColourType.neutralText);
+                }
             }
             else { actorDetails = "actorID -1"; }
             if (tagNodeID > -1)
             {
                 Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
                 nodeDetails = string.Format("{0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
+                nodeDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.badText);
             }
             else { nodeDetails = "nodeID -1"; }
-            
+
             ModalOutcomeDetails details = new ModalOutcomeDetails
             {
-                textTop = string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetFormattedString(turnTopic.name, ColourType.neutralText), "\n", turnTopic.tag),
+                textTop = string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetFormattedString(turnTopic.name, ColourType.salmonText), "\n", turnTopic.tag),
                 textBottom = String.Format("{0}{1}{2}{3}stringDataName {4}", actorDetails, "\n", nodeDetails, "\n", tagStringData),
                 sprite = GameManager.instance.guiScript.infoSprite,
                 isAction = false,
@@ -1558,6 +1630,11 @@ public class TopicManager : MonoBehaviour
                     if (actor != null)
                     { actor.RemoveMostRecentNodeAction(); }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                }
+                else if (turnTopicType.name.Equals(playerType.name, StringComparison.Ordinal) == true)
+                {
+                    //delete most recent nodeAction from Player
+                    GameManager.instance.playerScript.RemoveMostRecentNodeAction();
                 }
             }
             //topicHistory
@@ -2129,17 +2206,6 @@ public class TopicManager : MonoBehaviour
         {
             if (string.IsNullOrEmpty(subSubTypeName) == false)
             {
-                /*//loop list and break out and return true on first match
-                for (int i = 0; i < listOfTopics.Count; i++)
-                {
-                    if (listOfTopics[i].subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) == true)
-                    {
-                        //must be Live
-                        if (listOfTopics[i].status == Status.Live)
-                        { return true; }
-                    }
-                }*/
-
                 if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) && x.status == Status.Live))
                 { return true; }
             }

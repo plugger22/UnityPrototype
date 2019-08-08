@@ -741,6 +741,24 @@ public class EffectManager : MonoBehaviour
                                         errorFlag = true;
                                         break;
                                     //
+                                    // - - - Player (new, older ones are in Current Actor / Player above) - - -
+                                    //
+                                    case "Player":
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "NodeActionsNOTZero":
+                                                //player has listOfNodeActions.Count > 0
+                                                if (GameManager.instance.playerScript.CheckNumOFNodeActions() == 0)
+                                                { BuildString(result, "Player has NO NodeActions"); }
+                                                break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        break;
+                                    //
                                     // - - - All Actors
                                     //
                                     case "ActorAll":
@@ -776,6 +794,11 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with NodeActions OnMap"); }
                                                 break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
+                                                break;
                                         }
                                         break;
                                     //
@@ -794,11 +817,28 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.CheckNumOfGear() >= GameManager.instance.gearScript.maxNumOfGear)
                                                 { BuildString(result, "maxxed Gear Allowance"); }
                                                 break;
-                                            case "GearCommonAvailability":
-                                                //checks to see if at least 1 piece of unused common gear is available
+                                            case "GearAvailableCommon":
+                                                //checks to see if at least 1 piece of unused Common gear is available
                                                 List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
                                                 if (tempCommonGear.Count == 0)
                                                 { BuildString(result, "no Common Gear available"); }
+                                                break;
+                                            case "GearAvailableRare":
+                                                //checks to see if at least 1 piece of unused Rare gear is available
+                                                List<string> tempRareGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearRare));
+                                                if (tempRareGear.Count == 0)
+                                                { BuildString(result, "no Rare Gear available"); }
+                                                break;
+                                            case "GearAvailableUnique":
+                                                //checks to see if at least 1 piece of unused Unique gear is available
+                                                List<string> tempUniqueGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearUnique));
+                                                if (tempUniqueGear.Count == 0)
+                                                { BuildString(result, "no Unique Gear available"); }
+                                                break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
                                                 break;
                                         }
                                         break;
@@ -833,7 +873,7 @@ public class EffectManager : MonoBehaviour
                                                 isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.authorityType, turn);
                                                 break;
                                             default:
-                                                Debug.LogWarning(string.Format("Toic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
+                                                Debug.LogWarning(string.Format("Topic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                 errorFlag = true;
                                                 break;
                                         }

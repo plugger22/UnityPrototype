@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: FamB1
   m_EditorClassIdentifier: 
-  tag: Family Bravo story line tsst 1
+  tag: Family Bravo story line test 1
   type: {fileID: 11400000, guid: c748089ff4f3bd34bb1d8573ecf1044e, type: 2}
   subType: {fileID: 11400000, guid: 8646488ba661a50429c3f85efe9cdfae, type: 2}
   subSubType: {fileID: 0}
@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 176f8b336f555004ea1b1417b51c8aa6, type: 2}
   - {fileID: 11400000, guid: fb2a2be37399b8e4384c8990d1a0d6c6, type: 2}
   - {fileID: 11400000, guid: 0f8ea9929e0fd3242b93416cdaccbb89, type: 2}
-  status: 4
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 0
@@ -33,4 +33,4 @@ MonoBehaviour:
   turnsDormant: 1
   turnsActive: 0
   turnsLive: 9
-  turnsDone: 17
+  turnsDone: 0
