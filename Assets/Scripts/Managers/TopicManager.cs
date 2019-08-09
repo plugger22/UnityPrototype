@@ -608,10 +608,21 @@ public class TopicManager : MonoBehaviour
                         topic.timerRepeat = profile.delayRepeat;
                         topic.timerStart = profile.delayStart;
                         topic.timerWindow = profile.timerWindow;
-                        //set status
-                        if (topic.timerStart == 0)
-                        { topic.status = Status.Active; }
-                        else { topic.status = Status.Dormant; }
+
+                        //set status (only if level Scope)
+                        if (topic.subType.scope.name.Equals("Level", StringComparison.Ordinal) == true)
+                        {
+                            if (topic.timerStart == 0)
+                            { topic.status = Status.Active; }
+                            else { topic.status = Status.Dormant; }
+                        }
+                        else
+                        {
+
+                            //TO DO -> What if first up? -> need to initialise sequence and have first pair status started normally (campaign level index = 0 && topic.linkedIndex = 0 then do normally)
+
+                        }
+
                         //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
                         topic.isCurrent = true;
                         //zero status

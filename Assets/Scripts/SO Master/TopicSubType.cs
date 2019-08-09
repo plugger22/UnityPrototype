@@ -18,13 +18,13 @@ public class TopicSubType : ScriptableObject
     [Tooltip("Multiplier to global Minimum interval, eg. 2x, 3x, etc. for number of turns that must elapse before it can be chosen again, default 0")]
     [Range(0, 20)] public int minIntervalFactor = 0;
 
-    [Header("Priority")]
-    [Tooltip("Overall priority for this sub topic when being placed in the selection pool")]
-    public GlobalChance priority;
-
-    [Header("Side")]
+    [Header("Vitals")]
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
+    [Tooltip("Overall priority for this sub topic when being placed in the selection pool")]
+    public GlobalChance priority;
+    [Tooltip("Scope of Topics within - Level (topic status reset each level) / Campaign (topic status carries over)")]
+    public TopicScope scope;
 
     [Header("SubSubTypes")]
     [Tooltip("List of SubSubTypes that are linked to this SubType. Ignore if none")]
@@ -42,5 +42,6 @@ public class TopicSubType : ScriptableObject
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
         Debug.AssertFormat(type != null, "Invalid Type (Null) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+        Debug.AssertFormat(scope != null, "Invalid scope (Null) for {0}", name);
     }
 }

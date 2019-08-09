@@ -184,3 +184,26 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 15857 -> Friday, 9 August 2019 11:29 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 50642 -> Friday, 9 August 2019 4:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56419 -> Friday, 9 August 2019 4:06 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicPool, array 42, assets 40 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicPool[]) (at Assets/Scripts/Managers/ValidationManager.cs:1365)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1292)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager+<ValidateSOGeneric>c__AnonStorey3`1[T].<>m__0 (T element) (at Assets/Scripts/Managers/ValidationManager.cs:1375)
+	System.Array.FindIndex[T] (T[] array, System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.FindIndex[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.Exists[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.ValidateSOGeneric[T] (T[] arraySO) (at Assets/Scripts/Managers/ValidationManager.cs:1375)
+	ValidationManager.ValidateSO (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:1292)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:731)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:340)
+	
+Dev seed 39394 -> Friday, 9 August 2019 4:08 PM
+City seed 5678 -> London, United Kingdom

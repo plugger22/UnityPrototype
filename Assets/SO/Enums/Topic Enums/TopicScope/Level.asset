@@ -8,13 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
-  m_Name: Oncer
+  m_Script: {fileID: 11500000, guid: 8f70b5c713981714594000e32cd34469, type: 3}
+  m_Name: Level
   m_EditorClassIdentifier: 
-  descriptor: Once Off
-  delayRepeatFactor: 0
-  delayStartFactor: 0
-  liveWindowFactor: 0
-  delayRepeat: 0
-  delayStart: 0
-  timerWindow: 10
+  descriptor: Topic status resets prior to nxt level

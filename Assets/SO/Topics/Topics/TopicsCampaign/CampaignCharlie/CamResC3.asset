@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: CamResC3
+  m_EditorClassIdentifier: 
+  tag: Campaign Charlie 3
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  linkedTopic: {fileID: 0}
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  listOfCriteria: []
+  notes: 
+  listOfOptions:
+  - {fileID: 11400000, guid: 8b1931e32dda5374b89f3a608a265db2, type: 2}
+  - {fileID: 11400000, guid: e2a3e82fbd003024db81c9ad2fc3f214, type: 2}
+  - {fileID: 11400000, guid: 0837e9bb8b3cd0841bda4c1296284079, type: 2}
+  status: 2
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 5
+  timerWindow: 0
+  turnsDormant: 4
+  turnsActive: 1
+  turnsLive: 28
+  turnsDone: 0
