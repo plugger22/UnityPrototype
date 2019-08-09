@@ -21,17 +21,18 @@ public class Topic : ScriptableObject
     [Tooltip("Topic SubSubType that the decision is associated with. Ignore if not applicable")]
     public TopicSubSubType subSubType;
 
-    [Header("Priority")]
+    [Header("Vitals")]
     [Tooltip("Overall priority for this topic when being placed in the selection pool")]
     public GlobalChance priority;
-
-    [Header("Group")]
     [Tooltip("Is it in the Good, Nuetral or Bad group of topics for that SubType? If not relevant use Neutral")]
     public GlobalType group;
-
-    [Header("Criteria")]
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
+
+
+    [Header("Linked Topic")]
+    [Tooltip("Once topic Live and resolved, the specified Linked topic (must be in same TopicPool) will switch from Done to Dormant (and activate as per it's profile). Ignore if not relevant")]
+    public Topic linkedTopic;
 
     [Header("Profile")]
     [Tooltip("Profile with timer and repeat data")]

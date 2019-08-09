@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
+  m_Name: OncerWin5x
+  m_EditorClassIdentifier: 
+  descriptor: Once Off, 5x globalMinInt Live window
+  delayRepeatFactor: 0
+  delayStartFactor: 0
+  liveWindowFactor: 5
+  delayRepeat: 0
+  delayStart: 0
+  timerWindow: 10
