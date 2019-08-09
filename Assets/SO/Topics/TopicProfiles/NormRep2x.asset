@@ -9,10 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
-  m_Name: NormRep10
+  m_Name: NormRep2x
   m_EditorClassIdentifier: 
-  descriptor: Normal, Repeat in 10 turns
-  isRepeat: 1
-  delayRepeat: 10
+  descriptor: Normal, Repeat in 2x GlobalMinInt
+  delayRepeatFactor: 2
+  delayStartFactor: 0
+  liveWindowFactor: 0
+  delayRepeat: 5
   delayStart: 0
   timerWindow: 0

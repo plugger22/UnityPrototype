@@ -130,6 +130,24 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseStartUp
     private void SubInitialiseStartUp()
     {
+        //initialise Topic Profile delays
+        TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles;
+        if (arrayOfProfiles != null)
+        {
+            for (int i = 0; i < arrayOfProfiles.Length; i++)
+            {
+                TopicProfile profile = arrayOfProfiles[i];
+                if (profile != null)
+                {
+                    //update delays
+                    profile.delayRepeat = minIntervalGlobal * profile.delayRepeatFactor;
+                    profile.delayStart = minIntervalGlobal * profile.delayStartFactor;
+                    profile.timerWindow = minIntervalGlobal * profile.liveWindowFactor;
+                }
+                else { Debug.LogWarningFormat("Invalid TopicProfile (Null) for arrayOfProfiles[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfProfiles (Null)"); }
         //calculates topicType/SubType minimum Intervals based on global setting (minTopicTypeTurns)
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
@@ -1584,7 +1602,7 @@ public class TopicManager : MonoBehaviour
             {
                 Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
                 nodeDetails = string.Format("{0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
-                nodeDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.badText);
+                nodeDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.neutralText);
             }
             else { nodeDetails = "nodeID -1"; }
 

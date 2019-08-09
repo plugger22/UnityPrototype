@@ -770,7 +770,7 @@ public class ValidationManager : MonoBehaviour
         #endregion
 
         #region Topic Profiles
-        TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles;
+        /*TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles; [EDIT: Redundant code as all timers/delays are now factors of the GlobalMinInterval
         if (arrayOfProfiles != null)
         {
             //get TopicManager.cs global minimum Interval
@@ -816,7 +816,7 @@ public class ValidationManager : MonoBehaviour
                 else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid topicProfile (Null) for arrayOfTopicProfiles[{0}]{1}", i, "\n"); }
             }
         }
-        else { Debug.LogError("Invalid arrayOfTopicProfiles (Null)"); }
+        else { Debug.LogError("Invalid arrayOfTopicProfiles (Null)"); }*/
         #endregion
 
         #region Topic Pools

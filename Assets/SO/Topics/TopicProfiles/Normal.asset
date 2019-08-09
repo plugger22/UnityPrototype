@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
   m_Name: Normal
   m_EditorClassIdentifier: 
-  descriptor: Normal, no repeat, no delays
-  isRepeat: 0
+  descriptor: Normal, repeat at 1x GobalMinInt
+  delayRepeatFactor: 1
+  delayStartFactor: 0
+  liveWindowFactor: 0
   delayRepeat: 0
   delayStart: 0
   timerWindow: 0

@@ -690,8 +690,8 @@ namespace packageAPI
     [System.Serializable]
     public class TopicTypeData
     {
-        public string type;                        //SO.name of TopicType/SubType that the package refers to 
-        public string parent;                      //SO.name of TopicType that the package refers to (used for SubTypes to indicate which type they belong to)
+        public string type;                         //SO.name of TopicType/SubType that the package refers to 
+        public string parent;                       //SO.name of TopicType that the package refers to (used for SubTypes to indicate which type they belong to)
         public bool isAvailable;                    //True if the TopicSubType has decisions available, false if not (determined at level start)
         public int turnLastUsed;                    //turn # when last used
         public int minInterval;                     //minimum turn interval that must elapse prior to the next occurrence
