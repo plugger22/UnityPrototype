@@ -31,8 +31,14 @@ public class Topic : ScriptableObject
 
 
     [Header("Linked Topic")]
-    [Tooltip("Once topic Live and resolved, the specified Linked topic (must be in same TopicPool) will switch from Done to Dormant (and activate as per it's profile). Ignore if not relevant")]
-    public Topic linkedTopic;
+    [Tooltip("Once topic Live and resolved, the specified topics in the list (must be in same TopicPool) will switch from Done to Dormant (and activate as per it's profile). Ignore if not relevant")]
+    public List<Topic> listOfLinkedTopics;
+    [Tooltip("Any topics with the same linkedIndex, eg. All equivalent topics to the current one that could have been chosen but weren't. Needed so that they can be set to 'Done' with the next stage in the linked sequence")]
+    public List<Topic> listOfBuddyTopics;
+
+    [Header("Link In the Chain")]
+    [Tooltip("The position of the topic in the linked sequence where 0 is the start. Note that multiple topics can have the same linkedIndex (e.g, Buddy topics). Default -1 indicates not part of a linked sequence")]
+    public int linkedIndex = -1;
 
     [Header("Profile")]
     [Tooltip("Profile with timer and repeat data")]

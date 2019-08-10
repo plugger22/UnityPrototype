@@ -14,8 +14,9 @@ MonoBehaviour:
   tag: Player District Actions
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   minIntervalFactor: 2
-  priority: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
+  priority: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
+  scope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   listOfSubSubType:
   - {fileID: 11400000, guid: d645b48fb636dab488ffc87c31bd47ac, type: 2}
   - {fileID: 11400000, guid: 0290412aeaf0bc046b9490a02f11e599, type: 2}

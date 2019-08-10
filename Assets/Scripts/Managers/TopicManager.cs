@@ -24,6 +24,12 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType playerType;
 
+    [Header("Topic Scopes")]
+    [Tooltip("Used to avoid having to hard code the TopicScope.SO names")]
+    public TopicScope levelScope;
+    [Tooltip("Used to avoid having to hard code the TopicScope.SO names")]
+    public TopicScope campaignScope;
+
     [Header("Actor TopicSubSubTypes")]
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType actorBlowStuffUp;
@@ -93,6 +99,9 @@ public class TopicManager : MonoBehaviour
 
     private int minIntervalGlobalActual;                                                                //number used in codes. Can be less than the minIntervalGlobal
 
+    //fast access
+    private string levelScopeName;
+    private string campaignScopeName;
 
 
     /// <summary>
@@ -104,16 +113,16 @@ public class TopicManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
+                SubInitialiseFastAccess(); //needs to be first
                 SubInitialiseStartUp();
                 SubInitialiseLevelStart();
-                SubInitialiseFastAccess();
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
-                SubInitialiseStartUp();
                 SubInitialiseFastAccess();
+                SubInitialiseStartUp();
                 break;
             case GameState.LoadGame:
                 //do nothing
@@ -208,6 +217,13 @@ public class TopicManager : MonoBehaviour
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
+        //scopes
+        Debug.Assert(levelScope != null, "Invalid levelScope (Null)");
+        Debug.Assert(campaignScope != null, "Invalid campaignScope (Null)");
+        if (levelScope != null) { levelScopeName = levelScope.name; }
+        if (campaignScope != null) { campaignScopeName = campaignScope.name; }
+        Debug.Assert(string.IsNullOrEmpty(levelScopeName) == false, "Invalid levelScopeName (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(campaignScopeName) == false, "Invalid campaignScopeName (Null or Empty)");
         //actor subSubTypes
         Debug.Assert(actorBlowStuffUp != null, "Invalid actorBlowStuffUp (Null)");
         Debug.Assert(actorCreateRiots != null, "Invalid actorCreateRiots (Null)");
@@ -594,6 +610,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="listOfTopics"></param>
     private void SetTopicDynamicData(List<Topic> listOfTopics)
     {
+        bool isFirstScenario = GameManager.instance.campaignScript.CheckIsFirstScenario();
         if (listOfTopics != null)
         {
             for (int i = 0; i < listOfTopics.Count; i++)
@@ -610,18 +627,31 @@ public class TopicManager : MonoBehaviour
                         topic.timerWindow = profile.timerWindow;
 
                         //set status (only if level Scope)
-                        if (topic.subType.scope.name.Equals("Level", StringComparison.Ordinal) == true)
+                        if (topic.subType.scope.name.Equals(levelScopeName, StringComparison.Ordinal) == true)
                         {
                             if (topic.timerStart == 0)
                             { topic.status = Status.Active; }
                             else { topic.status = Status.Dormant; }
                         }
-                        else
+                        else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
                         {
-
-                            //TO DO -> What if first up? -> need to initialise sequence and have first pair status started normally (campaign level index = 0 && topic.linkedIndex = 0 then do normally)
-
+                            //need to initialise linked sequence and have first pair status started normally 
+                            if (isFirstScenario == true && topic.linkedIndex == 0)
+                            {
+                                if (topic.linkedIndex == 0)
+                                {
+                                    if (topic.timerStart == 0)
+                                    { topic.status = Status.Active; }
+                                    else { topic.status = Status.Dormant; }
+                                }
+                                else
+                                {
+                                    //set all none start campaign topics to 'Done' (but only right at the start as save/load game data will take over from there)
+                                    topic.status = Status.Done;
+                                }
+                            }
                         }
+                        else { Debug.LogWarningFormat("Invalid topic.subType.scope.name \"{0}\", status not set", topic.subType.scope.name); }
 
                         //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
                         topic.isCurrent = true;
@@ -681,7 +711,7 @@ public class TopicManager : MonoBehaviour
                     //debug purposes only -> BEFORE UpdateTopicTypeData
                     UnitTestTopic(playerSide);
                     //debug -> should be in ProcessTopic but here for autorun debugging purposes
-                    UpdateTopicTypeData();
+                    UpdateTopicAdmin();
                 }
             }
         }
@@ -1531,7 +1561,8 @@ public class TopicManager : MonoBehaviour
                 //valid topic selected, ignore otherwise
                 if (turnTopic != null)
                 {
-                    ExecuteTopic();
+                    if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+                    { ExecuteTopic(); }
                     UpdateTopicStatus();
                 }
             }
@@ -1539,6 +1570,7 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
 
+    #region ExecuteTopic
     /// <summary>
     /// Takes selected topic and executes according to topic subType
     /// </summary>
@@ -1632,11 +1664,12 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid turnTopic (Null) -> No decision generated this turn"); }
     }
+    #endregion
 
     /// <summary>
     /// handles all admin once a topic has been displayed and the user has chosen an option (or not, then default option selected)
     /// </summary>
-    private void UpdateTopicTypeData()
+    private void UpdateTopicAdmin()
     {
         if (turnTopic != null)
         {
@@ -1700,10 +1733,38 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
+            //LINKED topic
+            if (turnTopic.linkedIndex > -1)
+            {
+                //next topics in chain
+                if (turnTopic.listOfLinkedTopics.Count > 0)
+                {
+                    //set all linked topics to Dormant status (they can go active next turn depending on their profile)
+                    foreach (Topic topic in turnTopic.listOfLinkedTopics)
+                    {
+                        topic.status = Status.Dormant;
+                        Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: LINKED topic \"{0}\" set to Status.Dormant{1}", topic.name, "\n");
+                    }
+                }
+                //negate any buddy topics (current link in the chain) that weren't selected (only one topic in the each link in the chain can be selected)
+                if (turnTopic.listOfBuddyTopics.Count > 0)
+                {
+                    //set all Buddy topics to status Done to prevent them being selected
+                    foreach (Topic topic in turnTopic.listOfBuddyTopics)
+                    {
+                        topic.status = Status.Done;
+                        Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: BUDDY topic \"{0}\" set to Status.Done{1}", topic.name, "\n");
+                    }
+                }
+            }
+            //Non-Linked topic
+            else
+            {
             //Back to Dormant if repeat, Done otherwise
             if (turnTopic.timerRepeat > 0)
             { turnTopic.status = Status.Dormant; }
             else { turnTopic.status = Status.Done; }
+            }
         }
         else { Debug.LogError("Invalid turnTopic (Null)"); }
     }

@@ -283,13 +283,17 @@ public class TurnManager : MonoBehaviour
                     //select topic
                     GameManager.instance.topicScript.SelectTopic(playerSide);
 
+                    //Debugging only (temporary) -> don't forget to switch on below and delete this
+                    GameManager.instance.topicScript.ProcessTopic(playerSide);
+
                     //turn on info App (only if not autorunning)
                     if (isAutoRun == false)
                     {
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
-                        //generate topic
-                        GameManager.instance.topicScript.ProcessTopic(playerSide);
+                        
+                        /*//generate topic -> SWITCHED OFF temporarily for debugging, switch back on again
+                        GameManager.instance.topicScript.ProcessTopic(playerSide);*/
 
                         /*//debug
                         DebugCreatePipelineMessages();*/
