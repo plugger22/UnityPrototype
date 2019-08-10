@@ -86,6 +86,7 @@ public class ValidationManager : MonoBehaviour
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
     private string levelScopeName;
+    private string campaignScopeName;
 
 
     /// <summary>
@@ -122,8 +123,11 @@ public class ValidationManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         if (levelScope != null) { levelScopeName = levelScope.name; }
+        if (campaignScope != null) { campaignScopeName = campaignScope.name; }
         Debug.Assert(levelScope != null, "Invalid levelScope (Null)");
         Debug.Assert(string.IsNullOrEmpty(levelScopeName) == false, "Invalid levelScopeName (Null or Empty)");
+        Debug.Assert(campaignScope != null, "Invalid campaignScope (Null)");
+        Debug.Assert(string.IsNullOrEmpty(campaignScopeName) == false, "Invalid campaignScopeName (Null or Empty)");
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
@@ -1298,12 +1302,18 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicTypes);
         //TopicSubType
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicSubTypes);
+        //TopicSubSubType
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicSubSubTypes);
         //TopicOption
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicOptions);
         //TopicPool
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicPools);
+        //TopicScope
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicScopes);
         //Topics
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopics);
+        //TopicProfiles
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicProfiles);
         //ManageActor
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfManageActors);
         //ManageAction
@@ -2209,6 +2219,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="prefix"></param>
     private void CheckTopicData(string prefix)
     {
+        int index;
         string tag = string.Format("{0}{1}", prefix, "CheckTopicData: ");
         Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
         if (dictOfTopicPools != null)
@@ -2218,12 +2229,101 @@ public class ValidationManager : MonoBehaviour
                 CheckDictList(pool.Value, "listOfTopics", tag, pool.Key);
                 foreach (Topic topic in pool.Value)
                 {
-                    //each topic within pool should be 'isCurrent' true (dict contains all valid topics for the level) if Level Scope only
+                    //Level scope
                     if (topic.subType.scope.name.Equals(levelScopeName, StringComparison.Ordinal) == true)
                     {
+                        //each topic within pool should be 'isCurrent' true (dict contains all valid topics for the level) if Level Scope only
                         if (topic.isCurrent != true)
                         { Debug.LogFormat("{0}, topic \"{1}\", Invalid isCurrent (is {2}, should be {3}){4}", tag, topic.name, topic.isCurrent, "True", "\n"); }
+                        //shouldn't have a linkedIndex other than the default -1 value
+                        if (topic.linkedIndex > -1)
+                        { Debug.LogFormat("{0}, topic \"{1}\", Invalid linkedIndex (is {2}, should be default -1){3}", tag, topic.name, topic.linkedIndex,  "\n"); }
+                        //both linked and buddy lists should be empty
+                        if (topic.listOfLinkedTopics != null)
+                        {
+                            if (topic.listOfLinkedTopics.Count > 0)
+                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfLinkedTopics Count (is {2}, should be Zero){3}", tag, topic.name, topic.listOfLinkedTopics.Count, "\n"); }
+                        }
+                        if (topic.listOfBuddyTopics != null)
+                        {
+                            if (topic.listOfBuddyTopics.Count > 0)
+                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics Count (is {2}, should be Zero){3}", tag, topic.name, topic.listOfBuddyTopics.Count, "\n"); }
+                        }
                     }
+                    //Campaign scope
+                    else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
+                    {
+                        index = topic.linkedIndex;
+                        //linkedIndex > -1 (default)
+                        if (index < 0)
+                        { Debug.LogFormat("{0}, topic \"{1}\", Invalid linkedIndex (is {2}, should be > -1){3}", tag, topic.name, index, "\n"); }
+                        //Profile can't have a repeat delay or a window timer
+                        if (topic.profile != null)
+                        {
+                            if (topic.profile.delayRepeat > 0)
+                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid profile.delayRepeat (is {2}, should be Zero){3}", tag, topic.name, topic.profile.delayRepeat, "\n"); }
+                            if (topic.profile.timerWindow > 0)
+                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid profile.timerWindoow (is {2}, should be Zero){3}", tag, topic.name, topic.profile.timerWindow, "\n"); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid profile (Null) for topic \"{0}\"", topic.name); }
+                        //listOfBuddyTopics
+                        if (topic.listOfBuddyTopics != null)
+                        {
+                            //should have at least one entry
+                            if (topic.listOfBuddyTopics.Count == 0)
+                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics Count (is {2}, should be > 0){3}", tag, topic.name, topic.listOfBuddyTopics.Count, "\n"); }
+                            //check for nulls
+                            CheckList<Topic>(topic.listOfBuddyTopics, "listOfBuddyTopics", topic.name);
+                            //check for duplicates
+                            List<string> tempList = topic.listOfBuddyTopics.Select(x => x.name).ToList();
+                            if (tempList != null)
+                            { CheckListForDuplicates<string>(tempList, "Topic", topic.name, "listOfBuddyTopics"); }
+                            else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfBuddyTopics", topic.name); }
+                            //check topic is present in buddy list
+                            if (topic.listOfBuddyTopics.Exists(x => x.name.Equals(topic.name)) == false)
+                            { Debug.LogFormat("{0}, topic \"{1}\", MISSING in listOfBuddyTopics{2}", tag, topic.name, "\n"); }
+                            //should all have same linkedIndex as topic
+                            for (int i = 0; i < topic.listOfBuddyTopics.Count; i++)
+                            {
+                                Topic buddyTopic = topic.listOfBuddyTopics[i];
+                                if (buddyTopic != null)
+                                {
+                                    if (buddyTopic.linkedIndex != index)
+                                    { Debug.LogFormat("{0}, topic \"{1}\", in listOfBuddyTopics has Invalid linkedIndex (is {2}, should be > {3}){4}", tag, buddyTopic.name, buddyTopic.linkedIndex, index, "\n"); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid topic (Null) in listOfBuddyTopics for \"{0}\"", buddyTopic.name); }
+                            }
+                        }
+                        else { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics (Null) (should have entries){2}", tag, topic.name, "\n"); }
+                        //listOfLinkedTopics
+                        if (topic.listOfLinkedTopics != null)
+                        {
+                            if (topic.listOfLinkedTopics.Count > 0)
+                            {
+                                //check for nulls
+                                CheckList<Topic>(topic.listOfLinkedTopics, "listOfLinkedTopics", topic.name);
+                                //check for duplicates
+                                List<string> tempList = topic.listOfLinkedTopics.Select(x => x.name).ToList();
+                                if (tempList != null)
+                                { CheckListForDuplicates<string>(tempList, "Topic", topic.name, "listOfLinkedTopics"); }
+                                else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfLinkedTopics", topic.name); }
+                                //should all have the same linkedIndex and it should be one more than the topic's linkedIndex
+                                index += 1;
+                                for (int i = 0; i < topic.listOfLinkedTopics.Count; i++)
+                                {
+                                    Topic linkedTopic = topic.listOfLinkedTopics[i];
+                                    if (linkedTopic != null)
+                                    {
+                                        if (linkedTopic.linkedIndex != index)
+                                        { Debug.LogFormat("{0}, topic \"{1}\", in listOfLinkedTopics has Invalid linkedIndex (is {2}, should be > {3}){4}", tag, linkedTopic.name, linkedTopic.linkedIndex, index, "\n"); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topic (Null) in listOfLinkedTopics for \"{0}\"", linkedTopic.name); }
+                                }
+                            }
+                        }
+
+                    }
+                    else { Debug.LogFormat("{0}, topic \"{1}\", Invalid subType.scope.name \"{2}\"{3}", tag, topic.name, topic.subType.scope.name, "\n"); }
                 }
             }
         }

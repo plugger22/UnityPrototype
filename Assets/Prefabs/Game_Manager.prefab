@@ -1940,6 +1940,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64d78a497f3fa3842a62b1957b4c5c9c, type: 2}
   - {fileID: 11400000, guid: e6381bc8398f885499498120ca2f2fa9, type: 2}
   - {fileID: 11400000, guid: a62ce7d53ff3e314eb62de6f0a4fbcbd, type: 2}
+  - {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   - {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
   arrayOfTopicPools:
   - {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
@@ -1982,6 +1983,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 201607063ed9c134f9e681bbe7a32430, type: 2}
   - {fileID: 11400000, guid: 3705fb36dced07548855d5ad9c87ca15, type: 2}
   - {fileID: 11400000, guid: d7e0c4d461c95dc4595195c4576c1b7f, type: 2}
+  arrayOfTopicScopes:
+  - {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
+  - {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
   arrayOfTopics:
   - {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   - {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
@@ -3113,3 +3117,4 @@ MonoBehaviour:
   citySubType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
   normalProfile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   levelScope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
+  campaignScope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}

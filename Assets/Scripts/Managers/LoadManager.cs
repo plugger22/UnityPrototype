@@ -82,6 +82,7 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfTopicOptions;
     public TopicProfile[] arrayOfTopicProfiles;
     public TopicPool[] arrayOfTopicPools;
+    public TopicScope[] arrayOfTopicScopes;
     public Topic[] arrayOfTopics;
 
     [Header("Targets")]
@@ -1230,6 +1231,14 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicProfiles has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicProfiles present"); }
+        //
+        //
+        // - - - Topic Scopes (not stored in a collection)
+        //
+        numArray = arrayOfTopicScopes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicScopeshas {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicScopes present"); }
         //
         // - - - Topic Pools (not stored in a collection)
         //

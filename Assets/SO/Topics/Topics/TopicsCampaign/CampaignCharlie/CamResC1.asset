@@ -33,11 +33,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f96b142d6c836724c85898dd9495ebd1, type: 2}
   - {fileID: 11400000, guid: c96b97d1b2443a74e8ce38f405fa34d9, type: 2}
   status: 4
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 0
-  timerWindow: 7
+  timerWindow: 2
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 3
-  turnsDone: 21
+  turnsLive: 8
+  turnsDone: 0

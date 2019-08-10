@@ -36,8 +36,8 @@ MonoBehaviour:
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0
-  timerWindow: 7
+  timerWindow: 2
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 3
+  turnsLive: 8
   turnsDone: 0

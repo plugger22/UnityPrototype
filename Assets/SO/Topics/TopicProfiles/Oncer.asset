@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
   m_Name: Oncer
   m_EditorClassIdentifier: 
-  descriptor: Once Off
+  descriptor: Once off topic
   delayRepeatFactor: 0
   delayStartFactor: 0
   liveWindowFactor: 0
   delayRepeat: 0
   delayStart: 0
-  timerWindow: 10
+  timerWindow: 0

@@ -23,7 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000}
   - {fileID: 11400000, guid: da906bcc401890449a6e6bb6351fbb0f, type: 2}
   linkedIndex: 0
-  profile: {fileID: 11400000, guid: e6381bc8398f885499498120ca2f2fa9, type: 2}
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria: []
   notes: 
   listOfOptions:
@@ -35,7 +35,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 0
   timerWindow: 10
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsDormant: 1
+  turnsActive: 1
+  turnsLive: 9
   turnsDone: 0

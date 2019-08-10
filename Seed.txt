@@ -604,3 +604,77 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 25578 -> Saturday, 10 August 2019 3:25 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 7740 -> Saturday, 10 August 2019 4:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61446 -> Saturday, 10 August 2019 4:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37088 -> Saturday, 10 August 2019 5:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50730 -> Saturday, 10 August 2019 5:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 747 -> Saturday, 10 August 2019 5:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11711 -> Saturday, 10 August 2019 5:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23581 -> Saturday, 10 August 2019 5:11 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid teamID (-1) for teamArcID 2
+UnityEngine.Debug:LogWarning(Object)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3296)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3200)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:471)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 46854 -> Saturday, 10 August 2019 5:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20706 -> Saturday, 10 August 2019 5:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47280 -> Saturday, 10 August 2019 5:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8285 -> Saturday, 10 August 2019 5:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49187 -> Saturday, 10 August 2019 5:47 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid profile (Null) for topic "CamResC0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:668)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:484)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:210)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:118)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:785)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	WARNING Invalid profile (Null) for topic "CamResC1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:668)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:484)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:210)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:118)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:785)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:349)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.CheckTopicData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2255)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1454)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:242)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 2083 -> Saturday, 10 August 2019 5:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29716 -> Saturday, 10 August 2019 5:57 PM
+City seed 5678 -> London, United Kingdom

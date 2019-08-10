@@ -23,7 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60ead31962f573049ac05683a8542a86, type: 2}
   - {fileID: 11400000}
   linkedIndex: 0
-  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria: []
   notes: 
   listOfOptions:
@@ -31,11 +31,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2fbb3332c26f5e643a34592b07f0a75a, type: 2}
   - {fileID: 11400000, guid: 4fb41b0f9de6a344fa2e2e6805d4e56a, type: 2}
   status: 4
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 7
-  turnsDone: 17
+  turnsLive: 9
+  turnsDone: 0
