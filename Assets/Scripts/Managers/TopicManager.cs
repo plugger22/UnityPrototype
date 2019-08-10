@@ -1193,14 +1193,7 @@ public class TopicManager : MonoBehaviour
                 {
                     //get actor motivation
                     int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    switch (motivation)
-                    {
-                        case 3: group = GroupType.Good; break;
-                        case 2: group = GroupType.Neutral; break;
-                        case 1: group = GroupType.Bad; break;
-                        case 0: group = GroupType.VeryBad; break;
-                        default: Debug.LogWarningFormat("Unrecognised motivation \"[0}\" for actor {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
-                    }
+                    group = GetGroupMotivation(motivation);
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     //Info tags
@@ -1325,14 +1318,7 @@ public class TopicManager : MonoBehaviour
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
                 motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                switch (motivation)
-                {
-                    case 3: group = GroupType.Good; break;
-                    case 2: group = GroupType.Neutral; break;
-                    case 1: group = GroupType.Bad; break;
-                    case 0: group = GroupType.VeryBad; break;
-                    default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
-                }
+                group = GetGroupMotivation(motivation);
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                 //Info tags
@@ -2132,6 +2118,25 @@ public class TopicManager : MonoBehaviour
     //
     // - - - Utilities - - -
     //
+
+    /// <summary>
+    /// returns groupType based on Motivations
+    /// </summary>
+    /// <param name="motivation"></param>
+    /// <returns></returns>
+    private GroupType GetGroupMotivation(int motivation)
+    {
+        GroupType group = GroupType.Neutral;
+        switch (motivation)
+        {
+            case 3: group = GroupType.Good; break;
+            case 2: group = GroupType.Neutral; break;
+            case 1: group = GroupType.Bad; break;
+            case 0: group = GroupType.VeryBad; break;
+            default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\", default GroupType.Neutral used", motivation); break;
+        }
+        return group;
+    }
 
     #region AddTopicTypeToList
     /// <summary>
