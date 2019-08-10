@@ -76,9 +76,14 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("The 'Normal' topic profile with no delays. Needed to prevent hardcoding name, will auto adjust if TopicProfile.SO renamed")]
     public TopicProfile normalProfile;
 
+    [Header("Topic Scope")]
+    [Tooltip("TopicScope for TopicSubType (used to run validation checks to ensure the correct pool is used)")]
+    public TopicScope levelScope;
+
     //fast access
-    GlobalSide globalAuthority;
-    GlobalSide globalResistance;
+    private GlobalSide globalAuthority;
+    private GlobalSide globalResistance;
+    private string levelScopeName;
 
 
     /// <summary>
@@ -114,11 +119,16 @@ public class ValidationManager : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
+        if (levelScope != null) { levelScopeName = levelScope.name; }
+        Debug.Assert(levelScope != null, "Invalid levelScope (Null)");
+        Debug.Assert(string.IsNullOrEmpty(levelScopeName) == false, "Invalid levelScopeName (Null or Empty)");
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(normalProfile != null, "Invalid normalProfile (Null)");
+
+
     }
     #endregion
 
@@ -2206,9 +2216,12 @@ public class ValidationManager : MonoBehaviour
                 CheckDictList(pool.Value, "listOfTopics", tag, pool.Key);
                 foreach (Topic topic in pool.Value)
                 {
-                    //each topic within pool should be 'isCurrent' true (dict contains all valid topics for the level)
-                    if (topic.isCurrent != true)
-                    { Debug.LogFormat("{0}, topic \"{1}\", Invalid isCurrent (is {2}, should be {3}){4}", tag, topic.name, topic.isCurrent, "True"); }
+                    //each topic within pool should be 'isCurrent' true (dict contains all valid topics for the level) if Level Scope only
+                    if (topic.subType.scope.name.Equals(levelScopeName, StringComparison.Ordinal) == true)
+                    {
+                        if (topic.isCurrent != true)
+                        { Debug.LogFormat("{0}, topic \"{1}\", Invalid isCurrent (is {2}, should be {3}){4}", tag, topic.name, topic.isCurrent, "True", "\n"); }
+                    }
                 }
             }
         }

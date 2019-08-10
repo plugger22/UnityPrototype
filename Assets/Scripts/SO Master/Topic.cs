@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using gameAPI;
 using System.Collections.Generic;
 using UnityEngine;
-using gameAPI;
 
 /// <summary>
 /// Topic Decision 
@@ -33,7 +32,7 @@ public class Topic : ScriptableObject
     [Header("Linked Topic")]
     [Tooltip("Once topic Live and resolved, the specified topics in the list (must be in same TopicPool) will switch from Done to Dormant (and activate as per it's profile). Ignore if not relevant")]
     public List<Topic> listOfLinkedTopics;
-    [Tooltip("Any topics with the same linkedIndex, eg. All equivalent topics to the current one that could have been chosen but weren't. Needed so that they can be set to 'Done' with the next stage in the linked sequence")]
+    [Tooltip("Any topics with the same linkedIndex, eg. All equivalent topics to the current one that could have been chosen but weren't. INCLUDE CURRENT TOPIC")]
     public List<Topic> listOfBuddyTopics;
 
     [Header("Link In the Chain")]

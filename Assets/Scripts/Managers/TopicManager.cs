@@ -632,29 +632,33 @@ public class TopicManager : MonoBehaviour
                             if (topic.timerStart == 0)
                             { topic.status = Status.Active; }
                             else { topic.status = Status.Dormant; }
+                            //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
+                            topic.isCurrent = true;
                         }
                         else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
                         {
-                            //need to initialise linked sequence and have first pair status started normally 
-                            if (isFirstScenario == true && topic.linkedIndex == 0)
+                            //LINKED -> need to initialise linked sequence and have first pair status started normally 
+                            if (isFirstScenario == true)
                             {
                                 if (topic.linkedIndex == 0)
                                 {
                                     if (topic.timerStart == 0)
                                     { topic.status = Status.Active; }
                                     else { topic.status = Status.Dormant; }
+                                    //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
+                                    topic.isCurrent = true;
                                 }
                                 else
                                 {
                                     //set all none start campaign topics to 'Done' (but only right at the start as save/load game data will take over from there)
                                     topic.status = Status.Done;
+                                    topic.isCurrent = false;
                                 }
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid topic.subType.scope.name \"{0}\", status not set", topic.subType.scope.name); }
 
-                        //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
-                        topic.isCurrent = true;
+
                         //zero status
                         topic.turnsDormant = 0;
                         topic.turnsActive = 0;
@@ -710,8 +714,6 @@ public class TopicManager : MonoBehaviour
                 {
                     //debug purposes only -> BEFORE UpdateTopicTypeData
                     UnitTestTopic(playerSide);
-                    //debug -> should be in ProcessTopic but here for autorun debugging purposes
-                    UpdateTopicAdmin();
                 }
             }
         }
@@ -793,8 +795,16 @@ public class TopicManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    //no timers -> status Done
-                                    topic.Value.status = Status.Done;
+                                    if (topic.Value.linkedIndex < 0)
+                                    {
+                                        //normal topic -> no timers -> status Done
+                                        topic.Value.status = Status.Done;
+                                    }
+                                    else
+                                    {
+                                        //Linked topic
+                                        topic.Value.status = Status.Active;
+                                    }
                                 }
                                 break;
                             case Status.Active:
@@ -1561,6 +1571,7 @@ public class TopicManager : MonoBehaviour
                 //valid topic selected, ignore otherwise
                 if (turnTopic != null)
                 {
+                    UpdateTopicAdmin();
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
                     { ExecuteTopic(); }
                     UpdateTopicStatus();
@@ -1666,6 +1677,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region UpdateTopicAdmin
     /// <summary>
     /// handles all admin once a topic has been displayed and the user has chosen an option (or not, then default option selected)
     /// </summary>
@@ -1725,7 +1737,9 @@ public class TopicManager : MonoBehaviour
         }
         //no need to generate warning message as covered elsewhere
     }
+    #endregion
 
+    #region UpdateTopicStatus
     /// <summary>
     /// Update status for selected topic once interaction complete
     /// </summary>
@@ -1743,6 +1757,7 @@ public class TopicManager : MonoBehaviour
                     foreach (Topic topic in turnTopic.listOfLinkedTopics)
                     {
                         topic.status = Status.Dormant;
+                        topic.isCurrent = true;
                         Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: LINKED topic \"{0}\" set to Status.Dormant{1}", topic.name, "\n");
                     }
                 }
@@ -1753,21 +1768,32 @@ public class TopicManager : MonoBehaviour
                     foreach (Topic topic in turnTopic.listOfBuddyTopics)
                     {
                         topic.status = Status.Done;
+                        topic.isCurrent = false;
                         Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: BUDDY topic \"{0}\" set to Status.Done{1}", topic.name, "\n");
                     }
                 }
+                //current topic (Fail Safe measure -> should already be included in listOfBuddyTopics)
+                turnTopic.status = Status.Done;
             }
-            //Non-Linked topic
+            //non-linked topic
             else
             {
-            //Back to Dormant if repeat, Done otherwise
-            if (turnTopic.timerRepeat > 0)
-            { turnTopic.status = Status.Dormant; }
-            else { turnTopic.status = Status.Done; }
+                //Current topic -> Back to Dormant if repeat, Done otherwise
+                if (turnTopic.timerRepeat > 0)
+                {
+                    turnTopic.status = Status.Dormant;
+                    turnTopic.isCurrent = true;
+                }
+                else
+                {
+                    turnTopic.status = Status.Done;
+                    turnTopic.isCurrent = false;
+                }
             }
         }
         else { Debug.LogError("Invalid turnTopic (Null)"); }
     }
+    #endregion
 
     #endregion
 
@@ -1888,7 +1914,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-
+    #region CheckTopicsAvailable
     /// <summary>
     /// Checks any topicType for availability this Turn using a cascading series of checks that exits on the first positive outcome. 
     /// used by EffectManager.cs -> CheckCriteria
@@ -1963,7 +1989,9 @@ public class TopicManager : MonoBehaviour
         }
         return isValid;
     }
+    #endregion
 
+    #region CheckSubTypeCriteria
     /// <summary>
     /// checks individual TopicSubType criteria and returns true if none present or if all O.K. False if criteria check fails.
     /// </summary>
@@ -1987,6 +2015,7 @@ public class TopicManager : MonoBehaviour
         }
         return true;
     }
+    #endregion
 
     #endregion
 
@@ -2435,24 +2464,6 @@ public class TopicManager : MonoBehaviour
     //
     // - - - Debug - - -
     //
-
-    /// <summary>
-    /// debug method to randomise topic status (50/50 Active/Dormant) at start of each level
-    /// </summary>
-    private void DebugRandomiseTopicStatus()
-    {
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
-        if (dictOfTopics != null)
-        {
-            foreach (var topic in dictOfTopics)
-            {
-                if (Random.Range(0, 100) < 20)
-                { topic.Value.status = Status.Dormant; }
-                else { topic.Value.status = Status.Active; }
-            }
-        }
-        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
-    }
 
     /// <summary>
     /// Display's topic type data in a more user friendly manner (subTypes grouped by Types)

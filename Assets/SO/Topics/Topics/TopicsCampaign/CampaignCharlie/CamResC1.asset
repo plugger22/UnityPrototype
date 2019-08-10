@@ -18,7 +18,13 @@ MonoBehaviour:
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  linkedTopic: {fileID: 11400000, guid: 9b0227b5ae5c45447bf71871232c2ebf, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: d2c938fc4ddfbe549b40caa762c73cd8, type: 2}
+  - {fileID: 11400000, guid: 9b0227b5ae5c45447bf71871232c2ebf, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000, guid: c5f72088a6f5c4541b2c46a72d650343, type: 2}
+  - {fileID: 11400000}
+  linkedIndex: 0
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria: []
   notes: 
@@ -26,12 +32,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7deaaf78e02044049aee6142926bc63b, type: 2}
   - {fileID: 11400000, guid: f96b142d6c836724c85898dd9495ebd1, type: 2}
   - {fileID: 11400000, guid: c96b97d1b2443a74e8ce38f405fa34d9, type: 2}
-  status: 2
+  status: 4
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 2
-  timerWindow: 0
+  timerRepeat: 0
+  timerWindow: 7
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 1
-  turnsDone: 0
+  turnsLive: 3
+  turnsDone: 21

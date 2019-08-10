@@ -2887,7 +2887,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -3112,3 +3112,4 @@ MonoBehaviour:
   cityType: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
   citySubType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
   normalProfile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  levelScope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}

@@ -18,6 +18,11 @@ MonoBehaviour:
   priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 8462da0987315924d80b468ec366cd05, type: 2}
+  linkedIndex: 0
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
   notes: 
