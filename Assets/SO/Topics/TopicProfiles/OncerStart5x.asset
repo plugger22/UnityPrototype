@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d845ad134afa58646b7aa4d88d262191, type: 3}
   m_Name: OncerStart5x
   m_EditorClassIdentifier: 
-  descriptor: 5 turn start delay, no repeat
+  descriptor: 5x globalMinInt start delay, no repeat
   delayRepeatFactor: 0
   delayStartFactor: 5
   liveWindowFactor: 0
   delayRepeat: 0
-  delayStart: 5
+  delayStart: 10
   timerWindow: 0

@@ -697,9 +697,11 @@ public class TopicManager : MonoBehaviour
                 {
                     CheckTopics();
                     CheckForValidTopicTypes();
-                    GetTopicType();
-                    if (GetTopicSubType(playerSide) == true)
-                    { GetTopic(playerSide); }
+                    if (GetTopicType() == true)
+                    {
+                        if (GetTopicSubType(playerSide) == true)
+                        { GetTopic(playerSide); }
+                    }
                     //repeat process with a reduced minInterval
                     if (turnTopic == null)
                     {
@@ -939,10 +941,11 @@ public class TopicManager : MonoBehaviour
 
     #region GetTopicType
     /// <summary>
-    /// Get topicType for turn Decision
+    /// Get topicType for turn Decision. Returns true if valid topicType found, false otherwise
     /// </summary>
-    private void GetTopicType()
+    private bool GetTopicType()
     {
+        bool isSuccess = false;
         int numOfEntries;
         int count = listOfTopicTypesTurn.Count;
         if (count > 0)
@@ -962,9 +965,11 @@ public class TopicManager : MonoBehaviour
             {
                 //random draw of pool
                 turnTopicType = listOfTypePool[Random.Range(0, listOfTypePool.Count)];
+                isSuccess = true;
             }
             else { Debug.LogError("Invalid listOfTypePool (Empty) for selecting topicType"); }
         }
+        return isSuccess;
     }
     #endregion
 

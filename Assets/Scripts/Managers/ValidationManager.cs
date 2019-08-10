@@ -77,8 +77,10 @@ public class ValidationManager : MonoBehaviour
     public TopicProfile normalProfile;
 
     [Header("Topic Scope")]
-    [Tooltip("TopicScope for TopicSubType (used to run validation checks to ensure the correct pool is used)")]
+    [Tooltip("TopicScope for TopicSubType (used to run validation checks to ensure the correct scope is used)")]
     public TopicScope levelScope;
+    [Tooltip("TopicScope for TopicSubType (used to run validation checks to ensure correct scope is used")]
+    public TopicScope campaignScope;
 
     //fast access
     private GlobalSide globalAuthority;

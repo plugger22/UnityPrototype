@@ -20,8 +20,8 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics:
-  - {fileID: 11400000, guid: 0c5844e33729c6d4cbd2090a98499db5, type: 2}
-  - {fileID: 11400000, guid: a79a1d497132a3c4690a597e5cad50a7, type: 2}
+  - {fileID: 11400000, guid: 974d2b2822799634d8599c75da046786, type: 2}
+  - {fileID: 11400000}
   linkedIndex: 0
   profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
   listOfCriteria: []
@@ -37,5 +37,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
-  turnsDone: 0
+  turnsLive: 1
+  turnsDone: 19
