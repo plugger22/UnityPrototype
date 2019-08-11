@@ -312,6 +312,22 @@ public class TeamManager : MonoBehaviour
                             {
                                 //AI Authority player
                                 MoveTeamAI(TeamPool.InTransit, team.teamID, node);
+                                //nodeActionData -> need a random actor to assign to
+                                List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(GameManager.instance.sideScript.PlayerSide);
+                                if (listOfActors != null && listOfActors.Count > 0)
+                                {
+                                    Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                                    if (actor != null)
+                                    {
+                                        NodeActionData data = new NodeActionData()
+                                        {
+                                            turn = GameManager.instance.turnScript.Turn,
+                                            actorID = actor.actorID,
+                                            nodeID = node.nodeID,
+                                            teamID = team.teamID
+                                        };
+                                    }
+                                }
                                 //Permanent Team effect activated for node
                                 ProcessTeamEffect(team, node, null);
                                 //message

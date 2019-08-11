@@ -9,21 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: AuthorityTeamPool0
+  m_Name: TeamCivil
   m_EditorClassIdentifier: 
-  tag: Auhority Team topic test pool 0
+  tag: Authority Civil Team
   descriptor: 
   type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
   subType: {fileID: 11400000, guid: f31933caa1d5f614aa34b3f124cdf649, type: 2}
-  subSubType: {fileID: 0}
+  subSubType: {fileID: 11400000, guid: f68b569c93696b64bad55a27102378ce, type: 2}
   listOfTopics:
   - {fileID: 11400000, guid: 6c0b1022a6c607b49a9e09ea3e1fa6e0, type: 2}
   - {fileID: 11400000, guid: 46a94535af55ba24b8fe2cb7efaceb35, type: 2}
-  listOfSubSubTypePools:
-  - {fileID: 11400000, guid: 4e549ebe0894555429022e1e89ce3722, type: 2}
-  - {fileID: 11400000, guid: 1e3826ce7850546438c9ade10a32757e, type: 2}
-  - {fileID: 11400000, guid: fbe71ccb3d583d742b0e8f518be9ec9e, type: 2}
-  - {fileID: 11400000, guid: d884a5eb0f6fb2b4599f785029f29c3d, type: 2}
-  - {fileID: 11400000, guid: 63652079cece3af4a861016ecf842f59, type: 2}
-  - {fileID: 11400000, guid: be46d36319fbbad4da20cb601111ced3, type: 2}
-  - {fileID: 11400000, guid: ba3274e0f6c57264eaf2073191cb9039, type: 2}
+  listOfSubSubTypePools: []

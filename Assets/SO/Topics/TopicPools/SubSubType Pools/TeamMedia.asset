@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
+  m_Name: TeamMedia
+  m_EditorClassIdentifier: 
+  tag: Authority Media Team
+  descriptor: 
+  type: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
+  subType: {fileID: 11400000, guid: f31933caa1d5f614aa34b3f124cdf649, type: 2}
+  subSubType: {fileID: 11400000, guid: 047921bfb285c66498e2dbef7fe54fad, type: 2}
+  listOfTopics:
+  - {fileID: 11400000, guid: 374f64cfeff2e5c4eb714b9c48c81892, type: 2}
+  - {fileID: 11400000, guid: f9b4e568d0ce9c84ca4b151aac469bc2, type: 2}
+  listOfSubSubTypePools: []

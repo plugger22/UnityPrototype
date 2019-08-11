@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: AutTea0Opt2
+  m_Name: AutTeaErasure1Opt1
   m_EditorClassIdentifier: 
-  tag: Authority Team 0 Option 2
-  topic: {fileID: 11400000, guid: 6c0b1022a6c607b49a9e09ea3e1fa6e0, type: 2}
+  tag: Authority Erasure Team 1 Option 1
+  topic: {fileID: 11400000, guid: 79d1b30bcf3c81c448c49475b850f8d6, type: 2}
