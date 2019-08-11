@@ -31,10 +31,11 @@ MonoBehaviour:
   authorityGeneralPool: {fileID: 11400000, guid: 797a5c8b64ad0164bba95cdfa6aab7d9,
     type: 2}
   resistanceGeneralPool: {fileID: 0}
+  teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}
   actorContactPool: {fileID: 0}
   actorDistrictPool: {fileID: 0}
   actorGearPool: {fileID: 0}
   actorMatchPool: {fileID: 0}
   actorPoliticPool: {fileID: 0}
+  playerDistrictPool: {fileID: 0}
   hqPool: {fileID: 0}
-  teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}

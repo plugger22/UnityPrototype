@@ -21,19 +21,19 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
   notes: 
   listOfOptions:
   - {fileID: 11400000, guid: df9e60932039ff44ba4ddfb5b549ed0f, type: 2}
   - {fileID: 11400000, guid: 8803db05d76695f4eb62fbfd944fc4fd, type: 2}
   - {fileID: 11400000, guid: 4a16b385b3ac1ea42a07f4f38e5c5a11, type: 2}
-  status: 1
-  isCurrent: 0
+  status: 2
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 52
   turnsDone: 0
