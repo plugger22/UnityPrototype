@@ -702,3 +702,22 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 
 Dev seed 56970 -> Sunday, 11 August 2019 11:27 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 57096 -> Sunday, 11 August 2019 5:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51364 -> Sunday, 11 August 2019 5:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57396 -> Sunday, 11 August 2019 5:03 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.CheckNumOfActiveActorsSpecial (gameAPI.ActorCheck check, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4345)
+	EffectManager.CheckCriteria (packageAPI.CriteriaDataInput data) (at Assets/Scripts/Managers/EffectManager.cs:794)
+	TopicManager.CheckSubTypeCriteria (TopicSubType subType) (at Assets/Scripts/Managers/TopicManager.cs:2088)
+	TopicManager.GetTopicSubType (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1027)
+	TopicManager.SelectTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:727)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:286)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:351)
+	
