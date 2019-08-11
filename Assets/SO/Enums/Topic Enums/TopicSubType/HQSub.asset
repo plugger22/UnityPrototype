@@ -17,6 +17,7 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   scope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
+  groupType: {fileID: 11400000, guid: 80689d85dbfe52942b14d75bff299e89, type: 2}
   listOfSubSubType: []
   listOfCriteria: []
   minInterval: 0

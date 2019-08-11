@@ -164,7 +164,8 @@
         PlayerBreakdown, PlayerLieLow, PlayerCaptured, PlayerBetrayed, PlayerTimesStressed, PlayerDaysStressed, PlayerSuperStressed, PlayerDoNothing,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
-        NodeCrisis, NodeCrisisExplodes
+        NodeCrisis, NodeCrisisExplodes,
+        TopicsGood, TopicsBad, TopicsNeutral
     }
 
     //

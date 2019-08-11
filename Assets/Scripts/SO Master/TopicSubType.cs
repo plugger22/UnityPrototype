@@ -25,6 +25,8 @@ public class TopicSubType : ScriptableObject
     public GlobalChance priority;
     [Tooltip("Scope of Topics within - Level (topic status reset each level) / Campaign (topic status carries over)")]
     public TopicScope scope;
+    [Tooltip("Factor which determines which group (good/bad) of topics is used. Tooltip info purposes only.")]
+    public TopicGroupType groupType;
 
     [Header("SubSubTypes")]
     [Tooltip("List of SubSubTypes that are linked to this SubType. Ignore if none")]
@@ -43,5 +45,6 @@ public class TopicSubType : ScriptableObject
         Debug.AssertFormat(type != null, "Invalid Type (Null) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
         Debug.AssertFormat(scope != null, "Invalid scope (Null) for {0}", name);
+        Debug.AssertFormat(groupType != null, "Invalid groupType (Null) for {0}", name);
     }
 }

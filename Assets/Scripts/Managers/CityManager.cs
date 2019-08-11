@@ -12,7 +12,7 @@ using UnityEngine;
 public class CityManager : MonoBehaviour
 {
     [Tooltip("City Loyalty towards the Authority (same for both sides)")]
-    [Range(1, 9)] public int maxCityLoyalty = 9;
+    [Range(1, 10)] public int maxCityLoyalty = 10;
 
     [Header("GUI data")]
     [Tooltip("Opacity of the 3 grey background subPanels in the city tooltip")]

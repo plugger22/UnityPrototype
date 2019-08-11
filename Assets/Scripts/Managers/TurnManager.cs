@@ -280,11 +280,13 @@ public class TurnManager : MonoBehaviour
                 //only do for player
                 if (playerSide != null && currentSide.level == playerSide.level)
                 {
-                    //select topic
-                    GameManager.instance.topicScript.SelectTopic(playerSide);
-
-                    //Debugging only (temporary) -> don't forget to switch on below and delete this
-                    GameManager.instance.topicScript.ProcessTopic(playerSide);
+                    if (winStateLevel == WinState.None)
+                    {
+                        //select topic
+                        GameManager.instance.topicScript.SelectTopic(playerSide);
+                        //Debugging only (temporary) -> don't forget to switch on below and delete this
+                        GameManager.instance.topicScript.ProcessTopic(playerSide);
+                    }
 
                     //turn on info App (only if not autorunning)
                     if (isAutoRun == false)

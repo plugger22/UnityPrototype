@@ -83,6 +83,7 @@ public class LoadManager : MonoBehaviour
     public TopicProfile[] arrayOfTopicProfiles;
     public TopicPool[] arrayOfTopicPools;
     public TopicScope[] arrayOfTopicScopes;
+    public TopicGroupType[] arrayOfTopicGroupTypes;
     public Topic[] arrayOfTopics;
 
     [Header("Targets")]
@@ -1232,13 +1233,19 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicProfiles has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicProfiles present"); }
         //
-        //
         // - - - Topic Scopes (not stored in a collection)
         //
         numArray = arrayOfTopicScopes.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicScopeshas {0} entries{1}", numArray, "\n"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicScopes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicScopes present"); }
+        //
+        // - - - TopicGroupTypes (not stored in a collection)
+        //
+        numArray = arrayOfTopicGroupTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicGroupTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicGroupTypes present"); }
         //
         // - - - Topic Pools (not stored in a collection)
         //

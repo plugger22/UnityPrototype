@@ -1071,43 +1071,58 @@ public class TopicManager : MonoBehaviour
             List<Topic> listOfSubTypeTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
             if (listOfSubTypeTopics != null)
             {
+                GroupType group;
                 switch (turnTopicSubType.name)
                 {
                     //Standard topics
                     case "CampaignAlpha":
                     case "CampaignBravo":
                     case "CampaignCharlie":
-                    case "ResistanceCampaign":
-                    case "ResistanceGeneral":
                     case "AuthorityCampaign":
                     case "AuthorityGeneral":
+                    case "AuthorityTeam":
+                    case "ResistanceCampaign":
+                    case "ResistanceGeneral":
+                    case "HQSub":
+                        //based on faction Approval
+                        group = GetGroupApproval(GameManager.instance.factionScript.ApprovalResistance);
+                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
+                        break;
                     case "FamilyAlpha":
                     case "FamilyBravo":
                     case "FamilyCharlie":
-                        listOfPotentialTopics = listOfSubTypeTopics;
+                        //based on PlayerMood
+                        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     //Dynamic topic
-                    case "AuthorityTeam":
                     case "CitySub":
-                    case "HQSub":
-                        listOfPotentialTopics = listOfSubTypeTopics;
+                        //based on City Loyalty
+                        group = GetGroupLoyalty(GameManager.instance.factionScript.ApprovalResistance);
+                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     case "ActorGear":
+                        //based on actor Motivation
                         listOfPotentialTopics = GetActorGearTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorPolitic":
+                        //based on actor Motivation
                         listOfPotentialTopics = GetActorPoliticTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorContact":
+                        //based on actor Motivation
                         listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorMatch":
+                        //based on actor Compatibility
                         listOfPotentialTopics = GetActorMatchTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorDistrict":
+                        //based on actor Motivation
                         listOfPotentialTopics = GetActorDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "PlayerDistrict":
+                        //based on player Mood
                         listOfPotentialTopics = GetPlayerDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
@@ -1192,8 +1207,7 @@ public class TopicManager : MonoBehaviour
                 if (actor != null)
                 {
                     //get actor motivation
-                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    group = GetGroupMotivation(motivation);
+                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     //Info tags
@@ -1243,17 +1257,7 @@ public class TopicManager : MonoBehaviour
             {
                 //randomly select an actor from compatibility weighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
-                compatibility = actor.GetPersonality().GetCompatibilityWithPlayer();
-                switch (compatibility)
-                {
-                    case 3: group = GroupType.Good; break;
-                    case 2: group = GroupType.Good; break;
-                    case 1: group = GroupType.Good; break;
-                    case -1: group = GroupType.Bad; break;
-                    case -2: group = GroupType.VeryBad; break;
-                    case -3: group = GroupType.VeryBad; break;
-                    default: Debug.LogWarningFormat("Unrecognised compatibility \"{0}\" for {1}, {2}", compatibility, actor.actorName, actor.arc.name); break;
-                }
+                group = GetGroupCompatibility(actor.GetPersonality().GetCompatibilityWithPlayer());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                 //Debug
@@ -1288,7 +1292,6 @@ public class TopicManager : MonoBehaviour
         if (listOfActors != null)
         {
             List<Actor> selectionList = new List<Actor>();
-            int motivation;
             int numOfEntries = 0;
             int numOfActors = 0;
             foreach (Actor actor in listOfActors)
@@ -1297,8 +1300,7 @@ public class TopicManager : MonoBehaviour
                 {
                     numOfActors++;
                     //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
-                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    switch (motivation)
+                    switch (actor.GetDatapoint(ActorDatapoint.Motivation1))
                     {
                         case 3: numOfEntries = 2; break;
                         case 2: numOfEntries = 1; break;
@@ -1317,8 +1319,7 @@ public class TopicManager : MonoBehaviour
             {
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
-                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                group = GetGroupMotivation(motivation);
+                group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                 //Info tags
@@ -1345,7 +1346,6 @@ public class TopicManager : MonoBehaviour
         if (listOfActors != null)
         {
             List<Actor> selectionList = new List<Actor>();
-            int motivation;
             int numOfEntries = 0;
             int numOfActors = 0;
             foreach (Actor actor in listOfActors)
@@ -1354,8 +1354,7 @@ public class TopicManager : MonoBehaviour
                 {
                     numOfActors++;
                     //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
-                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    switch (motivation)
+                    switch (actor.GetDatapoint(ActorDatapoint.Motivation1))
                     {
                         case 3: numOfEntries = 2; break;
                         case 2: numOfEntries = 1; break;
@@ -1373,15 +1372,7 @@ public class TopicManager : MonoBehaviour
             {
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
-                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                switch (motivation)
-                {
-                    case 3: group = GroupType.Good; break;
-                    case 2: group = GroupType.Neutral; break;
-                    case 1: group = GroupType.Bad; break;
-                    case 0: group = GroupType.VeryBad; break;
-                    default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
-                }
+                group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                 //Info tags
@@ -1404,7 +1395,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private List<Topic> GetActorDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
-        int count, motivation;
+        int count;
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //Get all actors with at least one district action available
@@ -1453,15 +1444,7 @@ public class TopicManager : MonoBehaviour
                 if (data != null)
                 {
                     //group depends on actor motivation
-                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    switch (motivation)
-                    {
-                        case 3: group = GroupType.Good; break;
-                        case 2: group = GroupType.Neutral; break;
-                        case 1: group = GroupType.Bad; break;
-                        case 0: group = GroupType.VeryBad; break;
-                        default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\" for {1}, {2}", motivation, actor.actorName, actor.arc.name); break;
-                    }
+                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
@@ -1493,12 +1476,10 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private List<Topic> GetPlayerDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
-        int mood;
         bool isProceed = false;
         string playerName = GameManager.instance.playerScript.PlayerName;
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-
         //get the most recent Player node action
         NodeActionData data = GameManager.instance.playerScript.GetMostRecentNodeAction();
         if (data != null)
@@ -1516,15 +1497,7 @@ public class TopicManager : MonoBehaviour
             if (isProceed == true)
             {
                 //group depends on player mood
-                mood = GameManager.instance.playerScript.GetMood();
-                switch (mood)
-                {
-                    case 3: group = GroupType.Good; break;
-                    case 2: group = GroupType.Neutral; break;
-                    case 1: group = GroupType.Bad; break;
-                    case 0: group = GroupType.VeryBad; break;
-                    default: Debug.LogWarningFormat("Unrecognised mood \"{0}\" for {1}, {2}", mood, playerName, "Player"); break;
-                }
+                group = GetGroupMood(GameManager.instance.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                 //debug
@@ -1725,6 +1698,14 @@ public class TopicManager : MonoBehaviour
 
             };
             GameManager.instance.dataScript.AddTopicHistory(history);
+            //stats
+            switch(turnTopic.group.name)
+            {
+                case "Good": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsGood); break;
+                case "Neutral": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsNeutral); break;
+                case "Bad": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsBad); break;
+                default: Debug.LogWarningFormat("Unrecognised group \"{0}\" for topic \"{1}\"", turnTopic.group.name, turnTopic.name); break;
+            }
         }
         //no need to generate warning message as covered elsewhere
     }
@@ -2119,8 +2100,9 @@ public class TopicManager : MonoBehaviour
     // - - - Utilities - - -
     //
 
+    #region GetGroup Methods
     /// <summary>
-    /// returns groupType based on Motivations
+    /// returns groupType based on Actor Motivations, returns Neutral if a problem
     /// </summary>
     /// <param name="motivation"></param>
     /// <returns></returns>
@@ -2133,10 +2115,104 @@ public class TopicManager : MonoBehaviour
             case 2: group = GroupType.Neutral; break;
             case 1: group = GroupType.Bad; break;
             case 0: group = GroupType.VeryBad; break;
-            default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\", default GroupType.Neutral used", motivation); break;
+            default: Debug.LogWarningFormat("Unrecognised Actor Motivation \"{0}\", default GroupType.Neutral used", motivation); break;
         }
         return group;
     }
+
+    /// <summary>
+    /// returns groupType based on Player Mood, returns Neutral if a problem
+    /// </summary>
+    /// <param name="mood"></param>
+    /// <returns></returns>
+    private GroupType GetGroupMood(int mood)
+    {
+        GroupType group = GroupType.Neutral;
+        switch (mood)
+        {
+            case 3: group = GroupType.Good; break;
+            case 2: group = GroupType.Neutral; break;
+            case 1: group = GroupType.Bad; break;
+            case 0: group = GroupType.VeryBad; break;
+            default: Debug.LogWarningFormat("Unrecognised Player Mood \"{0}\" for {1}, {2}. Default GroupType.Neutral used", mood, GameManager.instance.playerScript.PlayerName, "Player"); break;
+        }
+        return group;
+    }
+
+    /// <summary>
+    /// returns GroupType based on Actor Compatability, returns Neutral if a problem
+    /// </summary>
+    /// <param name="compatibility"></param>
+    /// <returns></returns>
+    private GroupType GetGroupCompatibility(int compatibility)
+    {
+        GroupType group = GroupType.Neutral;
+        switch (compatibility)
+        {
+            case 3: group = GroupType.Good; break;
+            case 2: group = GroupType.Good; break;
+            case 1: group = GroupType.Good; break;
+            case -1: group = GroupType.Bad; break;
+            case -2: group = GroupType.VeryBad; break;
+            case -3: group = GroupType.VeryBad; break;
+            default: Debug.LogWarningFormat("Unrecognised compatibility \"{0}\". default GroupType.Neutral used", compatibility); break;
+        }
+        return group;
+    }
+
+    /// <summary>
+    /// returns GroupType based on Faction Approval, returns Neutral if a problem
+    /// </summary>
+    /// <param name="approval"></param>
+    /// <returns></returns>
+    private GroupType GetGroupApproval(int approval)
+    {
+        GroupType group = GroupType.Neutral;
+        switch (approval)
+        {
+            case 10: group = GroupType.Good; break;
+            case 9: group = GroupType.Good; break;
+            case 8: group = GroupType.Good; break;
+            case 7: group = GroupType.Good; break;
+            case 6: group = GroupType.Neutral; break;
+            case 5: group = GroupType.Neutral; break;
+            case 4: group = GroupType.Neutral; break;
+            case 3: group = GroupType.Bad; break;
+            case 2: group = GroupType.Bad; break;
+            case 1: group = GroupType.Bad; break;
+            case 0: group = GroupType.Bad; break;
+            default: Debug.LogWarningFormat("Unrecognised HQ Approval \"{0}\", GroupType.Neutral returned", approval); break;
+        }
+        return group;
+    }
+
+    /// <summary>
+    /// returns GroupType based on City Loyalty, returns Neutral if a problem
+    /// </summary>
+    /// <param name="loyalty"></param>
+    /// <returns></returns>
+    private GroupType GetGroupLoyalty(int loyalty)
+    {
+        GroupType group = GroupType.Neutral;
+        switch (loyalty)
+        {
+            case 10: group = GroupType.Good; break;
+            case 9: group = GroupType.Good; break;
+            case 8: group = GroupType.Good; break;
+            case 7: group = GroupType.Good; break;
+            case 6: group = GroupType.Neutral; break;
+            case 5: group = GroupType.Neutral; break;
+            case 4: group = GroupType.Neutral; break;
+            case 3: group = GroupType.Bad; break;
+            case 2: group = GroupType.Bad; break;
+            case 1: group = GroupType.Bad; break;
+            case 0: group = GroupType.Bad; break;
+            default: Debug.LogWarningFormat("Unrecognised City Loyalty \"{0}\", GroupType.Neutral returned", loyalty); break;
+        }
+        return group;
+    }
+
+    #endregion
 
     #region AddTopicTypeToList
     /// <summary>

@@ -1310,6 +1310,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicPools);
         //TopicScope
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicScopes);
+        //TopicGroupType
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicGroupTypes);
         //Topics
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopics);
         //TopicProfiles

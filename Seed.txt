@@ -678,3 +678,27 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 29716 -> Saturday, 10 August 2019 5:57 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 28463 -> Sunday, 11 August 2019 10:25 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10483 -> Sunday, 11 August 2019 10:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46856 -> Sunday, 11 August 2019 10:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5435 -> Sunday, 11 August 2019 11:21 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53582 -> Sunday, 11 August 2019 11:25 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicGroupType, array 4, assets 5 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicGroupType[]) (at Assets/Scripts/Managers/ValidationManager.cs:1389)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1314)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 56970 -> Sunday, 11 August 2019 11:27 AM
+City seed 5678 -> London, United Kingdom

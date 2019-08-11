@@ -1986,6 +1986,12 @@ MonoBehaviour:
   arrayOfTopicScopes:
   - {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   - {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
+  arrayOfTopicGroupTypes:
+  - {fileID: 11400000, guid: e297c84cf42001f4eb198917e6e63e43, type: 2}
+  - {fileID: 11400000, guid: 9bde567650578444fb1e72ca50cbb9ec, type: 2}
+  - {fileID: 11400000, guid: fdcb32d467e1bde49bf71c1423e18aa1, type: 2}
+  - {fileID: 11400000, guid: 80689d85dbfe52942b14d75bff299e89, type: 2}
+  - {fileID: 11400000, guid: 82866288fad95bd4db6ebab45a0c91b9, type: 2}
   arrayOfTopics:
   - {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   - {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
