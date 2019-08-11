@@ -78,9 +78,26 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType playerSpreadFakeNews;
 
+    [Header("Authority Team TopicSubSubTypes")]
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamCivil;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamControl;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamDamage;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamErasure;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamMedia;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamProbe;
+    [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
+    public TopicSubSubType teamSpider;
+
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
     private int tagNodeID;
+    private int tagTeamID;
     private int tagTurn;
     private string tagStringData;        //General purpose
 
@@ -248,6 +265,14 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(playerRecallTeam != null, "Invalid playerRecallTeam (Null)");
         Debug.Assert(playerRecruitActor != null, "Invalid playerRecruitActor (Null)");
         Debug.Assert(playerSpreadFakeNews != null, "Invalid playerSpreadFakeNews (Null)");
+        //authority Team subSubTypes
+        Debug.Assert(teamCivil != null, "Invalid teamCivil (Null)");
+        Debug.Assert(teamControl != null, "Invalid teamControl (Null)");
+        Debug.Assert(teamDamage != null, "Invalid teamDamage (Null)");
+        Debug.Assert(teamErasure != null, "Invalid teamErasure (Null)");
+        Debug.Assert(teamMedia != null, "Invalid teamMedia (Null)");
+        Debug.Assert(teamProbe != null, "Invalid teamProbe (Null)");
+        Debug.Assert(teamSpider != null, "Invalid teamSpider (Null)");
     }
     #endregion
 
@@ -1080,7 +1105,6 @@ public class TopicManager : MonoBehaviour
                     case "CampaignCharlie":
                     case "AuthorityCampaign":
                     case "AuthorityGeneral":
-                    case "AuthorityTeam":
                     case "ResistanceCampaign":
                     case "ResistanceGeneral":
                     case "HQSub":
@@ -1100,6 +1124,10 @@ public class TopicManager : MonoBehaviour
                         //based on City Loyalty
                         group = GetGroupLoyalty(GameManager.instance.factionScript.ApprovalResistance);
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
+                        break;
+                    case "AuthorityTeam":
+                        //base on actor Motivation
+                        listOfPotentialTopics = GetAuthorityTeamTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorGear":
                         //based on actor Motivation
@@ -1403,7 +1431,6 @@ public class TopicManager : MonoBehaviour
         count = listOfActors.Count;
         if (count > 0)
         {
-
             //loop list and put any actor with a viable subSubType topic pool (consider recent NodeAction only) up for random selection
             List<Actor> listOfSelection = new List<Actor>();
             for (int i = 0; i < count; i++)
@@ -1511,6 +1538,86 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}", playerName, "Player"); }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetAuthorityTeamTopics
+    /// <summary>
+    /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetAuthorityTeamTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        int count;
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //Get all actors with at least one district action available
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide);
+        count = listOfActors.Count;
+        if (count > 0)
+        {
+            //loop list and put any actor with a viable subSubType topic pool (consider recent NodeAction only) up for random selection
+            List<Actor> listOfSelection = new List<Actor>();
+            for (int i = 0; i < count; i++)
+            {
+                Actor actorTemp = listOfActors[i];
+                if (actorTemp != null)
+                {
+                    NodeActionData dataTemp = actorTemp.GetMostRecentNodeAction();
+                    turnTopicSubSubType = GetTopicSubSubType(dataTemp.nodeAction);
+                    if (turnTopicSubSubType != null)
+                    {
+                        //check topics of this subSubType present
+                        if (CheckSubSubTypeTopicsPresent(listOfSubTypeTopics, turnTopicSubSubType.name) == true)
+                        {
+                            //add to selection pool
+                            listOfSelection.Add(actorTemp);
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has a valid ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                                actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has an INVALID ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                                actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for Actor nodeAction \"{0}\"", dataTemp.nodeAction); }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}]", i); }
+            }
+            //select a random actor (all in pool have at least one matching topics present)
+            count = listOfSelection.Count;
+            if (count > 0)
+            {
+                Actor actor = listOfSelection[Random.Range(0, count)];
+                //get the most recent actor node action
+                NodeActionData data = actor.GetMostRecentNodeAction();
+                if (data != null)
+                {
+                    //group depends on actor motivation
+                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                    //if no entries use entire list by default
+                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+                    //debug
+                    foreach (Topic topic in listOfTopics)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+                }
+                else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                //Info tags
+                tagActorID = actor.actorID;
+                tagNodeID = data.nodeID;
+                tagTeamID = data.teamID;
+                tagTurn = data.turn;
+                tagStringData = data.dataName;
+            }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: No topics found for Actor Team actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
+        }
+        else { Debug.LogWarning("No active, onMap actors present with at least one NodeAction"); }
         return listOfTopics;
     }
     #endregion
@@ -2401,6 +2508,14 @@ public class TopicManager : MonoBehaviour
             case NodeAction.PlayerRecallTeam: subSubType = playerRecallTeam; break;
             case NodeAction.PlayerRecruitActor: subSubType = playerRecruitActor; break;
             case NodeAction.PlayerSpreadFakeNews: subSubType = playerSpreadFakeNews; break;
+            //authority SubSubTypes
+            case NodeAction.TeamCivil: subSubType = teamCivil; break;
+            case NodeAction.TeamControl: subSubType = teamCivil; break;
+            case NodeAction.TeamDamage: subSubType = teamCivil; break;
+            case NodeAction.TeamErasure: subSubType = teamCivil; break;
+            case NodeAction.TeamMedia: subSubType = teamCivil; break;
+            case NodeAction.TeamProbe: subSubType = teamCivil; break;
+            case NodeAction.TeamSpider: subSubType = teamCivil; break;
             default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\"", nodeAction); break;
         }
         return subSubType;

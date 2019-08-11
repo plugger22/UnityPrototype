@@ -288,6 +288,15 @@ public class TeamManager : MonoBehaviour
                                 {
                                     //Permanent Team effect activated for node
                                     ProcessTeamEffect(team, node, actor);
+                                    //NodeActionData
+                                    NodeActionData data = new NodeActionData()
+                                    {
+                                        turn = GameManager.instance.turnScript.Turn,
+                                        actorID = actor.actorID,
+                                        nodeID = node.nodeID,
+                                        teamID = team.teamID
+                                    };
+                                    actor.AddNodeAction(data);
                                     //message
                                     string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
                                     GameManager.instance.messageScript.TeamAutoRecall(text, node, team, actor);

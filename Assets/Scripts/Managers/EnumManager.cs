@@ -58,7 +58,8 @@
         ActorBlowStuffUp, ActorGainTargetInfo, ActorHackSecurity, ActorInsertTracer, ActorNeutraliseTeam, ActorObtainGear,
         ActorRecruitActor, ActorSpreadFakeNews, ActorCreateRiots, ActorDeployTeam, ActorRecallTeam,
         PlayerBlowStuffUp, PlayerGainTargetInfo, PlayerHackSecurity, PlayerInsertTracer, PlayerNeutraliseTeam, PlayerObtainGear,
-        PlayerRecruitActor, PlayerSpreadFakeNews, PlayerCreateRiots, PlayerDeployTeam, PlayerRecallTeam
+        PlayerRecruitActor, PlayerSpreadFakeNews, PlayerCreateRiots, PlayerDeployTeam, PlayerRecallTeam,
+        TeamCivil, TeamControl, TeamDamage, TeamErasure, TeamMedia, TeamProbe, TeamSpider
     } 
     public enum NodeUI
     {                                                            //parameter for NodeDisplay event

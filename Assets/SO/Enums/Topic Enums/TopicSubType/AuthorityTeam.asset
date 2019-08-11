@@ -17,7 +17,14 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   scope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
-  groupType: {fileID: 11400000, guid: 80689d85dbfe52942b14d75bff299e89, type: 2}
-  listOfSubSubType: []
+  groupType: {fileID: 11400000, guid: 9bde567650578444fb1e72ca50cbb9ec, type: 2}
+  listOfSubSubType:
+  - {fileID: 11400000, guid: f68b569c93696b64bad55a27102378ce, type: 2}
+  - {fileID: 11400000, guid: 0c7575e6d085ea04d951f9d2ce1296ec, type: 2}
+  - {fileID: 11400000, guid: 41c64b5b8ef1b084580ce82630b6b032, type: 2}
+  - {fileID: 11400000, guid: f4c102a02db268541a807e7225e9d6ba, type: 2}
+  - {fileID: 11400000, guid: 047921bfb285c66498e2dbef7fe54fad, type: 2}
+  - {fileID: 11400000, guid: c695623811af460489f36ce53bbcdc46, type: 2}
+  - {fileID: 11400000, guid: 2e3d39fc566b3ae41bb76b0aea31e3c4, type: 2}
   listOfCriteria: []
   minInterval: 0

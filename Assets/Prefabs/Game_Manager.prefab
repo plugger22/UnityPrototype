@@ -1665,6 +1665,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c16cf3d6b0ddff141b0ef5f16a1b7b73, type: 2}
   - {fileID: 11400000, guid: bbf874a18dc168f4a90e7bed8c81c63d, type: 2}
   - {fileID: 11400000, guid: 504b318621626ff4fa1b719fc91320fd, type: 2}
+  - {fileID: 11400000, guid: f68b569c93696b64bad55a27102378ce, type: 2}
+  - {fileID: 11400000, guid: 0c7575e6d085ea04d951f9d2ce1296ec, type: 2}
+  - {fileID: 11400000, guid: 41c64b5b8ef1b084580ce82630b6b032, type: 2}
+  - {fileID: 11400000, guid: f4c102a02db268541a807e7225e9d6ba, type: 2}
+  - {fileID: 11400000, guid: 047921bfb285c66498e2dbef7fe54fad, type: 2}
+  - {fileID: 11400000, guid: c695623811af460489f36ce53bbcdc46, type: 2}
+  - {fileID: 11400000, guid: 2e3d39fc566b3ae41bb76b0aea31e3c4, type: 2}
   arrayOfTopicOptions:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -3073,6 +3080,13 @@ MonoBehaviour:
   playerRecruitActor: {fileID: 11400000, guid: c16cf3d6b0ddff141b0ef5f16a1b7b73, type: 2}
   playerSpreadFakeNews: {fileID: 11400000, guid: 504b318621626ff4fa1b719fc91320fd,
     type: 2}
+  teamCivil: {fileID: 11400000, guid: f68b569c93696b64bad55a27102378ce, type: 2}
+  teamControl: {fileID: 11400000, guid: 0c7575e6d085ea04d951f9d2ce1296ec, type: 2}
+  teamDamage: {fileID: 11400000, guid: 41c64b5b8ef1b084580ce82630b6b032, type: 2}
+  teamErasure: {fileID: 11400000, guid: f4c102a02db268541a807e7225e9d6ba, type: 2}
+  teamMedia: {fileID: 11400000, guid: 047921bfb285c66498e2dbef7fe54fad, type: 2}
+  teamProbe: {fileID: 11400000, guid: c695623811af460489f36ce53bbcdc46, type: 2}
+  teamSpider: {fileID: 11400000, guid: 2e3d39fc566b3ae41bb76b0aea31e3c4, type: 2}
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1
