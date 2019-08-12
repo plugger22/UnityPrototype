@@ -702,6 +702,7 @@ namespace packageAPI
 
     /// <summary>
     /// every Node action by player or actor generates a node action data package
+    /// NOTE: Team auto time out are covered by TeamActionData whereas actor Team Deploy / Team Recall is covered by NodeActionData
     /// </summary>
     [System.Serializable]
     public class NodeActionData
@@ -712,6 +713,21 @@ namespace packageAPI
         public int teamID;                          //specific to authority player, ignore otherwise
         public string dataName;                     //general purpose data, eg. if recruited actor then name of actor recruited, name of gear gained, etc. Can be ignored
         public NodeAction nodeAction;               //type of nodeAction (compulsory)
+    }
+
+    /// <summary>
+    /// every Team action (when team autotimes out and is recalled) by Authority Actor generates a team action data package
+    /// NOTE: Team deploy and recall early actions by actors are covered by NodeActionData
+    /// </summary>
+    [System.Serializable]
+    public class TeamActionData
+    {
+        public int turn;
+        public int actorID;
+        public int nodeID;
+        public int teamID;                          
+        public string dataName;                     //general purpose data, eg. if recruited actor then name of actor recruited, name of gear gained, etc. Can be ignored
+        public TeamAction teamAction;               //type of team Action (compulsory)
     }
 
     //new classes above here

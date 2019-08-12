@@ -58,8 +58,7 @@
         ActorBlowStuffUp, ActorGainTargetInfo, ActorHackSecurity, ActorInsertTracer, ActorNeutraliseTeam, ActorObtainGear,
         ActorRecruitActor, ActorSpreadFakeNews, ActorCreateRiots, ActorDeployTeam, ActorRecallTeam,
         PlayerBlowStuffUp, PlayerGainTargetInfo, PlayerHackSecurity, PlayerInsertTracer, PlayerNeutraliseTeam, PlayerObtainGear,
-        PlayerRecruitActor, PlayerSpreadFakeNews, PlayerCreateRiots, PlayerDeployTeam, PlayerRecallTeam,
-        TeamCivil, TeamControl, TeamDamage, TeamErasure, TeamMedia, TeamProbe, TeamSpider
+        PlayerRecruitActor, PlayerSpreadFakeNews, PlayerCreateRiots, PlayerDeployTeam, PlayerRecallTeam
     } 
     public enum NodeUI
     {                                                            //parameter for NodeDisplay event
@@ -91,7 +90,7 @@
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
     public enum ActorDatapoint { Datapoint0, Influence0, Connections0, Datapoint1, Motivation1, Ability2, Invisibility2, Datapoint2}    //interchangeable. Use whichever one is appropriate
-    public enum ActorCheck { None, CompatibilityNOTZero, NodeActionsNOTZero, PersonalGearYes, PersonalGearNo,}                                //DataManager.cs -> CheckNumOfActiveActorsSpecial
+    public enum ActorCheck { None, CompatibilityNOTZero, NodeActionsNOTZero, TeamActionsNOTZero, PersonalGearYes, PersonalGearNo,}      //DataManager.cs -> CheckNumOfActiveActorsSpecial
 
     //
     // - - - Gear - - -
@@ -118,7 +117,7 @@
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
     public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}
-
+     
     //
     // - - - Secrets - - -
     //
@@ -136,6 +135,7 @@
     public enum TeamInfo { Total, Reserve, OnMap, InTransit, Count }           //DataManager arrayOfTeams  index
     public enum TeamPool { Reserve, OnMap, InTransit, Count }                  //Different pools that teams move between
     public enum TeamDebug { None, Pools, Roster, Actors }
+    public enum TeamAction { None, TeamCivil, TeamControl, TeamDamage, TeamErasure, TeamMedia, TeamProbe, TeamSpider }      //TeamActionData package
     public enum NATO
     {                                                        //used for sequentially naming teams, eg. 'Control Team Bravo'
         Alpha, Bravo, Charlie, Delta, Echo, Foxtrot, Golf, Hotel, India, Juliett, Kilo, Lima, Mike,

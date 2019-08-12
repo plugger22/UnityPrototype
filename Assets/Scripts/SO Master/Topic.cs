@@ -28,7 +28,6 @@ public class Topic : ScriptableObject
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
 
-
     [Header("Linked Topic")]
     [Tooltip("Once topic Live and resolved, the specified topics in the list (must be in same TopicPool) will switch from Done to Dormant (and activate as per it's profile). Ignore if not relevant")]
     public List<Topic> listOfLinkedTopics;

@@ -188,7 +188,8 @@ public class DebugGUI : MonoBehaviour
                     case 1: debugDisplay = 6; actorToggle = 2; break;
                     case 2: debugDisplay = 54; actorToggle = 3; break;
                     case 3: debugDisplay = 68; actorToggle = 4; break;
-                    case 4: debugDisplay = 0; actorToggle = 0; break;
+                    case 4: debugDisplay = 69; actorToggle = 5; break;
+                    case 5: debugDisplay = 0; actorToggle = 0; break;
                 }
             }
 
@@ -1519,7 +1520,12 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DebugDisplayActorNodeActionData();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
                         break;
-
+                    //Actor TeamActionData
+                    case 69:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorTeamActionData();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
+                        break;
                 }
             }
             else { status = GUIStatus.None; }

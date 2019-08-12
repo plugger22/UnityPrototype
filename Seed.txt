@@ -31409,3 +31409,134 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
 	
+Dev seed 2022 -> Monday, 12 August 2019 3:56 PM
+WARNING [Val] ValidateSO: MISMATCH on Criteria, array 57, assets 58 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Criteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1389)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1224)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	WARNING [Val] ValidateSO: MISMATCH on EffectCriteria, array 54, assets 55 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectCriteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1389)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1228)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:731)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:340)
+	City seed 890 -> Arles, France
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.GetCurrentActor (System.Int32 slotID, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4103)
+	TeamManager.StartTurnEarly () (at Assets/Scripts/Managers/TeamManager.cs:318)
+	TeamManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager.StartTurnEarly () (at Assets/Scripts/Managers/TurnManager.cs:416)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:275)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 33068 -> Monday, 12 August 2019 4:24 PM
+City seed 890 -> Arles, France
+
+Dev seed 6244 -> Monday, 12 August 2019 4:33 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:506)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 63613 -> Monday, 12 August 2019 4:37 PM
+City seed 890 -> Arles, France
+
+Dev seed 40490 -> Monday, 12 August 2019 4:50 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:506)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 44381 -> Monday, 12 August 2019 4:57 PM
+City seed 890 -> Arles, France
+
+Dev seed 63009 -> Monday, 12 August 2019 5:03 PM
+City seed 890 -> Arles, France
+
+Dev seed 21574 -> Monday, 12 August 2019 5:08 PM
+City seed 890 -> Arles, France
+
+Dev seed 20571 -> Monday, 12 August 2019 5:13 PM
+City seed 890 -> Arles, France
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "AuthorityTeam"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1197)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:727)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:286)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	

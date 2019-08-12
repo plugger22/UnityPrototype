@@ -4331,7 +4331,7 @@ public class DataManager : MonoBehaviour
                                 break;
                             case ActorCheck.NodeActionsNOTZero:
                                 //actor with listOfNodeActions.Count > 0 && the actors most recent NodeActivity has valid topics present
-                                if (actor.CheckNumOFNodeActions() != 0)
+                                if (actor.CheckNumOfNodeActions() != 0)
                                 {
                                     NodeActionData data = actor.GetMostRecentNodeAction();
                                     if (data != null)
@@ -4352,6 +4352,31 @@ public class DataManager : MonoBehaviour
                                         else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }
                                     }
                                     else { Debug.LogError("Invalid NodeActionData (Null)"); }
+                                }
+                                break;
+                            case ActorCheck.TeamActionsNOTZero:
+                                //actor with listOfTeamActions.Count > 0 && the actors most recent team Activity has valid topics present
+                                if (actor.CheckNumOfTeamActions() != 0)
+                                {
+                                    TeamActionData data = actor.GetMostRecentTeamAction();
+                                    if (data != null)
+                                    {
+                                        //get relevant subType topic list
+                                        TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.teamAction);
+                                        if (subSubType != null)
+                                        {
+                                            List<Topic> listOfTopics = GetListOfTopics(subSubType.subType);
+                                            if (listOfTopics != null)
+                                            {
+                                                //check that actors most recent team Action has at least one Live topic of correct subSubType on the list
+                                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
+                                                { numOfActors++; }
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid listOfTopics (Null) for {0}, {1}", subSubType.subType, subSubType); }
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid subSubType (Null) for teamAction \"{0}\"", data.teamAction); }
+                                    }
+                                    else { Debug.LogError("Invalid TeamActionData (Null)"); }
                                 }
                                 break;
                             case ActorCheck.PersonalGearYes:
@@ -4399,7 +4424,12 @@ public class DataManager : MonoBehaviour
                                 break;
                             case ActorCheck.NodeActionsNOTZero:
                                 //actor with listOfNodeActions.Count > 0
-                                if (actor.CheckNumOFNodeActions() != 0)
+                                if (actor.CheckNumOfNodeActions() != 0)
+                                { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.TeamActionsNOTZero:
+                                //actor with listOfTeamActions.Count > 0
+                                if (actor.CheckNumOfTeamActions() != 0)
                                 { listOfActors.Add(actor); }
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
@@ -4521,7 +4551,49 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
 
+    /// <summary>
+    /// Debug method to display actor's (OnMap) TeamActionData for player Side
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorTeamActionData()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Actor TeamActionData{0}{1}", "\n", "\n"));
+
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        builder.AppendFormat("- {0}, {1}, ID {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                        List<TeamActionData> listOfData = actor.GetListOfTeamActions();
+                        if (listOfData != null && listOfData.Count > 0)
+                        {
+                            for (int j = 0; j < listOfData.Count; j++)
+                            {
+                                TeamActionData data = listOfData[j];
+                                if (data != null)
+                                { builder.AppendFormat("  t{0}: {1}, A {2}, N {3}, T {4}, S {5}{6}", data.turn, data.teamAction, data.actorID, data.nodeID, data.teamID, data.dataName, "\n"); }
+                                else { Debug.LogWarningFormat("Invalid teamActionData for listOfData[{0}], {1}, {2}, ID {3}{4}", j, actor.actorName, actor.arc.name, actor.actorID, "\n"); }
+                            }
+                        }
+                        else { builder.AppendFormat("  no records present{0}", "\n"); }
+                        builder.AppendLine();
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
     }
 

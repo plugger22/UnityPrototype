@@ -643,6 +643,12 @@ public class TopicManager : MonoBehaviour
                 Topic topic = listOfTopics[i];
                 if (topic != null)
                 {
+                    //zero status
+                    topic.turnsDormant = 0;
+                    topic.turnsActive = 0;
+                    topic.turnsLive = 0;
+                    topic.turnsDone = 0;
+                    //profile
                     TopicProfile profile = topic.profile;
                     if (profile != null)
                     {
@@ -682,13 +688,6 @@ public class TopicManager : MonoBehaviour
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid topic.subType.scope.name \"{0}\", status not set", topic.subType.scope.name); }
-
-
-                        //zero status
-                        topic.turnsDormant = 0;
-                        topic.turnsActive = 0;
-                        topic.turnsLive = 0;
-                        topic.turnsDone = 0;
                     }
                     else { Debug.LogWarningFormat("Invalid profile (Null) for topic \"{0}\"", topic.name); }
                 }
@@ -717,10 +716,10 @@ public class TopicManager : MonoBehaviour
             if (CheckPlayerStatus(playerSide) == true)
             {
                 ResetTopicAdmin();
+                CheckTopics();
                 //select a topic, if none found then drop the global interval by 1 and try again
                 do
                 {
-                    CheckTopics();
                     CheckForValidTopicTypes();
                     if (GetTopicType() == true)
                     {
@@ -1558,20 +1557,20 @@ public class TopicManager : MonoBehaviour
         int count;
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-        //Get all actors with at least one district action available
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide);
+        //Get all actors with at least one team action available
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.TeamActionsNOTZero, playerSide);
         count = listOfActors.Count;
         if (count > 0)
         {
-            //loop list and put any actor with a viable subSubType topic pool (consider recent NodeAction only) up for random selection
+            //loop list and put any actor with a viable subSubType topic pool (consider recent TeamAction only) up for random selection
             List<Actor> listOfSelection = new List<Actor>();
             for (int i = 0; i < count; i++)
             {
                 Actor actorTemp = listOfActors[i];
                 if (actorTemp != null)
                 {
-                    NodeActionData dataTemp = actorTemp.GetMostRecentNodeAction();
-                    turnTopicSubSubType = GetTopicSubSubType(dataTemp.nodeAction);
+                    TeamActionData dataTemp = actorTemp.GetMostRecentTeamAction();
+                    turnTopicSubSubType = GetTopicSubSubType(dataTemp.teamAction);
                     if (turnTopicSubSubType != null)
                     {
                         //check topics of this subSubType present
@@ -1579,16 +1578,16 @@ public class TopicManager : MonoBehaviour
                         {
                             //add to selection pool
                             listOfSelection.Add(actorTemp);
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has a valid ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
                         }
                         else
                         {
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has an INVALID ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has an INVALID SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
                         }
                     }
-                    else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for Actor nodeAction \"{0}\"", dataTemp.nodeAction); }
+                    else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for Actor teamAction \"{0}\"", dataTemp.teamAction); }
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}]", i); }
             }
@@ -1597,8 +1596,8 @@ public class TopicManager : MonoBehaviour
             if (count > 0)
             {
                 Actor actor = listOfSelection[Random.Range(0, count)];
-                //get the most recent actor node action
-                NodeActionData data = actor.GetMostRecentNodeAction();
+                //get the most recent actor team action
+                TeamActionData data = actor.GetMostRecentTeamAction();
                 if (data != null)
                 {
                     //group depends on actor motivation
@@ -1609,7 +1608,7 @@ public class TopicManager : MonoBehaviour
                     foreach (Topic topic in listOfTopics)
                     { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
                 }
-                else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                else { Debug.LogErrorFormat("Invalid teamActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                 //Info tags
                 tagActorID = actor.actorID;
                 tagNodeID = data.nodeID;
@@ -1619,7 +1618,7 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: No topics found for Actor Team actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
-        else { Debug.LogWarning("No active, onMap actors present with at least one NodeAction"); }
+        else { Debug.LogWarning("No active, onMap actors present with at least one TeamAction"); }
         return listOfTopics;
     }
     #endregion
@@ -1739,12 +1738,12 @@ public class TopicManager : MonoBehaviour
             {
                 Team team = GameManager.instance.dataScript.GetTeam(tagTeamID);
                 teamDetails = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID);
-                teamDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.neutralText);
+                teamDetails = GameManager.instance.colourScript.GetFormattedString(teamDetails, ColourType.neutralText);
             }
             else { teamDetails = "teamID -1"; }
             //stringDataName
             if (string.IsNullOrEmpty(tagStringData) == false)
-            { nameDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.salmonText); }
+            { nameDetails = GameManager.instance.colourScript.GetFormattedString(nameDetails, ColourType.salmonText); }
             else { nameDetails = ""; }
             ModalOutcomeDetails details = new ModalOutcomeDetails
             {
@@ -2488,6 +2487,7 @@ public class TopicManager : MonoBehaviour
     #endregion
 
     #region GetTopicSubSubType
+    
     /// <summary>
     /// Get's NodeAction TopicSubSubType.SO.name given a nodeAction enum. Returns Null if a problem
     /// </summary>
@@ -2523,15 +2523,31 @@ public class TopicManager : MonoBehaviour
             case NodeAction.PlayerRecallTeam: subSubType = playerRecallTeam; break;
             case NodeAction.PlayerRecruitActor: subSubType = playerRecruitActor; break;
             case NodeAction.PlayerSpreadFakeNews: subSubType = playerSpreadFakeNews; break;
-            //authority SubSubTypes
-            case NodeAction.TeamCivil: subSubType = teamCivil; break;
-            case NodeAction.TeamControl: subSubType = teamCivil; break;
-            case NodeAction.TeamDamage: subSubType = teamCivil; break;
-            case NodeAction.TeamErasure: subSubType = teamCivil; break;
-            case NodeAction.TeamMedia: subSubType = teamCivil; break;
-            case NodeAction.TeamProbe: subSubType = teamCivil; break;
-            case NodeAction.TeamSpider: subSubType = teamCivil; break;
             default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\"", nodeAction); break;
+        }
+        return subSubType;
+    }
+
+    /// <summary>
+    /// Get's TeamAction TopicSubSubType.SO.name given a teamAction enum. Returns Null if a problem
+    /// </summary>
+    /// <param name="nodeAction"></param>
+    /// <returns></returns>
+    public TopicSubSubType GetTopicSubSubType(TeamAction teamAction)
+    {
+        TopicSubSubType subSubType = null;
+        //get specific subSubType topic pool
+        switch (teamAction)
+        {
+            //authority SubSubTypes
+            case TeamAction.TeamCivil: subSubType = teamCivil; break;
+            case TeamAction.TeamControl: subSubType = teamControl; break;
+            case TeamAction.TeamDamage: subSubType = teamDamage; break;
+            case TeamAction.TeamErasure: subSubType = teamErasure; break;
+            case TeamAction.TeamMedia: subSubType = teamMedia; break;
+            case TeamAction.TeamProbe: subSubType = teamProbe; break;
+            case TeamAction.TeamSpider: subSubType = teamSpider; break;
+            default: Debug.LogWarningFormat("Unrecognised data.teamAction \"{0}\"", teamAction); break;
         }
         return subSubType;
     }
@@ -2894,12 +2910,12 @@ public class TopicManager : MonoBehaviour
                                           topic.priority.name, topic.group.name, "\n");
                                     }
                                 }
-                                else { builder.AppendFormat("    None found{0}", "\n"); }
+                                else { builder.AppendFormat("     none found{0}", "\n"); }
                             }
                             else
                             {
                                 /*Debug.LogWarningFormat("Invalid listOfTopics (Null) for topicSubType {0}", subType.name);*/
-                                builder.AppendFormat("    Missing list (Error){0}", "\n");
+                                builder.AppendFormat("    none found{0}", "\n");
                             }
                         }
                     }
@@ -2907,7 +2923,7 @@ public class TopicManager : MonoBehaviour
                 else
                 {
                     /*Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"{1}", topicType, "\n");*/
-                    builder.AppendFormat("  None found (Error){0}", "\n");
+                    builder.AppendFormat("   none found{0}", "\n");
                 }
             }
         }
@@ -2976,18 +2992,22 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (dictOfTopics != null)
         {
             builder.AppendFormat("- Topic Profile Data{0}{1}", "\n", "\n");
             foreach (var topic in dictOfTopics)
             {
-                if (topic.Value.profile != null)
+                if (topic.Value.side.level == playerSide.level)
                 {
-                    builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}, D {8} -> {9}{10}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart,
-                        topic.Value.timerRepeat, topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive,
-                        topic.Value.turnsDone, topic.Value.isCurrent ? "true" : "FALSE", "\n");
+                    if (topic.Value.profile != null)
+                    {
+                        builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}, D {8} -> {9}{10}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart,
+                            topic.Value.timerRepeat, topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive,
+                            topic.Value.turnsDone, topic.Value.isCurrent ? "true" : "FALSE", "\n");
+                    }
+                    else { builder.AppendFormat(" {0} -> Invalid Profile (Null){1}", topic.Value.name, "\n"); }
                 }
-                else { builder.AppendFormat(" {0} -> Invalid Profile (Null){1}", topic.Value.name, "\n"); }
             }
         }
         else { Debug.LogError("Invalid dictOfTopics (Null)"); }

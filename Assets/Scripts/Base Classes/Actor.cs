@@ -65,6 +65,7 @@ namespace gameAPI
         #endregion
 
         private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
+        private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
 
         //cached trait effects (public for serialization reasons)
         [HideInInspector] public string actorStressNone;
@@ -1130,7 +1131,7 @@ namespace gameAPI
         { return personality; }
 
         //
-        // - - - Node Actions
+        // - - - Node Actions (Both sides)
         //
 
         public List<NodeActionData> GetListOfNodeActions()
@@ -1164,7 +1165,7 @@ namespace gameAPI
         /// get number of nodeActionData records in list
         /// </summary>
         /// <returns></returns>
-        public int CheckNumOFNodeActions()
+        public int CheckNumOfNodeActions()
         { return listOfNodeActions.Count; }
 
         /// <summary>
@@ -1189,6 +1190,67 @@ namespace gameAPI
         /// </summary>
         public void ClearAllNodeActions()
         { listOfNodeActions.Clear(); }
+
+        //
+        // - - - Team Actions (Authority actors only)
+        //
+   
+        public List<TeamActionData> GetListOfTeamActions()
+        { return listOfTeamActions; }
+
+        /// <summary>
+        /// add a teamActionData package to list
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddTeamAction(TeamActionData data)
+        {
+            if (data != null)
+            {
+                //validate data
+                if (data.turn < 0 || data.turn > GameManager.instance.turnScript.Turn)
+                { Debug.LogWarningFormat("Invalid TeamActionData turn \"{0}\" for {1}, {2}", data.turn, actorName, arc.name); }
+                if (data.actorID < 0 || data.actorID > GameManager.instance.actorScript.actorIDCounter)
+                { Debug.LogWarningFormat("Invalid TeamActionData actorID \"{0}\" for {1}, {2}", data.actorID, actorName, arc.name); }
+                if (data.nodeID < 0 || data.nodeID > GameManager.instance.nodeScript.nodeIDCounter)
+                { Debug.LogWarningFormat("Invalid TeamActionData nodeID \"{0}\" for {1}, {2}", data.nodeID, actorName, arc.name); }
+                if (data.teamAction == TeamAction.None)
+                { Debug.LogWarningFormat("Invalid TeamActionData teamAction \"{0}\" for {1}, {2}", data.teamAction, actorName, arc.name); }
+                //add to list
+                listOfTeamActions.Add(data);
+                Debug.LogFormat("[Tst] Actor.cs -> AddTeamAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.teamAction, data.dataName, "\n");
+            }
+            else { Debug.LogError("Invalid teamDataAction (Null)"); }
+        }
+
+        /// <summary>
+        /// get number of teamActionData records in list
+        /// </summary>
+        /// <returns></returns>
+        public int CheckNumOfTeamActions()
+        { return listOfTeamActions.Count; }
+
+        /// <summary>
+        /// Get most recent teamActionData package (record at end of list)
+        /// </summary>
+        /// <returns></returns>
+        public TeamActionData GetMostRecentTeamAction()
+        { return listOfTeamActions[listOfTeamActions.Count - 1]; }
+
+        /// <summary>
+        /// Delete most recent teamActionData package (record at end of list)
+        /// </summary>
+        public void RemoveMostRecentTeamAction()
+        {
+            int index = listOfTeamActions.Count - 1;
+            Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentTeamAction: {0}, {1}, teamAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfTeamActions[index].teamAction, "\n");
+            listOfTeamActions.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// Empty out listOfTeamActions
+        /// </summary>
+        public void ClearAllTeamActions()
+        { listOfTeamActions.Clear(); }
 
 
 
