@@ -1743,7 +1743,7 @@ public class TopicManager : MonoBehaviour
             else { teamDetails = "teamID -1"; }
             //stringDataName
             if (string.IsNullOrEmpty(tagStringData) == false)
-            { nameDetails = GameManager.instance.colourScript.GetFormattedString(nameDetails, ColourType.salmonText); }
+            { nameDetails = GameManager.instance.colourScript.GetFormattedString(tagStringData, ColourType.salmonText); }
             else { nameDetails = ""; }
             ModalOutcomeDetails details = new ModalOutcomeDetails
             {
