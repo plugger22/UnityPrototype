@@ -920,16 +920,17 @@ public class TopicManager : MonoBehaviour
                             listOfTopicTypesTurn.Add(topicType);
                             //add to local list of valid TopicTypes for the Turn
                             AddTopicTypeToList(listOfTopicTypesTurn, topicType);
+                            Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
                         }
                         else
                         {
                             //criteria check FAILED
 
-                            /*//generate message explaining why criteria failed -> debug only, spam otherwise
-                            Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");*/
+                            //generate message explaining why criteria failed -> debug only, spam otherwise
+                            Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
                         }
                     }
-                    /*else { Debug.LogFormat("[Top] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }*/
+                    else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
                 }
                 else { Debug.LogError("Invalid topicTypeData (Null)"); }
             }
@@ -966,7 +967,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetTopicType
     /// <summary>
-    /// Get topicType for turn Decision. Returns true if valid topicType found, false otherwise
+    /// Get topicType for turn Decision based of listOfTopicTypesTurn. Returns true if valid topicType found, false otherwise
     /// </summary>
     private bool GetTopicType()
     {
@@ -1064,7 +1065,8 @@ public class TopicManager : MonoBehaviour
                             }
                         }
                     }
-                    else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }
+                    /*else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }*/
+                    //O.K to have wrong side here Actor, for example, has subTypes from both sides
                 }
                 else { Debug.LogWarningFormat("Invalid subType (Null) for topicType \"{0}\"", turnTopicType.name); }
             }
@@ -1448,12 +1450,12 @@ public class TopicManager : MonoBehaviour
                         {
                             //add to selection pool
                             listOfSelection.Add(actorTemp);
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
                         }
                         else
                         {
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has an INVALID ActionTopic \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has an INVALID SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
                         }
                     }
@@ -1705,7 +1707,8 @@ public class TopicManager : MonoBehaviour
             // TO DO -> send topic data package to UI for display and user interaction
 
             //Debug outcome dialogue in infoMsgPipeline
-            string actorDetails, nodeDetails;
+            string actorDetails, nodeDetails, teamDetails, nameDetails;
+            //actor
             if (tagActorID > -1)
             {
                 if (tagActorID != 999)
@@ -1723,18 +1726,30 @@ public class TopicManager : MonoBehaviour
                 }
             }
             else { actorDetails = "actorID -1"; }
+            //node
             if (tagNodeID > -1)
             {
                 Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
                 nodeDetails = string.Format("{0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
-                nodeDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.neutralText);
+                nodeDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.salmonText);
             }
             else { nodeDetails = "nodeID -1"; }
-
+            //team
+            if (tagTeamID > -1)
+            {
+                Team team = GameManager.instance.dataScript.GetTeam(tagTeamID);
+                teamDetails = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID);
+                teamDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.neutralText);
+            }
+            else { teamDetails = "teamID -1"; }
+            //stringDataName
+            if (string.IsNullOrEmpty(tagStringData) == false)
+            { nameDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.salmonText); }
+            else { nameDetails = ""; }
             ModalOutcomeDetails details = new ModalOutcomeDetails
             {
                 textTop = string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetFormattedString(turnTopic.name, ColourType.salmonText), "\n", turnTopic.tag),
-                textBottom = String.Format("{0}{1}{2}{3}stringDataName {4}", actorDetails, "\n", nodeDetails, "\n", tagStringData),
+                textBottom = String.Format("{0}{1}{2}{3}{4}{5}{6}", actorDetails, "\n", nodeDetails, "\n", teamDetails, "\n", nameDetails),
                 sprite = GameManager.instance.guiScript.infoSprite,
                 isAction = false,
                 side = GameManager.instance.sideScript.PlayerSide,
@@ -1806,7 +1821,7 @@ public class TopicManager : MonoBehaviour
             };
             GameManager.instance.dataScript.AddTopicHistory(history);
             //stats
-            switch(turnTopic.group.name)
+            switch (turnTopic.group.name)
             {
                 case "Good": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsGood); break;
                 case "Neutral": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsNeutral); break;
@@ -2613,11 +2628,26 @@ public class TopicManager : MonoBehaviour
             //populate subType listOfTopics from all subSubType pool's listOfTopics
             foreach (TopicPool subSubPool in subPool.listOfSubSubTypePools)
             {
-                //correct side or 'Both'
+                //Pool has correct side or 'Both'
                 if (subSubPool.subSubType.side.level == side.level || subSubPool.subSubType.side.level == 3)
                 {
-                    count += subSubPool.listOfTopics.Count;
-                    subPool.listOfTopics.AddRange(subSubPool.listOfTopics);
+                    /*count += subSubPool.listOfTopics.Count;
+                    subPool.listOfTopics.AddRange(subSubPool.listOfTopics);*/
+
+                    for (int i = 0; i < subSubPool.listOfTopics.Count; i++)
+                    {
+                        Topic topic = subSubPool.listOfTopics[i];
+                        if (topic != null)
+                        {
+                            //Topic has correct side or 'Both'
+                            if (topic.side.level == side.level || topic.side.level == 3)
+                            {
+                                subPool.listOfTopics.Add(topic);
+                                count++;
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid topic (Null) in \"{0}\", for {1}", subPool, side); }
+                    }
                 }
             }
             Debug.LogFormat("[Top] TopicManager.cs -> LoadSubSubTypePools: {0} topics added to {1} from subSubTopicPools{2}",

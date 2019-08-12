@@ -38,21 +38,19 @@ public class Campaign : ScriptableObject
     [Tooltip("Topic pool of decisions for family story line Charlie")]
     public TopicPool familyCharliePool;
 
-    [Header("Authority/Resistance Campaign Topic Pools")]
+    [Header("Authority Topic Pools")]
     [Tooltip("Topic pool of campaign specific Authority decisions")]
     public TopicPool authorityCampaignPool;
-    [Tooltip("Topic pool of campaign specific Resistance decisions")]
-    public TopicPool resistanceCampaignPool;
-
-    [Header("Authority/Resistance General Topic Pools")]
     [Tooltip("Topic pool of general Authority decisions")]
     public TopicPool authorityGeneralPool;
-    [Tooltip("Topic pool of general Resistance decisions")]
-    public TopicPool resistanceGeneralPool;
-
-    [Header("Authority Team Topic Pools")]
     [Tooltip("Topic pool for Authority Team decisions")]
     public TopicPool teamPool;
+
+    [Header("Resistance General Topic Pools")]
+    [Tooltip("Topic pool of campaign specific Resistance decisions")]
+    public TopicPool resistanceCampaignPool;
+    [Tooltip("Topic pool of general Resistance decisions")]
+    public TopicPool resistanceGeneralPool;
 
     [Header("Actor Topic Pools")]
     [Tooltip("Topic pool for Actor Contact decisions")]

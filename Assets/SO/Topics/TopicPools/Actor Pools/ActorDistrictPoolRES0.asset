@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: ActorDistrictPool0
+  m_Name: ActorDistrictPoolRES0
   m_EditorClassIdentifier: 
-  tag: Actor District topic test pool 0
+  tag: Actor District topic Resistance pool 0
   descriptor: Placeholder pool needed to allow consolidation of subSubType pools into
     one at session start for validation and operational purposes. The topics within
     this pool will be removed and serve no purpose other than placeholders (or more
@@ -20,11 +20,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 0}
-  listOfTopics:
-  - {fileID: 11400000, guid: fb4cd8ddda278544bb98ee87a35506f3, type: 2}
-  - {fileID: 11400000, guid: 14910a3293be0ea4c92f79729d10d0b0, type: 2}
-  - {fileID: 11400000, guid: 69d7a866019375e41a48e73e4daae18b, type: 2}
-  - {fileID: 11400000, guid: 6f05c423e0cb7c343ad1a7f050a7e0fa, type: 2}
+  listOfTopics: []
   listOfSubSubTypePools:
   - {fileID: 11400000, guid: a2e5ac369172d3a4eaa504a8a833defe, type: 2}
   - {fileID: 11400000, guid: 080d69e1b7b6b4c45a46b661a9cf0500, type: 2}

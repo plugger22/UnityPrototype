@@ -2033,6 +2033,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63652079cece3af4a861016ecf842f59, type: 2}
   - {fileID: 11400000, guid: be46d36319fbbad4da20cb601111ced3, type: 2}
   - {fileID: 11400000, guid: ba3274e0f6c57264eaf2073191cb9039, type: 2}
+  - {fileID: 11400000, guid: 203de2836f359ee45935cc9028ce1237, type: 2}
   arrayOfTopicScopes:
   - {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   - {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
@@ -2958,7 +2959,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 57396
+  seedDev: 0
   autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1

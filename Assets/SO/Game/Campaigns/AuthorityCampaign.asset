@@ -27,13 +27,13 @@ MonoBehaviour:
   familyCharliePool: {fileID: 0}
   authorityCampaignPool: {fileID: 11400000, guid: 97c7cf6be7b3c9644923da7eda622b65,
     type: 2}
-  resistanceCampaignPool: {fileID: 0}
   authorityGeneralPool: {fileID: 11400000, guid: 797a5c8b64ad0164bba95cdfa6aab7d9,
     type: 2}
-  resistanceGeneralPool: {fileID: 0}
   teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}
+  resistanceCampaignPool: {fileID: 0}
+  resistanceGeneralPool: {fileID: 0}
   actorContactPool: {fileID: 0}
-  actorDistrictPool: {fileID: 0}
+  actorDistrictPool: {fileID: 11400000, guid: 203de2836f359ee45935cc9028ce1237, type: 2}
   actorGearPool: {fileID: 0}
   actorMatchPool: {fileID: 0}
   actorPoliticPool: {fileID: 0}

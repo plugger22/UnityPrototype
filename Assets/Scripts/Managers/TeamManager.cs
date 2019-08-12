@@ -291,6 +291,7 @@ public class TeamManager : MonoBehaviour
                                     //NodeActionData
                                     NodeActionData data = new NodeActionData()
                                     {
+                                        nodeAction = GetNodeAction(team.arc.name),
                                         turn = GameManager.instance.turnScript.Turn,
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
@@ -321,11 +322,13 @@ public class TeamManager : MonoBehaviour
                                     {
                                         NodeActionData data = new NodeActionData()
                                         {
+                                            nodeAction = GetNodeAction(team.arc.name),
                                             turn = GameManager.instance.turnScript.Turn,
                                             actorID = actor.actorID,
                                             nodeID = node.nodeID,
                                             teamID = team.teamID
                                         };
+                                        actor.AddNodeAction(data);
                                     }
                                 }
                                 //Permanent Team effect activated for node
@@ -364,6 +367,31 @@ public class TeamManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid teamPool (Null) -> no teams with expired timers recalled from OnMap"); }
+    }
+
+    /// <summary>
+    /// subMethod to get a nodeAction (for NodeActionData package) from a specified team.Arc.name. Returns 'NodeAction.None' if a problem
+    /// </summary>
+    /// <param name="teamArc"></param>
+    /// <returns></returns>
+    private NodeAction GetNodeAction(string teamArcName)
+    {
+        NodeAction nodeAction = NodeAction.None;
+        if (string.IsNullOrEmpty(teamArcName) == false)
+        {
+            switch (teamArcName)
+            {
+                case "CIVIL": nodeAction = NodeAction.TeamCivil; break;
+                case "CONTROL": nodeAction = NodeAction.TeamControl; break;
+                case "DAMAGE": nodeAction = NodeAction.TeamDamage; break;
+                case "ERASURE": nodeAction = NodeAction.TeamErasure; break;
+                case "MEDIA": nodeAction = NodeAction.TeamMedia; break;
+                case "PROBE": nodeAction = NodeAction.TeamProbe; break;
+                case "SPIDER": nodeAction = NodeAction.TeamSpider; break;
+                default: Debug.LogWarningFormat("Unrecognised teamArcName \"{0}\"", teamArcName); break;
+            }
+        }
+        return nodeAction;
     }
 
 

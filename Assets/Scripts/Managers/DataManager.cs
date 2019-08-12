@@ -4482,6 +4482,50 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Debug method to display actor's (OnMap) NodeActionData for player Side
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorNodeActionData()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Actor NodeActionData{0}{1}", "\n", "\n"));
+
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        builder.AppendFormat("- {0}, {1}, ID {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                        List<NodeActionData> listOfData = actor.GetListOfNodeActions();
+                        if (listOfData != null && listOfData.Count > 0)
+                        {
+                            for (int j = 0; j < listOfData.Count; j++)
+                            {
+                                NodeActionData data = listOfData[j];
+                                if (data != null)
+                                { builder.AppendFormat("  t{0}: {1}, A {2}, N {3}, T {4}, S {5}{6}", data.turn, data.nodeAction, data.actorID, data.nodeID, data.teamID, data.dataName, "\n"); }
+                                else { Debug.LogWarningFormat("Invalid nodeActionData for listOfData[{0}], {1}, {2}, ID {3}{4}", j, actor.actorName, actor.arc.name, actor.actorID, "\n"); } 
+                            }
+                        }
+                        else { builder.AppendFormat("  no records present{0}", "\n"); }
+                        builder.AppendLine();
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// sub method for DisplayActorLists (returns list of actors in specified list)
     /// </summary>
     /// <param name="listOfActors"></param>

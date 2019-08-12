@@ -1133,6 +1133,9 @@ namespace gameAPI
         // - - - Node Actions
         //
 
+        public List<NodeActionData> GetListOfNodeActions()
+        { return listOfNodeActions; }
+
         /// <summary>
         /// add a nodeActionData package to list
         /// </summary>

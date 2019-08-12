@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: ActorGearPool0
+  m_Name: ActorGearPoolRES0
   m_EditorClassIdentifier: 
-  tag: Actor Gear topic test pool 0
+  tag: Actor Gear topic Resistance pool 0
   descriptor: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}

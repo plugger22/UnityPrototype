@@ -19,7 +19,6 @@ public class DebugGUI : MonoBehaviour
     private MessageCategory msgStatus;
     private AIDebugData aiStatus;
     private TeamDebug teamStatus;
-    private ActorDebugData actorStatus;
     private DebugRegister registerStatus;
     public  bool showGUI = false;
     private bool doOnceFlag = false;                            //used to prevent continual repeats of input / output sequences
@@ -47,6 +46,7 @@ public class DebugGUI : MonoBehaviour
     private int playerToggle = 0;
     private int contactToggle = 0;
     private int trackerToggle = 0;
+    private int actorToggle = 0;
     private int topicToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
@@ -182,12 +182,13 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Toggle Actor Data");
                 //toggles sequentially through actor displays and then switches off
-                switch (actorStatus)
+                switch (actorToggle)
                 {
-                    case ActorDebugData.None: debugDisplay = 7; actorStatus = ActorDebugData.Pools; break;
-                    case ActorDebugData.Pools: debugDisplay = 6; actorStatus = ActorDebugData.Dict; break;
-                    case ActorDebugData.Dict: debugDisplay = 54; actorStatus = ActorDebugData.Lists; break;
-                    case ActorDebugData.Lists: debugDisplay = 0; actorStatus = ActorDebugData.None; break;
+                    case 0: debugDisplay = 7; actorToggle = 1; break;
+                    case 1: debugDisplay = 6; actorToggle = 2; break;
+                    case 2: debugDisplay = 54; actorToggle = 3; break;
+                    case 3: debugDisplay = 68; actorToggle = 4; break;
+                    case 4: debugDisplay = 0; actorToggle = 0; break;
                 }
             }
 
@@ -1512,7 +1513,12 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.topicScript.DebugDisplayCriteria();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
-
+                    //Actor NodeActionData
+                    case 68:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorNodeActionData();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
+                        break;
 
                 }
             }
