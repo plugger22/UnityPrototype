@@ -2961,7 +2961,7 @@ MonoBehaviour:
   basePanelScript: {fileID: 0}
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
-  seedDev: 16649
+  seedDev: 0
   autoRunTurns: 30
   isPerformanceLog: 1
   isDataValidation: 1
@@ -3108,6 +3108,13 @@ MonoBehaviour:
   maxOptions: 4
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
+  actorDistrictSubType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558,
+    type: 2}
+  playerDistrictSubType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a,
+    type: 2}
+  authorityTeamSubType: {fileID: 11400000, guid: f31933caa1d5f614aa34b3f124cdf649,
+    type: 2}
   levelScope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   campaignScope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
   actorBlowStuffUp: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}

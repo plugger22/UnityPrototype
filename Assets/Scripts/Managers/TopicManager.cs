@@ -18,11 +18,21 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Maximum number of options in a topic")]
     [Range(2, 5)] public int maxOptions = 4;
 
-    [Header("TopicTypes")]
+    [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType actorType;
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType playerType;
+    [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
+    public TopicType authorityType;
+
+    [Header("TopicSubTypes (with subSubTypes)")]
+    [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
+    public TopicSubType actorDistrictSubType;
+    [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
+    public TopicSubType playerDistrictSubType;
+    [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
+    public TopicSubType authorityTeamSubType;
 
     [Header("Topic Scopes")]
     [Tooltip("Used to avoid having to hard code the TopicScope.SO names")]
@@ -234,6 +244,10 @@ public class TopicManager : MonoBehaviour
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
+        Debug.Assert(authorityType != null, "Invalid authorityType (Null)");
+        Debug.Assert(actorDistrictSubType != null, "Invalid actorDistrictSubType (Null)");
+        Debug.Assert(playerDistrictSubType != null, "Invalid playerDistrictSubType (Null)");
+        Debug.Assert(authorityTeamSubType != null, "Invalid authorityTeamSubType (Null)");
         //scopes
         Debug.Assert(levelScope != null, "Invalid levelScope (Null)");
         Debug.Assert(campaignScope != null, "Invalid campaignScope (Null)");
@@ -1789,27 +1803,47 @@ public class TopicManager : MonoBehaviour
                 typeSubData.turnLastUsed = turn;
             }
             else { Debug.LogErrorFormat("Invalid topicTypeData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
-            //NodeAction
+            //Tidy up SubSubType topics
             if (turnTopicSubSubType != null)
             {
-                //actor subSubTopic?
+                //Actor
                 if (turnTopicType.name.Equals(actorType.name, StringComparison.Ordinal) == true)
                 {
-                    //get actor and delete most recent NodeAction record
-                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                    if (actor != null)
-                    { actor.RemoveMostRecentNodeAction(); }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    //Actor district
+                    if (turnTopicSubType.name.Equals(actorDistrictSubType.name, StringComparison.Ordinal) == true)
+                    {
+                        //get actor and delete most recent NodeAction record
+                        Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        if (actor != null)
+                        { actor.RemoveMostRecentNodeAction(); }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    }
                 }
+                //Player
                 else if (turnTopicType.name.Equals(playerType.name, StringComparison.Ordinal) == true)
                 {
-                    //delete most recent nodeAction from Player
-                    GameManager.instance.playerScript.RemoveMostRecentNodeAction();
+                    //Player District
+                    if (turnTopicSubType.name.Equals(playerDistrictSubType.name, StringComparison.Ordinal) == true)
+                    {
+                        //delete most recent nodeAction from Player
+                        GameManager.instance.playerScript.RemoveMostRecentNodeAction();
+                    }
+                }
+                //Authority
+                else if (turnTopicType.name.Equals(authorityType.name, StringComparison.Ordinal) == true)
+                {
+                    //Authority team
+                    if (turnTopicSubType.name.Equals(authorityTeamSubType.name, StringComparison.Ordinal) == true)
+                    {
+                        //get actor and delete most recent TeamAction record
+                        Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        if (actor != null)
+                        { actor.RemoveMostRecentTeamAction(); }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    }
                 }
             }
-            //TeamAction
-            if ()
-            { }
+
             //topicHistory
             HistoryTopic history = new HistoryTopic()
             {
