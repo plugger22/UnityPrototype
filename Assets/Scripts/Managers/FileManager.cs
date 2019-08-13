@@ -2424,7 +2424,6 @@ public class FileManager : MonoBehaviour
                     Actor actor = new Actor();
                     SaveActor readActor = read.actorData.listOfDictActors[i];
                     //copy over data from saveActor
-
                     actor.actorID = readActor.actorID;
                     actor.SetDatapointLoad(ActorDatapoint.Datapoint0, readActor.datapoint0);
                     actor.SetDatapointLoad(ActorDatapoint.Datapoint1, readActor.datapoint1);
@@ -2553,6 +2552,9 @@ public class FileManager : MonoBehaviour
                             listOfTraitEffects.AddRange(readActor.listOfTraitEffects);
                         }
                         else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+                        //topic data
+                        actor.SetNodeActionData(readActor.listOfNodeActions);
+                        actor.SetTeamActionData(readActor.listOfTeamActions);
                     }
                     //
                     // - - - Add to dictionary
@@ -2982,6 +2984,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.gearScript.SetListOfCompromisedGear(read.gearData.listOfCompromisedGear);
     }
     #endregion
+
 
     #region ReadTopicData
     /// <summary>
@@ -3461,7 +3464,6 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
-
     #region writeIndividualActor
     /// <summary>
     /// subMethod for WriteActorData to handle serializing an individual actor. Returns null if a problem
@@ -3584,6 +3586,9 @@ public class FileManager : MonoBehaviour
             if (listOfTraitEffects != null)
             { saveActor.listOfTraitEffects.AddRange(listOfTraitEffects); }
             else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+            //topics
+            saveActor.listOfNodeActions = actor.GetListOfNodeActions();
+            saveActor.listOfTeamActions = actor.GetListOfTeamActions();
         }
         //
         // - - - Success check

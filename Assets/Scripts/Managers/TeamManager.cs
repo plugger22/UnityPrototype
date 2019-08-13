@@ -296,7 +296,7 @@ public class TeamManager : MonoBehaviour
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
                                         teamID = team.teamID,
-                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName)
+                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID)
                                     };
                                     actor.AddTeamAction(data);
                                     //message
@@ -341,7 +341,7 @@ public class TeamManager : MonoBehaviour
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
                                         teamID = team.teamID,
-                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName)
+                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID)
                                     };
                                     actor.AddTeamAction(data);
                                 }
@@ -716,7 +716,8 @@ public class TeamManager : MonoBehaviour
                                                         turn = GameManager.instance.turnScript.Turn,
                                                         actorID = actor.actorID,
                                                         nodeID = node.nodeID,
-                                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
+                                                        teamID = team.teamID,
+                                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
                                                         nodeAction = NodeAction.ActorDeployTeam
                                                     };
                                                     //add to actor's personal list
@@ -938,8 +939,9 @@ public class TeamManager : MonoBehaviour
                                                         turn = GameManager.instance.turnScript.Turn,
                                                         actorID = actor.actorID,
                                                         nodeID = node.nodeID,
+                                                        teamID = team.teamID,
                                                         nodeAction = NodeAction.ActorDeployTeam,
-                                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName)
+                                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID)
                                                     };
                                                     //add to actor's personal list
                                                     actor.AddNodeAction(nodeActionData);
@@ -1346,7 +1348,8 @@ public class TeamManager : MonoBehaviour
                                 turn = GameManager.instance.turnScript.Turn,
                                 actorID = actor.actorID,
                                 nodeID = node.nodeID,
-                                dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
+                                teamID = team.teamID,
+                                dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
                                 nodeAction = NodeAction.ActorRecallTeam
                             };
                             //add to actor's personal list
@@ -1466,7 +1469,7 @@ public class TeamManager : MonoBehaviour
                                         turn = GameManager.instance.turnScript.Turn,
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
-                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
+                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
                                         nodeAction = NodeAction.ActorNeutraliseTeam
                                     };
                                     //add to actor's personal list
@@ -1481,7 +1484,7 @@ public class TeamManager : MonoBehaviour
                                         turn = GameManager.instance.turnScript.Turn,
                                         actorID = 999,
                                         nodeID = node.nodeID,
-                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
+                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
                                         nodeAction = NodeAction.PlayerNeutraliseTeam
                                     };
                                     //add to player's personal list
@@ -1851,7 +1854,8 @@ public class TeamManager : MonoBehaviour
                                                 turn = team.turnDeployed,
                                                 actorID = actor.actorID,
                                                 nodeID = team.nodeID,
-                                                dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
+                                                teamID = team.teamID,
+                                                dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
                                                 nodeAction = NodeAction.ActorDeployTeam
                                             };
                                             //add to actor's personal list

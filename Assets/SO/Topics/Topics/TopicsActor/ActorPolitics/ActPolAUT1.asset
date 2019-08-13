@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: ActPolAUT1
+  m_EditorClassIdentifier: 
+  tag: ActorPolitics Authority 1
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
+  listOfCriteria: []
+  notes: 
+  listOfOptions:
+  - {fileID: 11400000, guid: 28217750e4e2a6149bc3efe366cf55ba, type: 2}
+  - {fileID: 11400000, guid: 40178269e00c15040b4bcb2d59f42ddc, type: 2}
+  - {fileID: 11400000, guid: b39661020e74ca5429a5c372814543c5, type: 2}
+  status: 2
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 4
+  timerWindow: 0
+  turnsDormant: 3
+  turnsActive: 1
+  turnsLive: 23
+  turnsDone: 0

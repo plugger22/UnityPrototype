@@ -35,7 +35,7 @@ MonoBehaviour:
   actorContactPool: {fileID: 0}
   actorDistrictPool: {fileID: 11400000, guid: 203de2836f359ee45935cc9028ce1237, type: 2}
   actorGearPool: {fileID: 0}
-  actorMatchPool: {fileID: 0}
-  actorPoliticPool: {fileID: 0}
+  actorMatchPool: {fileID: 11400000, guid: 66cd518c39713114a8eea05d555cfdf6, type: 2}
+  actorPoliticPool: {fileID: 11400000, guid: 3cafa210b53bc8a4cb37b8d88e3a6a62, type: 2}
   playerDistrictPool: {fileID: 0}
   hqPool: {fileID: 0}

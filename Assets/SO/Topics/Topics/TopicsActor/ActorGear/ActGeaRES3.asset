@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: ActGeaRES3
+  m_EditorClassIdentifier: 
+  tag: Actor Gear Want 3
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5f71194adb918384c8c90213d3627864, type: 2}
+  - {fileID: 11400000, guid: c0575a198d9f485449cb05f9d2fde86a, type: 2}
+  notes: Actor wants a piece of player's gear straight out. Gear will be lost.
+  listOfOptions:
+  - {fileID: 11400000, guid: 026cfff3b098d084d8a2bb75a0db2f9c, type: 2}
+  - {fileID: 11400000, guid: 62f685f892359434f95747aaef8cc54f, type: 2}
+  - {fileID: 11400000, guid: 983cddb287215ac46b1f7b81f600dd15, type: 2}
+  status: 1
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 4
+  timerWindow: 0
+  turnsDormant: 3
+  turnsActive: 24
+  turnsLive: 0
+  turnsDone: 0

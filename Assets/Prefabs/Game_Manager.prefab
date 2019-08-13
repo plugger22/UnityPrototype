@@ -1979,6 +1979,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b17411dc9071d44d98dbae045c5bedf, type: 2}
   - {fileID: 11400000, guid: 8940affb69d58c9468baf10c16b5d391, type: 2}
   - {fileID: 11400000, guid: 8a7d2a753e920bc4dac079aeb98b0305, type: 2}
+  - {fileID: 11400000, guid: 459fe681e441ce347977fe63eaddc5cf, type: 2}
+  - {fileID: 11400000, guid: e4deb31364653cd4585ad90ab3b1778d, type: 2}
+  - {fileID: 11400000, guid: 218633278d5be6f4eac2945fac787c8d, type: 2}
+  - {fileID: 11400000, guid: e084c43b6f4ad0543bb2132fd7652ee0, type: 2}
+  - {fileID: 11400000, guid: 52b46546e992e1744a6cce49c4a36abf, type: 2}
+  - {fileID: 11400000, guid: 5310dbd2294a01146ad974b60433c1de, type: 2}
+  - {fileID: 11400000, guid: 4905c9347922f544a9cf7a8c3df67785, type: 2}
+  - {fileID: 11400000, guid: 23a9c4b7f6d68f449852c968383177b9, type: 2}
+  - {fileID: 11400000, guid: a5d6d43bfcfd0824e96ee5f846096c46, type: 2}
+  - {fileID: 11400000, guid: 28217750e4e2a6149bc3efe366cf55ba, type: 2}
+  - {fileID: 11400000, guid: 40178269e00c15040b4bcb2d59f42ddc, type: 2}
+  - {fileID: 11400000, guid: b39661020e74ca5429a5c372814543c5, type: 2}
   arrayOfTopicProfiles:
   - {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   - {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
@@ -2036,6 +2048,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be46d36319fbbad4da20cb601111ced3, type: 2}
   - {fileID: 11400000, guid: ba3274e0f6c57264eaf2073191cb9039, type: 2}
   - {fileID: 11400000, guid: 203de2836f359ee45935cc9028ce1237, type: 2}
+  - {fileID: 11400000, guid: 66cd518c39713114a8eea05d555cfdf6, type: 2}
+  - {fileID: 11400000, guid: 3cafa210b53bc8a4cb37b8d88e3a6a62, type: 2}
   arrayOfTopicScopes:
   - {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   - {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
@@ -2146,6 +2160,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 685a9ff5abadb6a488a8675f237400be, type: 2}
   - {fileID: 11400000, guid: 4f316629ea591e74bb2f4c83638c587f, type: 2}
   - {fileID: 11400000, guid: 1ae61814130ed62469871ec8fc92105b, type: 2}
+  - {fileID: 11400000, guid: db00363c109ba33488eab38a63929c2e, type: 2}
+  - {fileID: 11400000, guid: 028aaddccfc4087438fe2bf451eac66d, type: 2}
+  - {fileID: 11400000, guid: 9bf3040b40b75964694ad321910ae911, type: 2}
+  - {fileID: 11400000, guid: 36cd81cfd9fb2254f90e0cde2532e762, type: 2}
   arrayOfTargetsGeneric:
   - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
   - {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
@@ -2471,7 +2489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
-  campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
+  campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

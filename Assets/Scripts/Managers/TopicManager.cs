@@ -729,9 +729,9 @@ public class TopicManager : MonoBehaviour
             //Player must be Active
             if (CheckPlayerStatus(playerSide) == true)
             {
-
                 CheckTopics();
                 //select a topic, if none found then drop the global interval by 1 and try again
+                minIntervalGlobalActual = minIntervalGlobal;
                 do
                 {
                     //reset needs to be inside the loop
@@ -956,12 +956,10 @@ public class TopicManager : MonoBehaviour
 
     #region ResetTopicAdmin
     /// <summary>
-    /// Resets all relevant turn topic data prior to processing for the current turn and current attempt (can be multiple)
+    /// Resets all relevant turn topic data prior to processing for the current turn and current attempt (can be multiple)i
     /// </summary>
     private void ResetTopicAdmin()
     {
-        //minInterval
-        minIntervalGlobalActual = minIntervalGlobal;
         //selected topic data
         turnTopicType = null;
         turnTopicSubType = null;
@@ -970,6 +968,7 @@ public class TopicManager : MonoBehaviour
         //info tags
         tagActorID = -1;
         tagNodeID = -1;
+        tagTeamID = -1;
         tagTurn = -1;
         tagStringData = "";
         //empty collections
@@ -2796,7 +2795,7 @@ public class TopicManager : MonoBehaviour
                                     }
                                     else { Debug.LogWarningFormat("Invalid subData (Null) for topicSubType \"{0}\"", subType.name); }
                                 }
-                                else { builder.AppendFormat("  {0} -> Not Valid for this Side{1}", subType.name, "\n"); }
+                                else { builder.AppendFormat("   {0} -> Not Valid for this Side{1}", subType.name, "\n"); }
                             }
                             builder.AppendLine();
                         }

@@ -31716,3 +31716,31 @@ City seed 5678 -> London, United Kingdom
 ERROR Invalid editor window UnityEditor.ConsoleWindow
 UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
 	
+Dev seed 19284 -> Tuesday, 13 August 2019 3:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19455 -> Tuesday, 13 August 2019 3:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37970 -> Tuesday, 13 August 2019 3:29 PM
+City seed 890 -> Arles, France
+
+Dev seed 64795 -> Tuesday, 13 August 2019 3:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41396 -> Tuesday, 13 August 2019 3:44 PM
+City seed 890 -> Arles, France
+
+Dev seed 44499 -> Tuesday, 13 August 2019 4:01 PM
+City seed 890 -> Arles, France
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 12235 -> Tuesday, 13 August 2019 4:49 PM
+City seed 890 -> Arles, France
+
+Dev seed 22295 -> Tuesday, 13 August 2019 4:52 PM
+City seed 890 -> Arles, France
+
+Dev seed 62228 -> Tuesday, 13 August 2019 4:52 PM
+City seed 890 -> Arles, France

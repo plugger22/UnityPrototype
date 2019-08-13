@@ -62,10 +62,9 @@ namespace gameAPI
         private List<Condition> listOfConditions = new List<Condition>();                   //list of all conditions currently affecting the actor
         private List<string> listOfTraitEffects = new List<string>();                       //list of all traitEffect.teffID's       
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
+        private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();        //Actor district topics
+        private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();        //Authority team topics
         #endregion
-
-        private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
-        private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
 
         //cached trait effects (public for serialization reasons)
         [HideInInspector] public string actorStressNone;
@@ -1191,10 +1190,24 @@ namespace gameAPI
         public void ClearAllNodeActions()
         { listOfNodeActions.Clear(); }
 
+        /// <summary>
+        /// set listOfNodeActionData from saved load game data. Clears any existing data beforehand.
+        /// </summary>
+        /// <param name="listOfData"></param>
+        public void SetNodeActionData(List<NodeActionData> listOfData)
+        {
+            if (listOfData != null)
+            {
+                listOfNodeActions.Clear();
+                listOfNodeActions.AddRange(listOfData);
+            }
+            else { Debug.LogError("Invalid listOfData (Null)"); }
+        }
+
         //
         // - - - Team Actions (Authority actors only)
         //
-   
+
         public List<TeamActionData> GetListOfTeamActions()
         { return listOfTeamActions; }
 
@@ -1253,7 +1266,19 @@ namespace gameAPI
         { listOfTeamActions.Clear(); }
 
 
-
+        /// <summary>
+        /// set listOfTeamActionData from saved load game data. Clears any existing data beforehand.
+        /// </summary>
+        /// <param name="listOfData"></param>
+        public void SetTeamActionData(List<TeamActionData> listOfData)
+        {
+            if (listOfData != null)
+            {
+                listOfTeamActions.Clear();
+                listOfTeamActions.AddRange(listOfData);
+            }
+            else { Debug.LogError("Invalid listOfData (Null)"); }
+        }
 
 
         //place methods above here

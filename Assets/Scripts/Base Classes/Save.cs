@@ -562,6 +562,8 @@ public class SaveActor
     public List<int> listOfContactNodes = new List<int>();
     public List<int> listOfContacts = new List<int>();
     public List<string> listOfTraitEffects = new List<string>();
+    public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
+    public List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
     
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
 }
