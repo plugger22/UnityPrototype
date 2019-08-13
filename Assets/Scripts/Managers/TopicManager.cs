@@ -729,11 +729,13 @@ public class TopicManager : MonoBehaviour
             //Player must be Active
             if (CheckPlayerStatus(playerSide) == true)
             {
-                ResetTopicAdmin();
+
                 CheckTopics();
                 //select a topic, if none found then drop the global interval by 1 and try again
                 do
                 {
+                    //reset needs to be inside the loop
+                    ResetTopicAdmin();
                     CheckForValidTopicTypes();
                     if (GetTopicType() == true)
                     {
@@ -954,7 +956,7 @@ public class TopicManager : MonoBehaviour
 
     #region ResetTopicAdmin
     /// <summary>
-    /// Resets all relevant turn topic data prior to processing for the current turn
+    /// Resets all relevant turn topic data prior to processing for the current turn and current attempt (can be multiple)
     /// </summary>
     private void ResetTopicAdmin()
     {

@@ -31675,3 +31675,44 @@ City seed 890 -> Arles, France
 
 Dev seed 54204 -> Tuesday, 13 August 2019 2:23 PM
 City seed 890 -> Arles, France
+
+Dev seed 27583 -> Tuesday, 13 August 2019 2:32 PM
+City seed 890 -> Arles, France
+
+Dev seed 44117 -> Tuesday, 13 August 2019 3:11 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:495)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:506)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	
+Dev seed 52820 -> Tuesday, 13 August 2019 3:14 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid editor window UnityEditor.ConsoleWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	
+Dev seed 31007 -> Tuesday, 13 August 2019 3:20 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid editor window UnityEditor.ConsoleWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	
