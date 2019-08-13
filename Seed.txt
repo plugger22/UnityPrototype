@@ -31557,3 +31557,100 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
 	
+Dev seed 16649 -> Tuesday, 13 August 2019 9:02 AM
+City seed 890 -> Arles, France
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "AuthorityTeam"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1197)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:727)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:286)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "AuthorityTeam"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1197)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:727)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:286)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 16649 -> Tuesday, 13 August 2019 9:24 AM
+City seed 890 -> Arles, France
+
+Dev seed 40210 -> Tuesday, 13 August 2019 9:25 AM
+City seed 890 -> Arles, France
+
+Dev seed 50145 -> Tuesday, 13 August 2019 9:26 AM
+City seed 890 -> Arles, France
+
+Dev seed 11073 -> Tuesday, 13 August 2019 9:27 AM
+City seed 890 -> Arles, France
+
+Dev seed 28193 -> Tuesday, 13 August 2019 9:29 AM
+City seed 890 -> Arles, France
+
+Dev seed 37629 -> Tuesday, 13 August 2019 9:32 AM
+City seed 890 -> Arles, France
+
+Dev seed 34138 -> Tuesday, 13 August 2019 9:53 AM
+City seed 890 -> Arles, France
+
+Dev seed 62585 -> Tuesday, 13 August 2019 10:00 AM
+City seed 890 -> Arles, France
+
+Dev seed 2200 -> Tuesday, 13 August 2019 10:11 AM
+City seed 890 -> Arles, France
+
+Dev seed 59858 -> Tuesday, 13 August 2019 10:25 AM
+City seed 890 -> Arles, France
+
+Dev seed 36416 -> Tuesday, 13 August 2019 10:41 AM
+City seed 890 -> Arles, France
+
+Dev seed 40096 -> Tuesday, 13 August 2019 11:26 AM
+City seed 890 -> Arles, France
+
+Dev seed 64102 -> Tuesday, 13 August 2019 11:26 AM
+City seed 890 -> Arles, France
+WARNING Invalid actor (Null) for SPIDER, Team Alpha, ID 8, actorSlot 2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:348)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:416)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:275)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid actor (Null) for SPIDER, Team Alpha, ID 8, actorSlot 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:348)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:416)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:275)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid actor (Null) for PROBE, Team Bravo, ID 7, actorSlot 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:348)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:416)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:275)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING Invalid actor (Null) for ERASURE, Team Alpha, ID 3, actorSlot 1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:348)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:270)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:416)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:275)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	
+Dev seed 55685 -> Tuesday, 13 August 2019 11:33 AM
+City seed 890 -> Arles, France
+
+Dev seed 23821 -> Tuesday, 13 August 2019 11:33 AM
+City seed 890 -> Arles, France

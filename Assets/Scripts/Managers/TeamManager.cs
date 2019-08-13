@@ -312,8 +312,6 @@ public class TeamManager : MonoBehaviour
                             }
                             else
                             {
-                                //AI Authority player
-                                MoveTeamAI(TeamPool.InTransit, team.teamID, node);
                                 //teamActionData
                                 Actor actor = null;
                                 //actor previously assigned by MoveTeamAI
@@ -326,7 +324,11 @@ public class TeamManager : MonoBehaviour
                                     if (listOfActors != null)
                                     {
                                         if (listOfActors.Count > 0)
-                                        { actor = listOfActors[Random.Range(0, listOfActors.Count)]; }
+                                        {
+                                            actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                                            Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnEarly: Random Actor select {0}, {1}, ID {2} for {3} {4}, ID {5}{6}",
+                                                actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");
+                                        }
                                     }
                                     else { Debug.LogError("Invalid listOfActors (Null)"); }
                                 }
@@ -343,7 +345,10 @@ public class TeamManager : MonoBehaviour
                                     };
                                     actor.AddTeamAction(data);
                                 }
-                                else { Debug.LogWarningFormat("Invalid actor (Null) for {0}, {1}, ID {2}, actorSlot {3}", team.arc.name, team.teamName, team.teamID, team.actorSlotID); }
+                                else { Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnEarly: No ACTIVE, OnMap actor available, teamActionData package not generated for {0} {1}, ID {2}{3}", 
+                                    team.arc.name, team.teamName, team.teamID, "\n"); }
+                                //AI Authority player
+                                MoveTeamAI(TeamPool.InTransit, team.teamID, node);
                                 //Permanent Team effect activated for node
                                 ProcessTeamEffect(team, node, null);
                                 //message
@@ -845,7 +850,7 @@ public class TeamManager : MonoBehaviour
     /// <summary>
     /// handles all admin for AI moving a team from one pool to another. Assumed movement direction is 'Reserve Pool -> OnMap -> InTransit -> Reserve Pool'
     /// Takes care of all checks, eg. enough teams present in reserve for one to move to the map
-    /// AI Teams aren't associated with Actors
+    /// AI Teams aren't associated with Actors (EDIT: they are now to accomodate synching of node/team ActionData packages for topics)
     /// only use the node parameter if the team is moving 'OnMap' (it's moving to a specific node)
     /// </summary>
     /// <param name="destinationPool"></param>
@@ -903,7 +908,6 @@ public class TeamManager : MonoBehaviour
                                     //confirmation
                                     string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.arc.name, team.teamName, team.teamID,
                                         destinationPool, node.nodeID);
-
                                     //NodeActionData -> Debug purposes only (can be left in)
                                     if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                                     {
@@ -913,8 +917,17 @@ public class TeamManager : MonoBehaviour
                                         {
                                             if (listOfActors.Count > 0)
                                             {
-                                                //get random actor from OnMap line up to assign team to
-                                                Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                                                //get actor with least number of NodeActionData records to avoid loading up teams onto one or two actors
+                                                Actor actor = null;
+                                                int numOfActions = 99999;
+                                                foreach(Actor tempActor in listOfActors)
+                                                {
+                                                    if (tempActor.CheckNumOfNodeActions() < numOfActions)
+                                                    {
+                                                        numOfActions = tempActor.CheckNumOfNodeActions();
+                                                        actor = tempActor;
+                                                    }
+                                                }
                                                 if (actor != null)
                                                 {
                                                     //need to give assign ai team an actor as there could be multiple topics (DistrictAction / AuthorityTeam) referencing the same team
@@ -930,7 +943,8 @@ public class TeamManager : MonoBehaviour
                                                     };
                                                     //add to actor's personal list
                                                     actor.AddNodeAction(nodeActionData);
-                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeamAI: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                                    Debug.LogFormat("[Tst] TeamManager.cs -> MoveTeamAI: nodeActionData added to {0}, {1}, ID {2} for {3} {4}, ID {5}{6}", 
+                                                        actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");
                                                 }
                                                 else { Debug.LogError("Invalid actor (Null) from listOfActors (Active)"); }
                                             }
@@ -1766,9 +1780,10 @@ public class TeamManager : MonoBehaviour
                             Actor actor = arrayOfActors[i];
                             if (actor != null)
                             {
-                                //delete any debug Node/TeamActionData
+                                /*//delete any debug Node/TeamActionData -> EDIT : Best to leave in place as already assigned actors (only pick up exceptions)
                                 actor.ClearAllNodeActions();
-                                actor.ClearAllTeamActions();
+                                actor.ClearAllTeamActions();*/
+
                                 //one entry per actor for each spare team slot they have available
                                 availableTeamSlots = actor.GetDatapoint(ActorDatapoint.Ability2) - actor.CheckNumOfTeams();
                                 for (int j = 0; j < availableTeamSlots; j++)
@@ -1786,7 +1801,7 @@ public class TeamManager : MonoBehaviour
                     Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
                     if (team != null)
                     {
-                        //team hasn't already got an actorSlotID
+                        //team hasn't already got an actorSlotID (Expect that most have, only looking for exceptions here)
                         if (team.actorSlotID < 0)
                         {
                             listCount = listOfActorSlots.Count;

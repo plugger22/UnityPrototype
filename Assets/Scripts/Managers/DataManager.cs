@@ -3587,6 +3587,9 @@ public class DataManager : MonoBehaviour
                 GameManager.instance.factionScript.ChangeFactionApproval(approvalChange, side, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
                 //lose secrets
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+                //teams -> remove any onMap teams (for cases other than resigned this is handled locally)
+                if (side.level == GameManager.instance.globalScript.sideAuthority.level)
+                { GameManager.instance.teamScript.TeamCleanUp(actor); }
                 break;
             case ActorStatus.Dismissed:
             case ActorStatus.Promoted:

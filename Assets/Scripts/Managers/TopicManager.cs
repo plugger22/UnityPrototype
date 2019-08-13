@@ -1598,6 +1598,8 @@ public class TopicManager : MonoBehaviour
                 Actor actor = listOfSelection[Random.Range(0, count)];
                 //get the most recent actor team action
                 TeamActionData data = actor.GetMostRecentTeamAction();
+                //update subSubType for selected actor
+                turnTopicSubSubType = GetTopicSubSubType(data.teamAction);
                 if (data != null)
                 {
                     //group depends on actor motivation
@@ -1805,6 +1807,9 @@ public class TopicManager : MonoBehaviour
                     GameManager.instance.playerScript.RemoveMostRecentNodeAction();
                 }
             }
+            //TeamAction
+            if ()
+            { }
             //topicHistory
             HistoryTopic history = new HistoryTopic()
             {
@@ -2438,7 +2443,7 @@ public class TopicManager : MonoBehaviour
                 //if no entries use entire list by default
                 if (listOfTopics.Count == 0)
                 {
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n");
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n");
                     listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
                 }
                 else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\" group {2}{3}", listOfTopics.Count, subTypeName, group, "\n"); }
@@ -2473,11 +2478,11 @@ public class TopicManager : MonoBehaviour
                 //if no entries use full sub sub type list by default
                 if (listOfTopics.Count == 0)
                 {
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", \"{1}\", group \"{2}\", All relevant topics used{2}", subTypeName, subSubTypeName, group, "\n");
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", {1}, group {2}, All relevant topics used{2}", subTypeName, subSubTypeName, group, "\n");
                     listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                     t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
                 }
-                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\", \"{2}\", group {3}{4}", listOfTopics.Count, subTypeName, subSubTypeName, group, "\n"); }
+                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\", {2}, group {3}{4}", listOfTopics.Count, subTypeName, subSubTypeName, group, "\n"); }
             }
 
         }
