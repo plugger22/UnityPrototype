@@ -30,5 +30,4 @@ MonoBehaviour:
   missionAuthority: {fileID: 0}
   challengeResistance: {fileID: 11400000, guid: 6041b5eaf2a62bc4faf15f182b93e72b,
     type: 2}
-  challengeAuthority: {fileID: 0}
   timer: 70

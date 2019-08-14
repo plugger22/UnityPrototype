@@ -106,8 +106,6 @@ public class GameManager : MonoBehaviour
     #region Variables
     [Tooltip("Leave as default 0 for random. Can be a whole number between -2147483648 and 2147483647")]
     public int seedDev = 0;                                           //random seed for development
-    /*[Tooltip("If true Player side set to Authority")]               //DEBUG -> now set by Campaign.side
-    public bool isAuthority;*/
     [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
 
@@ -120,7 +118,7 @@ public class GameManager : MonoBehaviour
     public bool isValidateSO;
     [Tooltip("Runs Data Integrity checks at completion of an autorun, at the start of a followOn level or once a save game has been loaded")]
     public bool isIntegrityCheck;
-    [Tooltip("If true Data Validation tests are run ")]
+    [Tooltip("If true a Random city is used, not a campaign city")]
     public bool isRandomCity;
     [Tooltip("If true then save files are encrypted")]
     public bool isEncrypted;

@@ -293,7 +293,7 @@ public class TurnManager : MonoBehaviour
                     {
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
-                        
+
                         /*//generate topic -> SWITCHED OFF temporarily for debugging, switch back on again
                         GameManager.instance.topicScript.ProcessTopic(playerSide);*/
 

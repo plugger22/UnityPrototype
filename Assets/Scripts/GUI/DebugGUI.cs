@@ -1518,13 +1518,13 @@ public class DebugGUI : MonoBehaviour
                     case 68:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayActorNodeActionData();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
                     //Actor TeamActionData
                     case 69:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayActorTeamActionData();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
                 }
             }

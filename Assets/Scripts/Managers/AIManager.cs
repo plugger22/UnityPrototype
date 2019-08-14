@@ -774,6 +774,7 @@ public class AIManager : MonoBehaviour
     public bool CheckAIScreamerStatus()
     { return isScreamer; }
 
+    #region Game Start Setup
     //
     // - - - Game Start Setup - - -
     //
@@ -1058,28 +1059,12 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfNodes (NUll)"); }
     }
+    #endregion
 
-
+    #region Miscellaneous
     //
     // - - - Miscellaneous - - -
     //
-
-    /*/// <summary>
-    /// add the resource allowance each turn to the relevant pool
-    /// </summary>
-    /// <param name="side"></param>
-    private void UpdateResources(GlobalSide side)
-    {
-        int resources = GameManager.instance.dataScript.CheckAIResourcePool(side);
-        if (side.level == 1)
-        { resources += resourcesGainAuthority; }
-        else if (side.level == 2)
-        { resources += resourcesGainResistance; }
-        GameManager.instance.dataScript.SetAIResources(side, resources);
-        if (side.level == 1)
-        { Debug.LogFormat("[Aim] AIManager.cs -> UpdateResources: {0} resources now {1}{2}", side.name, resources, "\n"); }
-        else { Debug.LogFormat("[Rim] AIManager.cs -> UpdateResources: {0} resources now {1}{2}", side.name, resources, "\n"); }
-    }*/
 
     /// <summary>
     /// Extracts all relevant AI data from an AI related message
@@ -1163,6 +1148,7 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid message (Null)"); }
     }
+    #endregion
 
     //
     // - - - Turn based AI - - -
