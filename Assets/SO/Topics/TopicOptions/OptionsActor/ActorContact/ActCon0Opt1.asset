@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Name: ActCon0Opt1
   m_EditorClassIdentifier: 
   tag: Actor Contact 0 option 1
+  text: 
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  listOfIgnoreEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  tooltipText: 

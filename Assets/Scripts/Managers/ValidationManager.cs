@@ -653,6 +653,7 @@ public class ValidationManager : MonoBehaviour
     private void ValidateTopics()
     {
         int count, countSubType;
+        bool isPassedCheck;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (playerSide == null) { Debug.LogError("Invalid playerSide (Null)"); }
 
@@ -734,7 +735,6 @@ public class ValidationManager : MonoBehaviour
                     if (topic != null)
                     {
                         topicName = topic.name;
-
                         //listOfOptions
                         if (topic.listOfOptions != null)
                         {
@@ -743,6 +743,7 @@ public class ValidationManager : MonoBehaviour
                             {
                                 if (count > maxOptions)
                                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has more options that allowed (has {1}, max is {2}){3}", topicName, count, maxOptions, "\n"); }
+                                isPassedCheck = false;
                                 //loop options and check that they aren't null and have the correct topic name
                                 foreach (TopicOption option in topic.listOfOptions)
                                 {
@@ -754,7 +755,13 @@ public class ValidationManager : MonoBehaviour
                                     //delete option from list
                                     if (listOfOptionNames.Remove(option.name) == false)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" not found in arrayOfTopicOptions{2}", option.name, topicName, "\n"); }
+                                    //check at least one option has NO criteria (so topic always has at least one option available)
+                                    if (option.listOfCriteria.Count == 0)
+                                    { isPassedCheck = true; }
                                 }
+                                //at least one option with No criteria present
+                                if (isPassedCheck == false)
+                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has NO options without CRITERIA (should be at least one){1}", topicName, "\n"); }
                             }
                             else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has an Empty listOfOptions{1}", topicName, "\n"); }
                         }
