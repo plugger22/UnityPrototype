@@ -298,7 +298,7 @@ public class TopicManager : MonoBehaviour
     {
         //event listener
         EventManager.instance.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
+
     }
     #endregion
 
@@ -315,9 +315,6 @@ public class TopicManager : MonoBehaviour
         {
             case EventType.TopicDisplayOption:
                 ProcessTopicOption((int)Param);
-                break;
-            case EventType.TopicDisplayIgnore:
-                ProcessTopicIgnore();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1738,8 +1735,7 @@ public class TopicManager : MonoBehaviour
         UpdateTopicAdmin();
     }
 
-    private void ProcessTopicIgnore()
-    { }
+
 
     #region ExecuteTopic
     /// <summary>

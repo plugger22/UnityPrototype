@@ -639,9 +639,9 @@ public class GameManager : MonoBehaviour
         listOfLevelMethods.Add(startMethod);
         #endregion
 
-        #region UI Methods
+        #region GUI Methods
         //
-        // - - - UI methods - - -
+        // - - - GUI methods - - -
         //
         //Team Picker
         startMethod.handler = teamPickerScript.Initialise;
@@ -655,6 +655,11 @@ public class GameManager : MonoBehaviour
         //Main Info UI
         startMethod.handler = mainInfoScript.Initialise;
         startMethod.className = "MainInfoUI";
+        listOfUIMethods.Add(startMethod);
+        listOfConditionalMethods.Add(startMethod);
+        //Topic UI
+        startMethod.handler = topicDisplayScript.Initialise;
+        startMethod.className = "TopicUI";
         listOfUIMethods.Add(startMethod);
         listOfConditionalMethods.Add(startMethod);
         //AI Display UI 

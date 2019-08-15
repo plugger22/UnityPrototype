@@ -297,8 +297,8 @@ public class TurnManager : MonoBehaviour
                         /*//generate topic -> SWITCHED OFF temporarily for debugging, switch back on again
                         GameManager.instance.topicScript.ProcessTopic(playerSide);*/
 
-                        /*//debug
-                        DebugCreatePipelineMessages();*/
+                        //debug
+                        DebugCreatePipelineMessages();
 
                         //info App displayed AFTER any end of turn Player interactions
                         myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);

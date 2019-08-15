@@ -135,6 +135,7 @@ public class TopicUI : MonoBehaviour
         buttonInteractiveOption1 = buttonOption1.GetComponent<ButtonInteraction>();
         buttonInteractiveOption2 = buttonOption2.GetComponent<ButtonInteraction>();
         buttonInteractiveOption3 = buttonOption3.GetComponent<ButtonInteraction>();
+        buttonInteractiveIgnore = buttonIgnore.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractiveOption0 != null, "Invalid buttonInteractiveOption0 (Null)");
         Debug.Assert(buttonInteractiveOption1 != null, "Invalid buttonInteractiveOption1 (Null)");
         Debug.Assert(buttonInteractiveOption2 != null, "Invalid buttonInteractiveOption2 (Null)");
@@ -194,6 +195,7 @@ public class TopicUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.TopicDisplayOpen, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TopicUI");
     }
     #endregion
@@ -217,6 +219,10 @@ public class TopicUI : MonoBehaviour
                 SetTopicDisplay(data);
                 break;
             case EventType.TopicDisplayClose:
+                CloseTopicUI();
+                break;
+            case EventType.TopicDisplayIgnore:
+                CloseTopicUI();
                 break;
             case EventType.StartTurnEarly:
                 StartTurnEarly();
@@ -247,6 +253,13 @@ public class TopicUI : MonoBehaviour
         { dataPackage = data; }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }
+
+    /// <summary>
+    /// returns true if a topic is available for display, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsTopic()
+    { return dataPackage == null ? false : true;  }
 
     /// <summary>
     /// Used by message pipeline to activate the TopicUI Display
@@ -336,6 +349,8 @@ public class TopicUI : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid listOfOptions (Empty) for topic \"{0}\"", data.topicName); }
             }
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
+            //ignore button
+            buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore);
             //initialise Canvas (switches one everything once all ready to go)
             topicCanvas.gameObject.SetActive(true);
 
@@ -347,7 +362,7 @@ public class TopicUI : MonoBehaviour
     /// <summary>
     /// close TopicUI display
     /// </summary>
-    private void CloseMainInfo()
+    private void CloseTopicUI()
     {
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
@@ -357,6 +372,8 @@ public class TopicUI : MonoBehaviour
         GameManager.instance.alertScript.CloseAlertUI();
         //set game state
         GameManager.instance.inputScript.ResetStates();
+        //auto set waitUntilDone for InfoPipeline 
+        GameManager.instance.guiScript.waitUntilDone = false;
     }
 
 

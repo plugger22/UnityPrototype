@@ -517,7 +517,12 @@ public class GUIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator Decision()
     {
-        InitialiseDecision();
+        if (GameManager.instance.topicDisplayScript.CheckIsTopic() == true)
+        {
+            waitUntilDone = true;
+            InitialiseDecision();
+        }
+        else { waitUntilDone = false; }
         yield return new WaitUntil(() => waitUntilDone == false);
     }
 
@@ -537,8 +542,7 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     private void InitialiseDecision()
     {
-        //debug
-        waitUntilDone = false;
+        GameManager.instance.topicDisplayScript.ActivateTopicDisplay();
     }
 
     /// <summary>
