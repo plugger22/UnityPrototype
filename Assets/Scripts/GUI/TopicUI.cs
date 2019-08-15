@@ -351,9 +351,18 @@ public class TopicUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
             //ignore button
             buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore);
+            //Fixed position at screen centre
+            Vector3 screenPos = new Vector3();
+            screenPos.x = Screen.width / 2;
+            screenPos.y = Screen.height / 2;
+            //set position
+            topicObject.transform.position = screenPos;
+            //set states
+            ModalStateData package = new ModalStateData() { mainState = ModalSubState.Topic };
+            GameManager.instance.inputScript.SetModalState(package);
+            Debug.LogFormat("[UI] MainInfoUI.cs -> SetTopicDisplay{0}", "\n");
             //initialise Canvas (switches one everything once all ready to go)
             topicCanvas.gameObject.SetActive(true);
-
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }

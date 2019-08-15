@@ -104,6 +104,10 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
 
+    [Header("Debugging")]
+    [Tooltip("If there are any topics in this list, one of them will be chosen for the TopicUI display and execution. If none then the topic normally selected will be used")]
+    public List<Topic> listOfDebugTopics;
+
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
     private int tagNodeID;
@@ -1716,14 +1720,22 @@ public class TopicManager : MonoBehaviour
         if (turnTopic != null)
         {
             //initialise data package
-            TopicUIData data = new TopicUIData()
+            if (listOfDebugTopics.Count == 0)
             {
-                topicName = turnTopic.name,
-                header = turnTopic.tag,
-                text = turnTopic.text,
-                sprite = turnSprite,
-                listOfOptions = turnTopic.listOfOptions
-            };
+                //normal topic selected
+                TopicUIData data = new TopicUIData()
+                {
+                    topicName = turnTopic.name,
+                    header = turnTopic.tag,
+                    text = turnTopic.text,
+                    sprite = turnSprite,
+                    listOfOptions = turnTopic.listOfOptions
+                };
+            }
+            else
+            {
+                //select one of debug topics at random to be used (enables testing of a small subset of topics, perhaps even one)
+            }
             //send to TopicUI
             GameManager.instance.topicDisplayScript.InitialiseData(data);
         }
