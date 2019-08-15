@@ -143,6 +143,7 @@ public class TopicManager : MonoBehaviour
                 SubInitialiseFastAccess(); //needs to be first
                 SubInitialiseStartUp();
                 SubInitialiseLevelStart();
+                SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
@@ -150,6 +151,7 @@ public class TopicManager : MonoBehaviour
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
                 SubInitialiseStartUp();
+                SubInitialiseEvents();
                 break;
             case GameState.LoadGame:
                 //do nothing
@@ -289,6 +291,38 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(teamSpider != null, "Invalid teamSpider (Null)");
     }
     #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listener
+        EventManager.instance.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
+    }
+    #endregion
+
+    /// <summary>
+    /// Event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.TopicDisplayOption:
+                ProcessTopicOption((int)Param);
+                break;
+            case EventType.TopicDisplayIgnore:
+                ProcessTopicIgnore();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
 
     #endregion
 
@@ -1669,6 +1703,12 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
+
+    private void ProcessTopicOption(int option)
+    { }
+
+    private void ProcessTopicIgnore()
+    { }
 
     #region ExecuteTopic
     /// <summary>

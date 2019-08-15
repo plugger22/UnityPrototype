@@ -1,6 +1,5 @@
 ﻿using gameAPI;
-using System.Collections;
-using System.Collections.Generic;
+using packageAPI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +30,26 @@ public class TopicUI : MonoBehaviour
 
     [Header("Sprite")]
     public Image topicImage;
+
+    //button script handlers
+    private ButtonInteraction buttonInteractiveOption0;
+    private ButtonInteraction buttonInteractiveOption1;
+    private ButtonInteraction buttonInteractiveOption2;
+    private ButtonInteraction buttonInteractiveOption3;
+    private ButtonInteraction buttonInteractiveIgnore;
+    //tooltips
+    private GenericTooltipUI tooltipOption0;
+    private GenericTooltipUI tooltipOption1;
+    private GenericTooltipUI tooltipOption2;
+    private GenericTooltipUI tooltipOption3;
+    private GenericTooltipUI tooltipIgnore;
+    //options
+    private TopicOption[] arrayOfOptions;
+    private Button[] arrayOfButtons;
+    private TextMeshProUGUI[] arrayOfOptionTexts;
+    private ButtonInteraction[] arrayOfButtonInteractions;
+    private GenericTooltipUI[] arrayOfTooltips;
+
 
     //static reference
     private static TopicUI topicUI;
@@ -81,7 +100,80 @@ public class TopicUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-
+        //initialise arrays
+        int maxNumOfOptions = GameManager.instance.topicScript.maxOptions;
+        //hard coded max num of options based on how many fields in class (need to change if maxOptions increases)
+        if (maxNumOfOptions > 0 && maxNumOfOptions < 5)
+        {
+            arrayOfOptions = new TopicOption[maxNumOfOptions];
+            arrayOfButtons = new Button[maxNumOfOptions];
+            arrayOfOptionTexts = new TextMeshProUGUI[maxNumOfOptions];
+            arrayOfButtonInteractions = new ButtonInteraction[maxNumOfOptions];
+            arrayOfTooltips = new GenericTooltipUI[maxNumOfOptions];
+        }
+        else { Debug.LogErrorFormat("Invalid maxOptions \"{0}\", arrays not initialised", maxNumOfOptions); }
+        //UI elements
+        Debug.Assert(topicCanvas != null, "Invalid topicCanvas (Null)");
+        Debug.Assert(topicObject != null, "Invalid topicObject (Null)");
+        Debug.Assert(buttonOption0 != null, "Invalid buttonOption0 (Null)");
+        Debug.Assert(buttonOption1 != null, "Invalid buttonOption1 (Null)");
+        Debug.Assert(buttonOption2 != null, "Invalid buttonOption2 (Null)");
+        Debug.Assert(buttonOption3 != null, "Invalid buttonOption3 (Null)");
+        Debug.Assert(buttonIgnore != null, "Invalid buttonIgnore (Null)");
+        Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
+        Debug.Assert(textMain != null, "Invalid textMain (Null)");
+        Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
+        Debug.Assert(textOption1 != null, "Invalid textOption1 (Null)");
+        Debug.Assert(textOption2 != null, "Invalid textOption2 (Null)");
+        Debug.Assert(textOption3 != null, "Invalid textOption3 (Null)");
+        Debug.Assert(topicImage != null, "Invalid topicImage (Null)");
+        //Button Interactive
+        buttonInteractiveOption0 = buttonOption0.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption1 = buttonOption1.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption2 = buttonOption2.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption3 = buttonOption3.GetComponent<ButtonInteraction>();
+        Debug.Assert(buttonInteractiveOption0 != null, "Invalid buttonInteractiveOption0 (Null)");
+        Debug.Assert(buttonInteractiveOption1 != null, "Invalid buttonInteractiveOption1 (Null)");
+        Debug.Assert(buttonInteractiveOption2 != null, "Invalid buttonInteractiveOption2 (Null)");
+        Debug.Assert(buttonInteractiveOption3 != null, "Invalid buttonInteractiveOption3 (Null)");
+        Debug.Assert(buttonInteractiveIgnore != null, "Invalid buttonInteractiveIgnore (Null)");
+        //Button events
+        buttonInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
+        buttonInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
+        buttonInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
+        buttonInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
+        buttonInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
+        //Tooltipos
+        tooltipOption0 = buttonOption0.GetComponent<GenericTooltipUI>();
+        tooltipOption1 = buttonOption1.GetComponent<GenericTooltipUI>();
+        tooltipOption2 = buttonOption2.GetComponent<GenericTooltipUI>();
+        tooltipOption3 = buttonOption3.GetComponent<GenericTooltipUI>();
+        tooltipIgnore = buttonIgnore.GetComponent<GenericTooltipUI>();
+        Debug.Assert(tooltipOption0 != null, "Invalid tooltipOption0 (Null)");
+        Debug.Assert(tooltipOption1 != null, "Invalid tooltipOption1 (Null)");
+        Debug.Assert(tooltipOption2 != null, "Invalid tooltipOption2 (Null)");
+        Debug.Assert(tooltipOption3 != null, "Invalid tooltipOption3 (Null)");
+        Debug.Assert(tooltipIgnore != null, "Invalid tooltipIgnore (Null)");
+        //populate arrayOfButtons
+        arrayOfButtons[0] = buttonOption0;
+        arrayOfButtons[1] = buttonOption1;
+        arrayOfButtons[2] = buttonOption2;
+        arrayOfButtons[3] = buttonOption3;
+        //populate arrayOfButtonInteractions
+        arrayOfButtonInteractions[0] = buttonInteractiveOption0;
+        arrayOfButtonInteractions[1] = buttonInteractiveOption1;
+        arrayOfButtonInteractions[2] = buttonInteractiveOption2;
+        arrayOfButtonInteractions[3] = buttonInteractiveOption3;
+        //populate arrayOfOptionTexts
+        arrayOfOptionTexts[0] = textOption0;
+        arrayOfOptionTexts[1] = textOption1;
+        arrayOfOptionTexts[2] = textOption2;
+        arrayOfOptionTexts[3] = textOption3;
+        //populate arrayOfTooltips
+        arrayOfTooltips[0] = tooltipOption0;
+        arrayOfTooltips[1] = tooltipOption1;
+        arrayOfTooltips[2] = tooltipOption2;
+        arrayOfTooltips[3] = tooltipOption3;
     }
     #endregion
 
@@ -97,9 +189,115 @@ public class TopicUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-
+        EventManager.instance.AddListener(EventType.TopicDisplayOpen, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
     }
     #endregion
 
     #endregion
+
+
+    /// <summary>
+    /// Event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.TopicDisplayOpen:
+                TopicUIData data = Param as TopicUIData;
+                SetTopicDisplay(data);
+                break;
+            case EventType.TopicDisplayClose:
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Initialise topicUI display
+    /// </summary>
+    /// <param name="data"></param>
+    private void SetTopicDisplay(TopicUIData data)
+    {
+        if (data != null)
+        {
+
+            //deactivate all options
+
+            //topic header
+            if (string.IsNullOrEmpty(data.header) == false)
+            { textHeader.text = data.header; }
+            else { Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName); }
+            //topic text
+            if (string.IsNullOrEmpty(data.text) == false)
+            { textMain.text = data.text; }
+            else { Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName); }
+            //topic sprite
+            if (data.sprite != null)
+            { topicImage.sprite = data.sprite; }
+            else { Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName); }
+            //options
+            if (data.listOfOptions != null)
+            {
+                int count = data.listOfOptions.Count;
+                if (count > 0)
+                {
+                    Debug.AssertFormat(count <= arrayOfOptions.Length, "Mismatch on option count (should be {0}, is {1})", arrayOfOptions.Length, count);
+                    //populate arrayOfOptions
+                    for (int i = 0; i < count; i++)
+                    {
+                        TopicOption option = data.listOfOptions[i];
+                        if (option != null)
+                        {
+                            arrayOfOptions[i] = option;
+                            //initialise option text
+                            if (string.IsNullOrEmpty(option.text) == false)
+                            { arrayOfOptionTexts[i].text = option.text; }
+                            else
+                            {
+                                arrayOfOptionTexts[i].text = "Unknown";
+                                Debug.LogWarningFormat("Invalid optionText (Null or Empty) for arrayOfOptionTexts[{0}], topic \"{1}\"", i, data.topicName);
+                            }
+                            //initialise option
+                            arrayOfButtons[i].gameObject.SetActive(true);
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid option (Null) in listOfOptions[{0}] for topic \"{1}\"", i, data.topicName); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfOptions (Empty) for topic \"{0}\"", data.topicName); }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
+            //initialise Canvas (switches one everything once all ready to go)
+            topicCanvas.gameObject.SetActive(true);
+
+        }
+        else { Debug.LogError("Invalid TopicUIData (Null)"); }
+    }
+
+
+    /// <summary>
+    /// close TopicUI display
+    /// </summary>
+    private void CloseMainInfo()
+    {
+        GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        topicCanvas.gameObject.SetActive(false);
+        GameManager.instance.guiScript.SetIsBlocked(false);
+        //switch of AlertUI 
+        GameManager.instance.alertScript.CloseAlertUI();
+        //set game state
+        GameManager.instance.inputScript.ResetStates();
+    }
+
+
+    //new methods above here
 }

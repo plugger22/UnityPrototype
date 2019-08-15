@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -159,6 +158,11 @@ public enum EventType
     MainInfoRestore,
     MainInfoTickerFaster,
     MainInfoTickerSlower,
+    //Topic UI
+    TopicDisplayOpen,
+    TopicDisplayClose,
+    TopicDisplayOption,
+    TopicDisplayIgnore,
     //ShowMe
     ShowMeRestore,
     //City Info
@@ -232,11 +236,11 @@ public class EventManager : MonoBehaviour
             ListenList = new List<OnEvent>();
             ListenList.Add(Listener);
             //Add to internal listeners list
-            dictOfListeners.Add(eventType, ListenList); 
+            dictOfListeners.Add(eventType, ListenList);
         }
         Debug.Log(string.Format("[Evm] -> Listener Added -> type: {0},  sender: {1}{2}", eventType, methodName, "\n"));
     }
-    
+
     /// <summary>
     /// Function to post event to listeners
     /// </summary>
@@ -264,23 +268,23 @@ public class EventManager : MonoBehaviour
             if (ListenList[i] != null)
             {
                 if (Param != null)
-                { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, param: {1}, sender: {2}{3}", eventType, Param.GetType(), methodName,  "\n")); }
+                { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, param: {1}, sender: {2}{3}", eventType, Param.GetType(), methodName, "\n")); }
                 else { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, NO param, sender: {1}{2}", eventType, methodName, "\n")); }
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);
             }
         }
     }
-    
-    
+
+
     //Remove event type entry from dictionary, including all listeners
     public void RemoveEvent(EventType eventType)
     {
         //Remove entry from dictionary
         dictOfListeners.Remove(eventType);
     }
-    
-    
+
+
     //Remove all redundant entries from the Dictionary
     public void RemoveRedundancies()
     {

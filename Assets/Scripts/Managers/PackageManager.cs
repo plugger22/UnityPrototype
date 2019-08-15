@@ -730,5 +730,20 @@ namespace packageAPI
         public TeamAction teamAction;               //type of team Action (compulsory)
     }
 
+    /// <summary>
+    /// topic UI initialisation data
+    /// </summary>
+    public class TopicUIData
+    {
+        public string topicName;
+        public string header;
+        public string text;
+        public Sprite sprite;
+        public List<TopicOption> listOfOptions = new List<TopicOption>();
+    }
+
+
+
+
     //new classes above here
 }
