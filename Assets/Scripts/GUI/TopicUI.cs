@@ -230,19 +230,33 @@ public class TopicUI : MonoBehaviour
         {
 
             //deactivate all options
-
+            for (int i = 0; i < arrayOfButtons.Length; i++)
+            { arrayOfButtons[i].gameObject.SetActive(false); }
             //topic header
             if (string.IsNullOrEmpty(data.header) == false)
             { textHeader.text = data.header; }
-            else { Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName); }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
+                textHeader.text = "Unknown";
+            }
             //topic text
             if (string.IsNullOrEmpty(data.text) == false)
             { textMain.text = data.text; }
-            else { Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName); }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
+                textHeader.text = "Unknown";
+            }
             //topic sprite
             if (data.sprite != null)
             { topicImage.sprite = data.sprite; }
-            else { Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName); }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
+                //use default sprite
+                topicImage.sprite = GameManager.instance.guiScript.topicSprite;
+            }
             //options
             if (data.listOfOptions != null)
             {
@@ -265,6 +279,15 @@ public class TopicUI : MonoBehaviour
                                 arrayOfOptionTexts[i].text = "Unknown";
                                 Debug.LogWarningFormat("Invalid optionText (Null or Empty) for arrayOfOptionTexts[{0}], topic \"{1}\"", i, data.topicName);
                             }
+                            //initialise option tooltip
+                            if (string.IsNullOrEmpty(option.tooltipHeader) == false)
+                            { arrayOfTooltips[i].tooltipHeader = option.tooltipHeader; }
+                            if (string.IsNullOrEmpty(option.tooltipMain) == false)
+                            { arrayOfTooltips[i].tooltipMain = option.tooltipMain; }
+                            if (string.IsNullOrEmpty(option.tooltipDetails) == false)
+                            { arrayOfTooltips[i].tooltipDetails = option.tooltipDetails; }
+                            //button Interaction
+                            arrayOfButtonInteractions[i].SetButton(EventType.TopicDisplayOption, i);
                             //initialise option
                             arrayOfButtons[i].gameObject.SetActive(true);
                         }

@@ -39,7 +39,9 @@ public class TopicOption : ScriptableObject
     public GlobalChance chance;
 
 
-    [HideInInspector] public string tooltipText;            //derived from effects
+    [HideInInspector] public string tooltipHeader;            //derived from effects
+    [HideInInspector] public string tooltipMain;
+    [HideInInspector] public string tooltipDetails;
 
 
     public void OnEnable()
