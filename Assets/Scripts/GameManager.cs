@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public BasePanelUI basePanelScript;               //Base Panel UI
     [HideInInspector] public DebugGraphics debugGraphicsScript;         //Debug only Graphics
     [HideInInspector] public DebugGUI debugScript;                      //Debug GUI
+    [HideInInspector] public TopicUI topicDisplayScript;                //Topic UI
     #endregion
 
 
@@ -238,7 +239,8 @@ public class GameManager : MonoBehaviour
         alertScript = AlertUI.Instance();
         actorPanelScript = ActorPanelUI.Instance();
         basePanelScript = BasePanelUI.Instance();
-        debugGraphicsScript = DebugGraphics.Instance();       
+        debugGraphicsScript = DebugGraphics.Instance();
+        topicDisplayScript = TopicUI.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -312,6 +314,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(actorPanelScript != null, "Invalid actorPanelScript (Null)");
         Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");
         Debug.Assert(debugGraphicsScript != null, "Invalid debugGraphicsScript (Null)");
+        Debug.Assert(topicDisplayScript != null, "Invalid topicDisplayScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
