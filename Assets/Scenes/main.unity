@@ -14632,7 +14632,7 @@ GameObject:
   - component: {fileID: 562908815}
   - component: {fileID: 562908814}
   m_Layer: 5
-  m_Name: TextMeshPro Text
+  m_Name: option3Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17545,6 +17545,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c210b18410dc3542aaa97c930fcc64a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topicCanvas: {fileID: 2073812143}
+  topicObject: {fileID: 1071249910}
+  buttonOption0: {fileID: 1336395239}
+  buttonOption1: {fileID: 1215864348}
+  buttonOption2: {fileID: 149308200}
+  buttonOption3: {fileID: 621139022}
+  buttonIgnore: {fileID: 2069218509}
+  textHeader: {fileID: 891827637}
+  textMain: {fileID: 1852539988}
+  textOption0: {fileID: 968215953}
+  textOption1: {fileID: 1138001306}
+  textOption2: {fileID: 1572906973}
+  textOption3: {fileID: 562908814}
+  topicImage: {fileID: 1436693636}
 --- !u!1001 &617692005
 Prefab:
   m_ObjectHideFlags: 0
@@ -23461,7 +23475,7 @@ GameObject:
   - component: {fileID: 968215954}
   - component: {fileID: 968215953}
   m_Layer: 5
-  m_Name: TextMeshPro Text
+  m_Name: option0Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27375,7 +27389,7 @@ GameObject:
   - component: {fileID: 1138001307}
   - component: {fileID: 1138001306}
   m_Layer: 5
-  m_Name: TextMeshPro Text
+  m_Name: option1Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37308,7 +37322,7 @@ GameObject:
   - component: {fileID: 1572906974}
   - component: {fileID: 1572906973}
   m_Layer: 5
-  m_Name: TextMeshPro Text
+  m_Name: option2Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47330,6 +47344,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224040992118361858, guid: d086aed7d68115448ab4f87ee94f50bd,
     type: 2}
   m_PrefabInternal: {fileID: 2094996083}
+--- !u!114 &2069218509 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094996083}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &2073812139
 GameObject:
   m_ObjectHideFlags: 0

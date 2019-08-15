@@ -1,16 +1,38 @@
 ﻿using gameAPI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// handles all topic decision UI matters
 /// </summary>
 public class TopicUI : MonoBehaviour
 {
+    [Header("Main")]
+    public Canvas topicCanvas;
+    public GameObject topicObject;
 
+    [Header("Buttons")]
+    public Button buttonOption0;
+    public Button buttonOption1;
+    public Button buttonOption2;
+    public Button buttonOption3;
+    public Button buttonIgnore;
 
-        //static reference
+    [Header("Texts")]
+    public TextMeshProUGUI textHeader;
+    public TextMeshProUGUI textMain;
+    public TextMeshProUGUI textOption0;
+    public TextMeshProUGUI textOption1;
+    public TextMeshProUGUI textOption2;
+    public TextMeshProUGUI textOption3;
+
+    [Header("Sprite")]
+    public Image topicImage;
+
+    //static reference
     private static TopicUI topicUI;
 
 
