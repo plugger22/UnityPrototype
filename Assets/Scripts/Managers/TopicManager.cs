@@ -122,6 +122,7 @@ public class TopicManager : MonoBehaviour
     private TopicSubType turnTopicSubType;
     private TopicSubSubType turnTopicSubSubType;
     private Topic turnTopic;
+    private Sprite turnSprite;
     private TopicOption turnOption;                                                                     //option selected
 
     private int minIntervalGlobalActual;                                                                //number used in codes. Can be less than the minIntervalGlobal
@@ -325,6 +326,8 @@ public class TopicManager : MonoBehaviour
     }
 
     #endregion
+
+
 
     #region Session Start
     //
@@ -999,6 +1002,7 @@ public class TopicManager : MonoBehaviour
         turnTopicSubType = null;
         turnTopicSubSubType = null;
         turnTopic = null;
+        turnSprite = null;
         //info tags
         tagActorID = -1;
         tagNodeID = -1;
@@ -1696,7 +1700,10 @@ public class TopicManager : MonoBehaviour
                 {
                     UpdateTopicAdmin();
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
-                    { ExecuteTopic(); }
+                    {
+                        InitialiseTopicUI();
+                        /*ExecuteTopic();*/
+                    }
                     UpdateTopicStatus();
                 }
             }
@@ -1704,8 +1711,32 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
 
+    /// <summary>
+    /// Sends data to topicUI ready for use when activated by GUIManager.cs Pipeline
+    /// </summary>
+    private void InitialiseTopicUI()
+    {
+        if (turnTopic != null)
+        {
+            //initialise data package
+            TopicUIData data = new TopicUIData()
+            {
+                topicName = turnTopic.name,
+                header = turnTopic.tag,
+                text = turnTopic.text,
+                sprite = turnSprite,
+                listOfOptions = turnTopic.listOfOptions
+            };
+            //send to TopicUI
+            GameManager.instance.topicDisplayScript.InitialiseData(data);
+        }
+        //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
+    }
+
     private void ProcessTopicOption(int option)
-    { }
+    {
+        UpdateTopicAdmin();
+    }
 
     private void ProcessTopicIgnore()
     { }

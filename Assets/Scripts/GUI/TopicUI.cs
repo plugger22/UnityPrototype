@@ -50,6 +50,9 @@ public class TopicUI : MonoBehaviour
     private ButtonInteraction[] arrayOfButtonInteractions;
     private GenericTooltipUI[] arrayOfTooltips;
 
+    //data package
+    private TopicUIData dataPackage;
+
 
     //static reference
     private static TopicUI topicUI;
@@ -191,6 +194,7 @@ public class TopicUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.TopicDisplayOpen, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TopicUI");
     }
     #endregion
 
@@ -214,10 +218,44 @@ public class TopicUI : MonoBehaviour
                 break;
             case EventType.TopicDisplayClose:
                 break;
+            case EventType.StartTurnEarly:
+                StartTurnEarly();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// Pre processing admin
+    /// </summary>
+    private void StartTurnEarly()
+    {
+        //reset TopicUI.cs data package prior to end of turn topic processing
+        dataPackage = null;
+    }
+
+
+    /// <summary>
+    /// TopicManager.cs -> InitialiseTopicUI calls this to pass the data across. This is done rather than a direct call to SetTopicDisplay as it is activated conditionally (if data present) in the Msg Pipeline
+    /// </summary>
+    /// <param name="data"></param>
+    public void InitialiseData(TopicUIData data)
+    {
+        if (data != null)
+        { dataPackage = data; }
+        else { Debug.LogError("Invalid TopicUIData (Null)"); }
+    }
+
+    /// <summary>
+    /// Used by message pipeline to activate the TopicUI Display
+    /// </summary>
+    public void ActivateTopicDisplay()
+    {
+        if (dataPackage != null)
+        { SetTopicDisplay(dataPackage); }
+        else { Debug.LogError("Invalid dataPackage (Null)"); }
     }
 
     /// <summary>
