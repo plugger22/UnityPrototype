@@ -84,5 +84,17 @@ public class Topic : ScriptableObject
         Debug.AssertFormat(group != null, "Invalid group (Null) for {0}", name);
     }
 
+    /// <summary>
+    /// Returns TopicOption of the specified index from listOfOptions, null if a problem
+    /// </summary>
+    /// <param name="optionIndex"></param>
+    /// <returns></returns>
+    public TopicOption GetOption(int optionIndex)
+    {
+        TopicOption option = null;
+        if (optionIndex >= 0 && optionIndex < listOfOptions.Count)
+        { option = listOfOptions[optionIndex]; }
+        return option;
+    }
 
 }

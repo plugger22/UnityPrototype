@@ -1467,3 +1467,32 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 65001 -> Friday, 16 August 2019 3:45 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 9379 -> Friday, 16 August 2019 4:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23686 -> Friday, 16 August 2019 4:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11497 -> Friday, 16 August 2019 4:54 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid TopicOption (Null) for optionIndex "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1774)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:414)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:223)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:274)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 4142 -> Friday, 16 August 2019 4:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54606 -> Friday, 16 August 2019 5:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21158 -> Friday, 16 August 2019 6:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22943 -> Friday, 16 August 2019 6:27 PM
+City seed 5678 -> London, United Kingdom

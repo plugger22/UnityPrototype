@@ -1754,14 +1754,24 @@ public class TopicManager : MonoBehaviour
         //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
     }
 
+    /// <summary>
+    /// process selected topic option
+    /// NOTE: optionIndex range checked by parent method
+    /// </summary>
+    /// <param name="optionIndex"></param>
     public void ProcessOption(int optionIndex)
     {
+        turnOption = turnTopic.GetOption(optionIndex);
+        if (turnOption != null)
+        {
 
-        //process outcome effects / rolls / messages / etc.
-        //tidy up stuff related to chosen topic option / stats / histor / etc.
+            //process outcome effects / rolls / messages / etc.
+            //tidy up stuff related to chosen topic option / stats / histor / etc.
 
-        //outcome dialogue
-        SetTopicOutcome(optionIndex);
+            //outcome dialogue
+            SetTopicOutcome();
+        }
+        else { Debug.LogWarningFormat("Invalid TopicOption (Null) for optionIndex \"{0}\"", optionIndex); }
         
     }
 
@@ -1778,15 +1788,15 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// Initialise outcome for selected topic option
     /// </summary>
-    public void SetTopicOutcome(int optionIndex)
+    public void SetTopicOutcome()
     {
 
         //TO DO -> give actual selected option outcome 
 
         ModalOutcomeDetails details = new ModalOutcomeDetails()
         {
-            textTop = turnTopic.name,
-            textBottom = string.Format("Option {0} selected", optionIndex),
+            textTop = GameManager.instance.colourScript.GetFormattedString(string.Format("{0}{1}{2}", turnTopic.name, "\n", turnOption.tag), ColourType.neutralText),
+            textBottom = GameManager.instance.colourScript.GetFormattedString(turnOption.text, ColourType.salmonText),
             sprite = GameManager.instance.guiScript.infoSprite,
         };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
