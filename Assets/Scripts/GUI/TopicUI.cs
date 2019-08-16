@@ -197,6 +197,7 @@ public class TopicUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
     }
     #endregion
 
@@ -218,11 +219,14 @@ public class TopicUI : MonoBehaviour
                 TopicUIData data = Param as TopicUIData;
                 SetTopicDisplay(data);
                 break;
+            case EventType.TopicDisplayOption:
+                ProcessTopicOption((int)Param);
+                break;
             case EventType.TopicDisplayClose:
-                CloseTopicUI();
+                CloseTopicUI((int)Param);
                 break;
             case EventType.TopicDisplayIgnore:
-                CloseTopicUI();
+                CloseTopicUI((int)Param);
                 break;
             case EventType.StartTurnEarly:
                 StartTurnEarly();
@@ -261,6 +265,7 @@ public class TopicUI : MonoBehaviour
     public bool CheckIsTopic()
     { return dataPackage == null ? false : true;  }
 
+
     /// <summary>
     /// Used by message pipeline to activate the TopicUI Display
     /// </summary>
@@ -271,6 +276,7 @@ public class TopicUI : MonoBehaviour
         else { Debug.LogError("Invalid dataPackage (Null)"); }
     }
 
+    #region SetTopicDisplay
     /// <summary>
     /// Initialise topicUI display
     /// </summary>
@@ -350,7 +356,7 @@ public class TopicUI : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
             //ignore button
-            buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore);
+            buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
             //Fixed position at screen centre
             Vector3 screenPos = new Vector3();
             screenPos.x = Screen.width / 2;
@@ -360,29 +366,59 @@ public class TopicUI : MonoBehaviour
             //set states
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Topic };
             GameManager.instance.inputScript.SetModalState(package);
+            GameManager.instance.guiScript.SetIsBlocked(true);
             Debug.LogFormat("[UI] MainInfoUI.cs -> SetTopicDisplay{0}", "\n");
             //initialise Canvas (switches one everything once all ready to go)
             topicCanvas.gameObject.SetActive(true);
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }
+    #endregion
 
 
     /// <summary>
-    /// close TopicUI display
+    /// close TopicUI display. Outcome if parameter >= 0, none if otherwise
     /// </summary>
-    private void CloseTopicUI()
+    private void CloseTopicUI(int isOutcome)
     {
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         topicCanvas.gameObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+
         //switch of AlertUI 
         GameManager.instance.alertScript.CloseAlertUI();
-        //set game state
+
+        /*//set game state -> EDIT: Don't do this as you are going straight to the maininfoApp on every occasion and resetting the state allows clicks to node in the interim.
         GameManager.instance.inputScript.ResetStates();
-        //auto set waitUntilDone for InfoPipeline 
-        GameManager.instance.guiScript.waitUntilDone = false;
+        GameManager.instance.guiScript.SetIsBlocked(false);*/
+
+        //set waitUntilDone false to continue with pipeline only if there is no outcome from the topic option selected
+        if (isOutcome < 0)
+        {
+            //No outcome -> close topicUI and go straight to MainInfoApp
+            GameManager.instance.guiScript.waitUntilDone = false;
+        }
+    }
+
+    /// <summary>
+    /// Process selected Topic Option (index range 0 -> 3 (maxOptions -1)
+    /// </summary>
+    /// <param name="optionIndex"></param>
+    private void ProcessTopicOption(int optionIndex)
+    {
+        if (optionIndex >= 0 && optionIndex < GameManager.instance.topicScript.maxOptions)
+        {
+            //close TopicUI (with parameter > -1 to indicate outcome window required)
+            CloseTopicUI(optionIndex);
+            //actual processing of selected option is handled by topicManager.cs
+            GameManager.instance.topicScript.ProcessOption(optionIndex);
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid optionIndex \"{0}\" (should be >= 0 and < maxOptions). Outcome cancelled", optionIndex);
+            //close TopicUI without an Outcome dialogue
+            CloseTopicUI(-1);
+        }
     }
 
 

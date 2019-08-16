@@ -301,7 +301,7 @@ public class TopicManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
+
 
     }
     #endregion
@@ -317,9 +317,7 @@ public class TopicManager : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
-            case EventType.TopicDisplayOption:
-                ProcessTopicOption((int)Param);
-                break;
+
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -1719,35 +1717,80 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
-            //initialise data package
-            if (listOfDebugTopics.Count == 0)
-            {
-                //normal topic selected
-                TopicUIData data = new TopicUIData()
-                {
-                    topicName = turnTopic.name,
-                    header = turnTopic.tag,
-                    text = turnTopic.text,
-                    sprite = turnSprite,
-                    listOfOptions = turnTopic.listOfOptions
-                };
-            }
-            else
+            int index = -1;
+            int count = listOfDebugTopics.Count;
+            TopicUIData data = new TopicUIData();
+            //Debug initialise data package if any debug topics present (if none use normally selected topic)
+            if (count > 0)
             {
                 //select one of debug topics at random to be used (enables testing of a small subset of topics, perhaps even one)
+                if (count == 1)
+                { index = 0; }
+                else
+                { index = Random.Range(0, count); }
+                if (index > -1)
+                {
+                    //assign debug topic to turn data
+                    turnTopic = listOfDebugTopics[index];
+                    turnSprite = GameManager.instance.guiScript.topicSprite;
+                    turnTopicType = listOfDebugTopics[index].type;
+                    turnTopicSubType = listOfDebugTopics[index].subType;
+                    turnTopicSubSubType = listOfDebugTopics[index].subSubType;
+                }
             }
+            //use normal or debug topic
+            if (turnTopic != null)
+            {
+                data.topicName = turnTopic.name;
+                data.header = turnTopic.tag;
+                data.text = turnTopic.text;
+                data.sprite = turnSprite;
+                data.listOfOptions = turnTopic.listOfOptions;
+            }
+            else { Debug.LogError("Invalid topic (Null) normal, or debug"); }
             //send to TopicUI
             GameManager.instance.topicDisplayScript.InitialiseData(data);
         }
         //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
     }
 
-    private void ProcessTopicOption(int option)
+    public void ProcessOption(int optionIndex)
     {
-        UpdateTopicAdmin();
+
+        //process outcome effects / rolls / messages / etc.
+        //tidy up stuff related to chosen topic option / stats / histor / etc.
+
+        //outcome dialogue
+        SetTopicOutcome(optionIndex);
+        
     }
 
+    /*/// <summary>
+    /// returns true if a topic outcome is available (topic option selected, outcome shows result). False otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIsTopicOutcome()
+    {
+        //TO DO
+        return true;
+    }*/
 
+    /// <summary>
+    /// Initialise outcome for selected topic option
+    /// </summary>
+    public void SetTopicOutcome(int optionIndex)
+    {
+
+        //TO DO -> give actual selected option outcome 
+
+        ModalOutcomeDetails details = new ModalOutcomeDetails()
+        {
+            textTop = turnTopic.name,
+            textBottom = string.Format("Option {0} selected", optionIndex),
+            sprite = GameManager.instance.guiScript.infoSprite,
+        };
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+    }
 
     #region ExecuteTopic
     /// <summary>
@@ -2606,7 +2649,7 @@ public class TopicManager : MonoBehaviour
     #endregion
 
     #region GetTopicSubSubType
-    
+
     /// <summary>
     /// Get's NodeAction TopicSubSubType.SO.name given a nodeAction enum. Returns Null if a problem
     /// </summary>

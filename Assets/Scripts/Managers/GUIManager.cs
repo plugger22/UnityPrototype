@@ -455,6 +455,8 @@ public class GUIManager : MonoBehaviour
     {
         if (playerSide != null)
         {
+            //switch of all modal 0 tooltips
+            SetTooltipsOff();
             waitUntilDone = false;
             //process all messages in pipeline (waits until each message done)
             StartCoroutine("InfoPipeline", playerSide);
@@ -519,6 +521,8 @@ public class GUIManager : MonoBehaviour
     {
         if (GameManager.instance.topicDisplayScript.CheckIsTopic() == true)
         {
+            //switch of all modal 0 tooltips
+            SetTooltipsOff();
             waitUntilDone = true;
             InitialiseDecision();
         }
@@ -591,6 +595,15 @@ public class GUIManager : MonoBehaviour
             details.sprite = sprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         }
+    }
+
+    //set all modal 0 tooltips off
+    public void SetTooltipsOff()
+    {
+        //exit any generic or node tooltips
+        GameManager.instance.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.instance.tooltipNodeScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.instance.tooltipHelpScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
     }
 
 }

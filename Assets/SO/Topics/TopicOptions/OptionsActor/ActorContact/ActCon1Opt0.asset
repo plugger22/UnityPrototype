@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Name: ActCon1Opt0
   m_EditorClassIdentifier: 
   tag: Actor Contact 1 option 0
+  text: Give them what they want
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  listOfIgnoreEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 

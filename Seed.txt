@@ -1241,3 +1241,229 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 35164 -> Friday, 16 August 2019 1:42 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.header (Null or Empty) for topic "ActMatRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:307)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[0], topic "ActMatRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[1], topic "ActMatRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[2], topic "ActMatRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 13407 -> Friday, 16 August 2019 1:44 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.header (Null or Empty) for topic "CamResC1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:307)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[0], topic "CamResC1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[1], topic "CamResC1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[2], topic "CamResC1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 8705 -> Friday, 16 August 2019 1:46 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.header (Null or Empty) for topic "ActConRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:307)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[0], topic "ActConRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[1], topic "ActConRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[2], topic "ActConRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid optionText (Null or Empty) for arrayOfOptionTexts[3], topic "ActConRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:331)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:270)
+	GUIManager:InitialiseDecision() (at Assets/Scripts/Managers/GUIManager.cs:545)
+	<Decision>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:523)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:479)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 54540 -> Friday, 16 August 2019 1:56 PM
+City seed 5678 -> London, United Kingdom
+WARNING Topic must be instantiated using the ScriptableObject.CreateInstance method instead of new Topic.
+UnityEngine.ScriptableObject:.ctor()
+	Topic:.ctor() (at Assets/Scripts/SO Master/Topic.cs:60)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1727)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1705)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:274)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	
+Dev seed 39533 -> Friday, 16 August 2019 2:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46608 -> Friday, 16 August 2019 2:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53150 -> Friday, 16 August 2019 2:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41053 -> Friday, 16 August 2019 2:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38004 -> Friday, 16 August 2019 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65214 -> Friday, 16 August 2019 2:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50465 -> Friday, 16 August 2019 2:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32299 -> Friday, 16 August 2019 2:32 PM
+City seed 5678 -> London, United Kingdom
+ERROR Duplicate topicHistory record for history.turn "3"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddTopicHistory(HistoryTopic) (at Assets/Scripts/Managers/DataManager.cs:7100)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:1962)
+	TopicManager:ProcessTopicOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1761)
+	TopicManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TopicManager.cs:321)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:274)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 2057 -> Friday, 16 August 2019 2:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9775 -> Friday, 16 August 2019 2:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30981 -> Friday, 16 August 2019 2:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22608 -> Friday, 16 August 2019 3:01 PM
+City seed 5678 -> London, United Kingdom
+ASSERT InvalidCastException: Specified cast is not valid.
+TopicUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/TopicUI.cs:229)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:274)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 25911 -> Friday, 16 August 2019 3:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63432 -> Friday, 16 August 2019 3:30 PM
+City seed 5678 -> London, United Kingdom
+ERROR Duplicate topicHistory record for history.turn "2"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddTopicHistory(HistoryTopic) (at Assets/Scripts/Managers/DataManager.cs:7100)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:1983)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1762)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:413)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:223)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:274)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 23101 -> Friday, 16 August 2019 3:34 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:506)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 52875 -> Friday, 16 August 2019 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52698 -> Friday, 16 August 2019 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65001 -> Friday, 16 August 2019 3:45 PM
+City seed 5678 -> London, United Kingdom
