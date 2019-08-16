@@ -11908,16 +11908,6 @@ Prefab:
       propertyPath: m_Name
       value: topicOption0
       objectReference: {fileID: 0}
-    - target: {fileID: 114502623275907798, guid: 63bb2d0f27d333142b0fa40622085c5f,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114502623275907798, guid: 63bb2d0f27d333142b0fa40622085c5f,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
   m_IsPrefabAsset: 0
