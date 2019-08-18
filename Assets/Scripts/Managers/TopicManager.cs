@@ -1712,6 +1712,7 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
 
+    #region InitialiseTopicUI
     /// <summary>
     /// Sends data to topicUI ready for use when activated by GUIManager.cs Pipeline
     /// </summary>
@@ -1780,6 +1781,7 @@ public class TopicManager : MonoBehaviour
         }
         //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
     }
+    #endregion
 
 
     #region ProcessOption
