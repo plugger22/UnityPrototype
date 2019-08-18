@@ -16,10 +16,11 @@ MonoBehaviour:
   text: Ask [Actor] to negotiate a better deal
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 0b54c57926b41884c847e3cf910131a9, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  tooltipHeader: Actor Contact 0 option 1
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: Negotiate a better deal
+  tooltipMain: Unknown Effects
+  tooltipDetails: Unknown Mood Effect

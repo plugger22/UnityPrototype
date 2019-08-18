@@ -16,10 +16,11 @@ MonoBehaviour:
   text: Pay them what they want
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  tooltipHeader: Actor Contact 0 option 0
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: Pay them
+  tooltipMain: Unknown Effects
+  tooltipDetails: Unknown Mood Effect
