@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: A_GainRenHigh
   m_EditorClassIdentifier: 
-  description: Actor gains +3 Renown
+  description: Renown +3
   ongoingTooltip: 
   listOfCriteria: []
-  apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
+  apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   outcome: {fileID: 11400000, guid: 7c76320a8f113f5478bc9db61f9ddb29, type: 2}
   operand: {fileID: 11400000, guid: b4858fc13d863c64db627b8de742a542, type: 2}
   typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}

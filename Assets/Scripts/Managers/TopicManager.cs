@@ -2883,7 +2883,39 @@ public class TopicManager : MonoBehaviour
         { option.tooltipHeader = option.tag; }
         else { option.tooltipHeader = "Unknown"; }
         //Main -> derived from option good/bad effects
-        option.tooltipMain = "Unknown Effects";
+        StringBuilder builder = new StringBuilder();
+        //Good effects
+        if (option.listOfGoodEffects.Count > 0)
+        {
+            foreach(Effect effect in option.listOfGoodEffects)
+            {
+                if (effect != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    if (string.IsNullOrEmpty(effect.description) == false)
+                    { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfGoodEffects for option \"{0}\"", option.name); }
+            }
+        }
+        //Bad effects
+        if (option.listOfBadEffects.Count > 0)
+        {
+            foreach (Effect effect in option.listOfBadEffects)
+            {
+                if (effect != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    if (string.IsNullOrEmpty(effect.description) == false)
+                    { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfBadEffects for option \"{0}\"", option.name); }
+            }
+        }
+        if (builder.Length == 0) { builder.Append("No Effects present"); }
+        option.tooltipMain = builder.ToString(); ;
         //Details -> derived from option mood Effect
         option.tooltipDetails = "Unknown Mood Effect";
         return isSucceed;
@@ -2903,6 +2935,53 @@ public class TopicManager : MonoBehaviour
             data.ignoreTooltipDetails = "Could be stressful";
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
+    }
+    #endregion
+
+    #region GetEffectPrefix
+    /// <summary>
+    /// returns prefix (actor name, player name, etc.) for a topic effect based on first character of effect name (topic effects have a naming convention of 'X_...' where 'X' represents a prefix type)
+    /// NOTE: Effect checked for Null by parent method (InitialiseOption/IgnoreTooltip)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    private string GetEffectPrefix(Effect effect)
+    {
+        string prefix = "Unknown";
+        char key = effect.name[0];
+        //double check that first char of effect name is followed immediately by an underscore
+        if (effect.name[1].Equals('_') == true)
+        {
+            switch (key)
+            {
+                case 'A':
+                    //actor
+                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                    if (actor != null)
+                    { prefix = actor.arc.name; }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    break;
+                case 'P':
+                    //player
+                    prefix = "Player";
+                    break;
+                case 'T':
+                    //team
+                    break;
+                case 'Y':
+                    //city
+                    break;
+                case 'H':
+                    //HQ
+                    break;
+                case 'N':
+                    //Node
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised effect.name first character \"{0}\" for effect \"{1}\"", key, effect.name); break;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid effectName \"{0}\" (should be 'X_...')", effect.name); }
+        return prefix;
     }
     #endregion
 

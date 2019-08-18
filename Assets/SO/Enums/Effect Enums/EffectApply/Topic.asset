@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ffbf179b237f241bcd9f3be5ba1a48, type: 3}
   m_Name: Topic
   m_EditorClassIdentifier: 
-  descriptor: Topics
+  descriptor: Topics related effect
