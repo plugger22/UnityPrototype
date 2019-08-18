@@ -105,8 +105,8 @@ public class TopicManager : MonoBehaviour
     public TopicSubSubType teamSpider;
 
     [Header("Debugging")]
-    [Tooltip("If there are any topics in this list, one of them will be chosen for the TopicUI display and execution. If none then the topic normally selected will be used")]
-    public List<Topic> listOfDebugTopics;
+    [Tooltip("If there is a topic pool specified here then a topic will be randomly chosen from that pool overriding any normally selected topic")]
+    public TopicPool debugTopicPool;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
@@ -1720,26 +1720,14 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
-            int index = -1;
-            int count = listOfDebugTopics.Count;
             TopicUIData data = new TopicUIData();
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
-            if (count > 0)
+            if (debugTopicPool != null)
             {
-                //select one of debug topics at random to be used (enables testing of a small subset of topics, perhaps even one)
-                if (count == 1)
-                { index = 0; }
-                else
-                { index = Random.Range(0, count); }
-                if (index > -1)
-                {
-                    //assign debug topic to turn data
-                    turnTopic = listOfDebugTopics[index];
-                    turnSprite = GameManager.instance.guiScript.topicSprite;
-                    turnTopicType = listOfDebugTopics[index].type;
-                    turnTopicSubType = listOfDebugTopics[index].subType;
-                    turnTopicSubSubType = listOfDebugTopics[index].subSubType;
-                }
+                //select one of topics from the debug pool at random (enables testing of a small subset of topics)
+                turnTopicSubType = debugTopicPool.subType;
+                if (turnTopicSubType != null)
+                { GetTopic(GameManager.instance.sideScript.PlayerSide);  }
             }
             //use normal or debug topic
             if (turnTopic != null)

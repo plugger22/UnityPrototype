@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: C_GainContact
+  m_Name: A_GainContact
   m_EditorClassIdentifier: 
   description: gains Contact
   ongoingTooltip: 

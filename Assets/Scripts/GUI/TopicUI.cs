@@ -310,7 +310,7 @@ public class TopicUI : MonoBehaviour
             { topicImage.sprite = data.sprite; }
             else
             {
-                Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
+                Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
                 topicImage.sprite = GameManager.instance.guiScript.topicSprite;
             }
