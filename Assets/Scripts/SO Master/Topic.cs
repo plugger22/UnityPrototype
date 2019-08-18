@@ -48,6 +48,10 @@ public class Topic : ScriptableObject
     [Tooltip("In order for the topic to be valid all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
+    [Header("Ignore Penalty")]
+    [Tooltip("Ingore effects occur if no option in the topic is selected. Can be good or bad. Optional")]
+    public List<Effect> listOfIgnoreEffects;
+
     [Header("Content")]
     [Tooltip("Designer notes, not used inGame")]
     [TextArea] public string notes;

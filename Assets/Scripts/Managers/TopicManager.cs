@@ -1042,6 +1042,7 @@ public class TopicManager : MonoBehaviour
             {
                 //random draw of pool
                 turnTopicType = listOfTypePool[Random.Range(0, listOfTypePool.Count)];
+                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicType: SELECTED turnTopicType \"{0}\"", turnTopicType.name);
                 isSuccess = true;
             }
             else { Debug.LogError("Invalid listOfTypePool (Empty) for selecting topicType"); }
@@ -1126,6 +1127,7 @@ public class TopicManager : MonoBehaviour
             {
                 //random draw of pool
                 turnTopicSubType = listOfSubTypePool[Random.Range(0, listOfSubTypePool.Count)];
+                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: SELECTED turnTopicSubType \"{0}\"", turnTopicSubType.name);
                 return true;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" Empty Pool for topicSubType selection{1}", turnTopicType.name, "\n"); }
@@ -1748,12 +1750,39 @@ public class TopicManager : MonoBehaviour
                 data.listOfOptions = turnTopic.listOfOptions;
             }
             else { Debug.LogError("Invalid topic (Null) normal, or debug"); }
-            //send to TopicUI
-            GameManager.instance.topicDisplayScript.InitialiseData(data);
+            //topic must have at least one option
+            if (data.listOfOptions != null && data.listOfOptions.Count > 0)
+            {
+                bool isProceed = false;
+                //initialise option tooltips
+                for (int i = 0; i < data.listOfOptions.Count; i++)
+                {
+                    TopicOption option = data.listOfOptions[i];
+                    if (option != null)
+                    {
+                        if (InitialiseOptionTooltip(option) == true)
+                        { isProceed = true; }
+                    }
+                    else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
+                }
+                if (isProceed == true)
+                {
+                    //ignore button tooltip
+                    InitialiseIgnoreTooltip(data);
+                    //send to TopicUI
+                    GameManager.instance.topicDisplayScript.InitialiseData(data);
+                }
+                else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
+            }
+            else
+            { Debug.LogWarningFormat("Invalid listOfOptions (Null or Empty) for topic \"{0}\" -> No topic this turn", turnTopic.name); }
+
         }
         //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
     }
 
+
+    #region ProcessOption
     /// <summary>
     /// process selected topic option
     /// NOTE: optionIndex range checked by parent method
@@ -1772,19 +1801,12 @@ public class TopicManager : MonoBehaviour
             SetTopicOutcome();
         }
         else { Debug.LogWarningFormat("Invalid TopicOption (Null) for optionIndex \"{0}\"", optionIndex); }
-        
+
     }
+    #endregion
 
-    /*/// <summary>
-    /// returns true if a topic outcome is available (topic option selected, outcome shows result). False otherwise
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckIsTopicOutcome()
-    {
-        //TO DO
-        return true;
-    }*/
 
+    #region SetTopicOutcome
     /// <summary>
     /// Initialise outcome for selected topic option
     /// </summary>
@@ -1801,6 +1823,7 @@ public class TopicManager : MonoBehaviour
         };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
+    #endregion
 
     #region ExecuteTopic
     /// <summary>
@@ -2842,6 +2865,44 @@ public class TopicManager : MonoBehaviour
                 count, subPool.name, "\n");
         }
         else { Debug.LogError("Invalid subPool (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseOptionTooltip
+    /// <summary>
+    /// Initialise option tooltip prior to sending data Package to TopicUI.cs
+    /// NOTE: Option checked for Null by parent method (InitialiseTopicUI.cs)
+    /// </summary>
+    /// <param name="option"></param>
+    /// <returns></returns>
+    private bool InitialiseOptionTooltip(TopicOption option)
+    {
+        bool isSucceed = true;
+        //header -> from option.tag
+        if (string.IsNullOrEmpty(option.tag) == false)
+        { option.tooltipHeader = option.tag; }
+        else { option.tooltipHeader = "Unknown"; }
+        //Main -> derived from option good/bad effects
+        option.tooltipMain = "Unknown Effects";
+        //Details -> derived from option mood Effect
+        option.tooltipDetails = "Unknown Mood Effect";
+        return isSucceed;
+    }
+    #endregion
+
+    #region InitialiseIgnoreTooltip
+    /// <summary>
+    /// Initialise tooltip data for ignore button (could be ignore effects present)
+    /// </summary>
+    private void InitialiseIgnoreTooltip(TopicUIData data)
+    {
+        if (data != null)
+        {
+            data.ignoreTooltipHeader = "Don't bother me with this";
+            data.ignoreTooltipMain = "Nothing bad will happen";
+            data.ignoreTooltipDetails = "Could be stressful";
+        }
+        else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }
     #endregion
 

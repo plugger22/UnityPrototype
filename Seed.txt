@@ -1496,3 +1496,24 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 22943 -> Friday, 16 August 2019 6:27 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 41085 -> Saturday, 17 August 2019 3:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61697 -> Saturday, 17 August 2019 7:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36396 -> Sunday, 18 August 2019 9:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60681 -> Sunday, 18 August 2019 10:04 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34744 -> Sunday, 18 August 2019 10:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45601 -> Sunday, 18 August 2019 10:12 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48420 -> Sunday, 18 August 2019 10:25 AM
+City seed 5678 -> London, United Kingdom

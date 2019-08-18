@@ -738,6 +738,9 @@ namespace packageAPI
         public string topicName;
         public string header;
         public string text;
+        public string ignoreTooltipHeader;                                  //ignore button tooltip 
+        public string ignoreTooltipMain;                                    //ignore button tooltip
+        public string ignoreTooltipDetails;                                 //ignore button tooltip
         public Sprite sprite;
         public List<TopicOption> listOfOptions = new List<TopicOption>();
     }

@@ -9,7 +9,9 @@ using UnityEngine;
 public class TopicOption : ScriptableObject
 {
     [Header("Texts")]
-    [Tooltip("Short descriptor")]
+    [Tooltip("Full text explanation of option, eg 'Actor Contact 0 option 2', not used inGame")]
+    public string descriptor;
+    [Tooltip("Short descriptor (keep as short as possible, used for option tooltip header)")]
     public string tag;
     [Tooltip("Option text, max 140 chars")]
     public string text;
@@ -27,8 +29,7 @@ public class TopicOption : ScriptableObject
     public List<Effect> listOfGoodEffects;
     [Tooltip("Bad effects that occur. Normal options can have a mix of good and bad effects, Probability options give bad effects only if roll fails. Optional")]
     public List<Effect> listOfBadEffects;
-    [Tooltip("Ingore effects occur if the option isn't chosen. Can be good or bad. Optional")]
-    public List<Effect> listOfIgnoreEffects;
+
 
     [Header("Player Personality Effect")]
     [Tooltip("Personality effect. Mood will increase if it Player's Personality matches the effect, decrease if it doesn't. No effect if neutral")]
@@ -39,14 +40,16 @@ public class TopicOption : ScriptableObject
     public GlobalChance chance;
 
 
-    [HideInInspector] public string tooltipHeader;            //derived from effects
-    [HideInInspector] public string tooltipMain;
-    [HideInInspector] public string tooltipDetails;
+    [HideInInspector] public string tooltipHeader;              //tag
+    [HideInInspector] public string tooltipMain;                //derived from effects (good / bad)
+    [HideInInspector] public string tooltipDetails;             //derived from mood Effect
 
 
     public void OnEnable()
     {
-        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(topic != null, "Invalid topic (Null)");
+
     }
 }

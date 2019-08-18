@@ -357,6 +357,13 @@ public class TopicUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
             //ignore button
             buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
+            //initialise ignore Button tooltip
+            if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
+            { tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader; }
+            if (string.IsNullOrEmpty(data.ignoreTooltipMain) == false)
+            { tooltipIgnore.tooltipMain = data.ignoreTooltipMain; }
+            if (string.IsNullOrEmpty(data.ignoreTooltipDetails) == false)
+            { tooltipIgnore.tooltipDetails = data.ignoreTooltipDetails; }
             //Fixed position at screen centre
             Vector3 screenPos = new Vector3();
             screenPos.x = Screen.width / 2;

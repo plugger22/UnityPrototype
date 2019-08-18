@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActCon1Opt2
   m_EditorClassIdentifier: 
-  tag: Actor Contact 1 option 2
+  descriptor: Actor Contact 1 option 2
+  tag: Get rid of them
   text: Tell [Actor] to get rid of them
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects: []
-  listOfIgnoreEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  tooltipHeader: 
+  tooltipHeader: Actor Contact 1 option 2
   tooltipMain: 
   tooltipDetails: 

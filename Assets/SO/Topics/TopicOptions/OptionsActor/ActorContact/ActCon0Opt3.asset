@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActCon0Opt3
   m_EditorClassIdentifier: 
-  tag: Actor Contact 0 option 3
+  descriptor: Actor Contact 0 option 3
+  tag: No thanks
   text: No thanks
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects: []
-  listOfIgnoreEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  tooltipHeader: 
+  tooltipHeader: Actor Contact 0 option 3
   tooltipMain: 
   tooltipDetails: 
