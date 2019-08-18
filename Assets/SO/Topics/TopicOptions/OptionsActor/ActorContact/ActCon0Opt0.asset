@@ -17,8 +17,11 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 4b4715aca1639a9469efedeca44dbaff, type: 2}
-  listOfBadEffects: []
+  - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
+  - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
+  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   tooltipHeader: Pay them

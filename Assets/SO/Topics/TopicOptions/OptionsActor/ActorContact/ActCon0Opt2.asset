@@ -16,10 +16,11 @@ MonoBehaviour:
   text: Offer them the chance to volunteer
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  tooltipHeader: Actor Contact 0 option 2
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: Volunteer
+  tooltipMain: Unknown Effects
+  tooltipDetails: Unknown Mood Effect

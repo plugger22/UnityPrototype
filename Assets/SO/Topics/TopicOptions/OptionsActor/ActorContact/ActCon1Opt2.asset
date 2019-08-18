@@ -17,9 +17,11 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 997a659afd255764aab98908dcbcb192, type: 2}
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  tooltipHeader: Actor Contact 1 option 2
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: Get rid of them
+  tooltipMain: Unknown Effects
+  tooltipDetails: Unknown Mood Effect
