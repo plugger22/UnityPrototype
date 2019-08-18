@@ -1012,7 +1012,6 @@ public class TopicManager : MonoBehaviour
         listOfTopicTypesTurn.Clear();
         listOfTypePool.Clear();
         listOfSubTypePool.Clear();
-        listOfTopicPool.Clear();
     }
     #endregion
 
@@ -1145,6 +1144,9 @@ public class TopicManager : MonoBehaviour
     private void GetTopic(GlobalSide playerSide)
     {
         int numOfEntries;
+        //clear pool (do so here as doing in ResetTopicAdmin was causing issues with debugTopicPool
+        listOfTopicPool.Clear();
+        //valid subType present
         if (turnTopicSubType != null)
         {
             List<Topic> listOfPotentialTopics = new List<Topic>();
@@ -1212,9 +1214,11 @@ public class TopicManager : MonoBehaviour
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                         break;
                 }
+
                 //SubType should have provided a list of topics ready for a random draw
                 if (listOfPotentialTopics != null)
                 {
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: turnTopicSubType \"{0}\", listOfPotential topics {1} record{2}", turnTopicSubType.name, listOfPotentialTopics.Count, "\n");
                     int count = listOfPotentialTopics.Count;
                     //shouldn't be empty
                     if (count > 0)
@@ -1300,6 +1304,9 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
+        //debug
+        foreach(Topic topic in listOfTopics)
+        { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: \"{0}\"{1}", topic.name, "\n"); }
         return listOfTopics;
     }
     #endregion
@@ -1720,15 +1727,49 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
+            TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
             TopicUIData data = new TopicUIData();
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
             if (debugTopicPool != null)
             {
-                //select one of topics from the debug pool at random (enables testing of a small subset of topics)
-                turnTopicSubType = debugTopicPool.subType;
-                if (turnTopicSubType != null)
-                { GetTopic(GameManager.instance.sideScript.PlayerSide);  }
+                bool isProceed = false;
+                //check at least one topic in pool is live
+                foreach(Topic topic in debugTopicPool.listOfTopics)
+                { if (topic.status == Status.Live) { isProceed = true; break; } }
+                if (isProceed == true)
+                {
+                    //check subType criteria
+                    if (CheckSubTypeCriteria(debugTopicPool.subType) == false)
+                    {
+                        isProceed = false;
+                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: subType \"{0}\" FAILED CRITERIA check{1}", debugTopicPool.subType.name, "\n");
+                    }
+
+                    if (isProceed == true)
+                    {
+                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: debugTopicPool IN USE{0}", "\n");
+                        //select one of topics from the debug pool at random (enables testing of a small subset of topics)
+                        turnTopicSubType = debugTopicPool.subType;
+                        if (turnTopicSubType != null)
+                        { GetTopic(GameManager.instance.sideScript.PlayerSide); }
+                        if (turnTopic != null)
+                        {
+                            //valid debug topic, align the rest with topic
+                            turnTopicType = debugTopicPool.type;
+                            turnTopicSubSubType = debugTopicPool.subSubType;
+                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: VALID debug Topic{0}", "\n");
+                        }
+                        else
+                        {
+                            //revert back to normally selected topic
+                            turnTopicSubType = subTypeNormal;
+                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: REVERT{0}", "\n");
+                        }
+                    }
+                }
+                else { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: No LIVE topics found in debugTopicPool{0}", "\n"); }
             }
+            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
             //use normal or debug topic
             if (turnTopic != null)
             {
@@ -1794,7 +1835,6 @@ public class TopicManager : MonoBehaviour
 
     }
     #endregion
-
 
     #region SetTopicOutcome
     /// <summary>
