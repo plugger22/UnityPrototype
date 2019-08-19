@@ -1706,13 +1706,11 @@ public class TopicManager : MonoBehaviour
                 //valid topic selected, ignore otherwise
                 if (turnTopic != null)
                 {
-                    UpdateTopicAdmin();
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
                     {
                         InitialiseTopicUI();
                         /*ExecuteTopic();*/
                     }
-                    UpdateTopicStatus();
                 }
             }
         }
@@ -1778,6 +1776,7 @@ public class TopicManager : MonoBehaviour
                 data.text = turnTopic.text;
                 data.sprite = turnSprite;
                 data.listOfOptions = turnTopic.listOfOptions;
+                data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
             }
             else { Debug.LogError("Invalid topic (Null) normal, or debug"); }
             //topic must have at least one option
@@ -1823,7 +1822,6 @@ public class TopicManager : MonoBehaviour
         turnOption = turnTopic.GetOption(optionIndex);
         if (turnOption != null)
         {
-
             //process outcome effects / rolls / messages / etc.
             List<Effect> listOfEffects = new List<Effect>();
             if (turnOption.listOfGoodEffects != null) { listOfEffects.AddRange(turnOption.listOfGoodEffects); }
@@ -1844,6 +1842,8 @@ public class TopicManager : MonoBehaviour
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                //top text
+                builderTop.AppendFormat("{0}{1}{2}", turnTopic.tag, "\n", turnOption.text);
                 //loop effects
                 foreach (Effect effect in listOfEffects)
                 {
@@ -1853,12 +1853,6 @@ public class TopicManager : MonoBehaviour
                         effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
                         if (effectReturn != null)
                         {
-                            //builderTop
-                            if (string.IsNullOrEmpty(effectReturn.topText) == false)
-                            {
-                                if (builderTop.Length > 0) { builderTop.AppendLine(); }
-                                builderTop.Append(effectReturn.topText);
-                            }
                             //builderBottom
                             if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                             {
@@ -1884,12 +1878,78 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid listOfEffects (Null or Empty) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
             //outcome dialogue
             SetTopicOutcome(builderTop, builderBottom);
-
-            //tidy up stuff related to chosen topic option / stats / histor / etc.
-
+            //tidy up
+            ProcessTopicAdmin();
         }
         else { Debug.LogWarningFormat("Invalid TopicOption (Null) for optionIndex \"{0}\"", optionIndex); }
 
+    }
+    #endregion
+
+
+    #region ProcessIgnore
+    /// <summary>
+    /// Process Ignore button clicked where topic.listOfIgnoreEffects present
+    /// </summary>
+    public void ProcessIgnore()
+    {
+
+        //process outcome effects / rolls / messages / etc.
+        List<Effect> listOfEffects = new List<Effect>();
+        if (turnTopic.listOfIgnoreEffects != null) { listOfEffects.AddRange(turnTopic.listOfIgnoreEffects); }
+        //two builders for top and bottom texts
+        StringBuilder builderTop = new StringBuilder();
+        StringBuilder builderBottom = new StringBuilder();
+        //check valid effects present
+        if (listOfEffects != null && listOfEffects.Count > 0)
+        {
+            //set up
+            EffectDataReturn effectReturn = new EffectDataReturn();
+
+            //pass through data package
+            EffectDataInput dataInput = new EffectDataInput();
+            dataInput.originText = string.Format("{0}, IGNORE", turnTopic.tag);
+            dataInput.side = GameManager.instance.sideScript.PlayerSide;
+            //use Player node as default placeholder (actual tagNodeID is used)
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+            //top text
+            builderTop.AppendFormat("{0}{1}{2}", turnTopic.tag, "\n", "Ignored");
+            //loop effects
+            foreach (Effect effect in listOfEffects)
+            {
+                if (node != null)
+                {
+                    //process effect
+                    effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                    if (effectReturn != null)
+                    {
+                        //builderBottom
+                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                        {
+                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
+                            builderBottom.Append(effectReturn.bottomText);
+                        }
+                        //exit effect loop on error
+                        if (effectReturn.errorFlag == true) { break; }
+                    }
+                    else
+                    {
+                        builderTop.AppendLine();
+                        builderTop.Append("Error");
+                        builderBottom.AppendLine();
+                        builderBottom.Append("Error");
+                        effectReturn.errorFlag = true;
+                        break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for IGNORE", effect.name); }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null or Empty) for topic \"{0}\", IGNORE", turnTopic.name); }
+        //outcome dialogue
+        SetTopicOutcome(builderTop, builderBottom);
+        //tidy up
+        ProcessTopicAdmin();
     }
     #endregion
 
@@ -1903,13 +1963,19 @@ public class TopicManager : MonoBehaviour
         //default sprite
         if (sprite == null) { sprite = GameManager.instance.guiScript.infoSprite; }
         if (top == null || top.Length == 0)
-        { upperText = GameManager.instance.colourScript.GetFormattedString(string.Format("{0}{1}{2}", turnTopic.name, "\n", turnOption.tag), ColourType.neutralText); }
+        {
+            if (string.IsNullOrEmpty(turnOption.tag) == false)
+            { upperText = GameManager.instance.colourScript.GetFormattedString(string.Format("{0}{1}{2}", turnTopic.name, "\n", turnOption.tag), ColourType.neutralText); }
+            else { upperText = string.Format("{0} Unknown", turnOption.name); }
+        }
         else { upperText = top.ToString(); }
         if (bottom == null || bottom.Length == 0)
-        { lowerText = GameManager.instance.colourScript.GetFormattedString(turnOption.text, ColourType.salmonText); }
+        {
+            if (string.IsNullOrEmpty(turnOption.text) == false)
+            { lowerText = GameManager.instance.colourScript.GetFormattedString(turnOption.text, ColourType.salmonText); }
+            else { lowerText = string.Format("{0} Unknown", turnOption.name); }
+        }
         else { lowerText = bottom.ToString(); }
-
-        //TO DO -> give actual selected option outcome 
 
         ModalOutcomeDetails details = new ModalOutcomeDetails()
         {
@@ -2030,6 +2096,18 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region ProcessTopicAdmin
+    /// <summary>
+    /// tidy up at end of topic (option could have been selected or ignore button pressed (with or without ignore effects)
+    /// </summary>
+    public void ProcessTopicAdmin()
+    {
+        //tidy up stuff related to chosen topic option / stats / histor / etc.
+        UpdateTopicStatus();
+        UpdateTopicAdmin();
+    }
+    #endregion
+
     #region UpdateTopicAdmin
     /// <summary>
     /// handles all admin once a topic has been displayed and the user has chosen an option (or not, then default option selected)
@@ -2095,21 +2173,21 @@ public class TopicManager : MonoBehaviour
                     }
                 }
             }
-
-            //topicHistory
-            HistoryTopic history = new HistoryTopic()
+            if (turnOption != null)
             {
-                turn = turn,
-                numSelect = listOfTopicTypesTurn.Count,
-                topicType = turnTopicType.name,
-                topicSubType = turnTopicSubType.name,
-                topic = turnTopic.name,
-                option = "?"
-
-                //TO DO -> option selected
-
-            };
-            GameManager.instance.dataScript.AddTopicHistory(history);
+                //topicHistory
+                HistoryTopic history = new HistoryTopic()
+                {
+                    turn = turn,
+                    numSelect = listOfTopicTypesTurn.Count,
+                    topicType = turnTopicType.name,
+                    topicSubType = turnTopicSubType.name,
+                    topic = turnTopic.name,
+                    option = turnOption.name
+                };
+                GameManager.instance.dataScript.AddTopicHistory(history);
+            }
+            else { Debug.LogWarningFormat("Invalid turnOption (Null) for topic \"{0}\"", turnTopic.name); }
             //stats
             switch (turnTopic.group.name)
             {

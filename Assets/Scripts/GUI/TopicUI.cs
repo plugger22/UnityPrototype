@@ -226,7 +226,8 @@ public class TopicUI : MonoBehaviour
                 CloseTopicUI((int)Param);
                 break;
             case EventType.TopicDisplayIgnore:
-                CloseTopicUI((int)Param);
+                ProcessTopicIgnore();
+                /*CloseTopicUI((int)Param);*/
                 break;
             case EventType.StartTurnEarly:
                 StartTurnEarly();
@@ -404,6 +405,35 @@ public class TopicUI : MonoBehaviour
         {
             //No outcome -> close topicUI and go straight to MainInfoApp
             GameManager.instance.guiScript.waitUntilDone = false;
+        }
+    }
+
+    /// <summary>
+    /// Ignore button pressed, no option selected
+    /// </summary>
+    private void ProcessTopicIgnore()
+    {
+        if (dataPackage != null)
+        {
+            if (dataPackage.listOfIgnoreEffects != null && dataPackage.listOfIgnoreEffects.Count > 0)
+            {
+                //close TopicUI (with an arbitrary parameter > -1 to indicate outcome window required)
+                CloseTopicUI(1);
+                //actual processing of selected option is handled by topicManager.cs
+                GameManager.instance.topicScript.ProcessIgnore();
+            }
+            else
+            {
+                //close TopicUI without an Outcome dialogue
+                CloseTopicUI(-1);
+                GameManager.instance.topicScript.ProcessTopicAdmin();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid TopicUIData package (Null)");
+            //close TopicUI without an Outcome dialogue
+            CloseTopicUI(-1);
         }
     }
 

@@ -1013,454 +1013,545 @@ public class EffectManager : MonoBehaviour
                 }
             }
             else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
-            //what's affected?
-            switch (effect.outcome.name)
+            //Topic effects
+            if (effect.apply.name.Equals("Topic") == true)
             {
-                //
-                // - - - Node Data effects (both sides)
-                //
-                case "StatusSpiders":
-                case "StatusTracers":
-                case "StatusTeams":
-                case "StatusContacts":
-                case "NodeSecurity":
-                case "NodeStability":
-                case "NodeSupport":
-                    if (node != null)
-                    {
-                        EffectDataResolve resolve = ResolveNodeData(effect, node, dataInput);
-                        if (resolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = resolve.topText;
-                            effectReturn.bottomText = resolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                        effectReturn.errorFlag = true;
-                    }
-                    break;
-                //
-                // - - - Conditions (both sides) - - -
-                //
-                case "ConditionStressed":
-                case "ConditionIncompetent":
-                case "ConditionCorrupt":
-                case "ConditionQuestionable":
-                case "ConditionBlackmailer":
-                case "ConditionStar":
-                case "ConditionGroupBad":
-                case "ConditionGroupGood":
-                    if (node != null)
-                    {
-                        //it's OK to pass a null actor provided it's a player condition
-                        EffectDataResolve resolve = ResolveConditionData(effect, node, dataInput, actor);
-                        if (resolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = resolve.topText;
-                            effectReturn.bottomText = resolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                        effectReturn.errorFlag = true;
-                    }
-                    break;
-                //
-                // - - - Player Actions - - -
-                //
-                case "PlayerActions":
-                    EffectDataResolve resolvePlayer = ResolvePlayerData(effect, dataInput);
-                    if (resolvePlayer.isError == true)
-                    { effectReturn.errorFlag = true; }
-                    else
-                    {
-                        effectReturn.topText = resolvePlayer.topText;
-                        effectReturn.bottomText = resolvePlayer.bottomText;
-                        effectReturn.isAction = true;
-                    }
-                    break;
-                //
-                // - - - Manage - - -
-                //
-                case "ActorDismissed":
-                case "ActorDisposedOff":
-                case "ActorPromoted":
-                case "ActorToReserves":
-                case "ManageDismissRenown":
-                case "ManageDisposeRenown":
-                case "ManageReserveRenown":
-                case "UnhappyTimerCurrent":
-                case "ActorPromised":
-                    if (actor != null)
-                    {
-                        EffectDataResolve resolve = ResolveManageData(effect, actor);
-                        if (resolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = resolve.topText;
-                            effectReturn.bottomText = resolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    break;
-                //
-                // - - - Player Mood effects - - -
-                //
-                case "AgreeablenessBad":
-                case "AgreeablenessGood":
-                case "ConscientiousnessBad":
-                case "ConscientiousnessGood":
-                case "ExtroversionBad":
-                case "ExtroversionGood":
-                case "NeurotiscismBad":
-                case "NeurotiscismGood":
-                case "OpennessBad":
-                case "OpennessGood":
-                    EffectDataResolve resolveMood = ResolveMoodData(effect, dataInput);
-                    if (resolveMood.isError == true)
-                    { effectReturn.errorFlag = true; }
-                    else
-                    {
-                        effectReturn.topText = resolveMood.topText;
-                        effectReturn.bottomText = resolveMood.bottomText;
-                        effectReturn.isAction = true;
-                    }
-                    break;
-                //
-                // - - - Special Actor Effects - - -
-                //
-                case "ActorResigns":
-                case "ActorKills":
-                    if (actor != null)
-                    {
-                        EffectDataResolve resolve = ResolveSpecialActorEffect(effect, actor);
-                        if (resolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = resolve.topText;
-                            effectReturn.bottomText = resolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    break;
-
-                //
-                // - - - Secrets - - -
-                //
-                case "Secret":
-                    //Remove a random secret from Player (removes all instances) or Actor (removes local instance only)
-                    if (actor == null)
-                    {
-                        //Player
-                        Secret secret = GameManager.instance.playerScript.GetRandomCurrentSecret();
-                        if (secret != null)
-                        {
-                            secret.status = gameAPI.SecretStatus.Deleted;
-                            secret.deletedWhen = GameManager.instance.turnScript.Turn;
-                            //remove secret from game
-                            if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
-                            { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
-                            else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secret.tag, colourEnd); }
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    else
-                    {
-                        //Actor
-                        Secret secret = actor.GetRandomCurrentSecret();
-                        if (secret != null)
-                        {
-                            //removes secret from actor only (could still be with other actors and will always be with the player)
-                            actor.RemoveSecret(secret.name);
-                            effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted from {2}{3}", colourGood, secret.tag, actor.arc.name, colourEnd);
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    break;
-                //
-                // - - - Other - - -
-                //
-                case "Recruit":
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
-                    break;
-                case "ConnectionSecurity":
-                    if (node != null)
-                    {
-                        EffectDataResolve resolve = ResolveConnectionData(effect, node, dataInput);
-                        if (resolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = resolve.topText;
-                            effectReturn.bottomText = resolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                        effectReturn.errorFlag = true;
-                    }
-                    break;
-                case "Motivation":
-                    switch (effect.operand.name)
-                    {
-                        case "Add":
-                            switch (effect.apply.name)
-                            {
-                                case "ActorCurrent":
-                                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                                    motivation += effect.value;
-                                    motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
-                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
-                                    break;
-                                case "ActorAll":
-                                    //all actors have their motivation raised
-                                    ResolveGroupActorEffect(effect, dataInput, actor);
-                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                                    break;
-                                default:
-                                    Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
-                                    break;
-                            }
-                            break;
-                        case "Subtract":
-                            switch (effect.apply.name)
-                            {
-                                case "ActorCurrent":
-                                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                                    motivation -= effect.value;
-                                    motivation = Mathf.Max(0, motivation);
-                                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
-                                    break;
-                                case "ActorAll":
-                                    //all actors have their motivation lowered
-                                    ResolveGroupActorEffect(effect, dataInput, actor);
-                                    effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
-                                    break;
-                                default:
-                                    Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
-                                    break;
-                            }
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                            effectReturn.errorFlag = true;
-                            break;
-                    }
-
-                    break;
-                case "CityLoyalty":
-                    //depends on player side
-                    int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
-                    switch (dataInput.side.level)
-                    {
-                        case 1:
-                            //Authority
-                            switch (effect.typeOfEffect.level)
-                            {
-                                case 2:
-                                    //Good 
-                                    cityLoyalty += effect.value;
-                                    cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                                    effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourGood, effect.value, colourEnd);
-                                    break;
-                                case 0:
-                                    //Bad 
-                                    cityLoyalty -= effect.value;
-                                    cityLoyalty = Mathf.Max(0, cityLoyalty);
-                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                                    effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourBad, effect.value, colourEnd);
-                                    break;
-                                default:
-                                    Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
-                                    effectReturn.errorFlag = true;
-                                    break;
-                            }
-                            break;
-                        case 2:
-                            //Resistance
-                            switch (effect.typeOfEffect.level)
-                            {
-                                case 2:
-                                    //Good
-                                    cityLoyalty -= effect.value;
-                                    cityLoyalty = Mathf.Max(0, cityLoyalty);
-                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                                    effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourGood, effect.value, colourEnd);
-                                    break;
-                                case 0:
-                                    //Bad
-                                    cityLoyalty += effect.value;
-                                    cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-                                    GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                                    effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
-                                    effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourBad, effect.value, colourEnd);
-                                    break;
-                                default:
-                                    Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
-                                    effectReturn.errorFlag = true;
-                                    break;
-                            }
-                            break;
-                        default:
-                            Debug.LogWarningFormat("Invalid side \"{0}\"", dataInput.side.name);
-                            effectReturn.errorFlag = true;
-                            break;
-                    }
+                EffectDataResolve effectResolve = ResolveTopicData(effect, dataInput);
+                if (effectResolve.isError == true)
+                { effectReturn.errorFlag = true; }
+                else
+                {
+                    effectReturn.topText = effectResolve.topText;
+                    effectReturn.bottomText = effectResolve.bottomText;
                     effectReturn.isAction = true;
-                    break;
-                case "FactionApproval":
-                    switch (effect.operand.name)
-                    {
-                        case "Add":
-                            GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
-                            effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
-                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Faction Approval +{1}{2}", colourGood, effect.value, colourEnd);
-                            break;
-                        case "Subtract":
-                            GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
-                            effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
-                                GameManager.instance.factionScript.factionAuthority.name, colourEnd);
-                            effectReturn.bottomText = string.Format("{0}Faction Approval -{1}{2}", colourBad, effect.value, colourEnd);
-                            break;
-                        default:
-                            Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
-                            effectReturn.errorFlag = true;
-                            break;
-                    }
-                    effectReturn.isAction = true;
-                    break;
-                //
-                // - - - Resistance effects
-                //
-                case "Tracer":
-                    if (node != null)
-                    {
-                        node.AddTracer();
-
-                        /*node.isTracerActive = true;
-                        //neighbouring nodes made active
-                        List<Node> listOfNeighbours = node.GetNeighbouringNodes();
-                        if (listOfNeighbours != null)
+                }
+            }
+            //Non-Topic effect
+            else
+            {
+                //what's affected?
+                switch (effect.outcome.name)
+                {
+                    //
+                    // - - - Node Data effects (both sides)
+                    //
+                    case "StatusSpiders":
+                    case "StatusTracers":
+                    case "StatusTeams":
+                    case "StatusContacts":
+                    case "NodeSecurity":
+                    case "NodeStability":
+                    case "NodeSupport":
+                        if (node != null)
                         {
-                            foreach (Node nodeNeighbour in listOfNeighbours)
+                            EffectDataResolve resolve = ResolveNodeData(effect, node, dataInput);
+                            if (resolve.isError == true)
+                            { effectReturn.errorFlag = true; }
+                            else
                             {
-                                nodeNeighbour.isTracerActive = true;
-                                if (nodeNeighbour.isSpider == true)
-                                { nodeNeighbour.isSpiderKnown = true; }
+                                effectReturn.topText = resolve.topText;
+                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.isAction = true;
                             }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            effectReturn.errorFlag = true;
+                        }
+                        break;
+                    //
+                    // - - - Conditions (both sides) - - -
+                    //
+                    case "ConditionStressed":
+                    case "ConditionIncompetent":
+                    case "ConditionCorrupt":
+                    case "ConditionQuestionable":
+                    case "ConditionBlackmailer":
+                    case "ConditionStar":
+                    case "ConditionGroupBad":
+                    case "ConditionGroupGood":
+                        if (node != null)
+                        {
+                            //it's OK to pass a null actor provided it's a player condition
+                            EffectDataResolve resolve = ResolveConditionData(effect, node, dataInput, actor);
+                            if (resolve.isError == true)
+                            { effectReturn.errorFlag = true; }
+                            else
+                            {
+                                effectReturn.topText = resolve.topText;
+                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            effectReturn.errorFlag = true;
+                        }
+                        break;
+                    //
+                    // - - - Player Actions - - -
+                    //
+                    case "PlayerActions":
+                        EffectDataResolve resolvePlayer = ResolvePlayerData(effect, dataInput);
+                        if (resolvePlayer.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
+                        {
+                            effectReturn.topText = resolvePlayer.topText;
+                            effectReturn.bottomText = resolvePlayer.bottomText;
                             effectReturn.isAction = true;
                         }
-                        else { Debug.LogError("Invalid listOfNeighbours (Null)"); }*/
-
-                        //dialogue
-                        effectReturn.topText = string.Format("{0}A Tracer has been successfully inserted{1}", colourText, colourEnd);
-                        effectReturn.bottomText = string.Format("{0}Any Spider at the district is revealed{1}", colourEffect, colourEnd);
-                    }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                        effectReturn.errorFlag = true;
-                    }
-                    break;
-                case "Gear":
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
-                    break;
-                case "TargetInfo":
-                    //TO DO
-                    break;
-                case "NeutraliseTeam":
-                    //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
-                    break;
-                case "Invisibility":
-                    //raise/lower invisibility of actor or Player
-                    if (node != null)
-                    {
-                        bool isGearUsed = false;
-                        string reason = dataInput.originText;
-                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                        break;
+                    //
+                    // - - - Manage - - -
+                    //
+                    case "ActorDismissed":
+                    case "ActorDisposedOff":
+                    case "ActorPromoted":
+                    case "ActorToReserves":
+                    case "ManageDismissRenown":
+                    case "ManageDisposeRenown":
+                    case "ManageReserveRenown":
+                    case "UnhappyTimerCurrent":
+                    case "ActorPromised":
+                        if (actor != null)
                         {
-                            //
-                            // - - - Player Invisibility effect - - -
-                            //
-                            switch (effect.operand.name)
+                            EffectDataResolve resolve = ResolveManageData(effect, actor);
+                            if (resolve.isError == true)
+                            { effectReturn.errorFlag = true; }
+                            else
                             {
-                                case "Add":
-                                    if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
-                                    {
-                                        //adds a variable amount
-                                        int invis = GameManager.instance.playerScript.Invisibility;
-                                        invis += effect.value;
-                                        invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
-                                        GameManager.instance.playerScript.Invisibility = invis;
-                                    }
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd);
-                                    break;
-                                case "Subtract":
-                                    //does player have any invisibility type gear?
-                                    string gearName = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
-                                    if (string.IsNullOrEmpty(gearName) == false)
-                                    {
-                                        //gear present -> No drop in Invisibility
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
-                                        if (gear != null)
+                                effectReturn.topText = resolve.topText;
+                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        break;
+                    //
+                    // - - - Player Mood effects - - -
+                    //
+                    case "AgreeablenessBad":
+                    case "AgreeablenessGood":
+                    case "ConscientiousnessBad":
+                    case "ConscientiousnessGood":
+                    case "ExtroversionBad":
+                    case "ExtroversionGood":
+                    case "NeurotiscismBad":
+                    case "NeurotiscismGood":
+                    case "OpennessBad":
+                    case "OpennessGood":
+                        EffectDataResolve resolveMood = ResolveMoodData(effect, dataInput);
+                        if (resolveMood.isError == true)
+                        { effectReturn.errorFlag = true; }
+                        else
+                        {
+                            effectReturn.topText = resolveMood.topText;
+                            effectReturn.bottomText = resolveMood.bottomText;
+                            effectReturn.isAction = true;
+                        }
+                        break;
+                    //
+                    // - - - Special Actor Effects - - -
+                    //
+                    case "ActorResigns":
+                    case "ActorKills":
+                        if (actor != null)
+                        {
+                            EffectDataResolve resolve = ResolveSpecialActorEffect(effect, actor);
+                            if (resolve.isError == true)
+                            { effectReturn.errorFlag = true; }
+                            else
+                            {
+                                effectReturn.topText = resolve.topText;
+                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        break;
+
+                    //
+                    // - - - Secrets - - -
+                    //
+                    case "Secret":
+                        //Remove a random secret from Player (removes all instances) or Actor (removes local instance only)
+                        if (actor == null)
+                        {
+                            //Player
+                            Secret secret = GameManager.instance.playerScript.GetRandomCurrentSecret();
+                            if (secret != null)
+                            {
+                                secret.status = gameAPI.SecretStatus.Deleted;
+                                secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                                //remove secret from game
+                                if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
+                                { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
+                                else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secret.tag, colourEnd); }
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        else
+                        {
+                            //Actor
+                            Secret secret = actor.GetRandomCurrentSecret();
+                            if (secret != null)
+                            {
+                                //removes secret from actor only (could still be with other actors and will always be with the player)
+                                actor.RemoveSecret(secret.name);
+                                effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted from {2}{3}", colourGood, secret.tag, actor.arc.name, colourEnd);
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        break;
+                    //
+                    // - - - Other - - -
+                    //
+                    case "Recruit":
+                        //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
+                        break;
+                    case "ConnectionSecurity":
+                        if (node != null)
+                        {
+                            EffectDataResolve resolve = ResolveConnectionData(effect, node, dataInput);
+                            if (resolve.isError == true)
+                            { effectReturn.errorFlag = true; }
+                            else
+                            {
+                                effectReturn.topText = resolve.topText;
+                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            effectReturn.errorFlag = true;
+                        }
+                        break;
+                    case "Motivation":
+                        switch (effect.operand.name)
+                        {
+                            case "Add":
+                                switch (effect.apply.name)
+                                {
+                                    case "ActorCurrent":
+                                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                        motivation += effect.value;
+                                        motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                                        actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
+                                        break;
+                                    case "ActorAll":
+                                        //all actors have their motivation raised
+                                        ResolveGroupActorEffect(effect, dataInput, actor);
+                                        effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                        break;
+                                    default:
+                                        Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
+                                        break;
+                                }
+                                break;
+                            case "Subtract":
+                                switch (effect.apply.name)
+                                {
+                                    case "ActorCurrent":
+                                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                        motivation -= effect.value;
+                                        motivation = Mathf.Max(0, motivation);
+                                        actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
+                                        break;
+                                    case "ActorAll":
+                                        //all actors have their motivation lowered
+                                        ResolveGroupActorEffect(effect, dataInput, actor);
+                                        effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                        break;
+                                    default:
+                                        Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
+                                        break;
+                                }
+                                break;
+                            default:
+                                Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                                effectReturn.errorFlag = true;
+                                break;
+                        }
+
+                        break;
+                    case "CityLoyalty":
+                        //depends on player side
+                        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+                        switch (dataInput.side.level)
+                        {
+                            case 1:
+                                //Authority
+                                switch (effect.typeOfEffect.level)
+                                {
+                                    case 2:
+                                        //Good 
+                                        cityLoyalty += effect.value;
+                                        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourGood, effect.value, colourEnd);
+                                        break;
+                                    case 0:
+                                        //Bad 
+                                        cityLoyalty -= effect.value;
+                                        cityLoyalty = Mathf.Max(0, cityLoyalty);
+                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourBad, effect.value, colourEnd);
+                                        break;
+                                    default:
+                                        Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
+                                        effectReturn.errorFlag = true;
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                //Resistance
+                                switch (effect.typeOfEffect.level)
+                                {
+                                    case 2:
+                                        //Good
+                                        cityLoyalty -= effect.value;
+                                        cityLoyalty = Mathf.Max(0, cityLoyalty);
+                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourGood, effect.value, colourEnd);
+                                        break;
+                                    case 0:
+                                        //Bad
+                                        cityLoyalty += effect.value;
+                                        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourBad, effect.value, colourEnd);
+                                        break;
+                                    default:
+                                        Debug.LogWarningFormat("Invalid typeOfEffect \"{0}\"", effect.typeOfEffect.name);
+                                        effectReturn.errorFlag = true;
+                                        break;
+                                }
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid side \"{0}\"", dataInput.side.name);
+                                effectReturn.errorFlag = true;
+                                break;
+                        }
+                        effectReturn.isAction = true;
+                        break;
+                    case "FactionApproval":
+                        switch (effect.operand.name)
+                        {
+                            case "Add":
+                                GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
+                                effectReturn.topText = string.Format("{0}The {1} have a better opinion of you{2}", colourText,
+                                    GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Faction Approval +{1}{2}", colourGood, effect.value, colourEnd);
+                                break;
+                            case "Subtract":
+                                GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
+                                effectReturn.topText = string.Format("{0}The {1}'s opinion of you has diminished{2}", colourText,
+                                    GameManager.instance.factionScript.factionAuthority.name, colourEnd);
+                                effectReturn.bottomText = string.Format("{0}Faction Approval -{1}{2}", colourBad, effect.value, colourEnd);
+                                break;
+                            default:
+                                Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
+                                effectReturn.errorFlag = true;
+                                break;
+                        }
+                        effectReturn.isAction = true;
+                        break;
+                    //
+                    // - - - Resistance effects
+                    //
+                    case "Tracer":
+                        if (node != null)
+                        {
+                            node.AddTracer();
+
+                            /*node.isTracerActive = true;
+                            //neighbouring nodes made active
+                            List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+                            if (listOfNeighbours != null)
+                            {
+                                foreach (Node nodeNeighbour in listOfNeighbours)
+                                {
+                                    nodeNeighbour.isTracerActive = true;
+                                    if (nodeNeighbour.isSpider == true)
+                                    { nodeNeighbour.isSpiderKnown = true; }
+                                }
+                                effectReturn.isAction = true;
+                            }
+                            else { Debug.LogError("Invalid listOfNeighbours (Null)"); }*/
+
+                            //dialogue
+                            effectReturn.topText = string.Format("{0}A Tracer has been successfully inserted{1}", colourText, colourEnd);
+                            effectReturn.bottomText = string.Format("{0}Any Spider at the district is revealed{1}", colourEffect, colourEnd);
+                        }
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            effectReturn.errorFlag = true;
+                        }
+                        break;
+                    case "Gear":
+                        //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
+                        break;
+                    case "TargetInfo":
+                        //TO DO
+                        break;
+                    case "NeutraliseTeam":
+                        //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
+                        break;
+                    case "Invisibility":
+                        //raise/lower invisibility of actor or Player
+                        if (node != null)
+                        {
+                            bool isGearUsed = false;
+                            string reason = dataInput.originText;
+                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            {
+                                //
+                                // - - - Player Invisibility effect - - -
+                                //
+                                switch (effect.operand.name)
+                                {
+                                    case "Add":
+                                        if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
                                         {
-                                            GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
-                                            effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
-                                                colourEnd, colourNormal, colourEnd);
+                                            //adds a variable amount
+                                            int invis = GameManager.instance.playerScript.Invisibility;
+                                            invis += effect.value;
+                                            invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
+                                            GameManager.instance.playerScript.Invisibility = invis;
                                         }
-                                        else { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
-                                    }
-                                    else
-                                    {
-                                        //No gear present
-                                        int invisibility = GameManager.instance.playerScript.Invisibility;
-                                        //condition TAGGED
-                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
+                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd);
+                                        break;
+                                    case "Subtract":
+                                        //does player have any invisibility type gear?
+                                        string gearName = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
+                                        if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            //invisibility auto Zero
-                                            invisibility = 0;
-                                            //Immediate notification. AI flag set. Auto applies when TAGGED
-                                            effectReturn.bottomText =
-                                                string.Format("{0}Player Invisibility 0 (TAGGED){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                            reason = "TAGGED condition";
-                                            GameManager.instance.aiScript.immediateFlagResistance = true;
+                                            //gear present -> No drop in Invisibility
+                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                            if (gear != null)
+                                            {
+                                                GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
+                                                effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
+                                                    colourEnd, colourNormal, colourEnd);
+                                            }
+                                            else { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
                                         }
-                                        //NOT Tagged
                                         else
                                         {
+                                            //No gear present
+                                            int invisibility = GameManager.instance.playerScript.Invisibility;
+                                            //condition TAGGED
+                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
+                                            {
+                                                //invisibility auto Zero
+                                                invisibility = 0;
+                                                //Immediate notification. AI flag set. Auto applies when TAGGED
+                                                effectReturn.bottomText =
+                                                    string.Format("{0}Player Invisibility 0 (TAGGED){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                                    colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                reason = "TAGGED condition";
+                                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                            }
+                                            //NOT Tagged
+                                            else
+                                            {
+                                                //double effect if spider is present
+                                                if (node.isSpider == true)
+                                                {
+                                                    invisibility -= 2;
+                                                    if (invisibility >= 0)
+                                                    { effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd); }
+                                                    else
+                                                    {
+                                                        //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
+                                                        effectReturn.bottomText =
+                                                            string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                                            colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    invisibility -= 1;
+                                                    if (invisibility >= 0)
+                                                    { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd); }
+                                                    else
+                                                    {
+                                                        //immediate notification. AI flag set. Applies if player invis was 0 before action taken
+                                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
+                                                            colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                                                    }
+
+                                                }
+                                            }
+                                            //mincap zero
+                                            invisibility = Mathf.Max(0, invisibility);
+                                            GameManager.instance.playerScript.Invisibility = invisibility;
+                                        }
+                                        //AI activity message
+                                        if (isGearUsed == false)
+                                        {
+                                            int delay;
+                                            if (node.isSpider == true) { delay = delayYesSpider; }
+                                            else { delay = delayNoSpider; }
+                                            GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
+                                                dataInput.originText), node, GameManager.instance.playerScript.actorID, delay);
+                                            //AI Immediate message
+                                            if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                                            {
+                                                GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
+                                                    dataInput.originText), reason, node.nodeID, -1);
+                                            }
+                                        }
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                //
+                                // - - - Actor Invisibility effect - - -
+                                //
+                                if (actor != null)
+                                {
+                                    int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
+                                    dataBefore = actor.GetDatapoint(ActorDatapoint.Invisibility2);
+                                    switch (effect.operand.name)
+                                    {
+                                        case "Add":
+                                            if (invisibility < GameManager.instance.actorScript.maxStatValue)
+                                            {
+                                                //adds a variable amount
+                                                invisibility += effect.value;
+                                                invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
+                                                actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
+                                                Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                                                    dataBefore, invisibility, "\n");
+                                            }
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
+                                            break;
+                                        case "Subtract":
                                             //double effect if spider is present
                                             if (node.isSpider == true)
                                             {
                                                 invisibility -= 2;
                                                 if (invisibility >= 0)
-                                                { effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd); }
+                                                { effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourEffect, actor.arc.name, colourEnd); }
                                                 else
                                                 {
-                                                    //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
-                                                    effectReturn.bottomText =
-                                                        string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                        colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                    //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
+                                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                                        colourEffect, actor.arc.name, effect.description, "\n", "\n", colourEnd);
                                                     GameManager.instance.aiScript.immediateFlagResistance = true;
                                                 }
                                             }
@@ -1468,294 +1559,220 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 invisibility -= 1;
                                                 if (invisibility >= 0)
-                                                { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd); }
+                                                { effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd); }
                                                 else
                                                 {
-                                                    //immediate notification. AI flag set. Applies if player invis was 0 before action taken
-                                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
-                                                        colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                                    //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
+                                                    effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                                        colourEffect, actor.arc.name, effect.description, "\n", "\n", colourEnd);
                                                     GameManager.instance.aiScript.immediateFlagResistance = true;
                                                 }
-
                                             }
-                                        }
-                                        //mincap zero
-                                        invisibility = Mathf.Max(0, invisibility);
-                                        GameManager.instance.playerScript.Invisibility = invisibility;
-                                    }
-                                    //AI activity message
-                                    if (isGearUsed == false)
-                                    {
-                                        int delay;
-                                        if (node.isSpider == true) { delay = delayYesSpider; }
-                                        else { delay = delayNoSpider; }
-                                        GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
-                                            dataInput.originText), node, GameManager.instance.playerScript.actorID, delay);
-                                        //AI Immediate message
-                                        if (GameManager.instance.aiScript.immediateFlagResistance == true)
-                                        {
-                                            GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                                dataInput.originText), reason, node.nodeID, -1);
-                                        }
-                                    }
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            //
-                            // - - - Actor Invisibility effect - - -
-                            //
-                            if (actor != null)
-                            {
-                                int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
-                                dataBefore = actor.GetDatapoint(ActorDatapoint.Invisibility2);
-                                switch (effect.operand.name)
-                                {
-                                    case "Add":
-                                        if (invisibility < GameManager.instance.actorScript.maxStatValue)
-                                        {
-                                            //adds a variable amount
-                                            invisibility += effect.value;
-                                            invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
+                                            //mincap zero
+                                            invisibility = Mathf.Max(0, invisibility);
                                             actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
                                             Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                                 dataBefore, invisibility, "\n");
-                                        }
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
-                                        break;
-                                    case "Subtract":
-                                        //double effect if spider is present
-                                        if (node.isSpider == true)
-                                        {
-                                            invisibility -= 2;
-                                            if (invisibility >= 0)
-                                            { effectReturn.bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourEffect, actor.arc.name, colourEnd); }
-                                            else
+                                            //AI activity message
+                                            int delay;
+                                            if (node.isSpider == true) { delay = delayYesSpider; }
+                                            else { delay = delayNoSpider; }
+                                            GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
+                                                dataInput.originText, actor.arc.name), node, actor.actorID, delay);
+                                            //AI Immediate message
+                                            if (GameManager.instance.aiScript.immediateFlagResistance == true)
                                             {
-                                                //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourEffect, actor.arc.name, effect.description, "\n", "\n", colourEnd);
-                                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                                GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
+                                                    dataInput.originText, actor.arc.name), dataInput.originText, node.nodeID, -1, actor.actorID);
                                             }
-                                        }
-                                        else
-                                        {
-                                            invisibility -= 1;
-                                            if (invisibility >= 0)
-                                            { effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd); }
-                                            else
+                                            //Coward trait -> gets Stressed everytime they lose invisibility
+                                            if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
                                             {
-                                                //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
-                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourEffect, actor.arc.name, effect.description, "\n", "\n", colourEnd);
-                                                GameManager.instance.aiScript.immediateFlagResistance = true;
-                                            }
-                                        }
-                                        //mincap zero
-                                        invisibility = Mathf.Max(0, invisibility);
-                                        actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
-                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
-                                            dataBefore, invisibility, "\n");
-                                        //AI activity message
-                                        int delay;
-                                        if (node.isSpider == true) { delay = delayYesSpider; }
-                                        else { delay = delayNoSpider; }
-                                        GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
-                                            dataInput.originText, actor.arc.name), node, actor.actorID, delay);
-                                        //AI Immediate message
-                                        if (GameManager.instance.aiScript.immediateFlagResistance == true)
-                                        {
-                                            GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
-                                                dataInput.originText, actor.arc.name), dataInput.originText, node.nodeID, -1, actor.actorID);
-                                        }
-                                        //Coward trait -> gets Stressed everytime they lose invisibility
-                                        if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
-                                        {
-                                            Condition conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-                                            if (conditionStressed != null)
-                                            {
-                                                if (actor.CheckConditionPresent(conditionStressed) == false)
+                                                Condition conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+                                                if (conditionStressed != null)
                                                 {
-                                                    actor.AddCondition(conditionStressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
-                                                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Stress check", "to become STRESSED due to a loss of Invisibility");
-                                                    StringBuilder builder = new StringBuilder();
-                                                    builder.Append(effectReturn.bottomText);
+                                                    if (actor.CheckConditionPresent(conditionStressed) == false)
+                                                    {
+                                                        actor.AddCondition(conditionStressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
+                                                        GameManager.instance.actorScript.TraitLogMessage(actor, "for a Stress check", "to become STRESSED due to a loss of Invisibility");
+                                                        StringBuilder builder = new StringBuilder();
+                                                        builder.Append(effectReturn.bottomText);
 
-                                                    /*builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
-                                                        colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);*/
-                                                    builder.AppendLine(); builder.AppendLine();
-                                                    builder.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
-                                                        colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
-                                                    effectReturn.bottomText = builder.ToString();
+                                                        /*builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
+                                                            colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);*/
+                                                        builder.AppendLine(); builder.AppendLine();
+                                                        builder.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
+                                                            colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
+                                                        effectReturn.bottomText = builder.ToString();
+                                                    }
                                                 }
+                                                else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                                             }
-                                            else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
-                                        }
-                                        break;
+                                            break;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                                effectReturn.errorFlag = true;
-                            }
+                                else
+                                {
+                                    Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                                    effectReturn.errorFlag = true;
+                                }
 
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                        effectReturn.errorFlag = true;
-                    }
-                    break;
-                //Note: Renown can be in increments of > 1
-                case "Renown":
-                    if (node != null)
-                    {
-
-                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                        {
-                            int playerRenown = GameManager.instance.playerScript.Renown;
-                            //Player effect
-                            switch (effect.operand.name)
-                            {
-                                case "Add":
-                                    playerRenown += effect.value;
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
-                                    break;
-                                case "Subtract":
-                                    playerRenown -= effect.value;
-                                    playerRenown = Mathf.Max(0, playerRenown);
-                                    effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
-                                    break;
                             }
-                            GameManager.instance.playerScript.Renown = playerRenown;
                         }
                         else
                         {
-                            //Actor effect
-                            if (actor != null)
-                            {
+                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            effectReturn.errorFlag = true;
+                        }
+                        break;
+                    //Note: Renown can be in increments of > 1
+                    case "Renown":
+                        if (node != null)
+                        {
 
-                                dataBefore = actor.Renown;
+                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            {
+                                int playerRenown = GameManager.instance.playerScript.Renown;
+                                //Player effect
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
-                                        actor.Renown += effect.value;
-                                        if (actor.CheckTraitEffect(actorDoubleRenown) == true)
-                                        {
-                                            //trait -> renown doubled (only for Add renown)
-                                            actor.Renown += effect.value;
-                                            effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, actor.arc.name, effect.value * 2, colourEnd,
-                                                colourNeutral, actor.GetTrait().tag, colourEnd);
-                                            //logger
-                                            GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
-                                        }
-                                        else
-                                        {
-                                            //no trait
-                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd);
-                                        }
+                                        playerRenown += effect.value;
+                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
                                         break;
                                     case "Subtract":
-                                        actor.Renown -= effect.value;
-                                        actor.Renown = Mathf.Max(0, actor.Renown);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
+                                        playerRenown -= effect.value;
+                                        playerRenown = Mathf.Max(0, playerRenown);
+                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
                                         break;
                                 }
-                                Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
+                                GameManager.instance.playerScript.Renown = playerRenown;
                             }
                             else
                             {
-                                Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                                effectReturn.errorFlag = true;
+                                //Actor effect
+                                if (actor != null)
+                                {
+
+                                    dataBefore = actor.Renown;
+                                    switch (effect.operand.name)
+                                    {
+                                        case "Add":
+                                            actor.Renown += effect.value;
+                                            if (actor.CheckTraitEffect(actorDoubleRenown) == true)
+                                            {
+                                                //trait -> renown doubled (only for Add renown)
+                                                actor.Renown += effect.value;
+                                                effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, actor.arc.name, effect.value * 2, colourEnd,
+                                                    colourNeutral, actor.GetTrait().tag, colourEnd);
+                                                //logger
+                                                GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
+                                            }
+                                            else
+                                            {
+                                                //no trait
+                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd);
+                                            }
+                                            break;
+                                        case "Subtract":
+                                            actor.Renown -= effect.value;
+                                            actor.Renown = Mathf.Max(0, actor.Renown);
+                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
+                                            break;
+                                    }
+                                    Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
+                                }
+                                else
+                                {
+                                    Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                                    effectReturn.errorFlag = true;
+                                }
+
                             }
-
                         }
-                    }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                        effectReturn.errorFlag = true;
-                    }
-                    break;
-                //
-                // - - - Authority Effects
-                //
-                case "AnyTeam":
-                    // Not needed as handled by a different process, keep for reference
-                    break;
-                case "CivilTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    //insert team
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    //action
-                    effectReturn.isAction = true;
-                    break;
-                case "ControlTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    effectReturn.isAction = true;
-                    break;
-                case "DamageTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    effectReturn.isAction = true;
-                    break;
-                case "ErasureTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    effectReturn.isAction = true;
-                    break;
-                case "MediaTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    effectReturn.isAction = true;
-                    break;
-                case "ProbeTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("PROBE");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    effectReturn.isAction = true;
-                    break;
-                case "SpiderTeam":
-                    teamArcID = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                    GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
-                    //return texts
-                    effectReturn.topText = SetTopTeamText(teamID);
-                    effectReturn.bottomText = SetBottomTeamText(actor);
-                    effectReturn.isAction = true;
-                    break;
+                        else
+                        {
+                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            effectReturn.errorFlag = true;
+                        }
+                        break;
+                    //
+                    // - - - Authority Effects
+                    //
+                    case "AnyTeam":
+                        // Not needed as handled by a different process, keep for reference
+                        break;
+                    case "CivilTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        //insert team
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        //action
+                        effectReturn.isAction = true;
+                        break;
+                    case "ControlTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        effectReturn.isAction = true;
+                        break;
+                    case "DamageTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        effectReturn.isAction = true;
+                        break;
+                    case "ErasureTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        effectReturn.isAction = true;
+                        break;
+                    case "MediaTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        effectReturn.isAction = true;
+                        break;
+                    case "ProbeTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("PROBE");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        effectReturn.isAction = true;
+                        break;
+                    case "SpiderTeam":
+                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
+                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        //return texts
+                        effectReturn.topText = SetTopTeamText(teamID);
+                        effectReturn.bottomText = SetBottomTeamText(actor);
+                        effectReturn.isAction = true;
+                        break;
 
-                default:
-                    Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
-                    effectReturn.errorFlag = true;
-                    break;
+                    default:
+                        Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
+                        effectReturn.errorFlag = true;
+                        break;
+                }
             }
         }
         else
@@ -3219,43 +3236,6 @@ public class EffectManager : MonoBehaviour
         if (effect.belief != null)
         { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
         else { Debug.LogWarningFormat("Invalid belief (Null) for effect \"{0}\" (not processed)", effect.name); }
-        /*//get condition
-        switch (effect.outcome.name)
-        {
-            case "AgreeablenessBad":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.AgreeablenessBad, dataInput.originText + " effect");
-                break;
-            case "AgreeablenessGood":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.AgreeablenessGood, dataInput.originText + " effect");
-                break;
-            case "ConscientiousnessBad":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ConscientiousnessBad, dataInput.originText + " effect");
-                break;
-            case "ConscientiousnessGood":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ConscientiousnessGood, dataInput.originText + " effect");
-                break;
-            case "ExtroversionBad":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ExtroversionBad, dataInput.originText + " effect");
-                break;
-            case "ExtroversionGood":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.ExtroversionGood, dataInput.originText + " effect");
-                break;
-            case "NeurotiscismBad":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.NeurotiscismBad, dataInput.originText + " effect");
-                break;
-            case "NeurotiscismGood":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.NeurotiscismGood, dataInput.originText + " effect");
-                break;
-            case "OpennessBad":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.OpennessBad, dataInput.originText + " effect");
-                break;
-            case "OpennessGood":
-                effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(MoodType.OpennessGood, dataInput.originText + " effect");
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
-                break;
-        }*/
         return effectResolve;
     }
 
@@ -3312,6 +3292,47 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     public int GetOngoingEffectID()
     { return ongoingEffectIDCounter++; }
+
+
+    /// <summary>
+    /// subMethod to process topic specific effets
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    public EffectDataResolve ResolveTopicData(Effect effect, EffectDataInput dataInput)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        //topic effects use a specific naming convention, eg. 'X_...'
+        char key = effect.name[0];
+        //error check
+        if (effect.name[1].Equals('_') == true)
+        {
+            switch (key)
+            {
+                case 'A':
+                    //Actor
+                    effectResolve.bottomText = string.Format("Actor {0}", effect.description);
+                    break;
+                case 'P':
+                    //Player
+                    effectResolve.bottomText = string.Format("Player {0}", effect.description);
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
+            }
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid topic effect \"{0}\" (Incorrect prefix, should be 'X_...')", effect.name);
+            effectResolve.isError = true;
+        }
+        return effectResolve;
+    }
 
     //place methods above here
 }

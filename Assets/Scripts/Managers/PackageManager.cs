@@ -743,6 +743,7 @@ namespace packageAPI
         public string ignoreTooltipDetails;                                 //ignore button tooltip
         public Sprite sprite;
         public List<TopicOption> listOfOptions = new List<TopicOption>();
+        public List<Effect> listOfIgnoreEffects = new List<Effect>();
     }
 
 
